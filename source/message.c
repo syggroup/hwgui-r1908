@@ -6,93 +6,87 @@
  *
  * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
  * www - http://www.geocities.com/alkresin/
-*/
+ */
 
 #include "hwingui.h"
 #include <commctrl.h>
 #include <richedit.h>
 
-static int s_msgbox( UINT uType )
+static int s_msgbox(UINT uType)
 {
-   void * hText, * hTitle;
-   int iResult;
+  void *hText, *hTitle;
+  int iResult;
 
-   iResult = MessageBox( GetActiveWindow(),
-                         HB_PARSTR( 1, &hText, NULL ),
-                         HB_PARSTRDEF( 2, &hTitle, NULL ),
-                         uType );
-   hb_strfree( hText );
-   hb_strfree( hTitle );
+  iResult = MessageBox(GetActiveWindow(), HB_PARSTR(1, &hText, NULL), HB_PARSTRDEF(2, &hTitle, NULL), uType);
+  hb_strfree(hText);
+  hb_strfree(hTitle);
 
-   return iResult;
+  return iResult;
 }
 
-HB_FUNC( MSGINFO )
+HB_FUNC(MSGINFO)
 {
-   s_msgbox( MB_OK | MB_ICONINFORMATION );
+  s_msgbox(MB_OK | MB_ICONINFORMATION);
 }
 
-HB_FUNC( MSGSTOP )
+HB_FUNC(MSGSTOP)
 {
-   s_msgbox( MB_OK | MB_ICONSTOP );
+  s_msgbox(MB_OK | MB_ICONSTOP);
 }
 
-HB_FUNC( MSGOKCANCEL )
+HB_FUNC(MSGOKCANCEL)
 {
-   hb_retni( s_msgbox( MB_OKCANCEL | MB_ICONQUESTION ) );
+  hb_retni(s_msgbox(MB_OKCANCEL | MB_ICONQUESTION));
 }
 
-HB_FUNC( MSGYESNO )
+HB_FUNC(MSGYESNO)
 {
-   hb_retl( s_msgbox( MB_YESNO | MB_ICONQUESTION ) == IDYES );
+  hb_retl(s_msgbox(MB_YESNO | MB_ICONQUESTION) == IDYES);
 }
 
-HB_FUNC( MSGNOYES )
+HB_FUNC(MSGNOYES)
 {
-   hb_retl( s_msgbox( MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2 ) == IDYES );
+  hb_retl(s_msgbox(MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2) == IDYES);
 }
 
-HB_FUNC( MSGYESNOCANCEL )
+HB_FUNC(MSGYESNOCANCEL)
 {
-   hb_retni( s_msgbox( MB_YESNOCANCEL | MB_ICONQUESTION ) );
+  hb_retni(s_msgbox(MB_YESNOCANCEL | MB_ICONQUESTION));
 }
 
-HB_FUNC( MSGEXCLAMATION )
+HB_FUNC(MSGEXCLAMATION)
 {
-   s_msgbox( MB_ICONEXCLAMATION | MB_OK | MB_SYSTEMMODAL );
+  s_msgbox(MB_ICONEXCLAMATION | MB_OK | MB_SYSTEMMODAL);
 }
 
-HB_FUNC( MSGRETRYCANCEL )
+HB_FUNC(MSGRETRYCANCEL)
 {
-   hb_retni( s_msgbox( MB_RETRYCANCEL | MB_ICONQUESTION | MB_ICONQUESTION ) );
+  hb_retni(s_msgbox(MB_RETRYCANCEL | MB_ICONQUESTION | MB_ICONQUESTION));
 }
 
-HB_FUNC( MSGBEEP )
+HB_FUNC(MSGBEEP)
 {
-   MessageBeep( ( hb_pcount() == 0 ) ? ( LONG ) 0xFFFFFFFF : hb_parnl( 1 ) );
+  MessageBeep((hb_pcount() == 0) ? (LONG)0xFFFFFFFF : hb_parnl(1));
 }
 
-HB_FUNC( MSGTEMP )
+HB_FUNC(MSGTEMP)
 {
-   char cres[ 60 ];
-   LPCTSTR msg;
+  char cres[60];
+  LPCTSTR msg;
 
 #if __HARBOUR__ - 0 >= 0x010100
-   hb_snprintf( cres, sizeof( cres ), "WS_OVERLAPPEDWINDOW: %lx NM_FIRST: %d ",
-                ( LONG ) WS_OVERLAPPEDWINDOW, NM_FIRST );
+  hb_snprintf(cres, sizeof(cres), "WS_OVERLAPPEDWINDOW: %lx NM_FIRST: %d ", (LONG)WS_OVERLAPPEDWINDOW, NM_FIRST);
 #else
-   sprintf( cres, "WS_OVERLAPPEDWINDOW: %lx NM_FIRST: %d ",
-            ( LONG ) WS_OVERLAPPEDWINDOW, NM_FIRST );
+  sprintf(cres, "WS_OVERLAPPEDWINDOW: %lx NM_FIRST: %d ", (LONG)WS_OVERLAPPEDWINDOW, NM_FIRST);
 #endif
-   {
+  {
 #ifdef UNICODE
-      TCHAR wcres[ 60 ];
-      MultiByteToWideChar( CP_ACP, 0, cres, -1, wcres, HB_SIZEOFARRAY( wcres ) );
-      msg = wcres;
+    TCHAR wcres[60];
+    MultiByteToWideChar(CP_ACP, 0, cres, -1, wcres, HB_SIZEOFARRAY(wcres));
+    msg = wcres;
 #else
-      msg = cres;
+    msg = cres;
 #endif
-      hb_retni( MessageBox( GetActiveWindow(), msg, TEXT( "DialogBaseUnits" ),
-                            MB_OKCANCEL | MB_ICONQUESTION ) );
-   }
+    hb_retni(MessageBox(GetActiveWindow(), msg, TEXT("DialogBaseUnits"), MB_OKCANCEL | MB_ICONQUESTION));
+  }
 }
