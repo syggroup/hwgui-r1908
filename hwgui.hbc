@@ -11,8 +11,9 @@
 {win}gt=gtgui
 
 {win}libs=hwgui hwg_qhtm procmisc hbxml
-{win&!allmingw}libs=hbactivex
+#{win&!allmingw}libs=hbactivex
 
 # solução temporária para o erro:
 # multiple definition of `HB_FUN_ERRORSYS'
 {allmingw}ldflags=-Wl,--allow-multiple-definition
+{allmsvc}ldflags=/FORCE:MULTIPLE
