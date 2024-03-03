@@ -177,7 +177,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
       nStyle += IIF( ::lTransp, TBSTYLE_TRANSPARENT, IIF( ::lVertical, CCS_VERT, 0 ) )
    ENDIF
 
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, bcolor )
 
    ::BtnWidth :=  BtnWidth //!= Nil, BtnWidth, 32 )
@@ -224,7 +224,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
    HB_SYMBOL_UNUSED( lTransp )
 
    DEFAULT  aItem TO { }
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, bcolor )
    HWG_InitCommonControlsEx()
    ::aItem := aItem
@@ -253,7 +253,7 @@ METHOD INIT() CLASS hToolBar
       IF ::Line != Nil
          ::Line:Anchor := ::Anchor
       ENDIF
-      Super:Init()
+      ::Super:Init()
       ::CreateTool()
    ENDIF
 

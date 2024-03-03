@@ -103,7 +103,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
 //   bPaint := { | o, p | o:paint( p ) }
 *   ENDIF
     bcolor := IIf( bcolor == Nil .AND. Hwg_BitAnd( nStyle, WS_DISABLED ) = 0, GetSysColor( COLOR_BTNHIGHLIGHT ), bcolor )
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, bcolor  )
 //              bSize, bPaint, ctooltip, tcolor, IIf( bcolor == Nil, GetSysColor( COLOR_BTNHIGHLIGHT ), bcolor ) )
 
@@ -191,7 +191,7 @@ METHOD Activate() CLASS HEdit
 METHOD Init()  CLASS HEdit
 
    IF ! ::lInit
-      Super:Init()
+      ::Super:Init()
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
       Hwg_InitEditProc( ::handle )
@@ -534,7 +534,7 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bInit, bSize, bPaint, ;
                  bGfocus, bLfocus, ctooltip, tcolor, bcolor, cPicture, nMaxLength, lMultiLine, bKeyDown, bChange )  CLASS HEdit
 
 
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, IIf( bcolor == Nil, GetSysColor( COLOR_BTNHIGHLIGHT ), bcolor ) )
    ::bKeyDown := bKeyDown
    IF ValType( lMultiLine ) == "L"

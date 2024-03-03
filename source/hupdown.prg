@@ -51,18 +51,18 @@ CLASS HUpDown INHERIT HControl
    METHOD SetValue( nValue )
    METHOD Value( Value ) SETGET
    METHOD Refresh()
-   METHOD SetColor( tColor, bColor, lRedraw ) INLINE super:SetColor(tColor, bColor, lRedraw ), IIF( ::oEditUpDown != Nil, ;
+   METHOD SetColor( tColor, bColor, lRedraw ) INLINE ::super:SetColor(tColor, bColor, lRedraw ), IIF( ::oEditUpDown != Nil, ;
                                              ::oEditUpDown:SetColor( tColor, bColor, lRedraw ),)
    METHOD DisableBackColor( DisableBColor ) SETGET
    METHOD Hide() INLINE (::lHide := .T., HideWindow( ::handle ), HideWindow( ::hwndUpDown ) )
    METHOD Show() INLINE (::lHide := .F., ShowWindow( ::handle ), ShowWindow( ::hwndUpDown ) )
-   METHOD Enable()  INLINE ( Super:Enable(), EnableWindow( ::hwndUpDown, .T. ), InvalidateRect( ::hwndUpDown, 0 ) )
+   METHOD Enable()  INLINE ( ::Super:Enable(), EnableWindow( ::hwndUpDown, .T. ), InvalidateRect( ::hwndUpDown, 0 ) )
                           //  InvalidateRect( ::oParent:Handle, 1,  ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight ) )
-   METHOD Disable() INLINE ( Super:Disable(), EnableWindow( ::hwndUpDown, .F. ) )
+   METHOD Disable() INLINE ( ::Super:Disable(), EnableWindow( ::hwndUpDown, .F. ) )
    METHOD Valid()
    METHOD SetRange( nLower, nUpper ) 
    METHOD Move( x1, y1, width, height, nRepaint ) INLINE ;                             // + GetClientRect( ::hwndUpDown )[ 3 ] - 1
-                              Super:Move( x1, y1 , IIF( width != Nil, width, ::nWidth ), height, nRepaint  ) ,;
+                              ::Super:Move( x1, y1 , IIF( width != Nil, width, ::nWidth ), height, nRepaint  ) ,;
                               SENDMESSAGE( ::hwndUpDown, UDM_SETBUDDY, ::oEditUpDown:handle, 0 ),;
                               IIF( ::lHide, ::Hide(), ::Show() )
 
@@ -89,7 +89,7 @@ METHOD New( oWndParent,nId,vari,bSetGet,nStyle,nLeft,nTop,nWidth,nHeight, ;
    ::title := Str( vari )
    ::bSetGet := bSetGet
    ::bColorOld := bColor
-   Super:New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,oFont,bInit, ;
+   ::Super:New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,oFont,bInit, ;
                   bSize,bPaint,ctooltip,tcolor,bcolor )
 
    ::idUpDown := ::id //::NewId()
@@ -140,7 +140,7 @@ METHOD Activate() CLASS HUpDown
 METHOD Init()  CLASS HUpDown
 
    IF !::lInit
-      Super:Init()
+      ::Super:Init()
       ::Createupdown()
       ::DisableBackColor := ::DisablebColor
       ::Refresh()
@@ -183,7 +183,7 @@ METHOD CREATEUPDOWN() CLASS Hupdown
 METHOD DisableBackColor( DisableBColor ) CLASS HUpDown
 
     IF DisableBColor != NIL
-       Super:DisableBackColor( DisableBColor )
+       ::Super:DisableBackColor( DisableBColor )
        IF ::oEditUpDown != Nil
           ::oEditUpDown:DisableBrush := ::DisableBrush
        ENDIF
@@ -369,7 +369,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
             nUpDWidth, nLower, nUpper ) CLASS HUpDown
 
    nStyle   := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_TABSTOP + WS_BORDER + ES_RIGHT )
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, bcolor )
 
    ::idUpDown := ::NewId()
@@ -419,7 +419,7 @@ METHOD Activate CLASS HUpDown
 
 METHOD Init()  CLASS HUpDown
    IF ! ::lInit
-      Super:Init()
+      ::Super:Init()
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
       HWG_INITUpDownPROC( ::handle )

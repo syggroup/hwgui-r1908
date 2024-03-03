@@ -362,7 +362,7 @@ METHOD ControlSource( cControlSource ) CLASS HControl
 
 METHOD END() CLASS HControl
 
-   Super:END()
+   ::Super:END()
 
    IF ::tooltip != NIL
       DelToolTip( ::oParent:handle, ::handle )
@@ -561,7 +561,7 @@ METHOD New( oWndParent, nId, nStyle, oFont, aParts, bInit, bSize, bPaint, bRClic
    bSize  := IIf( bSize != NIL, bSize, { | o, x, y | o:Move( 0, y - ::nStatusHeight, x, ::nStatusHeight ) } )
    nStyle := Hwg_BitOr( IIf( nStyle == NIL, 0, nStyle ), ;
                         WS_CHILD + WS_VISIBLE + WS_OVERLAPPED + WS_CLIPSIBLINGS )
-   Super:New( oWndParent, nId, nStyle, 0, 0, 0, 0, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, nStyle, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint )
 
    //::nHeight   := nHeight
@@ -594,7 +594,7 @@ METHOD Init() CLASS HStatus
       IF ! Empty( ::aParts )
          hwg_InitStatus( ::oParent:handle, ::handle, Len( ::aParts ), ::aParts )
       ENDIF
-      Super:Init()
+      ::Super:Init()
    ENDIF
    RETURN  NIL
 
@@ -604,7 +604,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
    HB_SYMBOL_UNUSED( cCaption )
    HB_SYMBOL_UNUSED( lTransp )
 
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, bcolor )
    HWG_InitCommonControlsEx()
    ::style   := ::nLeft := ::nTop := ::nWidth := ::nHeight := 0
@@ -765,7 +765,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
    ENDIF
    ::hBrushDefault := HBrush():Add( GetSysColor( COLOR_BTNFACE ) )
    
-   Super:New( oWndParent, nId, nStyle + nStyles, nLeft, nTop, nWidth, nHeight, oFont, ;
+   ::Super:New( oWndParent, nId, nStyle + nStyles, nLeft, nTop, nWidth, nHeight, oFont, ;
               bInit, bSize, bPaint, cTooltip, tcolor, bColor )
 
    IF ::oParent:oParent != Nil
@@ -794,7 +794,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
       ::BackStyle := TRANSPARENT
    ENDIF
 
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, cTooltip, tcolor, bColor )
 
    ::title := cCaption
@@ -825,7 +825,7 @@ METHOD Activate() CLASS HStatic
 
 METHOD Init() CLASS HStatic
    IF ! ::lInit
-      Super:init()
+      ::Super:init()
       IF ::nHolder != 1
          ::nHolder := 1
          SetWindowObject( ::handle, Self )
@@ -1003,7 +1003,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
    ::bGetFocus  := bGFocus
    ::lFlat := Hwg_BitAND( nStyle, BS_FLAT ) != 0
 
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, ;
               IIf( nWidth  == NIL, 90, nWidth  ), ;
               IIf( nHeight == NIL, 30, nHeight ), ;
               oFont, bInit, bSize, bPaint, cTooltip, tcolor, bColor )
@@ -1042,7 +1042,7 @@ METHOD Activate() CLASS HButton
 METHOD Redefine( oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ;
                  cTooltip, tcolor, bColor, cCaption, bGFocus ) CLASS HButton
 
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, cTooltip, tcolor, bColor )
 
    ::title   := cCaption
@@ -1352,7 +1352,7 @@ METHOD SetIcon( hIcon ) CLASS HButtonEX
    RETURN Self
 
 METHOD END() CLASS HButtonEX
-   Super:END()
+   ::Super:END()
    RETURN Self
 
 METHOD INIT() CLASS HButtonEx
@@ -2084,7 +2084,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, ;
    ::title   := cCaption
    ::oRGroup := oRGroup
 
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
               oFont, bInit, bSize, bPaint,, tcolor, bColor )
 
    ::oBrush := IIF( bColor != Nil, ::brush,Nil )
@@ -2109,7 +2109,7 @@ METHOD Init() CLASS HGroup
    LOCAL nbs
 
    IF  ! ::lInit
-      Super:Init()
+      ::Super:Init()
 
       *-IF ::backStyle = TRANSPARENT .OR. ::bColor != Nil
       IF  ::oBrush != Nil .OR. ::backStyle = TRANSPARENT 
@@ -2255,7 +2255,7 @@ ENDCLASS
 
 METHOD New( oWndParent, nId, lVert, nLeft, nTop, nLength, bSize, bInit, tcolor, nHeight, cSlant, nBorder ) CLASS HLine
 
-   Super:New( oWndParent, nId, SS_OWNERDRAW, nLeft, nTop,,,,bInit, ;
+   ::Super:New( oWndParent, nId, SS_OWNERDRAW, nLeft, nTop,,,,bInit, ;
               bSize, { | o, lp | o:Paint( lp ) } , , tcolor )
 
    ::title := ""

@@ -187,7 +187,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
 
    nStyle   := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_CHILD + WS_CLIPSIBLINGS + WS_TABSTOP + TCS_TOOLTIPS )
 
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               bSize, bPaint )
 
    ::title   := ""
@@ -238,7 +238,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
    HB_SYMBOL_UNUSED( lTransp )
    HB_SYMBOL_UNUSED( aItem )
 
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, bcolor )
    HWG_InitCommonControlsEx()
    ::lResourceTab := .T.
@@ -271,7 +271,7 @@ METHOD Init() CLASS HTab
          SendMessage( ::handle, TCM_SETIMAGELIST, 0, ::himl )
       ENDIF
       AddToolTip( ::GetParentForm():handle, ::handle, "" )
-      Super:Init()
+      ::Super:Init()
 
       IF Len( ::aPages ) > 0
          //::Pages[ 1 ]:aItemPos := TabItemPos( ::Handle, 0 )
@@ -794,7 +794,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
        IF ::GetParentForm( self ):Type < WND_DLG_RESOURCE
           RETURN ( ::oParent:onEvent( msg, wparam, lparam ) )
        ELSE
-          RETURN ( super:onevent(msg, wparam, lparam ) )
+          RETURN ( ::super:onevent(msg, wparam, lparam ) )
        ENDIF
    ELSEIF  msg = WM_GETDLGCODE
       IF wparam == VK_RETURN .OR. wParam = VK_ESCAPE  .AND. ;
@@ -831,7 +831,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
       IF msg = WM_DRAWITEM
          ::ShowDisablePage()
       ENDIF
-      RETURN Super:onEvent( msg, wparam, lparam )
+      RETURN ::Super:onEvent( msg, wparam, lparam )
    ENDIF
    RETURN - 1
 
@@ -940,7 +940,7 @@ ENDCLASS
 METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, tcolor, bColor ) CLASS HPaintTab
 
    ::bPaint   := { | o, p | o:paint( p ) }
-   Super:New( oWndParent, nId, SS_OWNERDRAW + WS_DISABLED , nLeft, nTop, nWidth, nHeight, , ;
+   ::Super:New( oWndParent, nId, SS_OWNERDRAW + WS_DISABLED , nLeft, nTop, nWidth, nHeight, , ;
               ,, ::bPaint,, tcolor, bColor )
    ::anchor := 15
    ::brush := Nil

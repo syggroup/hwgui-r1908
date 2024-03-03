@@ -43,7 +43,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
                bInit, bSize, bPaint, bcolor ) CLASS HPanel
 LOCAL oParent := Iif( oWndParent == Nil, ::oDefaultParent, oWndParent )
 
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, Iif( nWidth == Nil, 0, nWidth ), ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, Iif( nWidth == Nil, 0, nWidth ), ;
               Iif( nHeight == Nil, 0, nHeight ), oParent:oFont, bInit, ;
               bSize, bPaint,,, bcolor )
 
@@ -80,7 +80,7 @@ RETURN Self
 METHOD Redefine( oWndParent, nId, nWidth, nHeight, bInit, bSize, bPaint, bcolor ) CLASS HPanel
 LOCAL oParent := Iif( oWndParent == Nil, ::oDefaultParent, oWndParent )
 
-   Super:New( oWndParent, nId, 0, 0, 0, Iif( nWidth == Nil, 0, nWidth ), ;
+   ::Super:New( oWndParent, nId, 0, 0, 0, Iif( nWidth == Nil, 0, nWidth ), ;
               Iif( nHeight != Nil, nHeight, 0 ), oParent:oFont, bInit, ;
               bSize, bPaint,,, bcolor )
 
@@ -129,7 +129,7 @@ METHOD Init() CLASS HPanel
                                           Iif( ::nHeight == 0 .OR. ::lResizeY, y, ::nHeight ) ) }
       ENDIF
 
-      Super:Init()
+      ::Super:Init()
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
       Hwg_InitWinCtrl( ::handle )
@@ -173,7 +173,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
 
       ::RedefineScrollbars()
       ::Resize()
-      RETURN Super:onEvent( WM_SIZE, wParam, lParam )
+      RETURN ::Super:onEvent( WM_SIZE, wParam, lParam )
 
    ELSEIF msg == WM_DESTROY
       IF ::oEmbedded != Nil
@@ -219,7 +219,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
          ENDIF
          onTrackScroll( Self,msg,wParam,lParam )
       ENDIF
-      Return Super:onEvent( msg, wParam, lParam )
+      Return ::Super:onEvent( msg, wParam, lParam )
    ENDIF
 
    RETURN - 1
@@ -290,7 +290,7 @@ METHOD Release() CLASS HPanel
    */
    ::nHeight := 0
    ::nWidth := 0
-   Super:Release( )
+   ::Super:Release( )
    //  ::oParent:DelControl( Self )
 
 RETURN Nil
@@ -316,7 +316,7 @@ METHOD Hide() CLASS HPanel
       ENDIF
    ENDIF
    */
-    Super:Hide()
+    ::Super:Hide()
     IF ::oParent:type == WND_MDI .AND. lRes
        //SENDMESSAGE( ::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ) )
        InvalidateRect( ::oParent:handle, 1, ::nLeft, ::nTop + 1, ::nLeft + ::nWidth, ::nTop + ::nHeight )
@@ -344,7 +344,7 @@ METHOD Show() CLASS HPanel
       ENDIF
    ENDIF
    */
-   Super:Show()
+   ::Super:Show()
    IF ::oParent:type == WND_MDI .AND. lRes
        //SENDMESSAGE( ::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ) )
        InvalidateRect( ::oParent:handle, 1, ::nLeft, ::nTop+1, ::nLeft + ::nWidth, ::nTop + ::nHeight )

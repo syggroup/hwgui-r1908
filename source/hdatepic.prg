@@ -50,7 +50,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
 
    nStyle := Hwg_BitOr( Iif( nStyle==Nil,0,nStyle ), IIF( bSetGet != Nil,WS_TABSTOP , 0 ) + ;
                         IIF( lShowTime == Nil.OR. ! lShowTime, 0, DTS_TIMEFORMAT ) )
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               ,, ctooltip, tcolor, bcolor )
 
    ::lShowTime := Hwg_BitAnd( nStyle, DTS_TIMEFORMAT ) > 0
@@ -85,7 +85,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
 
 METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, ;
                  bGfocus, bLfocus, bChange, ctooltip, tcolor, bcolor, lShowTime ) CLASS  HDatePicker
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize,, ctooltip, tcolor, bcolor )
               
    HWG_InitCommonControlsEx()
@@ -124,7 +124,7 @@ METHOD Init() CLASS HDatePicker
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
       HWG_INITDATEPICKERPROC( ::handle )
-      Super:Init()
+      ::Super:Init()
       ::Refresh()
    ENDIF
    RETURN Nil

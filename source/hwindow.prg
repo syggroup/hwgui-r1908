@@ -114,7 +114,7 @@ CLASS VAR szAppName  SHARED INIT "HwGUI_App"
    METHOD Maximize() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_MAXIMIZE, 0 )
    METHOD Minimize() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_MINIMIZE, 0 )
    METHOD Close()   INLINE SendMessage( ::handle, WM_SYSCOMMAND, SC_CLOSE, 0 )
-   METHOD Release()  INLINE ::Close( ), super:Release(), Self := Nil
+   METHOD Release()  INLINE ::Close( ), ::super:Release(), Self := Nil
    METHOD isMaximized() INLINE GetWindowPlacement( ::handle ) == SW_SHOWMAXIMIZED
    METHOD isMinimized() INLINE GetWindowPlacement( ::handle ) == SW_SHOWMINIMIZED
    METHOD isNormal() INLINE GetWindowPlacement( ::handle ) == SW_SHOWNORMAL
@@ -255,7 +255,7 @@ METHOD New( lType, oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, nPos,
             oFont, bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther, ;
             cAppName, oBmp, cHelp, nHelpId, bCloseQuery, bRefresh, bMdiMenu ) CLASS HMainWindow
 
-   Super:New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
+   ::Super:New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
               bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther,  ;
               cAppName, oBmp, cHelp, nHelpId, bCloseQuery, bRefresh )
    ::Type := lType
@@ -444,7 +444,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HMainWindow
          ENDIF
          onTrackScroll( Self, msg, wParam, lParam )
       ENDIF
-      RETURN Super:onEvent( msg, wParam, lParam )
+      RETURN ::Super:onEvent( msg, wParam, lParam )
    ENDIF
 
    RETURN - 1
@@ -647,7 +647,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HMDIChildWindow
             SendMessage( oCtrl:handle, msg, wParam, lParam )
          ENDIF
       ENDIF
-      RETURN Super:onEvent( msg, wParam, lParam )
+      RETURN ::Super:onEvent( msg, wParam, lParam )
    ENDIF
 
    RETURN - 1
@@ -669,7 +669,7 @@ METHOD New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
             bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther, ;
             cAppName, oBmp, cHelp, nHelpId, bRefresh ) CLASS HChildWindow
 
-   Super:New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
+   ::Super:New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
               bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther,  ;
               cAppName, oBmp, cHelp, nHelpId,, bRefresh )
    ::oParent := HWindow():GetMain()
@@ -765,7 +765,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HChildWindow
             SendMessage( oCtrl:handle, msg, wParam, lParam )
          ENDIF
       ENDIF
-      RETURN Super:onEvent( msg, wParam, lParam )
+      RETURN ::Super:onEvent( msg, wParam, lParam )
    ENDIF
 
    RETURN - 1

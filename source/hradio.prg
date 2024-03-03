@@ -51,7 +51,7 @@ METHOD New( vari, bSetGet, bInit, bClick, bGFocus, nStyle ) CLASS HRadioGroup
 
    ::lEnabled :=  ! Hwg_BitAnd( nStyle, WS_DISABLED ) > 0
 
-   Super:New( ::oParent, ,, ,,,,, bInit)
+   ::Super:New( ::oParent, ,, ,,,,, bInit)
 
    ::bInit := bInit
    ::bClick := bClick
@@ -76,7 +76,7 @@ METHOD NewRg( oWndParent, nId, nStyle, vari, bSetGet, nLeft, nTop, nWidth, nHeig
    ::aButtons := {}
    ::lEnabled :=  ! Hwg_BitAnd( nStyle, WS_DISABLED ) > 0
 
-   Super:New( ::oParent,,,nLeft, nTop, nWidth, nHeight, oFont, bInit )
+   ::Super:New( ::oParent,,,nLeft, nTop, nWidth, nHeight, oFont, bInit )
    ::oHGroup := HGroup():New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, ;
                               oFont, bInit, bSize, , tcolor, bColor, lTransp, Self )
                               
@@ -133,7 +133,7 @@ METHOD Init() CLASS HRadioGroup
         ::handle := ::oHGroup:handle
       ENDIF
       */
-      super:init()
+      ::super:init()
    ENDIF
    RETURN  NIL
 
@@ -230,7 +230,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFo
                         BS_NOTIFY + ;  // WS_CHILD + WS_VISIBLE
                        IIf( ::oGroup != Nil .AND. Empty( ::oGroup:aButtons ), WS_GROUP , 0 ) )
 
-   Super:New( oWndParent, nId, ::Style, nLeft, nTop, nWidth, nHeight, ;
+   ::Super:New( oWndParent, nId, ::Style, nLeft, nTop, nWidth, nHeight, ;
               oFont, bInit, bSize, bPaint,ctooltip, tcolor, bColor )
 
    ::backStyle :=  IIF( lTransp != NIL .AND. lTransp, TRANSPARENT, OPAQUE )
@@ -281,7 +281,7 @@ METHOD Init() CLASS HRadioButton
       SetWindowObject( ::handle, Self )
       HWG_INITBUTTONPROC( ::handle )
       ::Enabled :=  ::oGroup:lEnabled .AND. ::Enabled 
-      Super:Init()
+      ::Super:Init()
    ENDIF
 Return Nil
 

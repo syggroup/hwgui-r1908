@@ -45,7 +45,7 @@ ENDCLASS
 
 
 METHOD New(p1,p2,p3,p4,p5,p6) CLASS PdfReader
-  Super:New(p1,p2,p3,p4,p5,p6)
+  ::Super:New(p1,p2,p3,p4,p5,p6)
 RETURN
 
 function ViewPdf(oWindow, cPdfFile, col, row, nHeight, nWidth)

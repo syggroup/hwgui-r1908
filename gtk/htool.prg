@@ -52,7 +52,7 @@ ENDCLASS
 METHOD New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,cCaption,oFont,bInit, ;
                   bSize,bPaint,ctooltip,tcolor,bcolor,lTransp ,aitem) CLASS hToolBar
    Default  aItem to {}
-   Super:New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,oFont,bInit, ;
+   ::Super:New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,oFont,bInit, ;
                   bSize,bPaint,ctooltip,tcolor,bcolor )
 
    ::aitem := aItem
@@ -80,7 +80,7 @@ Local oImage
 Local nPos
 Local aItem
    IF !::lInit
-      Super:Init()
+      ::Super:Init()
       For n := 1 TO len( ::aItem )
 
 //         IF Valtype( ::aItem[ n, 7 ] ) == "B"

@@ -394,7 +394,7 @@ METHOD New( lType, oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont,
                           IIf( ! lNoVScroll, WS_VSCROLL, 0 ) )
    nStyle   -= IIF( Hwg_BitAND( nStyle, WS_VSCROLL ) > 0 .AND. lNoVScroll, WS_VSCROLL, 0 )
 
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, IIf( nWidth == Nil, 0, nWidth ), ;
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, IIf( nWidth == Nil, 0, nWidth ), ;
               IIf( nHeight == Nil, 0, nHeight ), oFont, bInit, bSize, bPaint, ctooltip ,tColor, bColor )
 
    ::lNoVScroll := lNoVScroll
@@ -457,7 +457,7 @@ METHOD Init() CLASS HBrowse
    IF ! ::lInit
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
-      Super:Init()
+      ::Super:Init()
       ::InitBrw( , .T. )
       //VScrollPos( Self, 0, .F. )
       IF ::GetParentForm( ):Type < WND_DLG_RESOURCE
@@ -631,7 +631,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
          RETURN DLGC_WANTALLKEYS
 
       ELSEIF msg == WM_COMMAND
-         // Super:onEvent( WM_COMMAND )
+         // ::Super:onEvent( WM_COMMAND )
          IF ::GetParentForm( self ):Type < WND_DLG_RESOURCE
             ::GetParentForm( self ):onEvent( msg, wparam, lparam )
          ELSE
@@ -890,7 +890,7 @@ RETURN - 1
 //----------------------------------------------------//
 METHOD Redefine( lType, oWndParent, nId, oFont, bInit, bSize, bPaint, bEnter, bGfocus, bLfocus ) CLASS HBrowse
 
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, bSize, bPaint )
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, bSize, bPaint )
 
    ::Type    := lType
    IF oFont == Nil
@@ -983,7 +983,7 @@ METHOD DelColumn( nPos ) CLASS HBrowse
 //----------------------------------------------------//
 METHOD END() CLASS HBrowse
 
-   Super:END()
+   ::Super:END()
    IF ::brush != Nil
       ::brush:Release()
       ::brush := Nil

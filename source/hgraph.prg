@@ -41,7 +41,7 @@ ENDCLASS
 METHOD New( oWndParent, nId, aValues, nLeft, nTop, nWidth, nHeight, oFont, ;
             bSize, ctooltip, tcolor, bcolor ) CLASS HGraph
 
-   Super:New( oWndParent, nId, SS_OWNERDRAW, nLeft, nTop, nWidth, nHeight, oFont,, ;
+   ::Super:New( oWndParent, nId, SS_OWNERDRAW, nLeft, nTop, nWidth, nHeight, oFont,, ;
               bSize, { | o, lpdis | o:Paint( lpdis ) }, ctooltip, ;
               IIf( tcolor == Nil, Vcolor( "FFFFFF" ), tcolor ), IIf( bcolor == Nil, 0, bcolor ) )
 
@@ -56,7 +56,7 @@ METHOD New( oWndParent, nId, aValues, nLeft, nTop, nWidth, nHeight, oFont, ;
 METHOD Redefine( oWndParent, nId, aValues, oFont, ;
                  bSize, ctooltip, tcolor, bcolor )  CLASS HGraph
 
-   Super:New( oWndParent, nId, SS_OWNERDRAW, 0, 0, 0, 0, oFont,, ;
+   ::Super:New( oWndParent, nId, SS_OWNERDRAW, 0, 0, 0, 0, oFont,, ;
               bSize, { | o, lpdis | o:Paint( lpdis ) }, ctooltip, ;
               IIf( tcolor == Nil, Vcolor( "FFFFFF" ), tcolor ), IIf( bcolor == Nil, 0, bcolor ) )
 
@@ -74,7 +74,7 @@ METHOD Activate() CLASS HGraph
 
 METHOD Init()  CLASS HGraph
    IF ! ::lInit
-      Super:Init()
+      ::Super:Init()
       ::CalcMinMax()
    ENDIF
    RETURN Nil

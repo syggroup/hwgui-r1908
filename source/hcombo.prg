@@ -112,7 +112,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    ENDIF
 
    nStyle := Hwg_BitOr( Iif( nStyle == Nil, 0, nStyle ), Iif( lEdit, CBS_DROPDOWN, CBS_DROPDOWNLIST ) + WS_TABSTOP )
-   Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, bSize, bPaint, ctooltip, tcolor, bcolor )
+   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, bSize, bPaint, ctooltip, tcolor, bcolor )
 
    IF lText == Nil
       lText := .f.
@@ -217,7 +217,7 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, aItems, oFont, bInit, bSize, bP
    ENDIF                                                                    
    //::nHeight := ( ::nHeight + 16.250 ) *  nDisplay
    ::lResource := .T.
-   Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, bSize, bPaint, ctooltip )
+   ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, bSize, bPaint, ctooltip )
 
    ::nDisplay := nDisplay
 
@@ -319,7 +319,7 @@ METHOD INIT() CLASS HComboBox
          NewLongComboWidth := ( LongComboWidth - 2 ) * avgwidth
          SendMessage( ::handle, CB_SETDROPPEDWIDTH, NewLongComboWidth + 50, 0 )
       ENDIF
-      Super:Init()
+      ::Super:Init()
       IF !::lResource
          // HEIGHT Items
          IF !Empty( ::nhItem )
@@ -358,7 +358,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HComboBox
       ENDIF
    ENDIF
    IF msg = WM_MOUSEWHEEL .AND. ::oParent:nScrollBars != -1 .AND. ::oParent:bScroll = Nil
-      super:ScrollHV( ::oParent, msg, wParam, lParam )
+      ::super:ScrollHV( ::oParent, msg, wParam, lParam )
       RETURN 0 
    ELSEIF msg = CB_SHOWDROPDOWN 
       ::ldropshow := IIF( wParam = 1, .T., ::ldropshow ) 
@@ -1050,7 +1050,7 @@ LOCAL i
    //SetWindowObject( ::handle, Self )  // because hcombobox is handling
    //HWG_INITCOMBOPROC( ::handle )
    IF !::lInit
-      Super:Init()
+      ::Super:Init()
       IF Len( ::acheck ) > 0
          FOR i := 1 TO Len( ::acheck )
             ::Setcheck( ::acheck[ i ], .t. )

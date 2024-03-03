@@ -150,7 +150,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, bInit, ;
          nHeight := ::oImage:nHeight
       ENDIF
    ENDIF
-   Super:New( oWndParent, nId, SS_OWNERDRAW, nLeft, nTop, nWidth, nHeight, bInit, bSize, ctooltip )
+   ::Super:New( oWndParent, nId, SS_OWNERDRAW, nLeft, nTop, nWidth, nHeight, bInit, bSize, ctooltip )
    // ::classname:= "HSAYFIMAGE"
 
    ::bPaint  := { | o, lpdis | o:Paint( lpdis ) }
@@ -163,7 +163,7 @@ METHOD Redefine( oWndParent, nId, Image, bInit, bSize, ctooltip ) CLASS HSayFIma
 
    ::oImage := IIf( ValType( Image ) == "C", HFreeImage():AddFile( Image ), Image )
 
-   Super:Redefine( oWndParent, nId, bInit, bSize, ctooltip )
+   ::Super:Redefine( oWndParent, nId, bInit, bSize, ctooltip )
    // ::classname:= "HSAYFIMAGE"
 
    ::bPaint  := { | o, lpdis | o:Paint( lpdis ) }

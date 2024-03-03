@@ -260,11 +260,11 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HDialog
    ELSE
       IF msg == WM_HSCROLL .OR. msg == WM_VSCROLL .or. msg == WM_MOUSEWHEEL
          IF ::nScrollBars != - 1  .AND. ::bScroll = Nil
-            Super:ScrollHV( Self, msg, wParam, lParam )
+            ::Super:ScrollHV( Self, msg, wParam, lParam )
          ENDIF
          onTrackScroll( Self, msg, wParam, lParam )
       ENDIF
-      RETURN Super:onEvent( msg, wParam, lParam )
+      RETURN ::Super:onEvent( msg, wParam, lParam )
    ENDIF
 
    RETURN 0
