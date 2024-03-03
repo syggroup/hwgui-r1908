@@ -1073,3 +1073,9 @@ FUNCTION GetBackColorParent( oCtrl, lSelf, lTransparent )
    ENDIF
    brush := HBrush():Add( bColor ) 
    Return brush
+
+INIT PROCEDURE HWGINIT
+
+   hwg_ErrorSys()
+
+RETURN
