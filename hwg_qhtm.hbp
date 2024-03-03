@@ -5,7 +5,8 @@
 -inc
 
 -hblib
--olib/hwg_qhtm
+#-olib/hwg_qhtm
+-olib/${hb_plat}/${hb_comp}/hwg_qhtm
 
 -n -q0 -w -es2
 
