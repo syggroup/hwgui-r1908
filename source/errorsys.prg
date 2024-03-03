@@ -15,7 +15,7 @@
 
 STATIC LogInitialPath := ""
 
-PROCEDURE ErrorSys
+PROCEDURE hwg_ErrorSys
 
    ErrorBlock( { | oError | DefError( oError ) } )
    LogInitialPath := "\" + CurDir() + IIf( Empty( CurDir() ), "", "\" )
