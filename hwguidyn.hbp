@@ -1,0 +1,23 @@
+#
+# $Id: hwguidyn.hbp 1615 2011-02-18 13:53:35Z mlacecilia $
+#
+
+-inc
+
+-hbdyn
+-nohblib-
+-o{bcc}lib/hwguidyn-bcc
+-o{!bcc}lib/hwguidyn
+-nohbc
+-lhbxml
+-lprocmisc
+-Llib
+
+-n1 -q0 -w -es2
+
+-cflag={bcc}-a8
+-cflag=-D__EXPORT__
+
+-iinclude
+
+@hwgui.hbm
