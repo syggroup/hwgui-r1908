@@ -437,14 +437,14 @@ HB_FUNC( PRINTRTF )
 HB_FUNC( HWG_INITRICHPROC )
 {
    wpOrigRichProc = ( WNDPROC ) SetWindowLong( ( HWND ) HB_PARHANDLE( 1 ),
-         GWL_WNDPROC, ( LONG ) RichSubclassProc );
+         GWLP_WNDPROC, ( LONG ) RichSubclassProc );
 }
 
 LRESULT APIENTRY RichSubclassProc( HWND hWnd, UINT message, WPARAM wParam,
       LPARAM lParam )
 {
    long int res;
-   PHB_ITEM pObject = ( PHB_ITEM ) GetWindowLongPtr( hWnd, GWL_USERDATA );
+   PHB_ITEM pObject = ( PHB_ITEM ) GetWindowLongPtr( hWnd, GWLP_USERDATA );
 
    if( !pSym_onEvent )
       pSym_onEvent = hb_dynsymFindName( "ONEVENT" );
