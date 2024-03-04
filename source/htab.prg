@@ -461,7 +461,7 @@ METHOD ChangePage( nPage ) CLASS HTab
 
 METHOD onChange( ) CLASS HTab
 
-   IF ::bChange2 != Nil
+   IF hb_IsBlock(::bChange2)
       ::oparent:lSuspendMsgsHandling := .t.
       Eval( ::bChange2, ::nActive, Self )
       ::oparent:lSuspendMsgsHandling := .f. //lSuspendMsgsHandling
@@ -543,7 +543,7 @@ METHOD Refresh( lAll ) CLASS HTab
                   ( __ObjHasMsg( ::aControls[ i ], "BSETGET" ) .OR. lAll ) .AND. ::aControls[ i ]:Handle != hCtrl
                 IF  ! Empty( lRefresh )
                ::aControls[ i ]:Refresh( )
-               IF ::aControls[ i ]:bRefresh != Nil
+               IF hb_IsBlock(::aControls[ i ]:bRefresh)
                   EVAL( ::aControls[ i ]:bRefresh, ::aControls[ i ] )
                ENDIF
             ENDIF
@@ -665,7 +665,7 @@ METHOD Notify( lParam ) CLASS HTab
         IF hb_IsBlock(::bChange)
            ::oparent:lSuspendMsgsHandling := .T.
            Eval( ::bChange, Self, GetCurrentTab( ::handle ) )
-           IF ::bGetFocus != NIL .AND. nPage != ::nPrevPage .AND. ::Pages[ nPage ]:Enabled .AND. ::nActivate > 0
+           IF hb_IsBlock(::bGetFocus) .AND. nPage != ::nPrevPage .AND. ::Pages[ nPage ]:Enabled .AND. ::nActivate > 0
               Eval( ::bGetFocus, GetCurrentTab( ::handle ), Self )
               ::nActivate := 0
            ENDIF
@@ -674,7 +674,7 @@ METHOD Notify( lParam ) CLASS HTab
    CASE nCode == TCN_SELCHANGING .AND. ::nPrevPage > 0
         // DEACTIVATE PAGE //ocorre antes de trocar o focu
         ::nPrevPage := ::nActive //npage
-        IF ::bLostFocus != NIL
+        IF hb_IsBlock(::bLostFocus)
            ::oparent:lSuspendMsgsHandling := .T.
            Eval( ::bLostFocus, ::nPrevPage, Self)
            ::oparent:lSuspendMsgsHandling := .F.
@@ -686,14 +686,14 @@ METHOD Notify( lParam ) CLASS HTab
    CASE nCode == TCN_CLICK
       IF ! Empty( ::pages ) .AND. ::nActive > 0 .AND. ::pages[ ::nActive ]:enabled
          SetFocus( ::handle )
-         IF ::bAction != Nil
+         IF hb_IsBlock(::bAction)
             Eval( ::bAction, Self, GetCurrentTab( ::handle ) )
          ENDIF
       ENDIF
    */
    CASE nCode == TCN_RCLICK
       IF ! Empty( ::pages ) .AND. ::nActive > 0 .AND. ::pages[ ::nActive ]:enabled
-          IF ::bRClick != Nil
+          IF hb_IsBlock(::bRClick)
               ::oparent:lSuspendMsgsHandling := .T.
               Eval( ::bRClick, Self, GetCurrentTab( ::handle ) )
               ::oparent:lSuspendMsgsHandling := .F.
@@ -701,11 +701,11 @@ METHOD Notify( lParam ) CLASS HTab
       ENDIF
 
    CASE nCode == TCN_SETFOCUS
-      IF ::bGetFocus != NIL .AND. ! ::Pages[ nPage ]:Enabled
+      IF hb_IsBlock(::bGetFocus) .AND. ! ::Pages[ nPage ]:Enabled
          Eval( ::bGetFocus, GetCurrentTab( ::handle ), Self )
       ENDIF
    CASE nCode == TCN_KILLFOCUS
-      IF ::bLostFocus != NIL
+      IF hb_IsBlock(::bLostFocus)
          Eval( ::bLostFocus, GetCurrentTab( ::handle ), Self )
       ENDIF
 
@@ -713,7 +713,7 @@ METHOD Notify( lParam ) CLASS HTab
    IF ( nCode == TCN_CLICK .AND. ::nPrevPage > 0 .AND. ::pages[ ::nPrevPage ]:enabled ) .OR.;
         ( ::lClick .AND. nCode == TCN_SELCHANGE )
        ::oparent:lSuspendMsgsHandling := .T.
-       IF ::bAction != Nil  .AND. ::lClick
+       IF hb_IsBlock(::bAction) .AND. ::lClick
           Eval( ::bAction, Self, GetCurrentTab( ::handle ) )
        ENDIF
        ::oparent:lSuspendMsgsHandling := .F.
@@ -805,7 +805,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
       ENDIF
    ENDIF
      IF  msg = WM_NOTIFY .AND. isWindowVisible( ::oParent:handle) .AND.  ::nActivate = Nil
-      IF ::bGetFocus != NIL
+      IF hb_IsBlock(::bGetFocus)
           ::oParent:lSuspendMsgsHandling := .T.
           Eval( ::bGetFocus, Self, GetCurrentTab( ::handle ) )
           ::oParent:lSuspendMsgsHandling := .F.
@@ -814,7 +814,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
       ::nActivate := getfocus()
    ENDIF
 
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       ::oparent:lSuspendMsgsHandling := .t.
       IF Eval( ::bOther, Self, msg, wParam, lParam ) != - 1
         * RETURN 0
