@@ -7,6 +7,10 @@
  * www - http://kresin.belgorod.su/
 */
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wcast-function-type"
+#endif
+
 #define HB_OS_WIN_32_USED
 
 #define _WIN32_WINNT 0x0400
