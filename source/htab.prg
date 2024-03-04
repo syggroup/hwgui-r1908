@@ -662,13 +662,15 @@ METHOD Notify( lParam ) CLASS HTab
               //IF GETFOCUS() != ::handle
             //   ::SETFOCUS()
             //ENDIF
-        ::oparent:lSuspendMsgsHandling := .T.
-        Eval( ::bChange, Self, GetCurrentTab( ::handle ) )
-        IF ::bGetFocus != NIL .AND. nPage != ::nPrevPage .AND. ::Pages[ nPage ]:Enabled .AND. ::nActivate > 0
-            Eval( ::bGetFocus, GetCurrentTab( ::handle ), Self )
-            ::nActivate := 0
+        IF hb_IsBlock(::bChange)
+           ::oparent:lSuspendMsgsHandling := .T.
+           Eval( ::bChange, Self, GetCurrentTab( ::handle ) )
+           IF ::bGetFocus != NIL .AND. nPage != ::nPrevPage .AND. ::Pages[ nPage ]:Enabled .AND. ::nActivate > 0
+              Eval( ::bGetFocus, GetCurrentTab( ::handle ), Self )
+              ::nActivate := 0
+           ENDIF
+           ::oparent:lSuspendMsgsHandling := .F.
         ENDIF
-        ::oparent:lSuspendMsgsHandling := .F.
    CASE nCode == TCN_SELCHANGING .AND. ::nPrevPage > 0
         // DEACTIVATE PAGE //ocorre antes de trocar o focu
         ::nPrevPage := ::nActive //npage
