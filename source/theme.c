@@ -8,6 +8,10 @@
  * www - http://sites.uol.com.br/culikr/
  */
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wcast-function-type"
+#endif
+
 #include "hwingui.h"
 #include <commctrl.h>
 #include <uxtheme.h>
