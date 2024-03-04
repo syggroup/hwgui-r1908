@@ -7,6 +7,10 @@
  * www - http://kresin.belgorod.su
  */
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wcast-function-type"
+#endif
+
 #include "hwingui.h"
 #include "hbapiitm.h"
 #include "hbvm.h"
