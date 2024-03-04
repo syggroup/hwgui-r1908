@@ -8,7 +8,7 @@
 #-olib/hbxml
 -olib/${hb_plat}/${hb_comp}/hbxml
 
--n -q0 -w -es2
+-n -q0 -w3 -es2
 
 -iinclude
 
