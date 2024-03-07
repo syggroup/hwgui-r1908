@@ -131,7 +131,7 @@ METHOD Init() CLASS HDatePicker
 
 METHOD OnEvent( msg, wParam, lParam ) CLASS HDatePicker
 
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       IF Eval( ::bOther,Self,msg,wParam,lParam ) != -1
          RETURN 0
       ENDIF
@@ -179,14 +179,14 @@ METHOD SetValue( xValue ) CLASS HDatePicker
    ::dValue := GetDatePicker( ::handle )
    ::tValue := GetTimePicker( ::handle )
    ::title := IIF( ::lShowTime, ::tValue, ::dValue )
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, IIF( ::lShowTime, ::tValue,::dValue ), Self )
    ENDIF
    RETURN Nil
 
 METHOD Refresh() CLASS HDatePicker
 
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       IF ! ::lShowTime
          ::dValue := Eval( ::bSetGet,, Self )
       ELSE
@@ -213,10 +213,10 @@ METHOD onChange( nMess ) CLASS HDatePicker
       ENDIF
       ::dValue := GetDatePicker( ::handle )
       ::tValue := GetTimePicker( ::handle )
-      IF ::bSetGet != Nil
+      IF hb_IsBlock(::bSetGet)
          Eval( ::bSetGet, IIF( ::lShowTime, ::tValue, ::dValue ), Self )
       ENDIF
-      IF ::bChange != Nil
+      IF hb_IsBlock(::bChange)
          ::oparent:lSuspendMsgsHandling := .T.
          Eval( ::bChange, IIF( ::lShowTime, ::tValue, ::dValue), Self )
          ::oparent:lSuspendMsgsHandling := .F.
@@ -230,7 +230,7 @@ METHOD When( ) CLASS HDatePicker
    IF ! CheckFocus( Self, .f. )
       RETURN .t.
    ENDIF
-   IF ::bGetFocus != Nil
+   IF hb_IsBlock(::bGetFocus)
       nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .and. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
       ::oParent:lSuspendMsgsHandling := .T.
       ::lnoValid := .T.
@@ -259,10 +259,10 @@ METHOD Valid( ) CLASS HDatePicker
       RETURN .T.
    ENDIF
    ::dValue := GetDatePicker( ::handle )
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, IIF( ::lShowTime, ::tValue,::dValue ), Self )
    ENDIF
-   IF ::bLostFocus != Nil
+   IF hb_IsBlock(::bLostFocus)
       ::oparent:lSuspendMsgsHandling := .T.
       res := Eval( ::bLostFocus, IIF( ::lShowTime, ::tValue, ::dValue ), Self )
       res := IIF( ValType( res ) == "L", res, .T. )

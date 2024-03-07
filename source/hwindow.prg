@@ -299,7 +299,7 @@ METHOD New( lType, oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, nPos,
    ENDIF
    ::rect := GetWindowRect( ::handle )
    /*
-   IF ::bInit != Nil
+   IF hb_IsBlock(::bInit)
       Eval( ::bInit, Self )
    ENDIF
     */
@@ -344,7 +344,7 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate ) CLASS HMa
       SENDMESSAGE( ::Handle, WM_SIZE, 0, MAKELPARAM( ::nWidth, ::nHeight ) )
       
       InitControls( Self )
-      IF ::bInit != Nil
+      IF hb_IsBlock(::bInit)
          lres := Eval( ::bInit, Self )
          IF ValType( lres ) = "L" .AND. ! lres
             SENDMESSAGE( ::handle, WM_DESTROY, 0, 0 )
@@ -374,7 +374,7 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate ) CLASS HMa
 
    ELSEIF ::Type == WND_MAIN
    
-      IF ::bInit != Nil
+      IF hb_IsBlock(::bInit)
          lres := Eval( ::bInit, Self )
          IF ValType( lres ) = "L" .AND. ! lres
             SENDMESSAGE( ::handle, WM_DESTROY, 0, 0 )
@@ -546,7 +546,7 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate, lModal ) C
    /*  in ONMDICREATE
    /*
    InitObjects( Self,.T. )
-   IF ::bInit != Nil
+   IF hb_IsBlock(::bInit)
       Eval( ::bInit,Self )
    ENDIF
    */
@@ -684,7 +684,7 @@ METHOD New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
       RETURN Nil
    ENDIF
    /*
-   IF ::bInit != Nil
+   IF hb_IsBlock(::bInit)
       Eval( ::bInit, Self )
    ENDIF
     */
@@ -705,7 +705,7 @@ METHOD Activate( lShow, lMaximized, lMinimized,lCentered, bActivate, lModal ) CL
    InitControls( SELF )
    InitObjects( Self, .T. )
    SENDMESSAGE( ::handle, WM_UPDATEUISTATE, makelong(UIS_CLEAR,UISF_HIDEFOCUS), 0)
-   IF ::bInit != Nil
+   IF hb_IsBlock(::bInit)
       //::hide()
       IF Valtype( nReturn := Eval( ::bInit, Self ) ) != "N"
          IF VALTYPE( nReturn ) == "L" .AND. ! nReturn

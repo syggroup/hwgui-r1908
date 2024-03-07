@@ -215,7 +215,7 @@ METHOD SetValue( nValue )  CLASS HUpDown
    ::nValue := nValue
    ::title := Str( ::nValue )
    SetUpDown( ::hwndUpDown, ::nValue )
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, ::nValue, Self )
    ENDIF
 
@@ -223,7 +223,7 @@ METHOD SetValue( nValue )  CLASS HUpDown
 
 METHOD Refresh()  CLASS HUpDown
 
-   IF ::bSetGet != Nil //.AND. ::nValue != Nil
+   IF hb_IsBlock(::bSetGet) //.AND. ::nValue != Nil
       ::nValue := Eval( ::bSetGet, , Self )
       IF Str(::nValue) != ::title
          //::title := Str( ::nValue )
@@ -247,7 +247,7 @@ METHOD Valid() CLASS HUpDown
    /*
    ::title := GetEditText( ::oParent:handle, ::oEditUpDown:id )
    ::nValue := Val( Ltrim( ::title ) )
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, ::nValue )
    ENDIF
    */
@@ -430,7 +430,7 @@ METHOD Init()  CLASS HUpDown
 
 METHOD OnEvent( msg, wParam, lParam ) CLASS HUpDown
 
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       IF Eval( ::bOther,Self,msg,wParam,lParam ) != -1
          RETURN 0
       ENDIF
@@ -455,7 +455,7 @@ RETURN -1
 
 METHOD Refresh()  CLASS HUpDown
 
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       ::value := Eval( ::bSetGet )
       IF Str( ::value ) != ::title
          ::title := Str( ::value )

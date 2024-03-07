@@ -67,7 +67,7 @@ METHOD Activate() CLASS HSayImage
    RETURN Nil
 
 METHOD onClick()  CLASS HSayImage
-   IF ::bClick != NIL
+   IF hb_IsBlock(::bClick)
       ::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bClick, Self, ::id )
       ::oParent:lSuspendMsgsHandling := .F.
@@ -75,7 +75,7 @@ METHOD onClick()  CLASS HSayImage
    RETURN Nil
 
 METHOD onDblClick()  CLASS HSayImage
-   IF ::bDblClick != NIL
+   IF hb_IsBlock(::bDblClick)
       ::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bDblClick, Self, ::id )
       ::oParent:lSuspendMsgsHandling := .F.

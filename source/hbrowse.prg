@@ -531,7 +531,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
          //RETURN 0 because bother is not run
       ENDIF
       //
-      IF ::bOther != Nil
+      IF hb_IsBlock(::bOther)
          IF Valtype( nRet := Eval( ::bOther,Self,msg,wParam,lParam ) ) != "N"
             nRet := IIF( VALTYPE( nRet ) = "L" .AND. ! nRet, 0, -1 )
          ENDIF
@@ -578,14 +578,14 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
       ELSEIF msg == WM_SETFOCUS .AND. ! ::lSuspendMsgsHandling
          ::When()
          /*
-         IF ::bGetFocus != Nil
+         IF hb_IsBlock(::bGetFocus)
             Eval( ::bGetFocus, Self )
          ENDIF
          */
       ELSEIF msg == WM_KILLFOCUS .AND. ! ::lSuspendMsgsHandling
          ::Valid()
          /*
-         IF ::bLostFocus != Nil
+         IF hb_IsBlock(::bLostFocus)
             Eval( ::bLostFocus, Self )
          ENDIF
 
@@ -606,7 +606,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
              nShiftAltCtrl := IIF( IsCtrlShift( .F., .T. ), 1 , 0 )
              nShiftAltCtrl += IIF( IsCtrlShift( .T., .F. ), 2 , nShiftAltCtrl )
              //nShiftAltCtrl += IIF( wParam > 111, 4, nShiftAltCtrl )
-             IF ::bKeyDown != Nil .and. ValType( ::bKeyDown ) == 'B' .AND. wParam != VK_TAB .AND. wParam != VK_RETURN
+             IF hb_IsBlock(::bKeyDown) .AND. wParam != VK_TAB .AND. wParam != VK_RETURN
                 IF EMPTY( nRet := Eval( ::bKeyDown, Self, wParam, nShiftAltCtrl, msg ) ) .and. nRet != Nil
                    RETURN 0
                 ENDIF
@@ -677,7 +677,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
          //::isMouseOver := .F.
          IF ( ( CheckBit( lParam, 25 ) .AND. wParam != 111 ) .OR.  ( wParam > 111 .AND. wParam < 124 ) .OR.;
                wParam = VK_TAB .OR. wParam = VK_RETURN )   .AND.;
-               ::bKeyDown != Nil .and. ValType( ::bKeyDown ) == 'B'
+               hb_IsBlock(::bKeyDown)
              nShiftAltCtrl := IIF( IsCtrlShift( .F., .T. ), 1 , 0 )
              nShiftAltCtrl += IIF( IsCtrlShift( .T., .F. ), 2 , nShiftAltCtrl )
              nShiftAltCtrl += IIF( wParam > 111, 4, nShiftAltCtrl )
@@ -1663,7 +1663,7 @@ METHOD Paint( lLostFocus )  CLASS HBrowse
    IF GetFocus() != ::handle .OR. nRecFilter = - 1
        Eval( ::bSkip, Self, 1 )
        Eval( ::bSkip, Self, - 1 )
-       IF ::bScrollPos != Nil // array
+       IF hb_IsBlock(::bScrollPos) // array
          Eval( ::bScrollPos, Self, 1, .F. )
       ELSE
          VScrollPos( Self, 0, .f. )
@@ -2150,7 +2150,7 @@ METHOD LineOut( nRow, nCol, hDC, lSelected, lClear ) CLASS HBrowse
    x := ::x1
    IF lClear == Nil ; lClear := .F. ; ENDIF
 
-   IF ::bLineOut != Nil
+   IF hb_IsBlock(::bLineOut)
       Eval( ::bLineOut, Self, lSelected )
    ENDIF
    IF ::nRecords > 0 .OR. lClear
@@ -2474,7 +2474,7 @@ METHOD DoVScroll( wParam ) CLASS HBrowse
 
    ELSEIF nScrollCode == SB_THUMBPOSITION .OR. nScrollCode == SB_THUMBTRACK
       ::SetFocus()
-      IF ::bScrollPos != Nil
+      IF hb_IsBlock(::bScrollPos)
          Eval( ::bScrollPos, Self, nScrollCode, .F., HIWORD( wParam ) )
       ELSE
          IF ( ::Alias ) -> ( IndexOrd() ) == 0              // sk
@@ -2614,7 +2614,7 @@ METHOD LINEDOWN( lMouse ) CLASS HBrowse
       ::internal[ 1 ] := SetBit( ::internal[ 1 ], 1, 0 )
    ENDIF
 
-   IF ::bScrollPos != Nil
+   IF hb_IsBlock(::bScrollPos)
       Eval( ::bScrollPos, Self, 1, .F. )
    ELSEIF ::nRecords > 1
       VScrollPos( Self, 0, .f. )
@@ -2644,7 +2644,7 @@ METHOD LINEUP() CLASS HBrowse
       InvalidateRect( ::handle, 0, ::x1 - ::nShowMark - ::nDeleteMark, ::y1 + ( ::height + 1 ) * ::internal[ 2 ] - ::height, ::xAdjRight, ::y1 + ( ::height + 1 ) * ::internal[ 2 ] )
       InvalidateRect( ::handle, 0, ::x1 - ::nShowMark - ::nDeleteMark, ::y1 + ( ::height + 1 ) * ::rowPos - ::height, ::xAdjRight , ::y1 + ( ::height + 1 ) * ::rowPos )
       //ENDIF
-      IF ::bScrollPos != Nil
+      IF hb_IsBlock(::bScrollPos)
          Eval( ::bScrollPos, Self, - 1, .F. )
       ELSEIF ::nRecords > 1
          VScrollPos( Self, 0, .f. )
@@ -2671,7 +2671,7 @@ METHOD PAGEUP() CLASS HBrowse
       ENDIF
    ENDIF
 
-   IF ::bScrollPos != Nil
+   IF hb_IsBlock(::bScrollPos)
       Eval( ::bScrollPos, Self, - STEP, lBof )
    ELSEIF ::nRecords > 1
       VScrollPos( Self, 0, .f. )
@@ -2699,7 +2699,7 @@ METHOD PAGEDOWN() CLASS HBrowse
    ENDIF
    ::rowPos := Min( ::nRecords, nRows )
 
-   IF ::bScrollPos != Nil
+   IF hb_IsBlock(::bScrollPos)
       Eval( ::bScrollPos, Self, STEP, .f. )
    ELSE
       VScrollPos( Self, 0, .f. )
@@ -2814,7 +2814,7 @@ IF nLine > 0 .AND. nLine <= ::rowCurrCount
    IF STEP != 0
       Eval( ::bSkip, Self, STEP )
       ::rowPos := nLine
-      IF ::bScrollPos != Nil
+      IF hb_IsBlock(::bScrollPos)
          Eval( ::bScrollPos, Self, STEP, .F. )
       ELSEIF ::nRecords > 1
          VScrollPos( Self, 0, .f. )
@@ -2824,7 +2824,7 @@ IF nLine > 0 .AND. nLine <= ::rowCurrCount
       /*
       IF ! Eval( ::bEof, Self )
          ::rowPos := nLine
-         IF ::bScrollPos != Nil
+         IF hb_IsBlock(::bScrollPos)
             Eval( ::bScrollPos, Self, STEP, .F. )
          ELSEIF ::nRecords > 1
             VScrollPos( Self, 0, .f. )
@@ -2999,7 +2999,7 @@ METHOD ButtonRDown( lParam ) CLASS HBrowse
    fif := aColumns[ fif, 2 ]
    IF nLine > 0 .AND. nLine <= ::rowCurrCount
       //::fipos := Min( ::colpos + ::nLeftCol - 1 - ::freeze, Len( ::aColumns ) )
-      IF ::bRClick != nil
+      IF hb_IsBlock(::bRClick)
          Eval( ::bRClick, Self, nLine, fif )
       ENDIF
    ELSEIF nLine == 0
@@ -3114,9 +3114,9 @@ METHOD MouseWheel( nKeys, nDelta, nXPos, nYPos ) CLASS HBrowse
 METHOD onClick( ) CLASS HBrowse
     LOCAL  lRes := .F.
     
-    IF ::bEnter != Nil
+    IF hb_IsBlock(::bEnter)
        ::oParent:lSuspendMsgsHandling := .T.
-       lRes := Eval( ::bEnter, Self, ::fipos )  
+       lRes := Eval( ::bEnter, Self, ::fipos )
        ::oParent:lSuspendMsgsHandling := .F.
        IF  ValType( lRes ) != "L"
            RETURN .T.
@@ -3136,7 +3136,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
 
    //IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ;
    //   ( ::bEnter == Nil .OR. ( ValType( lRes := Eval( ::bEnter, Self, fipos ) ) == 'L' .AND. ! lRes ) )
-   IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ( ! ::onClick( )  )      
+   IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ( ! ::onClick( )  )
       oColumn := ::aColumns[ fipos ]
       IF ::Type == BRW_DATABASE
          ::varbuf := ( ::Alias ) ->( Eval( oColumn:block,, Self, fipos ) )
@@ -3360,7 +3360,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
             ENDIF
 
             /* Execute block after changes are made */
-            IF ::bUpdate != nil
+            IF hb_IsBlock(::bUpdate)
                Eval( ::bUpdate,  Self, fipos )
             END
 
@@ -3512,7 +3512,7 @@ METHOD ChangeRowCol( nRowColChange ) CLASS HBrowse
 // 3 Row and column change
    LOCAL res := .T.
    LOCAL lSuspendMsgsHandling := ::oParent:lSuspendMsgsHandling
-   IF ::bChangeRowCol != Nil .AND.  !::oParent:lSuspendMsgsHandling
+   IF hb_IsBlock(::bChangeRowCol) .AND.  !::oParent:lSuspendMsgsHandling
       ::oParent:lSuspendMsgsHandling := .T.
       res :=  Eval( ::bChangeRowCol, nRowColChange, Self, ::SetColumn() )
       ::oParent:lSuspendMsgsHandling := lSuspendMsgsHandling
@@ -3532,7 +3532,7 @@ METHOD When() CLASS HBrowse
       ::RefreshLine()
 	  ENDIF
 
-   IF ::bGetFocus != Nil
+   IF hb_IsBlock(::bGetFocus)
       nSkip := iif( GetKeyState( VK_UP ) < 0 .OR. (GetKeyState( VK_TAB ) < 0 .AND. GetKeyState(VK_SHIFT) < 0 ), -1, 1 )
       ::oParent:lSuspendMsgsHandling := .T.
       ::lnoValid := .T.
@@ -3557,7 +3557,7 @@ METHOD Valid() CLASS HBrowse
  	 IF ::HighlightStyle = 0 .OR. ::HighlightStyle = 3
       ::RefreshLine()
 	  ENDIF
-   IF ::bLostFocus != Nil
+   IF hb_IsBlock(::bLostFocus)
       ::oParent:lSuspendMsgsHandling := .T.
       res := Eval( ::bLostFocus, ::ColPos, Self )
       res := IIF( VALTYPE(res) = "L", res, .T. )

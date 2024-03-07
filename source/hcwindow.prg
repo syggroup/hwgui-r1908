@@ -263,7 +263,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HCustomWindow
    IF ( i := AScan( aCustomEvents[ EVENTS_MESSAGES ], msg ) ) != 0
       RETURN Eval( aCustomEvents[ EVENTS_ACTIONS, i ], Self, wParam, lParam )
 
-   ELSEIF ::bOther != NIL
+   ELSEIF hb_IsBlock(::bOther)
 
       RETURN Eval( ::bOther, Self, msg, wParam, lParam )
 

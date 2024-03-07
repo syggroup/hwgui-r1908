@@ -149,7 +149,7 @@ METHOD Init() CLASS HListBox
 METHOD onEvent( msg, wParam, lParam ) CLASS HListBox
  Local nEval
 
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       IF (nEval := Eval( ::bOther,Self,msg,wParam,lParam )) != -1 .AND. nEval != Nil
          RETURN 0
       ENDIF
@@ -162,7 +162,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HListBox
          GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
         //RETURN 0
       ENDIF
-         IF ::bKeyDown != Nil .and. ValType( ::bKeyDown ) == 'B'
+         IF hb_IsBlock(::bKeyDown)
          ::oparent:lSuspendMsgsHandling := .T.
          nEval := Eval( ::bKeyDown, Self, wParam )
          IF (VALTYPE( nEval ) == "L" .AND. ! nEval ) .OR. ( nEval != -1 .AND. nEval != Nil )
@@ -190,7 +190,7 @@ METHOD Requery() CLASS HListBox
 
 METHOD Refresh() CLASS HListBox
    LOCAL vari
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       vari := Eval( ::bSetGet )
    ENDIF
 
@@ -202,17 +202,17 @@ METHOD SetItem( nPos ) CLASS HListBox
    ::value := nPos
    SendMessage( ::handle, LB_SETCURSEL, nPos - 1, 0 )
 
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, ::value )
    ENDIF
 
-   IF ::bChangeSel != Nil
+   IF hb_IsBlock(::bChangeSel)
       Eval( ::bChangeSel, ::value, Self )
    ENDIF
    RETURN Nil
 
 METHOD onDblClick()  CLASS HListBox
-  IF ::bDblClick != Nil
+  IF hb_IsBlock(::bDblClick)
        ::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bDblClick, self, ::value )
        ::oParent:lSuspendMsgsHandling := .F.
@@ -236,7 +236,7 @@ METHOD DeleteItem( nPos ) CLASS HListBox
       ADel( ::Aitems, nPos )
       ASize( ::Aitems, Len( ::aitems ) - 1 )
       ::value := Min( Len( ::aitems ) , ::value )
-      IF ::bSetGet != Nil
+      IF hb_IsBlock(::bSetGet)
          Eval( ::bSetGet, ::value, Self )
       ENDIF
       RETURN .T.
@@ -271,10 +271,10 @@ METHOD When( oCtrl ) CLASS HListBox
       RETURN .t.
    ENDIF
     nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .AND. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, ::value, Self )
    ENDIF
-   IF ::bGetFocus != Nil
+   IF hb_IsBlock(::bGetFocus)
       ::lnoValid := .T.
       ::oparent:lSuspendMsgsHandling := .t.
       res := Eval( ::bGetFocus, ::Value, Self )
@@ -301,13 +301,13 @@ METHOD Valid( oCtrl ) CLASS HListBox
    //nSkip := IIf( GetKeyState( VK_SHIFT ) < 0 , - 1, 1 )
    IF ( oDlg := ParentGetDialog( Self ) ) == Nil .OR. oDlg:nLastKey != 27
       ::value := SendMessage( ::handle, LB_GETCURSEL, 0, 0 ) + 1
-      IF ::bSetGet != Nil
+      IF hb_IsBlock(::bSetGet)
          Eval( ::bSetGet, ::value, Self )
       ENDIF
       IF oDlg != Nil
          oDlg:nLastKey := 27
       ENDIF
-      IF ::bLostFocus != Nil
+      IF hb_IsBlock(::bLostFocus)
          ::oparent:lSuspendMsgsHandling := .t.
          res := Eval( ::bLostFocus, ::value, Self )
          ::oparent:lSuspendMsgsHandling := .f.

@@ -115,7 +115,7 @@ METHOD Init() CLASS HCheckButton
 METHOD onEvent( msg, wParam, lParam ) CLASS HCheckButton
    LOCAL oCtrl
    
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       IF Eval( ::bOther,Self,msg,wParam,lParam ) != -1
          RETURN 0
       ENDIF
@@ -163,7 +163,7 @@ METHOD SetValue( lValue ) CLASS HCheckButton
 
    SendMessage( ::handle, BM_SETCHECK, IIF( EMPTY( lValue) , 0, 1 ), 0 )
    ::lValue := IIF( lValue = Nil .OR. Valtype( lValue ) != "L", .F., lValue )
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
        Eval( ::bSetGet, lValue, Self )
    ENDIF
    ::Refresh()
@@ -180,7 +180,7 @@ METHOD Value( lValue ) CLASS HCheckButton
 METHOD Refresh() CLASS HCheckButton
    LOCAL var
 
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       var :=  Eval( ::bSetGet,, Self )
       IF var = Nil .OR. Valtype( var ) != "L"
         var := SendMessage( ::handle, BM_GETCHECK, 0, 0 ) == 1
@@ -235,7 +235,7 @@ METHOD killFocus() CLASS HCheckButton
       ::SetValue( ! ::GetValue() )
       ::VALID( )
    ENDIF
-   IF ::bLostFocus != Nil
+   IF hb_IsBlock(::bLostFocus)
       ::oparent:lSuspendMsgsHandling := .t.
       Eval( ::bLostFocus, Self, ::lValue )
       ::oparent:lSuspendMsgsHandling := .f.
@@ -249,10 +249,10 @@ METHOD When( ) CLASS HCheckButton
       RETURN .t.
    ENDIF
    nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .and. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
-   IF ::bGetFocus != Nil
+   IF hb_IsBlock(::bGetFocus)
       ::lnoValid := .T.
       ::oParent:lSuspendMsgsHandling := .t.
- 		  IF ::bSetGet != Nil
+ 		  IF hb_IsBlock(::bSetGet)
           res := Eval( ::bGetFocus, Eval( ::bSetGet, , Self ), Self )
       ELSE
           res := Eval( ::bGetFocus,::lValue, Self )
@@ -278,10 +278,10 @@ METHOD Valid() CLASS HCheckButton
    ELSE
       ::lValue := ( l == 1 )
    ENDIF
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, ::lValue, Self )
    ENDIF
-   IF ::bClick != Nil
+   IF hb_IsBlock(::bClick)
       ::oparent:lSuspendMsgsHandling := .t.
        Eval( ::bClick, Self, ::lValue )
        ::oparent:lSuspendMsgsHandling := .f.

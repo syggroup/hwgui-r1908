@@ -352,7 +352,7 @@ RETURN Nil
 METHOD onEvent( msg, wParam, lParam ) CLASS HComboBox
    LOCAL oCtrl
 
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       IF Eval( ::bOther, Self, msg, wParam, lParam ) != - 1
          RETURN 0
       ENDIF
@@ -461,7 +461,7 @@ RETURN Nil
 METHOD Refresh() CLASS HComboBox
    LOCAL vari
 
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       vari := Eval( ::bSetGet,, Self )
       IF ::columnBound = 2
           vari := ::GetValueBound( vari )
@@ -528,7 +528,7 @@ METHOD SetItem( nPos ) CLASS HComboBox
 
    ComboSetString( ::handle, nPos ) 
 
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       IF ::columnBound = 1
          Eval( ::bSetGet, ::value, Self )
       ELSE
@@ -537,7 +537,7 @@ METHOD SetItem( nPos ) CLASS HComboBox
    ENDIF
 
    /*
-   IF ::bChangeSel != Nil
+   IF hb_IsBlock(::bChangeSel)
       ::oparent:lSuspendMsgsHandling := .t.
       Eval( ::bChangeSel, nPos, Self )
       ::oparent:lSuspendMsgsHandling := .f.
@@ -579,7 +579,7 @@ METHOD GetValue() CLASS HComboBox
       ::value := nPos
    ENDIF
    ::ValueBound := IIF( nPos > 0, ::GetValueBound(), ::ValueBound ) // IIF( ::lText, "", 0 ) )
-   IF ::bSetGet != Nil
+   IF hb_IsBlock(::bSetGet)
       IF ::columnBound = 1
          Eval( ::bSetGet, ::value, Self )
       ELSE
@@ -697,7 +697,7 @@ RETURN Nil
 
 METHOD onSelect() CLASS HComboBox
 
-   IF ::bSelect != Nil
+   IF hb_IsBlock(::bSelect)
       ::oparent:lSuspendMsgsHandling := .T.
       Eval( ::bSelect, ::value, Self )
       ::oparent:lSuspendMsgsHandling := .F.
@@ -715,7 +715,7 @@ METHOD onChange( lForce ) CLASS HComboBox
    ENDIF
    
    ::SetItem( SendMessage( ::handle, CB_GETCURSEL, 0, 0 ) + 1 )
-   IF ::bChangeSel != Nil
+   IF hb_IsBlock(::bChangeSel)
       //::SetItem( SendMessage( ::handle, CB_GETCURSEL, 0, 0 ) + 1 )
       ::oparent:lSuspendMsgsHandling := .T.
       Eval( ::bChangeSel, ::Value, Self )
@@ -738,10 +738,10 @@ LOCAL res := .t., oParent, nSkip
       //  SendMessage( ::handle, CB_SELECTSTRING, 0, ::value)
    ENDIF
    nSkip := Iif( GetKeyState( VK_UP ) < 0 .OR. ( GetKeyState( VK_TAB ) < 0 .AND. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
-   IF ::bGetFocus != Nil
+   IF hb_IsBlock(::bGetFocus)
       ::oParent:lSuspendMsgsHandling := .T.
       ::lnoValid                     := .T.
-      IF ::bSetGet != Nil
+      IF hb_IsBlock(::bSetGet)
          res := Eval( ::bGetFocus, Eval( ::bSetGet,, Self ), Self )
       ELSE
          res := Eval( ::bGetFocus, ::value, Self )
@@ -775,7 +775,7 @@ METHOD Valid( ) CLASS HComboBox
       // IF lESC // "if" by Luiz Henrique dos Santos (luizhsantos@gmail.com) 04/06/2006
       // By Luiz Henrique dos Santos (luizhsantos@gmail.com.br) 03/06/2006
       ::GetValue()
-      IF ::bLostFocus != Nil
+      IF hb_IsBlock(::bLostFocus)
          ::oparent:lSuspendMsgsHandling := .T.
          res := Eval( ::bLostFocus, ::value, Self )
          IF VALTYPE(res) = "L" .AND. ! res

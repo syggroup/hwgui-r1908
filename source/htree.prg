@@ -376,7 +376,7 @@ METHOD Activate() CLASS HTree
 METHOD onEvent( msg, wParam, lParam ) CLASS HTree
    Local nEval, hitemNew, htiParent, htiPrev, htiNext
 
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       IF ( nEval := Eval( ::bOther,Self,msg,wParam,lParam )) != Nil .AND. nEval != - 1
          RETURN 0
       ENDIF
@@ -400,7 +400,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
       ::lDragging := .F.
       SendMessage( ::handle, TVM_SELECTITEM, TVGN_DROPHILITE, Nil )
 
-      IF ::bDrag != Nil
+      IF hb_IsBlock(::bDrag)
          nEval :=  Eval( ::bDrag, Self, ::hitemDrag, ::hitemDrop )
          nEval := IIF( VALTYPE( nEval ) = "L", nEval, .T. )
          IF ! nEval
@@ -448,7 +448,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
       ::hitemDrag:delete()
       ::Select( hitemNew )
 
-      IF ::bDrop != Nil
+      IF hb_IsBlock(::bDrop)
          Eval( ::bDrop, Self, hitemNew, ::hitemDrop )
       ENDIF
 
@@ -603,7 +603,7 @@ METHOD Notify( lParam )  CLASS HTree
             ::Select( oItem )
             ::oItem := oItem
          ENDIF
-         IF ::bCheck != Nil
+         IF hb_IsBlock(::bCheck)
             lEval := Eval( ::bCheck, ! ::oItem:checked, ::oItem, Self )
          ENDIF
          IF lEval == Nil .OR. ! EMPTY( lEval )
@@ -620,12 +620,12 @@ METHOD Notify( lParam )  CLASS HTree
       ENDIF
 	
    ELSEIF nCode == NM_DBLCLK
-      IF ::bDblClick != Nil
+      IF hb_IsBlock(::bDblClick)
          oItem  := tree_Hittest( ::handle,,, @nAct )
          Eval( ::bDblClick, oItem, Self, nAct )
       ENDIF
    ELSEIF nCode == NM_RCLICK
-      IF ::bRClick != Nil
+      IF hb_IsBlock(::bRClick)
          oItem  := tree_Hittest( ::handle,,, @nAct )
          Eval( ::bRClick, oItem, Self, nAct )
       ENDIF
@@ -633,7 +633,7 @@ METHOD Notify( lParam )  CLASS HTree
       /* working only windows 7
    ELSEIF nCode == - 24 .and. ::oitem != Nil
       //nhitem := tree_Hittest( ::handle,,, @nAct )
-      IF ::bCheck != Nil
+      IF hb_IsBlock(::bCheck)
          lEval := Eval( ::bCheck, ! ::oItem:checked, ::oItem, Self )
       ENDIF
       IF lEval == Nil .OR. ! EMPTY( lEval )

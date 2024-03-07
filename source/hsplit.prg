@@ -107,7 +107,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HSplitter
       ::lCaptured := .F.
       ::lMoved := .F.
       ::DragAll( .F. )
-      IF ::bEndDrag != Nil
+      IF hb_IsBlock(::bEndDrag)
        //  Eval( ::bEndDrag, Self )
       ENDIF
    ELSEIF msg == WM_DESTROY
@@ -131,7 +131,7 @@ METHOD Paint() CLASS HSplitter
    y2 := aCoors[ 4 ] //- IIf( ::lVertical, 3, 0 )
 
    SetBkMode( hDC, ::backStyle )
-   IF ::bPaint != Nil
+   IF hb_IsBlock(::bPaint)
       Eval( ::bPaint, Self )
    ELSEIF ! ::lScrolling
       IF ::lCaptured
@@ -214,7 +214,7 @@ METHOD DragAll( lScroll ) CLASS HSplitter
    ELSE
       InvalidateRect( ::oParent:Handle, 0, ::nLeft , ::nTop - ::nHeight - yDiff - 1 , ::nLeft + ::nWidth, ::nTop + ::nHeight + yDiff + 1 )
    ENDIF
-   IF ::bEndDrag != Nil
+   IF hb_IsBlock(::bEndDrag)
       Eval( ::bEndDrag,Self )
    ENDIF
 

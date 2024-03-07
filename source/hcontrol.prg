@@ -168,7 +168,7 @@ METHOD INIT() CLASS HControl
          SetWindowPos( ::Handle, Nil, ::nLeft, ::nTop, ::nWidth, ::nHeight, SWP_NOACTIVATE + SWP_NOSIZE + SWP_NOZORDER + SWP_NOOWNERZORDER + SWP_NOSENDCHANGING ) //+ SWP_DRAWFRAME )
       ENDIF   
 
-      IF ISBLOCK( ::bInit )
+      IF hb_IsBlock(::bInit)
         ::oparent:lSuspendMsgsHandling := .T.
         Eval( ::bInit, Self )
         ::oparent:lSuspendMsgsHandling := .F.
@@ -626,11 +626,11 @@ LOCAL nParts := GetNotifySBParts( lParam ) - 1
       CASE nCode == NM_CLICK
 
       CASE nCode == NM_DBLCLK
-          IF ::bdblClick != Nil
+          IF hb_IsBlock(::bdblClick)
               Eval( ::bdblClick, Self, nParts )
           ENDIF
       CASE nCode == NM_RCLICK
-         IF ::bRClick != Nil
+         IF hb_IsBlock(::bRClick)
              Eval( ::bRClick, Self, nParts )
          ENDIF
    ENDCASE
@@ -843,7 +843,7 @@ METHOD Init() CLASS HStatic
 METHOD OnEvent( msg, wParam, lParam ) CLASS  HStatic
    LOCAL nEval, pos
 
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       IF ( nEval := Eval( ::bOther, Self, msg, wParam, lParam ) ) != - 1 .AND. nEval != Nil
          RETURN 0
       ENDIF
@@ -926,7 +926,7 @@ METHOD Paint( lpDis ) CLASS HStatic
    RETURN nil
 
 METHOD onClick()  CLASS HStatic
-   IF ::bClick != Nil
+   IF hb_IsBlock(::bClick)
       //::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bClick, Self, ::id )
       ::oParent:lSuspendMsgsHandling := .F.
@@ -934,7 +934,7 @@ METHOD onClick()  CLASS HStatic
    RETURN Nil
 
 METHOD onDblClick()  CLASS HStatic
-   IF ::bDblClick != Nil
+   IF hb_IsBlock(::bDblClick)
       //::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bDblClick, Self, ::id )
       ::oParent:lSuspendMsgsHandling := .F.
@@ -1121,7 +1121,7 @@ METHOD onevent( msg, wParam, lParam ) CLASS HButton
 
 METHOD onClick()  CLASS HButton
 
-   IF ::bClick != Nil
+   IF hb_IsBlock(::bClick)
       //::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bClick, Self, ::id )
       ::oParent:lSuspendMsgsHandling := .F.
@@ -1171,7 +1171,7 @@ METHOD onGetFocus()  CLASS HButton
    IF  ! CheckFocus( Self, .f. ) .OR. ::bGetFocus = Nil
       RETURN .t.
    ENDIF
-   IF ::bGetFocus != Nil
+   IF hb_IsBlock(::bGetFocus)
       nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .and. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
       ::oParent:lSuspendMsgsHandling := .t.
       res := Eval( ::bGetFocus, ::title, Self )
@@ -1192,7 +1192,7 @@ METHOD onLostFocus()  CLASS HButton
      InvalidateRect( ::oParent:Handle, 1 , ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight  )   
   ENDIF
   ::lnoWhen := .F.
-  IF ::bLostFocus != Nil .AND. SelfFocus( GetParent( GetFocus() ), ::getparentform():Handle )
+  IF hb_IsBlock(::bLostFocus).AND. SelfFocus( GetParent( GetFocus() ), ::getparentform():Handle )
  		  ::oparent:lSuspendMsgsHandling := .t.
       Eval( ::bLostFocus, ::title, Self)
       ::oparent:lSuspendMsgsHandling := .f.
@@ -1436,7 +1436,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
       RETURN 0
    ENDIF
    
-   IF ::bOther != Nil
+   IF hb_IsBlock(::bOther)
       IF ( nEval := Eval( ::bOther, Self, msg, wParam, lParam )) != -1 .AND. nEval != Nil
          RETURN 0
       ENDIF
