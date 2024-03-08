@@ -105,8 +105,10 @@ HB_FUNC(LISTVIEW_ADDCOLUMN)
     COL.iImage = hb_parni(2) - 1;
   }
   else
+  {
     COL.iImage = -1;
-
+  }
+  
   ListView_InsertColumn((HWND)HB_PARHANDLE(1), hb_parni(2) - 1, &COL);
 
   RedrawWindow((HWND)HB_PARHANDLE(1), NULL, NULL,
@@ -165,7 +167,9 @@ HB_FUNC(LISTVIEW_SETDISPINFO)
   // it seems these lines below are not strictly necessary for text cells
   // since we don't get a LVIF_STATE message !
   if (pDispInfo->item.iSubItem == 0)
+  {
     pDispInfo->item.state = 2;
+  }  
 }
 
 HB_FUNC(LISTVIEW_GETGRIDKEY)
@@ -311,10 +315,14 @@ HB_FUNC(LISTVIEW_ADDCOLUMNEX)
   memset(&lvcolumn, 0, sizeof(lvcolumn));
 
   if (iImage > 0)
+  {
     lvcolumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM | LVCF_IMAGE | LVCF_WIDTH;
+  }
   else
+  {
     lvcolumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM | LVCF_WIDTH;
-
+  }
+  
   lvcolumn.pszText = (LPTSTR)HB_PARSTR(3, &hText, NULL);
   lvcolumn.iSubItem = lCol;
   lvcolumn.cx = hb_parni(4);
@@ -322,10 +330,14 @@ HB_FUNC(LISTVIEW_ADDCOLUMNEX)
   lvcolumn.iImage = iImage > 0 ? lCol : -1;
 
   if (SendMessage((HWND)hwndListView, (UINT)LVM_INSERTCOLUMN, (WPARAM)(int)lCol, (LPARAM)&lvcolumn) == -1)
+  {
     iResult = 0;
+  }
   else
+  {
     iResult = 1;
-
+  }
+  
   RedrawWindow(hwndListView, NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_ERASENOW | RDW_UPDATENOW);
 
   hb_retnl(iResult);
@@ -349,10 +361,14 @@ HB_FUNC(LISTVIEW_INSERTITEMEX)
   memset(&lvi, 0, sizeof(lvi));
 
   if (iBitMap >= 0)
+  {
     lvi.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_STATE;
+  }
   else
+  {
     lvi.mask = LVIF_TEXT | LVIF_STATE;
-
+  }
+  
   lvi.iImage = iBitMap >= 0 ? lCol : -1;
   lvi.state = 0;
   lvi.stateMask = 0;
@@ -364,16 +380,24 @@ HB_FUNC(LISTVIEW_INSERTITEMEX)
   {
   case 0:
     if (SendMessage((HWND)hwndListView, (UINT)LVM_INSERTITEM, (WPARAM)0, (LPARAM)&lvi) == -1)
+    {
       iResult = 0;
+    }
     else
+    {
       iResult = 1;
+    }
     break;
 
   case 1:
     if (SendMessage((HWND)hwndListView, (UINT)LVM_SETITEM, (WPARAM)0, (LPARAM)&lvi) == FALSE)
+    {
       iResult = 0;
+    }
     else
+    {
       iResult = 1;
+    }
     break;
   }
 
@@ -466,9 +490,13 @@ HB_FUNC(LISTVIEWGETITEM)
   Item.cchTextMax = HB_SIZEOFARRAY(Buffer);
 
   if (ListView_GetItem(hList, &Item))
+  {
     HB_RETSTR(Buffer);
+  }
   else
+  {
     hb_retc(NULL);
+  }
 }
 
 int CALLBACK CompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
@@ -487,8 +515,10 @@ int CALLBACK CompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 
   rc = lstrcmp(szA, szB);
   if (!nAscendingSortOrder)
+  {
     rc = -rc;
-
+  }
+  
   return rc;
 }
 
@@ -519,7 +549,9 @@ HB_FUNC(LISTVIEWSORTINFOFREE)
   PSORTINFO p = (PSORTINFO)hb_parptr(3);
 
   if (p)
+  {
     hb_xfree(p);
+  }  
 }
 
 HB_FUNC(LISTVIEWSORT)
@@ -528,9 +560,13 @@ HB_FUNC(LISTVIEWSORT)
   LPNMLISTVIEW phdNotify = (LPNMLISTVIEW)HB_PARHANDLE(2);
 
   if (phdNotify->iSubItem == p->nColumnNo)
+  {
     p->nAscendingSortOrder = !p->nAscendingSortOrder;
+  }
   else
+  {
     p->nAscendingSortOrder = TRUE;
+  }
 
   // p->nColumnNo = phdNotify->iItem;
   p->nColumnNo = phdNotify->iSubItem;

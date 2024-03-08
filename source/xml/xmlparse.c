@@ -105,7 +105,9 @@ HB_FUNC(HBXML_TRANSFORM)
     pItem = hb_itemPutCLPtr(NULL, (char *)pNew, ulLen + iLenAdd);
   }
   else
+  {
     pItem = hb_itemPutCL(NULL, (char *)pBuffer, ulLen);
+  }
   hb_itemRelease(hb_itemReturn(pItem));
 }
 
@@ -132,7 +134,9 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
         while (*(ptr + i + 1) >= '0' && *(ptr + i + 1) <= '9')
           i++;
         if (*(ptr + i + 1) == ';')
+        {
           i++;
+        }
         ulLen -= i;
         for (ul1 = ul + 1; ul1 < ulLen; ul1++)
           *(ptrStart + ul1) = *(ptrStart + ul1 + i);
@@ -152,7 +156,9 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
           }
         }
         if (i == HBXML_PREDEFS_KOL)
+        {
           hbxml_error(HBXML_ERROR_WRONG_ENTITY, ptr);
+        }  
       }
     }
     ptr++;
@@ -162,7 +168,9 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
   HB_SKIPTABSPACES(ptr);
   ulLen -= (ptr - ptrStart);
   if (!ulLen)
+  {
     return hb_itemPutC(NULL, "");
+  }
   ptrStart = ptr;
   ptr = ptrStart + ulLen - 1;
   while (*ptr == ' ' || *ptr == '\t' || *ptr == '\r' || *ptr == '\n')
@@ -189,14 +197,20 @@ PHB_ITEM hbxml_getattr(unsigned char **pBuffer, HB_BOOL *lSingle)
   {
     (*pBuffer)++;
     if (**pBuffer == '?')
+    {
       bPI = 1;
+    }
     HB_SKIPTABSPACES(*pBuffer); // go till tag name
     HB_SKIPCHARS(*pBuffer);     // skip tag name
     if (*(*pBuffer - 1) == '/' || *(*pBuffer - 1) == '?')
+    {
       (*pBuffer)--;
+    }
     else
+    {
       HB_SKIPTABSPACES(*pBuffer);
-
+    }
+    
     while (**pBuffer && **pBuffer != '>')
     {
       if (!(**pBuffer))
@@ -231,7 +245,9 @@ PHB_ITEM hbxml_getattr(unsigned char **pBuffer, HB_BOOL *lSingle)
         HB_SKIPTABSPACES(*pBuffer); // go till attribute value
         cQuo = **pBuffer;
         if (cQuo == '\"' || cQuo == '\'')
+        {
           (*pBuffer)++;
+        }
         else
         {
           hbxml_error(HBXML_ERROR_NOT_QUOTE, *pBuffer);
@@ -263,7 +279,9 @@ PHB_ITEM hbxml_getattr(unsigned char **pBuffer, HB_BOOL *lSingle)
       return NULL;
     }
     if (**pBuffer == '>')
+    {
       (*pBuffer)++;
+    }  
   }
   return pArray;
 }
@@ -319,8 +337,10 @@ HB_BOOL hbxml_readComment(PHB_ITEM pParent, unsigned char **pBuffer)
     (*pBuffer) += 3;
   }
   else
+  {
     hbxml_error(HBXML_ERROR_TERMINATION, *pBuffer);
-
+  }
+  
   hb_itemRelease(pNode);
   return (nParseError) ? HB_FALSE : HB_TRUE;
 }
@@ -350,8 +370,10 @@ HB_BOOL hbxml_readCDATA(PHB_ITEM pParent, unsigned char **pBuffer)
     (*pBuffer) += 3;
   }
   else
+  {
     hbxml_error(HBXML_ERROR_TERMINATION, *pBuffer);
-
+  }
+  
   hb_itemRelease(pNode);
   return (nParseError) ? HB_FALSE : HB_TRUE;
 }
@@ -368,7 +390,9 @@ HB_BOOL hbxml_readElement(PHB_ITEM pParent, unsigned char **pBuffer)
 
   (*pBuffer)++;
   if (**pBuffer == '?')
+  {
     (*pBuffer)++;
+  }
   ptr = *pBuffer;
   HB_SKIPCHARS(ptr);
   nLenNodeName = ptr - *pBuffer - ((*(ptr - 1) == '/') ? 1 : 0);
@@ -381,7 +405,9 @@ HB_BOOL hbxml_readElement(PHB_ITEM pParent, unsigned char **pBuffer)
 
   (*pBuffer)--;
   if (**pBuffer == '?')
+  {
     (*pBuffer)--;
+  }
   if ((pArray = hbxml_getattr(pBuffer, &lSingle)) == NULL || nParseError)
   {
     hb_itemRelease(pNode);
@@ -405,7 +431,9 @@ HB_BOOL hbxml_readElement(PHB_ITEM pParent, unsigned char **pBuffer)
       while (**pBuffer != '<')
       {
         if (lEmpty && (**pBuffer != ' ' && **pBuffer != '\t' && **pBuffer != '\r' && **pBuffer != '\n'))
+        {
           lEmpty = HB_FALSE;
+        }
         (*pBuffer)++;
       }
       if (!lEmpty)
@@ -498,13 +526,17 @@ HB_FUNC(HBXML_GETDOC)
     bFile = HB_TRUE;
   }
   else
+  {
     return;
-
+  }
+  
   nParseError = 0;
   ptr = cBuffer;
   HB_SKIPTABSPACES(ptr);
   if (*ptr != '<')
+  {
     hbxml_error(HBXML_ERROR_NOT_LT, ptr);
+  }
   else
   {
     if (!memcmp(ptr + 1, "?xml", 4))
@@ -514,9 +546,13 @@ HB_FUNC(HBXML_GETDOC)
       if (!pArray || nParseError)
       {
         if (bFile)
+        {
           hb_xfree(cBuffer);
+        }
         if (pArray)
+        {
           hb_itemRelease(pArray);
+        }
         hb_retni(nParseError);
         return;
       }
@@ -534,24 +570,34 @@ HB_FUNC(HBXML_GETDOC)
       if (!memcmp(ptr + 1, "!--", 3))
       {
         if (!hbxml_readComment(pDoc, &ptr))
+        {
           break;
+        }
       }
       else
       {
         if (iMainTags)
+        {
           hbxml_error(HBXML_ERROR_WRONG_END, ptr);
+        }
         if (!hbxml_readElement(pDoc, &ptr))
+        {
           break;
+        }
         iMainTags++;
       }
       HB_SKIPTABSPACES(ptr);
       if (!*ptr)
+      {
         break;
+      }  
     }
   }
 
   if (bFile)
+  {
     hb_xfree(cBuffer);
+  }
 
   hb_retni(nParseError);
 }

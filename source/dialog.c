@@ -43,8 +43,10 @@ HB_FUNC(HWG_DIALOGBOX)
   LPCTSTR lpResource = HB_ITEMGETSTR(pData, &hResource, NULL);
 
   if (!lpResource && HB_IS_NUMERIC(pData))
+  {
     lpResource = MAKEINTRESOURCE(hb_itemGetNI(pData));
-
+  }
+  
   DialogBoxParam(hModule, lpResource, (HWND)HB_PARHANDLE(1), (DLGPROC)s_ModalDlgProc, (LPARAM)pObject);
 
   hb_strfree(hResource);
@@ -62,7 +64,9 @@ HB_FUNC(HWG_CREATEDIALOG)
   LPCTSTR lpResource = HB_ITEMGETSTR(pData, &hResource, NULL);
 
   if (!lpResource && HB_IS_NUMERIC(pData))
+  {
     lpResource = MAKEINTRESOURCE(hb_itemGetNI(pData));
+  }
 
   hDlg = CreateDialogParam(hModule, lpResource, (HWND)HB_PARHANDLE(1), (DLGPROC)s_DlgProc, (LPARAM)pObject);
   hb_strfree(hResource);
@@ -255,8 +259,10 @@ static LPDLGTEMPLATE s_CreateDlgTemplate(PHB_ITEM pObj, int x1, int y1, int dwid
 
   hgbl = GlobalAlloc(GMEM_ZEROINIT, lTemplateSize * sizeof(WORD));
   if (!hgbl)
+  {
     return NULL;
-
+  }
+  
   p = (PWORD)GlobalLock(hgbl);
   pend = p + lTemplateSize;
 
@@ -378,11 +384,17 @@ HB_FUNC(_CREATEPROPERTYSHEETPAGE)
 
     temp = GetObjectVar(pObj, "XRESOURCEID");
     if (HB_IS_STRING(temp))
+    {
       lpTitle = HB_ITEMGETSTR(temp, &hTitle, NULL);
+    }
     else if (HB_IS_NUMERIC(temp))
+    {
       lpTitle = MAKEINTRESOURCE(hb_itemGetNL(temp));
+    }
     else
+    {
       lpTitle = NULL;
+    }  
 #if !defined(__BORLANDC__) || (__BORLANDC__ > 1424)
     psp.pszTemplate = lpTitle;
 #else
@@ -422,9 +434,13 @@ HB_FUNC(_PROPERTYSHEET)
   DWORD dwFlags = (hb_pcount() < 5 || HB_ISNIL(5) || !hb_parl(5)) ? 0 : PSH_MODELESS;
 
   if (hb_pcount() > 5 && !HB_ISNIL(6) && hb_parl(6))
+  {
     dwFlags |= PSH_NOAPPLYNOW;
+  }
   if (hb_pcount() > 6 && !HB_ISNIL(7) && hb_parl(7))
+  {
     dwFlags |= PSH_WIZARD;
+  }
   for (i = 0; i < nPages; i++)
     psp[i] = (HPROPSHEETPAGE)hb_arrayGetNL(pArr, i + 1);
 
@@ -462,7 +478,9 @@ HB_FUNC(HWG_CREATEDLGINDIRECT)
   BOOL fFree = FALSE;
 
   if (hb_pcount() > 7 && !HB_ISNIL(8))
+  {
     pdlgtemplate = (LPDLGTEMPLATE)hb_parnl(8);
+  }
   else
   {
     ULONG ulStyle = ((hb_pcount() > 6 && !HB_ISNIL(7))
@@ -476,7 +494,9 @@ HB_FUNC(HWG_CREATEDLGINDIRECT)
   CreateDialogIndirectParam(hModule, pdlgtemplate, (HWND)HB_PARHANDLE(1), (DLGPROC)s_DlgProc, (LPARAM)pObject);
 
   if (fFree)
+  {
     s_ReleaseDlgTemplate(pdlgtemplate);
+  }  
 }
 
 /* Hwg_DlgBoxIndirect( hParentWnd, pArray, x1, y1, nWidth, nHeight, nStyle )
@@ -523,8 +543,10 @@ static LRESULT CALLBACK s_ModalDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPAR
   pObject = (PHB_ITEM)GetWindowLongPtr(hDlg, GWLP_USERDATA);
 
   if (!pSym_onEvent)
+  {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
-
+  }
+  
   if (pSym_onEvent && pObject)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
@@ -545,12 +567,18 @@ static LRESULT CALLBACK s_ModalDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPAR
 #endif
       res = hb_parnl(-1);
     if (res == -1)
+    {
       return FALSE;
+    }
     else
+    {
       return res;
+    }
   }
   else
+  {
     return FALSE;
+  }
 }
 
 static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -576,9 +604,13 @@ static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
     {
       s_nDialogs += 16;
       if (s_nDialogs == 16)
+      {
         aDialogs = (HWND *)hb_xgrab(sizeof(HWND) * s_nDialogs);
+      }
       else
+      {
         aDialogs = (HWND *)hb_xrealloc(aDialogs, sizeof(HWND) * s_nDialogs);
+      }
     }
     aDialogs[iDialogs++] = hDlg;
   }
@@ -587,7 +619,9 @@ static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
     int i;
     for (i = 0; i < iDialogs; i++)
       if (aDialogs[i] == hDlg)
+      {
         break;
+      }
     iDialogs--;
     for (; i < iDialogs; i++)
       aDialogs[i] = aDialogs[i + 1];
@@ -596,7 +630,9 @@ static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
   pObject = (PHB_ITEM)GetWindowLongPtr(hDlg, GWLP_USERDATA);
 
   if (!pSym_onEvent)
+  {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
+  }
 
   if (pSym_onEvent && pObject)
   {
@@ -619,12 +655,18 @@ static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 
       res = hb_parnl(-1);
     if (res == -1)
+    {
       return FALSE;
+    }
     else
+    {
       return res;
+    }
   }
   else
+  {
     return FALSE;
+  }
 }
 
 static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -652,21 +694,29 @@ static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
     {
       s_nDialogs += 16;
       if (s_nDialogs == 16)
+      {
         aDialogs = (HWND *)hb_xgrab(sizeof(HWND) * s_nDialogs);
+      }
       else
+      {
         aDialogs = (HWND *)hb_xrealloc(aDialogs, sizeof(HWND) * s_nDialogs);
+      }
     }
     aDialogs[iDialogs++] = hDlg;
     // hb_itemRelease( pObj );
   }
   else if (uMsg == WM_NOTIFY)
+  {
     uMsg = WM_PSPNOTIFY;
+  }
   else if (uMsg == WM_DESTROY)
   {
     int i;
     for (i = 0; i < iDialogs; i++)
       if (aDialogs[i] == hDlg)
+      {
         break;
+      }
     iDialogs--;
     for (; i < iDialogs; i++)
       aDialogs[i] = aDialogs[i + 1];
@@ -675,7 +725,9 @@ static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
   pObject = (PHB_ITEM)GetWindowLongPtr(hDlg, GWLP_USERDATA);
 
   if (!pSym_onEvent)
+  {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
+  }
 
   if (pSym_onEvent && pObject)
   {
@@ -688,18 +740,26 @@ static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
     hb_vmSend(3);
     res = hb_parnl(-1);
     if (res == -1)
+    {
       return FALSE;
+    }
     else
+    {
       return res;
+    }
   }
   else
+  {
     return FALSE;
+  }  
 }
 
 HB_FUNC(HWG_EXITPROC)
 {
   if (aDialogs)
+  {
     hb_xfree(aDialogs);
+  }  
 }
 static LRESULT CALLBACK s_PSPProcRelease(HWND hwnd, UINT uMsg, LPPROPSHEETPAGE ppsp)
 {

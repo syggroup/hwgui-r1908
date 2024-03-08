@@ -583,23 +583,23 @@ static HB_BOOL file_read ( FILE *stream, char *string )
    {
       ch = fgetc (stream);
 
-      if ( (ch == '\n') ||  (ch == EOF) ||  (ch == 26) )
+      if ((ch == '\n') || (ch == EOF) || (ch == 26))
       {
-         string [cnbr] = '\0';
-         return (ch == '\n' || cnbr);
+        string[cnbr] = '\0';
+        return (ch == '\n' || cnbr);
       }
       else
       {
-         if ( cnbr < LINE_MAX && ch != '\r' )
-         {
-            string [cnbr++] = (char) ch;
-         }
+        if (cnbr < LINE_MAX && ch != '\r')
+        {
+          string[cnbr++] = (char)ch;
+        }
       }
 
       if (cnbr >= LINE_MAX)
       {
-         string [LINE_MAX] = '\0';
-         return (HB_TRUE);
+        string[LINE_MAX] = '\0';
+        return (HB_TRUE);
       }
    }
 }
@@ -613,23 +613,23 @@ HB_FUNC( AFILLTEXT )
    PHB_ITEM pTemp = hb_itemNew(NULL);
    char *string ;
 
-   if ( !pSrc )
+   if (!pSrc)
    {
-      hb_reta( 0 );
-      return;
+     hb_reta( 0 );
+     return;
    }
 
-   if ( strlen( pSrc ) == 0 )
+   if (strlen(pSrc) == 0)
    {
-      hb_reta( 0 );
-      return;
+     hb_reta(0);
+     return;
    }
    inFile = fopen( pSrc, "r" );
 
-   if ( !inFile )
+   if (!inFile )
    {
-      hb_reta( 0 );
-      return;
+     hb_reta(0);
+     return;
    }
 
    string = (char*) hb_xgrab( LINE_MAX + 1 );

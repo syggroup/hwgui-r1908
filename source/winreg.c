@@ -199,7 +199,9 @@ HB_FUNC(REGCREATEKEYEX)
   void *hValue, *hClass;
 
   if (HB_ISCHAR(7))
+  {
     sa = (SECURITY_ATTRIBUTES *)hb_parc(7);
+  }
 
   nErr = RegCreateKeyEx((HKEY)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), (DWORD)0,
                         (LPTSTR)HB_PARSTRDEF(4, &hClass, NULL), (DWORD)hb_parnl(5), (DWORD)hb_parnl(6), sa, &hkResult,

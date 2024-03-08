@@ -31,9 +31,13 @@ HB_FUNC(PRINTSETUP)
   pd.nCopies = 1;
 
   if (PrintDlg(&pd))
+  {
     HB_RETHANDLE((LONG)pd.hDC);
+  }
   else
+  {
     HB_RETHANDLE(0);
+  }  
 }
 
 HB_FUNC(OPENPRINTER)

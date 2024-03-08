@@ -144,12 +144,18 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
     hb_vmDo(4); /* where iArgCount is the number of pushed parameters */
     res = hb_parl(-1);
     if (res)
+    {
       return 0;
+    }
     else
+    {
       return (DefWindowProc(hWnd, message, wParam, lParam));
+    }
   }
   else
+  {
     return (DefWindowProc(hWnd, message, wParam, lParam));
+  }  
 }
 
 HB_FUNC(CREATEROUNDRECTRGN)
@@ -234,7 +240,9 @@ HB_FUNC(DRAW_GRADIENT)
 HB_FUNC(GRADIENT)
 {
   if (s_pGradientfill == NULL)
+  {
     s_pGradientfill = (GRADIENTFILL)GetProcAddress(LoadLibrary(TEXT("MSIMG32.DLL")), "GradientFill");
+  }
   // void Gradient( HDC hdc, int x, int y, int w, int h, int color1, int color2, int nmode )
 
   Gradient((HDC)HB_PARHANDLE(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5),

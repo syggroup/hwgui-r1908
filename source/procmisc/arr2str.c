@@ -86,7 +86,9 @@ static HB_ULONG ArrayMemoSize(PHB_ITEM pArray)
   double dVal;
 
   if (ulArrLen > 0xFFFF)
+  {
     ulArrLen = 0xFFFF;
+  }
 
   for (ul = 1; ul <= ulArrLen; ++ul)
   {
@@ -138,7 +140,9 @@ static char *WriteArray(char *ptr, PHB_ITEM pArray)
   double dVal;
 
   if (ulArrLen > 0xFFFF)
+  {
     ulArrLen = 0xFFFF;
+  }
 
   *ptr++ = '\6';
   HB_PUT_LE_UINT16(ptr, ulArrLen);
@@ -229,7 +233,9 @@ HB_FUNC(STRING2ARRAY)
   PHB_ITEM pItem = hb_itemNew(NULL);
 
   if (hb_parclen(1) > 2 && *szResult == '\6')
+  {
     ReadArray(szResult, pItem);
+  }
 
   hb_itemRelease(hb_itemReturn(pItem));
 }

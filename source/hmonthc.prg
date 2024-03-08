@@ -181,7 +181,7 @@ HB_FUNC ( SETMONTHCALENDARDATE ) // adaptation of function SetDatePicker of file
 {
    PHB_ITEM pDate = hb_param( 2, HB_IT_DATE );
 
-   if( pDate )
+   if (pDate)
    {
       SYSTEMTIME sysTime;
       #ifndef HARBOUR_OLD_VERSION

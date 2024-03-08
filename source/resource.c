@@ -81,5 +81,7 @@ HB_FUNC(FINDRESOURCE)
     HB_RETHANDLE(hHRSRC);
   }
   else
+  {
     HB_RETHANDLE(0);
+  }
 }

@@ -142,12 +142,18 @@ static FARPROC s_getFunction(FARPROC h, LPCSTR funcname)
   if (!h)
   {
     if (!hFreeImageDll && !s_freeImgInit())
+    {
       return (FARPROC)NULL;
+    }
     else
+    {
       return GetProcAddress(hFreeImageDll, funcname);
+    }
   }
   else
+  {
     return h;
+  }
 }
 
 HB_FUNC(FI_INIT)
@@ -213,7 +219,9 @@ HB_FUNC(FI_UNLOAD)
   pUnload = (FREEIMAGE_UNLOAD)s_getFunction((FARPROC)pUnload, "_FreeImage_Unload@4");
 
   if (pUnload)
+  {
     pUnload((FIBITMAP *)hb_parnl(1));
+  }  
 }
 
 HB_FUNC(FI_LOAD)
@@ -228,7 +236,9 @@ HB_FUNC(FI_LOAD)
     hb_retnl((ULONG)pLoad(pGetfiffromfile(name), name, (hb_pcount() > 1) ? hb_parni(2) : 0));
   }
   else
+  {
     hb_retnl(0);
+  }  
 }
 
 /* 24/03/2006 - <maurilio.longo@libero.it>
@@ -244,7 +254,9 @@ HB_FUNC(FI_LOADTYPE)
     hb_retnl((ULONG)pLoad((enum FREE_IMAGE_FORMAT)hb_parni(1), name, (hb_pcount() > 2) ? hb_parni(3) : 0));
   }
   else
+  {
     hb_retnl(0);
+  }  
 }
 
 HB_FUNC(FI_SAVE)
@@ -259,7 +271,9 @@ HB_FUNC(FI_SAVE)
     hb_retl((BOOL)pSave(pGetfiffromfile(name), (FIBITMAP *)hb_parnl(1), name, (hb_pcount() > 2) ? hb_parni(3) : 0));
   }
   else
+  {
     hb_retl(FALSE);
+  }
 }
 
 /* 24/03/2006 - <maurilio.longo@libero.it>
@@ -276,7 +290,9 @@ HB_FUNC(FI_SAVETYPE)
                         (hb_pcount() > 3) ? hb_parni(4) : 0));
   }
   else
+  {
     hb_retl(FALSE);
+  }  
 }
 
 HB_FUNC(FI_GETWIDTH)
@@ -334,15 +350,25 @@ static HANDLE CreateDIB(DWORD dwWidth, DWORD dwHeight, WORD wBitCount)
 
   // Make sure bits per pixel is valid
   if (wBitCount <= 1)
+  {
     wBitCount = 1;
+  }
   else if (wBitCount <= 4)
+  {
     wBitCount = 4;
+  }
   else if (wBitCount <= 8)
+  {
     wBitCount = 8;
+  }
   else if (wBitCount <= 24)
+  {
     wBitCount = 24;
+  }
   else
+  {
     wBitCount = 4; // set default value to 4 if parameter is bogus
+  }  
 
   // initialize BITMAPINFOHEADER
   bi.biSize = sizeof(BITMAPINFOHEADER);
@@ -374,7 +400,9 @@ static HANDLE CreateDIB(DWORD dwWidth, DWORD dwHeight, WORD wBitCount)
 
   // major bummer if we couldn't get memory block
   if (!hDIB)
+  {
     return NULL;
+  }
 
   // lock memory and get pointer to it
   lpbi = (LPBITMAPINFOHEADER)GlobalLock(hDIB);
@@ -759,24 +787,38 @@ HB_FUNC(FI_LOADFROMMEM)
     if (cType)
     {
       if (!hb_stricmp(cType, "jpg"))
+      {
         fif = FIF_JPEG;
+      }
       else if (!hb_stricmp(cType, "bmp"))
+      {
         fif = FIF_BMP;
+      }
       else if (!hb_stricmp(cType, "png"))
+      {
         fif = FIF_PNG;
+      }
       else if (!hb_stricmp(cType, "tiff"))
+      {
         fif = FIF_TIFF;
+      }
       else
+      {
         fif = FIF_UNKNOWN;
+      }
     }
     else
+    {
       fif = FIF_UNKNOWN;
+    }
 
     g_load_address = (fi_handle)image;
     hb_retnl((LONG)pLoadFromHandle(fif, &io, (fi_handle)image, (hb_pcount() > 2) ? hb_parni(3) : 0));
   }
   else
+  {
     hb_retnl(0);
+  }
 }
 
 HB_FUNC(FI_ROTATECLASSIC)
@@ -808,7 +850,9 @@ HB_FUNC(FI_SETDOTSPERMETERX)
       (FREEIMAGE_SETDOTSPERMETERX)s_getFunction((FARPROC)pSetDotsPerMeterX, "_FreeImage_SetDotsPerMeterX@8");
 
   if (pSetDotsPerMeterX)
+  {
     pSetDotsPerMeterX((FIBITMAP *)hb_parnl(1), hb_parnl(2));
+  }
 
   hb_ret();
 }
@@ -819,7 +863,9 @@ HB_FUNC(FI_SETDOTSPERMETERY)
       (FREEIMAGE_SETDOTSPERMETERY)s_getFunction((FARPROC)pSetDotsPerMeterY, "_FreeImage_SetDotsPerMeterY@8");
 
   if (pSetDotsPerMeterY)
+  {
     pSetDotsPerMeterY((FIBITMAP *)hb_parnl(1), hb_parnl(2));
+  }
 
   hb_ret();
 }
@@ -917,7 +963,9 @@ HB_FUNC(FI_GETPIXELINDEX)
   lRes = pGetPixelIndex((FIBITMAP *)hb_parnl(1), hb_parni(2), hb_parni(3), &value);
 
   if (lRes)
+  {
     hb_stornl((ULONG)value, 4);
+  }
 
   hb_retl(lRes);
 }

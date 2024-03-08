@@ -70,8 +70,10 @@ HB_FUNC(HWG__ADDMENUITEM)
     uFlags |= (lString) ? MF_STRING : MF_SEPARATOR;
   }
   else
+  {
     uFlags |= MF_SEPARATOR;
-
+  }
+  
   if (hb_parl(7))
   {
     HMENU hSubMenu = CreateMenu();
@@ -124,7 +126,9 @@ HB_FUNC( HWG__ADDMENUITEM )
       mii.fType = MFT_STRING;
    }
    else
+   {
       mii.fType = MFT_SEPARATOR;
+   }
 
    hb_retl( InsertMenuItem( ( HMENU ) HB_PARHANDLE( 1 ),
                             hb_parni( 3 ), fByPosition, &mii
@@ -147,9 +151,13 @@ HB_FUNC(HWG__CREATESUBMENU)
   mii.hSubMenu = hSubMenu;
 
   if (SetMenuItemInfo((HMENU)HB_PARHANDLE(1), hb_parni(2), 0, &mii))
+  {
     HB_RETHANDLE(hSubMenu);
+  }
   else
+  {
     HB_RETHANDLE(NULL);
+  }  
 }
 
 /*
@@ -182,10 +190,14 @@ HB_FUNC(CHECKMENUITEM)
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
+  {
     hMenu = (HMENU)HB_PARHANDLE(1);
+  }
 
   if (!hMenu)
+  {
     MessageBox(GetActiveWindow(), TEXT(""), TEXT("No Menu!"), MB_OK | MB_ICONINFORMATION);
+  }
   else
   {
     CheckMenuItem(hMenu,                // handle to menu
@@ -211,10 +223,14 @@ HB_FUNC(ISCHECKEDMENUITEM)
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
+  {
     hMenu = (HMENU)HB_PARHANDLE(1);
+  }
 
   if (!hMenu)
+  {
     hb_retl(0);
+  }
   else
   {
     uCheck = GetMenuState(hMenu,       // handle to menu
@@ -242,7 +258,9 @@ HB_FUNC(ENABLEMENUITEM)
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
+  {
     hMenu = (HMENU)HB_PARHANDLE(1);
+  }
 
   if (!hMenu)
   {
@@ -275,10 +293,14 @@ HB_FUNC(ISENABLEDMENUITEM)
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
+  {
     hMenu = (HMENU)HB_PARHANDLE(1);
+  }
 
   if (!hMenu)
+  {
     hb_retl(0);
+  }
   else
   {
     uCheck = GetMenuState(hMenu,       // handle to menu
@@ -378,7 +400,9 @@ HB_FUNC(GETMENUCAPTION)
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
+  {
     hMenu = (HMENU)HB_PARHANDLE(1);
+  }
 
   if (!hMenu)
   {
@@ -400,9 +424,13 @@ HB_FUNC(GETMENUCAPTION)
     lpBuffer[0] = '\0';
     mii.dwTypeData = lpBuffer;
     if (GetMenuItemInfo(hMenu, hb_parni(2), 0, &mii))
+    {
       HB_RETSTR(mii.dwTypeData);
+    }
     else
+    {
       hb_retc("Error");
+    }
     hb_xfree(lpBuffer);
   }
 }
@@ -425,7 +453,9 @@ HB_FUNC(SETMENUCAPTION)
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
+  {
     hMenu = (HMENU)HB_PARHANDLE(1);
+  }
 
   if (!hMenu)
   {
@@ -442,9 +472,13 @@ HB_FUNC(SETMENUCAPTION)
     mii.dwTypeData = (LPTSTR)HB_PARSTR(3, &hData, NULL);
 
     if (SetMenuItemInfo(hMenu, hb_parni(2), 0, &mii))
+    {
       hb_retl(1);
+    }
     else
+    {
       hb_retl(0);
+    }
     hb_strfree(hData);
   }
 }
@@ -551,7 +585,9 @@ HB_FUNC(HWG_SETMENUINFO)
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
+  {
     hMenu = (HMENU)HB_PARHANDLE(1);
+  }
   if (hMenu)
   {
     hbrush = hb_pcount() > 1 && !HB_ISNIL(2) ? CreateSolidBrush((COLORREF)hb_parnl(2)) : NULL;

@@ -193,9 +193,13 @@ HB_FUNC(SELECTFILE)
   ofn.Flags = OFN_FILEMUSTEXIST | OFN_EXPLORER;
 
   if (GetOpenFileName(&ofn))
+  {
     HB_RETSTR(ofn.lpstrFile);
+  }
   else
+  {
     hb_retc(NULL);
+  }
   hb_xfree(lpFilter);
 
   hb_strfree(hInitDir);
@@ -220,8 +224,10 @@ HB_FUNC(SAVEFILE)
     nSize = 1024;
   }
   else
+  {
     lpFileBuff = HB_STRUNSHARE(&hFileName, lpFileName, nSize);
-
+  }
+  
   lpStr1 = HB_PARSTRDEF(2, &hStr1, &nLen1);
   lpStr2 = HB_PARSTRDEF(3, &hStr2, &nLen2);
 
@@ -243,12 +249,18 @@ HB_FUNC(SAVEFILE)
   ofn.lpstrTitle = HB_PARSTR(5, &hTitle, NULL);
   ofn.Flags = OFN_FILEMUSTEXIST | OFN_EXPLORER;
   if (HB_ISLOG(6) && hb_parl(6))
+  {
     ofn.Flags = ofn.Flags | OFN_OVERWRITEPROMPT;
+  }
 
   if (GetSaveFileName(&ofn))
+  {
     HB_RETSTR(ofn.lpstrFile);
+  }
   else
+  {
     hb_retc(NULL);
+  }
   hb_xfree(lpFilter);
 
   hb_strfree(hFileName);
@@ -297,7 +309,9 @@ HB_FUNC(PRINTSETUP)
     HB_RETHANDLE(pd.hDC);
   }
   else
+  {
     HB_RETHANDLE(0);
+  }  
 }
 
 HB_FUNC(HWG_CHOOSECOLOR)
@@ -319,9 +333,13 @@ HB_FUNC(HWG_CHOOSECOLOR)
   cc.Flags = nStyle;
 
   if (ChooseColor(&cc))
+  {
     hb_retnl((LONG)cc.rgbResult);
+  }
   else
+  {
     hb_ret();
+  }  
 }
 
 static unsigned long Get_SerialNumber(LPCTSTR RootPathName)
@@ -357,9 +375,13 @@ HB_FUNC(GETPRIVATEPROFILESTRING)
   dwLen = GetPrivateProfileString(HB_PARSTR(1, &hSection, NULL), HB_PARSTR(2, &hEntry, NULL), lpDefault, buffer,
                                   HB_SIZEOFARRAY(buffer), HB_PARSTR(4, &hFileName, NULL));
   if (dwLen)
+  {
     HB_RETSTRLEN(buffer, dwLen);
+  }
   else
+  {
     HB_RETSTR(lpDefault);
+  }  
 
   hb_strfree(hSection);
   hb_strfree(hEntry);
@@ -401,13 +423,13 @@ static void StartPrn(void)
     PrintDlg(&s_pd);
 
     /*
-       if (PrintDlg(&s_pd)==TRUE)
+       if (PrintDlg(&s_pd) == TRUE)
        {
-       hb_retl(TRUE);
+         hb_retl(TRUE);
        }
        else
        {
-       hb_retl(FALSE);
+         hb_retl(FALSE);
        }
      */
   }
@@ -496,7 +518,9 @@ HB_FUNC(_GETOPENFILENAME)
     nSize = 1024;
   }
   else
+  {
     lpFileBuff = HB_STRUNSHARE(&hFileName, lpFileName, nSize);
+  }  
 
   ZeroMemory(&ofn, sizeof(ofn));
   ofn.hInstance = GetModuleHandle(NULL);
@@ -518,7 +542,9 @@ HB_FUNC(_GETOPENFILENAME)
     HB_RETSTR(ofn.lpstrFile);
   }
   else
+  {
     hb_retc(NULL);
+  }
 
   hb_strfree(hFileName);
   hb_strfree(hTitle);

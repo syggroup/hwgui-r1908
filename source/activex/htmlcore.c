@@ -704,7 +704,9 @@ DWORD asciiToNumW(OLECHAR *val)
   {
     chr = *(val)++ - '0';
     if ((DWORD)chr > 9)
+    {
       break;
+    }
     len += (len + (len << 3) + chr);
   }
 
@@ -853,7 +855,9 @@ HRESULT STDMETHODCALLTYPE Site_QueryInterface(IOleClientSite *This, REFIID riid,
   // return a pointer to our _IOleClientSiteEx.
 
   if (!memcmp(riid, &IID_IUnknown, sizeof(GUID)) || !memcmp(riid, &IID_IOleClientSite, sizeof(GUID)))
+  {
     *ppvObject = &((_IOleClientSiteEx *)This)->client;
+  }
 
   // If the browser is asking us to match IID_IOleInPlaceSite, then it wants
   // us to return a pointer to our IOleInPlaceSite struct. Then the browser
@@ -869,7 +873,9 @@ HRESULT STDMETHODCALLTYPE Site_QueryInterface(IOleClientSite *This, REFIID riid,
   // continue passing our _IOleInPlaceSiteEx pointer wherever it would
   // normally pass a IOleInPlaceSite pointer.
   else if (!memcmp(riid, &IID_IOleInPlaceSite, sizeof(GUID)))
+  {
     *ppvObject = &((_IOleClientSiteEx *)This)->inplace;
+  }
 
   // If the browser is asking us to match IID_IDocHostUIHandler, then it wants
   // us to return a pointer to our IDocHostUIHandler struct. Then the browser
@@ -886,7 +892,9 @@ HRESULT STDMETHODCALLTYPE Site_QueryInterface(IOleClientSite *This, REFIID riid,
   // normally pass a IDocHostUIHandler pointer. My, we're really playing
   // dirty tricks on the browser here. heheh.
   else if (!memcmp(riid, &IID_IDocHostUIHandler, sizeof(GUID)))
+  {
     *ppvObject = &((_IOleClientSiteEx *)This)->ui;
+  }
 
   // For other types of objects the browser wants, just report that we don't
   // have any such objects.
@@ -1341,8 +1349,10 @@ static void webDetach(_IDispatchEx *lpDispatchEx)
 
   // Release any object that was originally passed to CreateEventHandler()
   if (lpDispatchEx->object)
+  {
     lpDispatchEx->object->lpVtbl->Release(lpDispatchEx->object);
-
+  }
+  
   // We don't need the IHTMLWindow2 any more (that we got in CreateEventHandler)
   lpDispatchEx->htmlWindow2->lpVtbl->Release(lpDispatchEx->htmlWindow2);
 }
@@ -1406,14 +1416,18 @@ HRESULT STDMETHODCALLTYPE Dispatch_Invoke(IDispatch *This, DISPID dispIdMember, 
         // WEBPARAMS, then get that string as UNICODE or ANSI -- whichever
         // is appropriate for the app window.
         if (((_IDispatchEx *)This)->id < 0)
+        {
           goto user;
+        }
         if (!IsWindowUnicode(webParams.nmhdr.hwndFrom))
         {
           // For ANSI, we need to convert the BSTR to an ANSI string, and
           // then we no longer need the BSTR.
           webParams.nmhdr.idFrom = WideCharToMultiByte(CP_ACP, 0, (WCHAR *)strType, -1, 0, 0, 0, 0);
           if ((webParams.eventStr = GlobalAlloc(GMEM_FIXED, sizeof(char) * webParams.nmhdr.idFrom)) == NULL)
+          {
             goto bad;
+          }
           WideCharToMultiByte(CP_ACP, 0, (WCHAR *)strType, -1, (char *)webParams.eventStr, webParams.nmhdr.idFrom, 0,
                               0);
         freestr:
@@ -1423,7 +1437,9 @@ HRESULT STDMETHODCALLTYPE Dispatch_Invoke(IDispatch *This, DISPID dispIdMember, 
 
         // For UNICODE, we can use the BSTR as is. We can't free the BSTR yet.
         else
+        {
           webParams.eventStr = (LPCTSTR)strType;
+        }  
       }
       // Send a WM_NOTIFY message to the window with the _IDispatchEx as
       // WPARAM, and the WEBPARAMS as LPARAM.
@@ -1433,15 +1449,21 @@ HRESULT STDMETHODCALLTYPE Dispatch_Invoke(IDispatch *This, DISPID dispIdMember, 
       // Free anything allocated or gotten above
     bad:
       if (strType)
+      {
         SysFreeString(strType);
+      }
       else if (webParams.eventStr && ((_IDispatchEx *)This)->id >= 0)
+      {
         GlobalFree((void *)webParams.eventStr);
+      }
 
       // If this was the "beforeunload" event, detach this IDispatch from
       // that event for its web page element. This should also cause the
       // IE engine to call this IDispatch's Dispatch_Release().
       if (!webParams.nmhdr.code)
+      {
         webDetach((_IDispatchEx *)This);
+      }  
     }
 
     // Release the IHTMLEventObj.
@@ -1504,7 +1526,9 @@ IDispatch *WINAPI CreateWebEvtHandler(HWND hwnd, IHTMLDocument2 *htmlDoc2, DWORD
     // "userdata" member on the IDispatch.
     varDisp.DEF_VT = 0;
     if (!userdata && id >= 0)
+    {
       varDisp.DEF_VT -= sizeof(void *);
+    }
 
     // Create an IDispatch object (actually we create one of our own
     // _IDispatchEx objects) which we'll use to monitor "events" that occur
@@ -1529,7 +1553,9 @@ IDispatch *WINAPI CreateWebEvtHandler(HWND hwnd, IHTMLDocument2 *htmlDoc2, DWORD
       lpDispatchEx->extraSize = (unsigned short)extraData;
       lpDispatchEx->object = obj;
       if (userdata)
+      {
         lpDispatchEx->userdata = userdata;
+      }
 
       // No one has yet called its Dispatch_AddRef(). That won't happen
       // until we attach some event to it, such as below.
@@ -1594,7 +1620,9 @@ IDispatch *WINAPI CreateWebEvtHandler(HWND hwnd, IHTMLDocument2 *htmlDoc2, DWORD
   // Release whatever the app passed, so it doesn't need to do that in case
   // of an error.
   if (obj)
+  {
     obj->lpVtbl->Release(obj);
+  }
 
   // FAILURE.
   return (0);
@@ -1650,10 +1678,14 @@ HRESULT WINAPI SetWebReturnValue(IHTMLEventObj *htmlEvent, BOOL returnVal)
   varResult.DEF_VT = VT_BOOL;
 
   if (returnVal)
+  {
     varResult.DEF_BOOLVAL = (VARIANT_BOOL)-1;
+  }
   else
+  {
     varResult.DEF_BOOLVAL = (VARIANT_BOOL)0;
-
+  }
+  
   return (htmlEvent->lpVtbl->put_returnValue(htmlEvent, varResult));
 }
 
@@ -1736,11 +1768,15 @@ HRESULT WINAPI GetWebPtrs(HWND hwnd, IWebBrowser2 **webBrowser2Result, IHTMLDocu
     // supplied handle. Note: We do not Release it here. The caller must do
     // that when he is done with it
     if (webBrowser2Result)
+    {
       *webBrowser2Result = webBrowser2;
+    }
 
     // If he doesn't want it returned, we need to release it here
     else
+    {
       webBrowser2->lpVtbl->Release(webBrowser2);
+    }  
   }
 
   return (S_OK);
@@ -1771,13 +1807,17 @@ BSTR WINAPI TStr2BStr(HWND hwnd, const char *string)
 
     size = MultiByteToWideChar(CP_ACP, 0, (char *)string, -1, 0, 0);
     if ((buffer = (WCHAR *)GlobalAlloc(GMEM_FIXED, sizeof(WCHAR) * size)) == NULL)
+    {
       return (0);
+    }
     MultiByteToWideChar(CP_ACP, 0, (char *)string, -1, buffer, size);
     bstr = SysAllocString(buffer);
     GlobalFree(buffer);
   }
   else
+  {
     bstr = SysAllocString((WCHAR *)string);
+  }
 
   return (bstr);
 }
@@ -1801,13 +1841,17 @@ void *WINAPI BStr2TStr(HWND hwnd, BSTR strIn)
   {
     size = WideCharToMultiByte(CP_ACP, 0, (WCHAR *)((char *)strIn + 2), -1, 0, 0, 0, 0);
     if ((strOut = GlobalAlloc(GMEM_FIXED, size)) != NULL)
+    {
       WideCharToMultiByte(CP_ACP, 0, (WCHAR *)((char *)strIn + 2), -1, (char *)strOut, size, 0, 0);
+    }
   }
   else
   {
     size = (*((short *)strIn) + 1) * sizeof(wchar_t);
     if ((strOut = GlobalAlloc(GMEM_FIXED, size)) != NULL)
+    {
       CopyMemory(strOut, (char *)strIn + 2, size);
+    }
   }
 
   return (strOut);
@@ -1951,7 +1995,9 @@ HRESULT WINAPI WaitOnReadyState(HWND hwnd, READYSTATE rs, DWORD timeout, IWebBro
   if (!webBrowser2)
   {
     if (GetWebPtrs(hwnd, &webBrowser2, 0))
+    {
       goto destroyed;
+    }
     releaseOnComplete = 1;
   }
 
@@ -1969,7 +2015,9 @@ HRESULT WINAPI WaitOnReadyState(HWND hwnd, READYSTATE rs, DWORD timeout, IWebBro
     // If we got the IWebBrowser2 ourselves above, release it now.
   out:
     if (releaseOnComplete)
+    {
       webBrowser2->lpVtbl->Release(webBrowser2);
+    }
 
     return ((HRESULT)rs);
   }
@@ -1999,7 +2047,9 @@ HRESULT WINAPI WaitOnReadyState(HWND hwnd, READYSTATE rs, DWORD timeout, IWebBro
     // Is the current ready state at least as high as the caller needs?
     webBrowser2->lpVtbl->get_ReadyState(webBrowser2, &rsi);
     if (rsi >= rs)
+    {
       goto yes;
+    }
 
     // We may need a sleep here on Win9x/Me systems to avoid a system hang.
     Sleep(10);
@@ -2158,15 +2208,19 @@ long WINAPI DisplayHTMLStr(HWND hwnd, const char *string)
       }
     }
     else
+    {
       SysFreeString(myURL.DEF_BSTRVAL);
-
+    }
+    
     // Release the IWebBrowser2 object.
     webBrowser2->lpVtbl->Release(webBrowser2);
   }
 
   // No error?
   if (myURL.DEF_VT != VT_BSTR)
+  {
     return (0);
+  }
 
   // An error
   return (-1);
@@ -2418,7 +2472,9 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
   // One final thing. We're going to allocate extra room to store the pointer
   // to the browser object.
   if ((ptr = (char *)GlobalAlloc(GMEM_FIXED, sizeof(_IOleClientSiteEx) + sizeof(IOleObject *))) == NULL)
+  {
     return (-1);
+  }
 
   // Initialize our IOleClientSite object with a pointer to our
   // IOleClientSite VTable.
