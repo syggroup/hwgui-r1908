@@ -1080,8 +1080,15 @@ METHOD Paint( lpdis ) CLASS HPaintTab
    LOCAL y2 := drawInfo[7]
    LOCAL i
    LOCAL client_rect
-   LOCAL nPage := SendMessage(::oParent:handle, TCM_GETCURFOCUS, 0, 0) + 1
-   LOCAL oPage := IIF(nPage > 0, ::oParent:Pages[nPage], ::oParent:Pages[1])
+   LOCAL nPage
+   LOCAL oPage
+   
+   IF Len(::oParent:Pages) == 0
+      RETURN 0
+   ENDIF
+
+   nPage := SendMessage(::oParent:handle, TCM_GETCURFOCUS, 0, 0) + 1
+   oPage := IIF(nPage > 0, ::oParent:Pages[nPage], ::oParent:Pages[1])
 
    ::disablebrush := oPage:brush
    IF oPage:brush != NIL
