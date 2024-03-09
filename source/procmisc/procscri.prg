@@ -510,7 +510,7 @@ MEMVAR aScriptt
    ENDIF
    scr_RetValue := Nil
    cProc := Upper( cProc )
-   DO WHILE i <= Len(aScript[2]) .AND. VALTYPE( aScript[2,i] ) == "A"
+   DO WHILE i <= Len(aScript[2]) .AND. hb_IsArray(aScript[2, i])
       IF aScript[2,i,1] == cProc
          DoScript( aScript[2,i],aParams )
          EXIT

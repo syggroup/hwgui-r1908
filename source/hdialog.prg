@@ -322,7 +322,7 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
    *  .if uMsg == WM_INITDIALOG
    *-EnableThemeDialogTexture(odlg:handle,6)  //,ETDT_ENABLETAB)
 
-   IF Valtype( oDlg:menu ) == "A"
+   IF hb_IsArray(oDlg:menu)
       hwg__SetMenu( oDlg:handle, oDlg:menu[5] )
    ENDIF
 
@@ -581,7 +581,7 @@ FUNCTION DlgCommand( oDlg, wParam, lParam )
       ELSEIF ! oDlg:lExitOnEsc
           oDlg:nLastKey := 0
       ENDIF
-   ELSEIF __ObjHasMsg( oDlg, "MENU" ) .AND. ValType( oDlg:menu ) == "A" .AND. ;
+   ELSEIF __ObjHasMsg( oDlg, "MENU" ) .AND. hb_IsArray(oDlg:menu) .AND. ;
       ( aMenu := Hwg_FindMenuItem( oDlg:menu, iParLow, @i ) ) != Nil
       IF Hwg_BitAnd( aMenu[ 1, i, 4 ], FLAG_CHECK ) > 0
          CheckMenuItem( , aMenu[ 1, i, 3 ], ! IsCheckedMenuItem( , aMenu[ 1, i, 3 ] ) )

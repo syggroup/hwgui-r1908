@@ -152,7 +152,7 @@ FUNCTION BuildMenu( aMenuInit, hWnd, oWnd, nPosParent, lPopup )
 
    nPos := 1
    DO WHILE nPos <= Len( aMenu[ 1 ] )
-      IF ValType( aMenu[ 1, nPos, 1 ] ) == "A"
+      IF hb_IsArray(aMenu[1, nPos, 1])
          BuildMenu( aMenu,,, nPos )
       ELSE
          IF aMenu[ 1, nPos, 1 ] == Nil .OR. aMenu[ 1, nPos, 2 ] != Nil

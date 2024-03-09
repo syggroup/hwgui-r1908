@@ -265,7 +265,7 @@ METHOD New( cFileName, aFontData, aFontFam, aFontChar, nFontSize, nFontColor, nS
       AFill( aFontChar, 0 )
    ENDIF
 
-   IF ValType( aHigh ) == "A"
+   IF hb_IsArray(aHigh)
       ::aTranslate := aHigh
    ENDIF
 
@@ -439,7 +439,7 @@ METHOD Paragraph( cText, nFontNumber, nFontSize, cAppear, ;
    ::Appearance( cAppear )
    ::HAlignment( cHorzAlign )
 
-   IF ValType( aTabPos ) == "A"
+   IF hb_IsArray(aTabPos)
       AEval( aTabPos, { | x | ::NumCode( "tx", x ) } )
    ENDIF
 
@@ -789,7 +789,7 @@ METHOD DefineTable( cTblHAlign, nTblFntNum, nTblFntSize, ;
 
    IF aTableCWid[ 1 ] == NIL
       AFill( aTableCWid, 6.5 / nTblColumns )
-   ELSEIF ValType( aTableCWid[ 1 ] ) == "A"
+   ELSEIF hb_IsArray(aTableCWid[1])
       aTableCWid := AClone( aTableCWid[ 1 ] )
    ENDIF
 
@@ -2003,7 +2003,7 @@ METHOD DefNewTable( cTblHAlign, nTblFntNum, nTblFntSize, ;
 
    IF aTableCWid[ 1 ] == NIL
       AFill( aTableCWid, 6.5 / nTblColumns )
-   ELSEIF ValType( aTableCWid[ 1 ] ) == "A"
+   ELSEIF hb_IsArray(aTableCWid[1])
       aTableCWid := AClone( aTableCWid[ 1 ] )
    ENDIF
 
