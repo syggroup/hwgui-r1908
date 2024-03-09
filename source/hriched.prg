@@ -146,7 +146,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HRichEdit
       ENDIF
    ELSEIF hb_IsBlock(::bOther)
       nret := Eval( ::bOther, Self, msg, wParam, lParam )
-      IF ValType( nret ) != "N" .OR. nret > - 1
+      IF !hb_IsNumeric(nret) .OR. nret > - 1
          RETURN nret
       ENDIF
    ENDIF

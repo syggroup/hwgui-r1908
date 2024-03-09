@@ -144,8 +144,8 @@ ENDCLASS
 METHOD AddEvent( nEvent, oCtrl, bAction, lNotify, cMethName ) CLASS HCustomWindow
 
    AAdd( IIf( lNotify == NIL .OR. ! lNotify, ::aEvents, ::aNotify ), ;
-         { nEvent, IIf( ValType( oCtrl ) == "N", oCtrl, oCtrl:id ), bAction } )
-   IF bAction != Nil .AND. ValType( oCtrl ) == "O"  //.AND. ValType(oCtrl) != "N"
+         { nEvent, IIf( hb_IsNumeric(oCtrl), oCtrl, oCtrl:id ), bAction } )
+   IF bAction != Nil .AND. ValType( oCtrl ) == "O"  //.AND. !hb_IsNumeric(oCtrl)
       IF cMethName != Nil //.AND. !__objHasMethod( oCtrl, cMethName )
          __objAddInline( oCtrl, cMethName, bAction )
       ENDIF
@@ -734,7 +734,7 @@ STATIC FUNCTION onNotify( oWnd, wParam, lParam )
       NEXT
    ENDIF
 
-   IF oCtrl != NIL  .AND. VALTYPE( oCtrl ) != "N"
+   IF oCtrl != NIL  .AND. !hb_IsNumeric(oCtrl)
 
       IF __ObjHasMsg( oCtrl, "NOTIFY" )
          RETURN oCtrl:Notify( lParam )
@@ -775,7 +775,7 @@ STATIC FUNCTION onCtlColor( oWnd, wParam, lParam )
 //lParam := HANDLETOPTR( lParam)
    oCtrl := oWnd:FindControl( , lParam )
 
-   IF  oCtrl != Nil .AND. VALTYPE( oCtrl ) != "N"
+   IF  oCtrl != Nil .AND. !hb_IsNumeric(oCtrl)
       IF oCtrl:tcolor != NIL
          SetTextColor( wParam, oCtrl:tcolor )
       ENDIF
@@ -812,7 +812,7 @@ STATIC FUNCTION onCtlColor( oWnd, wParam, lParam )
 STATIC FUNCTION onDrawItem( oWnd, wParam, lParam )
    LOCAL oCtrl
    IF ! EMPTY( wParam ) .AND. ( oCtrl := oWnd:FindControl( wParam ) ) != NIL .AND. ;
-                 VALTYPE( oCtrl ) != "N"  .AND. oCtrl:bPaint != NIL
+                 !hb_IsNumeric(oCtrl) .AND. oCtrl:bPaint != NIL
       Eval( oCtrl:bPaint, oCtrl, lParam )
       RETURN 1
 

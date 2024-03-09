@@ -344,7 +344,7 @@ METHOD AddResource( name, nFlags, lOEM, nWidth, nHeight ) CLASS HBitmap
    IF lOEM == nil
       lOEM := .f.
    ENDIF
-   IF ValType( name ) == "N"
+   IF hb_IsNumeric(name)
       name := LTrim( Str( name ) )
       lPreDefined := .T.
    ENDIF
@@ -526,7 +526,7 @@ METHOD AddResource( name, nWidth, nHeight, nFlags, lOEM ) CLASS HIcon
    IF lOEM == nil
       lOEM := .f.
    ENDIF
-   IF ValType( name ) == "N"
+   IF hb_IsNumeric(name)
       name := LTrim( Str( name ) )
       lPreDefined := .T.
    ENDIF

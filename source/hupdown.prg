@@ -77,7 +77,7 @@ METHOD New( oWndParent,nId,vari,bSetGet,nStyle,nLeft,nTop,nWidth,nHeight, ;
 
    nStyle := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_TABSTOP + IIf( lNoBorder == Nil.OR. ! lNoBorder, WS_BORDER, 0 ) )
 
-   IF Valtype(vari) != "N"
+   IF !hb_IsNumeric(vari)
       vari := 0
       Eval( bSetGet,vari )
    ENDIF
@@ -373,7 +373,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
               bSize, bPaint, ctooltip, tcolor, bcolor )
 
    ::idUpDown := ::NewId()
-   IF ValType( vari ) != "N"
+   IF !hb_IsNumeric(vari)
       vari := 0
       Eval( bSetGet, vari )
    ENDIF

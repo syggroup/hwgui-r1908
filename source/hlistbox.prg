@@ -51,7 +51,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               bSize, bPaint, cTooltip, tColor, bcolor )
 
-   ::value   := IIf( vari == Nil .OR. ValType( vari ) != "N", 0, vari )
+   ::value   := IIf( vari == Nil .OR. !hb_IsNumeric(vari), 0, vari )
    ::bSetGet := bSetGet
 
    IF aItems == Nil
@@ -105,7 +105,7 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, aItems, oFont, bInit, bSize, bP
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, cTooltip )
 
-   ::value   := IIf( vari == Nil .OR. ValType( vari ) != "N", 1, vari )
+   ::value   := IIf( vari == Nil .OR. !hb_IsNumeric(vari), 1, vari )
    ::bSetGet := bSetGet
    ::bKeydown := bKeydown
     ::bOther := bOther
@@ -194,7 +194,7 @@ METHOD Refresh() CLASS HListBox
       vari := Eval( ::bSetGet )
    ENDIF
 
-   ::value := IIf( vari == Nil .OR. ValType( vari ) != "N", 0, vari )
+   ::value := IIf( vari == Nil .OR. !hb_IsNumeric(vari), 0, vari )
    ::SetItem( ::value )
    RETURN Nil
 

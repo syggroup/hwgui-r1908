@@ -172,7 +172,7 @@ METHOD New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
    ::aOffset := Array( 4 )
    AFill( ::aOffset, 0 )
 
-   IF VALTYPE( cTitle ) != "N"
+   IF !hb_IsNumeric(cTitle)
       ::AddItem( Self )
    ENDIF
    IF Hwg_Bitand( nStyle,WS_HSCROLL ) > 0
@@ -531,7 +531,7 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate, lModal ) C
    ::Style := Hwg_BitOr( ::Style , WS_VISIBLE ) - IIF( ! lshow , WS_VISIBLE , 0 ) + ;
                         IIF( lMaximized .AND. ! ::lChild .AND. ! ::lModal , WS_MAXIMIZE, 0 ) 
    ::handle := Hwg_CreateMdiChildWindow( Self )
-   IF VALTYPE( ::TITLE ) = "N" .AND. ::title = - 1   // screen
+   IF hb_IsNumeric(::TITLE) .AND. ::title = - 1   // screen
       RETURN .T.
    ENDIF
 
@@ -707,7 +707,7 @@ METHOD Activate( lShow, lMaximized, lMinimized,lCentered, bActivate, lModal ) CL
    SENDMESSAGE( ::handle, WM_UPDATEUISTATE, makelong(UIS_CLEAR,UISF_HIDEFOCUS), 0)
    IF hb_IsBlock(::bInit)
       //::hide()
-      IF Valtype( nReturn := Eval( ::bInit, Self ) ) != "N"
+      IF !hb_IsNumeric( nReturn := Eval( ::bInit, Self ) )
          IF VALTYPE( nReturn ) == "L" .AND. ! nReturn
             ::Close()
             RETURN Nil
@@ -909,7 +909,7 @@ LOCAL aCoors,  oWndArea
   ELSEIF oWnd:type != WND_MDI //.AND. oWnd:type != WND_MAIN
       aCoors := GetClientRect( oWnd:handle )
       IF oWnd:brush != Nil
-         IF ValType( oWnd:brush ) != "N"
+         IF !hb_IsNumeric(oWnd:brush)
             FillRect( wParam, aCoors[ 1 ], aCoors[ 2 ], aCoors[ 3 ] + 1, aCoors[ 4 ] + 1, oWnd:brush:handle )
             IF !Empty( oWnd:Screen ) .AND. SELFFOCUS( oWnd:handle, oWnd:Screen:Handle )
                SetWindowPos( oWnd:Handle, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOREDRAW + SWP_NOACTIVATE + SWP_NOMOVE + SWP_NOSIZE + SWP_NOZORDER +;
@@ -1073,7 +1073,7 @@ STATIC FUNCTION onMdiCreate( oWnd, lParam )
    InitControls( oWnd )
    InitObjects( oWnd, .T. )
    IF oWnd:bInit != Nil
-      IF Valtype( nReturn := Eval( oWnd:bInit, oWnd ) ) != "N"
+      IF !hb_IsNumeric(nReturn := Eval( oWnd:bInit, oWnd ))
          IF VALTYPE( nReturn ) == "L" .AND. ! nReturn
             oWnd:Close()
             RETURN Nil

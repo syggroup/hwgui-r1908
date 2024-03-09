@@ -144,7 +144,7 @@ METHOD New(oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight,
    IF ::lText
       ::value := Iif( vari == Nil .OR. !hb_IsChar(vari), "", vari )
    ELSE
-      ::value := Iif( vari == Nil .OR. Valtype( vari ) != "N", 1, vari )
+      ::value := Iif( vari == Nil .OR. !hb_IsNumeric(vari), 1, vari )
    ENDIF
 
    aItems := IIF( aItems = Nil, {}, aClone( aItems ) )
@@ -236,7 +236,7 @@ METHOD Redefine(oWndParent, nId, vari, bSetGet, aItems, oFont, bInit, bSize, bPa
    IF ::lText
       ::value := Iif( vari == Nil .OR. !hb_IsChar(vari), "", vari )
    ELSE
-      ::value := Iif( vari == Nil .OR. Valtype( vari ) != "N", 1, vari )
+      ::value := Iif( vari == Nil .OR. !hb_IsNumeric(vari), 1, vari )
    ENDIF
    IF nMaxLength != Nil
        ::MaxLength := nMaxLength
@@ -502,7 +502,7 @@ METHOD Refresh() CLASS HComboBox
             ::value := Iif( vari==Nil .OR. !hb_IsChar(vari), "", vari )
                //SendMessage( ::handle, CB_SETEDITSEL, 0, LEN(::value) )
          ELSE
-            ::value := Iif( vari==Nil .OR. Valtype(vari) != "N", 1 , vari )
+            ::value := Iif( vari==Nil .OR. !hb_IsNumeric(vari), 1 , vari )
          ENDIF
       ENDIF
       /*
@@ -1039,7 +1039,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
                bValid, acheck, nDisplay, nhItem, ncWidth ) CLASS hCheckComboBox
 
    ::acheck := Iif( acheck == Nil, {}, acheck )
-   IF Valtype( nStyle ) == "N"
+   IF hb_IsNumeric(nStyle)
       nStyle := hwg_multibitor( nStyle, CBS_DROPDOWNLIST, CBS_OWNERDRAWVARIABLE, CBS_HASSTRINGS )
    ELSE
       nStyle := hwg_multibitor( CBS_DROPDOWNLIST, CBS_OWNERDRAWVARIABLE, CBS_HASSTRINGS )
@@ -1440,7 +1440,7 @@ FUNCTION hwg_multibitor( ... )
    LOCAL result := 0
 
    FOR EACH nItem IN aArgumentList
-      IF Valtype( nItem ) != "N"
+      IF !hb_IsNumeric(nItem)
          msginfo( "hwg_multibitor parameter not numeric set to zero", "Possible error" )
          nItem := 0
       ENDIF

@@ -119,7 +119,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
 
    IF Image != Nil .AND. ! Empty( Image )
       IF lRes == Nil ; lRes := .F. ; ENDIF
-      ::oImage := IIf( lRes .OR. ValType( Image ) == "N",     ;
+      ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),     ;
                        HBitmap():AddResource( Image ), ;
                        IIf( hb_IsChar(Image),     ;
                             HBitmap():AddFile( Image ), Image ) )
@@ -143,7 +143,7 @@ METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip, lTransp 
       ::extStyle +=  WS_EX_TRANSPARENT
    ENDIF
    IF lRes == Nil ; lRes := .F. ; ENDIF
-   ::oImage := IIf( lRes .OR. ValType( xImage ) == "N",     ;
+   ::oImage := IIf( lRes .OR. hb_IsNumeric(xImage),     ;
                     HBitmap():AddResource( xImage ), ;
                     IIf( hb_IsChar(xImage),     ;
                          HBitmap():AddFile( xImage ), xImage ) )
@@ -201,7 +201,7 @@ METHOD ReplaceBitmap( Image, lRes ) CLASS HSayBmp
       ::oImage:Release()
    ENDIF
    IF lRes == Nil ; lRes := .F. ; ENDIF
-   ::oImage := IIf( lRes .OR. ValType( Image ) == "N",     ;
+   ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),     ;
                     HBitmap():AddResource( Image ), ;
                     IIf( hb_IsChar(Image),     ;
                          HBitmap():AddFile( Image ), Image ) )
@@ -229,7 +229,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
    IF lRes == Nil ; lRes := .F. ; ENDIF
    IF lOEM == Nil ; lOEM := .F. ; ENDIF
    IF ::oImage == nil
-      ::oImage := IIf( lRes .OR. ValType( Image ) == "N",  ;
+      ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),  ;
                        HIcon():AddResource( Image,,,, lOEM ),  ;
                        IIf( hb_IsChar(Image),    ;
                             HIcon():AddFile( Image ), Image ) )
@@ -244,7 +244,7 @@ METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip ) CLASS H
 
    IF lRes == Nil ; lRes := .F. ; ENDIF
    IF ::oImage == nil
-      ::oImage := IIf( lRes .OR. ValType( xImage ) == "N",   ;
+      ::oImage := IIf( lRes .OR. hb_IsNumeric(xImage),   ;
                        HIcon():AddResource( xImage ), ;
                        IIf( hb_IsChar(xImage),   ;
                             HIcon():AddFile( xImage ), xImage ) )

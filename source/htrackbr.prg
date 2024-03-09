@@ -60,7 +60,7 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight,, ;
               bInit, bSize, bPaint, cTooltip )
 
-   ::value      := IIf( ValType( vari ) == "N", vari, 0 )
+   ::value      := IIf( hb_IsNumeric(vari), vari, 0 )
    ::bChange    := bChange
    ::bThumbDrag := bDrag
    ::nLow       := IIf( nLow == NIL, 0, nLow )
@@ -139,7 +139,7 @@ METHOD Init() CLASS HTrackBar
    RETURN NIL
 
 METHOD SetValue( nValue ) CLASS HTrackBar
-   IF ValType( nValue ) == "N"
+   IF hb_IsNumeric(nValue)
       SendMessage( ::handle, TBM_SETPOS, 1, nValue )
       ::value := nValue
    ENDIF

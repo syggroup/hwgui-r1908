@@ -113,7 +113,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight,   ;
       IF ValType( bmp ) == "O"
          ::oBitmap := bmp
       ELSE
-         ::oBitmap := IIf( ( lResour != Nil.AND.lResour ) .OR.Valtype( bmp ) == "N", ;
+         ::oBitmap := IIf( ( lResour != Nil.AND.lResour ) .OR. hb_IsNumeric(bmp), ;
                            HBitmap():AddResource( bmp ), ;
                            HBitmap():AddFile( IIf( ::cPath != Nil, ::cPath + bmp, bmp ) ) )
       ENDIF

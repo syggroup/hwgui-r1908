@@ -153,7 +153,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
          RETURN ::nrePaint
          /*
          IF ::brush != Nil
-            IF Valtype( ::brush ) != "N"
+            IF !hb_IsNumeric(::brush)
                FillRect( wParam, 0, 0, ::nWidth, ::nHeight, ::brush:handle )
             ENDIF
             RETURN 1
@@ -183,7 +183,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
       RETURN 0
    ENDIF
    IF hb_IsBlock(::bOther)
-      IF Valtype( nRet := Eval( ::bOther,Self,msg,wParam,lParam ) ) != "N"
+      IF !hb_IsNumeric(nRet := Eval( ::bOther,Self,msg,wParam,lParam ))
          nRet := IIF( VALTYPE( nRet ) = "L" .AND. ! nRet, 0, -1 )
       ENDIF
       IF nRet >= 0
@@ -241,7 +241,7 @@ LOCAL pps, hDC, aCoors, oPenLight, oPenGray
    IF ::backstyle = OPAQUE .AND. ::nrePaint = -1
       aCoors := GetClientRect( ::handle )
       IF ::brush != Nil
-         IF Valtype( ::brush ) != "N"
+         IF !hb_IsNumeric(::brush)
             FillRect( hDC, aCoors[ 1 ], aCoors[ 2 ], aCoors[ 3 ], aCoors[ 4 ], ::brush:handle )
          ENDIF
       ELSE

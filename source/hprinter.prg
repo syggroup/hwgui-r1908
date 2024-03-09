@@ -81,16 +81,16 @@ METHOD New( cPrinter, lmm, nFormType, nBin, lLandScape, nCopies, lProprierties, 
 
    LOCAL aPrnCoors, cPrinterName
 
-   IF Valtype(nFormType) ="N"
+   IF hb_IsNumeric(nFormType)
       ::FormType       := nFormType
    ENDIF
-   IF valtype(nBin) == "N"
+   IF hb_IsNumeric(nBin)
       ::BinNumber      := nBin
    ENDIF
    IF Valtype(lLandScape) =="L"
       ::Landscape      := lLandScape
    ENDIF
-   IF valtype(nCopies) == "N"
+   IF hb_IsNumeric(nCopies)
       IF nCopies>0
          ::Copies := nCopies
       ENDIF

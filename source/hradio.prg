@@ -59,7 +59,7 @@ METHOD New( vari, bSetGet, bInit, bClick, bGFocus, nStyle ) CLASS HRadioGroup
 
 
    IF vari != Nil
-      IF ValType( vari ) == "N"
+      IF hb_IsNumeric(vari)
          ::nValue := vari
       ENDIF
       //::bSetGet := bSetGet
@@ -86,7 +86,7 @@ METHOD NewRg( oWndParent, nId, nStyle, vari, bSetGet, nLeft, nTop, nWidth, nHeig
    ::bGetFocus := bGfocus
 
    IF vari != Nil
-      IF Valtype( vari ) == "N"
+      IF hb_IsNumeric(vari)
          ::nValue := vari
       ENDIF
    ENDIF
@@ -170,7 +170,7 @@ METHOD Refresh()  CLASS HRadioGroup
 
    IF hb_IsBlock(::bSetGet)
      vari := Eval( ::bSetGet,, Self )
-     IF vari = Nil .OR. Valtype( vari ) != "N"
+     IF vari = Nil .OR. !hb_IsNumeric(vari)
          vari := ::nValue
       ENDIF
       ::SetValue( vari )

@@ -499,7 +499,7 @@ METHOD SetRowHeight( nPixels ) CLASS HBrowse
 
    nOldPixels := ::forceHeight
 
-   IF ValType( nPixels ) == "N"
+   IF hb_IsNumeric(nPixels)
       IF nPixels > 0
          ::forceHeight := nPixels
          IF nPixels != nOldPixels .AND. ::rowCurrCount > 0  //nando
@@ -532,7 +532,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
       ENDIF
       //
       IF hb_IsBlock(::bOther)
-         IF Valtype( nRet := Eval( ::bOther,Self,msg,wParam,lParam ) ) != "N"
+         IF !hb_IsNumeric( nRet := Eval( ::bOther,Self,msg,wParam,lParam ) )
             nRet := IIF( VALTYPE( nRet ) = "L" .AND. ! nRet, 0, -1 )
          ENDIF
          IF nRet >= 0

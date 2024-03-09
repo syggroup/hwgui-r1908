@@ -154,7 +154,7 @@ METHOD Activate( lNoModal, bOnActivate, nShow ) CLASS HDialog
                    IIf( ( oWnd := HWindow():GetMain() ) != Nil,    ;
                         oWnd:handle, GetActiveWindow() ) )
 
-   ::WindowState := IIF( valtype( nShow ) = "N", nShow, SW_SHOWNORMAL ) 
+   ::WindowState := IIF( hb_IsNumeric(nShow), nShow, SW_SHOWNORMAL ) 
 
    IF ::Type == WND_DLG_RESOURCE
       IF lNoModal == Nil .OR. ! lNoModal
@@ -348,7 +348,7 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
 
    IF oDlg:bInit != Nil
       oDlg:lSuspendMsgsHandling := .T.
-      IF ValType( nReturn := Eval( oDlg:bInit, oDlg ) ) != "N"
+      IF !hb_IsNumeric(nReturn := Eval( oDlg:bInit, oDlg ))
          oDlg:lSuspendMsgsHandling := .F.
          IF ValType( nReturn ) = "L" .AND. ! nReturn
             oDlg:Close()
@@ -440,7 +440,7 @@ STATIC FUNCTION onDlgColor( oDlg, wParam, lParam )
    HB_SYMBOL_UNUSED(lParam)
 
    SetBkMode( wParam, 1 ) // Transparent mode
-   IF oDlg:bcolor != NIL  .AND. Valtype( oDlg:brush ) != "N"
+   IF oDlg:bcolor != NIL  .AND. !hb_IsNumeric(oDlg:brush)
        RETURN oDlg:brush:Handle
    ENDIF
    RETURN 0 //hBrTemp:handle
@@ -458,7 +458,7 @@ STATIC FUNCTION onEraseBk( oDlg, hDC )
        /*
        aCoors := GetClientRect( oDlg:handle )
        IF oDlg:brush != Nil
-          IF ValType( oDlg:brush ) != "N"
+          IF !hb_IsNumeric(oDlg:brush)
              FillRect( hDC, aCoors[ 1 ], aCoors[ 2 ], aCoors[ 3 ] + 1, aCoors[ 4 ] + 1, oDlg:brush:handle )
           ENDIF
        ELSE
@@ -715,7 +715,7 @@ FUNCTION onHelp( oDlg, wParam, lParam )
             nHelpId := IIF( Empty( oParent:HelpId ), oDlg:HelpId, oParent:HelpId )
          ENDIF
          IF "chm" $ Lower( CutPath( SetHelpFileName() ) )
-            nHelpId := IIF( VALTYPE( nHelpId ) = "N", LTrim( Str( nHelpId ) ), nHelpId )
+            nHelpId := IIF( hb_IsNumeric(nHelpId), LTrim( Str( nHelpId ) ), nHelpId )
             ShellExecute( "hh.exe", "open", CutPath( SetHelpFileName() ) + "::" + nHelpId+".html", cDir )
          ELSE
             WinHelp( oDlg:handle, SetHelpFileName(), IIf( Empty( nHelpId ), 3, 1 ), nHelpId )

@@ -516,7 +516,7 @@ METHOD SetFontSize( nFontSize ) CLASS RichText
 *
 *********************************************************************
 
-   IF ValType( nFontSize ) == "N"
+   IF hb_IsNumeric(nFontSize)
       ::nFontSize := nFontSize
       ::NumCode( "fs", ::nFontSize * 2, .F. )
    ENDIF
@@ -538,7 +538,7 @@ METHOD SetFontColor( nFontColor ) CLASS RichText
 *
 *********************************************************************
 
-   IF ValType( nFontColor ) == "N"
+   IF hb_IsNumeric(nFontColor)
       ::nFontColor := nFontColor
       ::NumCode( "cf", ::nFontColor, .F. )
    ENDIF
@@ -668,7 +668,7 @@ METHOD NumCode( cCode, nValue, lScale ) CLASS RichText
 *********************************************************************
    LOCAL cWrite := ""
 
-   IF hb_IsChar(cCode) .AND. ValType( nValue ) == "N"
+   IF hb_IsChar(cCode) .AND. hb_IsNumeric(nValue)
 
       cCode := FormatCode( cCode )
 

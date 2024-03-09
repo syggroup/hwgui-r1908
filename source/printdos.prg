@@ -266,7 +266,7 @@ METHOD NewLine() CLASS PrintDos
 
 METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
    // tracelog(oProw, oPcol, oTexto, oPicture)
-   IF ValType( oTexto ) == "N"
+   IF hb_IsNumeric(oTexto)
 
       IF ! Empty( oPicture ) .or. oPicture # Nil
          oTexto := Transform( oTexto, oPicture )

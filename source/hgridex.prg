@@ -231,12 +231,12 @@ METHOD AddRow( a , bupdate ) CLASS HGRIDEX
    DEFAULT bupdate TO .f.
    FOR n := 1 TO nLen STEP 4
       AAdd( aTmp1, a[ n ] )
-      AAdd( aTmp,  IF( ValType( a[ n + 1 ] ) == "N", a[ n + 1 ], - 1 ) )
+      AAdd( aTmp,  IF( hb_IsNumeric(a[n + 1]), a[ n + 1 ], - 1 ) )
 
-      AAdd( aTmp2,  IF( ValType( a[ n + 2  ] ) == "N", a[ n + 2 ], RGB( 12, 15, 46 ) ) )
+      AAdd( aTmp2,  IF( hb_IsNumeric(a[n + 2]), a[ n + 2 ], RGB( 12, 15, 46 ) ) )
 
 
-      AAdd( aTmp2,  IF( ValType( a[ n + 3  ] ) == "N", a[ n + 3 ], RGB( 192, 192, 192 ) ) )
+      AAdd( aTmp2,  IF( hb_IsNumeric(a[n + 3]), a[ n + 3 ], RGB( 192, 192, 192 ) ) )
 
       AAdd( ::aColors, aTmp2 )
       aTmp2 := { }
@@ -288,7 +288,7 @@ METHOD Notify( lParam )  CLASS HGRIDEX
    ENDIF
 
    Res := ListViewNotify( Self, lParam )
-   IF ValType( Res ) == "N"
+   IF hb_IsNumeric(Res)
       Hwg_SetDlgResult( oParent:Handle, Res )
       //RETURN 1
    ENDIF
