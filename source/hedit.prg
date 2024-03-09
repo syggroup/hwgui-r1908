@@ -305,7 +305,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
             ENDIF
 
          ELSEIF msg == WM_KEYDOWN
-            //IF ( CheckBit( lParam, 25 ) .OR. wParam > 111 ) .AND. ::bKeyDown != Nil .and. ValType( ::bKeyDown ) == 'B'
+            //IF ( CheckBit( lParam, 25 ) .OR. wParam > 111 ) .AND. hb_IsBlock(::bKeyDown)
             IF ( ( CheckBit( lParam, 25 ) .AND. wParam != 111 ) .OR.  ( wParam > 111 .AND. wParam < 124 ) ) .AND.;
                hb_IsBlock(::bKeyDown)
                nShiftAltCtrl := IIF( IsCtrlShift( .F., .T. ), 1 , 0 )

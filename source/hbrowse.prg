@@ -602,7 +602,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
          ::DoVScroll( wParam )
 
       ELSEIF msg == WM_CHAR
-         IF ! CheckBit( lParam, 32 ) //.AND.::bKeyDown != Nil .and. ValType( ::bKeyDown ) == 'B'
+         IF ! CheckBit( lParam, 32 ) //.AND. hb_IsBlock(::bKeyDown)
              nShiftAltCtrl := IIF( IsCtrlShift( .F., .T. ), 1 , 0 )
              nShiftAltCtrl += IIF( IsCtrlShift( .T., .F. ), 2 , nShiftAltCtrl )
              //nShiftAltCtrl += IIF( wParam > 111, 4, nShiftAltCtrl )
@@ -3135,7 +3135,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
    ::fiPos := fipos
 
    //IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ;
-   //   ( ::bEnter == Nil .OR. ( ValType( lRes := Eval( ::bEnter, Self, fipos ) ) == 'L' .AND. ! lRes ) )
+   //   ( ::bEnter == Nil .OR. ( hb_IsLogical(lRes := Eval( ::bEnter, Self, fipos )) .AND. ! lRes ) )
    IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ( ! ::onClick( )  )
       oColumn := ::aColumns[ fipos ]
       IF ::Type == BRW_DATABASE
@@ -3223,7 +3223,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
             oModDlg:brush := - 1
             oModDlg:nHeight := ::height + 1 // * 5
 
-            IF ValType( ::varbuf ) == 'N'
+            IF hb_IsNumeric(::varbuf)
                nChoic := ::varbuf
             ELSE
                ::varbuf := AllTrim( ::varbuf )
@@ -3306,7 +3306,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
 
          IF oModDlg:lResult
             IF oColumn:aList != Nil
-               IF ValType( ::varbuf ) == 'N'
+               IF hb_IsNumeric(::varbuf)
                   ::varbuf := nChoic
                ELSE
                   ::varbuf := oColumn:aList[ nChoic ]

@@ -1081,7 +1081,7 @@ STATIC FUNCTION onMdiCreate( oWnd, lParam )
       ENDIF
    ENDIF
    //draw rect focus
-   oWnd:nInitFocus := IIF(hb_IsObject(oWnd:nInitFocus), oWnd:nInitFocus:Handle, oWnd:nInitFocus )   
+   oWnd:nInitFocus := IIF(hb_IsObject(oWnd:nInitFocus), oWnd:nInitFocus:Handle, oWnd:nInitFocus )
    SENDMESSAGE( oWnd:handle, WM_UPDATEUISTATE, makelong( UIS_CLEAR, UISF_HIDEFOCUS ), 0 )
    SENDMESSAGE( oWnd:handle, WM_UPDATEUISTATE, makelong( UIS_CLEAR, UISF_HIDEACCEL ), 0 )
    IF oWnd:WindowState > 0
@@ -1222,7 +1222,7 @@ STATIC FUNCTION onEnterIdle( oDlg, wParam, lParam )
 
 //add by sauli
 STATIC FUNCTION onCloseQuery( o )
-   IF ValType( o:bCloseQuery ) = 'B'
+   IF hb_IsBlock(o:bCloseQuery)
       IF Eval( o:bCloseQuery )
          ReleaseAllWindows( o:handle )
       END
