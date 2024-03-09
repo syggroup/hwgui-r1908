@@ -448,13 +448,13 @@ METHOD InitCode128( cMode ) CLASS BarCode
    LOCAL nCount := 0
 
    // Errors
-   IF ValType( cCode ) <> "C"
+   IF !hb_IsChar(cCode)
       MsgInfo( "Barcode Code 128 requires a character value." )
       RETURN NIL
    ENDIF
 
    IF .NOT. Empty( cMode )
-      IF ValType( cMode ) = "C" .AND. Upper( cMode ) $ "ABC"
+      IF hb_IsChar(cMode) .AND. Upper( cMode ) $ "ABC"
          cMode := Upper( cMode )
       ELSE
          MsgInfo( "Code 128 modes are A,B o C. Character values." )

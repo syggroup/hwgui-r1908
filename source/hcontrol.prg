@@ -135,7 +135,7 @@ METHOD NewId() CLASS HControl
 
 METHOD AddName( cName ) CLASS HControl
 
-   IF !EMPTY( cName ) .AND. VALTYPE( cName) == "C" .AND. ! ":" $ cName .AND. ! "[" $ cName .AND. ! "->"$ cName
+   IF !EMPTY( cName ) .AND. hb_IsChar(cName) .AND. ! ":" $ cName .AND. ! "[" $ cName .AND. ! "->"$ cName
       ::xName := cName
          __objAddData( ::oParent, cName )
        ::oParent: & ( cName ) := Self
@@ -333,7 +333,7 @@ METHOD FontUnderline( lTrue ) CLASS HControl
 
 METHOD SetToolTip ( cToolTip ) CLASS HControl
 
-   IF VALTYPE( cToolTip ) = "C"  .AND. cToolTip != ::ToolTip
+   IF hb_IsChar(cToolTip) .AND. cToolTip != ::ToolTip
       SETTOOLTIPTITLE( ::GetparentForm():handle, ::handle, ctooltip )
       ::Tooltip := cToolTip
    ENDIF
@@ -741,7 +741,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
 
    Local nStyles
    // Enabling style for tooltips
-   //IF ValType( cTooltip ) == "C"
+   //IF hb_IsChar(cTooltip)
    //   IF nStyle == NIL
    //      nStyle := SS_NOTIFY
    //   ELSE
@@ -800,7 +800,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
    ::title := cCaption
    ::style := ::nLeft := ::nTop := ::nWidth := ::nHeight := 0
    // Enabling style for tooltips
-   //IF ValType( cTooltip ) == "C"
+   //IF hb_IsChar(cTooltip)
    ::Style := SS_NOTIFY
    //ENDIF
    ::bOther := bOther
@@ -1482,7 +1482,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
         IF hb_IsBlock(::bClick) .OR. ::id < 3
            SendMessage( ::oParent:handle, WM_COMMAND, makewparam( ::id, BN_CLICKED ), ::handle )
         ENDIF
-     ELSEIF ( nID := Ascan( ::oparent:acontrols, { | o | IIF( VALTYPE( o:title ) = "C", ( pos := At( "&", o:title )) > 0 .AND. ;
+     ELSEIF ( nID := Ascan( ::oparent:acontrols, { | o | IIF( hb_IsChar(o:title), ( pos := At( "&", o:title )) > 0 .AND. ;
               wParam == Asc( Upper( SubStr( o:title, ++ pos, 1 ) )), ) } )) > 0
         IF __ObjHasMsg( ::oParent:aControls[ nID ],"BCLICK") .AND.;
            hb_IsBlock(::oParent:aControls[nID]:bClick) .OR. ::oParent:aControls[ nID]:id < 3
@@ -1838,7 +1838,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
       nHeight := aTxtSize[ 2 ] //nHeight := IIF( lMultiLine, DrawText( dc, ::caption, itemRect,  DT_CALCRECT + DT_WORDBREAK ), aTxtSize[ 2 ] )
    ENDIF
 
-   bHasTitle := ValType( ::caption ) == "C" .and. ! Empty( ::Caption )
+   bHasTitle := hb_IsChar(::caption) .and. ! Empty( ::Caption )
 
    //   DrawTheIcon( ::handle, dc, bHasTitle, @itemRect, @captionRect, bIsPressed, bIsDisabled, ::hIcon, ::hbitmap, ::iStyle )
    IF ValType( ::hbitmap ) == "N" .AND. ::m_bDrawTransparent .AND. ( ! bIsDisabled .OR. ::istyle = ST_ALIGN_HORIZ_RIGHT )

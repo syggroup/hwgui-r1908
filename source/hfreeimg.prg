@@ -143,7 +143,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, bInit, ;
             bSize, ctooltip, cType ) CLASS HSayFImage
 
    IF Image != Nil
-      ::oImage := IIf( ValType( Image ) == "C", ;
+      ::oImage := IIf( hb_IsChar(Image), ;
                        IIf( cType != Nil, HFreeImage():AddFromVar( Image, cType ), HFreeImage():AddFile( Image ) ), Image )
       IF nWidth == Nil
          nWidth  := ::oImage:nWidth
@@ -161,7 +161,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, bInit, ;
 
 METHOD Redefine( oWndParent, nId, Image, bInit, bSize, ctooltip ) CLASS HSayFImage
 
-   ::oImage := IIf( ValType( Image ) == "C", HFreeImage():AddFile( Image ), Image )
+   ::oImage := IIf( hb_IsChar(Image), HFreeImage():AddFile( Image ), Image )
 
    ::Super:Redefine( oWndParent, nId, bInit, bSize, ctooltip )
    // ::classname:= "HSAYFIMAGE"
@@ -175,7 +175,7 @@ METHOD ReplaceImage( Image, cType )
    IF ::oImage != Nil
       ::oImage:Release()
    ENDIF
-   ::oImage := IIf( ValType( Image ) == "C", ;
+   ::oImage := IIf( hb_IsChar(Image), ;
                     IIf( cType != Nil, HFreeImage():AddFromVar( Image, cType ), HFreeImage():AddFile( Image ) ), Image )
 
    RETURN Nil

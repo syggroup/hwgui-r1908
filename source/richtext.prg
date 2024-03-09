@@ -668,7 +668,7 @@ METHOD NumCode( cCode, nValue, lScale ) CLASS RichText
 *********************************************************************
    LOCAL cWrite := ""
 
-   IF ValType( cCode ) == "C" .AND. ValType( nValue ) == "N"
+   IF hb_IsChar(cCode) .AND. ValType( nValue ) == "N"
 
       cCode := FormatCode( cCode )
 
@@ -707,7 +707,7 @@ METHOD LogicCode( cCode, lTest ) CLASS RichText
 *********************************************************************
    LOCAL cWrite := ""
 
-   IF ValType( cCode ) == "C" .AND. ValType( lTest ) == "L"
+   IF hb_IsChar(cCode) .AND. ValType( lTest ) == "L"
       IF lTest
          cWrite := ::TextCode( cCode )
       ENDIF
@@ -1175,7 +1175,7 @@ METHOD Borders( cEntity, cBorder ) CLASS RichText
 *********************************************************************
    LOCAL i, aBorder := { "t", "b", "l", "r" }
 
-   IF ValType( cBorder ) == "C"
+   IF hb_IsChar(cBorder)
       FOR i := 1 TO 4
          ::TextCode( cEntity + "brdr" + aBorder[ i ] + "\brdr" + cBorder )
       NEXT

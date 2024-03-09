@@ -601,7 +601,7 @@ METHOD Refresh()  CLASS HEdit
          vari := Transform( vari, ::cPicFunc + IIf( Empty( ::cPicFunc ), "", " " ) + ::cPicMask )
       ELSE
          vari := IIf( ::cType == "D", DToC( vari ), IIf( ::cType == "N", Str( vari ), ;
-                 IIf( ::cType == "C" .And. ValType( vari ) == "C", Trim( vari ), "" ) ) )
+                 IIf( ::cType == "C" .And. hb_IsChar(vari), Trim( vari ), "" ) ) )
       ENDIF
       ::Title := vari
    ENDIF
@@ -1668,7 +1668,7 @@ FUNCTION ParentGetDialog( o )
 FUNCTION SetColorinFocus( lDef, tcolor, bcolor, lFixed, lPersist )
 
    IF ValType( lDef ) <> "L"
-      lDef := ( ValType( lDef ) = "C" .AND. Upper( lDef ) = "ON" )
+      lDef := ( hb_IsChar(lDef) .AND. Upper( lDef ) = "ON" )
    ENDIF
    lColorinFocus := lDef
    IF ! lDef
@@ -1684,7 +1684,7 @@ FUNCTION SetColorinFocus( lDef, tcolor, bcolor, lFixed, lPersist )
 FUNCTION SetDisableBackColor( lDef, bcolor )
 
    IF ValType( lDef ) <> "L"
-      lDef := ( ValType( lDef ) = "C" .AND. Upper( lDef ) = "ON" )
+      lDef := ( hb_IsChar(lDef) .AND. Upper( lDef ) = "ON" )
 	 ENDIF
    //lColorinFocus := lDef
  	 IF ! lDef

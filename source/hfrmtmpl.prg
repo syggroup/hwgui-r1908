@@ -1183,7 +1183,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
    FUNCTION hfrm_GetProperty( xProp )
       LOCAL c
 
-      IF ValType( xProp ) == "C"
+      IF hb_IsChar(xProp)
          c := Left( xProp, 1 )
          IF c == "["
             xProp := SubStr( xProp, 2, Len( xProp ) - 2 )
@@ -1517,7 +1517,7 @@ METHOD PrintItem( oItem ) CLASS HRepTmpl
          ELSE
             cText := aGetSecond( oItem:aProp, "caption" )
          ENDIF
-         IF ValType( cText ) == "C"
+         IF hb_IsChar(cText)
             IF ( xProperty := aGetSecond( oItem:aProp, "border" ) ) != Nil ;
                  .AND. xProperty
                ::oPrinter:Box( x, y, x2, y2 )

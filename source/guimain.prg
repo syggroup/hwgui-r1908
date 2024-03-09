@@ -226,7 +226,7 @@ FUNCTION WChoice( arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel,
       addY += 30
    ENDIF
 
-   IF ValType( arr ) == "C"
+   IF hb_IsChar(arr)
       lArray := .F.
       aLen := RecCount()
       IF ( nField := FieldPos( arr ) ) == 0

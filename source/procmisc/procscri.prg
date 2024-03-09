@@ -101,7 +101,7 @@ LOCAL rezArray := Iif( lDebugInfo, { "", {}, {} }, { "", {} } )
    IF scrSource == Nil
       han := Nil
       poz := 0
-   ELSEIF VALTYPE( scrSource ) == "C"
+   ELSEIF hb_IsChar(scrSource)
       strbuf := SPACE( STR_BUFLEN )
       poz    := STR_BUFLEN+1
       han    := FOPEN( scrSource, FO_READ + FO_SHARED )
@@ -112,7 +112,7 @@ LOCAL rezArray := Iif( lDebugInfo, { "", {}, {} }, { "", {} } )
       IF !lppNoInit .or. s_pp == NIL
          s_pp := __pp_init()
       ENDIF
-      IF VALTYPE( scrSource ) == "C"
+      IF hb_IsChar(scrSource)
          WndOut( "Compiling ..." )
          WndOut( "" )
       ENDIF
@@ -120,7 +120,7 @@ LOCAL rezArray := Iif( lDebugInfo, { "", {}, {} }, { "", {} } )
       IF !CompileScr( s_pp, han, @strbuf, @poz, rezArray, scrSource )
          rezArray := Nil
       ENDIF
-      IF scrSource != Nil .AND. VALTYPE( scrSource ) == "C"
+      IF scrSource != Nil .AND. hb_IsChar(scrSource)
          WndOut()
          FCLOSE( han )
       ENDIF
@@ -251,7 +251,7 @@ Local cLine, lDebug := ( Len( rezArray ) >= 3 )
             BEGIN SEQUENCE
                AADD( rezArray[2], &( "{||EndScript("+Ltrim( Substr( stroka,7 ) )+")}" ) )
             RECOVER
-               IF scrSource != Nil .AND. VALTYPE( scrSource ) == "C"
+               IF scrSource != Nil .AND. hb_IsChar(scrSource)
                   WndOut()
                   FCLOSE( han )
                ENDIF
@@ -276,7 +276,7 @@ Local cLine, lDebug := ( Len( rezArray ) >= 3 )
             BEGIN SEQUENCE
                AADD( rezArray[2], &( "{||" + ALLTRIM( stroka ) + "}" ) )
             RECOVER
-               IF scrSource != Nil .AND. VALTYPE( scrSource ) == "C"
+               IF scrSource != Nil .AND. hb_IsChar(scrSource)
                   WndOut()
                   FCLOSE( han )
                ENDIF
@@ -420,7 +420,7 @@ PRIVATE iscr := 1, bOldError
    ENDIF
    lDebug := ( Len( aScript ) >= 3 )
    DO WHILE !hb_IsBlock(aScript[2, iscr])
-      IF VALTYPE( aScript[ 2,iscr ] ) == "C"
+      IF hb_IsChar(aScript[2, iscr])
          IF Left( aScript[ 2,iscr ],1 ) == "#"
             IF !lDebugger
                lSetDebugger := .T.

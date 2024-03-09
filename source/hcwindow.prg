@@ -702,9 +702,9 @@ METHOD SetAll( cProperty, Value, aControls, cClass ) CLASS HCustomWindow
    Local nLen , i //, oCtrl
 
    aControls := IIF( EMPTY( aControls ), ::aControls, aControls )
-   nLen := IIF( VALTYPE( aControls ) = "C", Len( ::&aControls ), LEN( aControls ) )
+   nLen := IIF( hb_IsChar(aControls), Len( ::&aControls ), LEN( aControls ) )
 	 FOR i = 1 TO nLen
-	    IF VALTYPE( aControls ) = "C"
+	    IF hb_IsChar(aControls)
 	       ::&aControls[ i ]:&cProperty := Value
 	    ELSEIF cClass == Nil .OR. UPPER( cClass ) == aControls[ i ]:ClassName
 	       IF Value = Nil
@@ -1035,7 +1035,7 @@ FUNCTION FindAccelerator( oCtrl, lParam )
      IF LEN(oCtrl:aControls[ i ]:aControls ) > 0
          RETURN FindAccelerator( oCtrl:aControls[ i ], lParam)
 	   ENDIF
-     IF __ObjHasMsg( oCtrl:aControls[ i ],"TITLE") .AND. VALTYPE( oCtrl:aControls[ i ]:title) = "C" .AND. ;
+     IF __ObjHasMsg( oCtrl:aControls[ i ],"TITLE") .AND. hb_IsChar(oCtrl:aControls[i]:title) .AND. ;
          ! oCtrl:aControls[ i ]:lHide .AND. IsWindowEnabled( oCtrl:aControls[ i ]:handle )
         IF ( pos := At( "&", oCtrl:aControls[ i ]:title ) ) > 0 .AND.  Upper( Chr( lParam)) ==  Upper( SubStr( oCtrl:aControls[ i ]:title, ++ pos, 1 ) )
            RETURN oCtrl:aControls[ i ]

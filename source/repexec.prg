@@ -213,7 +213,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
       ENDIF
    NEXT
 
-   IF ValType( aPaintRep[ FORM_VARS ] ) == "C"
+   IF hb_IsChar(aPaintRep[FORM_VARS])
       DO WHILE .T.
          stroka := RDSTR( , aPaintRep[ FORM_VARS ], @poz )
          IF Len( stroka ) = 0
@@ -497,7 +497,7 @@ FUNCTION PrintItem( oPrinter, aPaintRep, aItem, prnXCoef, prnYCoef, nYadd, lCalc
 STATIC FUNCTION ScriptExecute( aItem )
    LOCAL nError, nLineEr
    IF aItem[ ITEM_SCRIPT ] != Nil .AND. ! Empty( aItem[ ITEM_SCRIPT ] )
-      IF ValType( aItem[ ITEM_SCRIPT ] ) == "C"
+      IF hb_IsChar(aItem[ITEM_SCRIPT])
          IF ( aItem[ ITEM_SCRIPT ] := RdScript( , aItem[ ITEM_SCRIPT ] ) ) == Nil
             nError := CompileErr( @nLineEr )
             MsgStop( "Script error (" + LTrim( Str( nError ) ) + "), line " + LTrim( Str( nLineEr ) ) )

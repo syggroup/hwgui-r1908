@@ -295,9 +295,9 @@ METHOD FindDialog( hWndTitle, lAll ) CLASS HDialog
           RETURN Iif( i == 0, Nil, ::aModalDialogs[ i ] )
       ENDIF
    ELSE
-      i := AScan( ::aDialogs, { | o | VALTYPE( o:Title ) == "C" .AND. o:Title == hWndTitle } )
+      i := AScan( ::aDialogs, { | o | hb_IsChar(o:Title) .AND. o:Title == hWndTitle } )
       IF i = 0 .AND. ( lAll != Nil .AND. lAll )
-         i := AScan( ::aModalDialogs, { | o | VALTYPE( o:Title ) = "C" .AND. o:Title == hWndTitle } )
+         i := AScan( ::aModalDialogs, { | o | hb_IsChar(o:Title) .AND. o:Title == hWndTitle } )
          RETURN Iif( i == 0, Nil, ::aModalDialogs[ i ] )
       ENDIF
    ENDIF

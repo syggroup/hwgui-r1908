@@ -121,7 +121,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
       IF lRes == Nil ; lRes := .F. ; ENDIF
       ::oImage := IIf( lRes .OR. ValType( Image ) == "N",     ;
                        HBitmap():AddResource( Image ), ;
-                       IIf( ValType( Image ) == "C",     ;
+                       IIf( hb_IsChar(Image),     ;
                             HBitmap():AddFile( Image ), Image ) )
       IF nWidth == Nil .OR. nHeight == Nil
          ::nWidth  := ::oImage:nWidth
@@ -145,7 +145,7 @@ METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip, lTransp 
    IF lRes == Nil ; lRes := .F. ; ENDIF
    ::oImage := IIf( lRes .OR. ValType( xImage ) == "N",     ;
                     HBitmap():AddResource( xImage ), ;
-                    IIf( ValType( xImage ) == "C",     ;
+                    IIf( hb_IsChar(xImage),     ;
                          HBitmap():AddFile( xImage ), xImage ) )
    RETURN Self
 
@@ -203,7 +203,7 @@ METHOD ReplaceBitmap( Image, lRes ) CLASS HSayBmp
    IF lRes == Nil ; lRes := .F. ; ENDIF
    ::oImage := IIf( lRes .OR. ValType( Image ) == "N",     ;
                     HBitmap():AddResource( Image ), ;
-                    IIf( ValType( Image ) == "C",     ;
+                    IIf( hb_IsChar(Image),     ;
                          HBitmap():AddFile( Image ), Image ) )
 
    RETURN Nil
@@ -231,7 +231,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
    IF ::oImage == nil
       ::oImage := IIf( lRes .OR. ValType( Image ) == "N",  ;
                        HIcon():AddResource( Image,,,, lOEM ),  ;
-                       IIf( ValType( Image ) == "C",    ;
+                       IIf( hb_IsChar(Image),    ;
                             HIcon():AddFile( Image ), Image ) )
    ENDIF
    ::Activate()
@@ -246,7 +246,7 @@ METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip ) CLASS H
    IF ::oImage == nil
       ::oImage := IIf( lRes .OR. ValType( xImage ) == "N",   ;
                        HIcon():AddResource( xImage ), ;
-                       IIf( ValType( xImage ) == "C",   ;
+                       IIf( hb_IsChar(xImage),   ;
                             HIcon():AddFile( xImage ), xImage ) )
    ENDIF
    RETURN Self

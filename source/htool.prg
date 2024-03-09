@@ -326,8 +326,8 @@ METHOD CREATETOOL() CLASS hToolBar
 				    SendMessage( ::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( ::nSize, ::nSize ) )
 				 ENDIF
          */
-      IF ValType( ::aItem[ n, 1 ] )  == "C" .OR. ::aItem[ n, 1 ] > 1
-         IF ValType( ::aItem[ n, 1 ] )  == "C" .AND. At(".", ::aitem[ n, 1 ] ) != 0
+      IF hb_IsChar(::aItem[n, 1]) .OR. ::aItem[ n, 1 ] > 1
+         IF hb_IsChar(::aItem[n, 1]) .AND. At(".", ::aitem[ n, 1 ] ) != 0
             IF !File( ::aitem[ n, 1 ] )
                Loop
             ENDIF

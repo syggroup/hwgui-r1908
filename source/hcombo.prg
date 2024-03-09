@@ -142,7 +142,7 @@ METHOD New(oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight,
    ENDIF
 
    IF ::lText
-      ::value := Iif( vari == Nil .OR. Valtype( vari ) != "C", "", vari )
+      ::value := Iif( vari == Nil .OR. !hb_IsChar(vari), "", vari )
    ELSE
       ::value := Iif( vari == Nil .OR. Valtype( vari ) != "N", 1, vari )
    ENDIF
@@ -234,7 +234,7 @@ METHOD Redefine(oWndParent, nId, vari, bSetGet, aItems, oFont, bInit, bSize, bPa
    ::nDisplay := nDisplay
 
    IF ::lText
-      ::value := Iif( vari == Nil .OR. Valtype( vari ) != "C", "", vari )
+      ::value := Iif( vari == Nil .OR. !hb_IsChar(vari), "", vari )
    ELSE
       ::value := Iif( vari == Nil .OR. Valtype( vari ) != "N", 1, vari )
    ENDIF
@@ -498,8 +498,8 @@ METHOD Refresh() CLASS HComboBox
       ENDIF
       IF  ::columnBound = 1
          IF ::lText
-         //vari := IIF( ::bSetGetField != Nil  .AND. Valtype( vari ) = "C", TRIM( vari ), vari )
-            ::value := Iif( vari==Nil .OR. Valtype(vari) != "C", "", vari )
+         //vari := IIF( ::bSetGetField != Nil  .AND. hb_IsChar(vari), TRIM( vari ), vari )
+            ::value := Iif( vari==Nil .OR. !hb_IsChar(vari), "", vari )
                //SendMessage( ::handle, CB_SETEDITSEL, 0, LEN(::value) )
          ELSE
             ::value := Iif( vari==Nil .OR. Valtype(vari) != "N", 1 , vari )
@@ -544,7 +544,7 @@ RETURN Nil
 METHOD SetItem( nPos ) CLASS HComboBox
 
    /*
- IF VALTYPE( nPos ) = "C" .AND. ::lText
+ IF hb_IsChar(nPos) .AND. ::lText
     nPos := AScan( ::aItems, nPos )
       ComboSetString( ::handle, nPos  )
    ENDIF
@@ -588,7 +588,7 @@ METHOD SetValue( xItem ) CLASS HComboBox
 
    LOCAL nPos
 
-   IF ::lText .AND. Valtype( xItem ) = "C"
+   IF ::lText .AND. hb_IsChar(xItem)
       IF ::columnBound = 2
          nPos := AScan( ::aItemsBound, xItem )
       ELSE
@@ -610,7 +610,7 @@ METHOD GetValue() CLASS HComboBox
 
    //::value := Iif( ::lText, ::aItems[nPos], nPos )
    IF ::lText
-       IF ( ::lEdit .OR. Valtype( ::Value ) != "C" ) .AND. nPos <= 1
+       IF ( ::lEdit .OR. !hb_IsChar(::Value) ) .AND. nPos <= 1
            ::Value := GetEditText( ::oParent:handle, ::id )
            nPos := SendMessage( ::handle, CB_FINDSTRINGEXACT, -1, ::value ) + 1
         ELSEIF nPos > 0
@@ -673,7 +673,7 @@ RETURN ::ValueBound
 METHOD DisplayValue( cValue ) CLASS HComboBox
 
    IF cValue != Nil
-       IF ::lEdit .AND. VALTYPE( cValue ) = "C"
+       IF ::lEdit .AND. hb_IsChar(cValue)
          SetDlgItemText( ::oParent:handle, ::id, cValue )
          ::cDisplayValue := cValue
       ENDIF
@@ -688,7 +688,7 @@ METHOD DeleteItem( xIndex ) CLASS HComboBox
 
    LOCAL nIndex
 
-   IF ::lText .AND. VALTYPE( xIndex ) = "C"
+   IF ::lText .AND. hb_IsChar(xIndex)
          nIndex := SendMessage( ::handle, CB_FINDSTRINGEXACT, - 1, xIndex ) + 1
    ELSE
        nIndex := xIndex

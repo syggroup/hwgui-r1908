@@ -364,7 +364,7 @@ METHOD PAint( lpDis ) CLASS HStaticLink
    rcClient   := CopyRect( { drawInfo[ 4 ] , drawInfo[ 5 ], drawInfo[ 6 ], drawInfo[ 7 ] } )
    
    IF  ValType( ::hbitmap ) == "N"
-      bHasTitle := ValType( strtext ) == "C" .and. ! Empty( strtext )
+      bHasTitle := hb_IsChar(strtext) .and. ! Empty( strtext )
       itemRect[ 4 ] := aBmpSize[ 2 ] + 1
       bmpRect := PrepareImageRect( ::handle, dc, bHasTitle, @itemRect, @captionRect, , , ::hbitmap, ::iStyle )
       itemRect[ 4 ] := drawInfo[ 7 ]

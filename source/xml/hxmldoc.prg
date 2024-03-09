@@ -106,7 +106,7 @@ Local i, s := Space(level*2)+'<', lNewLine
    ELSEIF ::type == HBXML_TYPE_TAG
       s += '>'
       IF Empty( ::aItems ) .OR. ( Len(::aItems) == 1 .AND. ;
-            Valtype(::aItems[1]) == "C" .AND. Len(::aItems[1]) + Len(s) < 80 )
+            hb_IsChar(::aItems[1]) .AND. Len(::aItems[1]) + Len(s) < 80 )
          lNewLine := m->hxml_newline := .F.
       ELSE
          s += Chr(10)
@@ -118,7 +118,7 @@ Local i, s := Space(level*2)+'<', lNewLine
    ENDIF
 
    FOR i := 1 TO Len( ::aItems )
-      IF Valtype( ::aItems[i] ) == "C"
+      IF hb_IsChar(::aItems[i])
         IF handle >= 0
            IF ::type == HBXML_TYPE_CDATA .OR. ::type == HBXML_TYPE_COMMENT
               FWrite( handle, ::aItems[i] )
@@ -171,7 +171,7 @@ Local i
       nStart := 1
    ENDIF
    DO WHILE .T.
-      i := Ascan( ::aItems,{|a|Valtype(a)!="C".AND.a:title==cTitle},nStart )
+      i := Ascan( ::aItems,{|a|!hb_IsChar(a).AND.a:title==cTitle},nStart )
       IF i == 0
          EXIT
       ELSE
