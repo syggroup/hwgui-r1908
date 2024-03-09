@@ -50,13 +50,13 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
               bSize, bPaint, ctooltip, tcolor, bcolor )
 
    ::title   := cCaption
-   ::lValue   := IIf( vari == Nil .OR. ValType( vari ) != "L", .F., vari )
+   ::lValue   := IIf( vari == Nil .OR. !hb_IsLogical(vari), .F., vari )
    ::bSetGet := bSetGet
    ::backStyle :=  IIF( lTransp != NIL .AND. lTransp, TRANSPARENT, OPAQUE )
 
    ::Activate()
 
-   ::lEnter     := IIf( lEnter == Nil .OR. ValType( lEnter ) != "L", .F., lEnter )
+   ::lEnter     := IIf( lEnter == Nil .OR. !hb_IsLogical(lEnter), .F., lEnter )
    ::bClick     := bClick
    ::bLostFocus := bLFocus
    ::bGetFocus  := bGFocus
@@ -86,9 +86,9 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bInit, bSize, bPaint, bC
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, bcolor )
 
-   ::lValue   := IIf( vari == Nil .OR. ValType( vari ) != "L", .F., vari )
+   ::lValue   := IIf( vari == Nil .OR. !hb_IsLogical(vari), .F., vari )
    ::bSetGet := bSetGet
-   ::lEnter     := IIf( lEnter == Nil .OR. ValType( vari ) != "L", .F., lEnter )
+   ::lEnter     := IIf( lEnter == Nil .OR. !hb_IsLogical(vari), .F., lEnter )
    ::bClick     := bClick
    ::bLostFocus := bClick
    ::bGetFocus  := bGFocus
@@ -162,7 +162,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCheckButton
 METHOD SetValue( lValue ) CLASS HCheckButton
 
    SendMessage( ::handle, BM_SETCHECK, IIF( EMPTY( lValue) , 0, 1 ), 0 )
-   ::lValue := IIF( lValue = Nil .OR. Valtype( lValue ) != "L", .F., lValue )
+   ::lValue := IIF( lValue = Nil .OR. !hb_IsLogical(lValue), .F., lValue )
    IF hb_IsBlock(::bSetGet)
        Eval( ::bSetGet, lValue, Self )
    ENDIF
@@ -182,10 +182,10 @@ METHOD Refresh() CLASS HCheckButton
 
    IF hb_IsBlock(::bSetGet)
       var :=  Eval( ::bSetGet,, Self )
-      IF var = Nil .OR. Valtype( var ) != "L"
+      IF var = Nil .OR. !hb_IsLogical(var)
         var := SendMessage( ::handle, BM_GETCHECK, 0, 0 ) == 1
       ENDIF
-      ::lValue := Iif( var==Nil .OR. Valtype(var) != "L", .F., var )
+      ::lValue := Iif( var==Nil .OR. !hb_IsLogical(var), .F., var )
    ENDIF
    SendMessage( ::handle, BM_SETCHECK, IIf( ::lValue, 1, 0 ), 0 )
    RETURN Nil

@@ -318,7 +318,7 @@ METHOD Notify( lParam ) CLASS HeditUpDown
          res := Eval( ::oUpDown:bClickUp, ::oUpDown, ::oUpDown:nValue, iDelta, ipos )
       ENDIF
       ::oparent:lSuspendMsgsHandling := .F.
-      IF VALTYPE( res ) = "L" .AND. !res
+      IF hb_IsLogical(res) .AND. !res
          RETURN 0
       ENDIF
    ENDIF

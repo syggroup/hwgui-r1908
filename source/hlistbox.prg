@@ -165,7 +165,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HListBox
          IF hb_IsBlock(::bKeyDown)
          ::oparent:lSuspendMsgsHandling := .T.
          nEval := Eval( ::bKeyDown, Self, wParam )
-         IF (VALTYPE( nEval ) == "L" .AND. ! nEval ) .OR. ( nEval != -1 .AND. nEval != Nil )
+         IF (hb_IsLogical(nEval) .AND. ! nEval ) .OR. ( nEval != -1 .AND. nEval != Nil )
             ::oparent:lSuspendMsgsHandling := .F.
             RETURN 0
          ENDIF

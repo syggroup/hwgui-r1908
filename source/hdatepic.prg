@@ -237,7 +237,7 @@ METHOD When( ) CLASS HDatePicker
       res :=  Eval( ::bGetFocus, IIF( ::lShowTime, ::tValue, ::dValue ), Self )
       ::lnoValid := ! res
       ::oParent:lSuspendMsgsHandling := .F.
-      IF VALTYPE(res) = "L" .AND. ! res
+      IF hb_IsLogical(res) .AND. ! res
          WhenSetFocus( Self, nSkip )
          SendMessage( ::handle, DTM_CLOSEMONTHCAL, 0, 0 )
       ELSE
@@ -265,7 +265,7 @@ METHOD Valid( ) CLASS HDatePicker
    IF hb_IsBlock(::bLostFocus)
       ::oparent:lSuspendMsgsHandling := .T.
       res := Eval( ::bLostFocus, IIF( ::lShowTime, ::tValue, ::dValue ), Self )
-      res := IIF( ValType( res ) == "L", res, .T. )
+      res := IIF( hb_IsLogical(res), res, .T. )
       ::oparent:lSuspendMsgsHandling := .F.
       IF ! res
          POSTMESSAGE( ::handle, WM_KEYDOWN, VK_RIGHT, 0 )

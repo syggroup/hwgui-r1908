@@ -707,7 +707,7 @@ METHOD LogicCode( cCode, lTest ) CLASS RichText
 *********************************************************************
    LOCAL cWrite := ""
 
-   IF hb_IsChar(cCode) .AND. ValType( lTest ) == "L"
+   IF hb_IsChar(cCode) .AND. hb_IsLogical(lTest)
       IF lTest
          cWrite := ::TextCode( cCode )
       ENDIF

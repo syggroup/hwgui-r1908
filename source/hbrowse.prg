@@ -533,7 +533,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
       //
       IF hb_IsBlock(::bOther)
          IF !hb_IsNumeric( nRet := Eval( ::bOther,Self,msg,wParam,lParam ) )
-            nRet := IIF( VALTYPE( nRet ) = "L" .AND. ! nRet, 0, -1 )
+            nRet := IIF( hb_IsLogical(nRet) .AND. ! nRet, 0, -1 )
          ENDIF
          IF nRet >= 0
              RETURN -1
@@ -3118,7 +3118,7 @@ METHOD onClick( ) CLASS HBrowse
        ::oParent:lSuspendMsgsHandling := .T.
        lRes := Eval( ::bEnter, Self, ::fipos )
        ::oParent:lSuspendMsgsHandling := .F.
-       IF  ValType( lRes ) != "L"
+       IF !hb_IsLogical(lRes)
            RETURN .T.
        ENDIF
     ENDIF   
@@ -3402,7 +3402,7 @@ METHOD EditLogical( wParam, lParam ) CLASS HBrowse
          ::oparent:lSuspendMsgsHandling := .t.
          ::varbuf := Eval( ::aColumns[ ::fipos ]:bWhen, ::aColumns[ ::fipos ], ::varbuf )
          ::oparent:lSuspendMsgsHandling := .f.
-         IF ! ( ValType( ::varbuf ) == "L" .AND. ::varbuf )
+         IF ! ( hb_IsLogical(::varbuf) .AND. ::varbuf )
             RETURN .F.
          ENDIF
       ENDIF
@@ -3471,7 +3471,7 @@ METHOD WhenColumn( value, oGet ) CLASS HBROWSE
       ::oparent:lSuspendMsgsHandling := .T.
       res := EVAL( oColumn:bWhen, Value, oGet )
         oGet:lnovalid := res
-        IF ValType( res ) = "L" .AND. ! res
+        IF hb_IsLogical(res) .AND. ! res
            ::SetFocus()
            oGet:oParent:close()
         ENDIF
@@ -3493,7 +3493,7 @@ METHOD ValidColumn( value,oGet, oBtn ) CLASS HBROWSE
        ::oparent:lSuspendMsgsHandling := .T.
        res := EVAL( oColumn:bValid, value, oGet )
          oGet:lnovalid := res
-         IF ValType( res ) = "L" .AND. ! res
+         IF hb_IsLogical(res) .AND. ! res
             oGet:SetFocus()
          ENDIF
       ::oparent:lSuspendMsgsHandling := .F.
@@ -3538,7 +3538,7 @@ METHOD When() CLASS HBrowse
       ::lnoValid := .T.
         //::setfocus()
       res := Eval( ::bGetFocus, ::Colpos, Self )
-      res := IIF( VALTYPE(res) = "L", res, .T.)
+      res := IIF( hb_IsLogical(res), res, .T.)
       ::lnoValid := ! res
       IF ! res
          WhenSetFocus( Self, nSkip )
@@ -3560,8 +3560,8 @@ METHOD Valid() CLASS HBrowse
    IF hb_IsBlock(::bLostFocus)
       ::oParent:lSuspendMsgsHandling := .T.
       res := Eval( ::bLostFocus, ::ColPos, Self )
-      res := IIF( VALTYPE(res) = "L", res, .T. )
-      IF VALTYPE(res) = "L" .AND. ! res
+      res := IIF( hb_IsLogical(res), res, .T. )
+      IF hb_IsLogical(res) .AND. ! res
          ::setfocus( .T. )
          ::oParent:lSuspendMsgsHandling := .F.
          RETURN .F.

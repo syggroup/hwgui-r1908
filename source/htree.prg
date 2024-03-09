@@ -402,7 +402,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
 
       IF hb_IsBlock(::bDrag)
          nEval :=  Eval( ::bDrag, Self, ::hitemDrag, ::hitemDrop )
-         nEval := IIF( VALTYPE( nEval ) = "L", nEval, .T. )
+         nEval := IIF( hb_IsLogical(nEval), nEval, .T. )
          IF ! nEval
             RETURN 0
          ENDIF

@@ -184,7 +184,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
    ENDIF
    IF hb_IsBlock(::bOther)
       IF !hb_IsNumeric(nRet := Eval( ::bOther,Self,msg,wParam,lParam ))
-         nRet := IIF( VALTYPE( nRet ) = "L" .AND. ! nRet, 0, -1 )
+         nRet := IIF( hb_IsLogical(nRet) .AND. ! nRet, 0, -1 )
       ENDIF
       IF nRet >= 0
 		   RETURN -1

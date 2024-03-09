@@ -87,7 +87,7 @@ METHOD New( cPrinter, lmm, nFormType, nBin, lLandScape, nCopies, lProprierties, 
    IF hb_IsNumeric(nBin)
       ::BinNumber      := nBin
    ENDIF
-   IF Valtype(lLandScape) =="L"
+   IF hb_IsLogical(lLandScape)
       ::Landscape      := lLandScape
    ENDIF
    IF hb_IsNumeric(nCopies)
@@ -95,7 +95,7 @@ METHOD New( cPrinter, lmm, nFormType, nBin, lLandScape, nCopies, lProprierties, 
          ::Copies := nCopies
       ENDIF
    ENDIF
-   IF valtype(lProprierties ) <> "L"
+   IF !hb_IsLogical(lProprierties)
       lProprierties := .T.
    ENDIF
 

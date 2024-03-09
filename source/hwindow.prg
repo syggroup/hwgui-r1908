@@ -346,7 +346,7 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate ) CLASS HMa
       InitControls( Self )
       IF hb_IsBlock(::bInit)
          lres := Eval( ::bInit, Self )
-         IF ValType( lres ) = "L" .AND. ! lres
+         IF hb_IsLogical(lres) .AND. ! lres
             SENDMESSAGE( ::handle, WM_DESTROY, 0, 0 )
             RETURN Nil
          ENDIF
@@ -376,7 +376,7 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate ) CLASS HMa
    
       IF hb_IsBlock(::bInit)
          lres := Eval( ::bInit, Self )
-         IF ValType( lres ) = "L" .AND. ! lres
+         IF hb_IsLogical(lres) .AND. ! lres
             SENDMESSAGE( ::handle, WM_DESTROY, 0, 0 )
             RETURN Nil
          ENDIF
@@ -708,7 +708,7 @@ METHOD Activate( lShow, lMaximized, lMinimized,lCentered, bActivate, lModal ) CL
    IF hb_IsBlock(::bInit)
       //::hide()
       IF !hb_IsNumeric( nReturn := Eval( ::bInit, Self ) )
-         IF VALTYPE( nReturn ) == "L" .AND. ! nReturn
+         IF hb_IsLogical(nReturn) .AND. ! nReturn
             ::Close()
             RETURN Nil
          ENDIF
@@ -808,7 +808,7 @@ STATIC FUNCTION onCommand( oWnd, wParam, lParam )
                oChild:lSuspendMsgsHandling := .T.
                i := Eval( oChild:bDestroy, oChild )
                oChild:lSuspendMsgsHandling := .F.
-               i := IIf( Valtype(i) == "L", i, .T. )
+               i := IIf( hb_IsLogical(i), i, .T. )
                IF ! i
                   Return 0
                ENDIF
@@ -934,7 +934,7 @@ STATIC FUNCTION onSysCommand( oWnd, wParam, lParam )
          oWnd:lSuspendMsgsHandling := .T.
          i := Eval( oWnd:bDestroy, oWnd )
          oWnd:lSuspendMsgsHandling := .F.
-         i := IIf( ValType( i ) == "L", i, .t. )
+         i := IIf( hb_IsLogical(i), i, .t. )
          IF ! i
             RETURN 0
          ENDIF
@@ -1021,7 +1021,7 @@ STATIC FUNCTION onEndSession( oWnd, wParam )
 
    IF ISBLOCK( oWnd:bDestroy )
       i := Eval( oWnd:bDestroy, oWnd )
-      i := IIf( ValType( i ) == "L", i, .t. )
+      i := IIf( hb_IsLogical(i), i, .t. )
       IF ! i
          RETURN 0
       ENDIF
@@ -1074,7 +1074,7 @@ STATIC FUNCTION onMdiCreate( oWnd, lParam )
    InitObjects( oWnd, .T. )
    IF oWnd:bInit != Nil
       IF !hb_IsNumeric(nReturn := Eval( oWnd:bInit, oWnd ))
-         IF VALTYPE( nReturn ) == "L" .AND. ! nReturn
+         IF hb_IsLogical(nReturn) .AND. ! nReturn
             oWnd:Close()
             RETURN Nil
          ENDIF

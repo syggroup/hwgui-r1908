@@ -172,7 +172,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
    nWidth  -= IIF( Hwg_BitAnd( nStyle, WS_DLGFRAME + WS_BORDER ) > 0, 2, 0 )
 
    ::lTransp := IIF( lTransp != NIL, lTransp, .F. )
-   ::lVertical := IIF( lVertical != NIL .AND. VALTYPE( lVertical ) = "L", lVertical, ::lVertical )
+   ::lVertical := IIF( lVertical != NIL .AND. hb_IsLogical(lVertical), lVertical, ::lVertical )
    IF ::lTransp  .OR. ::lVertical
       nStyle += IIF( ::lTransp, TBSTYLE_TRANSPARENT, IIF( ::lVertical, CCS_VERT, 0 ) )
    ENDIF

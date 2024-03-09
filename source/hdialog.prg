@@ -350,7 +350,7 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
       oDlg:lSuspendMsgsHandling := .T.
       IF !hb_IsNumeric(nReturn := Eval( oDlg:bInit, oDlg ))
          oDlg:lSuspendMsgsHandling := .F.
-         IF ValType( nReturn ) = "L" .AND. ! nReturn
+         IF hb_IsLogical(nReturn) .AND. ! nReturn
             oDlg:Close()
             RETURN 0
          ENDIF

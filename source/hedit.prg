@@ -537,7 +537,7 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bInit, bSize, bPaint, ;
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, IIf( bcolor == Nil, GetSysColor( COLOR_BTNHIGHLIGHT ), bcolor ) )
    ::bKeyDown := bKeyDown
-   IF ValType( lMultiLine ) == "L"
+   IF hb_IsLogical(lMultiLine)
       ::lMultiLine := lMultiLine
    ENDIF
 
@@ -1136,7 +1136,7 @@ METHOD When() CLASS HEdit
       ENDIF
       ::oParent:lSuspendMsgsHandling := .T.
       res := Eval( ::bGetFocus, vari, IIF( ::oUpDown = Nil, Self, ::oUpDown ) )
-      res := IIf( ValType( res ) == "L", res, .T. )
+      res := IIf( hb_IsLogical(res), res, .T. )
       ::lnoValid := ! res
       ::oParent:lSuspendMsgsHandling := .F.
       IF ! res
@@ -1198,13 +1198,13 @@ METHOD Valid( ) CLASS HEdit
             ENDIF
             IF hb_IsBlock(::bLostFocus)
                res := Eval( ::bLostFocus, vari, IIF( ::oUpDown = Nil, Self, ::oUpDown ) )
-               res := IIF( ValType( res ) == "L", res, .T. )
+               res := IIF( hb_IsLogical(res), res, .T. )
             ENDIF
             IF res .AND. ::oUpDown != Nil // updown control
                //::oUpDown:nValue := vari
                res := ::oUpDown:Valid()
             ENDIF
-            IF ValType( res ) = "L" .AND. ! res
+            IF hb_IsLogical(res) .AND. ! res
                IF oDlg != Nil
                   oDlg:nLastKey := 0
                ENDIF
@@ -1228,7 +1228,7 @@ METHOD Valid( ) CLASS HEdit
         ::oparent:lSuspendMsgsHandling := .T.
         IF hb_IsBlock(::bLostFocus)
            res := Eval( ::bLostFocus, vari, Self )
-           res := IIF( ValType(res) == "L", res, .T. )
+           res := IIF( hb_IsLogical(res), res, .T. )
         ENDIF
         IF res .AND. ::oUpDown != Nil // updown control
            res := ::oUpDown:Valid()
@@ -1667,7 +1667,7 @@ FUNCTION ParentGetDialog( o )
 
 FUNCTION SetColorinFocus( lDef, tcolor, bcolor, lFixed, lPersist )
 
-   IF ValType( lDef ) <> "L"
+   IF !hb_IsLogical(lDef)
       lDef := ( hb_IsChar(lDef) .AND. Upper( lDef ) = "ON" )
    ENDIF
    lColorinFocus := lDef
@@ -1683,7 +1683,7 @@ FUNCTION SetColorinFocus( lDef, tcolor, bcolor, lFixed, lPersist )
 
 FUNCTION SetDisableBackColor( lDef, bcolor )
 
-   IF ValType( lDef ) <> "L"
+   IF !hb_IsLogical(lDef)
       lDef := ( hb_IsChar(lDef) .AND. Upper( lDef ) = "ON" )
 	 ENDIF
    //lColorinFocus := lDef
