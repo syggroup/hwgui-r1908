@@ -3449,7 +3449,7 @@ METHOD EditEvent( oCtrl, msg, wParam, lParam )
 METHOD onClickColumn( value, oGet, oBtn ) CLASS HBROWSE
    Local oColumn := ::aColumns[ ::fipos ]
 
-   IF VALTYPE( value ) = "D"
+   IF hb_IsDate(value)
       ::varbuf := value
       oGet:refresh()
       POSTMESSAGE( oBtn:handle, WM_KEYDOWN, VK_TAB, 0 )

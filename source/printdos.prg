@@ -274,7 +274,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
          oTexto := Str( oTexto )
       ENDIF
 
-   ELSEIF ValType( oTexto ) == "D"
+   ELSEIF hb_IsDate(oTexto)
       oTexto := DToC( oTexto )
    ELSE
       IF ! Empty( oPicture ) .or. oPicture # Nil
