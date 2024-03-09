@@ -145,7 +145,7 @@ METHOD AddEvent( nEvent, oCtrl, bAction, lNotify, cMethName ) CLASS HCustomWindo
 
    AAdd( IIf( lNotify == NIL .OR. ! lNotify, ::aEvents, ::aNotify ), ;
          { nEvent, IIf( hb_IsNumeric(oCtrl), oCtrl, oCtrl:id ), bAction } )
-   IF bAction != Nil .AND. ValType( oCtrl ) == "O"  //.AND. !hb_IsNumeric(oCtrl)
+   IF bAction != Nil .AND. hb_IsObject(oCtrl) //.AND. !hb_IsNumeric(oCtrl)
       IF cMethName != Nil //.AND. !__objHasMethod( oCtrl, cMethName )
          __objAddInline( oCtrl, cMethName, bAction )
       ENDIF
@@ -294,7 +294,7 @@ LOCAL oForm := IIF( EMPTY( oCtrl ), Self, oCtrl )
    DO WHILE ( oForm:oParent ) != Nil .AND. ! __ObjHasMsg( oForm, "GETLIST" )
       oForm := oForm:oParent
    ENDDO
-   RETURN IIF( VALTYPE( oForm ) == "O", oForm, ::oParent )
+   RETURN IIF( hb_IsObject(oForm), oForm, ::oParent )
 
 
 METHOD RefreshCtrl( oCtrl, nSeek ) CLASS HCustomWindow
@@ -984,7 +984,7 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
 
 FUNCTION ADDMETHOD( oObjectName, cMethodName, pFunction )    
 
-   IF VALTYPE( oObjectName ) = "O" .AND. ! EMPTY( cMethodName )
+   IF hb_IsObject(oObjectName) .AND. ! EMPTY( cMethodName )
       IF ! __ObjHasMsg( oObjectName, cMethodName )
           __objAddMethod( oObjectName, cMethodName, pFunction )  
       ENDIF   
@@ -994,7 +994,7 @@ FUNCTION ADDMETHOD( oObjectName, cMethodName, pFunction )
 
 FUNCTION ADDPROPERTY( oObjectName, cPropertyName, eNewValue )
 
-   IF VALTYPE( oObjectName ) = "O" .AND. ! EMPTY( cPropertyName )
+   IF hb_IsObject(oObjectName) .AND. ! EMPTY( cPropertyName )
       IF ! __objHasData( oObjectName, cPropertyName )
          IF EMPTY( __objAddData( oObjectName, cPropertyName ) )
               RETURN .F.
@@ -1013,7 +1013,7 @@ FUNCTION ADDPROPERTY( oObjectName, cPropertyName, eNewValue )
 
 FUNCTION REMOVEPROPERTY( oObjectName, cPropertyName )
 
-   IF VALTYPE( oObjectName ) = "O" .AND. ! EMPTY( cPropertyName ) .AND.;
+   IF hb_IsObject(oObjectName) .AND. ! EMPTY( cPropertyName ) .AND.;
        __objHasData( oObjectName, cPropertyName )
        RETURN EMPTY( __objDelData( oObjectName, cPropertyName ) )
    ENDIF

@@ -583,8 +583,8 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate, lModal ) C
    ENDIF
    */
 
-   IF ( ValType( ::nInitFocus ) = "O" .OR. ::nInitFocus > 0 )
-      ::nInitFocus := IIf( ValType( ::nInitFocus ) = "O", ::nInitFocus:Handle, ::nInitFocus )
+   IF ( hb_IsObject(::nInitFocus) .OR. ::nInitFocus > 0 )
+      ::nInitFocus := IIf( hb_IsObject(::nInitFocus), ::nInitFocus:Handle, ::nInitFocus )
       SETFOCUS( ::nInitFocus )
       ::nFocus := ::nInitFocus
    ELSEIF PtrtoUlong( GETFOCUS() ) = PtrtoUlong( ::handle ) .AND. Len( ::acontrols ) > 0
@@ -730,8 +730,8 @@ METHOD Activate( lShow, lMaximized, lMinimized,lCentered, bActivate, lModal ) CL
       Eval( bActivate, Self )
    ENDIF
 
-   IF ( ValType( ::nInitFocus ) = "O" .OR. ::nInitFocus > 0 )
-      ::nInitFocus := IIf( ValType( ::nInitFocus ) = "O", ::nInitFocus:Handle, ::nInitFocus )
+   IF ( hb_IsObject(::nInitFocus) .OR. ::nInitFocus > 0 )
+      ::nInitFocus := IIf( hb_IsObject(::nInitFocus), ::nInitFocus:Handle, ::nInitFocus )
       SETFOCUS( ::nInitFocus )
       ::nFocus := ::nInitFocus
    ELSEIF PtrtoUlong( GETFOCUS() ) = PtrtoUlong( ::handle ) .AND. Len( ::acontrols ) > 0
@@ -1081,7 +1081,7 @@ STATIC FUNCTION onMdiCreate( oWnd, lParam )
       ENDIF
    ENDIF
    //draw rect focus
-   oWnd:nInitFocus := IIF(VALTYPE( oWnd:nInitFocus ) = "O", oWnd:nInitFocus:Handle, oWnd:nInitFocus )   
+   oWnd:nInitFocus := IIF(hb_IsObject(oWnd:nInitFocus), oWnd:nInitFocus:Handle, oWnd:nInitFocus )   
    SENDMESSAGE( oWnd:handle, WM_UPDATEUISTATE, makelong( UIS_CLEAR, UISF_HIDEFOCUS ), 0 )
    SENDMESSAGE( oWnd:handle, WM_UPDATEUISTATE, makelong( UIS_CLEAR, UISF_HIDEACCEL ), 0 )
    IF oWnd:WindowState > 0
