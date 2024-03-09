@@ -61,7 +61,7 @@ FUNCTION InitControls( oWnd, lNoActivate )
             pArray[ i ]:lInit := .T.
          ENDIF
 //           IF empty(pArray[i]:handle)// <= 0
-         IF IF( ValType( pArray[ i ]:handle ) == "P", ptrtoulong( pArray[ i ]:handle ), pArray[ i ]:handle ) <= 0
+         IF IF( hb_IsPointer(pArray[i]:handle), ptrtoulong( pArray[ i ]:handle ), pArray[ i ]:handle ) <= 0
             pArray[ i ]:handle := GetDlgItem( oWnd:handle, pArray[ i ]:id )
 
             // writelog( "InitControl2"+str(pArray[i]:handle)+"/"+pArray[i]:classname )

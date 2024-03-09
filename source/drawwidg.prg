@@ -259,7 +259,7 @@ METHOD Add( nColor, nHatch ) CLASS HBrush
    IF nHatch == Nil
       nHatch := 99
    ENDIF
-   IF Valtype( nColor ) == "P"
+   IF hb_IsPointer(nColor)
       nColor := PTRTOULONG( nColor )
    ENDIF
    #ifdef __XHARBOUR__

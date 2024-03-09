@@ -1398,7 +1398,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
 
    IF msg == WM_THEMECHANGED
       IF ::Themed
-         IF ValType( ::hTheme ) == "P"
+         IF hb_IsPointer(::hTheme)
             HB_CLOSETHEMEDATA( ::htheme )
             ::hTheme       := nil
             //::m_bFirstTime := .T.
@@ -1681,7 +1681,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
 
       IF ( ISTHEMEDLOAD() )
 
-         IF ValType( ::hTheme ) == "P"
+         IF hb_IsPointer(::hTheme)
             HB_CLOSETHEMEDATA( ::htheme )
          ENDIF
          ::hTheme := nil
@@ -2154,7 +2154,7 @@ METHOD PAINT( lpdis ) CLASS HGroup
 
 	 // determine text length
 	 szText :=  ::Title
-   aSize :=  TxtRect( IIF( Empty( szText ), "A", szText ), Self ) 
+   aSize :=  TxtRect( IIF( Empty( szText ), "A", szText ), Self )
 	// distance from window top to group rect
 	 iUpDist := ( aSize[ 2 ] / 2 )
    dwStyle := ::Style //HWG_GETWINDOWSTYLE( ::handle ) //GetStyle();
