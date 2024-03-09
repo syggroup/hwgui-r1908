@@ -98,7 +98,7 @@ FUNCTION TimerProc( hWnd, idTimer, Time )
    HB_SYMBOL_UNUSED( hWnd )
 
    IF i != 0 .AND. HTimer():aTimers[ i ]:value > 0 .AND. HTimer():aTimers[ i ]:bAction != Nil .AND.;
-      ValType( HTimer():aTimers[ i ]:bAction ) == "B"
+      hb_IsBlock(HTimer():aTimers[i]:bAction)
       Eval( HTimer():aTimers[ i ]:bAction, HTimer():aTimers[i], time )
    ENDIF
 

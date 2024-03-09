@@ -1479,13 +1479,13 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
         wParam -= 48
      ENDIF
      IF ! EMPTY( ::title) .AND. ( pos := At( "&", ::title ) ) > 0 .AND. wParam == Asc( Upper( SubStr( ::title, ++ pos, 1 ) ) )
-        IF ValType( ::bClick ) == "B" .OR. ::id < 3
+        IF hb_IsBlock(::bClick) .OR. ::id < 3
            SendMessage( ::oParent:handle, WM_COMMAND, makewparam( ::id, BN_CLICKED ), ::handle )
         ENDIF
      ELSEIF ( nID := Ascan( ::oparent:acontrols, { | o | IIF( VALTYPE( o:title ) = "C", ( pos := At( "&", o:title )) > 0 .AND. ;
               wParam == Asc( Upper( SubStr( o:title, ++ pos, 1 ) )), ) } )) > 0
         IF __ObjHasMsg( ::oParent:aControls[ nID ],"BCLICK") .AND.;
-           ValType( ::oParent:aControls[ nID ]:bClick ) == "B" .OR. ::oParent:aControls[ nID]:id < 3
+           hb_IsBlock(::oParent:aControls[nID]:bClick) .OR. ::oParent:aControls[ nID]:id < 3
            SendMessage( ::oParent:handle, WM_COMMAND, makewparam( ::oParent:aControls[ nID ]:id, BN_CLICKED ), ::oParent:aControls[ nID ]:handle )
         ENDIF
      ENDIF

@@ -419,7 +419,7 @@ PRIVATE iscr := 1, bOldError
       Return .T.
    ENDIF
    lDebug := ( Len( aScript ) >= 3 )
-   DO WHILE VALTYPE( aScript[ 2,iscr ] ) != "B"
+   DO WHILE !hb_IsBlock(aScript[2, iscr])
       IF VALTYPE( aScript[ 2,iscr ] ) == "C"
          IF Left( aScript[ 2,iscr ],1 ) == "#"
             IF !lDebugger

@@ -1001,7 +1001,7 @@ FUNCTION ADDPROPERTY( oObjectName, cPropertyName, eNewValue )
          ENDIF
       ENDIF
       IF !EMPTY( eNewValue )
-         IF VALTYPE( eNewValue ) = "B"
+         IF hb_IsBlock(eNewValue)
             oObjectName: & ( cPropertyName ) := EVAL( eNewValue )
          ELSE
             oObjectName: & ( cPropertyName ) := eNewValue

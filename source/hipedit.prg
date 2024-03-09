@@ -133,7 +133,7 @@ STATIC FUNCTION __GetFocus( oCtrl )
       RETURN .t.
    ENDIF
 
-   IF ValType( oCtrl:bGetFocus ) == "B"
+   IF hb_IsBlock(oCtrl:bGetFocus)
       oCtrl:oparent:lSuspendMsgsHandling := .T.
       oCtrl:lnoValid := .T.
       xRet := Eval( oCtrl:bGetFocus, oCtrl )
@@ -151,7 +151,7 @@ STATIC FUNCTION __KillFocus( oCtrl )
       RETURN .t.
    ENDIF
 
-   IF ValType( oCtrl:bKillFocus ) == "B"
+   IF hb_IsBlock(oCtrl:bKillFocus)
       oCtrl:oparent:lSuspendMsgsHandling := .T.
       xRet := Eval( oCtrl:bKillFocus, oCtrl )
       oCtrl:oparent:lSuspendMsgsHandling := .F.

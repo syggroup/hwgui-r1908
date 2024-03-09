@@ -302,7 +302,7 @@ METHOD CREATETOOL() CLASS hToolBar
 	  ENDIF
 
    FOR n := 1 TO Len( ::aItem )
-      IF ValType( ::aItem[ n, 7 ] ) == "B"
+      IF hb_IsBlock(::aItem[n, 7])
           //::oParent:AddEvent( BN_CLICKED, ::aItem[ n, 2 ], ::aItem[ n , 7 ] )
       ENDIF
       IF ValType( ::aItem[ n, 9 ] ) == "A"
