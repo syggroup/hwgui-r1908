@@ -441,8 +441,8 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
          ELSEIF ::selstart = 0 .AND. "R" $ ::cPicFunc  //.AND. ::lPicComplex
             SendMessage( ::handle, EM_SETSEL, ::FirstEditable() - 1, ::FirstEditable() - 1 )
          ENDIF
-         //IF ( ::lPicComplex .OR. !Empty( ::cPicMask ) ) .AND. ::cType <> "N" .AND. ! ::lFirst
-         IF ::lPicComplex .AND. ::cType <> "N" .AND. ! ::lFirst
+         //IF ( ::lPicComplex .OR. !Empty( ::cPicMask ) ) .AND. ::cType != "N" .AND. ! ::lFirst
+         IF ::lPicComplex .AND. ::cType != "N" .AND. ! ::lFirst
             ::Title := Transform( ::Title, ::cPicFunc + " " + ::cPicMask )
          ENDIF
       ENDIF
@@ -801,17 +801,17 @@ METHOD DeleteChar( lBack ) CLASS HEdit
    ENDIF
   // msginfo(STR(NPOSEND)+STR(NPOSSTART)+::TITLE)
    /* NEW */
-   IF nPosEnd - nPosStart - 1 > 1 .AND.::lPicComplex .AND. ::cType <> "N" //.AND. NPOSEND < nGetLen
+   IF nPosEnd - nPosStart - 1 > 1 .AND.::lPicComplex .AND. ::cType != "N" //.AND. NPOSEND < nGetLen
       lBack := .T.
    ELSE
-      IF lBack .AND. ! ::IsEditable( nPosStart + 1, .T. ) //.AND.  ::cType <> "N"
-          nPosStart -= IIF( ::cType <> "N", 1, 0 )
+      IF lBack .AND. ! ::IsEditable( nPosStart + 1, .T. ) //.AND.  ::cType != "N"
+          nPosStart -= IIF( ::cType != "N", 1, 0 )
           IF nPosStart < 0
              SendMessage( ::handle, EM_SETSEL, ::FirstEditable() - 1, ::FirstEditable() - 1 )
              RETURN Nil
           ENDIF
       ENDIF
-      IF  ::lPicComplex .AND. ::cType <> "N" .AND. ::FirstNotEditable( nPosStart ) > 0 .AND. ;
+      IF  ::lPicComplex .AND. ::cType != "N" .AND. ::FirstNotEditable( nPosStart ) > 0 .AND. ;
                ( !lBack  .OR. ( lBack .AND. nPosEnd - nPosStart - 1 < 2 ))
          nPosEdit := ::FirstNotEditable( nPosStart  )
          nGetLen := Len( Trim( LEFT( ::title,  nPosEdit - 1 ) ) )
@@ -834,11 +834,11 @@ METHOD DeleteChar( lBack ) CLASS HEdit
    ELSE
       cBuf := Left( ::title, nPosStart ) + SubStr( ::title, nPosEnd )
    ENDIF
-   IF ::lPicComplex .AND. ::cType <> "N" .and. ;
+   IF ::lPicComplex .AND. ::cType != "N" .and. ;
    */
-   IF lBack .AND. ::lPicComplex .AND. ::cType <> "N" .AND. ( nPosStart + nPosEnd > 0 )
-      IF lBack .or. nPosStart <> ( nPosEnd - 2 )
-         IF  nPosStart <> ( nPosEnd - 2 )
+   IF lBack .AND. ::lPicComplex .AND. ::cType != "N" .AND. ( nPosStart + nPosEnd > 0 )
+      IF lBack .or. nPosStart != ( nPosEnd - 2 )
+         IF  nPosStart != ( nPosEnd - 2 )
             cBuf := Left( ::title, nPosStart ) + Space( nPosEnd - nPosStart - 1 ) + SubStr( ::title, nPosEnd )
          ENDIF
       ELSE

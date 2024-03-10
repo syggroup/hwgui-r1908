@@ -334,7 +334,7 @@ METHOD PrinterFile( fname ) CLASS PrintDos
 
    han := FOpen( fname, FO_READWRITE + FO_EXCLUSIVE )
 
-   IF han <> - 1
+   IF han != - 1
 
       DO WHILE .t.
 
@@ -390,7 +390,7 @@ METHOD TxttoGraphic( fName, osize, oPreview ) CLASS PrintDos
 
    SelectObject( oPrinter:hDC, oFont:handle )
 
-   IF han <> - 1
+   IF han != - 1
       DO WHILE .T.
          stroka := RDSTR( han, @strbuf, @poz, 2052 )
          IF Len( stroka ) = 0
@@ -435,7 +435,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
    LOCAL oEdit
    LOCAL oPrt := IIf( Empty( ::oPorta ) .or. ::oPorta == "PREVIEW", "LPT1", ::oPorta )
 
-   IF han <> - 1
+   IF han != - 1
       DO WHILE .T.
          stroka := RDSTR( han, @strbuf, @poz, 2052 )
          IF Len( stroka ) = 0

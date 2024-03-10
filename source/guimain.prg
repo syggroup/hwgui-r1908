@@ -382,7 +382,7 @@ FUNCTION Hwg_WriteIni( cSection, cEntry, cValue, cFile )
 FUNCTION SetHelpFileName ( cNewName )
    STATIC cName := ""
    LOCAL cOldName := cName
-   IF cNewName <> Nil
+   IF cNewName != Nil
       cName := cNewName
    ENDIF
    RETURN cOldName

@@ -105,7 +105,7 @@ METHOD New( cPrinter, lmm, nFormType, nBin, lLandScape, nCopies, lProprierties, 
    IF hDCPrn = Nil
       hDCPrn = 0
    ENDIF
-   IF hDCPrn <> 0
+   IF hDCPrn != 0
       ::hDCPrn = hDCPrn
       ::cPrinterName := cPrinter
    ELSE

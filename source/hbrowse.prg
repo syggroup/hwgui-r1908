@@ -1704,17 +1704,17 @@ METHOD HeaderOut( hDC ) CLASS HBrowse
    ENDIF
 
    x := ::x1
-   IF ::oHeadFont <> Nil
+   IF ::oHeadFont != Nil
       oldfont := SelectObject( hDC, ::oHeadFont:handle )
    ENDIF
-   IF ::headColor <> Nil
+   IF ::headColor != Nil
       oldc := SetTextColor( hDC, ::headColor )
    ENDIF
    fif := IIf( ::freeze > 0, 1, ::nLeftCol )
 
    DO WHILE x < ::x2 - 2
       oColumn := ::aColumns[ fif ]
-      IF oColumn:headColor <> Nil
+      IF oColumn:headColor != Nil
          toldc := SetTextColor( hDC, oColumn:headColor )
       ENDIF
       xSize := oColumn:width
@@ -1822,7 +1822,7 @@ METHOD HeaderOut( hDC ) CLASS HBrowse
       ENDIF
       x += xSize
 
-      IF oColumn:headColor <> Nil
+      IF oColumn:headColor != Nil
          SetTextColor( hDC, toldc )
       ENDIF
       fif := IIf( fif = ::freeze, ::nLeftCol, fif + 1 )
@@ -1858,10 +1858,10 @@ METHOD HeaderOut( hDC ) CLASS HBrowse
       DrawLine( hDC, ::xAdjRight, ::y1 - 1, ::x2 , ::y1 - 1  )
    ENDIF
    SetBkColor( hDC, oldBkColor )
-   IF ::headColor <> Nil
+   IF ::headColor != Nil
       SetTextColor( hDC, oldc )
    ENDIF
-   IF ::oHeadFont <> Nil
+   IF ::oHeadFont != Nil
       SelectObject( hDC, oldfont )
    ENDIF
    IF ::lResizing .AND. xDragMove > 0
@@ -3200,7 +3200,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
          lReadExit := SET( _SET_EXIT, .t. )
 
          ::lNoValid := .T.
-         IF Type <> "L"
+         IF Type != "L"
             bInit := IIf( wParam == Nil .OR. wParam = 13 .OR. Empty( lParam ), { | o | MoveWindow( o:handle, x1, y1, nWidth, o:nHeight + 1 ) }, ;
                        { | o | MoveWindow( o:handle, x1, y1, nWidth, o:nHeight + 1 ), ;
                            o:aControls[ 1 ]:SetFocus(), PostMessage( o:aControls[ 1 ]:handle, WM_CHAR, wParam, lParam ) } )
@@ -3208,7 +3208,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
             bInit := { || .F. }
          ENDIF
 
-         IF Type <> "M"
+         IF Type != "M"
             INIT DIALOG oModDlg ;
                  STYLE WS_POPUP + 1 + IIf( oColumn:aList == Nil, WS_BORDER, 0 ) + DS_CONTROL ;
                  At x1, y1 - IIf( oColumn:aList == Nil, 1, 0 ) ;
@@ -3248,7 +3248,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
          ELSE
             IF Type == "L"
                oModDlg:lResult := .T.
-            ELSEIF Type <> "M"
+            ELSEIF Type != "M"
                nHGet := Max( ( ::height - ( TxtRect( "N", self ) )[ 2 ] ) / 2 , 0 )
                @ 0, nHGet GET oGet VAR ::varbuf       ;
                   SIZE nWidth - IIF( oColumn:bClick != NIL, 16, 1 ) , ::height   ;
@@ -3801,7 +3801,7 @@ FUNCTION VScrollPos( oBrw, nType, lEof, nPos )
    ENDIF
    GetScrollRange( oBrw:handle, SB_VERT, @minPos, @maxPos )
    IF nPos == Nil
-      IF oBrw:Type <> BRW_DATABASE
+      IF oBrw:Type != BRW_DATABASE
          IF nType > 0 .AND. lEof
             Eval( oBrw:bSkip, oBrw, - 1 )
          ENDIF

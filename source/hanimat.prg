@@ -63,14 +63,14 @@ METHOD Init() CLASS HAnimation
       ::Super:Init()
       IF ::xResID != Nil
          Animate_OpenEx( ::handle, GetResources(), ::xResID )
-      ELSEIF ::cFileName <> Nil
+      ELSEIF ::cFileName != Nil
          Animate_Open( ::handle, ::cFileName )
       ENDIF
    ENDIF
    RETURN Nil
 
 METHOD Open( cFileName ) CLASS HAnimation
-   IF cFileName <> Nil
+   IF cFileName != Nil
       ::cFileName := cFileName
       Animate_Open( ::handle, ::cFileName )
    ENDIF

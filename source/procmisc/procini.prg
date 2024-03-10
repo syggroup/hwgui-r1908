@@ -72,7 +72,7 @@ LOCAL iniDbf := ( Upper( FilExten( fname ) ) == "DBF" )
    ELSE
       han    := FOPEN( fname, FO_READ + FO_SHARED )
    ENDIF
-   IF han <> - 1
+   IF han != - 1
       strfull := ""
       DO WHILE .T.
          kolstr ++
@@ -105,9 +105,9 @@ LOCAL iniDbf := ( Upper( FilExten( fname ) ) == "DBF" )
                ENDIF
                SET EXACT OFF
             ENDIF
-         ELSEIF ( prblo .OR. lWinIni ) .AND. Left( stroka,1 ) <> ";"
+         ELSEIF ( prblo .OR. lWinIni ) .AND. Left( stroka,1 ) != ";"
             poz1 := AT( "=", stroka )
-            IF poz1 <> 0
+            IF poz1 != 0
                lTruncAr := IIF( SUBSTR( stroka, poz1 - 1, 1 ) == '+', .F., .T. )
                vname    := RTRIM( SUBSTR( stroka, 1, IIF( lTruncAr, poz1 - 1, poz1 - 2 ) ) )
                stroka   := ALLTRIM( SUBSTR( stroka, poz1 + 1 ) )
@@ -140,7 +140,7 @@ LOCAL iniDbf := ( Upper( FilExten( fname ) ) == "DBF" )
                      &vname := .T.
                   CASE stroka = "off" .OR. stroka = "OFF" .OR. stroka = "Off" .OR. EMPTY( stroka )
                      &vname := .F.
-                  CASE ASC( stroka ) = 123 .AND. SUBSTR( stroka, 2, 1 ) <> "|"  // {
+                  CASE ASC( stroka ) = 123 .AND. SUBSTR( stroka, 2, 1 ) != "|"  // {
                      RDARR( vname, stroka )
                   OTHERWISE
                      &vname := RDZNACH( stroka )
@@ -165,7 +165,7 @@ LOCAL poz, znc
    ps := ALLTRIM( ps )
    IF ASC( ps ) = 34
       poz := AT( CHR( 34 ), SUBSTR( ps, 2 ) )
-      IF poz <> 0
+      IF poz != 0
          znc := SUBSTR( ps, 2, poz - 1 )
       ENDIF
    ELSE
@@ -180,17 +180,17 @@ LOCAL poz1
 //LOCAL lenm (variable not used)
 LOCAL len1, strv, newname
    poz1 := FIND_Z( SUBSTR( stroka, 2 ), "}" )
-   IF poz1 <> 0
+   IF poz1 != 0
       stroka := SUBSTR( stroka, 2, poz1 - 1 )
       //lenm   := LEN( &vname ) (value not used)
-      DO WHILE poz1 <> 0
+      DO WHILE poz1 != 0
          IF EMPTY( stroka )
             EXIT
          ELSE
             //i ++ (value not used)
             poz1 := FIND_Z( stroka )
             strv := LTRIM( SUBSTR( stroka, 1, IIF( poz1 = 0, 9999, poz1 - 1 ) ) )
-            IF ASC( strv ) = 123 .AND. SUBSTR( strv, 2, 1 ) <> "|"              // {
+            IF ASC( strv ) = 123 .AND. SUBSTR( strv, 2, 1 ) != "|"              // {
                AADD( &vname, {} )
                len1    := LEN( &vname )
                newname := vname + "[" + LTRIM( STR( len1, 3 ) ) + "]"

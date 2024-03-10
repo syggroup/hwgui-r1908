@@ -333,7 +333,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit,
       ::aImages := { }
       FOR i := 1 TO Len( aImages )
          AAdd( ::aImages, Upper( aImages[ i ] ) )
-         aImages[ i ] := IIf( lResour <> NIL.and.lResour, LoadBitmap( aImages[ i ] ), OpenBitmap( aImages[ i ] ) )
+         aImages[ i ] := IIf( lResour != NIL.and.lResour, LoadBitmap( aImages[ i ] ), OpenBitmap( aImages[ i ] ) )
       NEXT
       aBmpSize := GetBitmapSize( aImages[ 1 ] )
       ::himl := CreateImageList( aImages, aBmpSize[ 1 ], aBmpSize[ 2 ], 12, nBC )
