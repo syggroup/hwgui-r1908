@@ -205,7 +205,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
        ELSEIF   wParam = VK_UP
           getskip( ::oparent, ::handle, , -1 )
        ELSEIF wParam = VK_TAB
-          GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+          GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
        ENDIF
        RETURN 0
 */

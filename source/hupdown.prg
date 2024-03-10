@@ -437,7 +437,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HUpDown
    ENDIF
    IF msg == WM_CHAR
       IF wParam = VK_TAB
-          GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+          GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
           RETURN 0
       ELSEIF wParam == VK_RETURN
           GetSkip( ::oParent, ::handle, , 1 )
@@ -468,17 +468,17 @@ METHOD Refresh()  CLASS HUpDown
    RETURN Nil
 
 STATIC FUNCTION __When( oCtrl )
-   LOCAL res := .t., oParent, nSkip
+   LOCAL res := .T., oParent, nSkip
 
-   IF ! CheckFocus( oCtrl, .f. )
-      RETURN .t.
+   IF ! CheckFocus( oCtrl, .F. )
+      RETURN .T.
    ENDIF
    IF oCtrl:bGetFocus != Nil
       oCtrl:Refresh()
       oCtrl:lnoValid := .T.
-      oCtrl:oParent:lSuspendMsgsHandling := .t.
+      oCtrl:oParent:lSuspendMsgsHandling := .T.
       res := Eval( oCtrl:bGetFocus, Eval( oCtrl:bSetGet, , oCtrl ), oCtrl )
-      oCtrl:oParent:lSuspendMsgsHandling := .f.
+      oCtrl:oParent:lSuspendMsgsHandling := .F.
       oCtrl:lnoValid := ! res
       IF ! res
          oParent := ParentGetDialog( oCtrl )
@@ -493,10 +493,10 @@ STATIC FUNCTION __When( oCtrl )
    RETURN res
 
 STATIC FUNCTION __Valid( oCtrl )
-   LOCAL res := .t., hctrl , nSkip, oDlg
+   LOCAL res := .T., hctrl , nSkip, oDlg
    LOCAL ltab :=  GETKEYSTATE( VK_TAB ) < 0
 
-   IF ! CheckFocus( oCtrl, .t. )  .OR. oCtrl:lnoValid
+   IF ! CheckFocus( oCtrl, .T. )  .OR. oCtrl:lnoValid
       RETURN .T.
    ENDIF
    nSkip := IIf( GetKeyState( VK_SHIFT ) < 0 , - 1, 1 )
@@ -505,7 +505,7 @@ STATIC FUNCTION __Valid( oCtrl )
    IF oCtrl:bSetGet != Nil
       Eval( oCtrl:bSetGet, oCtrl:value )
    ENDIF
-   oCtrl:oparent:lSuspendMsgsHandling := .t.
+   oCtrl:oparent:lSuspendMsgsHandling := .T.
    hctrl := getfocus()
    oDlg := ParentGetDialog( oCtrl )
    IF oCtrl:bLostFocus != Nil

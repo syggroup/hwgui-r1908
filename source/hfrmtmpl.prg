@@ -241,9 +241,9 @@ METHOD Show( nMode, p1, p2, p3 ) CLASS HFormTmpl
    LOCAL i, j, cType
    LOCAL nLeft, nTop, nWidth, nHeight, cTitle, oFont, lClipper := .F., lExitOnEnter := .F.
    LOCAL xProperty, block, bFormExit, nstyle
-   LOCAL lModal := .f.
+   LOCAL lModal := .F.
    LOCAL lMdi := .F.
-   LOCAL lMdiChild := .f.
+   LOCAL lMdiChild := .F.
    LOCAL cBitmap := nil
    LOCAL oBmp := NIL
    MEMVAR oDlg
@@ -1059,7 +1059,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
                   m->nLength := j[ i, 3 ] //len(&(FieldName(i)))
                   m->nDec := j[ i, 4 ]
                   m->cPicture := Nil
-                  lEdit := .t.
+                  lEdit := .T.
                   oCtrl:AddColumn( HColumn():New( cHeader, fBlock, cValType, nLength, nDec, lEdit ) )
                NEXT
             ENDIF

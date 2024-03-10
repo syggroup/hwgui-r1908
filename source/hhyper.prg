@@ -226,10 +226,10 @@ METHOD GoToLinkUrl( csLink ) CLASS HStaticLink
    //ShellExecute(NULL              , _T("open")                             , csLink.operator LPCTSTR(), NULL                                 , NULL                                   , 2);
 
    IF hInstance < 33
-      RETURN .f.
+      RETURN .F.
    ENDIF
 
-   RETURN .t.
+   RETURN .T.
 
 METHOD GetLinkText() CLASS HStaticLink
 
@@ -290,7 +290,7 @@ METHOD OnSetCursor( pWnd, nHitTest, message ) CLASS HStaticLink
 
    hwg_SetCursor( ::m_hHyperCursor )
 
-   RETURN .t.
+   RETURN .T.
 
 METHOD SetLinkText( csLinkText ) CLASS HStaticLink
 
@@ -309,7 +309,7 @@ METHOD OnMouseMove( nFlags, lParam ) CLASS HStaticLink
 
    LOCAL xPos
    LOCAL yPos
-   LOCAL res  := .f.
+   LOCAL res  := .F.
 
    HB_SYMBOL_UNUSED( nFlags )
 

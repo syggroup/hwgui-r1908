@@ -137,7 +137,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HRichEdit
    ENDIF
    IF msg == WM_CHAR
       IF wParam = VK_TAB .AND. ::GetParentForm( Self ):Type < WND_DLG_RESOURCE
-         IF  ( IsCtrlShift(.T.,.f.) .OR. ! ::lAllowTabs )
+         IF  ( IsCtrlShift(.T.,.F.) .OR. ! ::lAllowTabs )
             RETURN 0
          ENDIF
       ENDIF
@@ -152,16 +152,16 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HRichEdit
    ENDIF
    IF msg == WM_KEYUP
      IF wParam = VK_TAB .AND. ::GetParentForm( Self ):Type < WND_DLG_RESOURCE
-         IF   IsCtrlShift(.T.,.f.)
+         IF   IsCtrlShift(.T.,.F.)
             GetSkip( ::oParent, ::handle, , ;
-                      iif( IsCtrlShift(.f., .t.), -1, 1) )
+                      iif( IsCtrlShift(.F., .T.), -1, 1) )
             RETURN 0
          ENDIF
       ENDIF
    ELSEIF msg == WM_KEYDOWN
-      IF wParam = VK_TAB .AND. ( IsCtrlShift(.T.,.f.) .OR. ! ::lAllowTabs )
+      IF wParam = VK_TAB .AND. ( IsCtrlShift(.T.,.F.) .OR. ! ::lAllowTabs )
          GetSkip( ::oParent, ::handle, , ;
-                      iif( IsCtrlShift(.f., .t.), -1, 1) )
+                      iif( IsCtrlShift(.F., .T.), -1, 1) )
          RETURN 0
       ELSEIF wParam = VK_TAB .AND. ::GetParentForm( Self ):Type >= WND_DLG_RESOURCE
          RE_INSERTTEXT( ::handle, CHR( VK_TAB ) )
@@ -223,9 +223,9 @@ METHOD UpdatePos( ) CLASS HRichEdit
 METHOD onChange( ) CLASS HRichEdit
 
    IF hb_IsBlock(::bChange)
-      ::oparent:lSuspendMsgsHandling := .t.
+      ::oparent:lSuspendMsgsHandling := .T.
       Eval( ::bChange, ::gettext(), Self  )
-      ::oparent:lSuspendMsgsHandling := .f.
+      ::oparent:lSuspendMsgsHandling := .F.
    ENDIF
    RETURN Nil
 
@@ -238,13 +238,13 @@ METHOD onLostFocus( ) CLASS HRichEdit
 
 METHOD When( ) CLASS HRichEdit
 
-    IF !CheckFocus( Self, .f. )
-       RETURN .t.
+    IF !CheckFocus( Self, .F. )
+       RETURN .T.
    ENDIF
    ::title := ::GetText()
-   ::oparent:lSuspendMsgsHandling := .t.
+   ::oparent:lSuspendMsgsHandling := .T.
    Eval( ::bGetFocus, ::title, Self ) // TODO: hb_IsBlock ?
-   ::oparent:lSuspendMsgsHandling := .f.
+   ::oparent:lSuspendMsgsHandling := .F.
  RETURN .T.
 
 
@@ -254,9 +254,9 @@ METHOD Valid( ) CLASS HRichEdit
        RETURN .T.
    ENDIF
    ::title := ::GetText()
-   ::oparent:lSuspendMsgsHandling := .t.
+   ::oparent:lSuspendMsgsHandling := .T.
    Eval( ::bLostFocus, ::title, Self )
-   ::oparent:lSuspendMsgsHandling := .f.
+   ::oparent:lSuspendMsgsHandling := .F.
 
   RETURN .T.
 

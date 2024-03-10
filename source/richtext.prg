@@ -1740,7 +1740,7 @@ METHOD Image( cName, ASize, nPercent, lCell, lInclude, lFrame, aFSize, cHorzAlig
    IF lCell
       ::nCurrColumn += 1
 
-      ::LogicCode( "pard", .t. )
+      ::LogicCode( "pard", .T. )
       ::TextCode( "intbl" )
       ::OpenGroup()
    ELSE
@@ -2464,12 +2464,12 @@ IF Abs(hDll) <= 32
         RETURN .F.
 ENDIF
 
-cFarProc:=GetProc32(hDll,"NViewLibLoad",.t.,LONG,STRING,LONG)
+cFarProc:=GetProc32(hDll,"NViewLibLoad",.T.,LONG,STRING,LONG)
 uResult=CallDll32(cFarProc,cName,0)
 
-cFarProc:=GetProc32(hDll,"GetWidth",.t.,_INT)
+cFarProc:=GetProc32(hDll,"GetWidth",.T.,_INT)
 nWidth=CallDll32(cFarProc)
-cFarProc:=GetProc32(hDll,"GetHeight",.t.,_INT)
+cFarProc:=GetProc32(hDll,"GetHeight",.T.,_INT)
 nHeight=CallDll32(cFarProc)
 
 FreeLib32(hDll)

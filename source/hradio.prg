@@ -236,7 +236,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFo
    ::backStyle :=  IIF( lTransp != NIL .AND. lTransp, TRANSPARENT, OPAQUE )
 
    ::Activate()
-   //::SetColor( tcolor, bColor, .t. )
+   //::SetColor( tcolor, bColor, .T. )
 
    //::oParent:AddControl( Self )
 
@@ -302,7 +302,7 @@ METHOD Redefine( oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ctooltip,
    ENDIF
    */
    ::backStyle :=  IIF( lTransp != NIL .AND. lTransp, TRANSPARENT, OPAQUE )
-   ::setcolor( tColor, bColor ,.t.)
+   ::setcolor( tColor, bColor ,.T.)
    ::oParent:AddControl( Self )
 
    ::oParent:AddControl( Self )
@@ -360,7 +360,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRadioButton
          GetSkip( ::oparent, ::handle, , 1 )
          RETURN 0
       ELSEIF wParam = VK_TAB //.AND. nType < WND_DLG_RESOURCE
-         GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+         GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
          RETURN 0
       ENDIF
       IF  ( wParam == VK_RETURN )
@@ -381,7 +381,7 @@ METHOD Notify( lParam ) CLASS HRadioButton
    LOCAL ndown := getkeystate( VK_RIGHT ) + getkeystate( VK_DOWN ) + GetKeyState( VK_TAB )
    LOCAL nSkip := 0
 
-   IF ! CheckFocus( Self, .t. )
+   IF ! CheckFocus( Self, .T. )
       RETURN 0
    ENDIF
 
@@ -414,23 +414,23 @@ METHOD onGotFocus() CLASS HRadioButton
 
 METHOD onClick() CLASS HRadioButton
    ::lWhen := .F.
-   ::lnoValid := .f.
+   ::lnoValid := .F.
    RETURN ::Valid( 0 )
 
 METHOD When( ) CLASS HRadioButton
-   LOCAL res := .t., nSkip
+   LOCAL res := .T., nSkip
 
-   IF ! CheckFocus( Self, .f. )
-      RETURN .t.
+   IF ! CheckFocus( Self, .F. )
+      RETURN .T.
    ENDIF
    nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .and. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
    ::lwhen := GetKeyState( VK_UP )  + GetKeyState( VK_DOWN ) + GetKeyState( VK_RETURN ) + GetKeyState( VK_TAB ) < 0
    IF hb_IsBlock(::bGetFocus)
       ::lnoValid := .T.
-      ::oParent:lSuspendMsgsHandling := .t.
+      ::oParent:lSuspendMsgsHandling := .T.
       res := Eval( ::bGetFocus, ::oGroup:nValue, Self )
       ::lnoValid := ! res
-      ::oparent:lSuspendMsgsHandling := .f.
+      ::oparent:lSuspendMsgsHandling := .F.
       IF ! res
          WhenSetFocus( Self, nSkip )
       ELSE

@@ -61,23 +61,23 @@ METHOD New( oWndParent, nId, aValue, bSetGet, nStyle, nLeft, nTop, nWidth, nHeig
       /*
       ::bGetFocus := bGFocus
       ::bLostFocus := bLFocus
-      ::oParent:AddEvent( EN_SETFOCUS,self,{|o,id|__When(o:FindControl(id))},.t.,"onGotFocus" )
-      ::oParent:AddEvent( EN_KILLFOCUS,self,{|o,id|__Valid(o:FindControl(id))},.t.,"onLostFocus" )
-      ::oParent:AddEvent( IPN_FIELDCHANGED,self,{|o,id|__Valid(o:FindControl(id))} ,.t.,"onChange")
+      ::oParent:AddEvent( EN_SETFOCUS,self,{|o,id|__When(o:FindControl(id))},.T.,"onGotFocus" )
+      ::oParent:AddEvent( EN_KILLFOCUS,self,{|o,id|__Valid(o:FindControl(id))},.T.,"onLostFocus" )
+      ::oParent:AddEvent( IPN_FIELDCHANGED,self,{|o,id|__Valid(o:FindControl(id))} ,.T.,"onChange")
       */
    //ELSE
    IF bGetFocus != Nil
       ::lnoValid := .T.
-        // ::oParent:AddEvent( EN_SETFOCUS,self,::bGetfocus,.t.,"onGotFocus" )
+        // ::oParent:AddEvent( EN_SETFOCUS,self,::bGetfocus,.T.,"onGotFocus" )
    ENDIF
    IF bKillFocus != Nil
-        // ::oParent:AddEvent( EN_KILLFOCUS,self,::bKillfocus,.t.,"onLostFocus" )
-      ::oParent:AddEvent( IPN_FIELDCHANGED, Self, ::bKillFocus, .t., "onChange" )
+        // ::oParent:AddEvent( EN_KILLFOCUS,self,::bKillfocus,.T.,"onLostFocus" )
+      ::oParent:AddEvent( IPN_FIELDCHANGED, Self, ::bKillFocus, .T., "onChange" )
    ENDIF
   // ENDIF
 
    // Notificacoes de Ganho e perda de foco
-   //::oParent:AddEvent( IPN_FIELDCHANGED,self,::bKillFocus, .t.,"onChange" )
+   //::oParent:AddEvent( IPN_FIELDCHANGED,self,::bKillFocus, .T.,"onChange" )
    ::oParent:AddEvent( EN_SETFOCUS , Self, { | o, id | __GetFocus( o:FindControl( id ) ) },, "onGotFocus" )
    ::oParent:AddEvent( EN_KILLFOCUS, Self, { | o, id | __KillFocus( o:FindControl( id ) ) },, "onLostFocus" )
 
@@ -97,7 +97,7 @@ METHOD Init() CLASS HIPedit
    IF ! ::lInit
       ::Super:Init()
       ::SetValue( ::aValue )
-      ::lInit := .t.
+      ::lInit := .T.
    ENDIF
 
    RETURN Nil
@@ -129,8 +129,8 @@ METHOD END() CLASS HIPedit
 STATIC FUNCTION __GetFocus( oCtrl )
    LOCAL xRet
 
-   IF ! CheckFocus( oCtrl, .f. )
-      RETURN .t.
+   IF ! CheckFocus( oCtrl, .F. )
+      RETURN .T.
    ENDIF
 
    IF hb_IsBlock(oCtrl:bGetFocus)
@@ -147,8 +147,8 @@ STATIC FUNCTION __GetFocus( oCtrl )
 STATIC FUNCTION __KillFocus( oCtrl )
    LOCAL xRet
 
-   IF ! CheckFocus( oCtrl, .t. ) .or. oCtrl:lNoValid
-      RETURN .t.
+   IF ! CheckFocus( oCtrl, .T. ) .or. oCtrl:lNoValid
+      RETURN .T.
    ENDIF
 
    IF hb_IsBlock(oCtrl:bKillFocus)

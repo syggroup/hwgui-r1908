@@ -920,7 +920,7 @@ LOCAL oParent, nCtrl,nPos
    IF wParam != VK_SHIFT  .AND. wParam != VK_CONTROL .AND. wParam != VK_MENU
       oParent := IIF( oMain != Nil, oMain, ParentGetDialog( oCtrl ) )
       IF oParent != Nil .AND. ! Empty( oParent:KeyList )
-         nctrl := IIf( IsCtrlShift(.t., .f.), FCONTROL, iif(IsCtrlShift(.f., .t.), FSHIFT, 0 ) )
+         nctrl := IIf( IsCtrlShift(.T., .F.), FCONTROL, iif(IsCtrlShift(.F., .T.), FSHIFT, 0 ) )
          IF ( nPos := AScan( oParent:KeyList, { | a | a[ 1 ] == nctrl.AND.a[ 2 ] == wParam } ) ) > 0
             Eval( oParent:KeyList[ nPos, 3 ], oCtrl )
             RETURN .T.

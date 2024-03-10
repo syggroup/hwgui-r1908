@@ -45,18 +45,18 @@ METHOD New( oWndParent, nLeft, nTop, nRight, nBottom, lPress, nStyle ) CLASS HRe
 
    DO CASE
    CASE nStyle = 1
-      ::oLine1 = HRect_Line():New( oWndParent, , .f., nLeft,  nTop,    nRight - nLeft, , nCor1 )
-      ::oLine3 = HRect_Line():New( oWndParent, , .f., nLeft,  nBottom, nRight - nLeft, , nCor2 )
+      ::oLine1 = HRect_Line():New( oWndParent, , .F., nLeft,  nTop,    nRight - nLeft, , nCor1 )
+      ::oLine3 = HRect_Line():New( oWndParent, , .F., nLeft,  nBottom, nRight - nLeft, , nCor2 )
 
    CASE nStyle = 2
-      ::oLine2 = HRect_Line():New( oWndParent, , .t., nLeft,  nTop,    nBottom - nTop, , nCor1 )
-      ::oLine4 = HRect_Line():New( oWndParent, , .t., nRight, nTop,    nBottom - nTop, , nCor2 )
+      ::oLine2 = HRect_Line():New( oWndParent, , .T., nLeft,  nTop,    nBottom - nTop, , nCor1 )
+      ::oLine4 = HRect_Line():New( oWndParent, , .T., nRight, nTop,    nBottom - nTop, , nCor2 )
 
    OTHERWISE
-      ::oLine1 = HRect_Line():New( oWndParent, , .f., nLeft,  nTop,    nRight - nLeft, , nCor1 )
-      ::oLine2 = HRect_Line():New( oWndParent, , .t., nLeft,  nTop,    nBottom - nTop, , nCor1 )
-      ::oLine3 = HRect_Line():New( oWndParent, , .f., nLeft,  nBottom, nRight - nLeft, , nCor2 )
-      ::oLine4 = HRect_Line():New( oWndParent, , .t., nRight, nTop,    nBottom - nTop, , nCor2 )
+      ::oLine1 = HRect_Line():New( oWndParent, , .F., nLeft,  nTop,    nRight - nLeft, , nCor1 )
+      ::oLine2 = HRect_Line():New( oWndParent, , .T., nLeft,  nTop,    nBottom - nTop, , nCor1 )
+      ::oLine3 = HRect_Line():New( oWndParent, , .F., nLeft,  nBottom, nRight - nLeft, , nCor2 )
+      ::oLine4 = HRect_Line():New( oWndParent, , .T., nRight, nTop,    nBottom - nTop, , nCor2 )
    ENDCASE
 
    RETURN Self
@@ -296,7 +296,7 @@ METHOD Paint( lpdis ) CLASS HDrawShape
 FUNCTION Rect( oWndParent, nLeft, nTop, nRight, nBottom, lPress, nST )
 
    IF lPress = NIL
-      lPress := .f.
+      lPress := .F.
    ENDIF
 
    RETURN  HRect():New( oWndParent, nLeft, nTop, nRight, nBottom, lPress, nST )
@@ -419,7 +419,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HContainer
          ELSEIF  wParam = VK_UP
             GetSkip( ::oparent, ::handle, , -1 )
          ELSEIF wParam = VK_TAB
-            GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+            GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
          ENDIF
          RETURN 0
       ELSEIF msg = WM_SYSKEYUP

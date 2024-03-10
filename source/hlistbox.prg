@@ -159,7 +159,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HListBox
          RETURN - 1
       ENDIF
       IF wParam = VK_TAB //.AND. nType < WND_DLG_RESOURCE
-         GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+         GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
         //RETURN 0
       ENDIF
          IF hb_IsBlock(::bKeyDown)
@@ -263,12 +263,12 @@ METHOD onChange( oCtrl ) CLASS HListBox
 
 
 METHOD When( oCtrl ) CLASS HListBox
-   LOCAL res := .t., nSkip
+   LOCAL res := .T., nSkip
 
    HB_SYMBOL_UNUSED( oCtrl )
 
-   IF ! CheckFocus( Self, .f. )
-      RETURN .t.
+   IF ! CheckFocus( Self, .F. )
+      RETURN .T.
    ENDIF
     nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .AND. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
    IF hb_IsBlock(::bSetGet)
@@ -276,9 +276,9 @@ METHOD When( oCtrl ) CLASS HListBox
    ENDIF
    IF hb_IsBlock(::bGetFocus)
       ::lnoValid := .T.
-      ::oparent:lSuspendMsgsHandling := .t.
+      ::oparent:lSuspendMsgsHandling := .T.
       res := Eval( ::bGetFocus, ::Value, Self )
-      ::oparent:lSuspendMsgsHandling := .f.
+      ::oparent:lSuspendMsgsHandling := .F.
       ::lnoValid := ! res
       IF ! res
          WhenSetFocus( Self, nSkip )
@@ -295,8 +295,8 @@ METHOD Valid( oCtrl ) CLASS HListBox
 
    HB_SYMBOL_UNUSED( oCtrl )
 
-   IF ! CheckFocus( Self, .t. ) .or. ::lNoValid
-      RETURN .t.
+   IF ! CheckFocus( Self, .T. ) .or. ::lNoValid
+      RETURN .T.
    ENDIF
    //nSkip := IIf( GetKeyState( VK_SHIFT ) < 0 , - 1, 1 )
    IF ( oDlg := ParentGetDialog( Self ) ) == Nil .OR. oDlg:nLastKey != 27
@@ -308,9 +308,9 @@ METHOD Valid( oCtrl ) CLASS HListBox
          oDlg:nLastKey := 27
       ENDIF
       IF hb_IsBlock(::bLostFocus)
-         ::oparent:lSuspendMsgsHandling := .t.
+         ::oparent:lSuspendMsgsHandling := .T.
          res := Eval( ::bLostFocus, ::value, Self )
-         ::oparent:lSuspendMsgsHandling := .f.
+         ::oparent:lSuspendMsgsHandling := .F.
          IF ! res
             ::SetFocus( .T. ) //( ::handle )
             IF oDlg != Nil

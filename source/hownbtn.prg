@@ -23,7 +23,7 @@ CLASS VAR cPath SHARED
    DATA state
    DATA bClick
    DATA lPress  INIT .F.
-   DATA lCheck  INIT .f.
+   DATA lCheck  INIT .F.
    DATA xt, yt, widtht, heightt
    DATA oBitmap, xb, yb, widthb, heightb, lTransp, trColor
    DATA lEnabled INIT .T.
@@ -138,7 +138,7 @@ METHOD Activate() CLASS HOwnButton
                                 ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
       IF ! ::lEnabled
-         EnableWindow( ::handle, .f. )
+         EnableWindow( ::handle, .F. )
          ::Disable()
       ENDIF
    ENDIF
@@ -490,10 +490,10 @@ METHOD Release()  CLASS HOwnButton
 
 
 METHOD onGetFocus()  CLASS HOwnButton
-   LOCAL res := .t., nSkip
+   LOCAL res := .T., nSkip
 
-   IF ::bGetFocus == Nil .OR. !CheckFocus(Self, .f.)
-      RETURN .t.
+   IF ::bGetFocus == Nil .OR. !CheckFocus(Self, .F.)
+      RETURN .T.
    ENDIF
    nSkip := iif( GetKeyState( VK_UP ) < 0 .or. (GetKeyState( VK_TAB ) < 0 .and. GetKeyState(VK_SHIFT) < 0 ), -1, 1 )
    IF hb_IsBlock(::bGetFocus)
@@ -508,7 +508,7 @@ METHOD onGetFocus()  CLASS HOwnButton
 
 METHOD onLostFocus()  CLASS HOwnButton
 
-    IF ::bLostFocus != Nil .AND. !CheckFocus(Self, .t.)
+    IF ::bLostFocus != Nil .AND. !CheckFocus(Self, .T.)
        RETURN .T.
    ENDIF
     IF hb_IsBlock(::bLostFocus)

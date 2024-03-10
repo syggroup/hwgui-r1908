@@ -934,7 +934,7 @@ STATIC FUNCTION onSysCommand( oWnd, wParam, lParam )
          oWnd:lSuspendMsgsHandling := .T.
          i := Eval( oWnd:bDestroy, oWnd )
          oWnd:lSuspendMsgsHandling := .F.
-         i := IIf( hb_IsLogical(i), i, .t. )
+         i := IIf( hb_IsLogical(i), i, .T. )
          IF ! i
             RETURN 0
          ENDIF
@@ -1021,7 +1021,7 @@ STATIC FUNCTION onEndSession( oWnd, wParam )
 
    IF ISBLOCK( oWnd:bDestroy )
       i := Eval( oWnd:bDestroy, oWnd )
-      i := IIf( hb_IsLogical(i), i, .t. )
+      i := IIf( hb_IsLogical(i), i, .T. )
       IF ! i
          RETURN 0
       ENDIF
@@ -1172,12 +1172,12 @@ Static Function onMdiActivate( oWnd,wParam, lParam )
       RETURN 0
    ELSEIF lConf //oWnd:Handle = wParam
       IF  ! SelfFocus( oWnd:Screen:handle, wParam ) .AND. oWnd:bLostFocus != Nil //.AND.wParam == 0
-         oWnd:lSuspendMsgsHandling := .t.
+         oWnd:lSuspendMsgsHandling := .T.
          //IF oWnd:Screen:handle = lParam
          //   SetWindowPos( oWnd:Screen:Handle, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOACTIVATE + SWP_NOOWNERZORDER + SWP_NOSIZE + SWP_NOMOVE )
          //ENDIF
          Eval( oWnd:bLostFocus, oWnd )
-         oWnd:lSuspendMsgsHandling := .f.
+         oWnd:lSuspendMsgsHandling := .F.
       ENDIF
       IF oWnd:lModal
          aWndMain := oWnd:GETMAIN():aWindows
@@ -1195,12 +1195,12 @@ Static Function onMdiActivate( oWnd,wParam, lParam )
          AEVAL( oWnd:aChilds,{| wH | EnableWindow( wH, .T. ) })             
      ENDIF
       IF oWnd:bGetFocus != Nil .AND. ! oWnd:lSuspendMsgsHandling .AND. ! oWnd:IsMaximized()
-         oWnd:lSuspendMsgsHandling := .t.
+         oWnd:lSuspendMsgsHandling := .T.
          IF EMPTY( oWnd:nFocus )
              UpdateWindow( oWnd:Handle)
          ENDIF
          Eval( oWnd:bGetFocus, oWnd )
-         oWnd:lSuspendMsgsHandling := .f.
+         oWnd:lSuspendMsgsHandling := .F.
       ENDIF
    ENDIF
 

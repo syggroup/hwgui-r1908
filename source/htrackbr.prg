@@ -108,7 +108,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTrackBar
    ELSEIF msg == WM_CHAR
       IF wParam = VK_TAB
          GetSkip( ::oParent, ::handle, , ;
-                      iif( IsCtrlShift(.f., .t.), -1, 1) )
+                      iif( IsCtrlShift(.F., .T.), -1, 1) )
           RETURN 0
       ENDIF
 

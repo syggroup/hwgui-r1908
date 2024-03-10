@@ -138,7 +138,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HDatePicker
    ENDIF
    IF msg == WM_CHAR
       IF wParam = VK_TAB
-        GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+        GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
         RETURN 0
       ELSEIF wParam == VK_RETURN
          GetSkip( ::oParent, ::handle, , 1 )
@@ -150,7 +150,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HDatePicker
         ENDIF
    ELSEIF  msg = WM_GETDLGCODE
       IF wParam = VK_TAB //.AND.  ::GetParentForm( Self ):Type < WND_DLG_RESOURCE
-        // GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+        // GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
          RETURN DLGC_WANTTAB
       ENDIF
     ENDIF
@@ -225,10 +225,10 @@ METHOD onChange( nMess ) CLASS HDatePicker
    RETURN .T.
 
 METHOD When( ) CLASS HDatePicker
-   LOCAL res := .t.,  nSkip
+   LOCAL res := .T.,  nSkip
 
-   IF ! CheckFocus( Self, .f. )
-      RETURN .t.
+   IF ! CheckFocus( Self, .F. )
+      RETURN .T.
    ENDIF
    IF hb_IsBlock(::bGetFocus)
       nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .and. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
@@ -248,7 +248,7 @@ METHOD When( ) CLASS HDatePicker
    RETURN res
 
 METHOD Valid( ) CLASS HDatePicker
-   LOCAL  res := .t.
+   LOCAL  res := .T.
 
    /*
    IF ! SELFFOCUS( GetParent( GetFocus() ) , ::GetParentForm():Handle )

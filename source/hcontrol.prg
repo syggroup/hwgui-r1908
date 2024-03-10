@@ -856,7 +856,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS  HStatic
       ELSEIF   wParam = VK_UP
          getskip( ::oparent, ::handle,, - 1 )
       ELSEIF wParam = VK_TAB
-         GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+         GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
       ENDIF
       RETURN 0
    ELSEIF msg == WM_SYSKEYUP
@@ -1093,7 +1093,7 @@ METHOD onevent( msg, wParam, lParam ) CLASS HButton
       ENDIF
       IF ! ProcKeyList( Self, wParam )
          IF  wParam = VK_TAB
-            GetSkip( ::oparent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1)  )
+            GetSkip( ::oparent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1)  )
             RETURN 0
          ELSEIF wParam = VK_LEFT .OR. wParam = VK_UP
             GetSkip( ::oparent, ::handle, , -1 )
@@ -1166,16 +1166,16 @@ METHOD NoteCaption( cNote )  CLASS HButton         //*
    RETURN ::cNote   
 
 METHOD onGetFocus()  CLASS HButton
-   LOCAL res := .t., nSkip
+   LOCAL res := .T., nSkip
 
-   IF  ! CheckFocus( Self, .f. ) .OR. ::bGetFocus = Nil
-      RETURN .t.
+   IF  ! CheckFocus( Self, .F. ) .OR. ::bGetFocus = Nil
+      RETURN .T.
    ENDIF
    IF hb_IsBlock(::bGetFocus)
       nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .and. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
-      ::oParent:lSuspendMsgsHandling := .t.
+      ::oParent:lSuspendMsgsHandling := .T.
       res := Eval( ::bGetFocus, ::title, Self )
-      ::oParent:lSuspendMsgsHandling := .f.
+      ::oParent:lSuspendMsgsHandling := .F.
       IF res != Nil .AND.  EMPTY( res )
          WhenSetFocus( Self, nSkip )
          IF ::lflat 
@@ -1193,9 +1193,9 @@ METHOD onLostFocus()  CLASS HButton
   ENDIF
   ::lnoWhen := .F.
   IF hb_IsBlock(::bLostFocus).AND. SelfFocus( GetParent( GetFocus() ), ::getparentform():Handle )
-         ::oparent:lSuspendMsgsHandling := .t.
+         ::oparent:lSuspendMsgsHandling := .T.
       Eval( ::bLostFocus, ::title, Self)
-      ::oparent:lSuspendMsgsHandling := .f.
+      ::oparent:lSuspendMsgsHandling := .F.
    ENDIF
    
    RETURN Nil
@@ -1225,17 +1225,17 @@ CLASS HButtonEX INHERIT HButton
    DATA m_bmpParent
    DATA m_pOldParentBitmap
    DATA m_csbitmaps init {,,,, }
-   DATA m_bToggled INIT .f.
+   DATA m_bToggled INIT .F.
    DATA PictureMargin INIT 0
 
-   DATA m_bDrawTransparent INIT .f.
+   DATA m_bDrawTransparent INIT .F.
 
    METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
                cCaption, oFont, bInit, bSize, bPaint, bClick, cTooltip, ;
                tcolor, bColor, hBitmap, iStyle, hicon, Transp, bGFocus, nPictureMargin, lnoThemes, bOther )
    DATA iStyle
    DATA m_bmpBk, m_pbmpOldBk
-   DATA  bMouseOverButton INIT .f.
+   DATA  bMouseOverButton INIT .F.
 
    METHOD Paint( lpDis )
    METHOD SetBitmap( hBitMap )
@@ -1273,10 +1273,10 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
    DEFAULT Transp TO .T.
    DEFAULT nPictureMargin TO 0
    DEFAULT lnoThemes  TO .F.
-   ::m_bLButtonDown := .f.
-   ::m_bSent := .f.
-   ::m_bLButtonDown := .f.
-   ::m_bIsToggle := .f.
+   ::m_bLButtonDown := .F.
+   ::m_bSent := .F.
+   ::m_bLButtonDown := .F.
+   ::m_bIsToggle := .F.
 
    cCaption := IIF( cCaption = Nil, "", cCaption )
    ::Caption := cCaption
@@ -1301,11 +1301,11 @@ METHOD Redefine( oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ;
    DEFAULT iStyle TO ST_ALIGN_HORIZ
    DEFAULT nPictureMargin TO 0
    bPaint   := { | o, p | o:paint( p ) }
-   ::m_bLButtonDown := .f.
-   ::m_bIsToggle := .f.
+   ::m_bLButtonDown := .F.
+   ::m_bIsToggle := .F.
 
-   ::m_bLButtonDown := .f.
-   ::m_bSent := .f.
+   ::m_bLButtonDown := .F.
+   ::m_bSent := .F.
 
    ::title   := cCaption
 
@@ -1375,7 +1375,7 @@ METHOD INIT() CLASS HButtonEx
          IF ( ::m_nTypeStyle == BS_DEFPUSHBUTTON )
 
             // Set default state for a default button
-            ::m_bIsDefault := .t.
+            ::m_bIsDefault := .T.
 
             // Adjust style for default button
             ::m_nTypeStyle := BS_PUSHBUTTON
@@ -1427,7 +1427,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
       ENDIF
       IF( ! ::bMouseOverButton )
          ::bMouseOverButton := .T.
-         Invalidaterect( ::handle, .f. )
+         Invalidaterect( ::handle, .F. )
          TRACKMOUSEVENT( ::handle )
       ENDIF
       RETURN 0
@@ -1469,7 +1469,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
          GetSkip( ::oParent, ::handle, , 1 )
          RETURN 0
       ELSEIF  wParam = VK_TAB
-         GetSkip( ::oparent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1)  )
+         GetSkip( ::oparent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1)  )
       ENDIF
       ProcKeyList( Self, wParam )
 
@@ -1502,10 +1502,10 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
       ENDIF
 
    ELSEIF msg == WM_LBUTTONUP
-      ::m_bLButtonDown := .f.
+      ::m_bLButtonDown := .F.
       IF ( ::m_bSent )
          SendMessage( ::handle, BM_SETSTATE, 0, 0 )
-         ::m_bSent := .f.
+         ::m_bSent := .F.
       ENDIF
       IF ::m_bIsToggle
          pt[ 1 ] := LOWORD( lParam )
@@ -1529,7 +1529,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
       RETURN - 1
 
    ELSEIF msg == WM_LBUTTONDOWN
-      ::m_bLButtonDown := .t.
+      ::m_bLButtonDown := .T.
       IF ( ::m_bIsToggle )
          ::m_bToggled := ! ::m_bToggled
          InvalidateRect( ::handle, 0 )
@@ -1572,7 +1572,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
             InvalidateRect( ::handle, 0 )
          ELSE
             SendMessage( ::handle, BM_SETSTATE, 1, 0 )
-            //::m_bSent := .t.
+            //::m_bSent := .T.
          ENDIF
          // remove because repet click  2 times
          //SendMessage( ::oParent:handle, WM_COMMAND, makewparam( ::id, BN_CLICKED ), ::handle )
@@ -1589,7 +1589,7 @@ METHOD CancelHover() CLASS HBUTTONEx
    IF ( ::bMouseOverButton ) .AND. ::id != IDOK //NANDO
       ::bMouseOverButton := .F.
       IF !::lflat
-         Invalidaterect( ::handle, .f. )
+         Invalidaterect( ::handle, .F. )
       ELSE
          InvalidateRect( ::oParent:Handle, 1 , ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight  )   
       ENDIF
@@ -1597,7 +1597,7 @@ METHOD CancelHover() CLASS HBUTTONEx
    RETURN nil
 
 METHOD SetDefaultColor( tColor, bColor, lPaint ) CLASS HBUTTONEx
-   DEFAULT lPaint TO .f.
+   DEFAULT lPaint TO .F.
 
    IF !EMPTY( tColor )
       ::tColor := tColor
@@ -1624,19 +1624,19 @@ METHOD SetDefaultColor( tColor, bColor, lPaint ) CLASS HBUTTONEx
    ::m_crColors[ BTNST_COLOR_FG_FOCUS ] := GetSysColor( COLOR_BTNTEXT )
    */
    IF lPaint
-      Invalidaterect( ::handle, .f. )
+      Invalidaterect( ::handle, .F. )
    ENDIF
    RETURN Self
 
 
 METHOD SetColorEx( nIndex, nColor, lPaint ) CLASS HBUTTONEx
-   DEFAULT lPaint TO .f.
+   DEFAULT lPaint TO .F.
    IF nIndex > BTNST_MAX_COLORS
       RETURN - 1
    ENDIF
    ::m_crColors[ nIndex ]    := nColor
    IF lPaint
-      Invalidaterect( ::handle, .f. )
+      Invalidaterect( ::handle, .F. )
    ENDIF
    RETURN 0
 
@@ -2122,7 +2122,7 @@ METHOD Init() CLASS HGroup
          ::oRGroup:Handle := ::handle
          ::oRGroup:id := ::id
          ::oFont := ::oRGroup:oFont
-         ::oRGroup:lInit := .f.
+         ::oRGroup:lInit := .F.
          ::oRGroup:Init()
       ELSE
          IF ::oBrush != Nil

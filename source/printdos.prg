@@ -101,7 +101,7 @@ METHOD New( oPorta ) CLASS PrintDos
    ::nProw    := 0
    ::nPcol    := 0
    ::oTopMar  := 0
-   ::oAns2Oem := .t.
+   ::oAns2Oem := .T.
    ::oLeftMar := 0
    ::oText    := ""
 
@@ -336,7 +336,7 @@ METHOD PrinterFile( fname ) CLASS PrintDos
 
    IF han != - 1
 
-      DO WHILE .t.
+      DO WHILE .T.
 
          nRead := FRead( han, @strbuf, PF_BUFFERS )
 
@@ -380,7 +380,7 @@ METHOD TxttoGraphic( fName, osize, oPreview ) CLASS PrintDos
    INIT PRINTER oPrinter // HPrinter():New()
 // added by Giuseppe Mastrangelo
    IF oPrinter == nil
-      RETURN .f.
+      RETURN .F.
    ENDIF
 // end of added code
    oFont := oPrinter:AddFont( "Courier New", osize )
@@ -490,7 +490,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
    @ 6, 30 BUTTON "<<"    ON CLICK { || nPage := PrintDosAnt( nPage, oText ) } SIZE 69, 32  STYLE IF( nPage = 1, WS_DISABLED, 0 )
    @ 6, 80 BUTTON ">>"    ON CLICK { || nPage := PrintDosNext( oPage, nPage, oText ) } SIZE 69, 32 STYLE IF( nPage = 1, WS_DISABLED, 0 )
    @ 6, 130 BUTTON "Imprimir" ON CLICK { || PrintDosPrint( oText, oPrt ) } SIZE 69, 32
-//   @ 6,180 BUTTON "Grafico" on Click {||EndDialog(),oDos2:TxttoGraphic(fName,2,.t.),oDos2:end()} SIZE 69,32
+//   @ 6,180 BUTTON "Grafico" on Click {||EndDialog(),oDos2:TxttoGraphic(fName,2,.T.),oDos2:end()} SIZE 69,32
    @ 6, 230 BUTTON "Fechar" ON CLICK { || EndDialog() } SIZE 69, 32
 
    oDlg:Activate()

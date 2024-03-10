@@ -314,7 +314,7 @@ METHOD Init() CLASS HTab
          ENDIF
       ELSE
          Asize( ::aPages, SendMessage( ::handle, TCM_GETITEMCOUNT, 0, 0 ) )
-         AEval( ::aPages, {|a, i|HB_SYMBOL_UNUSED(a), ::AddPage( HPage():New( "", i, .t.,), "" )})
+         AEval( ::aPages, {|a, i|HB_SYMBOL_UNUSED(a), ::AddPage( HPage():New( "", i, .T.,), "" )})
       ENDIF
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
@@ -503,9 +503,9 @@ RETURN NIL
 METHOD onChange( ) CLASS HTab
 
    IF hb_IsBlock(::bChange2)
-      ::oparent:lSuspendMsgsHandling := .t.
+      ::oparent:lSuspendMsgsHandling := .T.
       Eval( ::bChange2, ::nActive, Self )
-      ::oparent:lSuspendMsgsHandling := .f. //lSuspendMsgsHandling
+      ::oparent:lSuspendMsgsHandling := .F. //lSuspendMsgsHandling
    ENDIF
 
 RETURN NIL
@@ -665,7 +665,7 @@ RETURN ::nActive
 
 METHOD DeletePage( nPage ) CLASS HTab
    IF ::lResourceTab
-      ADel( ::m_arrayStatusTab, nPage,, .t. )
+      ADel( ::m_arrayStatusTab, nPage,, .T. )
       DeleteTab( ::handle, nPage )
       ::nActive := nPage - 1
 
@@ -789,7 +789,7 @@ METHOD Notify( lParam ) CLASS HTab
           Eval( ::bAction, Self, GetCurrentTab( ::handle ) )
        ENDIF
        ::oparent:lSuspendMsgsHandling := .F.
-       ::lClick := .f.
+       ::lClick := .F.
    ENDIF
 
 RETURN -1
@@ -859,7 +859,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
            GetSkip( Self, ::handle, , 1)
            RETURN 0
        ELSEIF wParam == VK_TAB
-           GetSkip( ::oParent, ::handle, , iif(IsCtrlShift(.f., .t.), -1, 1 ) )
+           GetSkip( ::oParent, ::handle, , iif(IsCtrlShift(.F., .T.), -1, 1 ) )
            RETURN 0
        ELSEIF wparam == VK_UP .AND. ::nActive > 0  //
           GetSkip( ::oParent, ::handle, , -1 )
@@ -891,11 +891,11 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
    ENDIF
 
    IF hb_IsBlock(::bOther)
-      ::oparent:lSuspendMsgsHandling := .t.
+      ::oparent:lSuspendMsgsHandling := .T.
       IF Eval( ::bOther, Self, msg, wParam, lParam ) != - 1
         //RETURN 0
       ENDIF
-      ::oparent:lSuspendMsgsHandling := .f.
+      ::oparent:lSuspendMsgsHandling := .F.
    ENDIF
    IF !( ( msg == WM_COMMAND .OR. msg == WM_NOTIFY) .AND. ::oParent:lSuspendMsgsHandling .AND. ::lSuspendMsgsHandling )
       IF msg == WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. PtrtouLong( GetParent( ::GetParentForm():nInitFocus ) ) == PtrtouLong( ::Handle )

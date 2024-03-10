@@ -269,7 +269,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
             ELSEIF wParam == VK_TAB
                IF ( ::GetParentForm( Self ):Type < WND_DLG_RESOURCE.OR.;
                    ! ::GetParentForm( Self ):lModal )
-                  //- GetSkip( oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+                  //- GetSkip( oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
                ENDIF
                RETURN 0
             ELSEIF wParam == VK_ESCAPE
@@ -372,7 +372,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
                RETURN 0
             ELSEIF wParam == VK_TAB     // Tab
                GetSkip( oParent, ::handle, , ;
-                        IIf( IsCtrlShift( .f., .t. ), - 1, 1 ) )
+                        IIf( IsCtrlShift( .F., .T. ), - 1, 1 ) )
                RETURN 0
             ELSEIF wParam == VK_RETURN  // Enter
                //GetSkip( oParent, ::handle, .T., 1 )
@@ -406,7 +406,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
          ELSEIF msg == WM_KEYDOWN
             IF wParam == VK_TAB .AND. ::GetParentForm():Type >= WND_DLG_RESOURCE    // Tab
                nexthandle := GetNextDlgTabItem ( GetActiveWindow(), GetFocus(), ;
-                                                 IsCtrlShift(.f., .t.) )
+                                                 IsCtrlShift(.F., .T.) )
                //SetFocus( nexthandle )
                PostMessage( GetActiveWindow(), WM_NEXTDLGCTL, nextHandle, 1 )
                RETURN 0
@@ -459,7 +459,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
       ELSEIF msg == WM_CHAR
          IF wParam == VK_TAB
                GetSkip( oParent, ::handle, , ;
-                      iif( IsCtrlShift(.f., .t.), -1, 1) )
+                      iif( IsCtrlShift(.F., .T.), -1, 1) )
             RETURN 0
          ELSEIF wParam == VK_ESCAPE
             RETURN 0
@@ -474,7 +474,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
       ELSEIF msg == WM_KEYDOWN
          IF wParam == VK_TAB     // Tab
         //    GetSkip( oParent, ::handle, , ;
-        //             IIf( IsCtrlShift( .f., .t. ), - 1, 1 ) )
+        //             IIf( IsCtrlShift( .F., .T. ), - 1, 1 ) )
           //  RETURN 0
          ELSEIF wParam == VK_ESCAPE
             RETURN -1
@@ -507,7 +507,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
             oParent := oParent:oParent
          ENDDO
          IF oParent != Nil .AND. ! Empty( oParent:KeyList )
-            nctrl := IIf( IsCtrlShift( .t., .f. ), FCONTROL, IIf( IsCtrlShift( .f., .t. ), FSHIFT, 0 ) )
+            nctrl := IIf( IsCtrlShift( .T., .F. ), FCONTROL, IIf( IsCtrlShift( .F., .T. ), FSHIFT, 0 ) )
             IF ( nPos := AScan( oParent:KeyList, { | a | a[ 1 ] == nctrl.AND.a[ 2 ] == wParam } ) ) > 0
                Eval( oParent:KeyList[ nPos, 3 ], Self )
             ENDIF
@@ -942,7 +942,7 @@ METHOD GetApplyKey( cKey ) CLASS HEdit
 
    x := SendMessage( ::handle, EM_GETSEL, 0, 0 )
    IF HIWORD( x ) != LOWORD( x )
-      ::DeleteChar( .f. )
+      ::DeleteChar( .F. )
    ENDIF
    ::title := GetEditText( ::oParent:handle, ::id )
    IF ::cType == "N" .and. cKey $ ".," .AND. ;
@@ -1116,9 +1116,9 @@ METHOD SetCueBanner( cText, lShowFoco ) CLASS HEdit
    RETURN lRet
 
 METHOD When() CLASS HEdit
-   LOCAL res := .t., nSkip, vari
+   LOCAL res := .T., nSkip, vari
 
-   IF ! CheckFocus( Self, .f. )
+   IF ! CheckFocus( Self, .F. )
       RETURN .F.
    ENDIF
 
@@ -1160,7 +1160,7 @@ METHOD Valid( ) CLASS HEdit
 
    //IF ::bLostFocus != Nil .AND. ( ::lNoValid .OR. ! CheckFocus( Self, .T. ) )
    IF ( ! CheckFocus( Self, .T. ) .OR. ::lNoValid ) .AND. ::bLostFocus != Nil
-      RETURN .t.
+      RETURN .T.
    ENDIF
    IF hb_IsBlock(::bSetGet)
       IF ( oDlg := ParentGetDialog( Self ) ) == Nil .OR. oDlg:nLastKey != 27
@@ -1621,7 +1621,7 @@ STATIC FUNCTION NextFocusContainer(oParent,hCtrl,nSkip)
    Local nextHandle := NIL,  i, i2, nWindow
    Local lGroup := Hwg_BitAND( HWG_GETWINDOWSTYLE(  hctrl ), WS_GROUP ) != 0
    Local lHradio
-   Local lnoTabStop := .f.
+   Local lnoTabStop := .F.
 
    AEVAL(oparent:acontrols,{|o| IIF(Hwg_BitAND( HWG_GETWINDOWSTYLE(  o:handle ), WS_TABSTOP ) != 0, lnoTabStop := .T., .T. ) } )
    IF !lnoTabStop .OR. empty( hCtrl )

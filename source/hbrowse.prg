@@ -213,8 +213,8 @@ CLASS HBrowse INHERIT HControl
    DATA winclass   INIT "BROWSE"
    DATA active     INIT .T.
    DATA lChanged   INIT .F.
-   DATA lDispHead  INIT .t.                    // Should I display headers ?
-   DATA lDispSep   INIT .t.                    // Should I display separators ?
+   DATA lDispHead  INIT .T.                    // Should I display headers ?
+   DATA lDispSep   INIT .T.                    // Should I display separators ?
    DATA aColumns                               // HColumn's array
    DATA aColAlias  INIT { }
    DATA aRelation  INIT .F.
@@ -648,7 +648,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
          IF wParam == VK_TAB .AND. ::GetParentForm( ):Type < WND_DLG_RESOURCE
             IF IsCtrlShift(.T.,.F.)
                getskip(::oParent,::handle,, ;
-               iif( IsCtrlShift(.f., .t.), -1, 1) )
+               iif( IsCtrlShift(.F., .T.), -1, 1) )
                RETURN 0
             ENDIF
             /*
@@ -695,7 +695,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
          IF wParam == VK_TAB
             IF ::lCtrlPress
                getskip(::oParent,::handle,, ;
-               iif( IsCtrlShift(.f., .t.), -1, 1) )
+               iif( IsCtrlShift(.F., .T.), -1, 1) )
                RETURN 0
             ELSE
                ::DoHScroll( iif( IsCtrlShift( .F., .T. ), SB_LINELEFT, SB_LINERIGHT ) )
@@ -734,7 +734,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HBrowse
                ENDIF
                IF ! ( lBEof .and. AScan( ::aSelected, Eval( ::bRecno, Self ) ) > 0 )
                   ::Select()
-                  ::refresh( .f. )
+                  ::refresh( .F. )
                ENDIF
             ENDIF
 
@@ -1582,7 +1582,7 @@ METHOD Paint( lLostFocus )  CLASS HBrowse
 
       DO WHILE cursor_row <= ::rowCount .AND. ( ::nRecords > nRows .AND. ! Eval( ::bEof, Self ) )
          //IF ::aSelected != Nil .AND. AScan( ::aSelected, { | x | x = Eval( ::bRecno, Self ) } ) > 0
-         //   ::LineOut( cursor_row, 0, hDC, .t., .T. )
+         //   ::LineOut( cursor_row, 0, hDC, .T., .T. )
          //ELSE
             ::LineOut( cursor_row, 0, hDC, .F., .T. )
          //ENDIF
@@ -1666,7 +1666,7 @@ METHOD Paint( lLostFocus )  CLASS HBrowse
        IF hb_IsBlock(::bScrollPos) // array
          Eval( ::bScrollPos, Self, 1, .F. )
       ELSE
-         VScrollPos( Self, 0, .f. )
+         VScrollPos( Self, 0, .F. )
       ENDIF
    ENDIF
 
@@ -2382,7 +2382,7 @@ METHOD LineOut( nRow, nCol, hDC, lSelected, lClear ) CLASS HBrowse
 
 //----------------------------------------------------//
 METHOD SetColumn( nCol ) CLASS HBrowse
-   LOCAL nColPos, lPaint := .f.
+   LOCAL nColPos, lPaint := .F.
    LOCAL lEditable := ::lEditable .OR. ::Highlight
 
    IF lEditable .OR. ::lAutoEdit
@@ -2484,7 +2484,7 @@ METHOD DoVScroll( wParam ) CLASS HBrowse
          ENDIF
          Eval( ::bSkip, Self, 1 )
          Eval( ::bSkip, Self, - 1 )
-         VScrollPos( Self, 0, .f. )
+         VScrollPos( Self, 0, .F. )
          ::refresh()
       ENDIF
    ENDIF
@@ -2617,7 +2617,7 @@ METHOD LINEDOWN( lMouse ) CLASS HBrowse
    IF hb_IsBlock(::bScrollPos)
       Eval( ::bScrollPos, Self, 1, .F. )
    ELSEIF ::nRecords > 1
-      VScrollPos( Self, 0, .f. )
+      VScrollPos( Self, 0, .F. )
    ENDIF
 
   // ::SetFocus()  ??
@@ -2647,7 +2647,7 @@ METHOD LINEUP() CLASS HBrowse
       IF hb_IsBlock(::bScrollPos)
          Eval( ::bScrollPos, Self, - 1, .F. )
       ELSEIF ::nRecords > 1
-         VScrollPos( Self, 0, .f. )
+         VScrollPos( Self, 0, .F. )
       ENDIF
       ::internal[ 1 ] := SetBit( ::internal[ 1 ], 1, 0 )
    ENDIF
@@ -2674,7 +2674,7 @@ METHOD PAGEUP() CLASS HBrowse
    IF hb_IsBlock(::bScrollPos)
       Eval( ::bScrollPos, Self, - STEP, lBof )
    ELSEIF ::nRecords > 1
-      VScrollPos( Self, 0, .f. )
+      VScrollPos( Self, 0, .F. )
    ENDIF
 
    ::Refresh( ::nFootRows > 0 )
@@ -2700,9 +2700,9 @@ METHOD PAGEDOWN() CLASS HBrowse
    ::rowPos := Min( ::nRecords, nRows )
 
    IF hb_IsBlock(::bScrollPos)
-      Eval( ::bScrollPos, Self, STEP, .f. )
+      Eval( ::bScrollPos, Self, STEP, .F. )
    ELSE
-      VScrollPos( Self, 0, .f. )
+      VScrollPos( Self, 0, .F. )
    ENDIF
 
    ::Refresh( ::nFootRows > 0 )
@@ -2722,7 +2722,7 @@ METHOD BOTTOM( lPaint ) CLASS HBrowse
       Eval( ::bGoBot, Self )
    ENDIF
 
-   VScrollPos( Self, 0, IIF( ::Type == BRW_ARRAY, .f., .T. ) )
+   VScrollPos( Self, 0, IIF( ::Type == BRW_ARRAY, .F., .T. ) )
 
    IF lPaint == Nil .OR. lPaint
       ::Refresh( ::nFootRows > 0 )
@@ -2738,7 +2738,7 @@ METHOD TOP() CLASS HBrowse
 
    ::rowPos := 1
    Eval( ::bGoTop, Self )
-   VScrollPos( Self, 0, .f. )
+   VScrollPos( Self, 0, .F. )
 
    //InvalidateRect( ::handle, 0 )
    ::Refresh( ::nFootRows > 0 )
@@ -2817,7 +2817,7 @@ IF nLine > 0 .AND. nLine <= ::rowCurrCount
       IF hb_IsBlock(::bScrollPos)
          Eval( ::bScrollPos, Self, STEP, .F. )
       ELSEIF ::nRecords > 1
-         VScrollPos( Self, 0, .f. )
+         VScrollPos( Self, 0, .F. )
       ENDIF
       res := .T.
 
@@ -2827,7 +2827,7 @@ IF nLine > 0 .AND. nLine <= ::rowCurrCount
          IF hb_IsBlock(::bScrollPos)
             Eval( ::bScrollPos, Self, STEP, .F. )
          ELSEIF ::nRecords > 1
-            VScrollPos( Self, 0, .f. )
+            VScrollPos( Self, 0, .F. )
          ENDIF
          res := .T.
       ELSEIF nRec > 0
@@ -2840,7 +2840,7 @@ IF nLine > 0 .AND. nLine <= ::rowCurrCount
       IF ::colpos != fif - ::nLeftCol + 1 + ::freeze
          // Colpos should not go beyond last column or I get bound errors on ::Edit()
          ::colpos := Min( ::nColumns + 1, fif - ::nLeftCol + 1 + ::freeze )
-         VScrollPos( Self, 0, .f. )
+         VScrollPos( Self, 0, .F. )
          res := .T.
       ENDIF
    ENDIF
@@ -3197,7 +3197,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
          x1 := aCoors[ 1 ]
          y1 := aCoors[ 2 ] + 1
 
-         lReadExit := SET( _SET_EXIT, .t. )
+         lReadExit := SET( _SET_EXIT, .T. )
 
          ::lNoValid := .T.
          IF Type != "L"
@@ -3266,7 +3266,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
                      @ nWidth - 15, 0  OWNERBUTTON oBtn  SIZE 16,::height - 0 ;
                         TEXT '...'  FONT HFont():Add( 'MS Sans Serif',0,-10,400,,,) ;
                         COORDINATES 0, 1, 0, 0      ;
-                        ON CLICK {| oColumn, oBtn | HB_SYMBOL_UNUSED( oColumn ), ::onClickColumn( .t., oGet, oBtn ) }
+                        ON CLICK {| oColumn, oBtn | HB_SYMBOL_UNUSED( oColumn ), ::onClickColumn( .T., oGet, oBtn ) }
                         oBtn:themed :=  ::hTheme != Nil
                   ELSE
                      @ nWidth - 16, 0 DATEPICKER oBtn SIZE 16,::height-1  ;
@@ -3280,7 +3280,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
             ELSE
                oGet1 := ::varbuf
                @ 10, 10 Get oGet1 SIZE oModDlg:nWidth - 20, 240 FONT ::oFont Style WS_VSCROLL + WS_HSCROLL + ES_MULTILINE VALID oColumn:bValid
-               @ 010, 252 ownerbutton owb2 text "Save" size 80, 24 ON Click { || ::varbuf := oGet1, oModDlg:close(), oModDlg:lResult := .t. }
+               @ 010, 252 ownerbutton owb2 text "Save" size 80, 24 ON Click { || ::varbuf := oGet1, oModDlg:close(), oModDlg:lResult := .T. }
                @ 100, 252 ownerbutton owb1 text "Close" size 80, 24 ON CLICK { || oModDlg:close() }
             ENDIF
          ENDIF
@@ -3399,9 +3399,9 @@ METHOD EditLogical( wParam, lParam ) CLASS HBrowse
       ENDIF
 
       IF  ::aColumns[ ::fipos ]:bWhen != Nil
-         ::oparent:lSuspendMsgsHandling := .t.
+         ::oparent:lSuspendMsgsHandling := .T.
          ::varbuf := Eval( ::aColumns[ ::fipos ]:bWhen, ::aColumns[ ::fipos ], ::varbuf )
-         ::oparent:lSuspendMsgsHandling := .f.
+         ::oparent:lSuspendMsgsHandling := .F.
          IF ! ( hb_IsLogical(::varbuf) .AND. ::varbuf )
             RETURN .F.
          ENDIF
@@ -3427,9 +3427,9 @@ METHOD EditLogical( wParam, lParam ) CLASS HBrowse
       ::lUpdated := .T.
       ::RefreshLine()
       IF  ::aColumns[ ::fipos ]:bValid != Nil
-         ::oparent:lSuspendMsgsHandling := .t.
+         ::oparent:lSuspendMsgsHandling := .T.
          Eval( ::aColumns[ ::fipos ]:bValid, ! ::varbuf, ::aColumns[ ::fipos ] ) //, ::varbuf )
-        ::oparent:lSuspendMsgsHandling := .f.
+        ::oparent:lSuspendMsgsHandling := .F.
       ENDIF
    RETURN .T.
 
@@ -3464,7 +3464,7 @@ METHOD onClickColumn( value, oGet, oBtn ) CLASS HBROWSE
 
 
 METHOD WhenColumn( value, oGet ) CLASS HBROWSE
-   Local res := .t.
+   Local res := .T.
    Local oColumn := ::aColumns[ ::fipos ]
 
    IF oColumn:bWhen != Nil
@@ -3480,11 +3480,11 @@ METHOD WhenColumn( value, oGet ) CLASS HBROWSE
    RETURN res
 
 METHOD ValidColumn( value,oGet, oBtn ) CLASS HBROWSE
-   Local res := .t.
+   Local res := .T.
    Local oColumn := ::aColumns[ ::fipos ]
 
    IF ! CheckFocus( oGet, .T. ) //.OR. oGet:lNoValid
-      RETURN .t.
+      RETURN .T.
    ENDIF
    IF oBtn != Nil .AND. GetFocus() = oBtn:handle
       RETURN .T.
@@ -3525,7 +3525,7 @@ METHOD ChangeRowCol( nRowColChange ) CLASS HBrowse
 METHOD When() CLASS HBrowse
    LOCAL nSkip, res := .T.
 
-   IF !CheckFocus(self, .f. )
+   IF !CheckFocus(self, .F. )
       RETURN .F.
    ENDIF
      IF ::HighlightStyle = 0 .OR. ::HighlightStyle = 3
@@ -3550,7 +3550,7 @@ METHOD When() CLASS HBrowse
 METHOD Valid() CLASS HBrowse
    LOCAL res
 
-    //IF ::bLostFocus != Nil .AND. ( ! CheckFocus( Self, .t. ) .OR.::lNoValid  )
+    //IF ::bLostFocus != Nil .AND. ( ! CheckFocus( Self, .T. ) .OR.::lNoValid  )
    IF !CheckFocus(self, .T. ) .OR. ::lNoValid
       RETURN .T.
    ENDIF

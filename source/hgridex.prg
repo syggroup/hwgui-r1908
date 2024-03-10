@@ -35,7 +35,7 @@ CLASS VAR winclass INIT "SYSLISTVIEW32"
    DATA aItems     INIT { }
    DATA ItemCount
    DATA color
-   DATA bFlag      INIT .f.
+   DATA bFlag      INIT .F.
    DATA bkcolor
    DATA aColumns   INIT { }
    DATA nRow       INIT 0
@@ -75,7 +75,7 @@ CLASS VAR winclass INIT "SYSLISTVIEW32"
    METHOD AddRow( a, bUpdate )
    METHOD Notify( lParam )
 
-   METHOD DELETEROW()    INLINE IF( ::bFlag , ( SendMessage( ::HANDLE, LVM_DELETEITEM, ::iRowSelect , 0 ), ::bFlag := .f. ), .T. )
+   METHOD DELETEROW()    INLINE IF( ::bFlag , ( SendMessage( ::HANDLE, LVM_DELETEITEM, ::iRowSelect , 0 ), ::bFlag := .F. ), .T. )
    METHOD DELETEALLROW() INLINE ::aItems := NIL, ::aColors := { }, SendMessage( ::Handle, LVM_DELETEALLITEMS, 0, 0 )
    METHOD SELECTALL()    INLINE ListViewSelectAll( ::Handle )
    METHOD SELECTLAST()   INLINE ListViewSelectLastItem( ::handle )
@@ -228,7 +228,7 @@ METHOD AddRow( a , bupdate ) CLASS HGRIDEX
    LOCAL aTmp2 := { }
 
 
-   DEFAULT bupdate TO .f.
+   DEFAULT bupdate TO .F.
    FOR n := 1 TO nLen STEP 4
       AAdd( aTmp1, a[ n ] )
       AAdd( aTmp,  IF( hb_IsNumeric(a[n + 1]), a[ n + 1 ], - 1 ) )
@@ -268,7 +268,7 @@ METHOD Notify( lParam )  CLASS HGRIDEX
       ENDIF
 
       ::iRowSelect := iSelect
-      ::bFlag := .t.
+      ::bFlag := .T.
       RETURN 1
    ENDIF
 
@@ -322,4 +322,4 @@ METHOD UpdateData() CLASS hGridex
       LISTVIEW_INSERTITEMEX( ::handle, n, n1, aTemp[ n1 ], atemp1[ n1 ] )
    NEXT
 
-   RETURN .t.
+   RETURN .T.
