@@ -64,7 +64,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFo
 
 
 METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
-                 bSize, bPaint, ctooltip, tcolor, bcolor, lVert )  CLASS hrebar
+                 bSize, bPaint, ctooltip, tcolor, bcolor, lVert ) CLASS hrebar
 
    HB_SYMBOL_UNUSED( cCaption )
 

@@ -188,7 +188,7 @@ METHOD Activate() CLASS HEdit
    ENDIF
    RETURN Nil
 
-METHOD Init()  CLASS HEdit
+METHOD Init() CLASS HEdit
 
    IF ! ::lInit
       ::Super:Init()
@@ -531,7 +531,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
    RETURN - 1
 
 METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bInit, bSize, bPaint, ;
-                 bGfocus, bLfocus, ctooltip, tcolor, bcolor, cPicture, nMaxLength, lMultiLine, bKeyDown, bChange )  CLASS HEdit
+                 bGfocus, bLfocus, ctooltip, tcolor, bcolor, cPicture, nMaxLength, lMultiLine, bKeyDown, bChange ) CLASS HEdit
 
 
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
@@ -575,7 +575,7 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bInit, bSize, bPaint, ;
    RETURN Self
 
 
-METHOD Value( Value )  CLASS HEdit
+METHOD Value( Value ) CLASS HEdit
    LOCAL vari
 
    IF Value != Nil
@@ -592,7 +592,7 @@ METHOD Value( Value )  CLASS HEdit
    ENDIF
    RETURN vari
 
-METHOD Refresh()  CLASS HEdit
+METHOD Refresh() CLASS HEdit
    LOCAL vari
    IF hb_IsBlock(::bSetGet)
       vari := Eval( ::bSetGet,, Self )

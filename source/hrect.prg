@@ -185,7 +185,7 @@ ENDCLASS
 
 
 METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, bSize, tcolor, bColor, ncStyle, ;
-            lnoBorder, nBorder, nCurvature, nbStyle, nfStyle, bInit, nBackStyle )  CLASS HDrawShape
+            lnoBorder, nBorder, nCurvature, nbStyle, nfStyle, bInit, nBackStyle ) CLASS HDrawShape
 
    HB_SYMBOL_UNUSED( ncStyle )
 

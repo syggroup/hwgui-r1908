@@ -137,7 +137,7 @@ METHOD Activate() CLASS HUpDown
 
    RETURN Nil
 
-METHOD Init()  CLASS HUpDown
+METHOD Init() CLASS HUpDown
 
    IF !::lInit
       ::Super:Init()
@@ -198,7 +198,7 @@ METHOD SetRange( nLower, nUpper ) CLASS HUpDown
 
    RETURN Nil
 
-METHOD Value( Value )  CLASS HUpDown
+METHOD Value( Value ) CLASS HUpDown
 
    IF Value != Nil .AND. ::oEditUpDown != Nil
        ::SetValue( Value )
@@ -207,7 +207,7 @@ METHOD Value( Value )  CLASS HUpDown
    ENDIF
    RETURN ::nValue
 
-METHOD SetValue( nValue )  CLASS HUpDown
+METHOD SetValue( nValue ) CLASS HUpDown
 
    IF  nValue < ::nLower .OR. nValue > ::nUpper
        nValue := ::nValue
@@ -221,7 +221,7 @@ METHOD SetValue( nValue )  CLASS HUpDown
 
    RETURN ::nValue
 
-METHOD Refresh()  CLASS HUpDown
+METHOD Refresh() CLASS HUpDown
 
    IF hb_IsBlock(::bSetGet) //.AND. ::nValue != Nil
       ::nValue := Eval( ::bSetGet, , Self )
@@ -327,7 +327,7 @@ METHOD Notify( lParam ) CLASS HeditUpDown
    ENDIF
    RETURN 0
 
-   METHOD Refresh()  CLASS HeditUpDown
+   METHOD Refresh() CLASS HeditUpDown
    LOCAL vari
 
    vari := ::Value
@@ -417,7 +417,7 @@ METHOD Activate CLASS HUpDown
    ENDIF
    RETURN Nil
 
-METHOD Init()  CLASS HUpDown
+METHOD Init() CLASS HUpDown
    IF ! ::lInit
       ::Super:Init()
       ::nHolder := 1
@@ -453,7 +453,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HUpDown
 
 RETURN -1
 
-METHOD Refresh()  CLASS HUpDown
+METHOD Refresh() CLASS HUpDown
 
    IF hb_IsBlock(::bSetGet)
       ::value := Eval( ::bSetGet )

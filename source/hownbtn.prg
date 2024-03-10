@@ -144,7 +144,7 @@ METHOD Activate() CLASS HOwnButton
    ENDIF
    RETURN Nil
 
-METHOD onEvent( msg, wParam, lParam )  CLASS HOwnButton
+METHOD onEvent( msg, wParam, lParam ) CLASS HOwnButton
 
    IF msg == WM_THEMECHANGED
       IF ::Themed
@@ -407,7 +407,7 @@ METHOD DrawItems( hDC ) CLASS HOwnButton
 
    RETURN Nil
 
-METHOD MouseMove( wParam, lParam )  CLASS HOwnButton
+METHOD MouseMove( wParam, lParam ) CLASS HOwnButton
    LOCAL xPos, yPos
    LOCAL res := .F.
 
@@ -437,7 +437,7 @@ METHOD MouseMove( wParam, lParam )  CLASS HOwnButton
    ENDIF
    RETURN Nil
 
-METHOD MDown()  CLASS HOwnButton
+METHOD MDown() CLASS HOwnButton
    IF ::state != OBTN_PRESSED
       ::state := OBTN_PRESSED
       //InvalidateRect( ::handle, 0 )
@@ -474,13 +474,13 @@ METHOD MUp() CLASS HOwnButton
 
    RETURN Nil
 
-METHOD Refresh()  CLASS HOwnButton
+METHOD Refresh() CLASS HOwnButton
    InvalidateRect( ::handle, 0 )
    RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW  )
    RETURN Nil
 
 
-METHOD Release()  CLASS HOwnButton
+METHOD Release() CLASS HOwnButton
    ::lPress := .F.
    ::state := OBTN_NORMAL
    InvalidateRect( ::handle, 0 )
@@ -489,7 +489,7 @@ METHOD Release()  CLASS HOwnButton
    RETURN Nil
 
 
-METHOD onGetFocus()  CLASS HOwnButton
+METHOD onGetFocus() CLASS HOwnButton
    LOCAL res := .T., nSkip
 
    IF ::bGetFocus == Nil .OR. !CheckFocus(Self, .F.)
@@ -506,7 +506,7 @@ METHOD onGetFocus()  CLASS HOwnButton
    ::oparent:lSuspendMsgsHandling := .F.
    RETURN res
 
-METHOD onLostFocus()  CLASS HOwnButton
+METHOD onLostFocus() CLASS HOwnButton
 
     IF ::bLostFocus != Nil .AND. !CheckFocus(Self, .T.)
        RETURN .T.
@@ -518,7 +518,7 @@ METHOD onLostFocus()  CLASS HOwnButton
    ENDIF
     RETURN Nil
 
-METHOD onClick()  CLASS HOwnButton
+METHOD onClick() CLASS HOwnButton
    IF hb_IsBlock(::bClick)
       //::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bClick, Self, ::id )
@@ -527,7 +527,7 @@ METHOD onClick()  CLASS HOwnButton
    RETURN Nil
 
 
-METHOD END()  CLASS HOwnButton
+METHOD END() CLASS HOwnButton
 
    ::Super:END()
    ::oFont := Nil

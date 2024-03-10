@@ -105,7 +105,7 @@ METHOD Activate() CLASS HProgressBar
    ENDIF
    RETURN Nil
 
-METHOD Init()  CLASS HProgressBar
+METHOD Init() CLASS HProgressBar
 
    IF ! ::lInit
       ::Super:Init()

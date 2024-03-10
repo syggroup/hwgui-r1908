@@ -67,14 +67,14 @@ METHOD New(oParent,cName,nBitIp,nId,bState,bStyle,cText,bClick,ctip,aMenu) CLASS
 
 RETURN Self
 
-METHOD Caption( cText )  CLASS HToolButton
+METHOD Caption( cText ) CLASS HToolButton
    IF cText != Nil 
       ::Title := cText
       TOOLBAR_SETBUTTONINFO( ::oParent:handle, ::id, cText )
    ENDIF
    RETURN ::Title
 
-METHOD onClick()  CLASS HToolButton
+METHOD onClick() CLASS HToolButton
   IF hb_IsBlock(::bClick)
       Eval( ::bClick, self, ::id )
    ENDIF
@@ -218,7 +218,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
 
 
 METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
-                 bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem )  CLASS hToolBar
+                 bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem ) CLASS hToolBar
 
    HB_SYMBOL_UNUSED( cCaption )
    HB_SYMBOL_UNUSED( lTransp )

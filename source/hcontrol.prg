@@ -599,7 +599,7 @@ METHOD Init() CLASS HStatus
    RETURN  NIL
 
 METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
-                 bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aParts )  CLASS hStatus
+                 bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aParts ) CLASS hStatus
 
    HB_SYMBOL_UNUSED( cCaption )
    HB_SYMBOL_UNUSED( lTransp )
@@ -872,7 +872,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS  HStatic
    RETURN - 1
 
 
-METHOD SetValue( cValue )  CLASS HStatic
+METHOD SetValue( cValue ) CLASS HStatic
 
     ::Auto_Size( cValue )
     IF ::Title != cValue 
@@ -925,7 +925,7 @@ METHOD Paint( lpDis ) CLASS HStatic
 
    RETURN nil
 
-METHOD onClick()  CLASS HStatic
+METHOD onClick() CLASS HStatic
    IF hb_IsBlock(::bClick)
       //::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bClick, Self, ::id )
@@ -933,7 +933,7 @@ METHOD onClick()  CLASS HStatic
    ENDIF
    RETURN Nil
 
-METHOD onDblClick()  CLASS HStatic
+METHOD onDblClick() CLASS HStatic
    IF hb_IsBlock(::bDblClick)
       //::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bDblClick, Self, ::id )
@@ -1119,7 +1119,7 @@ METHOD onevent( msg, wParam, lParam ) CLASS HButton
    RETURN -1
 
 
-METHOD onClick()  CLASS HButton
+METHOD onClick() CLASS HButton
 
    IF hb_IsBlock(::bClick)
       //::oParent:lSuspendMsgsHandling := .T.
@@ -1155,7 +1155,7 @@ METHOD Notify( lParam ) CLASS HButton
    RETURN - 1
 */
 
-METHOD NoteCaption( cNote )  CLASS HButton         //*
+METHOD NoteCaption( cNote ) CLASS HButton         //*
 //#DEFINE BCM_SETNOTE  0x00001609
    IF cNote != Nil     
       IF Hwg_BitOr( ::Style, BS_COMMANDLINK ) > 0
@@ -1165,7 +1165,7 @@ METHOD NoteCaption( cNote )  CLASS HButton         //*
    ENDIF
    RETURN ::cNote   
 
-METHOD onGetFocus()  CLASS HButton
+METHOD onGetFocus() CLASS HButton
    LOCAL res := .T., nSkip
 
    IF  ! CheckFocus( Self, .F. ) .OR. ::bGetFocus = Nil
@@ -1186,7 +1186,7 @@ METHOD onGetFocus()  CLASS HButton
 
    RETURN res
    
-METHOD onLostFocus()  CLASS HButton
+METHOD onLostFocus() CLASS HButton
 
   IF ::lflat
      InvalidateRect( ::oParent:Handle, 1 , ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight  )   

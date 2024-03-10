@@ -45,7 +45,7 @@ CLASS VAR winclass   INIT "LISTBOX"
 ENDCLASS
 
 METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight, aItems, oFont, ;
-            bInit, bSize, bPaint, bChange, cTooltip, tColor, bcolor, bGFocus, bLFocus,bKeydown, bDblclick,bOther )  CLASS HListBox
+            bInit, bSize, bPaint, bChange, cTooltip, tColor, bcolor, bGFocus, bLFocus,bKeydown, bDblclick,bOther ) CLASS HListBox
 
    nStyle   := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_TABSTOP + WS_VSCROLL + LBS_DISABLENOSCROLL + LBS_NOTIFY + LBS_NOINTEGRALHEIGHT + WS_BORDER )
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
@@ -100,7 +100,7 @@ METHOD Activate() CLASS HListBox
    RETURN Nil
 
 METHOD Redefine( oWndParent, nId, vari, bSetGet, aItems, oFont, bInit, bSize, bPaint, ;
-                 bChange, cTooltip, bKeydown, bOther )  CLASS HListBox
+                 bChange, cTooltip, bKeydown, bOther ) CLASS HListBox
 
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, cTooltip )
@@ -211,7 +211,7 @@ METHOD SetItem( nPos ) CLASS HListBox
    ENDIF
    RETURN Nil
 
-METHOD onDblClick()  CLASS HListBox
+METHOD onDblClick() CLASS HListBox
   IF hb_IsBlock(::bDblClick)
        ::oParent:lSuspendMsgsHandling := .T.
       Eval( ::bDblClick, self, ::value )

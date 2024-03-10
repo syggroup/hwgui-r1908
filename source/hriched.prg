@@ -95,7 +95,7 @@ METHOD Activate() CLASS HRichEdit
    ENDIF
    RETURN Nil
 
-METHOD Init()  CLASS HRichEdit
+METHOD Init() CLASS HRichEdit
    IF ! ::lInit
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
@@ -109,7 +109,7 @@ METHOD Init()  CLASS HRichEdit
    ENDIF
    RETURN Nil
 
-METHOD onEvent( msg, wParam, lParam )  CLASS HRichEdit
+METHOD onEvent( msg, wParam, lParam ) CLASS HRichEdit
    LOCAL nDelta, nret
 
    //HWG_writelog( 'rich' + str(msg) + str(wParam) + str(lParam) + chr(13) )
@@ -186,7 +186,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HRichEdit
 
    RETURN - 1
 
-METHOD SetColor( tColor, bColor, lRedraw )  CLASS HRichEdit
+METHOD SetColor( tColor, bColor, lRedraw ) CLASS HRichEdit
 
    IF tcolor != NIL
       re_SetDefault( ::handle, tColor ) //, ID_FONT ,, ) // cor e fonte padrao
@@ -260,7 +260,7 @@ METHOD Valid( ) CLASS HRichEdit
 
   RETURN .T.
 
-METHOD SaveFile( cFile )  CLASS HRichEdit
+METHOD SaveFile( cFile ) CLASS HRichEdit
 
    IF !EMPTY( cFile )
       IF ! EMPTY( SAVERICHEDIT( ::Handle, cFile ) )
@@ -269,7 +269,7 @@ METHOD SaveFile( cFile )  CLASS HRichEdit
    ENDIF
    RETURN .F.
 
-METHOD OpenFile( cFile )  CLASS HRichEdit
+METHOD OpenFile( cFile ) CLASS HRichEdit
 
    IF !EMPTY( cFile )
       IF ! EMPTY( LOADRICHEDIT( ::Handle, cFile ) )
@@ -278,7 +278,7 @@ METHOD OpenFile( cFile )  CLASS HRichEdit
    ENDIF
    RETURN .F.
 
-METHOD Print( )  CLASS HRichEdit
+METHOD Print( ) CLASS HRichEdit
 
    IF ::hDCPrinter = Nil
     //  ::hDCPrinter := PrintSetup()

@@ -1377,7 +1377,7 @@ FUNCTION NewBase( nDec, nBase )
 ************************  END OF NewBase()  *************************
 
 
-METHOD BegBookMark( texto )  CLASS RichText
+METHOD BegBookMark( texto ) CLASS RichText
 
    DEFAULT texto TO "marca"
 
@@ -1390,7 +1390,7 @@ METHOD BegBookMark( texto )  CLASS RichText
 
    RETURN NIL
 
-METHOD EndBookMark()  CLASS RichText
+METHOD EndBookMark() CLASS RichText
 
 
    ::OpenGroup()

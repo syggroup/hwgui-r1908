@@ -157,7 +157,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HDatePicker
 
 RETURN -1
 
-METHOD Value( Value )  CLASS HDatePicker
+METHOD Value( Value ) CLASS HDatePicker
 
    IF Value != Nil
       ::SetValue( Value  )

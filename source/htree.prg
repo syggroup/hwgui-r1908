@@ -519,7 +519,7 @@ METHOD Clean() CLASS HTree
 
    RETURN Nil
 
-METHOD ItemHeight( nHeight )  CLASS HTree
+METHOD ItemHeight( nHeight ) CLASS HTree
 
    IF nHeight != Nil
       SendMessage( ::handle, TVM_SETITEMHEIGHT, nHeight, 0 )
@@ -528,7 +528,7 @@ METHOD ItemHeight( nHeight )  CLASS HTree
    ENDIF
    RETURN  nHeight
 
-METHOD Notify( lParam )  CLASS HTree
+METHOD Notify( lParam ) CLASS HTree
    LOCAL nCode := GetNotifyCode( lParam ), oItem, cText, nAct, nHitem, leval
    LOCAL nkeyDown := GetNotifyKeydown( lParam )
     
@@ -649,7 +649,7 @@ METHOD Notify( lParam )  CLASS HTree
    ENDIF
    RETURN 0
 
-METHOD Selecteds( oItem, aSels )  CLASS HTree
+METHOD Selecteds( oItem, aSels ) CLASS HTree
    LOCAL i, iLen
    LOCAL aSelecteds := IIF( aSels = Nil, {}, aSels )
    
@@ -664,7 +664,7 @@ METHOD Selecteds( oItem, aSels )  CLASS HTree
    NEXT
    RETURN aSelecteds
 
-METHOD Expand( oNode, lAllNode )  CLASS HTree
+METHOD Expand( oNode, lAllNode ) CLASS HTree
    LOCAL i, iLen := Len( oNode:aitems  )
    
    SendMessage( ::handle, TVM_EXPAND, TVE_EXPAND, oNode:handle )

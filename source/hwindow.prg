@@ -124,7 +124,7 @@ ENDCLASS
 
 METHOD New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
             bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther, ;
-            cAppName, oBmp, cHelp, nHelpId, bCloseQuery, bRefresh, lChild, lClipper, lNoClosable, bSetForm )  CLASS HWindow
+            cAppName, oBmp, cHelp, nHelpId, bCloseQuery, bRefresh, lChild, lClipper, lNoClosable, bSetForm ) CLASS HWindow
 
    HB_SYMBOL_UNUSED( clr )
    HB_SYMBOL_UNUSED( cMenu )
@@ -400,7 +400,7 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate ) CLASS HMa
 
    RETURN Nil
 
-METHOD onEvent( msg, wParam, lParam )  CLASS HMainWindow
+METHOD onEvent( msg, wParam, lParam ) CLASS HMainWindow
    Local i, xPos, yPos, oMdi, aCoors
    LOCAL nFocus := If( Hb_IsNumeric( ::nFocus ), ::nFocus, 0 )
 
@@ -603,7 +603,7 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate, lModal ) C
 
    RETURN Nil
 
-METHOD onEvent( msg, wParam, lParam )  CLASS HMDIChildWindow
+METHOD onEvent( msg, wParam, lParam ) CLASS HMDIChildWindow
    LOCAL i, oCtrl
    LOCAL nFocus
 
@@ -745,7 +745,7 @@ METHOD Activate( lShow, lMaximized, lMinimized,lCentered, bActivate, lModal ) CL
    RETURN Nil
 
 
-METHOD onEvent( msg, wParam, lParam )  CLASS HChildWindow
+METHOD onEvent( msg, wParam, lParam ) CLASS HChildWindow
    LOCAL i, oCtrl
 
    IF msg == WM_DESTROY
