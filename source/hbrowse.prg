@@ -2206,7 +2206,7 @@ METHOD LineOut( nRow, nCol, hDC, lSelected, lClear ) CLASS HBrowse
       oldBkColor := SetBkColor(   hDC, IIf( nCol >= 1, ::htbcolor, IIf( lSelected, ::bcolorSel, ::bcolor ) ) )
       oldTColor  := SetTextColor( hDC, IIf( nCol >= 1, ::httcolor, IIf( lSelected, ::tcolorSel, ::tcolor ) ) )
       ::nVisibleColLeft :=  ::nPaintCol
-      WHILE x < ::x2 - 2
+      DO WHILE x < ::x2 - 2
          // if bColorBlock defined get the colors
          //IF ::aColumns[ ::nPaintCol ]:bColorBlock != Nil
          aCores := {}
@@ -3859,7 +3859,7 @@ Local nBWidth := oBrw:nWidth // :width is _not_ browse width
       nColPixel := Int( ( nPos * nBWidth ) / ( ( maxPos - minPos ) + 1 ) )
       i := oBrw:nLeftCol - 1
 
-      while nColPixel > nSize .AND. i < Len( oBrw:aColumns )
+      do while nColPixel > nSize .AND. i < Len( oBrw:aColumns )
          nSize += oBrw:aColumns[ ++i ]:width
       enddo
 
@@ -3916,7 +3916,7 @@ STATIC FUNCTION FltSkip( oBrw, nLines, lDesc )
       FOR n := 1 TO nLines
          ( oBrw:Alias )->( DBSKIP( IIF( lDesc, - 1, + 1 ) ) )
          IF  EMPTY( oBrw:RelationalExpr )
-            WHILE ( oBrw:Alias )->( ! Eof() ) .AND. Eval( oBrw:bWhile, oBrw ) .AND. ! Eval( oBrw:bFor, oBrw )
+            DO WHILE ( oBrw:Alias )->( ! Eof() ) .AND. Eval( oBrw:bWhile, oBrw ) .AND. ! Eval( oBrw:bFor, oBrw )
               //SKIP IF( lDesc, - 1, + 1 )
                ( oBrw:Alias )->( DBSKIP( IIF( lDesc, - 1, + 1 ) ) )
             ENDDO
@@ -3935,7 +3935,7 @@ STATIC FUNCTION FltSkip( oBrw, nLines, lDesc )
             ( oBrw:Alias )->( DBSKIP( IIF( lDesc, + 1, - 1 ) ) )
          ENDIF
          IF  EMPTY( oBrw:RelationalExpr )
-         WHILE ! ( oBrw:Alias )->( Bof() ) .AND. Eval( oBrw:bWhile, oBrw ) .AND. ! Eval( oBrw:bFor, oBrw )
+         DO WHILE ! ( oBrw:Alias )->( Bof() ) .AND. Eval( oBrw:bWhile, oBrw ) .AND. ! Eval( oBrw:bFor, oBrw )
             //SKIP IF( lDesc, + 1, - 1 )
             ( oBrw:Alias )->( DBSKIP( IIF( lDesc, + 1, - 1 ) ) )
          ENDDO
@@ -3950,7 +3950,7 @@ STATIC FUNCTION FltGoTop( oBrw )
       Eval( oBrw:bFirst )
       IF ( oBrw:Alias )-> ( ! Eof() )
          IF  EMPTY( oBrw:RelationalExpr )
-            WHILE ( oBrw:Alias )->( ! Eof() ) .AND. ! ( Eval( oBrw:bWhile, oBrw ) .AND. Eval( oBrw:bFor, oBrw ) )
+            DO WHILE ( oBrw:Alias )->( ! Eof() ) .AND. ! ( Eval( oBrw:bWhile, oBrw ) .AND. Eval( oBrw:bFor, oBrw ) )
               ( oBrw:Alias )->( DBSkip() )
             ENDDO
          ENDIF
@@ -3968,10 +3968,10 @@ STATIC FUNCTION FltGoBottom( oBrw )
       Eval( oBrw:bLast )
       IF  EMPTY( oBrw:RelationalExpr )
          IF ! Eval( oBrw:bWhile, oBrw ) .OR. ! Eval( oBrw:bFor, oBrw )
-            WHILE ( oBrw:Alias )->( ! Bof() ) .AND. ! Eval( oBrw:bWhile, oBrw )
+            DO WHILE ( oBrw:Alias )->( ! Bof() ) .AND. ! Eval( oBrw:bWhile, oBrw )
               ( oBrw:Alias )->( DBSkip( - 1 ) )
             ENDDO
-            WHILE ! Bof() .AND. Eval( oBrw:bWhile, oBrw ) .AND. ! Eval( oBrw:bFor, oBrw )
+            DO WHILE ! Bof() .AND. Eval( oBrw:bWhile, oBrw ) .AND. ! Eval( oBrw:bFor, oBrw )
               ( oBrw:Alias )->( DBSkip( - 1 ) )
             ENDDO
          ENDIF
@@ -4028,7 +4028,7 @@ STATIC FUNCTION FltRecCount( oBrw )
    nRecord := FltRecNo( oBrw )
    FltGoTop( oBrw )
    oBrw:aRecnoFilter := {}
-   WHILE !( oBrw:Alias )->( Eof() ) .AND. Eval( oBrw:bWhile, oBrw )
+   DO WHILE !( oBrw:Alias )->( Eof() ) .AND. Eval( oBrw:bWhile, oBrw )
       IF Eval( oBrw:bFor, oBrw )
          nCount ++
          IF oBrw:lFilter
