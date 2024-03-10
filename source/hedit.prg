@@ -141,7 +141,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    //   ::nMaxLength := nMaxLength
    //ENDIF
    ::ParsePict( cPicture, vari )
-  * ::SetText( vari )
+  // ::SetText( vari )
       
    ::Activate()
 
@@ -196,9 +196,9 @@ METHOD Init()  CLASS HEdit
       SetWindowObject( ::handle, Self )
       Hwg_InitEditProc( ::handle )
       ::Refresh()
-      *IF ::bChange != Nil .OR. ::lMultiLine
+      //IF ::bChange != Nil .OR. ::lMultiLine
          ::oParent:AddEvent( EN_CHANGE, Self, { | | ::onChange( ) },, "onChange"  )
-      *ENDIF
+      //ENDIF
 
    ENDIF
    RETURN Nil
@@ -269,7 +269,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
             ELSEIF wParam == VK_TAB
                IF ( ::GetParentForm( Self ):Type < WND_DLG_RESOURCE.OR.;
                    ! ::GetParentForm( Self ):lModal )
-                  *- GetSkip( oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
+                  //- GetSkip( oParent, ::handle, , iif( IsCtrlShift(.f., .t.), -1, 1) )
                ENDIF
                RETURN 0
             ELSEIF wParam == VK_ESCAPE
@@ -375,12 +375,12 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
                         IIf( IsCtrlShift( .f., .t. ), - 1, 1 ) )
                RETURN 0
             ELSEIF wParam == VK_RETURN  // Enter
-               *GetSkip( oParent, ::handle, .T., 1 )
+               //GetSkip( oParent, ::handle, .T., 1 )
                RETURN 0
             ENDIF
             IF "K" $ ::cPicFunc .AND. ::lFocu  .AND. ! EMPTY( ::Title )
-                *- ::value := IIF( ::cType == "D", CTOD(""), IIF( ::cType == "N", 0, "" ) )
-                *- SendMessage( ::handle, EM_SETSEL, ::FirstEditable() - 1, ::FirstEditable() - 1 )
+                //- ::value := IIF( ::cType == "D", CTOD(""), IIF( ::cType == "N", 0, "" ) )
+                //- SendMessage( ::handle, EM_SETSEL, ::FirstEditable() - 1, ::FirstEditable() - 1 )
                 ::Title := IIF( ::cType == "D", CTOD(""), IIF( ::cType == "N", 0, "" ) )
             ENDIF
 
@@ -425,7 +425,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
             ::nSelStart := IIF( Empty( ::title ), 0, ::nSelStart )
             ::SetColor( tColorSelect, bColorSelect )
             SendMessage( ::handle, EM_SETSEL, ::selStart, ::selStart ) // era -1
-            *-::SetColor( tcolorselect, bcolorselect,  .T. )
+            //-::SetColor( tcolorselect, bcolorselect,  .T. )
          ELSEIF msg == WM_KILLFOCUS .AND. ! lPersistColorSelect
             ::SetColor( ::tcolorOld, ::bColorOld, .T. )
             ::bColor := ::bColorOld                         
@@ -973,7 +973,7 @@ METHOD GetApplyKey( cKey ) CLASS HEdit
       //IF ! Empty( ::cPicFunc ) .OR. ! Empty( ::cPicMask )
       IF ( ! Empty( ::cPicFunc ) .OR. ! Empty( ::cPicMask ) ) .AND. ;
          ( ! cKey $ ",." .OR. RIGHT( TRIM( ::title ), 1 ) = '.'   )
-         *-::title := Transform( vari, ::cPicFunc + IIf( Empty( ::cPicFunc ), "", " " ) + ::cPicMask )
+         //-::title := Transform( vari, ::cPicFunc + IIf( Empty( ::cPicFunc ), "", " " ) + ::cPicMask )
          ::title := Transform( vari, STRTRAN(::cPicFunc, "Z", "" ) + IIf( Empty( ::cPicFunc ), "", " " ) + ::cPicMask )
          IF lSignal
            ::title := "-" + substr( ::title, 2 )
@@ -1247,7 +1247,7 @@ METHOD Valid( ) CLASS HEdit
    RETURN .T.
 
 METHOD onChange( lForce ) CLASS HEdit
-   *-LOCAL  nPos := HIWORD( SendMessage( ::handle, EM_GETSEL, 0, 0 ) ) + 1
+   //-LOCAL  nPos := HIWORD( SendMessage( ::handle, EM_GETSEL, 0, 0 ) ) + 1
    LOCAL vari
    
    IF ! SelfFocus( ::handle ) .AND. Empty( lForce )

@@ -533,7 +533,7 @@ METHOD Refresh() CLASS HComboBox
       #endif
    ELSE
       ComboSetString( ::handle, ::value )
-      *-::SetItem(::value )
+      //-::SetItem(::value )
    ENDIF
    ::valueBound := ::GetValueBound()
 

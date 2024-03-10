@@ -388,24 +388,24 @@ METHOD onAnchor( x, y, w, h ) CLASS HControl
    y1 := ::nTop
    w1 := ::nWidth  //- IIF( ::winclass = "EDIT" .AND. __ObjHasMsg( Self,"hwndUpDown" ), GetClientRect( ::hwndUpDown)[ 3 ], 0 )
    h1 := ::nHeight
-  *- calculo relativo
+  //- calculo relativo
    IF x > 0
       nXincRelative :=  w / x
    ENDIF
    IF y > 0
       nYincRelative :=  h / y
    ENDIF
-    *- calculo ABSOLUTE
+    //- calculo ABSOLUTE
    nXincAbsolute := ( w - x )
    nYincAbsolute := ( h - y )
 
    IF nAnchor >= ANCHOR_VERTFIX
-    *- vertical fixed center
+    //- vertical fixed center
       nAnchor := nAnchor - ANCHOR_VERTFIX
       y1 := y9 + Round( ( h - y ) * ( ( y9 + h9 / 2 ) / y ), 2 )
    ENDIF
    IF nAnchor >= ANCHOR_HORFIX
-    *- horizontal fixed center                                                    
+    //- horizontal fixed center                                                    
       nAnchor := nAnchor - ANCHOR_HORFIX
       x1 := x9 + Round( ( w - x ) * ( ( x9 + w9 / 2 ) / x ), 2 )
    ENDIF
@@ -1079,10 +1079,10 @@ METHOD Init() CLASS HButton
 METHOD onevent( msg, wParam, lParam ) CLASS HButton
 
    IF msg = WM_SETFOCUS .AND. ::oParent:oParent = Nil
-       *- SENDMESSAGE( ::handle, BM_SETSTYLE , BS_PUSHBUTTON , 1 )
+       //- SENDMESSAGE( ::handle, BM_SETSTYLE , BS_PUSHBUTTON , 1 )
    ELSEIF msg = WM_KILLFOCUS
        IF ::GetParentForm():handle != ::oParent:Handle 
-       *- IF ::oParent:oParent != Nil
+       //- IF ::oParent:oParent != Nil
           InvalidateRect( ::handle, 0 )
           SENDMESSAGE( ::handle, BM_SETSTYLE , BS_PUSHBUTTON , 1 )
        ENDIF
@@ -1795,7 +1795,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
       INT( aTxtSize[ 2 ] ) !=  INT( DrawText( dc, ::caption, itemRect[ 1 ], itemRect[ 2 ],;
           itemRect[ 3 ] - IIF( ::iStyle = ST_ALIGN_VERT, 0, aBmpSize[ 1 ] + 8 ),;
           itemRect[ 4 ], DT_CALCRECT + uAlign + DT_WORDBREAK, itemRectOld ) )
-      *-INT( aTxtSize[ 2 ] ) !=  INT( DrawText( dc, ::caption, itemRect,  DT_CALCRECT + uAlign + DT_WORDBREAK ) )
+      //-INT( aTxtSize[ 2 ] ) !=  INT( DrawText( dc, ::caption, itemRect,  DT_CALCRECT + uAlign + DT_WORDBREAK ) )
       uAlign += DT_WORDBREAK
       lMultiline := .T.
       drawInfo[ 4 ] += 2
@@ -1889,7 +1889,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
              DrawText( dc, ::caption, captionRect[ 1 ], captionRect[ 2 ], captionRect[ 3 ], captionRect[ 4 ], uAlign , @captionRect )
           ENDIF
       ELSE
-         *- uAlign += DT_CENTER
+         //- uAlign += DT_CENTER
       ENDIF
       
       //captionRectWidth  := captionRect[ 3 ] - captionRect[ 1 ]
@@ -2111,7 +2111,7 @@ METHOD Init() CLASS HGroup
    IF  ! ::lInit
       ::Super:Init()
 
-      *-IF ::backStyle = TRANSPARENT .OR. ::bColor != Nil
+      //-IF ::backStyle = TRANSPARENT .OR. ::bColor != Nil
       IF  ::oBrush != Nil .OR. ::backStyle = TRANSPARENT 
          nbs := HWG_GETWINDOWSTYLE( ::handle )
          nbs := modstyle( nbs, BS_TYPEMASK , BS_OWNERDRAW + WS_DISABLED )

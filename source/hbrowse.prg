@@ -1424,7 +1424,7 @@ METHOD Paint( lLostFocus )  CLASS HBrowse
    ::y1 := aCoors[ 2 ] + IIf( ::lDispHead, ::nHeadHeight * ::nHeadRows, 0 )
    ::x2 := aCoors[ 3 ]
    ::y2 := aCoors[ 4 ] // - Iif( ::nFootRows > 0, ::nFootHeight*::nFootRows, 0 )
-   *--::xAdjRight := ::x2
+   //--::xAdjRight := ::x2
    IF ::lRepaintBackground
       //FillRect( hDC, ::x1 - ::nDeleteMark, ::y1,  ::x2, ::y2 - ( ::nFootHeight * ::nFootRows ), ::brush:handle )
       FillRect( hDC, ::x1 - ::nDeleteMark, ::y1, ::xAdjRight, ::y2 - ( ::nFootHeight * ::nFootRows ), ::brush:handle )
@@ -1470,9 +1470,9 @@ METHOD Paint( lLostFocus )  CLASS HBrowse
          IF Eval( ::bRecno, Self ) == ::internal[ 4 ]
             EXIT
          ENDIF
-         *IF cursor_row > nRows .OR. ( Eval( ::bEof, Self ) .AND. ! ::lAppMode )
-         *   EXIT
-         *ENDIF
+         //IF cursor_row > nRows .OR. ( Eval( ::bEof, Self ) .AND. ! ::lAppMode )
+         //   EXIT
+         //ENDIF
          ::LineOut( cursor_row, 0, hDC, .F. )
          cursor_row ++
          Eval( ::bSkip, Self, 1 )
@@ -1480,7 +1480,7 @@ METHOD Paint( lLostFocus )  CLASS HBrowse
        */
        ::xAdjRight := ::x2
        ::HeaderOut( hDC )
-       *Eval( ::bGoTo, Self, tmp )
+       //Eval( ::bGoTo, Self, tmp )
 
     ELSE
       IF ! ::lAppMode
@@ -1731,15 +1731,15 @@ METHOD HeaderOut( hDC ) CLASS HBrowse
       IF !oColumn:lHide
        IF ::lDispHead .AND. ! ::lAppMode
          IF oColumn:cGrid == nil
-          *-  DrawButton( hDC, x - 1, ::y1 - ::nHeadHeight * ::nHeadRows, x + xSize - 1, ::y1 + 1, 1 )
+          //-  DrawButton( hDC, x - 1, ::y1 - ::nHeadHeight * ::nHeadRows, x + xSize - 1, ::y1 + 1, 1 )
             IF xsize != xsizeMax
                 DrawButton( hDC, x + xsize, ::y1 - ::nHeadHeight * ::nHeadRows, x + xsizeMax , ::y1 + 1, 0 )
             ENDIF
          ELSE
             // Draws a grid to the NWSE coordinate...
-          *-  DrawButton( hDC, x - 1, ::y1 - ::nHeadHeight * ::nHeadRows, x + xSize - 1, ::y1 + 1, 0 )
+          //-  DrawButton( hDC, x - 1, ::y1 - ::nHeadHeight * ::nHeadRows, x + xSize - 1, ::y1 + 1, 0 )
             IF xSize != xSizeMax
-          *-    DrawButton( hDC, x + xsize - 1, ::y1 - ::nHeadHeight * ::nHeadRows, x + xsizeMax - 1, ::y1 + 1, 0 )
+          //-    DrawButton( hDC, x + xsize - 1, ::y1 - ::nHeadHeight * ::nHeadRows, x + xsizeMax - 1, ::y1 + 1, 0 )
             ENDIF
             IF oPenHdr == nil
                oPenHdr := HPen():Add( BS_SOLID, 1, 0 )
@@ -2154,8 +2154,8 @@ METHOD LineOut( nRow, nCol, hDC, lSelected, lClear ) CLASS HBrowse
       Eval( ::bLineOut, Self, lSelected )
    ENDIF
    IF ::nRecords > 0 .OR. lClear
-  *    oldBkColor := SetBkColor(   hDC, IIf( nCol >= 1, ::htbcolor, IIf( lSelected, ::bcolorSel, ::bcolor ) ) )
-  *    oldTColor  := SetTextColor( hDC, IIf( nCol >= 1, ::httcolor, IIf( lSelected, ::tcolorSel, ::tcolor ) ) )
+  //    oldBkColor := SetBkColor(   hDC, IIf( nCol >= 1, ::htbcolor, IIf( lSelected, ::bcolorSel, ::bcolor ) ) )
+  //    oldTColor  := SetTextColor( hDC, IIf( nCol >= 1, ::httcolor, IIf( lSelected, ::tcolorSel, ::tcolor ) ) )
       ::nPaintCol  := IIf( ::freeze > 0, 1, ::nLeftCol )
       ::nPaintRow  := nRow
       IF ::lDeleteMark
@@ -2868,7 +2868,7 @@ ELSEIF nLine == 0
       //::aColumns[ fif ]:bHeadClick != nil
       ::aColumns[ fif ]:lHeadClick := .T.
       InvalidateRect( ::handle, 0, ::x1, ::y1 - ::nHeadHeight * ::nHeadRows, ::x2, ::y1 )
-     * MSGINFO('C')
+     // MSGINFO('C')
       IF ::aColumns[ fif ]:bHeadClick != nil
          ::isMouseOver := .F.
          ::oParent:lSuspendMsgsHandling := .T.

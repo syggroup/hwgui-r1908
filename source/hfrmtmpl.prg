@@ -954,9 +954,9 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
       //
       IF oCtrlTmpl:cClass == "combobox"
          IF ( AScan( oCtrlTmpl:aProp, { | a | Lower( a[ 1 ] ) == "nmaxlines" } ) ) > 0
-          *-  nHeight := nHeight * nMaxLines
+          //-  nHeight := nHeight * nMaxLines
          ELSE
-          *-  nHeight := nHeight * 4
+          //-  nHeight := nHeight * 4
          ENDIF
       ELSEIF oCtrlTmpl:cClass == "line"
          nLength := IIf( lVertical == Nil.OR. ! lVertical, nWidth, nHeight )
@@ -991,7 +991,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
          IF &( cOName ):Type = BRW_DATABASE .AND. ! Empty( Alias() )
             cAliasdbf := Alias()
             temp = StrTran( Upper( fBlock ), Alias() + "->", "" )
-       *- verificar se tem mais de um campo
+       //- verificar se tem mais de um campo
             temp = SubStr( temp, 1, IIf( At( '+', temp ) > 0, At( '+', temp ) - 1, Len( temp ) ) )
             j := { }
             AEval( &cAliasdbf->( ( DBStruct() ) ), { | aField | AAdd( j, aField[ 1 ] ) } )
@@ -1030,7 +1030,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
          oCtrl:sepColor := nsepColor
          oCtrl:nLeftCol := nLeftCol
          oCtrl:ladjright := ladjright
-      */
+      ///
          oCtrl:nColumns := nColumns
          oCtrl:Type := brwType
          IF brwType = BRW_DATABASE          //oCtrl:type = 1

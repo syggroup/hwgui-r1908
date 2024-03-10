@@ -147,7 +147,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
       InvalidateRect( ::handle, 0 )
       ::Paint()
    ELSEIF msg == WM_NCPAINT
-     *- RedrawWindow( ::handle, RDW_NOERASE +  RDW_FRAME + RDW_INVALIDATE + RDW_INTERNALPAINT )
+     //- RedrawWindow( ::handle, RDW_NOERASE +  RDW_FRAME + RDW_INVALIDATE + RDW_INTERNALPAINT )
    ELSEIF msg == WM_ERASEBKGND
       IF ::backstyle = OPAQUE
          RETURN ::nrePaint

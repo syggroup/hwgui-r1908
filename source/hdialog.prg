@@ -193,9 +193,9 @@ METHOD Activate( lNoModal, bOnActivate, nShow ) CLASS HDialog
          ::Add()
          Hwg_CreateDlgIndirect( hParent, Self, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::style )
          IF  ::WindowState > SW_HIDE
-           *InvalidateRect( ::handle, 1 )
-            *BRINGTOTOP( ::handle )
-            *UPDATEWINDOW( ::handle )
+           //InvalidateRect( ::handle, 1 )
+            //BRINGTOTOP( ::handle )
+            //UPDATEWINDOW( ::handle )
             SetWindowPos( ::Handle, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_FRAMECHANGED )
             RedrawWindow( ::handle, RDW_UPDATENOW + RDW_NOCHILDREN ) 
          ENDIF
@@ -319,14 +319,14 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
 
    // oDlg:handle := hDlg
    // writelog( str(oDlg:handle)+" "+oDlg:title )
-   *  .if uMsg == WM_INITDIALOG
-   *-EnableThemeDialogTexture(odlg:handle,6)  //,ETDT_ENABLETAB)
+   //  .if uMsg == WM_INITDIALOG
+   //-EnableThemeDialogTexture(odlg:handle,6)  //,ETDT_ENABLETAB)
 
    IF hb_IsArray(oDlg:menu)
       hwg__SetMenu( oDlg:handle, oDlg:menu[5] )
    ENDIF
 
-  *- oDlg:rect := GetWindowRect( odlg:handle )
+  //- oDlg:rect := GetWindowRect( odlg:handle )
    oDlg:rect := GetclientRect( oDlg:handle )
 
    IF oDlg:oIcon != Nil
@@ -381,7 +381,7 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
       oDlg:Hide()
       oDlg:lHide := .T.
       oDlg:lResult := oDlg
-      *-oDlg:WindowState := SW_SHOWNORMAL
+      //-oDlg:WindowState := SW_SHOWNORMAL
       RETURN oDlg
    ENDIF
 
@@ -405,7 +405,7 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
    ENDIF
 
    IF ! oDlg:lModal            
-     *- oDlg:lActivated := .T.
+     //- oDlg:lActivated := .T.
       IF hb_IsBlock(oDlg:bOnActivate)
          Eval(oDlg:bOnActivate, oDlg)
       ENDIF  
@@ -606,7 +606,7 @@ FUNCTION DlgMouseMove()
    IF oBtn != Nil .AND. ! oBtn:lPress
       oBtn:state := OBTN_NORMAL
       InvalidateRect( oBtn:handle, 0 )
-     * PostMessage( oBtn:handle, WM_PAINT, 0, 0 )
+     // PostMessage( oBtn:handle, WM_PAINT, 0, 0 )
       SetNiceBtnSelected( Nil )
    ENDIF
 
@@ -632,7 +632,7 @@ STATIC FUNCTION onSize( oDlg, wParam, lParam )
    */
    nW1 := oDlg:nWidth
    nH1 := oDlg:nHeight
-   *aControls := GetWindowRect( oDlg:handle )
+   //aControls := GetWindowRect( oDlg:handle )
    IF wParam != 1  //SIZE_MINIMIZED
       oDlg:nWidth := LOWORD( lParam )  //aControls[3]-aControls[1]
       oDlg:nHeight := HIWORD( lParam ) //aControls[4]-aControls[2]
@@ -672,9 +672,9 @@ STATIC FUNCTION onActivate( oDlg, wParam, lParam )
    ENDIF
    IF  iParLow = WA_ACTIVE  .AND. SelfFocus( lParam, oDlg:Handle )
       IF hb_IsBlock(oDlg:bOnActivate)
-        *- oDlg:lSuspendMsgsHandling := .t.
+        //- oDlg:lSuspendMsgsHandling := .t.
          Eval( oDlg:bOnActivate, oDlg )
-         *-oDlg:lSuspendMsgsHandling := .F.
+         //-oDlg:lSuspendMsgsHandling := .F.
       ENDIF
 
    ELSEIF ( iParLow = WA_ACTIVE .OR. iParLow = WA_CLICKACTIVE ) .AND. IsWindowVisible( oDlg:handle ) //.AND. PtrtoUlong( lParam ) = 0

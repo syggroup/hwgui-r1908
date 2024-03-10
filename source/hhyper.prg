@@ -174,7 +174,7 @@ METHOD INIT() CLASS HStaticLink
       IF ::GetParentForm():Type <= WND_MDICHILD .OR. ::TYPE = NIL
          ::nHolder := 1
          SetWindowObject( ::handle, Self )
-       *  Hwg_InitWinCtrl( ::handle )
+       //  Hwg_InitWinCtrl( ::handle )
          HWG_INITSTATICPROC( ::handle )
       ENDIF
       */
@@ -199,7 +199,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HStaticLink
         /*
          IF ::state != LBL_MOUSEOVER
             //::allMouseOver := .T.
-      *      ::state := LBL_MOUSEOVER
+      //      ::state := LBL_MOUSEOVER
             TRACKMOUSEVENT( ::handle )
           ELSE
             TRACKMOUSEVENT( ::handle, TME_HOVER + TME_LEAVE  )

@@ -571,7 +571,7 @@ METHOD SetupScrollbars() CLASS HCustomWindow
    IF ::nScrollBars = 0 .OR. ::nScrollBars = 2
       ::nHscrollMax := Max( 0, ::nHorzInc )
       IF ::nHscrollMax < HORZ_PTS / 2
-        *-  ScrollWindow( ::Handle, ::nHscrollPos * HORZ_PTS, 0 )
+        //-  ScrollWindow( ::Handle, ::nHscrollPos * HORZ_PTS, 0 )
       ELSEIF ::nHScrollMax <= HORZ_PTS
           ::nHScrollMax := 0
       ENDIF
@@ -590,7 +590,7 @@ METHOD SetupScrollbars() CLASS HCustomWindow
    IF ::nScrollBars = 1 .OR. ::nScrollBars = 2
       ::nVscrollMax := INT( Max( 0, ::nVertInc ) )
       IF ::nVscrollMax < VERT_PTS / 2 
-        *-  ScrollWindow( ::Handle, 0, ::nVscrollPos * VERT_PTS )
+        //-  ScrollWindow( ::Handle, 0, ::nVscrollPos * VERT_PTS )
       ELSEIF ::nVScrollMax <= VERT_PTS
          ::nVScrollMax := 0
       ENDIF
@@ -1053,23 +1053,23 @@ FUNCTION GetBackColorParent( oCtrl, lSelf, lTransparent )
       oCtrl := oCtrl:oParent
    ENDIF
    IF  oCtrl != Nil .AND. oCtrl:Classname = "HTAB"
-       *-brush := HBrush():Add( bColor )
+       //-brush := HBrush():Add( bColor )
        IF Len( oCtrl:aPages ) > 0 .AND. oCtrl:Pages[ oCtrl:GETACTIVEPAGE() ]:bColor != Nil
-          *-brush := oCtrl:Pages[ oCtrl:GetActivePage() ]:brush
+          //-brush := oCtrl:Pages[ oCtrl:GetActivePage() ]:brush
           bColor := oCtrl:Pages[ oCtrl:GetActivePage() ]:bColor
        ELSEIF ISTHEMEACTIVE() .AND. oCtrl:WindowsManifest
           hTheme := hb_OpenThemeData( oCtrl:handle, "TAB" ) //oCtrl:oParent:WinClass )
           IF !EMPTY( hTheme )
              bColor := HWG_GETTHEMESYSCOLOR( hTheme, COLOR_WINDOW  )
              HB_CLOSETHEMEDATA( hTheme )
-             *-brush := HBrush():Add( bColor )
+             //-brush := HBrush():Add( bColor )
           ENDIF
        ENDIF
    ELSEIF oCtrl:bColor != Nil
-       *-brush := oCtrl:brush
+       //-brush := oCtrl:brush
        bColor := oCtrl:bColor
-    *-ELSEIF oCtrl:brush = Nil .AND. lTransparent
-    *-   brush := HBrush():Add( bColor )
+    //-ELSEIF oCtrl:brush = Nil .AND. lTransparent
+    //-   brush := HBrush():Add( bColor )
    ENDIF
    brush := HBrush():Add( bColor ) 
    Return brush

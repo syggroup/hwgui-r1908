@@ -57,7 +57,7 @@ METHOD New( oWndParent, nId, aValue, bSetGet, nStyle, nLeft, nTop, nWidth, nHeig
    ::Activate()
 
 
-   *IF bSetGet != Nil
+   //IF bSetGet != Nil
       /*
       ::bGetFocus := bGFocus
       ::bLostFocus := bLFocus
@@ -65,19 +65,19 @@ METHOD New( oWndParent, nId, aValue, bSetGet, nStyle, nLeft, nTop, nWidth, nHeig
       ::oParent:AddEvent( EN_KILLFOCUS,self,{|o,id|__Valid(o:FindControl(id))},.t.,"onLostFocus" )
       ::oParent:AddEvent( IPN_FIELDCHANGED,self,{|o,id|__Valid(o:FindControl(id))} ,.t.,"onChange")
       */
-   *ELSE
+   //ELSE
    IF bGetFocus != Nil
       ::lnoValid := .T.
-        * ::oParent:AddEvent( EN_SETFOCUS,self,::bGetfocus,.t.,"onGotFocus" )
+        // ::oParent:AddEvent( EN_SETFOCUS,self,::bGetfocus,.t.,"onGotFocus" )
    ENDIF
    IF bKillFocus != Nil
-        * ::oParent:AddEvent( EN_KILLFOCUS,self,::bKillfocus,.t.,"onLostFocus" )
+        // ::oParent:AddEvent( EN_KILLFOCUS,self,::bKillfocus,.t.,"onLostFocus" )
       ::oParent:AddEvent( IPN_FIELDCHANGED, Self, ::bKillFocus, .t., "onChange" )
    ENDIF
-  * ENDIF
+  // ENDIF
 
    // Notificacoes de Ganho e perda de foco
-   *::oParent:AddEvent( IPN_FIELDCHANGED,self,::bKillFocus, .t.,"onChange" )
+   //::oParent:AddEvent( IPN_FIELDCHANGED,self,::bKillFocus, .t.,"onChange" )
    ::oParent:AddEvent( EN_SETFOCUS , Self, { | o, id | __GetFocus( o:FindControl( id ) ) },, "onGotFocus" )
    ::oParent:AddEvent( EN_KILLFOCUS, Self, { | o, id | __KillFocus( o:FindControl( id ) ) },, "onLostFocus" )
 
