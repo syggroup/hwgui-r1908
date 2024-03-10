@@ -796,8 +796,9 @@ RETURN -1
 
 //-------------------------------------------------------------------------------------------------------------------//
 
+#if 0 // old code for reference
 METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
-   
+
    LOCAL oCtrl
 
    IF (msg >= TCM_FIRST .AND. msg < TCM_FIRST + 61 )  // optimized only
@@ -912,11 +913,156 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
    ENDIF
 
 RETURN -1
+#else
+METHOD OnEvent(msg, wParam, lParam) CLASS HTab
+
+   LOCAL oCtrl
+
+   IF msg >= TCM_FIRST .AND. msg < TCM_FIRST + 61 // optimized only
+       RETURN -1
+   ENDIF
+
+   SWITCH msg
+
+   CASE WM_LBUTTONDOWN
+      IF ::ShowDisablePage(lParam, WM_LBUTTONDOWN) == 0
+         RETURN 0
+      ENDIF
+      ::lClick := .T.
+      ::SetFocus(0)
+      RETURN -1
+
+   CASE WM_MOUSEMOVE
+      //.OR. (::nPaintHeight == 0 .AND. msg == WM_NCHITTEST)
+      ::ShowToolTips(lParam)
+      RETURN ::ShowDisablePage(lParam)
+
+   CASE WM_PAINT
+      RETURN -1
+
+   CASE WM_ERASEBKGND
+      ::ShowDisablePage()
+      RETURN -1
+
+   CASE WM_PRINTCLIENT
+   CASE WM_NCHITTEST
+   CASE WM_UPDATEUISTATE
+      RETURN -1 // painted objects without METHOD PAINT
+
+   CASE WM_PRINT
+      //-AEVAL( ::Pages, {|p, i|p:aItemPos := TabItemPos(::oParent:Handle, i - 1)} )
+      //- ::SetPaintSizePos( -1 )
+      ::SetPaintSizePos(IIf(::nPaintHeight > 1, -1, 1))
+      IF ::nActive > 0
+         ::ShowPage(::nActive)
+         IF SendMessage(::handle, TCM_GETROWCOUNT, 0, 0) > 1
+            InvalidateRect(::Handle, 0, 1, ::Pages[1]:aItemPos[2], ::nWidth - 1, ;
+               ::Pages[1]:aItemPos[4] * SendMessage(::handle, TCM_GETROWCOUNT, 0, 0))
+         ENDIF
+      ENDIF
+      EXIT
+
+   CASE WM_SIZE
+      AEval(::Pages, {|p, i|p:aItemPos := TabItemPos(::Handle, i - 1)})
+      ::oPaint:nHeight := ::nPaintHeight
+      ::oPaint:Anchor := IIf(::nPaintHeight > 1, 15, 0)
+      IF ::nPaintHeight > 1
+         PostMessage(::handle, WM_PRINT, GETDC(::handle), PRF_CHECKVISIBLE)
+      ENDIF
+      EXIT
+
+   CASE WM_SETFONT
+      IF ::oFont != NIL .AND. ::lInit
+         SendMessage(::handle, WM_PRINT, GETDC(::handle), PRF_CHECKVISIBLE) //+ PRF_ERASEBKGND) //PRF_CLIENT + PRF_CHILDREN + PRF_OWNED)
+      ENDIF
+      EXIT
+
+   CASE WM_KEYDOWN
+      IF GetFocus() == ::handle //.OR. (msg == WM_GETDLGCODE .AND. wparam == VK_RETURN))
+         IF ProcKeyList(Self, wParam)
+            RETURN -1
+         ELSEIF wParam == VK_ESCAPE
+            RETURN 0
+         ENDIF
+         IF wParam == VK_RIGHT .OR. wParam == VK_LEFT
+            IF SetTabFocus(Self, ::nActive, wParam) == ::nActive
+               RETURN 0
+            ENDIF
+         ELSEIF (wparam == VK_DOWN .OR. wparam == VK_RETURN) .AND. ::nActive > 0
+            GetSkip(Self, ::handle, , 1)
+            RETURN 0
+         ELSEIF wParam == VK_TAB
+            GetSkip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
+            RETURN 0
+         ELSEIF wparam == VK_UP .AND. ::nActive > 0
+            GetSkip(::oParent, ::handle, , -1)
+            RETURN 0
+         ENDIF
+      ENDIF
+      EXIT
+
+   CASE WM_HSCROLL
+   CASE WM_VSCROLL
+      //.AND. ::FINDCONTROL(,GETFOCUS()):classname = "HUPDO"
+      IF GetFocus() == ::Handle
+          InvalidateRect(::oPaint:handle, 1, 0, 0, ::nwidth, 30) //::TabHeightSize + 2)
+      ENDIF
+      IF ::GetParentForm(self):Type < WND_DLG_RESOURCE
+         RETURN ::oParent:OnEvent(msg, wparam, lparam)
+      ELSE
+          RETURN ::super:OnEvent(msg, wparam, lparam)
+      ENDIF
+      EXIT
+
+   CASE WM_GETDLGCODE
+      IF wparam == VK_RETURN .OR. wParam == VK_ESCAPE .AND. ;
+         ((oCtrl := ::GetParentForm:FindControl(IDCANCEL)) != NIL .AND. !oCtrl:IsEnabled())
+         RETURN DLGC_WANTMESSAGE
+      ENDIF
+
+   ENDSWITCH
+
+   IF msg == WM_NOTIFY .AND. IsWindowVisible(::oParent:handle) .AND. ::nActivate == NIL
+      IF hb_IsBlock(::bGetFocus)
+         ::oParent:lSuspendMsgsHandling := .T.
+         Eval(::bGetFocus, Self, GetCurrentTab(::handle))
+         ::oParent:lSuspendMsgsHandling := .F.
+      ENDIF
+   ELSEIF (IsWindowVisible(::handle) .AND. ::nActivate == NIL) .OR. msg == WM_KILLFOCUS
+      ::nActivate := getfocus()
+   ENDIF
+
+   IF hb_IsBlock(::bOther)
+      ::oparent:lSuspendMsgsHandling := .T.
+      IF Eval(::bOther, Self, msg, wParam, lParam) != -1
+        //RETURN 0
+      ENDIF
+      ::oparent:lSuspendMsgsHandling := .F.
+   ENDIF
+
+   IF !((msg == WM_COMMAND .OR. msg == WM_NOTIFY) .AND. ::oParent:lSuspendMsgsHandling .AND. ::lSuspendMsgsHandling)
+      IF msg == WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. ;
+         PtrtouLong(GetParent(::GetParentForm():nInitFocus)) == PtrtouLong(::Handle)
+         GetSkip(::oParent, ::GetParentForm():nInitFocus, , 0)
+         ::GetParentForm():nInitFocus := 0
+      ENDIF
+      IF msg == WM_KILLFOCUS .AND. ::GetParentForm() != NIL .AND. ::GetParentForm():Type < WND_DLG_RESOURCE
+         SendMessage(::oParent:handle, WM_COMMAND, makewparam(::id, 0), ::handle)
+         ::nPrevPage := 0
+      ENDIF
+      IF msg == WM_DRAWITEM
+         ::ShowDisablePage()
+      ENDIF
+      RETURN ::Super:onEvent(msg, wparam, lparam)
+   ENDIF
+
+RETURN -1
+#endif
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 METHOD ShowDisablePage( nPageEnable, nEvent ) CLASS HTab
-   
+
    LOCAL client_rect
    LOCAL i
    LOCAL pt := {,}
