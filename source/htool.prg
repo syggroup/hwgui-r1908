@@ -270,14 +270,14 @@ METHOD CREATETOOL() CLASS hToolBar
    IF ! ::lResource
       IF Empty( ::handle )
          RETURN Nil
-			   ENDIF
-		   	IF ! ::lCreate
-			      DESTROYWINDOW( ::Handle )
-			      ::Activate()
-			      //IF !EMPTY( ::oFont )
-			      ::SetFont( ::oFont )
-			      //ENDIF
-		    ENDIF
+            ENDIF
+            IF ! ::lCreate
+               DESTROYWINDOW( ::Handle )
+               ::Activate()
+               //IF !EMPTY( ::oFont )
+               ::SetFont( ::oFont )
+               //ENDIF
+          ENDIF
    ELSE
       FOR n = 1 TO Len( ::aitem )
          ::AddButton(::aitem[ n, 1 ],::aitem[ n, 2 ],::aitem[ n, 3 ],::aitem[ n, 4 ],::aitem[ n, 6 ], ::aitem[ n, 7 ], ::aitem[ n, 8 ], ::aitem[ n, 9 ], , n )
@@ -294,12 +294,12 @@ METHOD CREATETOOL() CLASS hToolBar
    IF ::nIDB != Nil .AND. ::nIDB >= 0
       nlistimg := TOOLBAR_LOADSTANDARTIMAGE( ::handle, ::nIDB )
    ENDIF
-		 IF Hwg_BitAnd( ::Style,  TBSTYLE_LIST ) > 0 .AND. ::nwSize = Nil
-		    ::nwSize := MAX( 16, ( ::nHeight - 16 )  )
-  	ENDIF
-	  IF ::nwSize != Nil
-	     SendMessage( ::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( ::nwSize, ::nhSize ) )
-	  ENDIF
+       IF Hwg_BitAnd( ::Style,  TBSTYLE_LIST ) > 0 .AND. ::nwSize = Nil
+          ::nwSize := MAX( 16, ( ::nHeight - 16 )  )
+     ENDIF
+     IF ::nwSize != Nil
+        SendMessage( ::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( ::nwSize, ::nhSize ) )
+     ENDIF
 
    FOR n := 1 TO Len( ::aItem )
       IF hb_IsBlock(::aItem[n, 7])
@@ -316,15 +316,15 @@ METHOD CREATETOOL() CLASS hToolBar
             ::oParent:AddEvent( BN_CLICKED, aTemp[ n1, 2 ], aTemp[ n1, 3 ] )
          NEXT
       ENDIF
-			   IF ::aItem[ n, 4 ] = BTNS_SEP
-				     LOOP
-				  ENDIF
-				  nDrop := Max( nDrop, IIF( Hwg_Bitand(::aItem[ n, 4 ], BTNS_WHOLEDROPDOWN ) != 0, 0, ;
+            IF ::aItem[ n, 4 ] = BTNS_SEP
+                 LOOP
+              ENDIF
+              nDrop := Max( nDrop, IIF( Hwg_Bitand(::aItem[ n, 4 ], BTNS_WHOLEDROPDOWN ) != 0, 0, ;
                IIF( Hwg_Bitand(::aItem[ n, 4 ], BTNS_DROPDOWN ) != 0, 8,0 ) ) )
-				 /*
-				 IF ::nSize != Nil
-				    SendMessage( ::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( ::nSize, ::nSize ) )
-				 ENDIF
+             /*
+             IF ::nSize != Nil
+                SendMessage( ::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( ::nSize, ::nSize ) )
+             ENDIF
          */
       IF hb_IsChar(::aItem[n, 1]) .OR. ::aItem[ n, 1 ] > 1
          IF hb_IsChar(::aItem[n, 1]) .AND. At(".", ::aitem[ n, 1 ] ) != 0
@@ -523,8 +523,8 @@ METHOD RESIZE( xIncrSize, lWidth, lHeight  ) CLASS hToolBar
          SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::BtnWidth, ::BtnHeight ))
       ELSE
          SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::nWidth - ::nDrop - 1, ::BtnWidth )  )
-		    ENDIF
-		    SENDMESSAGE( ::handle, WM_SIZE, 0,  0 )
+          ENDIF
+          SENDMESSAGE( ::handle, WM_SIZE, 0,  0 )
    ENDIF
    RETURN NIL
 

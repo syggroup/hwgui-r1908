@@ -216,9 +216,9 @@ FUNCTION SayRupiah(nAngka)
     kalimat +=  kata
   NEXT
 
-	char:="0"+RIGHT( STR(nAngka,18,2) ,2)
+   char:="0"+RIGHT( STR(nAngka,18,2) ,2)
 
-	kalimat+=IF(char<>"000"," koma "+tigades(char,1)+"sen","")
+   kalimat+=IF(char<>"000"," koma "+tigades(char,1)+"sen","")
 
  RETURN (kalimat)
 

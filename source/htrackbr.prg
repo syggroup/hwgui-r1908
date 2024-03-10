@@ -108,13 +108,13 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTrackBar
    ELSEIF msg == WM_CHAR
       IF wParam = VK_TAB
          GetSkip( ::oParent, ::handle, , ;
-				          iif( IsCtrlShift(.f., .t.), -1, 1) )
+                      iif( IsCtrlShift(.f., .t.), -1, 1) )
           RETURN 0
       ENDIF
 
-	 ELSEIF msg = WM_KEYDOWN
-	    IF  ProcKeyList( Self, wParam )
-	       RETURN 0
+    ELSEIF msg = WM_KEYDOWN
+       IF  ProcKeyList( Self, wParam )
+          RETURN 0
       ENDIF
 
    ELSEIF hb_IsBlock(::bOther)

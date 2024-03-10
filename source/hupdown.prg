@@ -291,10 +291,10 @@ METHOD Notify( lParam ) CLASS HeditUpDown
 
    //iDelta := IIF( iDelta < 0,  1, - 1) // IIF( ::oParent:oParent = Nil , - 1 ,  1 )
 
- 	 IF ::oUpDown = Nil .OR. Hwg_BitAnd( GetWindowLong( ::handle, GWL_STYLE ), ES_READONLY ) != 0 .OR. ;
- 	     GetFocus() != ::Handle .OR. ;
+     IF ::oUpDown = Nil .OR. Hwg_BitAnd( GetWindowLong( ::handle, GWL_STYLE ), ES_READONLY ) != 0 .OR. ;
+         GetFocus() != ::Handle .OR. ;
        ( ::oUpDown:bGetFocus != Nil .AND. ! Eval( ::oUpDown:bGetFocus, ::oUpDown:nValue, ::oUpDown ) )
-	     Return 0
+        Return 0
    ENDIF
 
    vari := Val( LTrim( ::UnTransform( ::title ) ) )

@@ -144,9 +144,9 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCheckButton
    ELSEIF msg == WM_KEYUP
       ProcKeyList( Self, wParam ) // working in MDICHILD AND DIALOG
 
-	 ELSEIF  msg = WM_GETDLGCODE .AND. !EMPTY( lParam )
+    ELSEIF  msg = WM_GETDLGCODE .AND. !EMPTY( lParam )
       IF wParam = VK_RETURN .OR. wParam = VK_TAB
-	        RETURN -1
+           RETURN -1
       ELSEIF wParam = VK_ESCAPE  .AND. ;
             ( oCtrl := ::GetParentForm:FindControl( IDCANCEL ) ) != Nil .AND. ! oCtrl:IsEnabled() 
          RETURN DLGC_WANTMESSAGE  
@@ -175,7 +175,7 @@ METHOD Value( lValue ) CLASS HCheckButton
    IF lValue != Nil
        ::SetValue( lValue )
    ENDIF
-	 RETURN SendMessage( ::handle,BM_GETCHECK, 0, 0 ) == 1 
+    RETURN SendMessage( ::handle,BM_GETCHECK, 0, 0 ) == 1 
    
 METHOD Refresh() CLASS HCheckButton
    LOCAL var
@@ -252,7 +252,7 @@ METHOD When( ) CLASS HCheckButton
    IF hb_IsBlock(::bGetFocus)
       ::lnoValid := .T.
       ::oParent:lSuspendMsgsHandling := .t.
- 		  IF hb_IsBlock(::bSetGet)
+         IF hb_IsBlock(::bSetGet)
           res := Eval( ::bGetFocus, Eval( ::bSetGet, , Self ), Self )
       ELSE
           res := Eval( ::bGetFocus,::lValue, Self )

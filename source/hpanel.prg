@@ -187,7 +187,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
          nRet := IIF( hb_IsLogical(nRet) .AND. ! nRet, 0, -1 )
       ENDIF
       IF nRet >= 0
-		   RETURN -1
+         RETURN -1
       ENDIF
    ENDIF
    IF  msg = WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. ;

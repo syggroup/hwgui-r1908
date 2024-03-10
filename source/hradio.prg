@@ -162,7 +162,7 @@ METHOD Value( nValue ) CLASS HRadioGroup
    IF nValue != Nil
        ::SetValue( nValue )
    ENDIF
-	 RETURN ::nValue
+    RETURN ::nValue
    
 
 METHOD Refresh()  CLASS HRadioGroup
@@ -182,7 +182,7 @@ METHOD Enable() CLASS HRadioGroup
 
    FOR i = 1 TO nLen
        ::aButtons[ i ]:Enable()
-	 NEXT
+    NEXT
    RETURN Nil
 
 METHOD Disable() CLASS HRadioGroup
@@ -190,7 +190,7 @@ METHOD Disable() CLASS HRadioGroup
 
    FOR i = 1 TO nLen
        ::aButtons[ i ]:Disable()
-	 NEXT
+    NEXT
    RETURN Nil
 
  *--------------------------------------------------------------
@@ -330,20 +330,20 @@ METHOD Redefine( oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ctooltip,
    RETURN Self
 
 METHOD onEvent( msg, wParam, lParam ) CLASS HRadioButton
-	 LOCAL oCtrl
-	  
+    LOCAL oCtrl
+     
    IF hb_IsBlock(::bOther)
       IF Eval( ::bOther,Self,msg,wParam,lParam ) != -1
          RETURN 0
       ENDIF
    ENDIF
    IF  msg = WM_GETDLGCODE //.AND.  ! EMPTY( wParam )
-	    IF  wParam = VK_RETURN .AND. ProcOkCancel( Self, wParam, ::GetParentForm():Type >= WND_DLG_RESOURCE )
+       IF  wParam = VK_RETURN .AND. ProcOkCancel( Self, wParam, ::GetParentForm():Type >= WND_DLG_RESOURCE )
          RETURN 0
       ELSEIF wParam = VK_ESCAPE  .AND. ;
                   ( oCtrl := ::GetParentForm:FindControl( IDCANCEL ) ) != Nil .AND. ! oCtrl:IsEnabled() 
          RETURN DLGC_WANTMESSAGE  
-	    ELSEIF ( wParam != VK_TAB .AND. GETDLGMESSAGE( lParam ) = WM_CHAR ) .OR. GETDLGMESSAGE( lParam ) = WM_SYSCHAR .OR. ;
+       ELSEIF ( wParam != VK_TAB .AND. GETDLGMESSAGE( lParam ) = WM_CHAR ) .OR. GETDLGMESSAGE( lParam ) = WM_SYSCHAR .OR. ;
                wParam = VK_ESCAPE 
          RETURN -1         
       ELSEIF GETDLGMESSAGE( lParam ) = WM_KEYDOWN .AND. wParam = VK_RETURN  // DIALOG 
@@ -450,18 +450,18 @@ METHOD Valid( nKey ) CLASS HRadioButton
       RETURN .T.
    ELSE
       ::oParent:lSuspendMsgsHandling := .T.
-	    iValue := Ascan( ::oGroup:aButtons, {| o | o:id == ::id } )
+       iValue := Ascan( ::oGroup:aButtons, {| o | o:id == ::id } )
       IF nEnter = VK_RETURN //< 0
          //-iValue := Ascan( ::oGroup:aButtons,{ | o | o:id == ::id } )
          IF  ! ::GetValue() 
             ::oGroup:nValue  := iValue
-	          ::oGroup:SetValue( ::oGroup:nValue )	   
+             ::oGroup:SetValue( ::oGroup:nValue )      
             ::SetFocus( .T. ) 
          ENDIF
       ELSEIF nEnter = 0 .AND. ! GetKeyState( VK_RETURN ) < 0
          IF ! ::GetValue()
-  	        ::oGroup:nValue := Ascan( ::oGroup:aButtons, {| o | o:id == ::id } )
-	          ::oGroup:SetValue( ::oGroup:nValue )
+             ::oGroup:nValue := Ascan( ::oGroup:aButtons, {| o | o:id == ::id } )
+             ::oGroup:SetValue( ::oGroup:nValue )
          ENDIF 
       ENDIF
    ENDIF

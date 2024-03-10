@@ -3528,9 +3528,9 @@ METHOD When() CLASS HBrowse
    IF !CheckFocus(self, .f. )
       RETURN .F.
    ENDIF
-  	IF ::HighlightStyle = 0 .OR. ::HighlightStyle = 3
+     IF ::HighlightStyle = 0 .OR. ::HighlightStyle = 3
       ::RefreshLine()
-	  ENDIF
+     ENDIF
 
    IF hb_IsBlock(::bGetFocus)
       nSkip := iif( GetKeyState( VK_UP ) < 0 .OR. (GetKeyState( VK_TAB ) < 0 .AND. GetKeyState(VK_SHIFT) < 0 ), -1, 1 )
@@ -3554,9 +3554,9 @@ METHOD Valid() CLASS HBrowse
    IF !CheckFocus(self, .T. ) .OR. ::lNoValid
       RETURN .T.
    ENDIF
- 	 IF ::HighlightStyle = 0 .OR. ::HighlightStyle = 3
+     IF ::HighlightStyle = 0 .OR. ::HighlightStyle = 3
       ::RefreshLine()
-	  ENDIF
+     ENDIF
    IF hb_IsBlock(::bLostFocus)
       ::oParent:lSuspendMsgsHandling := .T.
       res := Eval( ::bLostFocus, ::ColPos, Self )

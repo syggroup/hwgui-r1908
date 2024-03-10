@@ -430,7 +430,7 @@ METHOD AddFile( name, hDC, lTranparent, nWidth, nHeight ) CLASS HBitmap
       DirChange( cCurDir )    
    ENDIF
 
-	 IF Lower( Right( name, 4 ) ) != ".bmp" .OR. ( nWidth == nil .AND. nHeight == nil .AND. lTranparent == Nil )
+    IF Lower( Right( name, 4 ) ) != ".bmp" .OR. ( nWidth == nil .AND. nHeight == nil .AND. lTranparent == Nil )
       IF Lower( Right( name, 4 ) ) == ".bmp"
          ::handle := OpenBitmap( name, hDC )
       ELSE
@@ -441,8 +441,8 @@ METHOD AddFile( name, hDC, lTranparent, nWidth, nHeight ) CLASS HBitmap
          ::handle := LoadImage( nil, name, IMAGE_BITMAP, nWidth, nHeight, LR_LOADFROMFILE + LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS)
       ELSE
          ::handle := LoadImage( nil, name, IMAGE_BITMAP, nWidth, nHeight, LR_LOADFROMFILE )
-			ENDIF
-	 ENDIF
+         ENDIF
+    ENDIF
    IF Empty( ::handle )
       RETURN Nil
    ENDIF

@@ -193,7 +193,7 @@ METHOD onEvent( msg, wParam, lParam )  CLASS HOwnButton
       ::onLostFocus()
    ELSEIF msg = WM_CHAR  .OR. msg = WM_KEYDOWN .OR. msg = WM_KEYUP
       IF wParam = VK_SPACE
-			::Press()
+         ::Press()
          ::onClick()
          ::Release()
       ENDIF

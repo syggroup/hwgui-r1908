@@ -525,8 +525,8 @@ METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate, lModal ) C
    ::aRectSave := { ::nLeft, ::nTop, ::nwidth, ::nHeight }
    IF Hwg_BitAND( ::Style , DS_3DLOOK ) > 0
        //- efect  border 3d in mdichilds with no sizebox
-  	   ::Style -=  DS_3DLOOK 
-  	   l3d := .T.
+        ::Style -=  DS_3DLOOK 
+        l3d := .T.
     ENDIF
    ::Style := Hwg_BitOr( ::Style , WS_VISIBLE ) - IIF( ! lshow , WS_VISIBLE , 0 ) + ;
                         IIF( lMaximized .AND. ! ::lChild .AND. ! ::lModal , WS_MAXIMIZE, 0 ) 
@@ -866,7 +866,7 @@ STATIC FUNCTION onCommand( oWnd, wParam, lParam )
          ENDIF
       ENDIF
       // menu MDICHILD
- 			IF oWnd:bMdiMenu != Nil
+          IF oWnd:bMdiMenu != Nil
          Eval( oWnd:bMdiMenu, oWnd:GetMdiActive(), wParam  )
       ENDIF
       */
@@ -883,8 +883,8 @@ FUNCTION onMove( oWnd )
    oWnd:nTop  := aControls[ 2 ]
    IF oWnd:type == WND_MDICHILD  .AND. ! oWnd:lMaximized
       //oWnd:aRectSave := { oWnd:nLeft, oWnd:nTop, oWnd:nWidth, oWnd:nHeight }
-		IF oWnd:nHeight > GETSYSTEMMETRICS( SM_CYCAPTION ) + 6
-	       oWnd:aRectSave := { oWnd:nLeft, oWnd:nTop, oWnd:nWidth, oWnd:nHeight }
+      IF oWnd:nHeight > GETSYSTEMMETRICS( SM_CYCAPTION ) + 6
+          oWnd:aRectSave := { oWnd:nLeft, oWnd:nTop, oWnd:nWidth, oWnd:nHeight }
       ELSE
         oWnd:aRectSave[ 1 ] := oWnd:nLeft
         oWnd:aRectSave[ 2 ] := oWnd:nTop
@@ -949,7 +949,7 @@ STATIC FUNCTION onSysCommand( oWnd, wParam, lParam )
       RETURN - 1
    ENDIF   
    
-   oWnd:WindowState := GetWindowPlacement( oWnd:handle )	      
+   oWnd:WindowState := GetWindowPlacement( oWnd:handle )         
    IF wParam == SC_MINIMIZE
       IF __ObjHasMsg( oWnd, "LTRAY" ) .AND. oWnd:lTray
          oWnd:Hide()
@@ -968,8 +968,8 @@ STATIC FUNCTION onSysCommand( oWnd, wParam, lParam )
       ars := aClone( oWnd:aRectSave )
       IF oWnd:lMaximized
           // restore
-	       IF oWnd:lSizeBox
-	          HWG_SETWINDOWSTYLE( oWnd:handle ,HWG_GETWINDOWSTYLE( oWnd:handle ) + WS_SIZEBOX )
+          IF oWnd:lSizeBox
+             HWG_SETWINDOWSTYLE( oWnd:handle ,HWG_GETWINDOWSTYLE( oWnd:handle ) + WS_SIZEBOX )
          ENDIF   
          MoveWindow(oWnd:Handle, oWnd:aRectSave[ 1 ], oWnd:aRectSave[ 2 ], oWnd:aRectSave[ 3 ], oWnd:aRectSave[ 4 ] )
          MoveWindow(oWnd:Handle, oWnd:aRectSave[ 1 ] - ( oWnd:nLeft - oWnd:aRectSave[ 1 ] ), ;
@@ -977,9 +977,9 @@ STATIC FUNCTION onSysCommand( oWnd, wParam, lParam )
                                   oWnd:aRectSave[ 3 ], oWnd:aRectSave[ 4 ] )
       ELSE
           // maximized
-  	     IF oWnd:lSizeBox
-  	        HWG_SETWINDOWSTYLE( oWnd:handle ,HWG_GETWINDOWSTYLE( oWnd:handle ) - WS_SIZEBOX )
-  	     ENDIF   
+          IF oWnd:lSizeBox
+             HWG_SETWINDOWSTYLE( oWnd:handle ,HWG_GETWINDOWSTYLE( oWnd:handle ) - WS_SIZEBOX )
+          ENDIF   
          MoveWindow( oWnd:handle, oWnd:oClient:nLeft, oWnd:oClient:nTop, oWnd:oClient:nWidth, oWnd:oClient:nHeight )
       ENDIF
       oWnd:aRectSave := aClone( ars )

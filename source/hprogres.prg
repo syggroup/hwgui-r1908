@@ -21,10 +21,10 @@ CLASS VAR winclass   INIT "msctls_progress32"
    DATA  lNewBox
    DATA  nCount INIT 0
    DATA  nLimit
-	 DATA  nAnimation
-	 DATA  LabelBox
-	 DATA  nPercent INIT 0
-	 DATA  lPercent INIT .F.
+    DATA  nAnimation
+    DATA  LabelBox
+    DATA  nPercent INIT 0
+    DATA  lPercent INIT .F.
 
    METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, maxPos, nRange, bInit, bSize, bPaint, ctooltip, nAnimation, lVertical )
    METHOD NewBox( cTitle, nLeft, nTop, nWidth, nHeight, maxPos, nRange, bExit, lPercent )
@@ -43,8 +43,8 @@ ENDCLASS
 METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, maxPos, nRange, bInit, bSize, bPaint, ctooltip, nAnimation, lVertical ) CLASS HProgressBar
 
    ::Style := IIF( lvertical != Nil .AND. lVertical, PBS_VERTICAL, 0 )
-	 ::Style += IIF( nAnimation != Nil .AND. nAnimation > 0, PBS_MARQUEE, 0 )
-	 ::nAnimation := nAnimation
+    ::Style += IIF( nAnimation != Nil .AND. nAnimation > 0, PBS_MARQUEE, 0 )
+    ::nAnimation := nAnimation
 
    ::Super:New( oWndParent, nId, ::Style, nLeft, nTop, nWidth, nHeight,, bInit, bSize, bPaint, ctooltip )
 
@@ -74,8 +74,8 @@ METHOD NewBox( cTitle, nLeft, nTop, nWidth, nHeight, maxPos, nRange, bExit, lPer
    ::lNewBox := .T.
    ::nRange := Iif( nRange != Nil .AND. nRange != 0, nRange, 100 )
    ::nLimit := IIf( nRange != Nil, Int( ::nRange / ::maxPos ), 1 )
-	 ::lPercent := lPercent
-	
+    ::lPercent := lPercent
+   
    INIT DIALOG ::oParent TITLE cTitle       ;
         At nLeft, nTop SIZE nWidth, nHeight   ;
         STYLE WS_POPUP + WS_VISIBLE + WS_CAPTION + WS_SYSMENU + WS_SIZEBOX + IIf( nTop == 0, DS_CENTER, 0 ) + DS_SYSMODAL + MB_USERICON
@@ -109,9 +109,9 @@ METHOD Init()  CLASS HProgressBar
 
    IF ! ::lInit
       ::Super:Init()
-	    IF ::nAnimation != Nil .AND. ::nAnimation > 0
-	       SendMessage( ::handle, PBM_SETMARQUEE, 1, ::nAnimation )
-	    ENDIF
+       IF ::nAnimation != Nil .AND. ::nAnimation > 0
+          SendMessage( ::handle, PBM_SETMARQUEE, 1, ::nAnimation )
+       ENDIF
    ENDIF
 
   RETURN Nil
@@ -154,17 +154,17 @@ METHOD SetLabel( cCaption ) CLASS HProgressBar
 METHOD SetAnimation( nAnimation ) CLASS HProgressBar
 
    IF nAnimation != Nil
-	    IF  nAnimation <= 0
-	       SendMessage( ::handle, PBM_SETMARQUEE, 0, Nil )
-	       MODIFYSTYLE( ::Handle, PBS_MARQUEE, 0 )
-	       SendMessage( ::handle, PBM_SETPOS, 0, 0)
-	    ELSE
-	       IF Hwg_BitAND( ::Style, PBS_MARQUEE ) = 0
-	          MODIFYSTYLE( ::Handle, PBS_MARQUEE, PBS_MARQUEE )
+       IF  nAnimation <= 0
+          SendMessage( ::handle, PBM_SETMARQUEE, 0, Nil )
+          MODIFYSTYLE( ::Handle, PBS_MARQUEE, 0 )
+          SendMessage( ::handle, PBM_SETPOS, 0, 0)
+       ELSE
+          IF Hwg_BitAND( ::Style, PBS_MARQUEE ) = 0
+             MODIFYSTYLE( ::Handle, PBS_MARQUEE, PBS_MARQUEE )
          ENDIF
          SendMessage( ::handle, PBM_SETMARQUEE, 1, nAnimation)
-	    ENDIF
-	    ::nAnimation := nAnimation
+       ENDIF
+       ::nAnimation := nAnimation
    ENDIF
    RETURN IIF( ::nAnimation != Nil, ::nAnimation, 0 )
 

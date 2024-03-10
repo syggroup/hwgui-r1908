@@ -225,7 +225,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
             COPYSTRINGTOCLIPBOARD( ::UnTransform( GETCLIPBOARDTEXT() ) )
             RETURN -1
          ELSEIF msg = WM_PASTE .AND. ! ::lNoPaste
- 	          ::lFirst := IIF( ::cType = "N" .AND. "E" $ ::cPicFunc, .T., .F. )
+              ::lFirst := IIF( ::cType = "N" .AND. "E" $ ::cPicFunc, .T., .F. )
             cClipboardText :=  GETCLIPBOARDTEXT()
             IF ! EMPTY( cClipboardText )
                nPos := HIWORD( SendMessage( ::handle, EM_GETSEL, 0, 0 ) ) + 1
@@ -258,7 +258,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
                RETURN 0
             ELSEIF wParam == VK_RETURN
                IF ! ProcOkCancel( Self, wParam, ::GetParentForm():Type >= WND_DLG_RESOURCE ) .AND.;
-						     ( ::GetParentForm():Type < WND_DLG_RESOURCE.OR.;
+                       ( ::GetParentForm():Type < WND_DLG_RESOURCE.OR.;
                    ! ::GetParentForm():lModal )
                    GetSkip( oParent, ::handle, , 1 )
                   RETURN 0
@@ -279,7 +279,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
                                 ! oParent:FindControl( IDCANCEL ):IsEnabled()       
                    SendMessage( oParent:handle, WM_COMMAND, makewparam( IDCANCEL, 0 ), ::handle )
                ENDIF    
-  					        IF ( oParent:Type < WND_DLG_RESOURCE .OR. ! oParent:lModal )
+                         IF ( oParent:Type < WND_DLG_RESOURCE .OR. ! oParent:lModal )
                    SETFOCUS( 0 )                                            
                    ProcOkCancel( Self, VK_ESCAPE )    
                    RETURN 0
@@ -406,7 +406,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
          ELSEIF msg == WM_KEYDOWN
             IF wParam == VK_TAB .AND. ::GetParentForm():Type >= WND_DLG_RESOURCE    // Tab
                nexthandle := GetNextDlgTabItem ( GetActiveWindow(), GetFocus(), ;
-					                                  IsCtrlShift(.f., .t.) )
+                                                 IsCtrlShift(.f., .t.) )
                //SetFocus( nexthandle )
                PostMessage( GetActiveWindow(), WM_NEXTDLGCTL, nextHandle, 1 )
                RETURN 0
@@ -1685,10 +1685,10 @@ FUNCTION SetDisableBackColor( lDef, bcolor )
 
    IF !hb_IsLogical(lDef)
       lDef := ( hb_IsChar(lDef) .AND. Upper( lDef ) = "ON" )
-	 ENDIF
+    ENDIF
    //lColorinFocus := lDef
- 	 IF ! lDef
- 	    bDisablecolor := Nil
+     IF ! lDef
+        bDisablecolor := Nil
       RETURN .F.
    ENDIF
    IF  Empty( bColor )
@@ -1718,7 +1718,7 @@ FUNCTION CheckFocus( oCtrl, lInside )
       ELSEIF ! lInside .AND. ! EMPTY( oParent:nInitFocus )
        //  SetFocus( oParent:handle )
          RETURN .T.
-	  ENDIF
+     ENDIF
       RETURN .F.
    ELSEIF ! lInside .AND. ! oCtrl:lNoWhen
       oCtrl:lNoWhen := .T.

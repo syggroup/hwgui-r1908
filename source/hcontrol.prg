@@ -37,7 +37,7 @@
 #define BTNST_MAX_COLORS      6
 #define WM_SYSCOLORCHANGE               0x0015
 #define BS_TYPEMASK SS_TYPEMASK
-#define OFS_X	10 // distance from left/right side to beginning/end of text
+#define OFS_X   10 // distance from left/right side to beginning/end of text
 
 //- HControl
 
@@ -1193,7 +1193,7 @@ METHOD onLostFocus()  CLASS HButton
   ENDIF
   ::lnoWhen := .F.
   IF hb_IsBlock(::bLostFocus).AND. SelfFocus( GetParent( GetFocus() ), ::getparentform():Handle )
- 		  ::oparent:lSuspendMsgsHandling := .t.
+         ::oparent:lSuspendMsgsHandling := .t.
       Eval( ::bLostFocus, ::title, Self)
       ::oparent:lSuspendMsgsHandling := .f.
    ENDIF
@@ -1552,15 +1552,15 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
       RETURN 0
 
    ELSEIF msg == WM_GETDLGCODE
-   		IF wParam = VK_ESCAPE .AND. ( GETDLGMESSAGE( lParam ) = WM_KEYDOWN .OR. GETDLGMESSAGE( lParam ) = WM_KEYUP )   
-		     oParent := ::GetParentForm()
-		     IF ! ProcKeyList( Self, wParam )  .AND. ( oParent:Type < WND_DLG_RESOURCE .OR. ! oParent:lModal )
-		        SendMessage( oParent:handle, WM_COMMAND, makewparam( IDCANCEL, 0 ), ::handle )
-		     ELSEIF oParent:FindControl( IDCANCEL ) != Nil .AND. ! oParent:FindControl( IDCANCEL ):IsEnabled() .AND. oParent:lExitOnEsc
+         IF wParam = VK_ESCAPE .AND. ( GETDLGMESSAGE( lParam ) = WM_KEYDOWN .OR. GETDLGMESSAGE( lParam ) = WM_KEYUP )   
+           oParent := ::GetParentForm()
+           IF ! ProcKeyList( Self, wParam )  .AND. ( oParent:Type < WND_DLG_RESOURCE .OR. ! oParent:lModal )
+              SendMessage( oParent:handle, WM_COMMAND, makewparam( IDCANCEL, 0 ), ::handle )
+           ELSEIF oParent:FindControl( IDCANCEL ) != Nil .AND. ! oParent:FindControl( IDCANCEL ):IsEnabled() .AND. oParent:lExitOnEsc
             SendMessage( oParent:handle, WM_COMMAND, makewparam( IDCANCEL, 0 ), ::handle )
             RETURN 0
-		     ENDIF    
-		  ENDIF     
+           ENDIF    
+        ENDIF     
       RETURN IIF( wParam = VK_ESCAPE, - 1, ButtonGetDlgCode( lParam ) )
 
    ELSEIF msg == WM_SYSCOLORCHANGE
@@ -1825,7 +1825,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
    IF !EMPTY( ::caption ) .AND. !EMPTY( ::hbitmap )  //.AND.!EMPTY( ::hicon )
       nHeight :=  aTxtSize[ 2 ] //nHeight := IIF( lMultiLine, DrawText( dc, ::caption, itemRect,  DT_CALCRECT + uAlign + DT_WORDBREAK  ), aTxtSize[ 2 ] )
       IF ::iStyle = ST_ALIGN_HORIZ
-	       itemRect[ 1 ] := IIF( ::PictureMargin = 0, ( ( ( ::nWidth - aTxtSize[ 1 ] - aBmpSize[ 1 ] / 2 ) / 2 ) ) / 2, ::PictureMargin )
+          itemRect[ 1 ] := IIF( ::PictureMargin = 0, ( ( ( ::nWidth - aTxtSize[ 1 ] - aBmpSize[ 1 ] / 2 ) / 2 ) ) / 2, ::PictureMargin )
          itemRect[ 1 ] := IIF( itemRect[ 1 ] < 0, 0, itemRect[ 1 ] )
       ELSEIF ::iStyle = ST_ALIGN_HORIZ_RIGHT
       ELSEIF ::iStyle = ST_ALIGN_VERT .OR. ::iStyle = ST_ALIGN_OVERLAP
@@ -2147,37 +2147,37 @@ METHOD Init() CLASS HGroup
 METHOD PAINT( lpdis ) CLASS HGroup
    LOCAL drawInfo := GetDrawItemInfo( lpdis )
    LOCAL DC := drawInfo[ 3 ]
-   LOCAL ppnOldPen, pnFrmDark,	pnFrmLight, iUpDist
+   LOCAL ppnOldPen, pnFrmDark,   pnFrmLight, iUpDist
    LOCAL szText, aSize, dwStyle
    LOCAL rc  := copyrect( { drawInfo[ 4 ], drawInfo[ 5 ], drawInfo[ 6 ] - 1, drawInfo[ 7 ] - 1 } )
    LOCAL rcText 
 
-	 // determine text length
-	 szText :=  ::Title
+    // determine text length
+    szText :=  ::Title
    aSize :=  TxtRect( IIF( Empty( szText ), "A", szText ), Self )
-	// distance from window top to group rect
-	 iUpDist := ( aSize[ 2 ] / 2 )
+   // distance from window top to group rect
+    iUpDist := ( aSize[ 2 ] / 2 )
    dwStyle := ::Style //HWG_GETWINDOWSTYLE( ::handle ) //GetStyle();
    rcText := { 0, rc[ 2 ] + iUpDist , 0, rc[ 2 ] + iUpDist  }
    IF  Empty( szText )
-	 ELSEIF hb_BitAnd( dwStyle, BS_CENTER ) == BS_RIGHT // right aligned
+    ELSEIF hb_BitAnd( dwStyle, BS_CENTER ) == BS_RIGHT // right aligned
       rcText[ 3 ] := rc[ 3 ] + 2 - OFS_X  
       rcText[ 1 ] := rcText[ 3 ] - aSize[ 1 ]
-	 ELSEIF hb_BitAnd( dwStyle, BS_CENTER ) == BS_CENTER  // text centered
+    ELSEIF hb_BitAnd( dwStyle, BS_CENTER ) == BS_CENTER  // text centered
       rcText[ 1 ] := ( rc[ 3 ] - rc[ 1 ]  - aSize[ 1 ]  ) / 2
       rcText[ 3 ] := rcText[ 1 ] + aSize[ 1 ] 
-	 ELSE //((!(dwStyle & BS_CENTER)) || ((dwStyle & BS_CENTER) == BS_LEFT))// left aligned	/ default
+    ELSE //((!(dwStyle & BS_CENTER)) || ((dwStyle & BS_CENTER) == BS_LEFT))// left aligned   / default
       rcText[ 1 ] := rc[ 1 ] + OFS_X
       rcText[ 3 ] := rcText[ 1 ] + aSize[ 1 ] 
-	 ENDIF	
-   SetBkMode( dc, TRANSPARENT ) 		
+    ENDIF   
+   SetBkMode( dc, TRANSPARENT )       
 
-	 IF Hwg_BitAND( dwStyle, BS_FLAT) != 0  // "flat" frame
-		  //pnFrmDark  := CreatePen( PS_SOLID, 1, RGB(0, 0, 0) ) )
-		  pnFrmDark  := HPen():Add( PS_SOLID, 1,  RGB( 64, 64, 64 ) )
-		  pnFrmLight := HPen():Add( PS_SOLID, 1, GetSysColor( COLOR_3DHILIGHT ) )
+    IF Hwg_BitAND( dwStyle, BS_FLAT) != 0  // "flat" frame
+        //pnFrmDark  := CreatePen( PS_SOLID, 1, RGB(0, 0, 0) ) )
+        pnFrmDark  := HPen():Add( PS_SOLID, 1,  RGB( 64, 64, 64 ) )
+        pnFrmLight := HPen():Add( PS_SOLID, 1, GetSysColor( COLOR_3DHILIGHT ) )
 
-		  ppnOldPen := SelectObject( dc, pnFrmDark:Handle )
+        ppnOldPen := SelectObject( dc, pnFrmDark:Handle )
       MoveTo( dc, rcText[ 1 ] - 2, rcText[ 2 ]  )
       LineTo( dc, rc[ 1 ], rcText[ 2 ] )
       LineTo( dc, rc[ 1 ], rc[ 4 ] )
@@ -2185,14 +2185,14 @@ METHOD PAINT( lpdis ) CLASS HGroup
       LineTo( dc, rc[ 3 ], rcText[ 4 ] )
       LineTo( dc, rcText[ 3 ], rcText[ 4 ] )
 
-  		SelectObject( dc, pnFrmLight:handle)
+        SelectObject( dc, pnFrmLight:handle)
       MoveTo( dc, rcText[ 1 ] - 2, rcText[ 2 ] + 1 )
       LineTo( dc, rc[ 1 ] + 1, rcText[ 2 ] + 1)
-		  LineTo( dc, rc[ 1 ] + 1, rc[ 4 ] - 1 )
-		  LineTo( dc, rc[ 3 ] - 1, rc[ 4 ] - 1 )
-		  LineTo( dc, rc[ 3 ] - 1, rcText[ 4 ] + 1 )
-		  LineTo( dc, rcText[ 3 ], rcText[ 4 ] + 1 )
-	 ELSE // 3D frame
+        LineTo( dc, rc[ 1 ] + 1, rc[ 4 ] - 1 )
+        LineTo( dc, rc[ 3 ] - 1, rc[ 4 ] - 1 )
+        LineTo( dc, rc[ 3 ] - 1, rcText[ 4 ] + 1 )
+        LineTo( dc, rcText[ 3 ], rcText[ 4 ] + 1 )
+    ELSE // 3D frame
 
       pnFrmDark  := HPen():Add( PS_SOLID, 1, GetSysColor( COLOR_3DSHADOW ) )
       pnFrmLight := HPen():Add( PS_SOLID, 1, GetSysColor( COLOR_3DHILIGHT ) )
@@ -2205,7 +2205,7 @@ METHOD PAINT( lpdis ) CLASS HGroup
       LineTo( dc, rc[ 3 ] - 1, rcText[ 4 ] )
       LineTo( dc, rcText[ 3 ], rcText[ 4 ] )
 
-    	SelectObject( dc, pnFrmLight:handle )
+       SelectObject( dc, pnFrmLight:handle )
       MoveTo( dc, rcText[ 1 ] - 2, rcText[ 2 ] + 1 )
       LineTo( dc, rc[ 1 ] + 1, rcText[ 2 ] + 1 )
       LineTo( dc, rc[ 1 ] + 1, rc[ 4 ] - 1 )
@@ -2213,24 +2213,24 @@ METHOD PAINT( lpdis ) CLASS HGroup
       LineTo( dc, rc[ 3 ], rc[ 4 ] )
       LineTo( dc, rc[ 3 ], rcText[ 4 ] - 1)
       MoveTo( dc, rc[ 3 ] - 2, rcText[ 4 ] + 1 )
-      LineTo( dc, rcText[ 3 ], rcText[ 4 ] + 1 )	
+      LineTo( dc, rcText[ 3 ], rcText[ 4 ] + 1 )   
    ENDIF
 
    // draw text (if any)
    IF !Empty( szText ) && !(dwExStyle & (BS_ICON|BS_BITMAP)))
-     SetBkMode( dc, TRANSPARENT ) 		
+     SetBkMode( dc, TRANSPARENT )       
      IF ::oBrush != Nil
         FillRect( DC, rc[ 1 ] + 2, rc[ 2 ] + iUpDist + 2 , rc[ 3 ] - 2, rc[ 4 ] - 2 , ::brush:handle )
         IF ! ::lTransparent
            FillRect( DC, rcText[ 1 ] - 2, rc[ 2 ] + 1 ,  rcText[ 3 ] + 1, rc[ 2 ] + iUpDist + 2 , ::brush:handle )
         ENDIF
      ENDIF
-	   DrawText( dc, szText, rcText, DT_VCENTER + DT_LEFT + DT_SINGLELINE + DT_NOCLIP )
+      DrawText( dc, szText, rcText, DT_VCENTER + DT_LEFT + DT_SINGLELINE + DT_NOCLIP )
    ENDIF
- 	 // cleanup
- 	 DeleteObject( pnFrmLight )
- 	 DeleteObject( pnFrmDark )
-	 SelectObject( dc, ppnOldPen )
+     // cleanup
+     DeleteObject( pnFrmLight )
+     DeleteObject( pnFrmDark )
+    SelectObject( dc, ppnOldPen )
    RETURN Nil
 
 

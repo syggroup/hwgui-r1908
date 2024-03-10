@@ -249,8 +249,8 @@ METHOD GetLevel( h ) CLASS HTreeNode
    
    LOCAL oNode := IIF( EMPTY( h ), Self, h )
    DO WHILE ( oNode:oParent ) != Nil 
-	    oNode := oNode:oParent
-	    iLevel ++
+       oNode := oNode:oParent
+       iLevel ++
    ENDDO
    RETURN iLevel
 
@@ -269,8 +269,8 @@ CLASS VAR winclass   INIT "SysTreeView32"
    DATA lCheckbox   INIT .F. HIDDEN
    DATA lDragDrop   INIT .F. HIDDEN
 
-   DATA	lDragging  INIT .F. HIDDEN
-	DATA  hitemDrag, hitemDrop HIDDEN
+   DATA   lDragging  INIT .F. HIDDEN
+   DATA  hitemDrag, hitemDrop HIDDEN
 
    METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, bSize, color, bcolor, ;
                aImages, lResour, lEditLabels, bAction, nBC, bRClick, bDblClick, lCheckbox,  bCheck, lDragDrop, bDrag, bDrop, bOther )
@@ -409,7 +409,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
       ENDIF
       IF ::hitemDrop != Nil
          IF ::hitemDrag:handle == ::hitemDrop:handle
-   			    Return 0
+                Return 0
          ENDIF
          htiParent := ::hitemDrop //:oParent
          DO WHILE ( htiParent:oParent ) != Nil
@@ -532,14 +532,14 @@ METHOD Notify( lParam )  CLASS HTree
    LOCAL nCode := GetNotifyCode( lParam ), oItem, cText, nAct, nHitem, leval
    LOCAL nkeyDown := GetNotifyKeydown( lParam )
     
-	IF ncode = NM_SETCURSOR .AND. ::lDragging
-	   ::hitemDrop := tree_Hittest( ::handle,,, @nAct )
-	   IF ::hitemDrop != Nil
-	      SendMessage( ::handle, TVM_SELECTITEM, TVGN_DROPHILITE, ::hitemDrop:handle )
-	   ENDIF
-	ENDIF
-	
-	IF nCode == TVN_SELCHANGING  //.AND. ::oitem != Nil // .OR. NCODE = -500
+   IF ncode = NM_SETCURSOR .AND. ::lDragging
+      ::hitemDrop := tree_Hittest( ::handle,,, @nAct )
+      IF ::hitemDrop != Nil
+         SendMessage( ::handle, TVM_SELECTITEM, TVGN_DROPHILITE, ::hitemDrop:handle )
+      ENDIF
+   ENDIF
+   
+   IF nCode == TVN_SELCHANGING  //.AND. ::oitem != Nil // .OR. NCODE = -500
 
    ELSEIF nCode == TVN_SELCHANGED //.OR. nCode == TVN_ITEMCHANGEDW
       ::oItemOld := Tree_GetNotify( lParam, TREE_GETNOTIFY_OLDPARAM )
@@ -555,7 +555,7 @@ METHOD Notify( lParam )  CLASS HTree
             SENDMESSAGE( ::handle,TVM_SETITEM, , oitem:HANDLE)
          ENDIF
       ENDIF
-	
+   
    ELSEIF nCode == TVN_BEGINLABELEDIT .or. nCode == TVN_BEGINLABELEDITW
       s_aEvents := aClone( ::oParent:aEvents )
       ::oParent:AddEvent( 0, IDOK, { || SendMessage( ::handle, TVM_ENDEDITLABELNOW , 0, 0 ) } )
@@ -594,12 +594,12 @@ METHOD Notify( lParam )  CLASS HTree
          Eval( ::oItem:oTree:bKeyDown, ::oItem, nKeyDown, Self )
       ENDIF
 
-	 ELSEIF nCode = NM_CLICK  //.AND. ::oitem != Nil // .AND. !::lEditLabels
-	    nHitem :=  Tree_GetNotify( lParam, 1 )
-	    //nHitem :=  GETNOTIFYcode( lParam )
-	    oItem  := tree_Hittest( ::handle,,, @nAct )
-	    IF nAct = TVHT_ONITEMSTATEICON
-	       IF ::oItem == Nil .OR. oItem:Handle != ::oitem:Handle 
+    ELSEIF nCode = NM_CLICK  //.AND. ::oitem != Nil // .AND. !::lEditLabels
+       nHitem :=  Tree_GetNotify( lParam, 1 )
+       //nHitem :=  GETNOTIFYcode( lParam )
+       oItem  := tree_Hittest( ::handle,,, @nAct )
+       IF nAct = TVHT_ONITEMSTATEICON
+          IF ::oItem == Nil .OR. oItem:Handle != ::oitem:Handle 
             ::Select( oItem )
             ::oItem := oItem
          ENDIF
@@ -618,7 +618,7 @@ METHOD Notify( lParam )  CLASS HTree
             ENDIF
          ENDIF
       ENDIF
-	
+   
    ELSEIF nCode == NM_DBLCLK
       IF hb_IsBlock(::bDblClick)
          oItem  := tree_Hittest( ::handle,,, @nAct )

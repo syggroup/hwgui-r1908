@@ -11,12 +11,12 @@
 #include "hwgui.ch"
 #include "hbclass.ch"
 
-#define WEBPAGE_GOBACK		0
-#define WEBPAGE_GOFORWARD	1
-#define WEBPAGE_GOHOME		2
-#define WEBPAGE_SEARCH		3
-#define WEBPAGE_REFRESH		4
-#define WEBPAGE_STOP		5
+#define WEBPAGE_GOBACK      0
+#define WEBPAGE_GOFORWARD   1
+#define WEBPAGE_GOHOME      2
+#define WEBPAGE_SEARCH      3
+#define WEBPAGE_REFRESH      4
+#define WEBPAGE_STOP      5
 
 CLASS HHtml // INHERIT HControl
 
