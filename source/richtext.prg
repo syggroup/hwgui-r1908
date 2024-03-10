@@ -452,10 +452,10 @@ METHOD Paragraph( cText, nFontNumber, nFontSize, cAppear, ;
    ::NumCode( "sa", nAfter )
    ::LogicCode( "keep", lNoWidow )
 
-   IF cTypeBorder # NIL // Hay bordes de parrafo
-      IF AScan( cTypeBorder, "ALL" ) # 0
+   IF cTypeBorder != NIL // Hay bordes de parrafo
+      IF AScan( cTypeBorder, "ALL" ) != 0
          ::ParaBorder( "ALL", cBordStyle )
-      ELSEIF AScan( cTypeBorder, "CHARACTER" ) # 0
+      ELSEIF AScan( cTypeBorder, "CHARACTER" ) != 0
          ::ParaBorder( "CHARACTER", cBordStyle )
       ELSE
          FOR i = 1 TO Len( cTypeBorder )
@@ -483,7 +483,7 @@ METHOD Paragraph( cText, nFontNumber, nFontSize, cAppear, ;
    ::Write( cText )
 
    IF lChar
-      IF cTypeBorder # NIL
+      IF cTypeBorder != NIL
          ::TextCode( "chrbdr" )
       ENDIF
       IF nShdPct > 0
@@ -1843,8 +1843,8 @@ METHOD IncStyle( cName, styletype, nFontNumber, nFontSize, ;
       ::CloseGroup()
    ENDIF
    IF lParrafo
-      IF cTypeBorder # NIL // Hay bordes de parrafo
-         IF AScan( cTypeBorder, "ALL" ) # 0
+      IF cTypeBorder != NIL // Hay bordes de parrafo
+         IF AScan( cTypeBorder, "ALL" ) != 0
             cEstilo += ::ParaBorder( "ALL", cBordStyle )
          ELSE
             FOR i = 1 TO Len( cTypeBorder )
@@ -1913,7 +1913,7 @@ METHOD ParaStyle( nStyle ) CLASS RichText
    IF nStyle == 0
       RETURN NIL
    ENDIF
-   IF ::nStlAct # nStyle
+   IF ::nStlAct != nStyle
       IF nStyle <= Len( ::ParStyles[ nStyle ] )
          ::Numcode( "par\pard\s", nStyle, .F. )
          FWrite( ::hFile, ::ParStyles[ nStyle ] )
@@ -1937,7 +1937,7 @@ METHOD CharStyle( nStyle ) CLASS RichText
       RETURN NIL
    ENDIF
 
-   IF ::nCharAct # nStyle
+   IF ::nCharAct != nStyle
       IF nStyle <= Len( ::CharStyles[ nStyle ] )
          ::Numcode( "\cs", nStyle, .F. )
          FWrite( ::hFile, ::CharStyles[ nStyle ] )
@@ -2105,7 +2105,7 @@ METHOD TableDef( lHeader, nRowHead, cCellBorder, aColPct ) CLASS RichText
                IF pos == 1
                   ::TextCode( "clvertalt" )
                   ::TextCode( "clmgf" )
-               ELSEIF pos # 0
+               ELSEIF pos != 0
                   ::TextCode( "clmrg" )
                ELSE
                   ::TextCode( "clvertalt" )

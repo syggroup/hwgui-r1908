@@ -268,7 +268,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
    // tracelog(oProw, oPcol, oTexto, oPicture)
    IF hb_IsNumeric(oTexto)
 
-      IF ! Empty( oPicture ) .or. oPicture # Nil
+      IF ! Empty( oPicture ) .or. oPicture != Nil
          oTexto := Transform( oTexto, oPicture )
       ELSE
          oTexto := Str( oTexto )
@@ -277,7 +277,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
    ELSEIF hb_IsDate(oTexto)
       oTexto := DToC( oTexto )
    ELSE
-      IF ! Empty( oPicture ) .or. oPicture # Nil
+      IF ! Empty( oPicture ) .or. oPicture != Nil
          oTexto := Transform( oTexto, oPicture )
       ENDIF
    ENDIF
