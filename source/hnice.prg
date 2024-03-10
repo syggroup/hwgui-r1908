@@ -188,8 +188,8 @@ METHOD MouseMove( wParam, lParam ) CLASS HNICEButton
 
    LOCAL otmp
 
-   HB_SYMBOL_UNUSED( wParam )
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(wParam)
+   HB_SYMBOL_UNUSED(lParam)
 
    IF ::lFlat .AND. ::state != OBTN_INIT
       otmp := SetNiceBtnSelected()

@@ -313,9 +313,9 @@ METHOD GetActive() CLASS HDialog
 
 STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
    LOCAL nReturn := 1 , uis
-   // HB_SYMBOL_UNUSED( wParam )
-   HB_SYMBOL_UNUSED( lParam )
-   HB_SYMBOL_UNUSED( wParam )
+   // HB_SYMBOL_UNUSED(wParam)
+   HB_SYMBOL_UNUSED(lParam)
+   HB_SYMBOL_UNUSED(wParam)
 
    // oDlg:handle := hDlg
    // writelog( str(oDlg:handle)+" "+oDlg:title )
@@ -424,7 +424,7 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
 STATIC FUNCTION onEnterIdle( oDlg, wParam, lParam )
    LOCAL oItem
 
-   HB_SYMBOL_UNUSED( oDlg )
+   HB_SYMBOL_UNUSED(oDlg)
 
    IF wParam == 0 .AND. ( oItem := ATail( HDialog():aModalDialogs ) ) != Nil ;
                           .AND. oItem:handle == lParam .AND. ! oItem:lActivated
@@ -478,7 +478,7 @@ FUNCTION DlgCommand( oDlg, wParam, lParam )
    LOCAL aMenu, i, hCtrl, oCtrl, nEsc := .F.
 
 
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
    IF iParHigh == 0
       IF iParLow == IDOK
@@ -616,7 +616,7 @@ STATIC FUNCTION onSize( oDlg, wParam, lParam )
 
    LOCAL aControls, iCont , nW1, nH1
 
-   //HB_SYMBOL_UNUSED( wParam )
+   //HB_SYMBOL_UNUSED(wParam)
 
    IF oDlg:oEmbedded != Nil
       oDlg:oEmbedded:Resize( LOWORD( lParam ), HIWORD( lParam ) )
@@ -662,7 +662,7 @@ STATIC FUNCTION onSize( oDlg, wParam, lParam )
 STATIC FUNCTION onActivate( oDlg, wParam, lParam )
    LOCAL iParLow := LOWORD( wParam ), iParHigh := HIWORD( wParam )
 
-   //HB_SYMBOL_UNUSED( lParam )
+   //HB_SYMBOL_UNUSED(lParam)
 
    IF ( iParLow = WA_ACTIVE .OR. iParLow = WA_CLICKACTIVE ) .AND. oDlg:lContainer .AND. ;
                                                     ! SelfFocus( lParam, oDlg:Handle )
@@ -699,7 +699,7 @@ STATIC FUNCTION onActivate( oDlg, wParam, lParam )
 FUNCTION onHelp( oDlg, wParam, lParam )
    LOCAL oCtrl, nHelpId, oParent, cDir
 
-   HB_SYMBOL_UNUSED( wParam )
+   HB_SYMBOL_UNUSED(wParam)
 
    IF ! Empty( SetHelpFileName() )
       IF "chm" $ Lower( CutPath( SetHelpFileName() ) )
@@ -731,7 +731,7 @@ FUNCTION onHelp( oDlg, wParam, lParam )
 STATIC FUNCTION onPspNotify( oDlg, wParam, lParam )
    LOCAL nCode := GetNotifyCode( lParam ), res := .T.
 
-   HB_SYMBOL_UNUSED( wParam )
+   HB_SYMBOL_UNUSED(wParam)
 
    IF nCode == PSN_SETACTIVE //.AND. !oDlg:aEvdisable
       IF oDlg:bGetFocus != Nil

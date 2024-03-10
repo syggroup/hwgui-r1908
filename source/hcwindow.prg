@@ -633,7 +633,7 @@ METHOD ResetScrollbars() CLASS HCustomWindow
 METHOD  ScrollHV( oForm, msg, wParam, lParam ) CLASS HCustomWindow
    LOCAL nDelta, nMaxPos,  wmsg , nPos
 
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
    nDelta := 0
    wmsg := LOWORD( wParam )
@@ -824,7 +824,7 @@ STATIC FUNCTION onCommand( oWnd, wParam, lParam )
    LOCAL iItem, iParHigh := HIWORD( wParam ), iParLow := LOWORD( wParam )
    LOCAL oForm := oWnd:GetParentForm()
    
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
    IF oWnd:aEvents != NIL .AND. ! oForm:lSuspendMsgsHandling .AND. ! oWnd:lSuspendMsgsHandling .AND. ;
       ( iItem := AScan( oWnd:aEvents, { | a | a[ 1 ] == iParHigh .AND. ;
                                         a[ 2 ] == iParLow } ) ) > 0

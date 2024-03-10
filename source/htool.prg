@@ -161,8 +161,8 @@ ENDCLASS
 METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFont, bInit, ;
                   bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, lVertical ,aItem, nWSize,nHSize, nIndent, nIDB ) CLASS hToolBar
 
-   //HB_SYMBOL_UNUSED( cCaption )
-   //HB_SYMBOL_UNUSED( lTransp )
+   //HB_SYMBOL_UNUSED(cCaption)
+   //HB_SYMBOL_UNUSED(lTransp)
 
    DEFAULT  aitem TO { }
 
@@ -220,8 +220,8 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
 METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
                  bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem ) CLASS hToolBar
 
-   HB_SYMBOL_UNUSED( cCaption )
-   HB_SYMBOL_UNUSED( lTransp )
+   HB_SYMBOL_UNUSED(cCaption)
+   HB_SYMBOL_UNUSED(lTransp)
 
    DEFAULT  aItem TO { }
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;

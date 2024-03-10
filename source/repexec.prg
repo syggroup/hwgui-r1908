@@ -452,7 +452,7 @@ FUNCTION PrintItem( oPrinter, aPaintRep, aItem, prnXCoef, prnYCoef, nYadd, lCalc
    LOCAL x1 := aItem[ ITEM_X1 ], y1 := aItem[ ITEM_Y1 ] + nYadd, x2, y2
    LOCAL hBitmap, stroka
 
-   HB_SYMBOL_UNUSED( aPaintRep )
+   HB_SYMBOL_UNUSED(aPaintRep)
 
    x2 := x1 + aItem[ ITEM_WIDTH ] - 1
    y2 := y1 + aItem[ ITEM_HEIGHT ] - 1

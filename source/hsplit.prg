@@ -80,7 +80,7 @@ METHOD Init() CLASS HSplitter
 
 METHOD onEvent( msg, wParam, lParam ) CLASS HSplitter
 
-   HB_SYMBOL_UNUSED( wParam )
+   HB_SYMBOL_UNUSED(wParam)
 
    IF msg == WM_MOUSEMOVE
       IF ::hCursor == Nil

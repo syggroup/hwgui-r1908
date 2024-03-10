@@ -254,7 +254,7 @@ METHOD Clear() CLASS HListBox
 METHOD onChange( oCtrl ) CLASS HListBox
    LOCAL nPos
 
-   HB_SYMBOL_UNUSED( oCtrl )
+   HB_SYMBOL_UNUSED(oCtrl)
 
    nPos := SendMessage( ::handle, LB_GETCURSEL, 0, 0 ) + 1
    ::SetItem( nPos )
@@ -265,7 +265,7 @@ METHOD onChange( oCtrl ) CLASS HListBox
 METHOD When( oCtrl ) CLASS HListBox
    LOCAL res := .T., nSkip
 
-   HB_SYMBOL_UNUSED( oCtrl )
+   HB_SYMBOL_UNUSED(oCtrl)
 
    IF ! CheckFocus( Self, .F. )
       RETURN .T.
@@ -293,7 +293,7 @@ METHOD Valid( oCtrl ) CLASS HListBox
    LOCAL res, oDlg
    //LOCAL ltab :=  GETKEYSTATE( VK_TAB ) < 0, , nSkip
 
-   HB_SYMBOL_UNUSED( oCtrl )
+   HB_SYMBOL_UNUSED(oCtrl)
 
    IF ! CheckFocus( Self, .T. ) .or. ::lNoValid
       RETURN .T.

@@ -187,7 +187,7 @@ ENDCLASS
 METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, bSize, tcolor, bColor, ncStyle, ;
             lnoBorder, nBorder, nCurvature, nbStyle, nfStyle, bInit, nBackStyle ) CLASS HDrawShape
 
-   HB_SYMBOL_UNUSED( ncStyle )
+   HB_SYMBOL_UNUSED(ncStyle)
 
    ::bPaint   := { | o, p | o:paint( p ) }
    ::Super:New( oWndParent, nId, SS_OWNERDRAW, nLeft, nTop, nWidth, nHeight, ,;

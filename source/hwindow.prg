@@ -126,9 +126,9 @@ METHOD New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
             bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther, ;
             cAppName, oBmp, cHelp, nHelpId, bCloseQuery, bRefresh, lChild, lClipper, lNoClosable, bSetForm ) CLASS HWindow
 
-   HB_SYMBOL_UNUSED( clr )
-   HB_SYMBOL_UNUSED( cMenu )
-   HB_SYMBOL_UNUSED( cHelp )
+   HB_SYMBOL_UNUSED(clr)
+   HB_SYMBOL_UNUSED(cMenu)
+   HB_SYMBOL_UNUSED(cHelp)
 
    ::oDefaultParent := Self
    ::title    := cTitle
@@ -466,7 +466,7 @@ CLASS VAR aMessages INIT { ;
                            { WM_CREATE, WM_COMMAND,WM_ERASEBKGND,WM_MOVE, WM_SIZE, WM_NCACTIVATE, ;
                              WM_SYSCOMMAND, WM_ENTERIDLE, WM_MDIACTIVATE, WM_DESTROY }, ;
                            { ;
-                             { | o, w, l | HB_SYMBOL_UNUSED( w ), onMdiCreate( o, l ) },        ;
+                             { | o, w, l | HB_SYMBOL_UNUSED(w), onMdiCreate( o, l ) },        ;
                              { | o, w | onMdiCommand( o, w ) },         ;
                              { | o, w | onEraseBk( o, w ) },            ;
                              { | o | onMove( o ) },                   ;
@@ -495,10 +495,10 @@ ENDCLASS
 METHOD Activate( lShow, lMaximized, lMinimized, lCentered, bActivate, lModal ) CLASS HMDIChildWindow
    LOCAL l3d := .F.
 
-   HB_SYMBOL_UNUSED( lShow )
-   HB_SYMBOL_UNUSED( lMaximized )
-   HB_SYMBOL_UNUSED( lMinimized )
-   HB_SYMBOL_UNUSED( lCentered )
+   HB_SYMBOL_UNUSED(lShow)
+   HB_SYMBOL_UNUSED(lMaximized)
+   HB_SYMBOL_UNUSED(lMinimized)
+   HB_SYMBOL_UNUSED(lCentered)
 
    DEFAULT lShow := .T.
    lMinimized := !EMPTY( lMinimized ) .AND. lMinimized .AND. Hwg_BitAnd( ::style, WS_MINIMIZE ) != 0
@@ -693,7 +693,7 @@ METHOD New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
 METHOD Activate( lShow, lMaximized, lMinimized,lCentered, bActivate, lModal ) CLASS HChildWindow
    LOCAL nReturn
 
-   HB_SYMBOL_UNUSED( lModal )
+   HB_SYMBOL_UNUSED(lModal)
 
    DEFAULT lShow := .T.
    lMinimized := !EMPTY( lMinimized ) .AND. lMinimized .AND. Hwg_BitAnd( ::style, WS_MINIMIZE ) != 0
@@ -789,7 +789,7 @@ FUNCTION ReleaseAllWindows( hWnd )
 STATIC FUNCTION onCommand( oWnd, wParam, lParam )
    LOCAL iItem, iCont, aMenu, iParHigh, iParLow, nHandle, oChild, i
 
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
    IF wParam >= FIRST_MDICHILD_ID .AND. wparam < FIRST_MDICHILD_ID + MAX_MDICHILD_WINDOWS .AND. ! Empty( oWnd:Screen ) 
       IF wParam >= FIRST_MDICHILD_ID
@@ -1017,7 +1017,7 @@ STATIC FUNCTION onEndSession( oWnd, wParam )
 
    LOCAL i
 
-   HB_SYMBOL_UNUSED( wParam )
+   HB_SYMBOL_UNUSED(wParam)
 
    IF ISBLOCK( oWnd:bDestroy )
       i := Eval( oWnd:bDestroy, oWnd )
@@ -1056,7 +1056,7 @@ STATIC FUNCTION onNotifyIcon( oWnd, wParam, lParam )
 
 STATIC FUNCTION onMdiCreate( oWnd, lParam )
    LOCAL nReturn
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
    IF ISBLOCK( oWnd:bSetForm )
       EVAL( oWnd:bSetForm, oWnd )
@@ -1209,7 +1209,7 @@ Static Function onMdiActivate( oWnd,wParam, lParam )
 STATIC FUNCTION onEnterIdle( oDlg, wParam, lParam )
    LOCAL oItem
 
-   HB_SYMBOL_UNUSED( oDlg )
+   HB_SYMBOL_UNUSED(oDlg)
 
    IF wParam == 0 .AND. ( oItem := ATail( HDialog():aModalDialogs ) ) != Nil ;
                           .AND. oItem:handle == lParam .AND. ! oItem:lActivated
@@ -1236,7 +1236,7 @@ STATIC FUNCTION onCloseQuery( o )
 STATIC FUNCTION onActivate( oWin, wParam, lParam )
    LOCAL iParLow := LOWORD( wParam ), iParHigh := HIWORD( wParam )
 
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
    IF ( iParLow = WA_ACTIVE .OR. iParLow = WA_CLICKACTIVE ) .AND. IsWindowVisible( oWin:handle )
       IF  ( oWin:type = WND_MDICHILD .AND. PtrtoUlong( lParam ) = 0  ) .OR.;

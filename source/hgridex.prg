@@ -89,7 +89,7 @@ METHOD New( oWnd, nId, nStyle, x, y, width, height, oFont, bInit, bSize, bPaint,
             bGfocus, bLfocus, lNoScroll, lNoBord, bKeyDown, bPosChg, bDispInfo, ;
             nItemCount, lNoLines, color, bkcolor, lNoHeader, aBit, aItems ) CLASS HGridEx
 
-   HB_SYMBOL_UNUSED( nItemCount )
+   HB_SYMBOL_UNUSED(nItemCount)
 
    //nStyle := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_VISIBLE + WS_CHILD + WS_TABSTOP + LVS_REPORT )
    nStyle := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_TABSTOP + WS_BORDER   )
@@ -297,8 +297,8 @@ METHOD Notify( lParam ) CLASS HGRIDEX
 METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
                  bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem ) CLASS hGridex
 
-   HB_SYMBOL_UNUSED( cCaption )
-   HB_SYMBOL_UNUSED( lTransp )
+   HB_SYMBOL_UNUSED(cCaption)
+   HB_SYMBOL_UNUSED(lTransp)
 
    DEFAULT  aItem TO { }
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;

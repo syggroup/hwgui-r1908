@@ -73,7 +73,7 @@ METHOD New( oWndParent,nId,vari,bSetGet,nStyle,nLeft,nTop,nWidth,nHeight, ;
                  nUpDWidth, nLower,nUpper, nIncr,cPicture,lNoBorder, nMaxLength,;
             bKeyDown, bChange, bOther, bClickUp ,bClickDown ) CLASS HUpDown
 
-   HB_SYMBOL_UNUSED( bOther )
+   HB_SYMBOL_UNUSED(bOther)
 
    nStyle := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_TABSTOP + IIf( lNoBorder == Nil.OR. ! lNoBorder, WS_BORDER, 0 ) )
 

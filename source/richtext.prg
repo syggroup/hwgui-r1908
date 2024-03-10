@@ -338,7 +338,7 @@ METHOD PageSetup( nLeft, nRight, nTop, nBottom, nWidth, nHeight, ;
 *
 *********************************************************************
 
-   HB_SYMBOL_UNUSED( cPgNumPos )
+   HB_SYMBOL_UNUSED(cPgNumPos)
 
    DEFAULT lLandscape TO .F.
    DEFAULT lNoWidow TO .F.
@@ -864,8 +864,8 @@ METHOD WriteCell( cText, nFontNumber, nFontSize, cAppear, cHorzAlign, ;
 *********************************************************************
    LOCAL i
 
-   HB_SYMBOL_UNUSED( cCellBorder )
-   HB_SYMBOL_UNUSED( nCellPct )
+   HB_SYMBOL_UNUSED(cCellBorder)
+   HB_SYMBOL_UNUSED(nCellPct)
 
    DEFAULT cText TO "", ;
    lDefault TO .F.

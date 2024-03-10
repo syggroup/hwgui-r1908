@@ -95,7 +95,7 @@ RETURN Nil
 FUNCTION TimerProc( hWnd, idTimer, Time )
    LOCAL i := AScan( HTimer():aTimers, { | o | o:id == idTimer } )
 
-   HB_SYMBOL_UNUSED( hWnd )
+   HB_SYMBOL_UNUSED(hWnd)
 
    IF i != 0 .AND. HTimer():aTimers[ i ]:value > 0 .AND. HTimer():aTimers[ i ]:bAction != Nil .AND.;
       hb_IsBlock(HTimer():aTimers[i]:bAction)

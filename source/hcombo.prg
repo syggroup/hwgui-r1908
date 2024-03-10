@@ -208,8 +208,8 @@ RETURN Nil
 METHOD Redefine(oWndParent, nId, vari, bSetGet, aItems, oFont, bInit, bSize, bPaint, bChange, ctooltip, bGFocus, ;
    bLFocus, bIChange, nDisplay, nMaxLength,ledit, ltext) CLASS HComboBox
 
-   HB_SYMBOL_UNUSED( bLFocus)
-   //HB_SYMBOL_UNUSED( bIChange )
+   HB_SYMBOL_UNUSED(bLFocus)
+   //HB_SYMBOL_UNUSED(bIChange)
    IF lEdit == Nil
       lEdit := .F.
    ENDIF
@@ -1411,8 +1411,8 @@ RETURN Iif( Empty( ::m_strText ), 0, Len( ::m_strText ) )
 
 METHOD OnGetTextLength( WPARAM, LPARAM ) CLASS hCheckComboBox
 
-   HB_SYMBOL_UNUSED( WPARAM )
-   HB_SYMBOL_UNUSED( LPARAM )
+   HB_SYMBOL_UNUSED(WPARAM)
+   HB_SYMBOL_UNUSED(LPARAM)
 
    ::RecalcText()
 

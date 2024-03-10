@@ -76,8 +76,8 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight,   ;
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               bSize, bPaint, cTooltip )
 
-//   HB_SYMBOL_UNUSED( bGFocus )
-//   HB_SYMBOL_UNUSED( bLFocus )
+//   HB_SYMBOL_UNUSED(bGFocus)
+//   HB_SYMBOL_UNUSED(bLFocus)
 
    IF oFont == Nil
       ::oFont := ::oParent:oFont
@@ -411,7 +411,7 @@ METHOD MouseMove( wParam, lParam ) CLASS HOwnButton
    LOCAL xPos, yPos
    LOCAL res := .F.
 
-   HB_SYMBOL_UNUSED( wParam )
+   HB_SYMBOL_UNUSED(wParam)
 
    IF ::state != OBTN_INIT
       xPos := LOWORD( lParam )

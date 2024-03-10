@@ -269,13 +269,13 @@ FUNCTION WChoice( arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel,
       @ 0, 0 Browse oBrw Array
       oBrw:aArray := arr
       IF hb_IsArray(arr[1])
-         oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED( value ), o:aArray[ o:nCurrent, 1 ] }, "C", nLen ) )
+         oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED(value), o:aArray[ o:nCurrent, 1 ] }, "C", nLen ) )
       ELSE
-         oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED( value ), o:aArray[ o:nCurrent ] }, "C", nLen ) )
+         oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED(value), o:aArray[ o:nCurrent ] }, "C", nLen ) )
       ENDIF
    ELSE
       @ 0, 0 Browse oBrw DATABASE
-      oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED( value ), ( o:Alias ) ->( FieldGet( nField ) ) }, "C", nLen ) )
+      oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED(value), ( o:Alias ) ->( FieldGet( nField ) ) }, "C", nLen ) )
    ENDIF
 
    oBrw:oFont  := oFont

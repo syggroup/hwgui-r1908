@@ -46,7 +46,7 @@ ENDCLASS
 METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFont, bInit, ;
             bSize, bPaint, ctooltip, tcolor, bcolor, lvert ) CLASS hrebar
 
-   HB_SYMBOL_UNUSED( cCaption )
+   HB_SYMBOL_UNUSED(cCaption)
 
    DEFAULT  lvert  TO .F.
    nStyle   := Hwg_BitOr( IIf( nStyle == NIL, 0, nStyle ), ;
@@ -66,7 +66,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFo
 METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
                  bSize, bPaint, ctooltip, tcolor, bcolor, lVert ) CLASS hrebar
 
-   HB_SYMBOL_UNUSED( cCaption )
+   HB_SYMBOL_UNUSED(cCaption)
 
    DEFAULT  lVert TO .F.
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;

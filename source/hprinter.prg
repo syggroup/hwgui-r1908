@@ -371,7 +371,7 @@ METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
         ON EXIT { || oCanvas:brush := NIL, .T. }
 
 
-   oDlg:bScroll := { | oWnd, msg, wParam, lParam | HB_SYMBOL_UNUSED( oWnd ), ::ResizePreviewDlg( oCanvas,, msg, wParam, lParam ) }
+   oDlg:bScroll := { | oWnd, msg, wParam, lParam | HB_SYMBOL_UNUSED(oWnd), ::ResizePreviewDlg( oCanvas,, msg, wParam, lParam ) }
    oDlg:brush := HBrush():Add( 11316396 )
 
    @ 0, 0 PANEL oToolBar SIZE 88, oDlg:nHeight
@@ -383,7 +383,7 @@ METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
       ON SIZE { | o, x, y | o:Move(,, x - oToolBar:nWidth, y ), ::ResizePreviewDlg( o ) } ;
       ON PAINT { || ::PlayMeta( oCanvas ) } STYLE WS_VSCROLL + WS_HSCROLL
 
-   oCanvas:bScroll := { | oWnd, msg, wParam, lParam | HB_SYMBOL_UNUSED( oWnd ), ::ResizePreviewDlg( oCanvas,, msg, wParam, lParam ) }
+   oCanvas:bScroll := { | oWnd, msg, wParam, lParam | HB_SYMBOL_UNUSED(oWnd), ::ResizePreviewDlg( oCanvas,, msg, wParam, lParam ) }
    // DON'T CHANGE NOR REMOVE THE FOLLOWING LINE !
    // I need it to have the correct side-effect to avoid flickering !!!
    oCanvas:brush := 0
@@ -542,7 +542,7 @@ METHOD ResizePreviewDlg( oCanvas, nZoom, msg, wParam, lParam ) CLASS hPrinter
    x := oCanvas:nWidth
    y := oCanvas:nHeight
 
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
    nPosVert := getscrollpos( oCanvas:handle, SB_VERT )
    nPosHorz := getscrollpos( oCanvas:handle, SB_HORZ )

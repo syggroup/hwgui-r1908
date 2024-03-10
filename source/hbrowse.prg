@@ -1122,14 +1122,14 @@ METHOD InitBrw( nType, lInit ) CLASS HBrowse
          ::bRecnoLog := ::bRecno := { | o | ( ::Alias ) ->( FltRecNo( o ) ) }
          ::bGoTo     := { | o, n | ( ::Alias ) ->( FltGoTo( o, n ) ) }
       ELSE
-         ::bSkip     :=  { | o, n | HB_SYMBOL_UNUSED( o ), ( ::Alias ) ->( DBSkip( n ) ) }
+         ::bSkip     :=  { | o, n | HB_SYMBOL_UNUSED(o), ( ::Alias ) ->( DBSkip( n ) ) }
          ::bGoTop    :=  { || ( ::Alias ) ->( DBGoTop() ) }
          ::bGoBot    :=  { || ( ::Alias ) ->( DBGoBottom() ) }
          ::bEof      :=  { || ( ::Alias ) ->( Eof() ) }
          ::bBof      :=  { || ( ::Alias ) ->( Bof() ) }
          ::bRcou     :=  { || ( ::Alias ) ->( RecCount() ) }
          ::bRecnoLog := ::bRecno  := { || ( ::Alias ) ->( RecNo() ) }
-         ::bGoTo     := { | a, n | HB_SYMBOL_UNUSED( a ), ( ::Alias ) ->( DBGoTo( n ) ) }
+         ::bGoTo     := { | a, n | HB_SYMBOL_UNUSED(a), ( ::Alias ) ->( DBGoTo( n ) ) }
       ENDIF
       */
    ELSEIF ::Type == BRW_ARRAY
@@ -1154,7 +1154,7 @@ METHOD InitBrw( nType, lInit ) CLASS HBrowse
              ::bFirst := { || ( ::Alias ) ->( DBSEEK( ( ::LinkMaster ) ->( &( ::RelationalExpr ) ), .F. ) ) }
              ::bLast  := { || ( ::Alias ) ->( DBSEEK( ( ::LinkMaster ) ->( &( ::RelationalExpr ) ) , .F., .T. ) ) }
              ::bWhile := {|| ( ::Alias ) -> ( &( ::RelationalExpr ) ) = ( ::LinkMaster ) ->( &( ::RelationalExpr ) ) }
-             //::bSkip  := { | o, n | HB_SYMBOL_UNUSED( o ), ( ::Alias ) ->( DBSkip( n ) ) }
+             //::bSkip  := { | o, n | HB_SYMBOL_UNUSED(o), ( ::Alias ) ->( DBSkip( n ) ) }
           ENDIF
       ENDIF
    ENDIF
@@ -1197,14 +1197,14 @@ METHOD FILTER( lFilter ) CLASS HBrowse
          ::bRecnoLog := ::bRecno := { | o | ( ::Alias ) ->( FltRecNo( o ) ) }
          ::bGoTo     := { | o, n | ( ::Alias ) ->( FltGoTo( o, n ) ) }
       ELSE
-         ::bSkip     :=  { | o, n | HB_SYMBOL_UNUSED( o ), ( ::Alias ) ->( DBSkip( n ) ) }
+         ::bSkip     :=  { | o, n | HB_SYMBOL_UNUSED(o), ( ::Alias ) ->( DBSkip( n ) ) }
          ::bGoTop    :=  { || ( ::Alias ) ->( DBGoTop() ) }
          ::bGoBot    :=  { || ( ::Alias ) ->( DBGoBottom() ) }
          ::bEof      :=  { || ( ::Alias ) ->( Eof() ) }
          ::bBof      :=  { || ( ::Alias ) ->( Bof() ) }
          ::bRcou     :=  { || ( ::Alias ) ->( RecCount() ) }
          ::bRecnoLog := ::bRecno  := { || ( ::Alias ) ->( RecNo() ) }
-         ::bGoTo     := { | a, n | HB_SYMBOL_UNUSED( a ), ( ::Alias ) ->( DBGoTo( n ) ) }
+         ::bGoTo     := { | a, n | HB_SYMBOL_UNUSED(a), ( ::Alias ) ->( DBGoTo( n ) ) }
       ENDIF
       ::lFilter := lFilter
    ENDIF
@@ -3088,8 +3088,8 @@ METHOD MouseMove( wParam, lParam ) CLASS HBrowse
 //----------------------------------------------------------------------------//
 METHOD MouseWheel( nKeys, nDelta, nXPos, nYPos ) CLASS HBrowse
 
-   HB_SYMBOL_UNUSED( nXPos )
-   HB_SYMBOL_UNUSED( nYPos )
+   HB_SYMBOL_UNUSED(nXPos)
+   HB_SYMBOL_UNUSED(nYPos)
 
    IF Hwg_BitAnd( nKeys, MK_MBUTTON ) != 0
       IF nDelta > 0
@@ -3266,7 +3266,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
                      @ nWidth - 15, 0  OWNERBUTTON oBtn  SIZE 16,::height - 0 ;
                         TEXT '...'  FONT HFont():Add( 'MS Sans Serif',0,-10,400,,,) ;
                         COORDINATES 0, 1, 0, 0      ;
-                        ON CLICK {| oColumn, oBtn | HB_SYMBOL_UNUSED( oColumn ), ::onClickColumn( .T., oGet, oBtn ) }
+                        ON CLICK {| oColumn, oBtn | HB_SYMBOL_UNUSED(oColumn), ::onClickColumn( .T., oGet, oBtn ) }
                         oBtn:themed :=  ::hTheme != Nil
                   ELSE
                      @ nWidth - 16, 0 DATEPICKER oBtn SIZE 16,::height-1  ;
@@ -3392,7 +3392,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
 
 METHOD EditLogical( wParam, lParam ) CLASS HBrowse
 
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
       IF  ! ::aColumns[ ::fipos ]:lEditable
           RETURN .F.
@@ -3435,7 +3435,7 @@ METHOD EditLogical( wParam, lParam ) CLASS HBrowse
 
 METHOD EditEvent( oCtrl, msg, wParam, lParam )
 
-   HB_SYMBOL_UNUSED( lParam )
+   HB_SYMBOL_UNUSED(lParam)
 
    IF ( msg = WM_KEYDOWN .AND.( wParam = VK_RETURN  .OR. wParam = VK_TAB ) )
       Return -1
@@ -3749,7 +3749,7 @@ FUNCTION CREATEARLIST( oBrw, arr )
             oBrw:AddColumn( HColumn():New( , ColumnArBlock() ) )
          NEXT
       ELSE
-         oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED( value ), o:aArray[ o:nCurrent ] } ) )
+         oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED(value), o:aArray[ o:nCurrent ] } ) )
       ENDIF
    ENDIF
    Eval( oBrw:bGoTop, oBrw )
@@ -3879,7 +3879,7 @@ METHOD ShowSizes() CLASS HBrowse
    LOCAL cText := ""
 
    AEval( ::aColumns, ;
-          { | v, e | HB_SYMBOL_UNUSED( v ), cText += ::aColumns[ e ]:heading + ": " + Str( Round( ::aColumns[ e ]:width / 8, 0 ) - 2  ) + Chr( 10 ) + Chr( 13 ) } )
+          { | v, e | HB_SYMBOL_UNUSED(v), cText += ::aColumns[ e ]:heading + ": " + Str( Round( ::aColumns[ e ]:width / 8, 0 ) - 2  ) + Chr( 10 ) + Chr( 13 ) } )
    MsgInfo( cText )
    RETURN nil
 
@@ -4042,17 +4042,17 @@ STATIC FUNCTION FltRecCount( oBrw )
   */
   
 STATIC FUNCTION FltGoTo( oBrw, nRecord )
-   HB_SYMBOL_UNUSED( oBrw )
+   HB_SYMBOL_UNUSED(oBrw)
    RETURN ( oBrw:Alias )->( DBGoTo( nRecord ) )
 
 STATIC FUNCTION FltRecNo( oBrw )
-   HB_SYMBOL_UNUSED( oBrw )
+   HB_SYMBOL_UNUSED(oBrw)
    RETURN ( oBrw:Alias )->( RecNo() )
 
 //End Implementation by Luiz
 /*  no used
 STATIC FUNCTION FltRecNoRelative( oBrw )
-   HB_SYMBOL_UNUSED( oBrw )
+   HB_SYMBOL_UNUSED(oBrw)
    IF oBrw:lFilter .AND. EMPTY( oBrw:RelationalExpr )
       RETURN ASCAN( oBrw:aRecnoFilter, ( oBrw:Alias )->( RecNo() ) )
    ENDIF

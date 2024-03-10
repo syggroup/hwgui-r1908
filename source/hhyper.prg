@@ -284,9 +284,9 @@ METHOD OnClicked() CLASS HStaticLink
 
 METHOD OnSetCursor( pWnd, nHitTest, message ) CLASS HStaticLink
 
-   HB_SYMBOL_UNUSED( pWnd )
-   HB_SYMBOL_UNUSED( nHitTest )
-   HB_SYMBOL_UNUSED( message )
+   HB_SYMBOL_UNUSED(pWnd)
+   HB_SYMBOL_UNUSED(nHitTest)
+   HB_SYMBOL_UNUSED(message)
 
    hwg_SetCursor( ::m_hHyperCursor )
 
@@ -311,7 +311,7 @@ METHOD OnMouseMove( nFlags, lParam ) CLASS HStaticLink
    LOCAL yPos
    LOCAL res  := .F.
 
-   HB_SYMBOL_UNUSED( nFlags )
+   HB_SYMBOL_UNUSED(nFlags)
 
    IF ::state != LBL_INIT
       xPos := LOWORD( lParam )
