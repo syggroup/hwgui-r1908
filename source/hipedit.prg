@@ -30,8 +30,8 @@ CLASS VAR winclass   INIT "SysIPAddress32"
    METHOD Activate()
    METHOD Init()
    METHOD SetValue( aValue )
-   METHOD GetValue(  )
-   METHOD Clear(  )
+   METHOD GetValue()
+   METHOD Clear()
    METHOD END()
 
    HIDDEN:
@@ -108,11 +108,11 @@ METHOD SetValue( aValue ) CLASS HIPedit
    RETURN Nil
 
 
-METHOD GetValue( ) CLASS HIPedit
+METHOD GetValue() CLASS HIPedit
    ::aValue := GETIPADDRESS( ::handle )
    RETURN ( ::aValue )
 
-METHOD Clear( ) CLASS HIPedit
+METHOD Clear() CLASS HIPedit
    CLEARIPADDRESS( ::handle )
    ::aValue := { 0, 0, 0, 0 }
    RETURN ( ::aValue )

@@ -114,7 +114,7 @@ CLASS VAR szAppName  SHARED INIT "HwGUI_App"
    METHOD Maximize() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_MAXIMIZE, 0 )
    METHOD Minimize() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_MINIMIZE, 0 )
    METHOD Close()   INLINE SendMessage( ::handle, WM_SYSCOMMAND, SC_CLOSE, 0 )
-   METHOD Release()  INLINE ::Close( ), ::super:Release(), Self := Nil
+   METHOD Release()  INLINE ::Close(), ::super:Release(), Self := Nil
    METHOD isMaximized() INLINE GetWindowPlacement( ::handle ) == SW_SHOWMAXIMIZED
    METHOD isMinimized() INLINE GetWindowPlacement( ::handle ) == SW_SHOWMINIMIZED
    METHOD isNormal() INLINE GetWindowPlacement( ::handle ) == SW_SHOWNORMAL

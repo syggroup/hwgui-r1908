@@ -324,7 +324,7 @@ CLASS HContainer INHERIT HControl
 
    METHOD Activate()
    METHOD Init()
-   METHOD Create( ) INLINE ::lCreate := .T.
+   METHOD Create() INLINE ::lCreate := .T.
    METHOD onEvent( msg, wParam, lParam )
    METHOD Paint( lpDis )
    METHOD Visible( lVisibled ) SETGET

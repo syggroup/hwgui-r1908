@@ -261,7 +261,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFo
       // IF ::oGroup:bSetGet != Nil
       ::bLostFocus := bClick
       //- ::oParent:AddEvent( BN_CLICKED, self, { | o, id | ::Valid( o:FindControl( id ) ) },, "onClick" )
-      ::oParent:AddEvent( BN_CLICKED, self, { |  | ::onClick( ) },,"onClick" )
+      ::oParent:AddEvent( BN_CLICKED, self, { |  | ::onClick() },,"onClick" )
       // ENDIF
    ENDIF
 
@@ -324,7 +324,7 @@ METHOD Redefine( oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ctooltip,
       // IF ::oGroup:bSetGet != Nil
       ::bLostFocus := bClick
       //::oParent:AddEvent( BN_CLICKED, self, { | o, id | ::Valid( o:FindControl( id ) ) },, "onClick" )
-      ::oParent:AddEvent( BN_CLICKED, self, { |  | ::onClick( ) },,"onClick" )
+      ::oParent:AddEvent( BN_CLICKED, self, { |  | ::onClick() },,"onClick" )
       // ENDIF
    ENDIF
    RETURN Self
@@ -410,14 +410,14 @@ METHOD Notify( lParam ) CLASS HRadioButton
 */
 
 METHOD onGotFocus() CLASS HRadioButton
-   RETURN ::When( )
+   RETURN ::When()
 
 METHOD onClick() CLASS HRadioButton
    ::lWhen := .F.
    ::lnoValid := .F.
    RETURN ::Valid( 0 )
 
-METHOD When( ) CLASS HRadioButton
+METHOD When() CLASS HRadioButton
    LOCAL res := .T., nSkip
 
    IF ! CheckFocus( Self, .F. )

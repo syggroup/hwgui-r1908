@@ -45,7 +45,7 @@ CLASS HDC
    DATA m_hDC
    DATA m_hAttribDC
 
-   METHOD NEW( )
+   METHOD NEW()
    METHOD SetAttribDC( hDC )
    METHOD ATTACH( hDc )
    METHOD MOVETO( x1, y1 )
@@ -76,7 +76,7 @@ CLASS HDC
    METHOD DeleteDc()
 ENDCLASS
 
-METHOD NEW( ) CLASS HDC
+METHOD NEW() CLASS HDC
 
    ::m_hDC       := NIL
    ::m_hAttribDC := NIL
@@ -102,7 +102,7 @@ METHOD Attach( hDC ) CLASS HDC
    ::SetAttribDC( ::m_hDC )
    return.T.
 
-METHOD deletedc(  ) CLASS HDC
+METHOD deletedc() CLASS HDC
    DeleteDc( ::m_hDC )
    ::m_hDC := NIL
    ::m_hAttribDC := NIL

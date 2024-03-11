@@ -145,7 +145,7 @@ RETURN Nil
 
 
 METHOD INIT() CLASS HControl
-   LOCAL oForm := ::GetParentForm( )
+   LOCAL oForm := ::GetParentForm()
    
    IF ! ::lInit
       //IF ::tooltip != Nil
@@ -1059,9 +1059,9 @@ METHOD Redefine( oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ;
 
 METHOD Init() CLASS HButton
    IF ! ::lInit
-      IF !( ::GetParentForm( ):classname == ::oParent:classname .AND.;
-            ::GetParentForm( ):Type >= WND_DLG_RESOURCE ) .OR. ;
-          ! ::GetParentForm( ):lModal  .OR. ::nHolder = 1
+      IF !( ::GetParentForm():classname == ::oParent:classname .AND.;
+            ::GetParentForm():Type >= WND_DLG_RESOURCE ) .OR. ;
+          ! ::GetParentForm():lModal  .OR. ::nHolder = 1
          ::nHolder := 1
          SetWindowObject( ::handle, Self )
          HWG_INITBUTTONPROC( ::handle )

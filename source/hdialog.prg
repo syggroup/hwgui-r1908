@@ -94,7 +94,7 @@ CLASS VAR aModalDialogs  SHARED INIT { }
    METHOD Maximize() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_MAXIMIZE, 0 )
    METHOD Minimize() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_MINIMIZE, 0 )
    METHOD Close()    INLINE EndDialog( ::handle )
-   METHOD Release()  INLINE ::Close( ), Self := Nil
+   METHOD Release()  INLINE ::Close(), Self := Nil
 
 ENDCLASS
 

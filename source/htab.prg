@@ -177,7 +177,7 @@ CLASS HTab INHERIT HControl
    METHOD SetPaintSizePos( nFlag  )
    METHOD RedrawControls()
    METHOD ShowToolTips( lParam )
-   METHOD onChange( )
+   METHOD onChange()
 
    HIDDEN:
    DATA nActive INIT 0         // Active Page
@@ -487,7 +487,7 @@ METHOD ChangePage( nPage ) CLASS HTab
       ENDIF
       ::nActive := nPage
       IF ::bChange2 != NIL
-        ::onChange( )
+        ::onChange()
       ENDIF
       ::ShowPage( nPage )
 
@@ -500,7 +500,7 @@ RETURN NIL
 
 //-------------------------------------------------------------------------------------------------------------------//
 
-METHOD onChange( ) CLASS HTab
+METHOD onChange() CLASS HTab
 
    IF hb_IsBlock(::bChange2)
       ::oparent:lSuspendMsgsHandling := .T.
@@ -602,7 +602,7 @@ METHOD Refresh( lAll ) CLASS HTab
             lRefresh := !Empty(__ObjHasMethod(::aControls[i], "REFRESH")) .AND. ;
                   ( __ObjHasMsg( ::aControls[i], "BSETGET" ) .OR. lAll ) .AND. ::aControls[i]:Handle != hCtrl
                 IF !Empty(lRefresh)
-               ::aControls[i]:Refresh( )
+               ::aControls[i]:Refresh()
                IF hb_IsBlock(::aControls[i]:bRefresh)
                   EVAL( ::aControls[i]:bRefresh, ::aControls[i] )
                ENDIF
@@ -1243,7 +1243,7 @@ METHOD Paint( lpdis ) CLASS HPaintTab
         ::move(, , , ::nHeight)
       ELSEIF oPage:brush != NIL
         FillRect( hDC, x1 + 1, y1 + 2, x2 - 1, y2 - 0, oPage:brush:Handle ) //obrush )
-        ::oParent:RedrawControls( )
+        ::oParent:RedrawControls()
       ENDIF
    ENDIF
 

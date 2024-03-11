@@ -207,10 +207,10 @@ METHOD Enable() CLASS HCheckButton
 */
 
 METHOD onGotFocus() CLASS HCheckButton
-   RETURN ::When( )
+   RETURN ::When()
 
 METHOD onClick() CLASS HCheckButton
-   RETURN ::Valid( )
+   RETURN ::Valid()
 
 METHOD killFocus() CLASS HCheckButton
    LOCAL ndown := Getkeystate( VK_RIGHT ) + Getkeystate( VK_DOWN ) + GetKeyState( VK_TAB )
@@ -233,7 +233,7 @@ METHOD killFocus() CLASS HCheckButton
    ENDIF
    IF getkeystate( VK_RETURN ) < 0 .AND. ::lEnter
       ::SetValue( ! ::GetValue() )
-      ::VALID( )
+      ::VALID()
    ENDIF
    IF hb_IsBlock(::bLostFocus)
       ::oparent:lSuspendMsgsHandling := .T.
@@ -242,7 +242,7 @@ METHOD killFocus() CLASS HCheckButton
    ENDIF
    RETURN Nil
 
-METHOD When( ) CLASS HCheckButton
+METHOD When() CLASS HCheckButton
    LOCAL res := .T., nSkip
 
    IF ! CheckFocus( Self, .F. )

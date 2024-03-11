@@ -147,12 +147,12 @@ METHOD Visible( lVisible ) CLASS HColumn
   ENDIF
   RETURN ! ::lHide
 
- METHOD Hide( ) CLASS HColumn
+ METHOD Hide() CLASS HColumn
     ::lHide := .T.
     ::oParent:Refresh()
     RETURN ::lHide
 
- METHOD Show( ) CLASS HColumn
+ METHOD Show() CLASS HColumn
     ::lHide := .F.
     ::oParent:Refresh()
     RETURN ::lHide
@@ -352,7 +352,7 @@ CLASS HBrowse INHERIT HControl
    METHOD MouseWheel( nKeys, nDelta, nXPos, nYPos )
    METHOD Edit( wParam, lParam )
    METHOD Append() INLINE ( ::Bottom( .F. ), ::LineDown() )
-   METHOD onClick( ) 
+   METHOD onClick() 
    METHOD RefreshLine()
    METHOD Refresh( lFull, lLineUp )
    METHOD ShowSizes()
@@ -460,7 +460,7 @@ METHOD Init() CLASS HBrowse
       ::Super:Init()
       ::InitBrw( , .T. )
       //VScrollPos( Self, 0, .F. )
-      IF ::GetParentForm( ):Type < WND_DLG_RESOURCE
+      IF ::GetParentForm():Type < WND_DLG_RESOURCE
          ::GetParentForm():lDisableCtrlTab := .T.
       ENDIF
 
@@ -646,7 +646,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBrowse
          IF wParam == 16
             ::lShiftPress := .F.
          ENDIF
-         IF wParam == VK_TAB .AND. ::GetParentForm( ):Type < WND_DLG_RESOURCE
+         IF wParam == VK_TAB .AND. ::GetParentForm():Type < WND_DLG_RESOURCE
             IF IsCtrlShift(.T.,.F.)
                getskip(::oParent,::handle,, ;
                iif( IsCtrlShift(.F., .T.), -1, 1) )
@@ -810,7 +810,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBrowse
             ::Edit( VK_RETURN )
 
          ELSEIF wParam == VK_ESCAPE .AND. ::lESC
-            IF ::GetParentForm( ):Type < WND_DLG_RESOURCE
+            IF ::GetParentForm():Type < WND_DLG_RESOURCE
                SendMessage( GetParent( ::handle ), WM_SYSCOMMAND, SC_CLOSE, 0 )
             ELSE
                SendMessage( GetParent( ::handle ), WM_CLOSE, 0, 0 )
@@ -1722,7 +1722,7 @@ METHOD Rebuild() CLASS HBrowse
 
    RETURN Nil
 
-METHOD AutoFit( ) CLASS HBrowse
+METHOD AutoFit() CLASS HBrowse
    Local nlen , i, aCoors, nXincRelative
 
    IF ::AutoColumnFit = 2
@@ -3143,7 +3143,7 @@ METHOD BOTTOM( lPaint ) CLASS HBrowse
 
    IF lPaint == Nil .OR. lPaint
       ::Refresh( ::nFootRows > 0 )
-      //::SetFocus( )
+      //::SetFocus()
    ELSE
       //InvalidateRect( ::handle, 0 )
       ::internal[ 1 ] := SetBit( ::internal[ 1 ], 1, 0 )
@@ -3296,7 +3296,7 @@ ELSEIF nLine == 0
    ENDIF
 ENDIF
    IF  ( PtrtouLong( GetActiveWindow() ) = PtrtouLong( ::GetParentForm():Handle )  .OR. ;
-       ::GetParentForm( ):Type < WND_DLG_RESOURCE )
+       ::GetParentForm():Type < WND_DLG_RESOURCE )
        ::SetFocus()
        ::RefreshLine()
    ENDIF
@@ -3352,7 +3352,7 @@ METHOD ButtonUp( lParam ) CLASS HBrowse
    ENDIF
    /*
    IF  PtrtouLong( GetActiveWindow() ) = PtrtouLong( ::GetParentForm():Handle )  .OR. ;
-       ::GetParentForm( ):Type < WND_DLG_RESOURCE
+       ::GetParentForm():Type < WND_DLG_RESOURCE
        ::SetFocus()
    ENDIF
     */
@@ -3528,7 +3528,7 @@ METHOD MouseWheel( nKeys, nDelta, nXPos, nYPos ) CLASS HBrowse
    ENDIF
    RETURN NIL
 
-METHOD onClick( ) CLASS HBrowse
+METHOD onClick() CLASS HBrowse
     LOCAL  lRes := .F.
     
     IF hb_IsBlock(::bEnter)
@@ -3553,7 +3553,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
 
    //IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ;
    //   ( ::bEnter == Nil .OR. ( hb_IsLogical(lRes := Eval( ::bEnter, Self, fipos )) .AND. ! lRes ) )
-   IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ( ! ::onClick( )  )
+   IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ( ! ::onClick()  )
       oColumn := ::aColumns[ fipos ]
       IF ::Type == BRW_DATABASE
          ::varbuf := ( ::Alias ) ->( Eval( oColumn:block,, Self, fipos ) )
@@ -4030,7 +4030,7 @@ METHOD Refresh( lFull, lLineUp ) CLASS HBrowse
    RETURN Nil
 
 /*
-METHOD BrwScrollVPos( ) CLASS HBrowse
+METHOD BrwScrollVPos() CLASS HBrowse
    LOCAL minPos, maxPos
    Local nRecCount, nRecno, nPosRecno
    LOCAL nIndexOrd := ( ::Alias ) ->( IndexOrd() )
@@ -4237,7 +4237,7 @@ FUNCTION VScrollPos( oBrw, nType, lEof, nPos )
          ( oBrw:Alias ) ->( DBGoTo( nrecno ) )
          SetScrollPos( oBrw:handle, SB_VERT, IF( ( oBrw:Alias ) ->( IndexOrd() ) = 0, ( oBrw:Alias ) ->( RecNo() ), ( oBrw:Alias ) ->( ordkeyno() ) ) )
 
-//         SetScrollPos( oBrw:handle, SB_VERT, oBrw:BrwScrollVPos( ) )
+//         SetScrollPos( oBrw:handle, SB_VERT, oBrw:BrwScrollVPos() )
       ENDIF
    ELSE
       oldRecno := Eval( oBrw:bRecnoLog, oBrw )

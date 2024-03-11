@@ -157,16 +157,16 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
       ::bGetFocus := bGfocus
       ::bLostFocus := bLfocus
       ::lnoValid := IIF( bGfocus != Nil, .T., .F. )
-      ::oParent:AddEvent( EN_SETFOCUS,  Self, { | | ::When( ) },, "onGotFocus"  )
-      ::oParent:AddEvent( EN_KILLFOCUS, Self, { | | ::Valid( ) },, "onLostFocus" )
-      ::bValid := { | | ::Valid( ) }
+      ::oParent:AddEvent( EN_SETFOCUS,  Self, { | | ::When() },, "onGotFocus"  )
+      ::oParent:AddEvent( EN_KILLFOCUS, Self, { | | ::Valid() },, "onLostFocus" )
+      ::bValid := { | | ::Valid() }
    ELSE
       IF bGfocus != Nil
-         ::oParent:AddEvent( EN_SETFOCUS, Self, { | | ::When( ) },, "onGotFocus"  )
+         ::oParent:AddEvent( EN_SETFOCUS, Self, { | | ::When() },, "onGotFocus"  )
       ENDIF
       //IF bLfocus != Nil
-         ::oParent:AddEvent( EN_KILLFOCUS, Self, { | | ::Valid( ) },, "onLostFocus" )
-         ::bValid := { | | ::Valid( ) }
+         ::oParent:AddEvent( EN_KILLFOCUS, Self, { | | ::Valid() },, "onLostFocus" )
+         ::bValid := { | | ::Valid() }
       //ENDIF
    ENDIF
 
@@ -197,7 +197,7 @@ METHOD Init() CLASS HEdit
       Hwg_InitEditProc( ::handle )
       ::Refresh()
       //IF ::bChange != Nil .OR. ::lMultiLine
-         ::oParent:AddEvent( EN_CHANGE, Self, { | | ::onChange( ) },, "onChange"  )
+         ::oParent:AddEvent( EN_CHANGE, Self, { | | ::onChange() },, "onChange"  )
       //ENDIF
 
    ENDIF
@@ -273,7 +273,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
                ENDIF
                RETURN 0
             ELSEIF wParam == VK_ESCAPE
-               oParent := ::GetParentForm( )
+               oParent := ::GetParentForm()
                IF oParent:Handle == ::oParent:Handle .AND. oParent:lExitOnEsc .AND. ;
                                   oParent:FindControl( IDCANCEL ) != Nil .AND. ;
                                 ! oParent:FindControl( IDCANCEL ):IsEnabled()       
@@ -556,8 +556,8 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bInit, bSize, bPaint, ;
       ::bGetFocus := bGfocus
       ::bLostFocus := bLfocus
       ::lnoValid := IIF( bGfocus != Nil, .T., .F. )
-      ::oParent:AddEvent( EN_SETFOCUS, Self, { | | ::When( ) },, "onGotFocus" )
-      ::oParent:AddEvent( EN_KILLFOCUS, Self, { | | ::Valid( ) },, "onLostFocus" )
+      ::oParent:AddEvent( EN_SETFOCUS, Self, { | | ::When() },, "onGotFocus" )
+      ::oParent:AddEvent( EN_KILLFOCUS, Self, { | | ::Valid() },, "onLostFocus" )
       ::bValid := { | | ::Valid() }
    ELSE
       IF bGfocus != Nil
@@ -1155,7 +1155,7 @@ METHOD When() CLASS HEdit
    ENDIF
    RETURN res
 
-METHOD Valid( ) CLASS HEdit
+METHOD Valid() CLASS HEdit
    LOCAL res := .T., vari, oDlg
 
    //IF ::bLostFocus != Nil .AND. ( ::lNoValid .OR. ! CheckFocus( Self, .T. ) )
@@ -1366,7 +1366,7 @@ METHOD Untransform( cBuffer ) CLASS HEdit
 
    RETURN xValue
 
-METHOD FirstEditable( ) CLASS HEdit
+METHOD FirstEditable() CLASS HEdit
    LOCAL nFor, nMaxLen := Len( ::cPicMask )
 
    IF ::IsEditable( 1 )

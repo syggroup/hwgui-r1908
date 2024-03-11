@@ -45,8 +45,8 @@ CLASS HRichEdit INHERIT HControl
    METHOD onLostFocus()
    METHOD When()
    METHOD Valid()
-   METHOD UpdatePos( )
-   METHOD onChange( )
+   METHOD UpdatePos()
+   METHOD onChange()
    METHOD ReadOnly( lreadOnly ) SETGET
    METHOD SetColor( tColor, bColor, lRedraw )
    METHOD SaveFile( cFile )
@@ -104,7 +104,7 @@ METHOD Init() CLASS HRichEdit
       ::SetColor( ::tColor, ::bColor )
       IF ::bChange != Nil
          SendMessage( ::handle, EM_SETEVENTMASK, 0, ENM_SELCHANGE + ENM_CHANGE )
-         ::oParent:AddEvent( EN_CHANGE, ::id, {| | ::onChange( )} )
+         ::oParent:AddEvent( EN_CHANGE, ::id, {| | ::onChange()} )
       ENDIF
    ENDIF
    RETURN Nil
@@ -115,8 +115,8 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRichEdit
    //HWG_writelog( 'rich' + str(msg) + str(wParam) + str(lParam) + chr(13) )
    IF msg = WM_KEYUP .OR. msg == WM_LBUTTONDOWN .OR. msg == WM_LBUTTONUP // msg = WM_NOTIFY .OR.
       ::updatePos()
-   ELSEIF msg == WM_MOUSEACTIVATE  .AND. ::GetParentForm( ):Type < WND_DLG_RESOURCE
-      ::SetFocus( )
+   ELSEIF msg == WM_MOUSEACTIVATE  .AND. ::GetParentForm():Type < WND_DLG_RESOURCE
+      ::SetFocus()
    ENDIF
    IF  msg = EM_GETSEL .OR. msg = EM_LINEFROMCHAR .OR. msg = EM_LINEINDEX .OR. ;
        msg = EM_GETLINECOUNT .OR. msg = EM_SETSEL .OR. msg = EM_SETCHARFORMAT .OR. ;
@@ -207,7 +207,7 @@ METHOD ReadOnly( lreadOnly )
    ENDIF
    RETURN ::lReadOnly
 
-METHOD UpdatePos( ) CLASS HRichEdit
+METHOD UpdatePos() CLASS HRichEdit
     LOCAL npos := SendMessage( ::handle, EM_GETSEL, 0, 0 )
    LOCAL pos1 := Loword( npos ) + 1,   pos2 := Hiword( npos ) + 1
 
@@ -220,7 +220,7 @@ METHOD UpdatePos( ) CLASS HRichEdit
 
    RETURN nPos
 
-METHOD onChange( ) CLASS HRichEdit
+METHOD onChange() CLASS HRichEdit
 
    IF hb_IsBlock(::bChange)
       ::oparent:lSuspendMsgsHandling := .T.
@@ -229,14 +229,14 @@ METHOD onChange( ) CLASS HRichEdit
    ENDIF
    RETURN Nil
 
-METHOD onGotFocus( ) CLASS HRichEdit
+METHOD onGotFocus() CLASS HRichEdit
   RETURN ::When()
 
-METHOD onLostFocus( ) CLASS HRichEdit
+METHOD onLostFocus() CLASS HRichEdit
   RETURN ::Valid()
 
 
-METHOD When( ) CLASS HRichEdit
+METHOD When() CLASS HRichEdit
 
     IF !CheckFocus( Self, .F. )
        RETURN .T.
@@ -248,7 +248,7 @@ METHOD When( ) CLASS HRichEdit
  RETURN .T.
 
 
-METHOD Valid( ) CLASS HRichEdit
+METHOD Valid() CLASS HRichEdit
 
    IF hb_IsBlock(::bLostFocus) .AND. !CheckFocus( Self, .T. )
        RETURN .T.
@@ -278,7 +278,7 @@ METHOD OpenFile( cFile ) CLASS HRichEdit
    ENDIF
    RETURN .F.
 
-METHOD Print( ) CLASS HRichEdit
+METHOD Print() CLASS HRichEdit
 
    IF ::hDCPrinter = Nil
     //  ::hDCPrinter := PrintSetup()

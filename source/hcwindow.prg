@@ -117,7 +117,7 @@ CLASS VAR WindowsManifest INIT !EMPTY(FindResource( , 1 , RT_MANIFEST ) ) SHARED
    METHOD AddEvent( nEvent, oCtrl, bAction, lNotify, cMethName )
    METHOD FindControl( nId, nHandle )
    METHOD Hide()              INLINE ( ::lHide := .T., HideWindow( ::handle ) )
-   //METHOD Show( )              INLINE ( ::lHide := .F., ShowWindow( ::handle ) )
+   //METHOD Show()              INLINE ( ::lHide := .F., ShowWindow( ::handle ) )
    METHOD Show( nShow )       INLINE ( ::lHide := .F., IIF( nShow = Nil, ShowWindow( ::handle  ),;
                                        ShowWindow( ::handle, nShow  )  ) )
    METHOD Move( x1, y1, width, height, nRePaint )
@@ -345,7 +345,7 @@ METHOD Refresh( lAll, oCtrl ) CLASS HCustomWindow
              IF LEN( oCtrlTmp:aControls) > 0
                  ::Refresh( lAll, oCtrlTmp )
               ELSEIF  ! Empty( lRefresh ) .AND. ( lAll .OR. ASCAN( ::GetList, {| o | o:Handle == oCtrlTmp:handle } ) > 0 ) 
-               oCtrlTmp:Refresh( )
+               oCtrlTmp:Refresh()
                IF oCtrlTmp:bRefresh != Nil  
                   EVAL( oCtrlTmp:bRefresh, oCtrlTmp )
                ENDIF   

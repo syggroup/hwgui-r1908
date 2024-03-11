@@ -37,8 +37,8 @@ CLASS VAR winclass   INIT "SysMonthCal32"
    METHOD Init()
    METHOD SetValue( dValue )
    METHOD GetValue()
-   METHOD onChange( )
-   METHOD onSelect( )
+   METHOD onChange()
+   METHOD onSelect()
 
 
 ENDCLASS
@@ -120,7 +120,7 @@ METHOD GetValue() CLASS HMonthCalendar
 
    RETURN ( ::value )
 
-METHOD onChange( ) CLASS HMonthCalendar
+METHOD onChange() CLASS HMonthCalendar
 
    IF hb_IsBlock(::bChange) .AND. ! ::oparent:lSuspendMsgsHandling
       SendMessage( ::handle, WM_LBUTTONDOWN, 0, MAKELPARAM( 1, 1 ) )
@@ -131,7 +131,7 @@ METHOD onChange( ) CLASS HMonthCalendar
 
    RETURN 0
 
-METHOD onSelect( ) CLASS HMonthCalendar
+METHOD onSelect() CLASS HMonthCalendar
 
    IF hb_IsBlock(::bSelect) .AND. ! ::oparent:lSuspendMsgsHandling
       ::oparent:lSuspendMsgsHandling := .T.

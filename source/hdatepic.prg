@@ -39,8 +39,8 @@ CLASS VAR winclass   INIT "SYSDATETIMEPICK32"
    METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, ;
                     bGfocus, bLfocus, bChange, ctooltip, tcolor, bcolor, lShowTime )
    METHOD onChange( nMess )
-   METHOD When( )
-   METHOD Valid( )
+   METHOD When()
+   METHOD Valid()
    METHOD Value ( Value ) SETGET
 
 ENDCLASS
@@ -224,7 +224,7 @@ METHOD onChange( nMess ) CLASS HDatePicker
    ENDIF
    RETURN .T.
 
-METHOD When( ) CLASS HDatePicker
+METHOD When() CLASS HDatePicker
    LOCAL res := .T.,  nSkip
 
    IF ! CheckFocus( Self, .F. )
@@ -247,7 +247,7 @@ METHOD When( ) CLASS HDatePicker
 
    RETURN res
 
-METHOD Valid( ) CLASS HDatePicker
+METHOD Valid() CLASS HDatePicker
    LOCAL  res := .T.
 
    /*
