@@ -13,7 +13,6 @@ PROCEDURE Main()
    // Click: seleciona o registro
    // Double Click ou ENTER: executa o codeblock definido no 'ON CLICK'
    // Right Click: executa o codeblock definido no 'ON RIGHTCLICK'
-   // REVISAR: TAB e SHIFT+TAB estão acionando o ON CLICK
 
    @ 20, 20 BROWSE oBrowse ARRAY SIZE 640 - 40, 480 - 100 AUTOEDIT NO VSCROLL ;
       ON CLICK {||MsgInfo("ON CLICK", "Aviso")} ;
