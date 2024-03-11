@@ -244,7 +244,7 @@ METHOD Show( nMode, p1, p2, p3 ) CLASS HFormTmpl
    LOCAL lModal := .F.
    LOCAL lMdi := .F.
    LOCAL lMdiChild := .F.
-   LOCAL cBitmap := nil
+   LOCAL cBitmap := NIL
    LOCAL oBmp := NIL
    MEMVAR oDlg
    PRIVATE oDlg
@@ -581,7 +581,7 @@ STATIC PROCEDURE CompileErr( e, stroka )
 
    MsgStop( ErrorMessage( e ) + Chr( 10 ) + Chr( 13 ) + "in" + Chr( 10 ) + Chr( 13 ) + ;
             AllTrim( stroka ), "Script compiling error" )
-   BREAK( nil )
+   BREAK( NIL )
 
 STATIC FUNCTION ReadCtrl( pp, oCtrlDesc, oContainer, oForm )
    LOCAL oCtrl := HCtrlTmpl():New( oContainer )

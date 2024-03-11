@@ -616,7 +616,7 @@ METHOD SetText( c ) CLASS HEdit
    IF c != Nil
       IF hb_IsObject(c)
          //in run time return object
-         RETURN nil
+         RETURN NIL
       ENDIF
       IF ! Empty( ::cPicFunc ) .OR. ! Empty( ::cPicMask )
          ::title := Transform( c, ::cPicFunc + IIf( Empty( ::cPicFunc ), "", " " ) + ::cPicMask )
@@ -1625,7 +1625,7 @@ STATIC FUNCTION NextFocusContainer(oParent,hCtrl,nSkip)
 
    AEVAL(oparent:acontrols,{|o| IIF(Hwg_BitAND( HWG_GETWINDOWSTYLE(  o:handle ), WS_TABSTOP ) != 0, lnoTabStop := .T., .T. ) } )
    IF !lnoTabStop .OR. empty( hCtrl )
-      RETURN nil //nexthandle
+      RETURN NIL //nexthandle
    ENDIF
    nWindow := oParent:handle
    i := AScan( oparent:acontrols, { | o | PtrtouLong( o:handle ) == PtrtouLong( hCtrl ) } )

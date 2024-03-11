@@ -94,7 +94,7 @@ METHOD INIT() CLASS hrebar
    IF ! ::lInit
       ::Super:Init()
       ::CreateBands()
-//      REBARSETIMAGELIST(::handle,nil)
+//      REBARSETIMAGELIST(::handle,NIL)
    ENDIF
    RETURN Nil
 

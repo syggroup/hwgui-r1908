@@ -150,7 +150,7 @@ METHOD AddEvent( nEvent, oCtrl, bAction, lNotify, cMethName ) CLASS HCustomWindo
          __objAddInline( oCtrl, cMethName, bAction )
       ENDIF
    ENDIF
-   RETURN nil
+   RETURN NIL
 
 METHOD FindControl( nId, nHandle ) CLASS HCustomWindow
 
@@ -160,7 +160,7 @@ METHOD FindControl( nId, nHandle ) CLASS HCustomWindow
 
    DO WHILE i > 0
       IF Len( ::aControls[ i ]:aControls ) > 0 .and. ;
-         ( oCtrl := ::aControls[ i ]:FindControl( nId, nHandle ) ) != nil
+         ( oCtrl := ::aControls[ i ]:FindControl( nId, nHandle ) ) != NIL
          RETURN oCtrl
       ENDIF
       IF Eval( bSearch, ::aControls[ i ] )
@@ -252,10 +252,10 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCustomWindow
       IF ::minWidth  > - 1 .OR. ::maxWidth  > - 1 .OR. ;
          ::minHeight > - 1 .OR. ::maxHeight > - 1
          MINMAXWINDOW( ::handle, lParam, ;
-                       IIf( ::minWidth  > - 1, ::minWidth, nil ), ;
-                       IIf( ::minHeight > - 1, ::minHeight, nil ), ;
-                       IIf( ::maxWidth  > - 1, ::maxWidth, nil ), ;
-                       IIf( ::maxHeight > - 1, ::maxHeight, nil ) )
+                       IIf( ::minWidth  > - 1, ::minWidth, NIL ), ;
+                       IIf( ::minHeight > - 1, ::minHeight, NIL ), ;
+                       IIf( ::maxWidth  > - 1, ::maxWidth, NIL ), ;
+                       IIf( ::maxHeight > - 1, ::maxHeight, NIL ) )
          RETURN 0
       ENDIF
    ENDIF
@@ -1046,7 +1046,7 @@ FUNCTION FindAccelerator( oCtrl, lParam )
 
 FUNCTION GetBackColorParent( oCtrl, lSelf, lTransparent )
    Local bColor := GetSysColor( COLOR_BTNFACE ), hTheme
-   Local brush := nil
+   Local brush := NIL
 
    DEFAULT lTransparent := .F.
    IF lSelf == Nil .OR. ! lSelf

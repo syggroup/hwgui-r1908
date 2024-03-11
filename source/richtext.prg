@@ -256,11 +256,11 @@ METHOD New( cFileName, aFontData, aFontFam, aFontChar, nFontSize, nFontColor, nS
 
    ::lTrimSpaces := .F.
 
-   IF aFontFam == nil
+   IF aFontFam == NIL
       aFontFam := Array( aFontData )
       AFill( aFontFam, "fnil" )
    ENDIF
-   IF aFontChar == nil
+   IF aFontChar == NIL
       aFontChar := Array( aFontData )
       AFill( aFontChar, 0 )
    ENDIF

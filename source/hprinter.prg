@@ -190,7 +190,7 @@ METHOD END() CLASS HPrinter
 
    IF !empty( ::hDCPrn )
       DeleteDC( ::hDCPrn )
-      ::hDCPrn := nil
+      ::hDCPrn := NIL
    ENDIF
    IF !empty( ::hPrinter )
       ClosePrinter( ::hPrinter )
@@ -513,7 +513,7 @@ STATIC FUNCTION TimerFunc( o )
 METHOD ChangePage( oSayPage, n, nPage ) CLASS hPrinter
 
    ::NeedsRedraw := .T.
-   IF nPage == nil
+   IF nPage == NIL
       IF n == 0
          ::nCurrPage := 1
       ELSEIF n == 2

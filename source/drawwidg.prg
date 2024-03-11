@@ -338,10 +338,10 @@ ENDCLASS
 METHOD AddResource( name, nFlags, lOEM, nWidth, nHeight ) CLASS HBitmap
    LOCAL lPreDefined := .F., i, aBmpSize
 
-   IF nFlags == nil
+   IF nFlags == NIL
       nFlags := LR_DEFAULTCOLOR
    ENDIF
-   IF lOEM == nil
+   IF lOEM == NIL
       lOEM := .F.
    ENDIF
    IF hb_IsNumeric(name)
@@ -350,24 +350,24 @@ METHOD AddResource( name, nFlags, lOEM, nWidth, nHeight ) CLASS HBitmap
    ENDIF
    #ifdef __XHARBOUR__
       FOR EACH i  IN  ::aBitmaps
-         IF i:name == name .AND. ( nWidth == nil .OR. nHeight == nil )
+         IF i:name == name .AND. ( nWidth == NIL .OR. nHeight == NIL )
             i:nCounter ++
             RETURN i
          ENDIF
       NEXT
    #else
       FOR i := 1 TO Len( ::aBitmaps )
-         IF ::aBitmaps[ i ]:name == name .AND. ( nWidth == nil .OR. nHeight == nil )
+         IF ::aBitmaps[ i ]:name == name .AND. ( nWidth == NIL .OR. nHeight == NIL )
             ::aBitmaps[ i ]:nCounter ++
             RETURN ::aBitmaps[ i ]
          ENDIF
       NEXT
    #endif
    IF lOEM
-      ::handle := LoadImage( 0, Val( name ), IMAGE_BITMAP, nil, nil, Hwg_bitor( nFlags, LR_SHARED ) )
+      ::handle := LoadImage( 0, Val( name ), IMAGE_BITMAP, NIL, NIL, Hwg_bitor( nFlags, LR_SHARED ) )
    ELSE
-      //::handle := LoadImage( nil, IIf( lPreDefined, Val( name ), name ), IMAGE_BITMAP, nil, nil, nFlags )
-      ::handle := LoadImage( nil, IIf( lPreDefined, Val( name ), name ), IMAGE_BITMAP, nWidth, nHeight, nFlags )
+      //::handle := LoadImage( NIL, IIf( lPreDefined, Val( name ), name ), IMAGE_BITMAP, NIL, NIL, nFlags )
+      ::handle := LoadImage( NIL, IIf( lPreDefined, Val( name ), name ), IMAGE_BITMAP, nWidth, nHeight, nFlags )
    ENDIF
    ::name   := name
    aBmpSize  := GetBitmapSize( ::handle )
@@ -410,14 +410,14 @@ METHOD AddFile( name, hDC, lTranparent, nWidth, nHeight ) CLASS HBitmap
    cname := CutPath( name )
    #ifdef __XHARBOUR__
       FOR EACH i IN ::aBitmaps
-         IF i:name == name .AND. ( nWidth == nil .OR. nHeight == nil )
+         IF i:name == name .AND. ( nWidth == NIL .OR. nHeight == NIL )
             i:nCounter ++
             RETURN i
          ENDIF
       NEXT
    #else
       FOR i := 1 TO Len( ::aBitmaps )
-         IF ::aBitmaps[ i ]:name == name .AND. ( nWidth == nil .OR. nHeight == nil )
+         IF ::aBitmaps[ i ]:name == name .AND. ( nWidth == NIL .OR. nHeight == NIL )
             ::aBitmaps[ i ]:nCounter ++
             RETURN ::aBitmaps[ i ]
          ENDIF
@@ -430,7 +430,7 @@ METHOD AddFile( name, hDC, lTranparent, nWidth, nHeight ) CLASS HBitmap
       DirChange( cCurDir )    
    ENDIF
 
-    IF Lower( Right( name, 4 ) ) != ".bmp" .OR. ( nWidth == nil .AND. nHeight == nil .AND. lTranparent == Nil )
+    IF Lower( Right( name, 4 ) ) != ".bmp" .OR. ( nWidth == NIL .AND. nHeight == NIL .AND. lTranparent == Nil )
       IF Lower( Right( name, 4 ) ) == ".bmp"
          ::handle := OpenBitmap( name, hDC )
       ELSE
@@ -438,9 +438,9 @@ METHOD AddFile( name, hDC, lTranparent, nWidth, nHeight ) CLASS HBitmap
       ENDIF
    ELSE
       IF lTranparent != Nil .AND. lTranparent
-         ::handle := LoadImage( nil, name, IMAGE_BITMAP, nWidth, nHeight, LR_LOADFROMFILE + LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS)
+         ::handle := LoadImage( NIL, name, IMAGE_BITMAP, nWidth, nHeight, LR_LOADFROMFILE + LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS)
       ELSE
-         ::handle := LoadImage( nil, name, IMAGE_BITMAP, nWidth, nHeight, LR_LOADFROMFILE )
+         ::handle := LoadImage( NIL, name, IMAGE_BITMAP, nWidth, nHeight, LR_LOADFROMFILE )
          ENDIF
     ENDIF
    IF Empty( ::handle )
@@ -514,16 +514,16 @@ ENDCLASS
 METHOD AddResource( name, nWidth, nHeight, nFlags, lOEM ) CLASS HIcon
    LOCAL lPreDefined := .F., i, aIconSize
 
-   IF nWidth == nil
+   IF nWidth == NIL
       nWidth := 0
    ENDIF
-   IF nHeight == nil
+   IF nHeight == NIL
       nHeight := 0
    ENDIF
-   IF nFlags == nil
+   IF nFlags == NIL
       nFlags := 0
    ENDIF
-   IF lOEM == nil
+   IF lOEM == NIL
       lOEM := .F.
    ENDIF
    IF hb_IsNumeric(name)
@@ -549,7 +549,7 @@ METHOD AddResource( name, nWidth, nHeight, nFlags, lOEM ) CLASS HIcon
    IF lOEM // LR_SHARED is required for OEM images
       ::handle := LoadImage( 0, Val( name ), IMAGE_ICON, nWidth, nHeight, Hwg_bitor( nFlags, LR_SHARED ) )
    ELSE
-      ::handle := LoadImage( nil, IIf( lPreDefined, Val( name ), name ), IMAGE_ICON, nWidth, nHeight, nFlags )
+      ::handle := LoadImage( NIL, IIf( lPreDefined, Val( name ), name ), IMAGE_ICON, nWidth, nHeight, nFlags )
    ENDIF
    ::name   := name
    aIconSize := GetIconSize( ::handle )
@@ -564,10 +564,10 @@ METHOD AddFile( name, nWidth, nHeight ) CLASS HIcon
    LOCAL i, aIconSize, cname, cCurDir
 
 
-   IF nWidth == nil
+   IF nWidth == NIL
       nWidth := 0
    ENDIF
-   IF nHeight == nil
+   IF nHeight == NIL
       nHeight := 0
    ENDIF
    cname := CutPath( name )

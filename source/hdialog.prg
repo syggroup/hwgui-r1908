@@ -127,7 +127,7 @@ METHOD NEW( lType, nStyle, x, y, width, height, cTitle, oFont, bInit, bExit, bSi
    ::lExitOnEsc  := IIf( lExitOnEsc == Nil, .T., ! lExitOnEsc )
    ::lClosable   := Iif( lnoClosable==Nil, .T., !lnoClosable )
 
-   IF nHelpId != nil
+   IF nHelpId != NIL
       ::HelpId := nHelpId
    END
    ::SetColor( , bColor )
@@ -217,10 +217,10 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HDialog
       IF ::minWidth  > - 1 .OR. ::maxWidth  > - 1 .OR. ;
          ::minHeight > - 1 .OR. ::maxHeight > - 1
          MINMAXWINDOW( ::handle, lParam, ;
-                       IIf( ::minWidth  > - 1, ::minWidth, nil ), ;
-                       IIf( ::minHeight > - 1, ::minHeight, nil ), ;
-                       IIf( ::maxWidth  > - 1, ::maxWidth, nil ), ;
-                       IIf( ::maxHeight > - 1, ::maxHeight, nil ) )
+                       IIf( ::minWidth  > - 1, ::minWidth, NIL ), ;
+                       IIf( ::minHeight > - 1, ::minHeight, NIL ), ;
+                       IIf( ::maxWidth  > - 1, ::maxWidth, NIL ), ;
+                       IIf( ::maxHeight > - 1, ::maxHeight, NIL ) )
          RETURN 0
       ENDIF
    ELSEIF msg = WM_MENUCHAR
@@ -484,7 +484,7 @@ FUNCTION DlgCommand( oDlg, wParam, lParam )
       IF iParLow == IDOK
          hCtrl := GetFocus()
          oCtrl := oDlg:FindControl(, hCtrl )
-         IF oCtrl == nil .OR. ! SelfFocus( oCtrl:Handle, hCtrl )
+         IF oCtrl == NIL .OR. ! SelfFocus( oCtrl:Handle, hCtrl )
             hCtrl := GetAncestor( hCtrl, GA_PARENT )
             IF ( oCtrl := oDlg:FindControl( , hCtrl ) ) != Nil
                GetSkip( oCtrl:oParent, hCtrl, , 1 )
@@ -564,7 +564,7 @@ FUNCTION DlgCommand( oDlg, wParam, lParam )
          Eval( oDlg:aEvents[ i, 3 ], oDlg, iParLow )
       ENDIF
    ELSEIF iParHigh == 0 .AND. ( ; //.AND. ! oDlg:lSuspendMsgsHandling .AND. ( ;
-        ( iParLow == IDOK .AND. oDlg:FindControl( IDOK ) != nil ) .OR. ;
+        ( iParLow == IDOK .AND. oDlg:FindControl( IDOK ) != NIL ) .OR. ;
           iParLow == IDCANCEL )
       IF iParLow == IDOK
          oDlg:lResult := .T.          
@@ -708,7 +708,7 @@ FUNCTION onHelp( oDlg, wParam, lParam )
       IF ! Empty( lParam )
          oCtrl := oDlg:FindControl( Nil, GetHelpData( lParam ) )
       ENDIF
-      IF oCtrl != nil
+      IF oCtrl != NIL
          nHelpId := oCtrl:HelpId
          IF Empty( nHelpId )
             oParent := oCtrl:oParent
@@ -843,7 +843,7 @@ FUNCTION SetDlgKey( oDlg, nctrl, nkey, block )
    IF nctrl == Nil ; nctrl := 0 ; ENDIF
 
    IF ! __ObjHasMsg( oDlg, "KEYLIST" )
-      RETURN nil
+      RETURN NIL
    ENDIF
    aKeys := oDlg:KeyList
    IF ( i := AScan( aKeys, { | a | a[ 1 ] == nctrl.AND.a[ 2 ] == nkey } ) ) > 0

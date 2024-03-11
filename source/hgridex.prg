@@ -197,12 +197,12 @@ METHOD Init() CLASS HGridEx
          NEXT
 
       ENDIF
-      IF ::color != nil
+      IF ::color != NIL
          ListView_SetTextColor( ::handle, ::color )
 
       ENDIF
 
-      IF ::bkcolor != nil
+      IF ::bkcolor != NIL
          Listview_setbkcolor( ::handle, ::bkcolor )
          Listview_settextbkcolor( ::handle, ::bkcolor )
       ENDIF
@@ -248,7 +248,7 @@ METHOD AddRow( a , bupdate ) CLASS HGRIDEX
       ::updatedata()
    ENDIF
 
-   RETURN nil
+   RETURN NIL
 
 METHOD Notify( lParam ) CLASS HGRIDEX
    LOCAL nCode := GetNotifyCode( lParam )
@@ -274,7 +274,7 @@ METHOD Notify( lParam ) CLASS HGRIDEX
 
    IF nCode == LVN_COLUMNCLICK //.and. GETNOTIFYCODEFROM(lParam) == ::Handle
       IF Empty( ::hsort )
-         ::hSort := LISTVIEWSORTINFONEW( lParam, nil )
+         ::hSort := LISTVIEWSORTINFONEW( lParam, NIL )
       ENDIF
       LISTVIEWSORT( ::handle, lParam, ::hSort )
       RETURN  0

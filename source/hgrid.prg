@@ -157,15 +157,15 @@ METHOD Init() CLASS HGrid
       Listview_Init( ::handle, ::ItemCount, ::lNoLines )
 
       FOR i := 1 TO Len( ::aColumns )
-         Listview_addcolumn( ::handle, i, ::aColumns[ i, 2 ], ::aColumns[ i, 1 ], ::aColumns[ i, 3 ], IF( ::aColumns[ i, 4 ] != nil, ::aColumns[ i, 4 ], 0 ) )
+         Listview_addcolumn( ::handle, i, ::aColumns[ i, 2 ], ::aColumns[ i, 1 ], ::aColumns[ i, 3 ], IF( ::aColumns[ i, 4 ] != NIL, ::aColumns[ i, 4 ], 0 ) )
       NEXT
 
-      IF ::color != nil
+      IF ::color != NIL
          ListView_SetTextColor( ::handle, ::color )
 
       ENDIF
 
-      IF ::bkcolor != nil
+      IF ::bkcolor != NIL
          Listview_setbkcolor( ::handle, ::bkcolor )
          Listview_settextbkcolor( ::handle, ::bkcolor )
       ENDIF
@@ -188,10 +188,10 @@ METHOD Notify( lParam ) CLASS HGrid
 FUNCTION ListViewNotify( oCtrl, lParam )
    LOCAL aCord
 
-   IF GetNotifyCode ( lParam ) = LVN_KEYDOWN .and. oCtrl:bKeydown != nil
+   IF GetNotifyCode ( lParam ) = LVN_KEYDOWN .and. oCtrl:bKeydown != NIL
       Eval( oCtrl:bKeyDown, oCtrl, Listview_GetGridKey( lParam ) )
 
-   ELSEIF GetNotifyCode ( lParam ) == NM_DBLCLK .and. oCtrl:bEnter != nil
+   ELSEIF GetNotifyCode ( lParam ) == NM_DBLCLK .and. oCtrl:bEnter != NIL
       aCord := Listview_Hittest( oCtrl:handle, GetCursorRow() - GetWindowRow ( oCtrl:handle ), ;
                                  GetCursorCol() - GetWindowCol ( oCtrl:handle ) )
       oCtrl:nRow := aCord[ 1 ]
@@ -199,20 +199,20 @@ FUNCTION ListViewNotify( oCtrl, lParam )
 
       Eval( oCtrl:bEnter, oCtrl )
 
-   ELSEIF GetNotifyCode ( lParam ) == NM_SETFOCUS .and. oCtrl:bGfocus != nil
+   ELSEIF GetNotifyCode ( lParam ) == NM_SETFOCUS .and. oCtrl:bGfocus != NIL
       Eval( oCtrl:bGfocus, oCtrl )
 
-   ELSEIF GetNotifyCode ( lParam ) == NM_KILLFOCUS .and. oCtrl:bLfocus != nil
+   ELSEIF GetNotifyCode ( lParam ) == NM_KILLFOCUS .and. oCtrl:bLfocus != NIL
       Eval( oCtrl:bLfocus, oCtrl )
 
    ELSEIF GetNotifyCode ( lParam ) = LVN_ITEMCHANGED
       oCtrl:nRow := oCtrl:Row()
 
-      IF oCtrl:bPosChg != nil
+      IF oCtrl:bPosChg != NIL
          Eval( oCtrl:bPosChg, oCtrl, Listview_getfirstitem( oCtrl:handle ) )
       ENDIF
 
-   ELSEIF GetNotifyCode ( lParam ) = LVN_GETDISPINFO .and. oCtrl:bDispInfo != nil
+   ELSEIF GetNotifyCode ( lParam ) = LVN_GETDISPINFO .and. oCtrl:bDispInfo != NIL
       aCord := Listview_getdispinfo( lParam )
 
       oCtrl:nRow := aCord[ 1 ]

@@ -165,7 +165,7 @@ METHOD New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
       ::szAppName := cAppName
    ENDIF
 
-   IF nHelpId != nil
+   IF nHelpId != NIL
       ::HelpId := nHelpId
    END
 
@@ -268,7 +268,7 @@ METHOD New( lType, oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, nPos,
       ::Style := nStyle
       ::tColor := clr
       ::oBmp := oBmp
-       clr:= nil  // because error
+       clr:= NIL  // because error
       ::handle := Hwg_InitMdiWindow( Self, ::szAppName, cTitle, cMenu,  ;
                                      IIf( oIcon != Nil, oIcon:handle, Nil ), , ;  //clr, ;
                                      nStyle, ::nLeft, ::nTop, ::nWidth, ::nHeight )
@@ -287,7 +287,7 @@ METHOD New( lType, oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, nPos,
 
    ELSEIF lType == WND_MAIN
 
-      clr := nil  // because error and WINDOW IS INVISIBLE
+      clr := NIL  // because error and WINDOW IS INVISIBLE
       ::handle := Hwg_InitMainWindow( Self, ::szAppName, cTitle, cMenu, ;
                       IIf( oIcon != Nil, oIcon:handle, Nil ), ;
                       IIf( oBmp != Nil, - 1, clr ), nStyle, ::nLeft, ::nTop, ::nWidth, ::nHeight )
@@ -1142,7 +1142,7 @@ STATIC FUNCTION onMdiNcActivate( oWnd, wParam )
    RETURN - 1
 
 Static Function onMdiActivate( oWnd,wParam, lParam )
-   Local  lScreen := oWnd:Screen != nil, aWndMain ,oWndDeact
+   Local  lScreen := oWnd:Screen != NIL, aWndMain ,oWndDeact
    Local lConf
    
    If ValType( wParam ) == ValType( oWnd:Handle )

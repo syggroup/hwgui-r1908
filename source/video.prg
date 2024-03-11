@@ -84,6 +84,6 @@ METHOD Initiate( ) CLASS TVideo
    ::oMci:lOpen()
    ::oMci:SetWindow( Self )
 
-   RETURN nil
+   RETURN NIL
 
 //----------------------------------------------------------------------------//

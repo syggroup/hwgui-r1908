@@ -228,7 +228,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
 
    IF lRes == Nil ; lRes := .F. ; ENDIF
    IF lOEM == Nil ; lOEM := .F. ; ENDIF
-   IF ::oImage == nil
+   IF ::oImage == NIL
       ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),  ;
                        HIcon():AddResource( Image,,,, lOEM ),  ;
                        IIf( hb_IsChar(Image),    ;
@@ -243,7 +243,7 @@ METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip ) CLASS H
    ::Super:Redefine( oWndParent, nId, bInit, bSize, ctooltip )
 
    IF lRes == Nil ; lRes := .F. ; ENDIF
-   IF ::oImage == nil
+   IF ::oImage == NIL
       ::oImage := IIf( lRes .OR. hb_IsNumeric(xImage),   ;
                        HIcon():AddResource( xImage ), ;
                        IIf( hb_IsChar(xImage),   ;

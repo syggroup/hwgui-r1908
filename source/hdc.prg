@@ -104,9 +104,9 @@ METHOD Attach( hDC ) CLASS HDC
 
 METHOD deletedc(  ) CLASS HDC
    DeleteDc( ::m_hDC )
-   ::m_hDC := nil
-   ::m_hAttribDC := nil
-   RETURN nil
+   ::m_hDC := NIL
+   ::m_hAttribDC := NIL
+   RETURN NIL
 
 METHOD SetAttribDC( hDC ) CLASS HDC
 

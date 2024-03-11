@@ -441,7 +441,7 @@ METHOD When( ) CLASS HRadioButton
 
 
 METHOD Valid( nKey ) CLASS HRadioButton
-   LOCAL nEnter := IIF( nKey = nil, 1, nkey)
+   LOCAL nEnter := IIF( nKey = NIL, 1, nkey)
    LOCAL hctrl, iValue
 
    IF ::lnoValid .OR. getkeystate( VK_LEFT ) + getkeystate( VK_RIGHT ) + GetKeyState( VK_UP ) + ;

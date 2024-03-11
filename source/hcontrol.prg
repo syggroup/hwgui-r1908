@@ -923,7 +923,7 @@ METHOD Paint( lpDis ) CLASS HStatic
    // Draw the text
    DrawText( dc, szText, client_rect, dwtext )
 
-   RETURN nil
+   RETURN NIL
 
 METHOD onClick() CLASS HStatic
    IF hb_IsBlock(::bClick)
@@ -1400,7 +1400,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
       IF ::Themed
          IF hb_IsPointer(::hTheme)
             HB_CLOSETHEMEDATA( ::htheme )
-            ::hTheme       := nil
+            ::hTheme       := NIL
             //::m_bFirstTime := .T.
          ENDIF
          ::Themed := .F.
@@ -1594,7 +1594,7 @@ METHOD CancelHover() CLASS HBUTTONEx
          InvalidateRect( ::oParent:Handle, 1 , ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight  )   
       ENDIF
    ENDIF
-   RETURN nil
+   RETURN NIL
 
 METHOD SetDefaultColor( tColor, bColor, lPaint ) CLASS HBUTTONEx
    DEFAULT lPaint TO .F.
@@ -1684,7 +1684,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
          IF hb_IsPointer(::hTheme)
             HB_CLOSETHEMEDATA( ::htheme )
          ENDIF
-         ::hTheme := nil
+         ::hTheme := NIL
          IF ::WindowsManifest
             ::hTheme := hb_OpenThemeData( ::handle, "BUTTON" )
          ENDIF
@@ -2034,7 +2034,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
    DeleteObject( brBtnShadow )
 
 
-   RETURN nil
+   RETURN NIL
 
 METHOD PAINTBK( hdc ) CLASS HBUTTONEx
 
