@@ -516,6 +516,7 @@ METHOD SetRowHeight( nPixels ) CLASS HBrowse
 
 
 //----------------------------------------------------//
+#if 0 // old code for reference
 METHOD onEvent( msg, wParam, lParam ) CLASS HBrowse
    LOCAL oParent, cKeyb, nCtrl, nPos, lBEof
    LOCAL nRecStart, nRecStop, nRet, nShiftAltCtrl
@@ -885,7 +886,423 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBrowse
    ENDIF
 
 RETURN - 1
+#else
+METHOD OnEvent(msg, wParam, lParam) CLASS HBrowse
 
+   LOCAL oParent
+   LOCAL cKeyb
+   LOCAL nCtrl
+   LOCAL nPos
+   LOCAL lBEof
+   LOCAL nRecStart
+   LOCAL nRecStop
+   LOCAL nRet
+   LOCAL nShiftAltCtrl
+
+   IF !::active .OR. Empty(::aColumns)
+      RETURN -1
+   ENDIF
+
+   IF hb_IsBlock(::bOther)
+      IF !hb_IsNumeric(nRet := Eval(::bOther, Self, msg, wParam, lParam))
+         nRet := IIf(hb_IsLogical(nRet) .AND. !nRet, 0, -1)
+      ENDIF
+      IF nRet >= 0
+         RETURN -1
+      ENDIF
+   ENDIF
+
+   SWITCH msg
+
+   CASE WM_MOUSEWHEEL
+      IF !::oParent:lSuspendMsgsHandling
+         ::isMouseOver := .F.
+         ::MouseWheel(LOWORD(wParam), IIf(HIWORD(wParam) > 32768, HIWORD(wParam) - 65535, HIWORD(wParam)), ;
+            LOWORD(lParam), HIWORD(lParam))
+         //RETURN 0 because bother is not run
+      ENDIF
+      EXIT
+
+   CASE WM_THEMECHANGED
+      IF ::Themed
+         IF hb_IsPointer(::hTheme)
+            HB_CLOSETHEMEDATA(::htheme)
+            ::hTheme := NIL
+         ENDIF
+         ::Themed := .F.
+      ENDIF
+      ::m_bFirstTime := .T.
+      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+      RETURN 0
+
+   CASE WM_PAINT
+      ::Paint()
+      RETURN 1
+
+   CASE WM_ERASEBKGND
+      RETURN 0
+
+   CASE WM_SIZE
+      ::oParent:lSuspendMsgsHandling := .F.
+      ::lRepaintBackground := .T.
+      ::isMouseOver := .F.
+      IF ::AutoColumnFit == 1
+         IF !isWindowVisible(::oParent:Handle)
+            ::Rebuild()
+            ::lRepaintBackground := .F.
+         ENDIF
+         ::AutoFit()
+      ENDIF
+      EXIT
+
+   CASE WM_SETFONT
+      IF ::oHeadFont == NIL .AND. ::lInit
+         ::nHeadHeight := 0
+         ::nFootHeight := 0
+      ENDIF
+      EXIT
+
+   CASE WM_SETFOCUS
+      IF !::lSuspendMsgsHandling
+         ::When()
+         //IF hb_IsBlock(::bGetFocus)
+         //   Eval(::bGetFocus, Self)
+         //ENDIF
+      ENDIF
+      EXIT
+
+   CASE WM_KILLFOCUS
+      IF !::lSuspendMsgsHandling
+         ::Valid()
+         //IF hb_IsBlock(::bLostFocus)
+         //   Eval(::bLostFocus, Self)
+         //ENDIF
+         //IF ::GetParentForm(self):Type < WND_DLG_RESOURCE
+         //    SendMessage(::oParent:handle, WM_COMMAND, makewparam(::id, 0), ::handle)
+         //ENDIF
+         ::internal[1] := 15 //force redraw header, footer and separator
+      ENDIF
+      EXIT
+
+   CASE WM_HSCROLL
+      ::DoHScroll( wParam )
+      EXIT
+
+   CASE WM_VSCROLL
+      ::DoVScroll( wParam )
+      EXIT
+
+   CASE WM_CHAR
+      IF !CheckBit(lParam, 32) //.AND. hb_IsBlock(::bKeyDown)
+         nShiftAltCtrl := IIf(IsCtrlShift(.F., .T.), 1, 0)
+         nShiftAltCtrl += IIf(IsCtrlShift(.T., .F.), 2, nShiftAltCtrl)
+         //nShiftAltCtrl += IIf(wParam > 111, 4, nShiftAltCtrl)
+         IF hb_IsBlock(::bKeyDown) .AND. wParam != VK_TAB .AND. wParam != VK_RETURN
+            IF Empty(nRet := Eval(::bKeyDown, Self, wParam, nShiftAltCtrl, msg)) .AND. nRet != NIL
+               RETURN 0
+            ENDIF
+         ENDIF
+         IF wParam == VK_RETURN .OR. wParam == VK_ESCAPE
+            RETURN -1
+         ENDIF
+         IF ::lAutoEdit .OR. ::aColumns[::SetColumn()]:lEditable
+            ::Edit(wParam, lParam)
+         ENDIF
+      ENDIF
+      EXIT
+
+   CASE WM_GETDLGCODE
+      ::isMouseOver := .F.
+      IF wParam == VK_ESCAPE .AND. ; // DIALOG MODAL
+         (oParent := ::GetParentForm:FindControl(IDCANCEL)) != NIL .AND. !oParent:IsEnabled()
+         RETURN DLGC_WANTMESSAGE
+      ELSEIF (wParam == VK_ESCAPE .AND. ::GetParentForm():handle != ::oParent:Handle .AND. ::lEsc) .OR. ; //!::lAutoEdit
+         (wParam == VK_RETURN .AND. ::GetParentForm():FindControl(IDOK) != NIL)
+         RETURN -1
+      ENDIF
+      RETURN DLGC_WANTALLKEYS
+
+   CASE WM_COMMAND
+      //::Super:onEvent(WM_COMMAND)
+      IF ::GetParentForm(self):Type < WND_DLG_RESOURCE
+         ::GetParentForm(self):OnEvent(msg, wparam, lparam)
+      ELSE
+         DlgCommand(Self, wParam, lParam)
+      ENDIF
+      EXIT
+
+   CASE WM_KEYUP //.AND. !::oParent:lSuspendMsgsHandling
+      IF wParam == VK_CONTROL
+         ::lCtrlPress := .F.
+      ENDIF
+      IF wParam == VK_SHIFT
+         ::lShiftPress := .F.
+      ENDIF
+      IF wParam == VK_TAB .AND. ::GetParentForm():Type < WND_DLG_RESOURCE
+         IF IsCtrlShift(.T., .F.)
+            getskip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
+            RETURN 0
+         ENDIF
+         //ELSE
+         //   ::DoHScroll(IIf(IsCtrlShift(.F., .T.), SB_LINELEFT, SB_LINERIGHT))
+         //ENDIF
+      ENDIF
+      IF wParam != VK_SHIFT .AND. wParam != VK_CONTROL .AND. wParam != VK_MENU
+         oParent := ::oParent
+         DO WHILE oParent != NIL .AND. !__ObjHasMsg(oParent, "GETLIST")
+            oParent := oParent:oParent
+         ENDDO
+         IF oParent != NIL .AND. !Empty(oParent:KeyList)
+            cKeyb := GetKeyboardState()
+            nCtrl := IIf(Asc(SubStr(cKeyb, VK_CONTROL + 1, 1)) >= 128, FCONTROL, ;
+               IIf(Asc(SubStr(cKeyb, VK_SHIFT + 1, 1)) >= 128, FSHIFT, 0))
+            IF (nPos := AScan(oParent:KeyList, {|a|a[1] == nCtrl .AND. a[2] == wParam})) > 0
+               Eval(oParent:KeyList[nPos, 3], Self)
+            ENDIF
+         ENDIF
+      ENDIF
+      RETURN 1
+
+   CASE WM_KEYDOWN
+      IF !::oParent:lSuspendMsgsHandling
+         //::isMouseOver := .F.
+         IF ((CheckBit(lParam, 25) .AND. wParam != 111) .OR. (wParam >= VK_F1 .AND. wParam <= VK_F12) .OR. ;
+            wParam == VK_TAB .OR. wParam == VK_RETURN) .AND. hb_IsBlock(::bKeyDown)
+            nShiftAltCtrl := IIf(IsCtrlShift(.F., .T.), 1, 0)
+            nShiftAltCtrl += IIf(IsCtrlShift(.T., .F.), 2, nShiftAltCtrl)
+            nShiftAltCtrl += IIf(wParam > 111, 4, nShiftAltCtrl)
+            IF Empty(nRet := Eval(::bKeyDown, Self, wParam, nShiftAltCtrl, msg)) .AND. nRet != NIL
+               RETURN 0
+            ENDIF
+         ENDIF
+         ::isMouseOver := .F.
+         SWITCH wParam
+         CASE VK_TAB
+            IF ::lCtrlPress
+               getskip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
+               RETURN 0
+            ENDIF
+            ::DoHScroll(IIf(IsCtrlShift(.F., .T.), SB_LINELEFT, SB_LINERIGHT))
+            EXIT
+         CASE VK_DOWN
+            IF !::ChangeRowCol(1)
+               RETURN -1
+            ENDIF
+            IF ::lShiftPress .AND. ::aSelected != NIL
+               Eval(::bskip, Self, 1)
+               lBEof := Eval(::beof, Self)
+               Eval(::bskip, Self, -1)
+               IF !(lBEof .AND. AScan(::aSelected, Eval(::bRecno, Self)) > 0)
+                  ::Select()
+                  IF lBEof
+                     ::refreshline()
+                  ENDIF
+               ENDIF
+            ENDIF
+            ::LINEDOWN()
+            EXIT
+         CASE VK_UP
+            IF !::ChangeRowCol(1)
+               RETURN -1
+            ENDIF
+            IF ::lShiftPress .AND. ::aSelected != NIL
+               Eval(::bskip, Self, 1)
+               lBEof := Eval(::beof, Self)
+               Eval(::bskip, Self, -1)
+               IF !(lBEof .AND. AScan(::aSelected, Eval(::bRecno, Self)) > 0)
+                  ::LINEUP()
+               ENDIF
+            ELSE
+               ::LINEUP()
+            ENDIF
+            IF ::lShiftPress .AND. ::aSelected != NIL
+               Eval(::bskip, Self, -1)
+               IF !(lBEof := Eval(::bBof, Self))
+                  Eval(::bskip, Self, 1)
+               ENDIF
+               IF !(lBEof .AND. AScan(::aSelected, Eval(::bRecno, Self)) > 0)
+                  ::Select()
+                  ::refresh(.F.)
+               ENDIF
+            ENDIF
+            EXIT
+         CASE VK_RIGHT
+            ::DoHScroll(SB_LINERIGHT)
+            EXIT
+         CASE VK_LEFT
+            ::DoHScroll(SB_LINELEFT)
+            EXIT
+         CASE VK_HOME
+            IF !::lCtrlPress .AND. (::lAutoEdit .OR. ::aColumns[::SetColumn()]:lEditable)
+               ::Edit(wParam)
+            ELSE
+               ::DoHScroll(SB_LEFT)
+            ENDIF
+            EXIT
+         CASE VK_END
+            IF !::lCtrlPress .AND. (::lAutoEdit .OR. ::aColumns[::SetColumn()]:lEditable)
+               ::Edit(wParam)
+            ELSE
+               ::DoHScroll(SB_RIGHT)
+            ENDIF
+            EXIT
+         CASE VK_NEXT
+            IF !::ChangeRowCol(1)
+               RETURN -1
+            ENDIF
+            nRecStart := Eval(::brecno, Self)
+            IF ::lCtrlPress
+               IF (::nRecords > ::rowCount)
+                  ::BOTTOM()
+               ELSE
+                 ::PageDown()
+               ENDIF
+            ELSE
+              ::PageDown()
+            ENDIF
+            IF ::lShiftPress .AND. ::aSelected != NIL
+               nRecStop := Eval(::brecno, Self)
+               Eval(::bskip, Self, 1)
+               lBEof := Eval(::beof, Self)
+               Eval(::bskip, Self, -1)
+               IF !(lBEof .AND. AScan(::aSelected, Eval(::bRecno, Self)) > 0)
+                  ::Select()
+               ENDIF
+               DO WHILE Eval(::bRecno, Self) != nRecStart
+                  ::Select()
+                  Eval(::bskip, Self, -1)
+               ENDDO
+               ::Select()
+               Eval(::bgoto, Self, nRecStop)
+               Eval(::bskip, Self, 1)
+               IF Eval(::beof, Self)
+                  Eval(::bskip, Self, -1)
+                  ::Select()
+               ELSE
+                  Eval(::bskip, Self, -1)
+               ENDIF
+               ::Refresh()
+            ENDIF
+            EXIT
+         CASE VK_PRIOR
+            IF !::ChangeRowCol(1)
+               RETURN -1
+            ENDIF
+            nRecStop := Eval(::brecno, Self)
+            IF ::lCtrlPress
+               ::TOP()
+            ELSE
+               ::PageUp()
+            ENDIF
+            IF ::lShiftPress .AND. ::aSelected != NIL
+                nRecStart := Eval(::bRecno, Self)
+                DO WHILE Eval(::bRecno, Self) != nRecStop
+                   ::Select()
+                   Eval(::bskip, Self, 1)
+                ENDDO
+                Eval(::bgoto, Self, nRecStart)
+                ::Refresh()
+            ENDIF
+            EXIT
+         CASE VK_RETURN
+            ::Edit(VK_RETURN)
+            EXIT
+         CASE VK_ESCAPE
+            IF ::lESC
+               IF ::GetParentForm():Type < WND_DLG_RESOURCE
+                  SendMessage(GetParent(::handle), WM_SYSCOMMAND, SC_CLOSE, 0)
+               ELSE
+                  SendMessage(GetParent(::handle), WM_CLOSE, 0, 0)
+               ENDIF
+            ENDIF
+            EXIT
+         CASE VK_CONTROL
+            ::lCtrlPress := .T.
+            EXIT
+         CASE VK_SHIFT
+            ::lShiftPress := .T.
+         //ELSEIF ::lAutoEdit .AND. (wParam >= 48 .AND. wParam <= 90 .OR. wParam >= 96 .AND. wParam <= 111)
+         //   ::Edit(wParam, lParam)
+         ENDSWITCH
+         RETURN 1
+      ENDIF
+      EXIT
+
+   CASE WM_LBUTTONDBLCLK
+      ::ButtonDbl(lParam)
+      EXIT
+
+   CASE WM_LBUTTONDOWN
+      ::ButtonDown(lParam)
+      EXIT
+
+   CASE WM_LBUTTONUP
+      ::ButtonUp(lParam)
+      EXIT
+
+   CASE WM_RBUTTONDOWN
+      ::ButtonRDown(lParam)
+      EXIT
+
+   CASE WM_MOUSEMOVE
+      IF !::oParent:lSuspendMsgsHandling
+         IF ::nWheelPress > 0
+            ::MouseWheel(LOWORD(wParam), ::nWheelPress - lParam)
+         ELSE
+            ::MouseMove(wParam, lParam)
+            IF ::lHeadClick
+               AEVAL(::aColumns, {|c|c:lHeadClick := .F.})
+               InvalidateRect(::handle, 0, ::x1, ::y1 - ::nHeadHeight * ::nHeadRows, ::x2, ::y1)
+               ::lHeadClick := .F.
+            ENDIF
+            IF !::allMouseOver .AND. ::hTheme != NIL
+               ::allMouseOver := .T.
+               TRACKMOUSEVENT(::handle)
+            ELSE
+               TRACKMOUSEVENT(::handle, TME_HOVER + TME_LEAVE)
+            ENDIF
+         ENDIF
+      ENDIF
+      EXIT
+
+   CASE WM_MOUSEHOVER
+      ::ShowColToolTips(lParam)
+      EXIT
+
+   CASE WM_MOUSELEAVE
+   CASE WM_NCMOUSELEAVE //.AND. !::oParent:lSuspendMsgsHandling
+      IF ::allMouseOver
+         //::MouseMove(0, 0)
+         ::MouseMove(wParam, lParam)
+         ::allMouseOver := .F.
+         //::isMouseOver := .F.
+      ENDIF
+      EXIT
+
+   CASE WM_MBUTTONUP
+      ::nWheelPress := IIf(::nWheelPress > 0, 0, lParam)
+      IF ::nWheelPress > 0
+         Hwg_SetCursor(LOADCURSOR(32652))
+      ELSE
+         Hwg_SetCursor(LOADCURSOR(IDC_ARROW))
+      ENDIF
+      EXIT
+
+   //CASE WM_MOUSEWHEEL
+   //   ::MouseWheel(LOWORD(wParam), IIf(HIWORD(wParam) > 32768, HIWORD(wParam) - 65535, HIWORD(wParam)), ;
+   //      LOWORD(lParam), HIWORD(lParam))
+
+   CASE WM_DESTROY
+     IF hb_IsPointer(::hTheme)
+        HB_CLOSETHEMEDATA(::htheme)
+       ::hTheme := NIL
+     ENDIF
+     ::END()
+
+   ENDSWITCH
+
+RETURN -1
+#endif
 
 //----------------------------------------------------//
 METHOD Redefine( lType, oWndParent, nId, oFont, bInit, bSize, bPaint, bEnter, bGfocus, bLfocus ) CLASS HBrowse
