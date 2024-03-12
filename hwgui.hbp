@@ -15,8 +15,11 @@
 -q0
 -w3
 -es2
+
+{!xhb}-gc3
+
 -iinclude
- 
+
 source/animat.c
 source/commond.c
 source/control.c
