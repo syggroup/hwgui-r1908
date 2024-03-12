@@ -330,7 +330,7 @@ CLASS VAR aBitmaps   INIT {}
    METHOD AddStandard( nId )
    METHOD AddFile( name, hDC, lTranparent, nWidth, nHeight )
    METHOD AddWindow( oWnd, lFull )
-   METHOD Draw( hDC, x1, y1, width, height )  INLINE DrawBitmap( hDC, ::handle, SRCCOPY, x1, y1, width, height )
+   METHOD Draw( hDC, x1, y1, width, height ) INLINE DrawBitmap( hDC, ::handle, SRCCOPY, x1, y1, width, height )
    METHOD Release()
 
 ENDCLASS
@@ -506,7 +506,7 @@ CLASS VAR aIcons   INIT {}
 
    METHOD AddResource( name, nWidth, nHeight, nFlags, lOEM )
    METHOD AddFile( name, nWidth, nHeight )
-   METHOD Draw( hDC, x, y )   INLINE DrawIcon( hDC, ::handle, x, y )
+   METHOD Draw( hDC, x, y ) INLINE DrawIcon( hDC, ::handle, x, y )
    METHOD Release()
 
 ENDCLASS

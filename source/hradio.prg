@@ -31,7 +31,7 @@ CLASS HRadioGroup INHERIT HControl //HObject
               bGFocus,lTransp )
    METHOD EndGroup( nSelected )
    METHOD SetValue( nValue )
-   METHOD GetValue()  INLINE ::nValue
+   METHOD GetValue() INLINE ::nValue
    METHOD Value ( nValue ) SETGET
    METHOD Refresh()
    //METHOD IsEnabled() INLINE ::lEnabled

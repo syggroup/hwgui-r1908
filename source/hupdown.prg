@@ -56,7 +56,7 @@ CLASS HUpDown INHERIT HControl
    METHOD DisableBackColor( DisableBColor ) SETGET
    METHOD Hide() INLINE (::lHide := .T., HideWindow( ::handle ), HideWindow( ::hwndUpDown ) )
    METHOD Show() INLINE (::lHide := .F., ShowWindow( ::handle ), ShowWindow( ::hwndUpDown ) )
-   METHOD Enable()  INLINE ( ::Super:Enable(), EnableWindow( ::hwndUpDown, .T. ), InvalidateRect( ::hwndUpDown, 0 ) )
+   METHOD Enable() INLINE ( ::Super:Enable(), EnableWindow( ::hwndUpDown, .T. ), InvalidateRect( ::hwndUpDown, 0 ) )
                           //  InvalidateRect( ::oParent:Handle, 1,  ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight ) )
    METHOD Disable() INLINE ( ::Super:Disable(), EnableWindow( ::hwndUpDown, .F. ) )
    METHOD Valid()

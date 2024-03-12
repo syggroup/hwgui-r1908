@@ -69,19 +69,19 @@ CLASS VAR winclass INIT "SYSLISTVIEW32"
    METHOD Init()
    METHOD AddColumn( cHeader, nWidth, nJusHead, nBit ) INLINE AAdd( ::aColumns, { cHeader, nWidth, nJusHead, nBit } )
    METHOD Refresh()
-   METHOD RefreshLine()                          INLINE Listview_update( ::handle, Listview_getfirstitem( ::handle ) )
-   METHOD SetItemCount( nItem )                    INLINE Listview_setitemcount( ::handle, nItem )
-   METHOD Row()                                  INLINE Listview_getfirstitem( ::handle )
+   METHOD RefreshLine() INLINE Listview_update( ::handle, Listview_getfirstitem( ::handle ) )
+   METHOD SetItemCount( nItem ) INLINE Listview_setitemcount( ::handle, nItem )
+   METHOD Row() INLINE Listview_getfirstitem( ::handle )
    METHOD AddRow( a, bUpdate )
    METHOD Notify( lParam )
 
-   METHOD DELETEROW()    INLINE IF( ::bFlag , ( SendMessage( ::HANDLE, LVM_DELETEITEM, ::iRowSelect , 0 ), ::bFlag := .F. ), .T. )
+   METHOD DELETEROW() INLINE IF( ::bFlag , ( SendMessage( ::HANDLE, LVM_DELETEITEM, ::iRowSelect , 0 ), ::bFlag := .F. ), .T. )
    METHOD DELETEALLROW() INLINE ::aItems := NIL, ::aColors := {}, SendMessage( ::Handle, LVM_DELETEALLITEMS, 0, 0 )
-   METHOD SELECTALL()    INLINE ListViewSelectAll( ::Handle )
-   METHOD SELECTLAST()   INLINE ListViewSelectLastItem( ::handle )
+   METHOD SELECTALL() INLINE ListViewSelectAll( ::Handle )
+   METHOD SELECTLAST() INLINE ListViewSelectLastItem( ::handle )
    METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem )
    METHOD UpdateData()
-   METHOD SETVIEW( style )  INLINE LISTVIEW_SETVIEW( ::handle, style )
+   METHOD SETVIEW( style ) INLINE LISTVIEW_SETVIEW( ::handle, style )
 ENDCLASS
 
 

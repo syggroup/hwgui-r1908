@@ -40,7 +40,7 @@ CLASS HObject
    DATA aObjects     INIT {}
    METHOD AddObject( oCtrl ) INLINE AAdd( ::aObjects, oCtrl )
    METHOD DelObject( oCtrl )
-   METHOD Release()  INLINE ::DelObject( Self )
+   METHOD Release() INLINE ::DelObject( Self )
 
 ENDCLASS
 
@@ -65,7 +65,7 @@ CLASS VAR WindowsManifest INIT !EMPTY(FindResource( , 1 , RT_MANIFEST ) ) SHARED
    DATA handle        INIT 0
    DATA oParent
    DATA title
-   ACCESS Caption  INLINE ::title
+   ACCESS Caption INLINE ::title
    ASSIGN Caption( x ) INLINE ::SetTextClass( x )
    DATA Type       INIT 0
    DATA nTop, nLeft, nWidth, nHeight
@@ -116,9 +116,9 @@ CLASS VAR WindowsManifest INIT !EMPTY(FindResource( , 1 , RT_MANIFEST ) ) SHARED
    METHOD DelControl( oCtrl )
    METHOD AddEvent( nEvent, oCtrl, bAction, lNotify, cMethName )
    METHOD FindControl( nId, nHandle )
-   METHOD Hide()              INLINE ( ::lHide := .T., HideWindow( ::handle ) )
-   //METHOD Show()              INLINE ( ::lHide := .F., ShowWindow( ::handle ) )
-   METHOD Show( nShow )       INLINE ( ::lHide := .F., IIF( nShow = Nil, ShowWindow( ::handle  ),;
+   METHOD Hide() INLINE ( ::lHide := .T., HideWindow( ::handle ) )
+   //METHOD Show() INLINE ( ::lHide := .F., ShowWindow( ::handle ) )
+   METHOD Show( nShow ) INLINE ( ::lHide := .F., IIF( nShow = Nil, ShowWindow( ::handle  ),;
                                        ShowWindow( ::handle, nShow  )  ) )
    METHOD Move( x1, y1, width, height, nRePaint )
    METHOD onEvent( msg, wParam, lParam )
@@ -134,9 +134,9 @@ CLASS VAR WindowsManifest INIT !EMPTY(FindResource( , 1 , RT_MANIFEST ) ) SHARED
    METHOD RedefineScrollbars()
    METHOD SetTextClass ( x ) HIDDEN
    METHOD GetParentForm( oCtrl )
-   METHOD ActiveControl()  INLINE ::FindControl( , GetFocus() )
+   METHOD ActiveControl() INLINE ::FindControl( , GetFocus() )
    METHOD Closable( lClosable ) SETGET
-   METHOD Release()        INLINE ::DelControl( Self )
+   METHOD Release() INLINE ::DelControl( Self )
    METHOD SetAll( cProperty, Value, aControls, cClass )
 
 ENDCLASS

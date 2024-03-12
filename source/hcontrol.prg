@@ -56,8 +56,8 @@ CLASS HControl INHERIT HCustomWindow
    DATA   DisableBrush
    DATA   xControlSource
    DATA   xName           HIDDEN
-   ACCESS Name            INLINE ::xName
-   ASSIGN Name( cName )   INLINE ::AddName( cName )
+   ACCESS Name INLINE ::xName
+   ASSIGN Name( cName ) INLINE ::AddName( cName )
 
    METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
                oFont, bInit, bSize, bPaint, cTooltip, tcolor, bColor )
@@ -65,19 +65,19 @@ CLASS HControl INHERIT HCustomWindow
    METHOD AddName( cName ) HIDDEN
  //  METHOD SetColor( tcolor, bColor, lRepaint )
    METHOD NewId()
-   METHOD Show( nShow )  INLINE ::Super:Show( nShow ), IIF( ::oParent:lGetSkipLostFocus,;
+   METHOD Show( nShow ) INLINE ::Super:Show( nShow ), IIF( ::oParent:lGetSkipLostFocus,;
                         PostMessage(  GetActiveWindow() , WM_NEXTDLGCTL, IIF( ::oParent:FindControl(, GetFocus() ) != NIL, 0, ::handle ), 1 ) , .T. )
-   METHOD Hide()        INLINE ( ::oParent:lGetSkipLostFocus := .F., ::Super:Hide() )
-   //METHOD Disable()     INLINE EnableWindow( ::handle, .F. )
-   METHOD Disable()     INLINE ( IIF( SELFFOCUS( ::Handle ), SendMessage( GetActiveWindow(), WM_NEXTDLGCTL, 0, 0 ) , ), EnableWindow( ::handle, .F. ) )
+   METHOD Hide() INLINE ( ::oParent:lGetSkipLostFocus := .F., ::Super:Hide() )
+   //METHOD Disable() INLINE EnableWindow( ::handle, .F. )
+   METHOD Disable() INLINE ( IIF( SELFFOCUS( ::Handle ), SendMessage( GetActiveWindow(), WM_NEXTDLGCTL, 0, 0 ) , ), EnableWindow( ::handle, .F. ) )
    METHOD Enable()      
-   METHOD IsEnabled()   INLINE IsWindowEnabled( ::Handle )
+   METHOD IsEnabled() INLINE IsWindowEnabled( ::Handle )
    METHOD Enabled( lEnabled ) SETGET
    METHOD SetFont( oFont )
    METHOD SetFocus( lValid )    
                          
-   METHOD GetText()     INLINE GetWindowText( ::handle )
-   METHOD SetText( c )  INLINE SetWindowText( ::Handle, c ), ::title := c, ::Refresh()
+   METHOD GetText() INLINE GetWindowText( ::handle )
+   METHOD SetText( c ) INLINE SetWindowText( ::Handle, c ), ::title := c, ::Refresh()
    METHOD Refresh()     VIRTUAL
    METHOD onAnchor( x, y, w, h )
    METHOD SetToolTip( ctooltip )

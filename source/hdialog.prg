@@ -85,16 +85,16 @@ CLASS VAR aModalDialogs  SHARED INIT {}
                xResourceID, lExitOnEsc, bcolor, bRefresh, lNoClosable )
    METHOD Activate( lNoModal, bOnActivate, nShow )
    METHOD onEvent( msg, wParam, lParam )
-   METHOD Add()      INLINE AAdd( IIf( ::lModal, ::aModalDialogs, ::aDialogs ), Self )
+   METHOD Add() INLINE AAdd( IIf( ::lModal, ::aModalDialogs, ::aDialogs ), Self )
    METHOD Del()
    METHOD FindDialog( hWndTitle, lAll )
    METHOD GetActive()
-   METHOD Center()   INLINE Hwg_CenterWindow( ::handle , ::Type )
-   METHOD Restore()  INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_RESTORE, 0 )
+   METHOD Center() INLINE Hwg_CenterWindow( ::handle , ::Type )
+   METHOD Restore() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_RESTORE, 0 )
    METHOD Maximize() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_MAXIMIZE, 0 )
    METHOD Minimize() INLINE SendMessage( ::handle,  WM_SYSCOMMAND, SC_MINIMIZE, 0 )
-   METHOD Close()    INLINE EndDialog( ::handle )
-   METHOD Release()  INLINE ::Close(), Self := Nil
+   METHOD Close() INLINE EndDialog( ::handle )
+   METHOD Release() INLINE ::Close(), Self := Nil
 
 ENDCLASS
 

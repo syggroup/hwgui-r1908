@@ -135,7 +135,7 @@ CLASS RichText
                        nTblHdFSize, cHeadAppear, cHeadHAlign, nTblHdColor , nTblHdFColor )
 
    METHOD BeginRow() INLINE ::TextCode( "trowd" ), ::nCurrRow += 1
-   METHOD EndRow()   INLINE ::TextCode( "row" )
+   METHOD EndRow() INLINE ::TextCode( "row" )
 
    METHOD WriteCell( cText, nFontNumber, nFontSize, cAppear, cHorzAlign, ;
                      nSpace, lSpExact, cCellBorder, nCellPct, nFontColor, lDefault )

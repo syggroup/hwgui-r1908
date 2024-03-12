@@ -32,7 +32,7 @@ CLASS VAR winclass   INIT "BUTTON"
  //  METHOD Disable()
  //  METHOD Enable()
    METHOD SetValue( lValue )
-   METHOD GetValue()          INLINE ( SendMessage( ::handle, BM_GETCHECK, 0, 0 ) == 1 )
+   METHOD GetValue() INLINE ( SendMessage( ::handle, BM_GETCHECK, 0, 0 ) == 1 )
    METHOD onGotFocus()
    METHOD onClick()
    METHOD KillFocus()
