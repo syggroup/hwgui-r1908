@@ -92,7 +92,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    RETURN Self
 
 METHOD Activate() CLASS HListBox
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateListbox( ::oParent:handle, ::id, ;
                                  ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
@@ -125,7 +125,7 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, aItems, oFont, bInit, bSize, bP
 METHOD Init() CLASS HListBox
    LOCAL i
 
-   IF ! ::lInit
+   IF !::lInit
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
       HWG_INITLISTPROC( ::handle )
@@ -165,7 +165,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HListBox
          IF hb_IsBlock(::bKeyDown)
          ::oparent:lSuspendMsgsHandling := .T.
          nEval := Eval( ::bKeyDown, Self, wParam )
-         IF (hb_IsLogical(nEval) .AND. ! nEval ) .OR. ( nEval != -1 .AND. nEval != Nil )
+         IF (hb_IsLogical(nEval) .AND. !nEval ) .OR. ( nEval != -1 .AND. nEval != Nil )
             ::oparent:lSuspendMsgsHandling := .F.
             RETURN 0
          ENDIF
@@ -267,7 +267,7 @@ METHOD When( oCtrl ) CLASS HListBox
 
    HB_SYMBOL_UNUSED(oCtrl)
 
-   IF ! CheckFocus( Self, .F. )
+   IF !CheckFocus( Self, .F. )
       RETURN .T.
    ENDIF
     nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .AND. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
@@ -279,8 +279,8 @@ METHOD When( oCtrl ) CLASS HListBox
       ::oparent:lSuspendMsgsHandling := .T.
       res := Eval( ::bGetFocus, ::Value, Self )
       ::oparent:lSuspendMsgsHandling := .F.
-      ::lnoValid := ! res
-      IF ! res
+      ::lnoValid := !res
+      IF !res
          WhenSetFocus( Self, nSkip )
       ELSE
          ::SetFocus()      
@@ -295,7 +295,7 @@ METHOD Valid( oCtrl ) CLASS HListBox
 
    HB_SYMBOL_UNUSED(oCtrl)
 
-   IF ! CheckFocus( Self, .T. ) .or. ::lNoValid
+   IF !CheckFocus( Self, .T. ) .or. ::lNoValid
       RETURN .T.
    ENDIF
    //nSkip := IIf( GetKeyState( VK_SHIFT ) < 0 , - 1, 1 )
@@ -311,7 +311,7 @@ METHOD Valid( oCtrl ) CLASS HListBox
          ::oparent:lSuspendMsgsHandling := .T.
          res := Eval( ::bLostFocus, ::value, Self )
          ::oparent:lSuspendMsgsHandling := .F.
-         IF ! res
+         IF !res
             ::SetFocus( .T. ) //( ::handle )
             IF oDlg != Nil
                oDlg:nLastKey := 0

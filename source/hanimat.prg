@@ -38,8 +38,8 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
 
    nStyle     := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_CHILD + WS_VISIBLE )
    nStyle     := nStyle + IIf( lAutoPlay == Nil.OR.lAutoPlay, ACS_AUTOPLAY, 0 )
-   nStyle     := nStyle + IIf( lCenter == Nil.OR. ! lCenter, 0, ACS_CENTER )
-   nStyle     := nStyle + IIf( lTransparent == Nil.OR. ! lTransparent, 0, ACS_TRANSPARENT )
+   nStyle     := nStyle + IIf( lCenter == Nil.OR. !lCenter, 0, ACS_CENTER )
+   nStyle     := nStyle + IIf( lTransparent == Nil.OR. !lTransparent, 0, ACS_TRANSPARENT )
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight )
    ::xResID    := xResID
    ::cFilename := cFilename
@@ -51,7 +51,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
    RETURN Self
 
 METHOD Activate() CLASS HAnimation
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := Animate_Create( ::oParent:handle, ::id, ::style, ;
                                   ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
@@ -59,7 +59,7 @@ METHOD Activate() CLASS HAnimation
    RETURN Nil
 
 METHOD Init() CLASS HAnimation
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
       IF ::xResID != Nil
          Animate_OpenEx( ::handle, GetResources(), ::xResID )

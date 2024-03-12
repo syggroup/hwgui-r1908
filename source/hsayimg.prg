@@ -59,7 +59,7 @@ METHOD Redefine( oWndParent, nId, bInit, bSize, ctooltip ) CLASS HSayImage
 
 METHOD Activate() CLASS HSayImage
 
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateStatic( ::oParent:handle, ::id, ;
                                 ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle )
       ::Init()
@@ -117,7 +117,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
       ::extStyle +=  WS_EX_TRANSPARENT
    ENDIF
 
-   IF Image != Nil .AND. ! Empty( Image )
+   IF Image != Nil .AND. !Empty( Image )
       IF lRes == Nil ; lRes := .F. ; ENDIF
       ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),     ;
                        HBitmap():AddResource( Image ), ;
@@ -253,7 +253,7 @@ METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip ) CLASS H
 
 METHOD Init() CLASS HSayIcon
 
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
       SendMessage( ::handle, STM_SETIMAGE, IMAGE_ICON, ::oImage:handle )
    ENDIF

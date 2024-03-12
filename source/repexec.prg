@@ -219,7 +219,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
          IF Len( stroka ) = 0
             EXIT
          ENDIF
-         DO WHILE ! Empty( varName := getNextVar( @stroka, @varValue ) )
+         DO WHILE !Empty( varName := getNextVar( @stroka, @varValue ) )
             PRIVATE &varName
             IF varValue != Nil
                &varName := &varValue
@@ -307,7 +307,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
                   NEXT
                   // ENDIF
                   aItem[ ITEM_STATE ] := 1
-                  IF ! ScriptExecute( aItem )
+                  IF !ScriptExecute( aItem )
                      #ifdef __DEBUG__
                         // Writelog( "Endpage" )
                         // Writelog( "Enddoc" )
@@ -330,7 +330,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
                      PrintItem( oPrinter, aPaintRep, aPaintRep[ FORM_ITEMS, i ], prnXCoef, prnYCoef, IIf( lAddMode, nYadd, 0 ), .T. )
                   ENDIF
                NEXT
-               IF ! ScriptExecute( aItem )
+               IF !ScriptExecute( aItem )
                   #ifdef __DEBUG__
                      // Writelog( "Endpage" )
                      // Writelog( "Enddoc" )
@@ -341,7 +341,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
                   #endif
                   RETURN .F.
                ENDIF
-               IF ! lLastCycle
+               IF !lLastCycle
                   nYadd += nLineHeight
                   // Writelog( Str(nLineStartY)+" "+Str(nYadd)+" "+Str(nEndList) )
                   IF nLineStartY + nYadd + nLineHeight >= nEndList
@@ -376,7 +376,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
                      PrintItem( oPrinter, aPaintRep, aPaintRep[ FORM_ITEMS, i ], prnXCoef, prnYCoef, IIf( lAddMode, nYadd, 0 ), .T. )
                   ENDIF
                NEXT
-               IF ! lLastCycle
+               IF !lLastCycle
                   #ifdef __DEBUG__
                      // Writelog( "Endpage" )
                      // Writelog( "Startpage" )
@@ -399,7 +399,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
             ENDIF
          ELSE
             IF aItem[ ITEM_TYPE ] == TYPE_TEXT
-               IF ! ScriptExecute( aItem )
+               IF !ScriptExecute( aItem )
                   #ifdef __DEBUG__
                      // Writelog( "Endpage" )
                      // Writelog( "Enddoc" )
@@ -473,7 +473,7 @@ FUNCTION PrintItem( oPrinter, aPaintRep, aItem, prnXCoef, prnYCoef, nYadd, lCalc
          ELSE
             stroka := aItem[ ITEM_CAPTION ]
          ENDIF
-         IF ! Empty( aItem[ ITEM_CAPTION ] )
+         IF !Empty( aItem[ ITEM_CAPTION ] )
             oPrinter:Say( stroka, x1, y1, x2, y2, ;
                           IIf( aItem[ ITEM_ALIGN ] == 0, DT_LEFT, IIf( aItem[ ITEM_ALIGN ] == 1, DT_RIGHT, DT_CENTER ) ), ;
                           aItem[ ITEM_STATE ] )
@@ -496,7 +496,7 @@ FUNCTION PrintItem( oPrinter, aPaintRep, aItem, prnXCoef, prnYCoef, nYadd, lCalc
 
 STATIC FUNCTION ScriptExecute( aItem )
    LOCAL nError, nLineEr
-   IF aItem[ ITEM_SCRIPT ] != Nil .AND. ! Empty( aItem[ ITEM_SCRIPT ] )
+   IF aItem[ ITEM_SCRIPT ] != Nil .AND. !Empty( aItem[ ITEM_SCRIPT ] )
       IF hb_IsChar(aItem[ITEM_SCRIPT])
          IF ( aItem[ ITEM_SCRIPT ] := RdScript( , aItem[ ITEM_SCRIPT ] ) ) == Nil
             nError := CompileErr( @nLineEr )

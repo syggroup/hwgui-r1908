@@ -186,9 +186,9 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
    ::nIndent := IIF( nIndent != NIL , nIndent, 1 )
    ::nwSize := IIF( nwSize != NIL .AND. nwSize > 11 , nwSize, 16 )
    ::nhSize := IIF( nhSize != NIL .AND. nhSize > 11 , nhSize, ::nwSize - 1 )
-   ::lnoThemes := ! ISTHEMEACTIVE() .OR. ! ::WindowsManifest
+   ::lnoThemes := !ISTHEMEACTIVE() .OR. !::WindowsManifest
    IF Hwg_BitAnd( ::Style, WS_DLGFRAME + WS_BORDER + CCS_NODIVIDER ) = 0
-      IF ! ::lVertical
+      IF !::lVertical
          ::Line := HLine():New( oWndParent,,, nLeft, nTop + nHeight + ;
                    IIF( ::lnoThemes .AND. Hwg_BitAnd( nStyle,  TBSTYLE_FLAT ) > 0, 2, 1 ) , nWidth )
       ELSE
@@ -239,7 +239,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
 
 METHOD Activate() CLASS hToolBar
 
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::lCreate := .T.
       ::handle := CREATETOOLBAR( ::oParent:handle, ::id, ;
                                  ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle )
@@ -249,7 +249,7 @@ METHOD Activate() CLASS hToolBar
 
 METHOD INIT() CLASS hToolBar
 
-   IF ! ::lInit
+   IF !::lInit
       IF ::Line != Nil
          ::Line:Anchor := ::Anchor
       ENDIF
@@ -267,11 +267,11 @@ METHOD CREATETOOL() CLASS hToolBar
    Local nMax := 0
    Local hImage, img, nlistimg, ndrop := 0
 
-   IF ! ::lResource
+   IF !::lResource
       IF Empty( ::handle )
          RETURN Nil
             ENDIF
-            IF ! ::lCreate
+            IF !::lCreate
                DESTROYWINDOW( ::Handle )
                ::Activate()
                //IF !EMPTY( ::oFont )
@@ -342,7 +342,7 @@ METHOD CREATETOOL() CLASS hToolBar
             img := Len( aButton )
          ENDIF
          ::aItem[ n ,1 ] := img + nlistimg //n
-         IF ! ::lResource
+         IF !::lResource
             TOOLBAR_LOADIMAGE( ::Handle, aButton[ img ])
          ENDIF
       ELSE
@@ -410,10 +410,10 @@ METHOD CREATETOOL() CLASS hToolBar
       ELSEIF Hwg_BitAnd( ::Style,  TBSTYLE_FLAT ) > 0
          nMax := 2
       ENDIF
-      ::ndrop := nMax + IIF( ! ::WindowsManifest , 0, nDrop )
+      ::ndrop := nMax + IIF( !::WindowsManifest , 0, nDrop )
       ::BtnHeight := MAX( HIWORD( SENDMESSAGE( ::handle, TB_GETBUTTONSIZE, 0, 0 ) ),;
-                     ::nHeight - ::nDrop - IIF( ! ::lnoThemes .AND. Hwg_BitAnd( ::Style,  TBSTYLE_FLAT ) > 0, 0, 2 ) )
-      IF ! ::lVertical
+                     ::nHeight - ::nDrop - IIF( !::lnoThemes .AND. Hwg_BitAnd( ::Style,  TBSTYLE_FLAT ) > 0, 0, 2 ) )
+      IF !::lVertical
          SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::BtnWidth , ::BtnHeight ) )
       ELSE
          SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::nWidth - ::nDrop - 1, ::BtnWidth )  )
@@ -495,7 +495,7 @@ METHOD AddButton( nBitIp, nId, bState, bStyle, cText, bClick, c, aMenu, cName, n
    ENDIF
 
    oButton := HToolButton():New(Self,cName,nBitIp,nId,bState,bStyle,cText,bClick, c ,aMenu)
-   IF ! ::lResource
+   IF !::lResource
       AAdd( ::aItem ,{ nBitIp, nId, bState, bStyle, 0, cText, bClick, c, aMenu, hMenu, oButton } )
    ELSE
       ::aItem[ nIndex ] := { nBitIp, nId, bState, bStyle, 0, cText, bClick, c, aMenu, hMenu, oButton }
@@ -505,7 +505,7 @@ METHOD AddButton( nBitIp, nId, bState, bStyle, cText, bClick, c, aMenu, cName, n
 METHOD RESIZE( xIncrSize, lWidth, lHeight  ) CLASS hToolBar
    LOCAL nSize
 
-   IF ::Anchor = 0 .OR. ( ! lWidth .AND. ! lHeight )
+   IF ::Anchor = 0 .OR. ( !lWidth .AND. !lHeight )
       RETURN Nil
    ENDIF
    nSize := SENDMESSAGE( ::handle, TB_GETBUTTONSIZE, 0, 0 )
@@ -519,7 +519,7 @@ METHOD RESIZE( xIncrSize, lWidth, lHeight  ) CLASS hToolBar
    ENDIF
    SENDMESSAGE( ::Handle, TB_SETBUTTONWIDTH, MAKELPARAM( ::BtnWidth - 1, ::BtnWidth + 1 ) )
    IF ::BtnWidth != Nil
-      IF ! ::lVertical
+      IF !::lVertical
          SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::BtnWidth, ::BtnHeight ))
       ELSE
          SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::nWidth - ::nDrop - 1, ::BtnWidth )  )

@@ -60,7 +60,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, ;
    RETURN Self
 
 METHOD Activate() CLASS HSplitter
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateStatic( ::oParent:handle, ::id, ;
                                 ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle )
       ::Init()
@@ -69,7 +69,7 @@ METHOD Activate() CLASS HSplitter
 
 METHOD Init() CLASS HSplitter
 
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
@@ -133,7 +133,7 @@ METHOD Paint() CLASS HSplitter
    SetBkMode( hDC, ::backStyle )
    IF hb_IsBlock(::bPaint)
       Eval( ::bPaint, Self )
-   ELSEIF ! ::lScrolling
+   ELSEIF !::lScrolling
       IF ::lCaptured
          oBrushFill := HBrush():Add( RGB( 156, 156, 156 ) )
          SelectObject( hDC, oBrushFill:handle )
@@ -165,7 +165,7 @@ METHOD Drag( lParam ) CLASS HSplitter
       ::nTop += yPos
       xPos := 0
    ENDIF
-   ::Move( ::nLeft + xPos, ::nTop + yPos, ::nWidth, ::nHeight ) //,  ! ::lScrolling  )
+   ::Move( ::nLeft + xPos, ::nTop + yPos, ::nWidth, ::nHeight ) //,  !::lScrolling  )
    InvalidateRect( ::oParent:handle, 1, ::nLeft, ::nTop, ::nleft + ::nWidth , ::nTop + ::nHeight )
    ::lMoved := .T.
 
@@ -187,7 +187,7 @@ METHOD DragAll( lScroll ) CLASS HSplitter
          //oCtrl:nTop += nDiff
          //oCtrl:nHeight -= nDiff
       ENDIF
-      oCtrl:Move( oCtrl:nLeft + xDiff, oCtrl:nTop + yDiff, oCtrl:nWidth - xDiff ,oCtrl:nHeight - yDiff, ! lScroll )
+      oCtrl:Move( oCtrl:nLeft + xDiff, oCtrl:nTop + yDiff, oCtrl:nWidth - xDiff ,oCtrl:nHeight - yDiff, !lScroll )
       //IF oCtrl:winclass == "STATIC"
           InvalidateRect( oCtrl:Handle, 1 )
       //ENDIF
@@ -201,13 +201,13 @@ METHOD DragAll( lScroll ) CLASS HSplitter
          yDiff := ::nTop - ( oCtrl:nTop + oCtrl:nHeight )
         // oCtrl:nHeight += nDiff
       ENDIF
-      oCtrl:Move( oCtrl:nLeft, oCtrl:nTop, oCtrl:nWidth + xDiff, oCtrl:nHeight + yDiff , ! lScroll )
+      oCtrl:Move( oCtrl:nLeft, oCtrl:nTop, oCtrl:nWidth + xDiff, oCtrl:nHeight + yDiff , !lScroll )
       //IF oCtrl:winclass == "STATIC"
          InvalidateRect( oCtrl:Handle, 1 )
       //ENDIF
    NEXT
    //::lMoved := .F.
-   IF ! lScroll
+   IF !lScroll
       InvalidateRect( ::oParent:handle, 1, ::nLeft ,::nTop  , ::nLeft + ::nWidth , ::nTop + ::nHeight  )
    ELSEIF ::lVertical
       InvalidateRect( ::oParent:Handle, 0, ::nLeft - ::nWidth - xDiff - 1 , ::nTop , ::nLeft + ::nWidth + xDiff + 1, ::nTop + ::nHeight )

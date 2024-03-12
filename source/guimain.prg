@@ -25,7 +25,7 @@ FUNCTION InitObjects( oWnd )
    
    IF !EMPTY( LoadArray )
       FOR i := 1 TO Len( LoadArray )
-         IF ! EMPTY( oWnd:Handle )
+         IF !EMPTY( oWnd:Handle )
             IF __ObjHasMsg( LoadArray[ i ],"INIT")
                LoadArray[ i ]:Init( oWnd )
                LoadArray[ i ]:lInit := .T.
@@ -51,13 +51,13 @@ FUNCTION InitControls( oWnd, lNoActivate )
    IF pArray != Nil
       FOR i := 1 TO Len( pArray )
          // writelog( "InitControl1"+str(pArray[i]:handle)+"/"+pArray[i]:classname+" "+str(pArray[i]:nWidth)+"/"+str(pArray[i]:nHeight) )
-         IF Empty( pArray[ i ]:handle ) .AND. ! lNoActivate
+         IF Empty( pArray[ i ]:handle ) .AND. !lNoActivate
 //         IF empty(pArray[i]:handle ) .AND. !lNoActivate
             lInit := pArray[ i ]:lInit
             pArray[ i ]:lInit := .T.
             pArray[ i ]:Activate()
             pArray[ i ]:lInit := lInit
-         ELSEIF ! lNoActivate
+         ELSEIF !lNoActivate
             pArray[ i ]:lInit := .T.
          ENDIF
 //           IF empty(pArray[i]:handle)// <= 0
@@ -66,12 +66,12 @@ FUNCTION InitControls( oWnd, lNoActivate )
 
             // writelog( "InitControl2"+str(pArray[i]:handle)+"/"+pArray[i]:classname )
          ENDIF
-         IF ! Empty( pArray[ i ]:aControls )
+         IF !Empty( pArray[ i ]:aControls )
             InitControls( pArray[ i ] )
          ENDIF
          pArray[ i ]:Init()
           // nando required to classes that inherit the class of patterns hwgui
-         IF ! pArray[i]:lInit
+         IF !pArray[i]:lInit
             pArray[i]:Super:Init()
          ENDIF
       NEXT
@@ -153,7 +153,7 @@ FUNCTION MsgGet( cTitle, cText, nStyle, x, y, nDlgStyle, cResIni )
    LOCAL oModDlg, oFont := HFont():Add( "MS Sans Serif", 0, - 13 )
    LOCAL cRes := IIf( cResIni != Nil, Trim( cResIni ), "" )
    /*
-   IF ! Empty( cRes )
+   IF !Empty( cRes )
       Keyb_Event( VK_END )
    ENDIF
    */
@@ -173,7 +173,7 @@ FUNCTION MsgGet( cTitle, cText, nStyle, x, y, nDlgStyle, cResIni )
    @ 180, 95 BUTTON "Cancel" ID IDCANCEL SIZE 100, 32
    oModDlg:aControls[ 4 ]:Anchor := 9
    
-   ACTIVATE DIALOG oModDlg ON ACTIVATE { || IIF( ! EMPTY( cRes ), KEYB_EVENT( VK_END ), .T. ) }
+   ACTIVATE DIALOG oModDlg ON ACTIVATE { || IIF( !EMPTY( cRes ), KEYB_EVENT( VK_END ), .T. ) }
 
    oFont:Release()
    IF oModDlg:lResult
@@ -426,7 +426,7 @@ FUNCTION SelectMultipleFiles( cDescr, cTip, cIniDir, cTitle )
          /* skip path which is already in cPath variable */
          cFile := SubStr( cFile, nAt + 1 )
          /* decode files */
-         DO WHILE ! cFile == ""
+         DO WHILE !(cFile == "")
             nAt := At( Chr( 0 ), cFile )
             IF nAt != 0
                AAdd( aFiles, cPath + hb_osPathSeparator() + ;

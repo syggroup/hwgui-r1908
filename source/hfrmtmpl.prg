@@ -130,7 +130,7 @@ METHOD F( nId ) CLASS HCtrlTmpl
    FOR i := 1 TO nLen
       IF aControls[ i ]:nId == nId
          RETURN aControls[ i ]
-      ELSEIF ! Empty( aControls[ i ]:aControls ) .AND. ( o := aControls[ i ]:F( nId ) ) != Nil
+      ELSEIF !Empty( aControls[ i ]:aControls ) .AND. ( o := aControls[ i ]:F( nId ) ) != Nil
          RETURN o
       ENDIF
    NEXT
@@ -203,7 +203,7 @@ METHOD Read( fname, cId ) CLASS HFormTmpl
          FOR j := 1 TO Len( aItems[ i ]:aItems )
             o := aItems[ i ]:aItems[ j ]
             IF o:title == "property"
-               IF ! Empty( o:aItems )
+               IF !Empty( o:aItems )
                   AAdd( aProp, { Lower( o:GetAttribute( "name" ) ), o:aItems[ 1 ] } )
                   IF Atail(aProp)[1] == "ldebug" .AND. hfrm_GetProperty( Atail(aProp)[2] )
                      ::lDebug := .T.
@@ -285,7 +285,7 @@ METHOD Show( nMode, p1, p2, p3 ) CLASS HFormTmpl
          NEXT
          // Styles below
       ELSEIF ::aProp[ i, 1 ] == "systemmenu"
-         IF ! xProperty
+         IF !xProperty
             nstyle := hwg_bitandinverse( nstyle, WS_SYSMENU )
          ENDIF
       ELSEIF ::aProp[ i, 1 ] == "minimizebox"
@@ -297,15 +297,15 @@ METHOD Show( nMode, p1, p2, p3 ) CLASS HFormTmpl
             nstyle += WS_MAXIMIZEBOX
          ENDIF
       ELSEIF ::aProp[ i, 1 ] == "absalignent"
-         IF ! xProperty
+         IF !xProperty
             nstyle := hwg_bitandinverse( nstyle, DS_ABSALIGN )
          ENDIF
       ELSEIF ::aProp[ i, 1 ] == "sizeBox"
-         IF ! xProperty
+         IF !xProperty
             nstyle := hwg_bitandinverse( nstyle, WS_SIZEBOX )
          ENDIF
       ELSEIF ::aProp[ i, 1 ] == "visible"
-         IF ! xProperty
+         IF !xProperty
             nstyle := hwg_bitandinverse( nstyle, WS_VISIBLE )
          ENDIF
       ELSEIF ::aProp[ i, 1 ] == "3dLook"
@@ -344,7 +344,7 @@ METHOD Show( nMode, p1, p2, p3 ) CLASS HFormTmpl
    NEXT
 
 
-   oBmp := IF( ! Empty( cBitmap ), HBitmap():addfile( cBitmap, NIL ), NIL )
+   oBmp := IF( !Empty( cBitmap ), HBitmap():addfile( cBitmap, NIL ), NIL )
 
    IF nMode == Nil .OR. nMode == 2
       INIT DIALOG ::oDlg TITLE cTitle         ;
@@ -461,7 +461,7 @@ STATIC FUNCTION ReadTree( pp, oForm, aParent, oDesc )
       ELSE
          AAdd( aTree, { Nil, oNode:GetAttribute( "name" ), ;
                         Val( oNode:GetAttribute( "id" ) ), .T. } )
-         IF ! Empty( oNode:aItems )
+         IF !Empty( oNode:aItems )
             IF ( subarr := ReadTree( pp, oForm, ATail( aTree ), oNode ) ) != Nil
                aTree[ Len( aTree ), 1 ] := subarr
             ENDIF
@@ -484,7 +484,7 @@ FUNCTION ParseMethod( cMethod )
          ELSE
             cLine := AllTrim( SubStr( cMethod, nPos1 + 1, nPos2 - nPos1 - 1 ) )
          ENDIF
-         IF ! Empty( cLine )
+         IF !Empty( cLine )
             AAdd( arr, cLine )
          ENDIF
          IF nPos2 == 0 .OR. Len( arr ) > 2
@@ -845,16 +845,16 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
          //ELSEIF cPName == "brwtype"
          //  brwtype := xProperty
       ELSEIF cPName == "aarray"
-         caArray := IIf( xProperty != Nil .AND. ! Empty( xProperty ), &( xProperty ) , {} )
+         caArray := IIf( xProperty != Nil .AND. !Empty( xProperty ), &( xProperty ) , {} )
       ELSEIF cPName == "childorder"
-         cKey := IIf( xProperty != Nil .AND. ! Empty( xProperty ), Trim( xProperty ), "" )
+         cKey := IIf( xProperty != Nil .AND. !Empty( xProperty ), Trim( xProperty ), "" )
       ELSEIF cPName == "relationalexpr"
-         cRelexpr := IIf( xProperty != Nil .AND. ! Empty( xProperty ), Trim( xProperty ), "" )
+         cRelexpr := IIf( xProperty != Nil .AND. !Empty( xProperty ), Trim( xProperty ), "" )
       ELSEIF cPName == "linkmaster"
-         cLink := IIf( xProperty != Nil .AND. ! Empty( xProperty ), Trim( xProperty ), "" )
+         cLink := IIf( xProperty != Nil .AND. !Empty( xProperty ), Trim( xProperty ), "" )
 /*
       ELSEIF cPName == "filedbf"
-         IF ! Empty( xProperty )
+         IF !Empty( xProperty )
             cAliasdbf := Left( CutPath( xProperty ), At( ".", CutPath( xProperty ) ) - 1 )
             IF Select( Left( CutPath( xProperty ), At( ".", CutPath( xProperty ) ) - 1 ) ) = 0
                USE ( xProperty ) NEW SHARED Alias ( Left( CutPath( xProperty ), At( ".", CutPath( xProperty ) ) - 1 ) )  //ftmp
@@ -888,9 +888,9 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
       ELSEIF cPName == "heading"
          cHeader := IIf( xProperty != Nil , xProperty , "" )
       ELSEIF cPName == "fieldname"
-         fBlock  := Lower( IIf( xProperty != Nil .AND. ! Empty( xProperty ), xProperty , FieldName( i ) ) )
+         fBlock  := Lower( IIf( xProperty != Nil .AND. !Empty( xProperty ), xProperty , FieldName( i ) ) )
       ELSEIF cPName == "fieldexpr"
-         fBlock  := Lower( IIf( xProperty != Nil .AND. ! Empty( xProperty ), xProperty , fBlock ) )
+         fBlock  := Lower( IIf( xProperty != Nil .AND. !Empty( xProperty ), xProperty , fBlock ) )
          // IF !(cAlias == cTmpAlias) .AND. cTmpAlias $ cCampo
          //    cCampo := STRTRAN(cCampo,cTmpAlias,cAlias)
          //   ENDIF
@@ -922,7 +922,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
          the same name as the property */
          __mvPut( cPName, xProperty )
 
-         IF cPName == "varname" .AND. ! Empty( xProperty )
+         IF cPName == "varname" .AND. !Empty( xProperty )
             cVarName := xProperty
             bSetGet := &( "{|v|Iif(v==Nil," + xProperty + "," + xProperty + ":=v)}" )
             IF __mvGet( xProperty ) == Nil
@@ -959,7 +959,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
           //-  nHeight := nHeight * 4
          ENDIF
       ELSEIF oCtrlTmpl:cClass == "line"
-         nLength := IIf( lVertical == Nil.OR. ! lVertical, nWidth, nHeight )
+         nLength := IIf( lVertical == Nil.OR. !lVertical, nWidth, nHeight )
       ELSEIF oCtrlTmpl:cClass == "browse"
          brwType := IIf( brwType == Nil .OR. brwType == "dbf", BRW_DATABASE, BRW_ARRAY )
       ELSEIF oCtrlTmpl:cClass == "trackbar"
@@ -988,7 +988,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
       // criacao
       IF oCtrlTmpl:cClass == "column"
          cValType := Type( "&fblock" )
-         IF &( cOName ):Type = BRW_DATABASE .AND. ! Empty( Alias() )
+         IF &( cOName ):Type = BRW_DATABASE .AND. !Empty( Alias() )
             cAliasdbf := Alias()
             temp = StrTran( Upper( fBlock ), Alias() + "->", "" )
        //- verificar se tem mais de um campo
@@ -1009,7 +1009,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
             fBlock := IIf( fBlock = Nil, ".T.", fBlock )
             fBlock := IIf( cValType = "B", &fBlock, { || &fBlock } )
          ENDIF
-         IF ! Empty( cPicture ) .AND. At( ".9", cPicture ) > 0 .AND. nDec = 0
+         IF !Empty( cPicture ) .AND. At( ".9", cPicture ) > 0 .AND. nDec = 0
             m->nDec := Len( SubStr( cPicture, At( ".9", cPicture ) + 1 ) )
          ENDIF
          stroka   := cOName + ":" + stroka
@@ -1036,13 +1036,13 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
          IF brwType = BRW_DATABASE          //oCtrl:type = 1
             // CRIAR AS RELA€OES E O LINK
             oCtrl:Alias := cAliasdbf
-            IF ! Empty( cKey )
+            IF !Empty( cKey )
                &( oCtrl:Alias ) ->( DBSetOrder( cKey ) )
                cKey := ( oCtrl:Alias ) ->( ordkey( cKey ) )
                cKey := IIf( At( '+', cKey ) > 0, Left( cKey, At( '+', cKey ) - 1 ), cKey )
             ENDIF
-            cRelexpr := IIf( ! Empty( cRelexpr ), cRelexpr, cKey )
-            IF ! Empty( cRelexpr + cLink )
+            cRelexpr := IIf( !Empty( cRelexpr ), cRelexpr, cKey )
+            IF !Empty( cRelexpr + cLink )
                &cLink->( DBSetRelation( oCtrl:Alias, { || &cRelexpr }, cRelexpr ) )
                &( oCtrl:Alias ) ->( DBSetFilter( &( "{|| " + cRelexpr + " = " + cLink + "->(" + cRelexpr + ")}" ), "&crelexpr = &clink->(&crelexpr) " ) )
             ENDIF
@@ -1076,7 +1076,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
          __mvPut( name, oCtrl )
          name := Nil
       ENDIF
-      IF ! Empty( oCtrlTmpl:aControls )
+      IF !Empty( oCtrlTmpl:aControls )
          IF oCtrlTmpl:cClass == "page"
             __mvPrivate( "tmp_nSheet" )
             __mvPut( "tmp_nSheet", 0 )
@@ -1278,7 +1278,7 @@ METHOD Read( fname, cId ) CLASS HRepTmpl
          FOR j := 1 TO Len( aItems[ i ]:aItems )
             o := aItems[ i ]:aItems[ j ]
             IF o:title == "property"
-               IF ! Empty( o:aItems )
+               IF !Empty( o:aItems )
                   AAdd( aProp, { Lower( o:GetAttribute( "name" ) ), hfrm_GetProperty( o:aItems[ 1 ] ) } )
                   IF Atail(aProp)[1] == "ldebug" .AND. hfrm_GetProperty( Atail(aProp)[2] )
                      ::lDebug := .T.
@@ -1414,13 +1414,13 @@ METHOD PrintItem( oItem ) CLASS HRepTmpl
          PRIVATE lSkipItem := .T.
       ENDIF
    ENDIF
-   IF ! __mvExist( "LSKIPITEM" ) .OR. ! lSkipItem
+   IF !__mvExist( "LSKIPITEM" ) .OR. !lSkipItem
       IF ( aMethod := aGetSecond( oItem:aMethods, "onbegin" ) ) != Nil
          DoScript( aMethod )
       ENDIF
       IF ( aMethod := aGetSecond( oItem:aMethods, "condition" ) ) != Nil
          lRes := DoScript( aMethod )
-         IF ! lRes .AND. oItem:cClass == "area"
+         IF !lRes .AND. oItem:cClass == "area"
             ::nAOffSet += Val( aGetSecond( oItem:aProp, "geometry" )[ 4 ] ) * ::nKoefY
          ENDIF
       ENDIF
@@ -1437,16 +1437,16 @@ METHOD PrintItem( oItem ) CLASS HRepTmpl
          oItem:y2 := y2
          // writelog( "Area: "+cText+" "+Iif(::lNextPage,"T","F") )
          IF ( xProperty := aGetSecond( oItem:aProp, "varoffset" ) ) == Nil ;
-              .OR. ! xProperty
+              .OR. !xProperty
             ::nTOffset := ::nAOffSet := 0
          ENDIF
          IF cText == "Table"
             PRIVATE lLastCycle := .F.
             ::lFinish := .F.
-            DO WHILE ! lLastCycle
+            DO WHILE !lLastCycle
                ::ny := 0
                FOR i := 1 TO Len( oItem:aControls )
-                  IF ! ::lNextPage .OR. oItem:aControls[ i ]:lMark
+                  IF !::lNextPage .OR. oItem:aControls[ i ]:lMark
                      oItem:aControls[ i ]:lMark := ::lNextPage := .F.
                      IF __mvExist( "LSKIPITEM" )
                         lSkipItem := .F.
@@ -1584,7 +1584,7 @@ METHOD ReleaseObj( aControls ) CLASS HRepTmpl
    LOCAL i
 
    FOR i := 1 TO Len( aControls )
-      IF ! Empty( aControls[ i ]:aControls )
+      IF !Empty( aControls[ i ]:aControls )
          ::ReleaseObj( aControls[ i ]:aControls )
       ELSE
          IF aControls[ i ]:obj != Nil

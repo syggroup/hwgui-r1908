@@ -110,7 +110,7 @@ METHOD Redefine( oWndParent, nId, nStyleEx, ;
 
 METHOD Activate() CLASS HNiceButton
 
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateNiceBtn( ::oParent:handle, ::id, ;
                                  ::Style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::ExStyle, ::Text )
       ::Init()
@@ -119,7 +119,7 @@ METHOD Activate() CLASS HNiceButton
 
 METHOD INIT() CLASS HNiceButton
 
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
       ::Create()
    ENDIF
@@ -194,7 +194,7 @@ METHOD MouseMove( wParam, lParam ) CLASS HNICEButton
    IF ::lFlat .AND. ::state != OBTN_INIT
       otmp := SetNiceBtnSelected()
 
-      IF otmp != Nil .AND. otmp:id != ::id .AND. ! otmp:lPress
+      IF otmp != Nil .AND. otmp:id != ::id .AND. !otmp:lPress
          otmp:state := OBTN_NORMAL
          InvalidateRect( otmp:handle, 0 )
          PostMessage( otmp:handle, WM_PAINT, 0, 0 )
@@ -216,12 +216,12 @@ METHOD MouseMove( wParam, lParam ) CLASS HNICEButton
 METHOD MUp() CLASS HNICEButton
 
    IF ::state == OBTN_PRESSED
-      IF ! ::lPress
+      IF !::lPress
          ::state := IIf( ::lFlat, OBTN_MOUSOVER, OBTN_NORMAL )
          InvalidateRect( ::handle, 0 )
          PostMessage( ::handle, WM_PAINT, 0, 0 )
       ENDIF
-      IF ! ::lFlat
+      IF !::lFlat
          SetNiceBtnSelected( Nil )
       ENDIF
       IF hb_IsBlock(::bClick)

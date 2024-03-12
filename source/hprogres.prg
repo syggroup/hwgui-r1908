@@ -98,7 +98,7 @@ METHOD NewBox( cTitle, nLeft, nTop, nWidth, nHeight, maxPos, nRange, bExit, lPer
 
 METHOD Activate() CLASS HProgressBar
 
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateProgressBar( ::oParent:handle, ::maxPos, ::style, ;
                                      ::nLeft, ::nTop, ::nWidth, IIF( ::nHeight = 0, Nil, ::nHeight ) )
       ::Init()
@@ -107,7 +107,7 @@ METHOD Activate() CLASS HProgressBar
 
 METHOD Init() CLASS HProgressBar
 
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
        IF ::nAnimation != Nil .AND. ::nAnimation > 0
           SendMessage( ::handle, PBM_SETMARQUEE, 1, ::nAnimation )
@@ -123,7 +123,7 @@ METHOD STEP( cTitle )
       ::nCount := 0
       UpdateProgressBar( ::handle )
       ::SET( cTitle )
-      IF ! EMPTY( ::lPercent )
+      IF !EMPTY( ::lPercent )
          ::nPercent += ::maxPos  //::nLimit
          ::setLabel( LTRIM( STR( ::nPercent, 3 ) ) + " %" )
       ENDIF

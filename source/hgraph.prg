@@ -65,7 +65,7 @@ METHOD Redefine( oWndParent, nId, aValues, oFont, ;
    RETURN Self
 
 METHOD Activate() CLASS HGraph
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateStatic( ::oParent:handle, ::id, ;
                                 ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
@@ -73,7 +73,7 @@ METHOD Activate() CLASS HGraph
    RETURN Nil
 
 METHOD Init() CLASS HGraph
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
       ::CalcMinMax()
    ENDIF

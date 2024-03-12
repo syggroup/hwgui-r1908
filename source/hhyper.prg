@@ -168,7 +168,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
 
 METHOD INIT() CLASS HStaticLink
 
-   IF ! ::lInit
+   IF !::lInit
 
       /*
       IF ::GetParentForm():Type <= WND_MDICHILD .OR. ::TYPE = NIL
@@ -316,22 +316,22 @@ METHOD OnMouseMove( nFlags, lParam ) CLASS HStaticLink
    IF ::state != LBL_INIT
       xPos := LOWORD( lParam )
       yPos := HIWORD( lParam )
-      IF (  ! PtInRect( { 0, 0, ::nWidthOver , ::nHeight }, { xPos, yPos } ) ) .AND. ::state != LBL_MOUSEOVER
+      IF (  !PtInRect( { 0, 0, ::nWidthOver , ::nHeight }, { xPos, yPos } ) ) .AND. ::state != LBL_MOUSEOVER
           res := .T.
       ELSE
         hwg_SetCursor( ::m_hHyperCursor )
-        IF ( !  PtInRect( { 4, 4, ::nWidthover - 6, ::nHeight - 6 }, { xPos, yPos } ) )
+        IF ( !PtInRect( { 4, 4, ::nWidthover - 6, ::nHeight - 6 }, { xPos, yPos } ) )
            //ReleaseCapture()
            res := .T.
         ENDIF
       ENDIF
-      IF ( res .AND. ! ::m_bVisited ) .or. ( res .AND. ::m_bVisited )
+      IF ( res .AND. !::m_bVisited ) .or. ( res .AND. ::m_bVisited )
          ::state := LBL_NORMAL
          InvalidateRect( ::handle, 0 )
          RedrawWindow( ::oParent:Handle, RDW_ERASE + RDW_INVALIDATE + RDW_INTERNALPAINT , ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ENDIF
-      IF ( ::state == LBL_NORMAL .AND. ! res ) .or. ;
-         ( ::state == LBL_NORMAL .AND. ! res .and. ::m_bVisited )
+      IF ( ::state == LBL_NORMAL .AND. !res ) .or. ;
+         ( ::state == LBL_NORMAL .AND. !res .and. ::m_bVisited )
          ::state := LBL_MOUSEOVER
          InvalidateRect( ::handle, 0 )
           RedrawWindow( ::oParent:Handle, RDW_ERASE + RDW_INVALIDATE + RDW_INTERNALPAINT , ::nLeft, ::nTop, ::nWidth, ::nHeight )
@@ -353,7 +353,7 @@ METHOD PAint( lpDis ) CLASS HStaticLink
 //   LOCAL POLDFONT
 //   LOCAL DWSTYLE
    LOCAL bHasTitle
-   LOCAL aBmpSize    := IIF( ! EMPTY( ::hbitmap ), GetBitmapSize( ::hbitmap ),{0,0} )
+   LOCAL aBmpSize    := IIF( !EMPTY( ::hbitmap ), GetBitmapSize( ::hbitmap ),{0,0} )
    LOCAL itemRect    := copyrect( { drawInfo[ 4 ], drawInfo[ 5 ], drawInfo[ 6 ], drawInfo[ 7 ] } )
    LOCAL captionRect := { drawInfo[ 4 ]  , drawInfo[ 5 ], drawInfo[ 6 ] , drawInfo[ 7 ]  }
    LOCAL bmpRect
@@ -364,7 +364,7 @@ METHOD PAint( lpDis ) CLASS HStaticLink
    rcClient   := CopyRect( { drawInfo[ 4 ] , drawInfo[ 5 ], drawInfo[ 6 ], drawInfo[ 7 ] } )
    
    IF hb_IsNumeric(::hbitmap)
-      bHasTitle := hb_IsChar(strtext) .and. ! Empty( strtext )
+      bHasTitle := hb_IsChar(strtext) .and. !Empty( strtext )
       itemRect[ 4 ] := aBmpSize[ 2 ] + 1
       bmpRect := PrepareImageRect( ::handle, dc, bHasTitle, @itemRect, @captionRect, , , ::hbitmap, ::iStyle )
       itemRect[ 4 ] := drawInfo[ 7 ]
@@ -400,7 +400,7 @@ METHOD PAint( lpDis ) CLASS HStaticLink
    ENDIF
 
    //::dc:DrawText( strtext, rcClient, dwFlags )
-   IF ::state = LBL_MOUSEOVER .AND. ! ::lAllUnderline
+   IF ::state = LBL_MOUSEOVER .AND. !::lAllUnderline
       SelectObject( DC, ::oFontUnder:handle )
       DrawText( dc, strText, rcClient, dwFlags )
       SelectObject( DC, ::oFont:handle )
@@ -423,7 +423,7 @@ METHOD Resize( x, y ) CLASS HStaticLink
    ENDIF
 
    x := iif( x == Nil, 0, x - ::nWidth + 1 )
-   aBmpSize := IIF( ! EMPTY( ::hbitmap ), GetBitmapSize( ::hbitmap ), { 0,0 } )
+   aBmpSize := IIF( !EMPTY( ::hbitmap ), GetBitmapSize( ::hbitmap ), { 0,0 } )
    aBmpSize[ 1 ] += IIF( aBmpSize[ 1 ] > 0, 6, 0 )
    ::Move( , , ::nWidth + x , , 0 )
    aTxtSize := TxtRect( ::Title, Self )

@@ -268,7 +268,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
    // tracelog(oProw, oPcol, oTexto, oPicture)
    IF hb_IsNumeric(oTexto)
 
-      IF ! Empty( oPicture ) .or. oPicture != Nil
+      IF !Empty( oPicture ) .or. oPicture != Nil
          oTexto := Transform( oTexto, oPicture )
       ELSE
          oTexto := Str( oTexto )
@@ -277,7 +277,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
    ELSEIF hb_IsDate(oTexto)
       oTexto := DToC( oTexto )
    ELSE
-      IF ! Empty( oPicture ) .or. oPicture != Nil
+      IF !Empty( oPicture ) .or. oPicture != Nil
          oTexto := Transform( oTexto, oPicture )
       ENDIF
    ENDIF
@@ -327,7 +327,7 @@ METHOD PrinterFile( fname ) CLASS PrintDos
    LOCAL strbuf := Space( PF_BUFFERS )
    LOCAL han, nRead
 
-   IF ! File( fname )
+   IF !File( fname )
       MsgStop( "Error open file " + fname, "Error" )
       RETURN .F.
    ENDIF
@@ -459,7 +459,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
 
    oEdit := SUBS( oText[ nPage ], 2 )  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
 
-   IF ! Empty( ::colorpreview )
+   IF !Empty( ::colorpreview )
       oColor1 := ::colorpreview[ 1 ]
       oColor2 := ::colorpreview[ 2 ]
    ELSE

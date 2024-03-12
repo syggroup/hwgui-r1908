@@ -133,11 +133,11 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight,   ;
    RETURN Self
 
 METHOD Activate() CLASS HOwnButton
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateOwnBtn( ::oParent:handle, ::id, ;
                                 ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
-      IF ! ::lEnabled
+      IF !::lEnabled
          EnableWindow( ::handle, .F. )
          ::Disable()
       ENDIF
@@ -187,7 +187,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HOwnButton
          Eval( ::bLostfocus, Self, msg, wParam, lParam )
       ENDIF
       */
-      IF ! ::lCheck
+      IF !::lCheck
          ::release()
       ENDIF
       ::onLostFocus()
@@ -207,7 +207,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HOwnButton
 
 METHOD Init() CLASS HOwnButton
 
-   IF ! ::lInit
+   IF !::lInit
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
       ::Super:Init()
@@ -294,7 +294,7 @@ METHOD Paint() CLASS HOwnButton
       ENDIF
    ENDIF
    IF ::Themed
-      IF ! ::lEnabled
+      IF !::lEnabled
          state :=  PBS_DISABLED
       ELSE
          state := IIF( ::state == OBTN_PRESSED, PBS_PRESSED, PBS_NORMAL )
@@ -317,7 +317,7 @@ METHOD Paint() CLASS HOwnButton
          ENDIF
       ELSE
          IF ::state == OBTN_NORMAL
-            IF ! SelfFocus( ::handle, GetFocus() )
+            IF !SelfFocus( ::handle, GetFocus() )
                // NORM
                DrawButton( hDC, 0, 0, aCoors[ 3 ], aCoors[ 4 ], 0 )
             ELSE
@@ -357,7 +357,7 @@ METHOD DrawItems( hDC ) CLASS HOwnButton
    LOCAL x1, y1, x2, y2,  aCoors
 
    aCoors := GetClientRect( ::handle )
-   IF ! EMPTY( ::brush )
+   IF !EMPTY( ::brush )
       FillRect( hDC, aCoors[ 1 ] + 2, aCoors[ 2 ] + 2, aCoors[ 3 ] - 2, aCoors[ 4 ] - 2, ::Brush:handle )
    ENDIF
 
@@ -421,13 +421,13 @@ METHOD MouseMove( wParam, lParam ) CLASS HOwnButton
          res := .T.
       ENDIF
 
-      IF res .AND. ! ::lPress
+      IF res .AND. !::lPress
          ::state := OBTN_NORMAL
          InvalidateRect( ::handle, 0 )
          RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
          //PostMessage( ::handle, WM_PAINT, 0, 0 )
       ENDIF
-      IF ::state == OBTN_NORMAL .AND. ! res
+      IF ::state == OBTN_NORMAL .AND. !res
          ::state := OBTN_MOUSOVER
          InvalidateRect( ::handle, 0 )
          //PostMessage( ::handle, WM_PAINT, 0, 0 )
@@ -454,7 +454,7 @@ METHOD MDown() CLASS HOwnButton
 
 METHOD MUp() CLASS HOwnButton
 //   IF ::state == OBTN_PRESSED
-      IF ! ::lPress
+      IF !::lPress
          //::state := OBTN_NORMAL  // IIF( ::lFlat,OBTN_MOUSOVER,OBTN_NORMAL )
          ::state := IIF( ::lFlat, OBTN_MOUSOVER, OBTN_NORMAL )
       ENDIF

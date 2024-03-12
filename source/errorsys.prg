@@ -49,16 +49,16 @@ STATIC FUNCTION DefError( oError )
    ENDIF
 
    cMessage := ErrorMessage( oError )
-   IF ! Empty( oError:osCode )
+   IF !Empty( oError:osCode )
       cDOSError := "(DOS Error " + LTrim( Str( oError:osCode ) ) + ")"
    ENDIF
 
-   IF ! Empty( oError:osCode )
+   IF !Empty( oError:osCode )
       cMessage += " " + cDOSError
    ENDIF
 
    n := 2
-   DO WHILE ! Empty( ProcName( n ) )
+   DO WHILE !Empty( ProcName( n ) )
       cMessage += Chr( 13 ) + Chr( 10 ) + "Called from " + ProcFile( n ) + "->" + ProcName( n ) + "(" + AllTrim( Str( ProcLine( n ++ ) ) ) + ")"
    ENDDO
 
@@ -107,14 +107,14 @@ FUNCTION ErrorMessage( oError )
 
    // add either filename or operation
    DO CASE
-   CASE ! Empty( oError:filename )
+   CASE !Empty( oError:filename )
       cMessage += ": " + oError:filename
-   CASE ! Empty( oError:operation )
+   CASE !Empty( oError:operation )
       cMessage += ": " + oError:operation
    ENDCASE
 
    /*
-   IF ! Empty( oError:Args )
+   IF !Empty( oError:Args )
       cMessage += "Arguments: " + ValToPrgExp( oError:Args )
    ENDIF
    */
@@ -125,7 +125,7 @@ FUNCTION hwg_WriteLog( cText, fname )
    LOCAL nHand
 
    fname := LogInitialPath + IIf( fname == Nil, "a.log", fname )
-   IF ! File( fname )
+   IF !File( fname )
       nHand := FCreate( fname )
    ELSE
       nHand := FOpen( fname, 1 )

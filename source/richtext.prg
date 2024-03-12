@@ -113,10 +113,10 @@ CLASS RichText
                      cPgNumPos, lPgNumTop )
 
    METHOD BeginHeader() INLINE ::OpenGroup(), ;
-   IIf( ! ::lFacing, ::TextCode( "header \pard" ), ::TextCode( "headerr \pard" ) )
+   IIf( !::lFacing, ::TextCode( "header \pard" ), ::TextCode( "headerr \pard" ) )
    METHOD EndHeader() INLINE ::TextCode( "par" ), ::CloseGroup()
    METHOD BeginFooter() INLINE ::OpenGroup(), ;
-   IIf( ! ::lFacing, ::TextCode( "footer \pard" ), ::TextCode( "footerr \pard" ) )
+   IIf( !::lFacing, ::TextCode( "footer \pard" ), ::TextCode( "footerr \pard" ) )
    METHOD EndFooter() INLINE ::TextCode( "par" ), ::CloseGroup()
 
    METHOD Paragraph( cText, nFontNumber, nFontSize, cAppear, ;
@@ -270,7 +270,7 @@ METHOD New( cFileName, aFontData, aFontFam, aFontChar, nFontSize, nFontColor, nS
    ENDIF
 
 // If no extension specified in file name, use ".RTF"
-   IF ! ( "." $ ::cFileName )
+   IF !( "." $ ::cFileName )
       ::cFileName += ".RTF"
    ENDIF
 
@@ -365,7 +365,7 @@ METHOD PageSetup( nLeft, nRight, nTop, nBottom, nWidth, nHeight, ;
 // Vertical alignment and page number position are "section-specific"
 // codes.  But we'll put them here anyway for now...
 
-   IF ! Empty( cVertAlign )
+   IF !Empty( cVertAlign )
       ::TextCode( "vertal" + Lower( Left( cVertAlign, 1 ) ) )
    ENDIF
 
@@ -423,13 +423,13 @@ METHOD Paragraph( cText, nFontNumber, nFontSize, cAppear, ;
 
    ::LogicCode( "pagebb", lBreak )
 
-   IF ! lNoPar
+   IF !lNoPar
       ::TextCode( "par" )
    ENDIF
 
    ::LogicCode( "pard", lDefault )
 
-   IF ! lChar
+   IF !lChar
       ::ParaStyle( nStyle )
    ENDIF
 
@@ -474,8 +474,8 @@ METHOD Paragraph( cText, nFontNumber, nFontSize, cAppear, ;
    ENDIF
 
    IF nShdPct > 0
-      ::NumCode( IIf( ! lChar, "shading", "chshdng" ), nShdPct, .F. )
-      IF ! Empty( cShadPat )
+      ::NumCode( IIf( !lChar, "shading", "chshdng" ), nShdPct, .F. )
+      IF !Empty( cShadPat )
          ::TextCode( "bg" + ::ShadeCode( cShadPat ) )
       ENDIF
    ENDIF
@@ -590,7 +590,7 @@ METHOD Write( xData, lCodesOK ) CLASS RichText
          IF nChar > 91
 
             // Process special RTF symbols
-            IF ! lCodesOK
+            IF !lCodesOK
                IF AScan( aCodes, cChar ) > 0
                   cChar := "\" + cChar
                ENDIF
@@ -737,7 +737,7 @@ FUNCTION FormatCode( cCode )
 *
 *********************************************************************
    cCode := AllTrim( cCode )
-   IF ! ( Left( cCode, 1 ) == "\" )
+   IF !( Left( cCode, 1 ) == "\" )
       cCode := "\" + cCode
    ENDIF
 
@@ -1030,7 +1030,7 @@ METHOD NewSection( lLandscape, nColumns, nLeft, nRight, nTop, nBottom, ;
    ::NumCode( "pgwsxn", nWidth )
    ::NumCode( "pghsxn", nHeight )
 
-   IF ! Empty( cVertAlign )
+   IF !Empty( cVertAlign )
       ::TextCode( "vertal" + Lower( Left( cVertAlign, 1 ) ) )
    ENDIF
 
@@ -1061,7 +1061,7 @@ METHOD NewFont( nFontNumber ) CLASS RichText
 *
 *********************************************************************
 
-   IF ! Empty( nFontNumber ) .AND. nFontNumber <= ::nFontNum
+   IF !Empty( nFontNumber ) .AND. nFontNumber <= ::nFontNum
       ::NumCode( "f", nFontNumber - 1, .F. )
       ::nFontAct := nFontNumber
    ENDIF
@@ -1091,7 +1091,7 @@ METHOD Appearance( cAppear ) CLASS RichText
 *********************************************************************
    LOCAL cWrite := ""
 // Special case (see .CH file) -- first remove leading slash ...ugh.
-   IF ! Empty( cAppear )
+   IF !Empty( cAppear )
       cWrite := ::TextCode( SubStr( cAppear, 2 ) )
       ::cLastApar := cAppear
    ENDIF
@@ -1116,7 +1116,7 @@ METHOD HAlignment( cAlign ) CLASS RichText
 * 01/19/97   TRM         Creation
 *
 *********************************************************************
-   IF ! Empty( cAlign )
+   IF !Empty( cAlign )
       ::TextCode( "q" + Lower( Left( cAlign, 1 ) ) )
    ENDIF
 
@@ -1146,7 +1146,7 @@ METHOD LineSpacing( nSpace, lSpExact ) CLASS RichText
    DEFAULT lSpExact TO .F.
 
    ::NumCode( "sl", nSpace, lSpExact )
-   IF ! Empty( nSpace )
+   IF !Empty( nSpace )
       ::NumCode( "slmult", IIf( lSpExact, 0, 1 ), .F. )
    ENDIF
 
@@ -1536,7 +1536,7 @@ METHOD FootNote( cTexto, cChar, nFontNumber, ;
    IF lUpper
       ::TextCode( "super " + cChar )
    ELSE
-      IF ! Empty( cChar )
+      IF !Empty( cChar )
          ::Write( cChar )
       ENDIF
    ENDIF
@@ -1558,7 +1558,7 @@ METHOD FootNote( cTexto, cChar, nFontNumber, ;
    IF lUpper
       ::TextCode( "super " + cChar )
    ELSE
-      IF ! Empty( cChar )
+      IF !Empty( cChar )
          ::Write( cChar )
       ENDIF
    ENDIF
@@ -1607,7 +1607,7 @@ METHOD BegTextBox( cTexto, aOffset, ASize, cTipo, aColores, nWidth, nPatron, ;
    ENDIF
    ::OpenGroup()
    ::TextCode( "dptxbxtext \s0\ql" )
-   IF ! Empty( cTexto )
+   IF !Empty( cTexto )
       ::Paragraph( cTexto, nFontNumber, nFontSize, cAppear, ;
                    ,, nIndent,,,,,,,,,,,, .F., .T. , nFontColor )
    ENDIF
@@ -1751,7 +1751,7 @@ METHOD Image( cName, ASize, nPercent, lCell, lInclude, lFrame, aFSize, cHorzAlig
       ENDIF
    ENDIF
 
-   IF ! lInclude
+   IF !lInclude
       ::NumCode( "sslinkpictw", ASize[ 1 ] )
       ::NumCode( "sslinkpicth", ASize[ 2 ] )
 
@@ -1837,7 +1837,7 @@ METHOD IncStyle( cName, styletype, nFontNumber, nFontSize, ;
       ::NumCode( "ds", ::nStlSec, .F. )
    ENDCASE
 
-   IF ! Empty( cKeys )
+   IF !Empty( cKeys )
       ::OpenGroup()
       ::TextCode( "keycode " + cKeys )
       ::CloseGroup()
@@ -1871,7 +1871,7 @@ METHOD IncStyle( cName, styletype, nFontNumber, nFontSize, ;
    IF lParrafo
       IF nShdPct > 0
          cEstilo += ::NumCode( "shading", nShdPct, .F. )
-         IF ! Empty( cShadPat )
+         IF !Empty( cShadPat )
             cEstilo += ::TextCode( "bg" + ::ShadeCode( cShadPat ) )
          ENDIF
       ENDIF
@@ -2099,7 +2099,7 @@ METHOD TableDef( lHeader, nRowHead, cCellBorder, aColPct ) CLASS RichText
    // Set the default shading, border & width info for each body cell
    FOR i := 1 TO Len( ::aTableCWid )
       IF lHeader
-         IF ! Empty( ::TblCJoin )
+         IF !Empty( ::TblCJoin )
             FOR j = 1 TO Len( ::TblCJoin[ nRowHead ] )
                pos := AScan( ::TblCJoin[ nRowHead ][ j ], i )
                IF pos == 1

@@ -75,7 +75,7 @@ METHOD New( oWndParent,nId,vari,bSetGet,nStyle,nLeft,nTop,nWidth,nHeight, ;
 
    HB_SYMBOL_UNUSED(bOther)
 
-   nStyle := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_TABSTOP + IIf( lNoBorder == Nil.OR. ! lNoBorder, WS_BORDER, 0 ) )
+   nStyle := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_TABSTOP + IIf( lNoBorder == Nil.OR. !lNoBorder, WS_BORDER, 0 ) )
 
    IF !hb_IsNumeric(vari)
       vari := 0
@@ -252,7 +252,7 @@ METHOD Valid() CLASS HUpDown
    ENDIF
    */
    res :=  ::nValue <= ::nUpper .and. ::nValue >= ::nLower
-   IF ! res
+   IF !res
       ::nValue := IIF( ::nValue > ::nUpper, Min( ::nValue, ::nUpper ), Max( ::nValue, ::nLower ) )
       ::SetValue( ::nValue )
       ::oEditUpDown:Refresh()
@@ -276,7 +276,7 @@ ENDCLASS
 
 METHOD Init() CLASS HEditUpDown
 
-   IF ! ::lInit
+   IF !::lInit
       IF ::bChange != Nil
          ::oParent:AddEvent( EN_CHANGE, self,{|| ::onChange()},,"onChange")
       ENDIF
@@ -293,7 +293,7 @@ METHOD Notify( lParam ) CLASS HeditUpDown
 
      IF ::oUpDown = Nil .OR. Hwg_BitAnd( GetWindowLong( ::handle, GWL_STYLE ), ES_READONLY ) != 0 .OR. ;
          GetFocus() != ::Handle .OR. ;
-       ( ::oUpDown:bGetFocus != Nil .AND. ! Eval( ::oUpDown:bGetFocus, ::oUpDown:nValue, ::oUpDown ) )
+       ( ::oUpDown:bGetFocus != Nil .AND. !Eval( ::oUpDown:bGetFocus, ::oUpDown:nValue, ::oUpDown ) )
         Return 0
    ENDIF
 
@@ -410,7 +410,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    RETURN Self
 
 METHOD Activate CLASS HUpDown
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateEdit( ::oParent:handle, ::id, ;
                               ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::title )
       ::Init()
@@ -418,7 +418,7 @@ METHOD Activate CLASS HUpDown
    RETURN Nil
 
 METHOD Init() CLASS HUpDown
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
@@ -470,7 +470,7 @@ METHOD Refresh() CLASS HUpDown
 STATIC FUNCTION __When( oCtrl )
    LOCAL res := .T., oParent, nSkip
 
-   IF ! CheckFocus( oCtrl, .F. )
+   IF !CheckFocus( oCtrl, .F. )
       RETURN .T.
    ENDIF
    IF oCtrl:bGetFocus != Nil
@@ -479,8 +479,8 @@ STATIC FUNCTION __When( oCtrl )
       oCtrl:oParent:lSuspendMsgsHandling := .T.
       res := Eval( oCtrl:bGetFocus, Eval( oCtrl:bSetGet, , oCtrl ), oCtrl )
       oCtrl:oParent:lSuspendMsgsHandling := .F.
-      oCtrl:lnoValid := ! res
-      IF ! res
+      oCtrl:lnoValid := !res
+      IF !res
          oParent := ParentGetDialog( oCtrl )
          IF oCtrl == ATail( oParent:GetList )
             nSkip := - 1
@@ -496,7 +496,7 @@ STATIC FUNCTION __Valid( oCtrl )
    LOCAL res := .T., hctrl , nSkip, oDlg
    LOCAL ltab :=  GETKEYSTATE( VK_TAB ) < 0
 
-   IF ! CheckFocus( oCtrl, .T. )  .OR. oCtrl:lnoValid
+   IF !CheckFocus( oCtrl, .T. )  .OR. oCtrl:lnoValid
       RETURN .T.
    ENDIF
    nSkip := IIf( GetKeyState( VK_SHIFT ) < 0 , - 1, 1 )
@@ -512,7 +512,7 @@ STATIC FUNCTION __Valid( oCtrl )
       res := Eval( oCtrl:bLostFocus, oCtrl:value,  oCtrl )
       res := IIf( res, oCtrl:value <= oCtrl:nUpper .and. ;
                   oCtrl:value >= oCtrl:nLower , res )
-      IF ! res
+      IF !res
          SetFocus( oCtrl:handle )
          IF oDlg != Nil
             oDlg:nLastKey := 0

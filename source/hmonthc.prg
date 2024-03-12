@@ -50,13 +50,13 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
             lWeekNumbers, bSelect ) CLASS HMonthCalendar
 
    nStyle := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), 0 ) //WS_TABSTOP )
-   nStyle   += IIf( lNoToday == Nil.OR. ! lNoToday, 0, MCS_NOTODAY )
-   nStyle   += IIf( lNoTodayCircle == Nil.OR. ! lNoTodayCircle, 0, MCS_NOTODAYCIRCLE )
-   nStyle   += IIf( lWeekNumbers == Nil.OR. ! lWeekNumbers, 0, MCS_WEEKNUMBERS )
+   nStyle   += IIf( lNoToday == Nil.OR. !lNoToday, 0, MCS_NOTODAY )
+   nStyle   += IIf( lNoTodayCircle == Nil.OR. !lNoTodayCircle, 0, MCS_NOTODAYCIRCLE )
+   nStyle   += IIf( lWeekNumbers == Nil.OR. !lWeekNumbers, 0, MCS_WEEKNUMBERS )
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               ,, cTooltip )
 
-   ::value   := IIf( hb_IsDate(vari) .And. ! Empty( vari ), vari, Date() )
+   ::value   := IIf( hb_IsDate(vari) .And. !Empty( vari ), vari, Date() )
 
    ::bChange := bChange
    ::bSelect := bSelect
@@ -77,7 +77,7 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
 
 METHOD Activate() CLASS HMonthCalendar
 
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := InitMonthCalendar ( ::oParent:handle, ::id, ::style, ;
                                       ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
@@ -89,9 +89,9 @@ METHOD Activate() CLASS HMonthCalendar
 
 METHOD Init() CLASS HMonthCalendar
 
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
-      IF ! Empty( ::value )
+      IF !Empty( ::value )
          SetMonthCalendarDate( ::handle , ::value )
       ENDIF
       ::oParent:AddEvent( MCN_SELECT, Self, { || ::onSelect() }, .T., "onSelect" )
@@ -105,7 +105,7 @@ METHOD Init() CLASS HMonthCalendar
 
 METHOD SetValue( dValue ) CLASS HMonthCalendar
 
-   IF hb_IsDate(dValue) .And. ! Empty( dValue )
+   IF hb_IsDate(dValue) .And. !Empty( dValue )
       SetMonthCalendarDate( ::handle, dValue )
       ::value := dValue
    ENDIF
@@ -122,7 +122,7 @@ METHOD GetValue() CLASS HMonthCalendar
 
 METHOD onChange() CLASS HMonthCalendar
 
-   IF hb_IsBlock(::bChange) .AND. ! ::oparent:lSuspendMsgsHandling
+   IF hb_IsBlock(::bChange) .AND. !::oparent:lSuspendMsgsHandling
       SendMessage( ::handle, WM_LBUTTONDOWN, 0, MAKELPARAM( 1, 1 ) )
       ::oparent:lSuspendMsgsHandling := .T.
       Eval( ::bChange, ::value, Self )
@@ -133,7 +133,7 @@ METHOD onChange() CLASS HMonthCalendar
 
 METHOD onSelect() CLASS HMonthCalendar
 
-   IF hb_IsBlock(::bSelect) .AND. ! ::oparent:lSuspendMsgsHandling
+   IF hb_IsBlock(::bSelect) .AND. !::oparent:lSuspendMsgsHandling
       ::oparent:lSuspendMsgsHandling := .T.
       Eval( ::bSelect, ::value, Self )
       ::oparent:lSuspendMsgsHandling := .F.

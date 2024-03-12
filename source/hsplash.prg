@@ -30,7 +30,7 @@ METHOD Create( cFile, oTime, oResource, nWidth, nHeight, nStyle ) CLASS HSplash
 
    IIf( Empty( oTime ) .or. oTime == Nil, oTime := 2000, oTime := oTime )
 
-   IF oResource == Nil .or. ! oResource
+   IF oResource == Nil .or. !oResource
       bitmap  := HBitmap():AddFile( cFile,,, nWidth, nHeight )
    ELSE
       bitmap  := HBitmap():AddResource( cFile,,, nWidth, nHeight )
@@ -49,7 +49,7 @@ METHOD Create( cFile, oTime, oResource, nWidth, nHeight, nStyle ) CLASS HSplash
         At 0, 0 SIZE aWidth, aHeigth  STYLE WS_POPUP + DS_CENTER + WS_VISIBLE + WS_DLGFRAME ;
         ON INIT { || ::CountSeconds( oTime, ::oDlg ) }        
       @ 0,0 BITMAP Bitmap SHOW cFile STRETCH 0 SIZE nWidth, nHeight STYLE nStyle 
-   ENDIF     
+   ENDIF
    
    ::oDlg:Activate( otime < 0 )
    ::oTimer:END()

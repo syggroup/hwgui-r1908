@@ -60,7 +60,7 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
             tcolor, bcolor, bOther, lAllowTabs, bChange, lnoBorder ) CLASS HRichEdit
 
    nStyle := Hwg_BitOr( IIf( nStyle == Nil, 0, nStyle ), WS_CHILD + WS_VISIBLE + WS_TABSTOP + ; // WS_BORDER )
-                        IIf( lNoBorder = Nil.OR. ! lNoBorder, WS_BORDER, 0 ) )
+                        IIf( lNoBorder = Nil.OR. !lNoBorder, WS_BORDER, 0 ) )
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, IIf( bcolor == Nil, GetSysColor( COLOR_BTNHIGHLIGHT ), bcolor ) )
 
@@ -88,7 +88,7 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
    RETURN Self
 
 METHOD Activate() CLASS HRichEdit
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
       ::handle := CreateRichEdit( ::oParent:handle, ::id, ;
                                   ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::title )
       ::Init()
@@ -96,7 +96,7 @@ METHOD Activate() CLASS HRichEdit
    RETURN Nil
 
 METHOD Init() CLASS HRichEdit
-   IF ! ::lInit
+   IF !::lInit
       ::nHolder := 1
       SetWindowObject( ::handle, Self )
       Hwg_InitRichProc( ::handle )
@@ -137,7 +137,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRichEdit
    ENDIF
    IF msg == WM_CHAR
       IF wParam = VK_TAB .AND. ::GetParentForm( Self ):Type < WND_DLG_RESOURCE
-         IF ( IsCtrlShift(.T.,.F.) .OR. ! ::lAllowTabs )
+         IF ( IsCtrlShift(.T.,.F.) .OR. !::lAllowTabs )
             RETURN 0
          ENDIF
       ENDIF
@@ -159,7 +159,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRichEdit
          ENDIF
       ENDIF
    ELSEIF msg == WM_KEYDOWN
-      IF wParam = VK_TAB .AND. ( IsCtrlShift(.T.,.F.) .OR. ! ::lAllowTabs )
+      IF wParam = VK_TAB .AND. ( IsCtrlShift(.T.,.F.) .OR. !::lAllowTabs )
          GetSkip( ::oParent, ::handle, , ;
                       iif( IsCtrlShift(.F., .T.), -1, 1) )
          RETURN 0
@@ -201,7 +201,7 @@ METHOD SetColor( tColor, bColor, lRedraw ) CLASS HRichEdit
 METHOD ReadOnly( lreadOnly )
 
    IF lreadOnly != Nil
-      IF ! EMPTY( SENDMESSAGE( ::handle,  EM_SETREADONLY, IIF( lReadOnly, 1, 0 ), 0 ) )
+      IF !EMPTY( SENDMESSAGE( ::handle,  EM_SETREADONLY, IIF( lReadOnly, 1, 0 ), 0 ) )
           ::lReadOnly := lReadOnly
       ENDIF
    ENDIF
@@ -263,7 +263,7 @@ METHOD Valid() CLASS HRichEdit
 METHOD SaveFile( cFile ) CLASS HRichEdit
 
    IF !EMPTY( cFile )
-      IF ! EMPTY( SAVERICHEDIT( ::Handle, cFile ) )
+      IF !EMPTY( SAVERICHEDIT( ::Handle, cFile ) )
           RETURN .T.
       ENDIF
    ENDIF
@@ -272,7 +272,7 @@ METHOD SaveFile( cFile ) CLASS HRichEdit
 METHOD OpenFile( cFile ) CLASS HRichEdit
 
    IF !EMPTY( cFile )
-      IF ! EMPTY( LOADRICHEDIT( ::Handle, cFile ) )
+      IF !EMPTY( LOADRICHEDIT( ::Handle, cFile ) )
           RETURN .T.
       ENDIF
    ENDIF

@@ -89,7 +89,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
 
 METHOD Activate() CLASS HPager
 
-   IF ! Empty( ::oParent:handle )
+   IF !Empty( ::oParent:handle )
 
       ::handle := CREATEPAGER( ::oParent:handle, ::id, ;
                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, IF( ::lVert, PGS_VERT, PGS_HORZ ) )
@@ -100,7 +100,7 @@ METHOD Activate() CLASS HPager
 
 METHOD INIT() CLASS HPager
 
-   IF ! ::lInit
+   IF !::lInit
       ::Super:Init()
    ENDIF
    RETURN Nil

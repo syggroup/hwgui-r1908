@@ -44,7 +44,7 @@ METHOD New( nRow, nCol, nWidth, nHeight, cFileName, oWnd, lNoBorder, nid ) CLASS
    ::nLeft     := nCol * VID_CHARPIX_W   // 14
    ::nHeight   := ::nTop  + nHeight - 1
    ::nWidth    := ::nLeft + nWidth + 1
-   ::Style     := hwg_bitOR( WS_CHILD + WS_VISIBLE + WS_TABSTOP, IF( ! lNoBorder, WS_BORDER, 0 ) )
+   ::Style     := hwg_bitOR( WS_CHILD + WS_VISIBLE + WS_TABSTOP, IF( !lNoBorder, WS_BORDER, 0 ) )
 
    ::oParent   := IIf( oWnd == Nil, ::oDefaultParent, oWnd )
    ::id        := IIf( nid == Nil, ::NewId(), nid )
@@ -52,7 +52,7 @@ METHOD New( nRow, nCol, nWidth, nHeight, cFileName, oWnd, lNoBorder, nid ) CLASS
    ::oMci      := TMci():New( "avivideo", cFileName )
    ::Initiate()
 
-   IF ! Empty( ::oparent:handle )
+   IF !Empty( ::oparent:handle )
       ::oMci:lOpen()
       ::oMci:SetWindow( Self )
    ELSE

@@ -184,7 +184,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
    ENDIF
    IF hb_IsBlock(::bOther)
       IF !hb_IsNumeric(nRet := Eval( ::bOther,Self,msg,wParam,lParam ))
-         nRet := IIF( hb_IsLogical(nRet) .AND. ! nRet, 0, -1 )
+         nRet := IIF( hb_IsLogical(nRet) .AND. !nRet, 0, -1 )
       ENDIF
       IF nRet >= 0
          RETURN -1
@@ -196,7 +196,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
       GetSkip( ::oParent, ::GetParentForm():nInitFocus , , IIF( SelfFocus( ::GetParentForm():nInitFocus, ::Handle ), 1, 0 ) )
       ::GetParentForm():nInitFocus := 0
 
-   ELSEIF msg = WM_SETFOCUS .AND. EMPTY(::GetParentForm():nInitFocus) .AND. ! ::lSuspendMsgsHandling  //.AND. Hwg_BitaND( ::sTyle, WS_TABSTOP ) > 0 .
+   ELSEIF msg = WM_SETFOCUS .AND. EMPTY(::GetParentForm():nInitFocus) .AND. !::lSuspendMsgsHandling  //.AND. Hwg_BitaND( ::sTyle, WS_TABSTOP ) > 0 .
       Getskip( ::oParent, ::handle, , ::nGetSkip )
 /*
    ELSEIF msg = WM_KEYUP
@@ -250,7 +250,7 @@ LOCAL pps, hDC, aCoors, oPenLight, oPenGray
    ENDIF
    ::nrePaint := -1
    IF ::nScrollBars = - 1
-      IF ! ::lBorder
+      IF !::lBorder
          oPenLight := HPen():Add( BS_SOLID, 1, GetSysColor( COLOR_3DHILIGHT ) )
          oPenGray := HPen():Add( BS_SOLID, 1, GetSysColor( COLOR_3DSHADOW) )
 
@@ -326,7 +326,7 @@ METHOD Hide() CLASS HPanel
 METHOD Show() CLASS HPanel
    LOCAL lRes
    
-   IF ! ::lHide
+   IF !::lHide
       Return Nil
    ENDIF
    ::nrePaint := - 1
@@ -360,7 +360,7 @@ METHOD Resize() CLASS HPanel
       Return Nil
    ENDIF
 
-   IF ! ::ResizeOffSet( 1 )
+   IF !::ResizeOffSet( 1 )
       RETURN Nil
    ENDIF
    /*
