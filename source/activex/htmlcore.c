@@ -2211,7 +2211,7 @@ long WINAPI DisplayHTMLStr(HWND hwnd, const char *string)
     {
       SysFreeString(myURL.DEF_BSTRVAL);
     }
-    
+
     // Release the IWebBrowser2 object.
     webBrowser2->lpVtbl->Release(webBrowser2);
   }
