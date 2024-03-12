@@ -164,7 +164,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
    //HB_SYMBOL_UNUSED(cCaption)
    //HB_SYMBOL_UNUSED(lTransp)
 
-   DEFAULT  aitem TO { }
+   DEFAULT  aitem TO {}
 
    //nStyle := Hwg_BitOr( IIf( nStyle == NIL, 0, nStyle ), TBSTYLE_FLAT )
    nStyle := Hwg_BitOr( IIf( nStyle == NIL, 0, nStyle ), IIF( Hwg_BitAnd( nStyle, WS_DLGFRAME + WS_BORDER ) > 0, CCS_NODIVIDER , 0 ) )
@@ -223,7 +223,7 @@ METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
    HB_SYMBOL_UNUSED(cCaption)
    HB_SYMBOL_UNUSED(lTransp)
 
-   DEFAULT  aItem TO { }
+   DEFAULT  aItem TO {}
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize, bPaint, ctooltip, tcolor, bcolor )
    HWG_InitCommonControlsEx()
@@ -367,13 +367,13 @@ METHOD CREATETOOL() CLASS hToolBar
          aBmpSize := GetBitmapSize( aButton[ 1 ] )
 
          IF nmax == 4
-            hIm := CreateImageList( { } , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR4 + ILC_MASK )
+            hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR4 + ILC_MASK )
          ELSEIF nmax == 8
-            hIm := CreateImageList( { } , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR8 + ILC_MASK )
+            hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR8 + ILC_MASK )
          ELSEIF nMax == 16 //
              hIm := CreateImageList( {} ,aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )
          ELSEIF nmax == 24
-            hIm := CreateImageList( { } , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )
+            hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )
          ENDIF
          */
       hIm := CreateImageList( {} ,aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )

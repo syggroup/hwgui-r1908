@@ -82,9 +82,9 @@ CLASS RichText
    DATA nStlSec INIT 1
    DATA nSectAct INIT 0
 
-   DATA ParStyles AS Array INIT { }
-   DATA CharStyles AS Array INIT { }
-   DATA SectStyles AS Array INIT { }
+   DATA ParStyles AS Array INIT {}
+   DATA CharStyles AS Array INIT {}
+   DATA SectStyles AS Array INIT {}
 
    DATA oPrinter
    // Methods for opening & closing output file, and setting defaults
@@ -1720,7 +1720,7 @@ METHOD Image( cName, ASize, nPercent, lCell, lInclude, lFrame, aFSize, cHorzAlig
    LOCAL cExt
 
    DEFAULT cName TO "", ;
-   ASize TO { }, ;
+   ASize TO {}, ;
    cHorzAlign TO "CENTER", ;
    cVertAlign TO "TOP", ;
    lFrame TO .T., ;
@@ -1992,14 +1992,14 @@ METHOD DefNewTable( cTblHAlign, nTblFntNum, nTblFntSize, ;
    lTblNoSplit  TO  .F., ;
    nCellPct  TO  0, ;
    nTblHdRows  TO  0, ;
-   aHeadTit TO { }, ;
+   aHeadTit TO {}, ;
    nTblHdHgt  TO  nTblRHgt, ;
    nTblHdPct  TO  0, ;
    nTblHdFont  TO  nTblFntNum, ;
    nTblHdFSize  TO  ::nFontSize + 2, ;
    nTblHdColor   TO  0, ;
    nTblHdFColor  TO  0, ;
-   aTblCJoin TO { }
+   aTblCJoin TO {}
 
    IF aTableCWid[ 1 ] == NIL
       AFill( aTableCWid, 6.5 / nTblColumns )

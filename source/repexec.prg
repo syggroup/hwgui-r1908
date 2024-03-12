@@ -57,7 +57,7 @@ FUNCTION OpenReport( fname, repName )
                   stroka := LTrim( SubStr( stroka, 9 ) )
                   IF Upper( stroka ) == Upper( repName )
                      nMode := 1
-                     aPaintRep := { 0, 0, 0, 0, 0, { }, fname, repName, .F., 0, Nil }
+                     aPaintRep := { 0, 0, 0, 0, 0, {}, fname, repName, .F., 0, Nil }
                   ENDIF
                ENDIF
             ENDIF
