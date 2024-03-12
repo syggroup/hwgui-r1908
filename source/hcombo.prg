@@ -369,6 +369,7 @@ RETURN Nil
 
 //-------------------------------------------------------------------------------------------------------------------//
 
+#if 0 // old code for reference
 METHOD onEvent( msg, wParam, lParam ) CLASS HComboBox
 
    LOCAL oCtrl
@@ -454,6 +455,119 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HComboBox
    ENDIF
 
 RETURN -1
+#else
+METHOD onEvent(msg, wParam, lParam) CLASS HComboBox
+
+   LOCAL oCtrl
+
+   IF hb_IsBlock(::bOther)
+      IF Eval(::bOther, Self, msg, wParam, lParam) != -1
+         RETURN 0
+      ENDIF
+   ENDIF
+   
+   // TODO: unificar switch's
+
+   SWITCH msg
+
+   CASE WM_MOUSEWHEEL
+      IF ::oParent:nScrollBars != -1 .AND. ::oParent:bScroll == NIL
+         ::super:ScrollHV(::oParent, msg, wParam, lParam)
+         RETURN 0
+      ENDIF
+      EXIT
+
+   CASE CB_SHOWDROPDOWN
+      ::ldropshow := IIf(wParam == 1, .T., ::ldropshow)
+
+   ENDSWITCH
+
+   IF hb_IsBlock(::bSetGet) .OR. ::GetParentForm(Self):Type < WND_DLG_RESOURCE
+
+      SWITCH msg
+
+      CASE WM_CHAR
+         IF ::GetParentForm(Self):Type < WND_DLG_RESOURCE .OR. !::GetParentForm(Self):lModal
+            IF wParam == VK_TAB
+               GetSkip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
+               RETURN 0
+            ELSEIF wParam == VK_RETURN .AND. ;
+               !ProcOkCancel(Self, wParam, ::GetParentForm():Type >= WND_DLG_RESOURCE) .AND. ;
+               (::GetParentForm():Type < WND_DLG_RESOURCE .OR. !::GetParentForm():lModal)
+               GetSkip(::oParent, ::handle, , 1)
+               RETURN 0
+            ENDIF
+         ENDIF
+         EXIT
+
+      CASE WM_GETDLGCODE
+         IF wParam == VK_RETURN
+            RETURN DLGC_WANTMESSAGE
+         ELSEIF wParam == VK_ESCAPE .AND. ;
+            (oCtrl := ::GetParentForm:FindControl(IDCANCEL)) != NIL .AND. !oCtrl:IsEnabled()
+            RETURN DLGC_WANTMESSAGE
+         ENDIF
+         RETURN DLGC_WANTCHARS + DLGC_WANTARROWS
+
+      CASE WM_KEYDOWN
+         //ProcKeyList(Self, wParam)
+         IF wparam == VK_RIGHT .OR. wParam == VK_RETURN //.AND. !::lEdit
+            GetSkip(::oParent, ::handle, , 1)
+            RETURN 0
+         ELSEIF wparam == VK_LEFT //.AND. !::lEdit
+            GetSkip(::oParent, ::handle, , -1)
+            RETURN 0
+         ELSEIF wParam == VK_ESCAPE .AND. ::GetParentForm(Self):Type < WND_DLG_RESOURCE //.OR. ;
+            RETURN 0
+         ENDIF
+         EXIT
+
+      CASE WM_KEYUP
+         ProcKeyList(Self, wParam) //working in MDICHILD AND DIALOG
+         EXIT
+
+      CASE WM_COMMAND
+         IF ::lEdit .AND. !::ldropshow
+            IF GETKEYSTATE(VK_DOWN) + GETKEYSTATE(VK_UP) < 0 .AND. GetKeyState(VK_SHIFT) > 0 .AND. HiWord(wParam) == 1
+               RETURN 0
+            ENDIF
+         ENDIF
+         EXIT
+
+      CASE CB_GETDROPPEDSTATE
+         IF !::ldropshow
+            IF GETKEYSTATE(VK_RETURN) < 0
+               ::GetValue()
+            ENDIF
+            IF (GETKEYSTATE(VK_RETURN) < 0 .OR. GETKEYSTATE(VK_ESCAPE) < 0) .AND. ;
+               (::GetParentForm(Self):Type < WND_DLG_RESOURCE .OR. ;
+               !::GetParentForm(Self):lModal)
+               ProcOkCancel(Self, IIf(GETKEYSTATE(VK_RETURN) < 0, VK_RETURN, VK_ESCAPE))
+            ENDIF
+            IF GETKEYSTATE(VK_TAB) + GETKEYSTATE(VK_DOWN) < 0 .AND. GetKeyState(VK_SHIFT) > 0
+               IF ::oParent:oParent == NIL
+                  //GetSkip(::oParent, GetAncestor(::handle, GA_PARENT), , 1)
+               ENDIF
+               GetSkip(::oParent, ::handle, , 1)
+               RETURN 0
+            ELSEIF GETKEYSTATE(VK_UP) < 0 .AND. GetKeyState(VK_SHIFT) > 0
+               IF ::oParent:oParent == NIL
+                  //GetSkip(::oParent, GetAncestor(::handle, GA_PARENT), , 1)
+               ENDIF
+               GetSkip(::oParent, ::handle, , -1)
+               RETURN 0
+            ENDIF
+            IF ::GetParentForm(Self):Type < WND_DLG_RESOURCE .OR. !::GetParentForm(Self):lModal
+               RETURN 1
+            ENDIF
+         ENDIF
+
+      ENDSWITCH
+
+   ENDIF
+
+RETURN -1
+#endif
 
 //-------------------------------------------------------------------------------------------------------------------//
 
@@ -1066,6 +1180,7 @@ RETURN Self
 
 //-------------------------------------------------------------------------------------------------------------------//
 
+#if 0 // old code for reference
 METHOD onEvent( msg, wParam, lParam ) CLASS hCheckComboBox
 
    LOCAL nIndex
@@ -1149,13 +1264,94 @@ METHOD onEvent( msg, wParam, lParam ) CLASS hCheckComboBox
    ENDIF
 
 RETURN -1
+#else
+METHOD onEvent(msg, wParam, lParam) CLASS hCheckComboBox
+
+   LOCAL nIndex
+   LOCAL rcItem
+   LOCAL rcClient
+   LOCAL pt
+   LOCAL nItemHeight
+   LOCAL nTopIndex
+
+   SWITCH msg
+
+   CASE WM_RBUTTONDOWN
+      EXIT
+
+   CASE LB_GETCURSEL
+      RETURN -1
+
+   CASE WM_MEASUREITEM
+      ::MeasureItem(lParam)
+      RETURN 0
+
+   CASE WM_GETTEXT
+      RETURN ::OnGetText(wParam, lParam)
+
+   CASE WM_GETTEXTLENGTH
+      RETURN ::OnGetTextLength(wParam, lParam)
+
+   CASE WM_CHAR
+      IF wParam == VK_SPACE
+         nIndex := SendMessage(::handle, CB_GETCURSEL, wParam, lParam) + 1
+         rcItem := COMBOGETITEMRECT(::handle, nIndex - 1)
+         InvalidateRect(::handle, .F., rcItem[1], rcItem[2], rcItem[3], rcItem[4])
+         ::SetCheck(nIndex, !::GetCheck(nIndex))
+         SendMessage(::oParent:handle, WM_COMMAND, MAKELONG(::id, CBN_SELCHANGE), ::handle)
+      ENDIF
+      IF ::GetParentForm(Self):Type < WND_DLG_RESOURCE .OR. !::GetParentForm(Self):lModal
+         IF wParam == VK_TAB
+            GetSkip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
+            RETURN 0
+         ELSEIF wParam == VK_RETURN
+            GetSkip(::oParent, ::handle, , 1)
+            RETURN 0
+         ENDIF
+      ENDIF
+      RETURN 0
+
+   CASE WM_KEYDOWN
+      ProcKeyList(Self, wParam)
+      EXIT
+
+   CASE WM_LBUTTONDOWN
+      rcClient := GetClientRect(::handle)
+      pt := {,}
+      pt[1] = LOWORD(lParam)
+      pt[2] = HIWORD(lParam)
+      IF PtInRect(rcClient, pt)
+         nItemHeight := SendMessage(::handle, LB_GETITEMHEIGHT, 0, 0)
+         nTopIndex := SendMessage(::handle, LB_GETTOPINDEX, 0, 0)
+         // Compute which index to check/uncheck
+         nIndex := (nTopIndex + pt[2] / nItemHeight) + 1
+         rcItem := COMBOGETITEMRECT(::handle, nIndex - 1)
+         //IF PtInRect(rcItem, pt)
+         IF pt[1] < ::nWidthCheck
+            // Invalidate this window
+            InvalidateRect(::handle, .F., rcItem[1], rcItem[2], rcItem[3], rcItem[4])
+            nIndex := SendMessage(::handle, CB_GETCURSEL, wParam, lParam) + 1
+            ::SetCheck(nIndex, !::GetCheck(nIndex))
+            // Notify that selection has changed
+            SendMessage(::oParent:handle, WM_COMMAND, MAKELONG(::id, CBN_SELCHANGE), ::handle)
+         ENDIF
+      ENDIF
+      EXIT
+
+   CASE WM_LBUTTONUP
+      RETURN -1 //0
+
+   ENDSWITCH
+
+RETURN -1
+#endif
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 METHOD INIT() CLASS hCheckComboBox
 
    LOCAL i
-   
+
    //::nHolder := 1
    //SetWindowObject( ::handle, Self )  // because hcombobox is handling
    //HWG_INITCOMBOPROC( ::handle )
