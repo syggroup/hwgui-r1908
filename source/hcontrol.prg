@@ -494,7 +494,7 @@ METHOD onAnchor( x, y, w, h ) CLASS HControl
          ENDIF
 *         ::Move( x1, y1, w1, h1,  HWG_BITAND( ::Style, WS_CLIPSIBLINGS + WS_CLIPCHILDREN ) = 0 )
 
-         IF ( ( x1 != x9 .OR. y1 != y9 ) .AND. ( ISBLOCK( ::bPaint ) .OR. ;
+         IF ( ( x1 != x9 .OR. y1 != y9 ) .AND. ( hb_IsBlock(::bPaint) .OR. ;
                       x9 + w9 > ::oParent:nWidth ) ) .OR. ( ::backstyle = TRANSPARENT .AND. ;
                     ( ::Title != Nil .AND. ! Empty( ::Title ) ) ) .OR. __ObjHasMsg( Self,"oImage" )
              IF __ObjHasMsg( Self, "oImage" ) .OR.  ::backstyle = TRANSPARENT //.OR. w9 != w1
@@ -2169,7 +2169,7 @@ METHOD PAINT( lpdis ) CLASS HGroup
     ELSE //((!(dwStyle & BS_CENTER)) || ((dwStyle & BS_CENTER) == BS_LEFT))// left aligned   / default
       rcText[ 1 ] := rc[ 1 ] + OFS_X
       rcText[ 3 ] := rcText[ 1 ] + aSize[ 1 ] 
-    ENDIF   
+    ENDIF
    SetBkMode( dc, TRANSPARENT )       
 
     IF Hwg_BitAND( dwStyle, BS_FLAT) != 0  // "flat" frame

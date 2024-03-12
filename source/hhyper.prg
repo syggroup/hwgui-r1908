@@ -263,7 +263,7 @@ METHOD SetHoverColor( cHoverColor ) CLASS HStaticLink
 METHOD OnClicked() CLASS HStaticLink
    LOCAL nCtrlID
 
-   IF ISBLOCK( ::bClick )
+   IF hb_IsBlock(::bClick)
       ::state := LBL_NORMAL
 
    ELSEIF !EMPTY( ::m_csUrl)

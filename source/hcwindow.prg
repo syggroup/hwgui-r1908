@@ -886,7 +886,7 @@ FUNCTION onTrackScroll( oWnd, msg, wParam, lParam )
    IF oCtrl != NIL
       msg := LOWORD( wParam )
       IF msg == TB_ENDTRACK
-         IF ISBLOCK( oCtrl:bChange )
+         IF hb_IsBlock(oCtrl:bChange)
             Eval( oCtrl:bChange, oCtrl )
             RETURN 0
          ENDIF
@@ -894,13 +894,13 @@ FUNCTION onTrackScroll( oWnd, msg, wParam, lParam )
          msg == TB_PAGEUP     .OR. ;
          msg == TB_PAGEDOWN
 
-         IF ISBLOCK( oCtrl:bThumbDrag )
+         IF hb_IsBlock(oCtrl:bThumbDrag)
             Eval( oCtrl:bThumbDrag, oCtrl )
             RETURN 0
          ENDIF
       ENDIF
    ELSE
-      IF ISBLOCK( oWnd:bScroll )
+      IF hb_IsBlock(oWnd:bScroll)
          Eval( oWnd:bScroll, oWnd, msg, wParam, lParam )
          RETURN 0
       ENDIF
@@ -947,7 +947,7 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
          oCtrl:SetFocus()
           oWin:lResult := .T.
           IF lForce
-          ELSEIF ISBLOCK( oCtrl:bClick ) .AND. ! lForce
+          ELSEIF hb_IsBlock(oCtrl:bClick) .AND. ! lForce
              SendMessage( oCtrl:oParent:handle, WM_COMMAND, makewparam( oCtrl:id, BN_CLICKED ), oCtrl:handle )
           ELSEIF oWin:lExitOnEnter
             oWin:close()

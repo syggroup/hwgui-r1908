@@ -36,7 +36,7 @@ ENDCLASS
 METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, bInit, ;
             bSize, ctooltip, bClick, bDblClick ) CLASS HSayImage
 
-   nStyle := Hwg_BitOr( nStyle, IIF( ISBLOCK( bClick ) .OR. ISBLOCK( bDblClick ), SS_NOTIFY , 0 ) )
+   nStyle := Hwg_BitOr( nStyle, IIF( hb_IsBlock(bClick) .OR. hb_IsBlock(bDblClick), SS_NOTIFY , 0 ) )
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop,               ;
               IIf( nWidth != Nil, nWidth, 0 ), IIf( nHeight != Nil, nHeight, 0 ),, ;
               bInit, bSize,, ctooltip )

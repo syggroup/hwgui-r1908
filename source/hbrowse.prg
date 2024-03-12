@@ -419,18 +419,18 @@ METHOD New( lType, oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont,
    ENDIF
    ::lDescend    := IIf( lDescend == Nil, .F., lDescend )
 
-   IF ISBLOCK( bFirst ) .OR. ISBLOCK( bFor ) .OR. ISBLOCK( bWhile )
+   IF hb_IsBlock(bFirst) .OR. hb_IsBlock(bFor) .OR. hb_IsBlock(bWhile)
       ::lFilter := .T.
-      IF ISBLOCK( bFirst )
+      IF hb_IsBlock(bFirst)
          ::bFirst  := bFirst
       ENDIF
-      IF ISBLOCK( bLast )
+      IF hb_IsBlock(bLast)
          ::bLast   := bLast
       ENDIF
-      IF ISBLOCK( bWhile )
+      IF hb_IsBlock(bWhile)
          ::bWhile  := bWhile
       ENDIF
-      IF ISBLOCK( bFor )
+      IF hb_IsBlock(bFor)
          ::bFor    := bFor
       ENDIF
    ELSE

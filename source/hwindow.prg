@@ -30,7 +30,7 @@ STATIC FUNCTION onSize( oWnd, wParam, lParam )
    oWnd:nWidth  := aCoors[ 3 ] - aCoors[ 1 ]
    oWnd:nHeight := aCoors[ 4 ] - aCoors[ 2 ]
 
-   IF ISBLOCK( oWnd:bSize )
+   IF hb_IsBlock(oWnd:bSize)
       Eval( oWnd:bSize, oWnd, LOWORD( lParam ), HIWORD( lParam ) )
    ENDIF
    IF oWnd:Type == WND_MDI .AND. Len( HWindow():aWindows ) > 1
@@ -804,7 +804,7 @@ STATIC FUNCTION onCommand( oWnd, wParam, lParam )
          IF oChild != Nil
             IF ! oChild:Closable
                RETURN 0
-            ELSEIF ISBLOCK( oChild:bDestroy )
+            ELSEIF hb_IsBlock(oChild:bDestroy)
                oChild:lSuspendMsgsHandling := .T.
                i := Eval( oChild:bDestroy, oChild )
                oChild:lSuspendMsgsHandling := .F.
@@ -930,7 +930,7 @@ STATIC FUNCTION onSysCommand( oWnd, wParam, lParam )
    Local i, ars, oChild, oCtrl
    
    IF wParam == SC_CLOSE
-      IF ISBLOCK( oWnd:bDestroy )
+      IF hb_IsBlock(oWnd:bDestroy)
          oWnd:lSuspendMsgsHandling := .T.
          i := Eval( oWnd:bDestroy, oWnd )
          oWnd:lSuspendMsgsHandling := .F.
@@ -1019,7 +1019,7 @@ STATIC FUNCTION onEndSession( oWnd, wParam )
 
    HB_SYMBOL_UNUSED(wParam)
 
-   IF ISBLOCK( oWnd:bDestroy )
+   IF hb_IsBlock(oWnd:bDestroy)
       i := Eval( oWnd:bDestroy, oWnd )
       i := IIf( hb_IsLogical(i), i, .T. )
       IF ! i
@@ -1034,12 +1034,12 @@ STATIC FUNCTION onNotifyIcon( oWnd, wParam, lParam )
 
    IF wParam == ID_NOTIFYICON
       IF PtrtoUlong(lParam) == WM_LBUTTONDOWN
-         IF ISBLOCK( oWnd:bNotify )
+         IF hb_IsBlock(oWnd:bNotify)
             Eval( oWnd:bNotify )
          ENDIF
       ELSEIF PtrtoUlong(lParam) == WM_MOUSEMOVE
          /*
-         IF ISBLOCK( oWnd:bNotify )
+         IF hb_IsBlock(oWnd:bNotify)
             oWnd:lSuspendMsgsHandling := .T.
             Eval( oWnd:bNotify )
             oWnd:lSuspendMsgsHandling := .F.
@@ -1058,7 +1058,7 @@ STATIC FUNCTION onMdiCreate( oWnd, lParam )
    LOCAL nReturn
    HB_SYMBOL_UNUSED(lParam)
 
-   IF ISBLOCK( oWnd:bSetForm )
+   IF hb_IsBlock(oWnd:bSetForm)
       EVAL( oWnd:bSetForm, oWnd )
    ENDIF
    IF ! EMPTY ( oWnd:oWndParent )
@@ -1128,7 +1128,7 @@ STATIC FUNCTION onMdiNcActivate( oWnd, wParam )
       ENDIF
       IF wParam == 1 .AND. ! SelfFocus( oWnd:Screen:Handle, oWnd:HANDLE )
          // triggered ON GETFOCUS MDI CHILD MAXIMIZED
-         IF ISBLOCK( oWnd:bSetForm )
+         IF hb_IsBlock(oWnd:bSetForm)
             EVAL( oWnd:bSetForm, oWnd )
          ENDIF   
          IF ! oWnd:lSuspendMsgsHandling .AND.;
@@ -1185,7 +1185,7 @@ Static Function onMdiActivate( oWnd,wParam, lParam )
              PtrtoUlong( w:Handle ) != PtrtoUlong( wParam ), EnableWindow( w:Handle, .T. ), ) })
       ENDIF
    ELSEIF SelfFocus( oWnd:Handle, lParam ) //.AND. ownd:screen:handle != WPARAM
-      IF ISBLOCK( oWnd:bSetForm )
+      IF hb_IsBlock(oWnd:bSetForm)
          EVAL( oWnd:bSetForm, oWnd )
       ENDIF
       IF oWnd:lModal
@@ -1258,6 +1258,6 @@ STATIC FUNCTION onActivate( oWin, wParam, lParam )
             Eval( oWin:bLostFocus, oWin, lParam )
             oWin:lSuspendMsgsHandling := .F.
          ENDIF
-      ENDIF   
+      ENDIF
    ENDIF
    RETURN 1
