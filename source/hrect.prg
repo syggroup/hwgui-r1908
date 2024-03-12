@@ -416,7 +416,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HContainer
       ELSEIF msg == WM_KEYUP
          IF wParam = VK_DOWN
             GetSkip( ::oparent, ::handle, , 1 )
-         ELSEIF  wParam = VK_UP
+         ELSEIF wParam = VK_UP
             GetSkip( ::oparent, ::handle, , -1 )
          ELSEIF wParam = VK_TAB
             GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )

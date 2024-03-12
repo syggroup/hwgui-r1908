@@ -213,7 +213,7 @@ METHOD Move( x1, y1, width, height, nRePaint ) CLASS HCustomWindow
    y1     := IIF( y1     = NIL, ::nTop, y1 )
    width  := IIF( width  = NIL, ::nWidth, width )
    height := IIF( height = NIL, ::nHeight, height )
-   IF  Hwg_BitAnd( ::style,WS_CHILD ) = 0
+   IF Hwg_BitAnd( ::style,WS_CHILD ) = 0
       rect := GetwindowRect( ::Handle )
       nHx := rect[ 4 ] - rect[ 2 ]  - GetclientRect( ::Handle )[ 4 ] - ;
                  IIF( Hwg_BitAnd( ::style, WS_HSCROLL ) > 0, GetSystemMetrics( SM_CYHSCROLL ), 0 )
@@ -344,12 +344,12 @@ METHOD Refresh( lAll, oCtrl ) CLASS HCustomWindow
             ( ! oCtrlTmp:lHide .OR.  __ObjHasMsg( oCtrlTmp, "BSETGET" ) ) 
              IF LEN( oCtrlTmp:aControls) > 0
                  ::Refresh( lAll, oCtrlTmp )
-              ELSEIF  ! Empty( lRefresh ) .AND. ( lAll .OR. ASCAN( ::GetList, {| o | o:Handle == oCtrlTmp:handle } ) > 0 ) 
+              ELSEIF ! Empty( lRefresh ) .AND. ( lAll .OR. ASCAN( ::GetList, {| o | o:Handle == oCtrlTmp:handle } ) > 0 ) 
                oCtrlTmp:Refresh()
                IF oCtrlTmp:bRefresh != Nil  
                   EVAL( oCtrlTmp:bRefresh, oCtrlTmp )
                ENDIF   
-            ELSEIF  IsWindowEnabled( oCtrlTmp:Handle ) .AND. ! oCtrlTmp:lHide .AND.  ! lRefresh
+            ELSEIF IsWindowEnabled( oCtrlTmp:Handle ) .AND. ! oCtrlTmp:lHide .AND.  ! lRefresh
                oCtrlTmp:SHOW( SW_SHOWNOACTIVATE )
                 ENDIF  
          ENDIF
@@ -357,7 +357,7 @@ METHOD Refresh( lAll, oCtrl ) CLASS HCustomWindow
       IF oCtrl:bRefresh != Nil .AND. oCtrl:handle != hCtrl
          Eval( oCtrl:bRefresh, Self ) 
       ENDIF
-   ELSEIF  oCtrl:bRefresh != Nil
+   ELSEIF oCtrl:bRefresh != Nil
       Eval( oCtrl:bRefresh, Self )
    ENDIF  
    RETURN Nil
@@ -365,7 +365,7 @@ METHOD Refresh( lAll, oCtrl ) CLASS HCustomWindow
 
 METHOD SetTextClass( x ) CLASS HCustomWindow
 
-   IF  __ObjHasMsg( Self, "SETVALUE" ) .AND. ::winClass != "STATIC" .AND. ::winclass != "BUTTON" 
+   IF __ObjHasMsg( Self, "SETVALUE" ) .AND. ::winClass != "STATIC" .AND. ::winclass != "BUTTON" 
    ELSEIF __ObjHasMsg( Self, "SETTEXT" ) //.AND. ::classname != "HBUTTONEX"
       ::SetText( x )
    ELSE
@@ -533,12 +533,12 @@ METHOD RedefineScrollbars() CLASS HCustomWindow
 
    ::rect := GetClientRect( ::handle )
    IF ::nScrollBars > - 1 .AND. ::bScroll = Nil
-      IF  ::nVscrollPos = 0
+      IF ::nVscrollPos = 0
           ::ncurHeight := 0                                                              //* 4
           AEval( ::aControls, { | o | ::ncurHeight := INT( Max( o:nTop + o:nHeight + VERT_PTS * 1, ;
                                       ::ncurHeight ) ) } )
       ENDIF
-      IF  ::nHscrollPos = 0
+      IF ::nHscrollPos = 0
           ::ncurWidth  := 0                                                           // * 4
           AEval( ::aControls, { | o | ::ncurWidth := INT( Max( o:nLeft + o:nWidth  + HORZ_PTS * 1, ;
                                       ::ncurWidth ) ) } )
@@ -775,7 +775,7 @@ STATIC FUNCTION onCtlColor( oWnd, wParam, lParam )
 //lParam := HANDLETOPTR( lParam)
    oCtrl := oWnd:FindControl( , lParam )
 
-   IF  oCtrl != Nil .AND. !hb_IsNumeric(oCtrl)
+   IF oCtrl != Nil .AND. !hb_IsNumeric(oCtrl)
       IF oCtrl:tcolor != NIL
          SetTextColor( wParam, oCtrl:tcolor )
       ENDIF
@@ -798,7 +798,7 @@ STATIC FUNCTION onCtlColor( oWnd, wParam, lParam )
                 RETURN GetBackColorParent( oCtrl, , .T. ):handle
              ENDIF
              */
-             IF  __ObjHasMsg( oCtrl, "PAINT" ) .OR. oCtrl:lnoThemes .OR. ( oCtrl:winClass == "BUTTON"  .AND. oCtrl:classname != "HCHECKBUTTON" )
+             IF __ObjHasMsg( oCtrl, "PAINT" ) .OR. oCtrl:lnoThemes .OR. ( oCtrl:winClass == "BUTTON"  .AND. oCtrl:classname != "HCHECKBUTTON" )
                 RETURN GetStockObject( NULL_BRUSH )
              ENDIF
              RETURN GetBackColorParent( oCtrl, , .T. ):handle
@@ -854,7 +854,7 @@ STATIC FUNCTION onSize( oWnd, wParam, lParam )
       IF wParam != 1 .AND. ( oWnd:GETMDIMAIN() != Nil .AND. ! oWnd:GETMDIMAIN():IsMinimized() ) //SIZE_MINIMIZED 
          oWnd:nWidth  := aCoors[ 3 ] - aCoors[ 1 ]
          oWnd:nHeight := aCoors[ 4 ] - aCoors[ 2 ]
-         IF  oWnd:Type = WND_MDICHILD .AND. oWnd:GETMDIMAIN() != Nil .AND. wParam != 1 .AND. oWnd:GETMDIMAIN():WindowState = 2
+         IF oWnd:Type = WND_MDICHILD .AND. oWnd:GETMDIMAIN() != Nil .AND. wParam != 1 .AND. oWnd:GETMDIMAIN():WindowState = 2
              nWindowState := SW_SHOWMINIMIZED
          ENDIF 
       ENDIF
@@ -864,7 +864,7 @@ STATIC FUNCTION onSize( oWnd, wParam, lParam )
       oWnd:ResetScrollbars()
       oWnd:SetupScrollbars()
    ENDIF
-   IF  wParam != 1 .AND. nWindowState != 2
+   IF wParam != 1 .AND. nWindowState != 2
       IF !EMPTY( oWnd:Type) .AND. oWnd:Type = WND_MDI  .AND. ! EMPTY( oWnd:Screen )
          oWnd:Anchor( oWnd:Screen, nw1, nh1, oWnd:nWidth, oWnd:nHeight )
       ENDIF
@@ -1052,7 +1052,7 @@ FUNCTION GetBackColorParent( oCtrl, lSelf, lTransparent )
    IF lSelf == Nil .OR. ! lSelf
       oCtrl := oCtrl:oParent
    ENDIF
-   IF  oCtrl != Nil .AND. oCtrl:Classname = "HTAB"
+   IF oCtrl != Nil .AND. oCtrl:Classname = "HTAB"
        //-brush := HBrush():Add( bColor )
        IF Len( oCtrl:aPages ) > 0 .AND. oCtrl:Pages[ oCtrl:GETACTIVEPAGE() ]:bColor != Nil
           //-brush := oCtrl:Pages[ oCtrl:GetActivePage() ]:brush

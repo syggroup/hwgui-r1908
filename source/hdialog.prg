@@ -134,7 +134,7 @@ METHOD NEW( lType, nStyle, x, y, width, height, cTitle, oFont, bInit, bExit, bSi
    IF Hwg_Bitand( nStyle, WS_HSCROLL ) > 0
       ::nScrollBars ++
    ENDIF
-   IF  Hwg_Bitand( nStyle, WS_VSCROLL ) > 0
+   IF Hwg_Bitand( nStyle, WS_VSCROLL ) > 0
       ::nScrollBars += 2
    ENDIF
    ::lContainer := Hwg_Bitand( nStyle, DS_CONTROL ) > 0
@@ -192,7 +192,7 @@ METHOD Activate( lNoModal, bOnActivate, nShow ) CLASS HDialog
          ::lResult := .F.
          ::Add()
          Hwg_CreateDlgIndirect( hParent, Self, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::style )
-         IF  ::WindowState > SW_HIDE
+         IF ::WindowState > SW_HIDE
            //InvalidateRect( ::handle, 1 )
             //BRINGTOTOP( ::handle )
             //UPDATEWINDOW( ::handle )
@@ -229,7 +229,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HDialog
       aCoors := GetWindowRect( ::handle )
       ::nLeft := aCoors[ 1 ]
          ::nTop  := aCoors[ 2 ]
-    ELSEIF  msg = WM_UPDATEUISTATE .AND. HIWORD( wParam ) != UISF_HIDEFOCUS 
+    ELSEIF msg = WM_UPDATEUISTATE .AND. HIWORD( wParam ) != UISF_HIDEFOCUS 
       // prevent the screen flicker
        RETURN 1
    ELSEIF ! ::lActivated .AND. msg = WM_NCPAINT  
@@ -360,8 +360,8 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
    oDlg:lSuspendMsgsHandling := .F.
 
    oDlg:nInitFocus := IIF( hb_IsObject(oDlg:nInitFocus), oDlg:nInitFocus:Handle, oDlg:nInitFocus )
-   IF  ! EMPTY( oDlg:nInitFocus )
-      IF  PtrtouLong( oDlg:FindControl( , oDlg:nInitFocus ):oParent:Handle ) == PtrtouLong( oDlg:Handle )
+   IF ! EMPTY( oDlg:nInitFocus )
+      IF PtrtouLong( oDlg:FindControl( , oDlg:nInitFocus ):oParent:Handle ) == PtrtouLong( oDlg:Handle )
          SETFOCUS( oDlg:nInitFocus )
       ENDIF    
       nReturn := 0
@@ -369,7 +369,7 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
    
    uis := SendMESSAGE( oDlg:handle , WM_QUERYUISTATE, 0, 0 )
    // draw focus
-   IF  uis != 0 
+   IF uis != 0 
       // triggered to mouse
       SENDMESSAGE( oDlg:handle, WM_CHANGEUISTATE, makelong( UIS_CLEAR, UISF_HIDEACCEL ), 0 )  
    ELSE
@@ -670,7 +670,7 @@ STATIC FUNCTION onActivate( oDlg, wParam, lParam )
       SENDMessage( lParam, WM_NCACTIVATE, 1, Nil )
       RETURN 0
    ENDIF
-   IF  iParLow = WA_ACTIVE  .AND. SelfFocus( lParam, oDlg:Handle )
+   IF iParLow = WA_ACTIVE  .AND. SelfFocus( lParam, oDlg:Handle )
       IF hb_IsBlock(oDlg:bOnActivate)
         //- oDlg:lSuspendMsgsHandling := .T.
          Eval( oDlg:bOnActivate, oDlg )

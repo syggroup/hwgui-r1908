@@ -154,7 +154,7 @@ METHOD SetLabel( cCaption ) CLASS HProgressBar
 METHOD SetAnimation( nAnimation ) CLASS HProgressBar
 
    IF nAnimation != Nil
-       IF  nAnimation <= 0
+       IF nAnimation <= 0
           SendMessage( ::handle, PBM_SETMARQUEE, 0, Nil )
           MODIFYSTYLE( ::Handle, PBS_MARQUEE, 0 )
           SendMessage( ::handle, PBM_SETPOS, 0, 0)

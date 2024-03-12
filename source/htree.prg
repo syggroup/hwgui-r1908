@@ -390,7 +390,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
       RETURN 0
 
    ELSEIF msg = WM_KEYUP
-      IF  ProcKeyList( Self, wParam )
+      IF ProcKeyList( Self, wParam )
          RETURN 0
       ENDIF
 
@@ -431,7 +431,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
          ENDIF
       ENDIF
       // fazr a arotina para copias os nodos filhos ao arrastar
-      IF  ! IsCtrlShift( .T. )
+      IF ! IsCtrlShift( .T. )
          IF ::hitemDrop:oParent != Nil
             hitemNew := ::hitemDrop:oParent:AddNode( ::hitemDrag:GetText(), htiPrev ,htiNext, ::hitemDrag:bAction,, ::hitemDrag:lchecked, ::hitemDrag:bClick  ) //, ::hitemDrop:aImages )
          ELSE
@@ -452,7 +452,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
          Eval( ::bDrop, Self, hitemNew, ::hitemDrop )
       ENDIF
 
-   ELSEIF  ::lEditLabels .AND. ( ( msg = WM_LBUTTONDBLCLK .AND. ::bDblClick = Nil ) .OR. msg = WM_CHAR )
+   ELSEIF ::lEditLabels .AND. ( ( msg = WM_LBUTTONDBLCLK .AND. ::bDblClick = Nil ) .OR. msg = WM_CHAR )
       ::EditLabel( ::oSelected )
       RETURN 0
    ENDIF
@@ -501,7 +501,7 @@ METHOD SearchString( cText, iNivel, oNode, inodo ) CLASS HTree
          ( oNodeRet := ::SearchString( cText, iNivel, aItems[ i ], iNodo ) ) != Nil 
          RETURN oNodeRet
       ENDIF
-      IF  aItems[ i ]:Title = cText .AND. ( iNivel == Nil .OR. aItems[ i ]:GetLevel() = iNivel )
+      IF aItems[ i ]:Title = cText .AND. ( iNivel == Nil .OR. aItems[ i ]:GetLevel() = iNivel )
          iNodo ++ 
          RETURN aItems[ i ]
       ELSE

@@ -68,7 +68,7 @@ LOCAL oParent := Iif( oWndParent == Nil, ::oDefaultParent, oWndParent )
    IF Hwg_Bitand( nStyle,WS_HSCROLL ) > 0
       ::nScrollBars ++
    ENDIF
-    IF  Hwg_Bitand( nStyle,WS_VSCROLL ) > 0
+    IF Hwg_Bitand( nStyle,WS_VSCROLL ) > 0
       ::nScrollBars += 2
     ENDIF
 
@@ -190,7 +190,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
          RETURN -1
       ENDIF
    ENDIF
-   IF  msg = WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. ;
+   IF msg = WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. ;
        ( SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), ::Handle  ) .OR. ;
          SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), GetParent( ::Handle ) ) )
       GetSkip( ::oParent, ::GetParentForm():nInitFocus , , IIF( SelfFocus( ::GetParentForm():nInitFocus, ::Handle ), 1, 0 ) )
@@ -202,7 +202,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
    ELSEIF msg = WM_KEYUP
        IF wParam = VK_DOWN
           getskip( ::oparent, ::handle, , 1 )
-       ELSEIF   wParam = VK_UP
+       ELSEIF wParam = VK_UP
           getskip( ::oparent, ::handle, , -1 )
        ELSEIF wParam = VK_TAB
           GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
@@ -213,7 +213,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
       IF msg == WM_HSCROLL .OR. msg == WM_VSCROLL .or. msg == WM_MOUSEWHEEL
          IF ::nScrollBars != -1 .AND. ::bScroll = Nil
              ::ScrollHV( Self, msg, wParam, lParam )
-             IF  msg == WM_MOUSEWHEEL
+             IF msg == WM_MOUSEWHEEL
                  RETURN 0
              ENDIF
          ENDIF
@@ -250,7 +250,7 @@ LOCAL pps, hDC, aCoors, oPenLight, oPenGray
    ENDIF
    ::nrePaint := -1
    IF ::nScrollBars = - 1
-      IF  ! ::lBorder
+      IF ! ::lBorder
          oPenLight := HPen():Add( BS_SOLID, 1, GetSysColor( COLOR_3DHILIGHT ) )
          oPenGray := HPen():Add( BS_SOLID, 1, GetSysColor( COLOR_3DSHADOW) )
 

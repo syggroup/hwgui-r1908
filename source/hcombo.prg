@@ -479,7 +479,7 @@ METHOD Requery() CLASS HComboBox
    NEXT
    */
    //::Refresh()
-   IF  Empty( ::Value ) .AND. LEN( ::aItems ) > 0 .AND. ::bSetGet = Nil .AND. !::lEdit
+   IF Empty( ::Value ) .AND. LEN( ::aItems ) > 0 .AND. ::bSetGet = Nil .AND. !::lEdit
       ::SetItem( 1 )
    ENDIF
 
@@ -496,7 +496,7 @@ METHOD Refresh() CLASS HComboBox
       IF ::columnBound = 2
           vari := ::GetValueBound( vari )
       ENDIF
-      IF  ::columnBound = 1
+      IF ::columnBound = 1
          IF ::lText
          //vari := IIF( ::bSetGetField != Nil  .AND. hb_IsChar(vari), TRIM( vari ), vari )
             ::value := Iif( vari==Nil .OR. !hb_IsChar(vari), "", vari )
@@ -786,7 +786,7 @@ METHOD onChange( lForce ) CLASS HComboBox
    IF !SelfFocus( ::handle ) .AND. Empty( lForce )
       RETURN Nil
    ENDIF
-   IF  !isWindowVisible( ::handle)
+   IF !isWindowVisible( ::handle)
       ::SetItem( ::Value )
       RETURN Nil
    ENDIF
@@ -853,7 +853,7 @@ METHOD Valid() CLASS HComboBox
    LOCAL hCtrl := getfocus()
    LOCAL ltab := GETKEYSTATE( VK_TAB ) < 0
 
-   IF  ::lNoValid .OR. !CheckFocus( Self, .T. )
+   IF ::lNoValid .OR. !CheckFocus( Self, .T. )
       RETURN .T.
    ENDIF
 
@@ -963,7 +963,7 @@ METHOD Populate() CLASS HComboBox
          ENDIF
          ComboAddString( ::handle, ::aItems[i] )
          numofchars := SendMessage( ::handle, CB_GETLBTEXTLEN, i - 1, 0 )
-         IF  numofchars > LongComboWidth
+         IF numofchars > LongComboWidth
              LongComboWidth := numofchars
          ENDIF
          ( cAlias ) ->( DBSKIP() )
@@ -986,7 +986,7 @@ METHOD Populate() CLASS HComboBox
              ComboAddString( ::handle, ::aItems[i] )
           ENDIF
           numofchars := SendMessage(::handle,CB_GETLBTEXTLEN, i - 1, 0 )
-          if  numofchars > LongComboWidth
+          if numofchars > LongComboWidth
               LongComboWidth := numofchars
           endif
        NEXT

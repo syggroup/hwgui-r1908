@@ -147,7 +147,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
 
    ::DisableBackColor := bDisablecolor
    // defines the number of characters based on the size of control
-   IF  EMPTY( ::nMaxLength ) .AND. ::cType = "C" .AND. Empty( cPicture ) .AND. Hwg_BitAnd( nStyle, ES_AUTOHSCROLL ) = 0
+   IF EMPTY( ::nMaxLength ) .AND. ::cType = "C" .AND. Empty( cPicture ) .AND. Hwg_BitAnd( nStyle, ES_AUTOHSCROLL ) = 0
        nWidth :=  ( TxtRect( " ", Self ) )[ 1 ]
        ::nMaxLength := INT( ( ::nWidth - nWidth ) / nWidth ) - 1
        ::nMaxLength := IIF( ::nMaxLength < 10, 10, ::nMaxLength )
@@ -262,7 +262,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
                    ! ::GetParentForm():lModal )
                    GetSkip( oParent, ::handle, , 1 )
                   RETURN 0
-               ELSEIF  ::GetParentForm():Type < WND_DLG_RESOURCE
+               ELSEIF ::GetParentForm():Type < WND_DLG_RESOURCE
                   RETURN 0   
                ENDIF
                RETURN -1
@@ -410,7 +410,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
                //SetFocus( nexthandle )
                PostMessage( GetActiveWindow(), WM_NEXTDLGCTL, nextHandle, 1 )
                RETURN 0
-            ELSEIF  ( wParam == VK_RETURN .OR. wParam == VK_ESCAPE ).AND. ProcOkCancel( Self, wParam, ::GetParentForm():Type >= WND_DLG_RESOURCE )   
+            ELSEIF ( wParam == VK_RETURN .OR. wParam == VK_ESCAPE ).AND. ProcOkCancel( Self, wParam, ::GetParentForm():Type >= WND_DLG_RESOURCE )   
                RETURN - 1
             ELSEIF ( wParam == VK_RETURN .OR. wParam == VK_TAB ) .AND. ::GetParentForm():Type < WND_DLG_RESOURCE
                GetSkip( oParent, ::handle, , 1 )
@@ -811,7 +811,7 @@ METHOD DeleteChar( lBack ) CLASS HEdit
              RETURN Nil
           ENDIF
       ENDIF
-      IF  ::lPicComplex .AND. ::cType != "N" .AND. ::FirstNotEditable( nPosStart ) > 0 .AND. ;
+      IF ::lPicComplex .AND. ::cType != "N" .AND. ::FirstNotEditable( nPosStart ) > 0 .AND. ;
                ( !lBack  .OR. ( lBack .AND. nPosEnd - nPosStart - 1 < 2 ))
          nPosEdit := ::FirstNotEditable( nPosStart  )
          nGetLen := Len( Trim( LEFT( ::title,  nPosEdit - 1 ) ) )
@@ -838,7 +838,7 @@ METHOD DeleteChar( lBack ) CLASS HEdit
    */
    IF lBack .AND. ::lPicComplex .AND. ::cType != "N" .AND. ( nPosStart + nPosEnd > 0 )
       IF lBack .or. nPosStart != ( nPosEnd - 2 )
-         IF  nPosStart != ( nPosEnd - 2 )
+         IF nPosStart != ( nPosEnd - 2 )
             cBuf := Left( ::title, nPosStart ) + Space( nPosEnd - nPosStart - 1 ) + SubStr( ::title, nPosEnd )
          ENDIF
       ELSE
@@ -1023,7 +1023,7 @@ METHOD GetApplyKey( cKey ) CLASS HEdit
          ENDIF
          IF ! Empty( SendMessage( ::handle, EM_GETPASSWORDCHAR, 0, 0 ) )
             ::title := Left( ::title, nPos - 1 ) + cKey + Trim( SubStr( ::title, nPos + 1 ) )
-            IF  !empty( ::nMaxLength ) .AND. LEN( TRIM( ::GetText() ) ) = ::nMaxLength
+            IF !empty( ::nMaxLength ) .AND. LEN( TRIM( ::GetText() ) ) = ::nMaxLength
                   ::title := PadR( ::title, ::nMaxLength )
             ENDIF
             nLen := LEN( TRIM( ::GetText() ) )
@@ -1514,7 +1514,7 @@ FUNCTION GetSkip( oParent, hCtrl, lClipper, nSkip )
    ENDIF
    IF nSkip != 0 .AND. SELFFOCUS( hctrl, nextHandle ) .AND. oCtrl != Nil
      // necessario para executa um codigo do lostfcosu
-      IF  __ObjHasMsg(oCtrl,"BLOSTFOCUS") .AND. oCtrl:blostfocus != Nil
+      IF __ObjHasMsg(oCtrl,"BLOSTFOCUS") .AND. oCtrl:blostfocus != Nil
          sendmessage( nexthandle, WM_KILLFOCUS, 0,  0)
       ENDIF
    ENDIF
@@ -1531,7 +1531,7 @@ STATIC FUNCTION NextFocusTab( oParent, hCtrl, nSkip )
          i += IIf( i == 0, nFirst, nSkip ) //nLast, nSkip)
          IF i >= nFirst .and. i <= nLast
             nextHandle := GetNextDlgTabItem ( oParent:handle , hCtrl, ( nSkip < 0 ) )
-            IF  i != AScan( oParent:aControls, { | o | o:handle == nextHandle } ) .AND. oParent:aControls[ i ]:CLASSNAME = "HRADIOB"
+            IF i != AScan( oParent:aControls, { | o | o:handle == nextHandle } ) .AND. oParent:aControls[ i ]:CLASSNAME = "HRADIOB"
                nextHandle := GetNextDlgGroupItem( oParent:handle , hCtrl, ( nSkip < 0 ) )
             ENDIF
             k := AScan( oParent:acontrols, { | o | o:Handle == nextHandle } )
@@ -1596,7 +1596,7 @@ STATIC FUNCTION NextFocus( oParent, hCtrl, nSkip )
    //IF oParent:Type = WND_DLG_RESOURCE
       nextHandle := GetNextDlgTabItem( nWindow , hctrl,( nSkip < 0 ) )
    //ELSE
-      IF  lHradio .OR.  lGroup
+      IF lHradio .OR.  lGroup
          nexthandle := GetNextDlgGroupItem( nWindow , hctrl,( nSkip < 0 ) )
          i := AScan( oParent:aControls, { | o | PtrtouLong( o:Handle ) == PtrtouLong( nextHandle ) } )
          lnoTabStop := !( i > 0 .AND. oParent:aControls[ i ]:CLASSNAME = "HRADIOB")
@@ -1634,7 +1634,7 @@ STATIC FUNCTION NextFocusContainer(oParent,hCtrl,nSkip)
    IF oParent:Type = WND_DLG_RESOURCE
       nexthandle := GetNextDlgGroupItem( oParent:handle , hctrl,( nSkip < 0 ) )
    ELSE
-      IF  lHradio .OR.  lGroup
+      IF lHradio .OR.  lGroup
          nextHandle := GetNextDlgGroupItem( nWindow , hCtrl,( nSkip < 0 ) )
          i := AScan( oParent:aControls, { | o | o:Handle == nextHandle } )
          lnoTabStop := !( i > 0 .AND. oParent:aControls[ i ]:CLASSNAME = "HRADIOB")  //Hwg_BitAND( HWG_GETWINDOWSTYLE( nexthandle ), WS_TABSTOP ) = 0
@@ -1691,7 +1691,7 @@ FUNCTION SetDisableBackColor( lDef, bcolor )
         bDisablecolor := Nil
       RETURN .F.
    ENDIF
-   IF  Empty( bColor )
+   IF Empty( bColor )
       bDisablecolor :=  IIF( Empty( bDisablecolor ), GetSysColor( COLOR_BTNHIGHLIGHT ), bDisablecolor )
    ELSE
       bDisablecolor :=  bColor
@@ -1741,7 +1741,7 @@ FUNCTION CheckFocus( oCtrl, lInside )
 
 FUNCTION WhenSetFocus( oCtrl, nSkip ) 
 
-   IF  SelfFocus( oCtrl:Handle ) .OR. EMPTY( GetFocus() )
+   IF SelfFocus( oCtrl:Handle ) .OR. EMPTY( GetFocus() )
        GetSkip( oCtrl:oParent, oCtrl:handle, , nSkip )
    ENDIF   
    RETURN Nil

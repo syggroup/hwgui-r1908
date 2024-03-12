@@ -145,10 +145,10 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HDatePicker
          RETURN 0
         ENDIF
     ELSEIF msg = WM_KEYDOWN
-        IF  ProcKeyList( Self, wParam )
+        IF ProcKeyList( Self, wParam )
            RETURN 0
         ENDIF
-   ELSEIF  msg = WM_GETDLGCODE
+   ELSEIF msg = WM_GETDLGCODE
       IF wParam = VK_TAB //.AND.  ::GetParentForm( Self ):Type < WND_DLG_RESOURCE
         // GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
          RETURN DLGC_WANTTAB

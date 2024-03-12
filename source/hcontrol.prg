@@ -250,7 +250,7 @@ METHOD DisableBackColor( DisableBColor )
          ::Disablebrush:Release()
       ENDIF
       ::Disablebrush := HBrush():Add( ::DisableBColor )
-      IF  ! ::IsEnabled() .AND. IsWindowVisible( ::Handle )
+      IF ! ::IsEnabled() .AND. IsWindowVisible( ::Handle )
          InvalidateRect( ::Handle, 0 )
       ENDIF
    ENDIF
@@ -476,7 +476,7 @@ METHOD onAnchor( x, y, w, h ) CLASS HControl
       y1 := y9
    ENDIF
    // REDRAW AND INVALIDATE SCREEN
-   IF  ( x1 != X9 .OR. y1 != y9 .OR. w1 != w9 .OR. h1 != h9 )
+   IF ( x1 != X9 .OR. y1 != y9 .OR. w1 != w9 .OR. h1 != h9 )
       IF isWindowVisible( ::handle )
          IF ( x1 != x9 .or. y1 != y9 ) .AND. x9 < ::oParent:nWidth
                    InvalidateRect( ::oParent:handle, 1, MAX( x9 - 1, 0 ), MAX( y9 - 1, 0 ), ;
@@ -497,7 +497,7 @@ METHOD onAnchor( x, y, w, h ) CLASS HControl
          IF ( ( x1 != x9 .OR. y1 != y9 ) .AND. ( ISBLOCK( ::bPaint ) .OR. ;
                       x9 + w9 > ::oParent:nWidth ) ) .OR. ( ::backstyle = TRANSPARENT .AND. ;
                     ( ::Title != Nil .AND. ! Empty( ::Title ) ) ) .OR. __ObjHasMsg( Self,"oImage" )
-             IF  __ObjHasMsg( Self, "oImage" ) .OR.  ::backstyle = TRANSPARENT //.OR. w9 != w1
+             IF __ObjHasMsg( Self, "oImage" ) .OR.  ::backstyle = TRANSPARENT //.OR. w9 != w1
                 InvalidateRect( ::oParent:handle, 1, MAX( x1 - 1, 0 ), MAX( y1 - 1, 0 ), x1 + w1 + 1 , y1 + h1 + 1 )
              ELSE
                 RedrawWindow( ::handle, RDW_NOERASE + RDW_INVALIDATE + RDW_INTERNALPAINT )
@@ -643,7 +643,7 @@ METHOD StatusHeight( nHeight  ) CLASS HStatus
    IF nHeight != Nil
       aCoors := GetWindowRect( ::handle )
       IF nHeight != 0
-         IF  ::lInit .AND. __ObjHasMsg( ::oParent, "AOFFSET" )
+         IF ::lInit .AND. __ObjHasMsg( ::oParent, "AOFFSET" )
             ::oParent:aOffset[ 4 ] -= ( aCoors[ 4 ] - aCoors[ 2 ] )
          ENDIF
          SendMessage( ::handle,;           // (HWND) handle to destination control
@@ -853,7 +853,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS  HStatic
    ELSEIF msg = WM_KEYUP
       IF wParam = VK_DOWN
          getskip( ::oparent, ::handle,, 1 )
-      ELSEIF   wParam = VK_UP
+      ELSEIF wParam = VK_UP
          getskip( ::oparent, ::handle,, - 1 )
       ELSEIF wParam = VK_TAB
          GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
@@ -879,7 +879,7 @@ METHOD SetValue( cValue ) CLASS HStatic
        IF ::backstyle = TRANSPARENT .AND. ::Title != cValue .AND. isWindowVisible( ::handle ) 
           RedrawWindow( ::oParent:Handle, RDW_NOERASE + RDW_INVALIDATE + RDW_ERASENOW, ::nLeft, ::nTop, ::nWidth , ::nHeight )
           InvalidateRect( ::oParent:Handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight  )
-       ENDIF   
+       ENDIF
        SetDlgItemText( ::oParent:handle, ::id, cValue )
    ELSEIF ::backstyle != TRANSPARENT       
       SetDlgItemText( ::oParent:handle, ::id, cValue )
@@ -907,7 +907,7 @@ METHOD Paint( lpDis ) CLASS HStatic
 
    // Set transparent background
    SetBkMode( dc, ::backstyle )
-   IF  ::BackStyle = OPAQUE
+   IF ::BackStyle = OPAQUE
       brBackground := IIF( ! EMPTY( ::brush ), ::brush, ::hBrushDefault )
       FillRect( dc, client_rect[ 1 ], client_rect[ 2 ], client_rect[ 3 ], client_rect[ 4 ], brBackground:handle )
    ENDIF
@@ -1087,12 +1087,12 @@ METHOD onevent( msg, wParam, lParam ) CLASS HButton
           SENDMESSAGE( ::handle, BM_SETSTYLE , BS_PUSHBUTTON , 1 )
        ENDIF
    ELSEIF msg = WM_KEYDOWN
-      IF  ( wParam == VK_RETURN   .OR. wParam == VK_SPACE )
+      IF ( wParam == VK_RETURN   .OR. wParam == VK_SPACE )
          SendMessage( ::handle, WM_LBUTTONDOWN, 0, MAKELPARAM( 1, 1 ) )
          RETURN 0
       ENDIF
       IF ! ProcKeyList( Self, wParam )
-         IF  wParam = VK_TAB
+         IF wParam = VK_TAB
             GetSkip( ::oparent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1)  )
             RETURN 0
          ELSEIF wParam = VK_LEFT .OR. wParam = VK_UP
@@ -1108,7 +1108,7 @@ METHOD onevent( msg, wParam, lParam ) CLASS HButton
          SendMessage( ::handle, WM_LBUTTONUP, 0, MAKELPARAM( 1, 1 ) )
          RETURN 0
       ENDIF
-   ELSEIF  msg = WM_GETDLGCODE .AND. ! EMPTY( lParam )
+   ELSEIF msg = WM_GETDLGCODE .AND. ! EMPTY( lParam )
       IF wParam = VK_RETURN .OR. wParam = VK_TAB
       ELSEIF GETDLGMESSAGE( lParam ) = WM_KEYDOWN .AND.wParam != VK_ESCAPE
       ELSEIF GETDLGMESSAGE( lParam ) = WM_CHAR .OR.wParam = VK_ESCAPE
@@ -1168,7 +1168,7 @@ METHOD NoteCaption( cNote ) CLASS HButton         //*
 METHOD onGetFocus() CLASS HButton
    LOCAL res := .T., nSkip
 
-   IF  ! CheckFocus( Self, .F. ) .OR. ::bGetFocus = Nil
+   IF ! CheckFocus( Self, .F. ) .OR. ::bGetFocus = Nil
       RETURN .T.
    ENDIF
    IF hb_IsBlock(::bGetFocus)
@@ -1468,14 +1468,14 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
       ELSEIF wParam == VK_RIGHT .OR. wParam == VK_DOWN
          GetSkip( ::oParent, ::handle, , 1 )
          RETURN 0
-      ELSEIF  wParam = VK_TAB
+      ELSEIF wParam = VK_TAB
          GetSkip( ::oparent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1)  )
       ENDIF
       ProcKeyList( Self, wParam )
 
    ELSEIF msg == WM_SYSKEYUP .OR. ( msg == WM_KEYUP .AND.;
                      ASCAN( { VK_SPACE, VK_RETURN, VK_ESCAPE }, wParam ) = 0 )
-     IF   CheckBit( lParam, 23 ) .AND. ( wParam > 95 .AND. wParam < 106 ) 
+     IF CheckBit( lParam, 23 ) .AND. ( wParam > 95 .AND. wParam < 106 ) 
         wParam -= 48
      ENDIF
      IF ! EMPTY( ::title) .AND. ( pos := At( "&", ::title ) ) > 0 .AND. wParam == Asc( Upper( SubStr( ::title, ++ pos, 1 ) ) )
@@ -1834,7 +1834,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
          itemRect[ 1 ] := ( ::nWidth - aBmpSize[ 1 ] ) /  2
          itemRect[ 2 ] := IIF( ::PictureMargin = 0, ( ( ( ::nHeight - ( nHeight + aBmpSize[ 2 ] + 1 ) ) / 2 ) ), ::PictureMargin )
       ENDIF
-   ELSEIF  ! EMPTY( ::caption )
+   ELSEIF ! EMPTY( ::caption )
       nHeight := aTxtSize[ 2 ] //nHeight := IIF( lMultiLine, DrawText( dc, ::caption, itemRect,  DT_CALCRECT + DT_WORDBREAK ), aTxtSize[ 2 ] )
    ENDIF
 
@@ -1937,8 +1937,8 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
 
       IF ::Themed
 
-         IF  ( hb_IsNumeric(::hicon) .OR. hb_IsNumeric(::hbitmap) )
-             IF  lMultiLine  .OR. ::iStyle = ST_ALIGN_OVERLAP
+         IF ( hb_IsNumeric(::hicon) .OR. hb_IsNumeric(::hbitmap) )
+             IF lMultiLine  .OR. ::iStyle = ST_ALIGN_OVERLAP
                  captionRect := aclone( savecaptionRect )
              ENDIF
          ELSEIF lMultiLine
@@ -2008,8 +2008,8 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
                 DrawTheIcon( ::handle, dc, bHasTitle, @itemRect1, @captionRect1, bIsPressed, bIsDisabled, ::hIcon, ::hbitmap, ::iStyle )
             ENDIF
 
-            IF  ( hb_IsNumeric(::hicon) .OR. hb_IsNumeric(::hbitmap) )
-                IF  lmultiline  .OR. ::iStyle = ST_ALIGN_OVERLAP
+            IF ( hb_IsNumeric(::hicon) .OR. hb_IsNumeric(::hbitmap) )
+                IF lmultiline  .OR. ::iStyle = ST_ALIGN_OVERLAP
                    captionRect := aclone( savecaptionRect )
                 ENDIF
             ELSEIF lMultiLine
@@ -2108,11 +2108,11 @@ METHOD Activate() CLASS HGroup
 METHOD Init() CLASS HGroup
    LOCAL nbs
 
-   IF  ! ::lInit
+   IF ! ::lInit
       ::Super:Init()
 
       //-IF ::backStyle = TRANSPARENT .OR. ::bColor != Nil
-      IF  ::oBrush != Nil .OR. ::backStyle = TRANSPARENT 
+      IF ::oBrush != Nil .OR. ::backStyle = TRANSPARENT 
          nbs := HWG_GETWINDOWSTYLE( ::handle )
          nbs := modstyle( nbs, BS_TYPEMASK , BS_OWNERDRAW + WS_DISABLED )
          HWG_SETWINDOWSTYLE ( ::handle, nbs )
@@ -2159,7 +2159,7 @@ METHOD PAINT( lpdis ) CLASS HGroup
     iUpDist := ( aSize[ 2 ] / 2 )
    dwStyle := ::Style //HWG_GETWINDOWSTYLE( ::handle ) //GetStyle();
    rcText := { 0, rc[ 2 ] + iUpDist , 0, rc[ 2 ] + iUpDist  }
-   IF  Empty( szText )
+   IF Empty( szText )
     ELSEIF hb_BitAnd( dwStyle, BS_CENTER ) == BS_RIGHT // right aligned
       rcText[ 3 ] := rc[ 3 ] + 2 - OFS_X  
       rcText[ 1 ] := rcText[ 3 ] - aSize[ 1 ]

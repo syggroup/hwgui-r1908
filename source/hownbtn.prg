@@ -289,7 +289,7 @@ METHOD Paint() CLASS HOwnButton
          ENDIF
          ::hTheme := IIF( EMPTY( ::hTheme  ), Nil, ::hTheme )
       ENDIF
-      IF  Empty( ::hTheme )
+      IF Empty( ::hTheme )
          ::Themed := .F.
       ENDIF
    ENDIF
@@ -332,7 +332,7 @@ METHOD Paint() CLASS HOwnButton
    ELSE
       IF ::Themed
          //SetBkMode( hdc, TRANSPARENT )
-         IF  SelfFocus( ::handle, GetFocus() ) .AND. ::lCheck
+         IF SelfFocus( ::handle, GetFocus() ) .AND. ::lCheck
             hb_DrawThemeBackground( ::hTheme, hdc, BP_PUSHBUTTON, PBS_PRESSED, aCoors, Nil )
          ELSE //IF ::state != OBTN_NORMAL
             hb_DrawThemeBackground( ::hTheme, hdc, BP_PUSHBUTTON, state, aCoors, Nil )
@@ -445,7 +445,7 @@ METHOD MDown() CLASS HOwnButton
       SendMessage( ::Handle, WM_SETFOCUS, 0, 0 )
       InvalidateRect( ::handle, 0 )
       RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
-   ELSEIF  ::lCheck
+   ELSEIF ::lCheck
       ::state := OBTN_NORMAL
       InvalidateRect( ::handle, 0 )
       PostMessage( ::handle, WM_PAINT, 0, 0 )

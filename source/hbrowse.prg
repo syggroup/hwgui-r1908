@@ -138,7 +138,7 @@ METHOD New( cHeading, block, Type, length, dec, lEditable, nJusHead, nJusLin, cP
 METHOD Visible( lVisible ) CLASS HColumn
 
    IF lVisible != Nil
-     IF  ! lVisible
+     IF ! lVisible
         ::Hide()
      ELSE
         ::Show()
@@ -1584,7 +1584,7 @@ METHOD InitBrw( nType, lInit ) CLASS HBrowse
 METHOD FILTER( lFilter ) CLASS HBrowse
 
    IF lFilter != Nil .AND. ::Type == BRW_DATABASE
-      IF  EMPTY( ::Alias )
+      IF EMPTY( ::Alias )
         ::Alias   := Alias()
       ENDIF
       IF ! EMPTY( ::Alias ) .AND. SELECT( ::Alias ) > 0
@@ -2024,7 +2024,7 @@ METHOD Paint( lLostFocus ) CLASS HBrowse
 
    // Highlights the selected ROW
    // we can have a modality with CELL selection only or ROW selection
-   IF  !::lHeadClick  .AND. ( ! ::lEditable .OR. ( ::lEditable .AND. ::Highlight ) ) // .AND.! ::lResizing
+   IF !::lHeadClick  .AND. ( ! ::lEditable .OR. ( ::lEditable .AND. ::Highlight ) ) // .AND.! ::lResizing
       ::LineOut( ::rowPos, 0, hDC, ! ::lResizing )
    ENDIF
    // Highligths the selected cell
@@ -2219,7 +2219,7 @@ METHOD HeaderOut( hDC ) CLASS HBrowse
             captionRect[ 2 ] := ( ::nHeadHeight + 17 ) / 2 - 17
             IF oColumn:nJusHead - DT_VCENTER - DT_SINGLELINE  ==  DT_RIGHT .OR. xSize < aTxtSize[ 1 ] + nMd
                DrawTransparentBitmap( hDC, oBmpSort:Handle, captionRect[ 1 ] + ( captionRect[ 3 ] - captionRect[ 1 ]  ) ,captionRect[ 2 ] + 2, , )
-            ELSEIF  oColumn:nJusHead - DT_VCENTER - DT_SINGLELINE  ==  DT_CENTER
+            ELSEIF oColumn:nJusHead - DT_VCENTER - DT_SINGLELINE  ==  DT_CENTER
                CaptionRect[ 1 ] := captionRect[ 1 ] + ( captionRect[ 3 ] - captionRect[ 1 ] + aTxtSize[ 1 ] ) / 2  +  ;
                    MIN( ( x + xSize - ( 1 + ::aMargin[ 2 ] ) ) - ( captionRect[ 1 ] + ( captionRect[ 3 ] - captionRect[ 1 ] + aTxtSize[ 1 ] ) / 2   ) - 16, 8 )
                DrawBitmap( hDC, oBmpSort:Handle,, captionRect[ 1 ] - 1 , captionRect[ 2 ]  , , )
@@ -3268,7 +3268,7 @@ IF nLine > 0 .AND. nLine <= ::rowCurrCount
       InvalidateRect( ::handle, 0, ::x1 - ::nShowMark - ::nDeleteMark, ::y1 + ( ::height + 1 ) * ::rowPos - ::height, ::xAdjRight , ::y1 + ( ::height + 1 ) * ::rowPos )
    ENDIF
    ::fipos := Min( ::colpos + ::nLeftCol - 1 - ::freeze, Len( ::aColumns ) )
-   IF  ::aColumns[ ::fipos ]:Type = "L"
+   IF ::aColumns[ ::fipos ]:Type = "L"
       ::EditLogical( WM_LBUTTONDOWN )
    ENDIF
 
@@ -3295,7 +3295,7 @@ ELSEIF nLine == 0
       ::lHeadClick := .T.
    ENDIF
 ENDIF
-   IF  ( PtrtouLong( GetActiveWindow() ) = PtrtouLong( ::GetParentForm():Handle )  .OR. ;
+   IF ( PtrtouLong( GetActiveWindow() ) = PtrtouLong( ::GetParentForm():Handle )  .OR. ;
        ::GetParentForm():Type < WND_DLG_RESOURCE )
        ::SetFocus()
        ::RefreshLine()
@@ -3344,14 +3344,14 @@ METHOD ButtonUp( lParam ) CLASS HBrowse
          ENDIF
       ENDIF
    ENDIF
-   IF  ::lHeadClick
+   IF ::lHeadClick
       AEVAL( ::aColumns,{ | c | c:lHeadClick := .F. } )
       InvalidateRect( ::handle, 0, ::x1, ::y1 - ::nHeadHeight * ::nHeadRows, ::x2, ::y1 )
       ::lHeadClick := .F.
      Hwg_SetCursor( downCursor )
    ENDIF
    /*
-   IF  PtrtouLong( GetActiveWindow() ) = PtrtouLong( ::GetParentForm():Handle )  .OR. ;
+   IF PtrtouLong( GetActiveWindow() ) = PtrtouLong( ::GetParentForm():Handle )  .OR. ;
        ::GetParentForm():Type < WND_DLG_RESOURCE
        ::SetFocus()
    ENDIF
@@ -3551,9 +3551,9 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
    fipos := Min( ::colpos + ::nLeftCol - 1 - ::freeze, Len( ::aColumns ) )
    ::fiPos := fipos
 
-   //IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ;
+   //IF ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ;
    //   ( ::bEnter == Nil .OR. ( hb_IsLogical(lRes := Eval( ::bEnter, Self, fipos )) .AND. ! lRes ) )
-   IF  ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ( ! ::onClick()  )
+   IF ( ! Eval( ::bEof, Self ) .OR. ::lAppMode ) .AND. ( ! ::onClick()  )
       oColumn := ::aColumns[ fipos ]
       IF ::Type == BRW_DATABASE
          ::varbuf := ( ::Alias ) ->( Eval( oColumn:block,, Self, fipos ) )
@@ -3597,7 +3597,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
             fif := IIf( fif = ::freeze, ::nLeftCol, fif + 1 )
          ENDDO
          nWidth := Min( ::aColumns[ fif ]:width, ::x2 - x1 - 1 )
-         IF  fif =  Len( ::aColumns )
+         IF fif =  Len( ::aColumns )
             nWidth := Min( ::nWidthColRight, ::x2 - x1 - 1 )
          ENDIF
          rowPos := ::rowPos - 1
@@ -3811,11 +3811,11 @@ METHOD EditLogical( wParam, lParam ) CLASS HBrowse
 
    HB_SYMBOL_UNUSED(lParam)
 
-      IF  ! ::aColumns[ ::fipos ]:lEditable
+      IF ! ::aColumns[ ::fipos ]:lEditable
           RETURN .F.
       ENDIF
 
-      IF  ::aColumns[ ::fipos ]:bWhen != Nil
+      IF ::aColumns[ ::fipos ]:bWhen != Nil
          ::oparent:lSuspendMsgsHandling := .T.
          ::varbuf := Eval( ::aColumns[ ::fipos ]:bWhen, ::aColumns[ ::fipos ], ::varbuf )
          ::oparent:lSuspendMsgsHandling := .F.
@@ -3843,7 +3843,7 @@ METHOD EditLogical( wParam, lParam ) CLASS HBrowse
 
       ::lUpdated := .T.
       ::RefreshLine()
-      IF  ::aColumns[ ::fipos ]:bValid != Nil
+      IF ::aColumns[ ::fipos ]:bValid != Nil
          ::oparent:lSuspendMsgsHandling := .T.
          Eval( ::aColumns[ ::fipos ]:bValid, ! ::varbuf, ::aColumns[ ::fipos ] ) //, ::varbuf )
         ::oparent:lSuspendMsgsHandling := .F.
@@ -4040,7 +4040,7 @@ METHOD BrwScrollVPos() CLASS HBrowse
 
    IF ! lDisableVScrollPos .AND. ( ( ! ::lFilter .AND. Empty( ( ::Alias ) ->( DBFILTER() ) ) ) .OR. ! EMPTY( ::RelationalExpr ) )
       nRecCount := Eval( ::bRcou, Self ) //IIF( ( ::Alias ) ->( IndexOrd() ) = 0, , OrdKeyCount() )
-      IF  ::nRecCount != nRecCount .OR. nIndexOrd != ::nIndexOrd  .OR. ::Alias != Alias()
+      IF ::nRecCount != nRecCount .OR. nIndexOrd != ::nIndexOrd  .OR. ::Alias != Alias()
          ::nRecCount := nRecCount
          ::nIndexOrd := nIndexOrd
          nrecno := ( ::Alias ) ->( RecNo() )
@@ -4332,7 +4332,7 @@ STATIC FUNCTION FltSkip( oBrw, nLines, lDesc )
    IF nLines > 0
       FOR n := 1 TO nLines
          ( oBrw:Alias )->( DBSKIP( IIF( lDesc, - 1, + 1 ) ) )
-         IF  EMPTY( oBrw:RelationalExpr )
+         IF EMPTY( oBrw:RelationalExpr )
             DO WHILE ( oBrw:Alias )->( ! Eof() ) .AND. Eval( oBrw:bWhile, oBrw ) .AND. ! Eval( oBrw:bFor, oBrw )
               //SKIP IF( lDesc, - 1, + 1 )
                ( oBrw:Alias )->( DBSKIP( IIF( lDesc, - 1, + 1 ) ) )
@@ -4351,7 +4351,7 @@ STATIC FUNCTION FltSkip( oBrw, nLines, lDesc )
             //SKIP IF( lDesc, + 1, - 1 )
             ( oBrw:Alias )->( DBSKIP( IIF( lDesc, + 1, - 1 ) ) )
          ENDIF
-         IF  EMPTY( oBrw:RelationalExpr )
+         IF EMPTY( oBrw:RelationalExpr )
          DO WHILE ! ( oBrw:Alias )->( Bof() ) .AND. Eval( oBrw:bWhile, oBrw ) .AND. ! Eval( oBrw:bFor, oBrw )
             //SKIP IF( lDesc, + 1, - 1 )
             ( oBrw:Alias )->( DBSKIP( IIF( lDesc, + 1, - 1 ) ) )
@@ -4366,7 +4366,7 @@ STATIC FUNCTION FltGoTop( oBrw )
    IF oBrw:nFirstRecordFilter == 0
       Eval( oBrw:bFirst )
       IF ( oBrw:Alias )-> ( ! Eof() )
-         IF  EMPTY( oBrw:RelationalExpr )
+         IF EMPTY( oBrw:RelationalExpr )
             DO WHILE ( oBrw:Alias )->( ! Eof() ) .AND. ! ( Eval( oBrw:bWhile, oBrw ) .AND. Eval( oBrw:bFor, oBrw ) )
               ( oBrw:Alias )->( DBSkip() )
             ENDDO
@@ -4383,7 +4383,7 @@ STATIC FUNCTION FltGoTop( oBrw )
 STATIC FUNCTION FltGoBottom( oBrw )
    IF oBrw:nLastRecordFilter == 0
       Eval( oBrw:bLast )
-      IF  EMPTY( oBrw:RelationalExpr )
+      IF EMPTY( oBrw:RelationalExpr )
          IF ! Eval( oBrw:bWhile, oBrw ) .OR. ! Eval( oBrw:bFor, oBrw )
             DO WHILE ( oBrw:Alias )->( ! Bof() ) .AND. ! Eval( oBrw:bWhile, oBrw )
               ( oBrw:Alias )->( DBSkip( - 1 ) )

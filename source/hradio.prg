@@ -337,8 +337,8 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRadioButton
          RETURN 0
       ENDIF
    ENDIF
-   IF  msg = WM_GETDLGCODE //.AND.  ! EMPTY( wParam )
-       IF  wParam = VK_RETURN .AND. ProcOkCancel( Self, wParam, ::GetParentForm():Type >= WND_DLG_RESOURCE )
+   IF msg = WM_GETDLGCODE //.AND.  ! EMPTY( wParam )
+       IF wParam = VK_RETURN .AND. ProcOkCancel( Self, wParam, ::GetParentForm():Type >= WND_DLG_RESOURCE )
          RETURN 0
       ELSEIF wParam = VK_ESCAPE  .AND. ;
                   ( oCtrl := ::GetParentForm:FindControl( IDCANCEL ) ) != Nil .AND. ! oCtrl:IsEnabled() 
@@ -352,7 +352,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRadioButton
       ENDIF 
       RETURN DLGC_WANTMESSAGE
    ELSEIF msg = WM_KEYDOWN
-      //IF  ProcKeyList( Self, wParam )
+      //IF ProcKeyList( Self, wParam )
       IF wParam = VK_LEFT .OR. wParam = VK_UP
          GetSkip( ::oparent, ::handle, , -1 )
          RETURN 0
@@ -363,13 +363,13 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRadioButton
          GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
          RETURN 0
       ENDIF
-      IF  ( wParam == VK_RETURN )
+      IF ( wParam == VK_RETURN )
          ::VALID( VK_RETURN )
          RETURN 0
       ENDIF
    ELSEIF msg == WM_KEYUP
       ProcKeyList( Self, wParam )   // working in MDICHILD AND DIALOG
-      IF  ( wParam == VK_RETURN ) 
+      IF ( wParam == VK_RETURN ) 
          RETURN 0
       ENDIF  
    ELSEIF msg == WM_NOTIFY
@@ -386,7 +386,7 @@ METHOD Notify( lParam ) CLASS HRadioButton
    ENDIF
 
    IF PTRTOULONG( lParam )  = WM_KEYDOWN
-      IF  GetKeyState( VK_RETURN ) < 0 //.AND. ::oGroup:value < Len(::oGroup:aButtons)
+      IF GetKeyState( VK_RETURN ) < 0 //.AND. ::oGroup:value < Len(::oGroup:aButtons)
          ::oParent:lSuspendMsgsHandling := .T.
          __VALID( Self )
          ::oParent:lSuspendMsgsHandling := .F.
@@ -453,7 +453,7 @@ METHOD Valid( nKey ) CLASS HRadioButton
        iValue := Ascan( ::oGroup:aButtons, {| o | o:id == ::id } )
       IF nEnter = VK_RETURN //< 0
          //-iValue := Ascan( ::oGroup:aButtons,{ | o | o:id == ::id } )
-         IF  ! ::GetValue() 
+         IF ! ::GetValue() 
             ::oGroup:nValue  := iValue
              ::oGroup:SetValue( ::oGroup:nValue )      
             ::SetFocus( .T. ) 

@@ -57,7 +57,7 @@ FUNCTION InitControls( oWnd, lNoActivate )
             pArray[ i ]:lInit := .T.
             pArray[ i ]:Activate()
             pArray[ i ]:lInit := lInit
-         ELSEIF  ! lNoActivate
+         ELSEIF ! lNoActivate
             pArray[ i ]:lInit := .T.
          ENDIF
 //           IF empty(pArray[i]:handle)// <= 0

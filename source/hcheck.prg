@@ -122,7 +122,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCheckButton
    ENDIF
    IF msg = WM_KEYDOWN
       //IF ProcKeyList( Self, wParam )
-      IF  wParam = VK_TAB
+      IF wParam = VK_TAB
          GetSkip( ::oparent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1 )  )
          RETURN 0
       ELSEIF wParam = VK_LEFT .OR. wParam = VK_UP
@@ -131,8 +131,8 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCheckButton
       ELSEIF wParam = VK_RIGHT .OR. wParam = VK_DOWN
          GetSkip( ::oparent, ::handle, , 1 )
          RETURN 0
-      ELSEIF  ( wParam == VK_RETURN ) //  .OR. wParam == VK_SPACE )
-         IF  ::lEnter
+      ELSEIF ( wParam == VK_RETURN ) //  .OR. wParam == VK_SPACE )
+         IF ::lEnter
             ::SetValue( ! ::GetValue() )
             ::VALID()
             RETURN 0 //-1
@@ -144,7 +144,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCheckButton
    ELSEIF msg == WM_KEYUP
       ProcKeyList( Self, wParam ) // working in MDICHILD AND DIALOG
 
-    ELSEIF  msg = WM_GETDLGCODE .AND. !EMPTY( lParam )
+    ELSEIF msg = WM_GETDLGCODE .AND. !EMPTY( lParam )
       IF wParam = VK_RETURN .OR. wParam = VK_TAB
            RETURN -1
       ELSEIF wParam = VK_ESCAPE  .AND. ;

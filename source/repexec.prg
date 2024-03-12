@@ -244,7 +244,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
             iPF := iItem
          ELSEIF aItem[ ITEM_CAPTION ] == "EPF"
             iEPF := iItem
-         ELSEIF  aItem[ ITEM_CAPTION ] == "DF"
+         ELSEIF aItem[ ITEM_CAPTION ] == "DF"
             iDF := iItem
             IF iPF == 0
                nEndList := aItem[ ITEM_Y1 ]

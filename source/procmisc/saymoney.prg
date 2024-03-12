@@ -231,14 +231,14 @@ STATIC FUNCTION tigades( mvc, n)    // created: 28 mei 1993
  IF n==4 .and. mvc=="001"; RETURN "se"; ENDIF
  IF mvc=="000"; RETURN "";  end
 
-       IF     x1=="0"   // do nothing
+       IF x1=="0"   // do nothing
        ELSEIF x1=="1";  say += "SERATUS "
        ELSE;            say += bil(x1)+ "RATUS "
        ENDIF
 
-       IF     x2 == "0";  say += bil(x3)
+       IF x2 == "0";  say += bil(x3)
        ELSEIF x2 == "1"
-                 IF     x3 == "0";  say += "SEPULUH "
+                 IF x3 == "0";  say += "SEPULUH "
                  ELSEIF x3 == "1";  say += "SEBELAS "
                  ELSE;              say += bil(x3) +"BELAS "
                  ENDIF
