@@ -31,7 +31,7 @@ CLASS VAR winclass   INIT "msctls_progress32"
    METHOD Init()
    METHOD Activate()
    METHOD Increment() INLINE UpdateProgressBar( ::handle )
-   METHOD STEP( cTitle )
+   METHOD STEP(cTitle)
    METHOD SET( cTitle, nPos )
    METHOD SetLabel( cCaption )
    METHOD SetAnimation( nAnimation ) SETGET
@@ -110,13 +110,13 @@ METHOD Init() CLASS HProgressBar
    IF !::lInit
       ::Super:Init()
        IF ::nAnimation != Nil .AND. ::nAnimation > 0
-          SendMessage( ::handle, PBM_SETMARQUEE, 1, ::nAnimation )
+          SendMessage(::handle, PBM_SETMARQUEE, 1, ::nAnimation)
        ENDIF
    ENDIF
 
   RETURN Nil
 
-METHOD STEP( cTitle )
+METHOD STEP(cTitle)
 
    ::nCount ++
    IF ::nCount == ::nLimit
@@ -146,7 +146,7 @@ METHOD SET( cTitle, nPos ) CLASS HProgressBar
 METHOD SetLabel( cCaption ) CLASS HProgressBar
 
    IF cCaption != Nil .AND. ::lNewBox
-      ::LabelBox:SetValue( cCaption )
+      ::LabelBox:SetValue(cCaption)
    ENDIF
 
    RETURN Nil
@@ -155,14 +155,14 @@ METHOD SetAnimation( nAnimation ) CLASS HProgressBar
 
    IF nAnimation != Nil
        IF nAnimation <= 0
-          SendMessage( ::handle, PBM_SETMARQUEE, 0, Nil )
-          MODIFYSTYLE( ::Handle, PBS_MARQUEE, 0 )
-          SendMessage( ::handle, PBM_SETPOS, 0, 0)
+          SendMessage(::handle, PBM_SETMARQUEE, 0, Nil)
+          MODIFYSTYLE(::Handle, PBS_MARQUEE, 0)
+          SendMessage(::handle, PBM_SETPOS, 0, 0)
        ELSE
-          IF Hwg_BitAND( ::Style, PBS_MARQUEE ) = 0
-             MODIFYSTYLE( ::Handle, PBS_MARQUEE, PBS_MARQUEE )
+          IF Hwg_BitAND(::Style, PBS_MARQUEE) = 0
+             MODIFYSTYLE(::Handle, PBS_MARQUEE, PBS_MARQUEE)
          ENDIF
-         SendMessage( ::handle, PBM_SETMARQUEE, 1, nAnimation)
+         SendMessage(::handle, PBM_SETMARQUEE, 1, nAnimation)
        ENDIF
        ::nAnimation := nAnimation
    ENDIF

@@ -65,7 +65,7 @@ HB_FUNC(DRAWTEXT)
   LPCTSTR lpText = HB_PARSTR(2, &hText, &nLen);
   RECT rc;
   UINT uFormat = (hb_pcount() == 4 ? hb_parni(4) : hb_parni(7));
-  // int uiPos = ( hb_pcount(  ) == 4 ? 3 : hb_parni( 8 ) );
+  // int uiPos = (hb_pcount() == 4 ? 3 : hb_parni(8));
   int heigh;
 
   if (hb_pcount() > 4)
@@ -87,7 +87,7 @@ HB_FUNC(DRAWTEXT)
                    &rc, uFormat);
   hb_strfree(hText);
 
-  // if( HB_ISBYREF( uiPos ) )
+  // if (HB_ISBYREF(uiPos))
   if (HB_ISARRAY(8))
   {
     hb_storvni(rc.left, 8, 1);
@@ -285,32 +285,32 @@ HB_FUNC(GETBKCOLOR)
 }
 
 /*
-HB_FUNC( GETTEXTSIZE )
+HB_FUNC(GETTEXTSIZE)
 {
 
-   HDC hdc = GetDC( (HWND)HB_PARHANDLE(1) );
+   HDC hdc = GetDC((HWND)HB_PARHANDLE(1));
    SIZE size;
-   PHB_ITEM aMetr = hb_itemArrayNew( 2 );
+   PHB_ITEM aMetr = hb_itemArrayNew(2);
    PHB_ITEM temp;
    void * hString;
 
-   GetTextExtentPoint32( hdc, HB_PARSTR( 2, &hString, NULL ),
+   GetTextExtentPoint32(hdc, HB_PARSTR(2, &hString, NULL),
       lpString,         // address of text string
       strlen(cbString), // number of characters in string
       &size            // address of structure for string size
    );
-   hb_strfree( hString );
+   hb_strfree(hString);
 
-   temp = hb_itemPutNI( NULL, size.cx );
-   hb_itemArrayPut( aMetr, 1, temp );
-   hb_itemRelease( temp );
+   temp = hb_itemPutNI(NULL, size.cx);
+   hb_itemArrayPut(aMetr, 1, temp);
+   hb_itemRelease(temp);
 
-   temp = hb_itemPutNI( NULL, size.cy );
-   hb_itemArrayPut( aMetr, 2, temp );
-   hb_itemRelease( temp );
+   temp = hb_itemPutNI(NULL, size.cy);
+   hb_itemArrayPut(aMetr, 2, temp);
+   hb_itemRelease(temp);
 
-   hb_itemReturn( aMetr );
-   hb_itemRelease( aMetr );
+   hb_itemReturn(aMetr);
+   hb_itemRelease(aMetr);
 
 }
 */
@@ -352,8 +352,7 @@ HB_FUNC(WINDOWFROMDC)
   HB_RETHANDLE(WindowFromDC((HDC)HB_PARHANDLE(1)));
 }
 
-/* CreateFont( fontName, nWidth, hHeight [,fnWeight] [,fdwCharSet],
-               [,fdwItalic] [,fdwUnderline] [,fdwStrikeOut]  )
+/* CreateFont(fontName, nWidth, hHeight [,fnWeight] [,fdwCharSet], [,fdwItalic] [,fdwUnderline] [,fdwStrikeOut])
 */
 HB_FUNC(CREATEFONT)
 {
@@ -385,7 +384,7 @@ HB_FUNC(CREATEFONT)
 }
 
 /*
- * SetCtrlFont( hWnd, ctrlId, hFont )
+ * SetCtrlFont(hWnd, ctrlId, hFont)
  */
 HB_FUNC(SETCTRLFONT)
 {

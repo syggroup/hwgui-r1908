@@ -298,8 +298,8 @@ HB_FUNC(LISTVIEW_SETVIEW)
   if ((dwStyle & LVS_TYPEMASK) != dwView)
   {
     SetWindowLong(hWndListView, GWL_STYLE, (dwStyle & ~LVS_TYPEMASK) | dwView);
-    //  RedrawWindow( (HWND) HB_PARHANDLE( 1 ), NULL , NULL , RDW_ERASE | RDW_INVALIDATE | RDW_ALLCHILDREN |
-    //  RDW_ERASENOW | RDW_UPDATENOW ) ;
+    // RedrawWindow((HWND)HB_PARHANDLE(1), NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_ERASENOW | ;
+    // RDW_UPDATENOW);
   }
 }
 
@@ -401,8 +401,8 @@ HB_FUNC(LISTVIEW_INSERTITEMEX)
     break;
   }
 
-  // RedrawWindow( hwndListView, NULL , NULL , RDW_ERASE | RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_ERASENOW |
-  // RDW_UPDATENOW ) ;
+  // RedrawWindow(hwndListView, NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_ERASENOW |
+  // RDW_UPDATENOW);
   InvalidateRect(hwndListView, &rect, TRUE);
   hb_retni(iResult);
   hb_strfree(hText);
@@ -466,7 +466,7 @@ LRESULT ProcessCustomDraw(LPARAM lParam, PHB_ITEM pArray)
 
 HB_FUNC(PROCESSCUSTU)
 {
-  /* HWND hWnd = ( HWND ) HB_PARHANDLE( 1 ) ; */
+  /* HWND hWnd = (HWND)HB_PARHANDLE(1); */
   LPARAM lParam = (LPARAM)HB_PARHANDLE(2);
   PHB_ITEM pColor = hb_param(3, HB_IT_ARRAY);
 
@@ -525,7 +525,7 @@ int CALLBACK CompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 HB_FUNC(LISTVIEWSORTINFONEW)
 {
   // PSORTINFO p = (PSORTINFO) hb_xgrab(sizeof(SortInfo));
-  // LPNMLISTVIEW phdNotify = ( LPNMLISTVIEW ) hb_parnl( 1 ) ;
+  // LPNMLISTVIEW phdNotify = (LPNMLISTVIEW)hb_parnl(1);
   PSORTINFO p;
 
   if (HB_ISPOINTER(2))

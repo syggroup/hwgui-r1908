@@ -79,5 +79,5 @@ METHOD Paint() CLASS HShadeButton
 METHOD END() CLASS HShadeButton
 
    ::Super:END()
-   shade_Release( ::hShade )
+   shade_Release(::hShade)
    RETURN Nil

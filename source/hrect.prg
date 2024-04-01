@@ -90,7 +90,7 @@ METHOD New( oWndParent, nId, lVert, nLeft, nTop, nLength, bSize, nColor ) CLASS 
       ::nWidth  := IIf( nLength == Nil, 20, nLength )
       ::nHeight := 10
    ENDIF
-   ::oPen := HPen():Add( BS_SOLID, 1, GetSysColor( nColor ) )
+   ::oPen := HPen():Add(BS_SOLID, 1, GetSysColor(nColor))
 
    ::Activate()
 
@@ -99,8 +99,8 @@ METHOD New( oWndParent, nId, lVert, nLeft, nTop, nLength, bSize, nColor ) CLASS 
 //---------------------------------------------------------------------------
 METHOD Activate() CLASS HRect_Line
    IF !Empty( ::oParent:handle )
-      ::handle := CreateStatic( ::oParent:handle, ::id, ;
-                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight )
+      ::handle := CreateStatic(::oParent:handle, ::id, ;
+                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ::Init()
    ENDIF
    RETURN Nil
@@ -111,12 +111,12 @@ METHOD Paint( lpdis ) CLASS HRect_Line
    LOCAL hDC := drawInfo[ 3 ], x1 := drawInfo[ 4 ], y1 := drawInfo[ 5 ], x2 := drawInfo[ 6 ], y2 := drawInfo[ 7 ]
 
 
-   SelectObject( hDC, ::oPen:handle )
+   SelectObject(hDC, ::oPen:handle)
 
    IF ::lVert
-      DrawLine( hDC, x1, y1, x1, y2 )
+      DrawLine(hDC, x1, y1, x1, y2)
    ELSE
-      DrawLine( hDC, x1, y1, x2, y1 )
+      DrawLine(hDC, x1, y1, x2, y1)
    ENDIF
 
 
@@ -177,9 +177,9 @@ CLASS VAR winclass   INIT "STATIC"
 
    METHOD Activate()
    METHOD Paint( lpDis )
-   METHOD SetColor( tcolor, bcolor, lRedraw )
-   METHOD Curvature( nCurvature )
-   //METHOD Refresh() INLINE SENDMESSAGE( ::handle, WM_PAINT, 0, 0 ), RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
+   METHOD SetColor(tcolor, bcolor, lRedraw)
+   METHOD Curvature(nCurvature)
+   //METHOD Refresh() INLINE SENDMESSAGE(::handle, WM_PAINT, 0, 0), RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
 
 ENDCLASS
 
@@ -202,14 +202,14 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, bSize, tcolor, bColor
    ::nbStyle := nbStyle
    ::nfStyle := nfStyle
    ::nCurvature := nCurvature
-   ::SetColor( ::tcolor , ::bColor )
+   ::SetColor(::tcolor, ::bColor)
 
    ::Activate()
 
    IF ::ncStyle == Nil
-      ::oPen := HPen():Add( ::nbStyle, ::nBorder, ::tColor )
+      ::oPen := HPen():Add(::nbStyle, ::nBorder, ::tColor)
    //ELSE  // CONTAINER
-   //    ::oPen := HPen():Add( PS_SOLID, 5, GetSysColor( COLOR_3DHILIGHT ) )
+   //    ::oPen := HPen():Add(PS_SOLID, 5, GetSysColor(COLOR_3DHILIGHT))
    ENDIF
 
   RETURN Self
@@ -218,24 +218,24 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, bSize, tcolor, bColor
 
 METHOD Activate() CLASS HDrawShape
    IF !Empty( ::oParent:handle )
-      ::handle := CreateStatic( ::oParent:handle, ::id, ;
-                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight )
+      ::handle := CreateStatic(::oParent:handle, ::id, ;
+                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ::Init()
    ENDIF
    RETURN Nil
 
 
-METHOD SetColor( tcolor, bColor, lRedraw ) CLASS HDrawShape
+METHOD SetColor(tcolor, bColor, lRedraw) CLASS HDrawShape
 
-   ::brushFill := HBrush():Add( tColor, ::nfstyle )
-   ::Super:SetColor( tColor, bColor )
+   ::brushFill := HBrush():Add(tColor, ::nfstyle)
+   ::Super:SetColor(tColor, bColor)
    IF !Empty( lRedraw )
       RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
    ENDIF
    RETURN Nil
 
 
-METHOD Curvature( nCurvature ) CLASS HDrawShape
+METHOD Curvature(nCurvature) CLASS HDrawShape
 
    IF nCurvature != NIL
       ::nCurvature := nCurvature
@@ -251,42 +251,42 @@ METHOD Paint( lpdis ) CLASS HDrawShape
    LOCAL  x1 := drawInfo[ 4 ], y1 := drawInfo[ 5 ]
    LOCAL  x2 := drawInfo[ 6 ], y2 := drawInfo[ 7 ]
 
-   oldbkMode := SetBKMode( hdc, ::backStyle )
-   SelectObject( hDC, ::oPen:handle )
+   oldbkMode := SetBKMode(hdc, ::backStyle)
+   SelectObject(hDC, ::oPen:handle)
    IF ::ncStyle != Nil
       /*
       IF ::lnoBorder = .F.
          IF ::ncStyle == 0      // RAISED
-            DrawEdge( hDC, x1, y1, x2, y2, BDR_RAISED, BF_LEFT + BF_TOP + BF_RIGHT + BF_BOTTOM )  // raised  forte      8
+            DrawEdge(hDC, x1, y1, x2, y2, BDR_RAISED, BF_LEFT + BF_TOP + BF_RIGHT + BF_BOTTOM)  // raised  forte      8
          ELSEIF ::ncStyle == 1  // sunken
-            DrawEdge( hDC, x1, y1, x2, y2, BDR_SUNKEN, BF_LEFT + BF_TOP + BF_RIGHT + BF_BOTTOM ) // sunken mais forte
+            DrawEdge(hDC, x1, y1, x2, y2, BDR_SUNKEN, BF_LEFT + BF_TOP + BF_RIGHT + BF_BOTTOM) // sunken mais forte
          ELSEIF ::ncStyle == 2  // FRAME
-            DrawEdge( hDC, x1, y1, x2, y2, BDR_RAISED + BDR_RAISEDOUTER, BF_LEFT + BF_TOP + BF_RIGHT + BF_BOTTOM ) // FRAME
+            DrawEdge(hDC, x1, y1, x2, y2, BDR_RAISED + BDR_RAISEDOUTER, BF_LEFT + BF_TOP + BF_RIGHT + BF_BOTTOM) // FRAME
          ELSE                   // FLAT
-            DrawEdge( hDC, x1, y1, x2, y2, BDR_SUNKENINNER, BF_TOP )
-            DrawEdge( hDC, x1, y1, x2, y2, BDR_RAISEDOUTER, BF_BOTTOM )
-            DrawEdge( hDC, x1, y2, x2, y1, BDR_SUNKENINNER, BF_LEFT )
-            DrawEdge( hDC, x1, y2, x2, y1, BDR_RAISEDOUTER, BF_RIGHT )
+            DrawEdge(hDC, x1, y1, x2, y2, BDR_SUNKENINNER, BF_TOP)
+            DrawEdge(hDC, x1, y1, x2, y2, BDR_RAISEDOUTER, BF_BOTTOM)
+            DrawEdge(hDC, x1, y2, x2, y1, BDR_SUNKENINNER, BF_LEFT)
+            DrawEdge(hDC, x1, y2, x2, y1, BDR_RAISEDOUTER, BF_RIGHT)
          ENDIF
       ELSE
-         DrawEdge( hDC, x1, y1, x2, y2, 0, 0 )
+         DrawEdge(hDC, x1, y1, x2, y2, 0, 0)
       ENDIF
       */
    ELSE
       IF ::backStyle = OPAQUE
          IF ::Brush != Nil
-            SelectObject( hDC, ::Brush:handle )
+            SelectObject(hDC, ::Brush:handle)
          ENDIF
          //RoundRect( hDC, x1 + 1, y1 + 1, x2, y2 , ::nCurvature, ::nCurvature)
       ENDIF
       IF ::nfStyle != BS_TRANSPARENT .OR. ::backStyle = OPAQUE
-         SelectObject( hDC, ::BrushFill:handle )
+         SelectObject(hDC, ::BrushFill:handle)
       ELSE
-         SelectObject( hDC, GetStockObject( NULL_BRUSH ) )
+         SelectObject(hDC, GetStockObject(NULL_BRUSH))
       ENDIF
       RoundRect( hDC, x1 + 1, y1 + 1, x2, y2 , ::nCurvature, ::nCurvature)
    ENDIF
-   SetBKMode( hDC, oldbkMode )
+   SetBKMode(hDC, oldbkMode)
    RETURN Nil
 
 // END NEW CLASSE
@@ -327,7 +327,7 @@ CLASS HContainer INHERIT HControl
    METHOD Create() INLINE ::lCreate := .T.
    METHOD onEvent( msg, wParam, lParam )
    METHOD Paint( lpDis )
-   METHOD Visible( lVisibled ) SETGET
+   METHOD Visible(lVisibled) SETGET
 
 ENDCLASS
 
@@ -336,7 +336,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ncStyle, bSiz
 
     ::lTABSTOP :=  nStyle = WS_TABSTOP
     ::bPaint   := { | o, p | o:paint( p ) }
-    nStyle := SS_OWNERDRAW + IIF( nStyle = WS_TABSTOP, WS_TABSTOP , 0 ) + Hwg_Bitand( nStyle, SS_NOTIFY )
+    nStyle := SS_OWNERDRAW + IIF( nStyle = WS_TABSTOP, WS_TABSTOP , 0 ) + Hwg_Bitand(nStyle, SS_NOTIFY)
     ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, , ;
               bInit, bSize, ::bPaint,, tcolor, bColor )
 
@@ -349,13 +349,13 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ncStyle, bSiz
    ::bRefresh := bRefresh
    ::bOther := bOther
 
-   ::SetColor( ::tColor, ::bColor )
+   ::SetColor(::tColor, ::bColor)
    ::Activate()
    IF hb_IsBlock(::bLoad)
      // SET ENVIRONMENT
        Eval( ::bLoad,Self )
    ENDIF
-   ::oPen := HPen():Add( PS_SOLID, 1, GetSysColor( COLOR_3DHILIGHT ) )
+   ::oPen := HPen():Add(PS_SOLID, 1, GetSysColor(COLOR_3DHILIGHT))
 
   Return Self
 
@@ -363,13 +363,13 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ncStyle, bSiz
 METHOD Activate() CLASS HContainer
 
    IF !Empty( ::oParent:handle )
-      ::handle := CreateStatic( ::oParent:handle, ::id, ::style, ;
-                                ::nLeft, ::nTop, ::nWidth, ::nHeight )
+      ::handle := CreateStatic(::oParent:handle, ::id, ::style, ;
+                                ::nLeft, ::nTop, ::nWidth, ::nHeight)
       IF !::lInit
-         AddToolTip( ::handle, ::handle, "" )
+         AddToolTip(::handle, ::handle, "")
          ::nHolder := 1
-         SetWindowObject( ::handle, Self )
-         Hwg_InitStaticProc( ::handle )
+         SetWindowObject(::handle, Self)
+         Hwg_InitStaticProc(::handle)
          ::linit := .T.
          IF Empty( ::oParent:oParent ) .AND. ::oParent:Type >= WND_DLG_RESOURCE
             ::Create()
@@ -388,10 +388,10 @@ METHOD Init() CLASS HContainer
 
    IF !::lInit
       ::Super:init()
-      AddToolTip( ::handle, ::handle, "" )
+      AddToolTip(::handle, ::handle, "")
       ::nHolder := 1
-      SetWindowObject( ::handle, Self )
-      Hwg_InitStaticProc( ::handle )
+      SetWindowObject(::handle, Self)
+      Hwg_InitStaticProc(::handle)
       //SetWindowPos( ::Handle, HWND_BOTTOM, 0, 0, 0, 0 , SWP_NOSIZE + SWP_NOMOVE + SWP_NOZORDER)
    ENDIF
    RETURN  NIL
@@ -412,14 +412,14 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HContainer
    ENDIF
    IF ::lTABSTOP
       IF msg == WM_SETFOCUS
-         GetSkip( ::oparent, ::handle, , ::nGetSkip )
+         GetSkip(::oparent, ::handle, , ::nGetSkip)
       ELSEIF msg == WM_KEYUP
          IF wParam = VK_DOWN
-            GetSkip( ::oparent, ::handle, , 1 )
+            GetSkip(::oparent, ::handle, , 1)
          ELSEIF wParam = VK_UP
-            GetSkip( ::oparent, ::handle, , -1 )
+            GetSkip(::oparent, ::handle, , -1)
          ELSEIF wParam = VK_TAB
-            GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
+            GetSkip(::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1))
          ENDIF
          RETURN 0
       ELSEIF msg = WM_SYSKEYUP
@@ -427,7 +427,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HContainer
    ENDIF
    RETURN ::Super:onEvent( msg, wParam, lParam )
 
-METHOD Visible( lVisibled ) CLASS HContainer
+METHOD Visible(lVisibled) CLASS HContainer
 
     IF lVisibled != Nil
       IF lVisibled
@@ -452,34 +452,34 @@ METHOD Paint( lpdis ) CLASS HContainer
     x2  := drawInfo[ 6 ]
     y2  := drawInfo[ 7 ]
 
-   SelectObject( hDC, ::oPen:handle )
+   SelectObject(hDC, ::oPen:handle)
 
    IF ::ncStyle != Nil
-      SetBkMode( hDC, ::backStyle )
+      SetBkMode(hDC, ::backStyle)
       IF !::lnoBorder
          IF ::ncStyle == 0      // RAISED
-           DrawEdge( hDC, x1, y1, x2, y2,BDR_RAISED,BF_LEFT+BF_TOP+BF_RIGHT+BF_BOTTOM)  // raised  forte      8
+           DrawEdge(hDC, x1, y1, x2, y2,BDR_RAISED,BF_LEFT+BF_TOP+BF_RIGHT+BF_BOTTOM)  // raised  forte      8
          ELSEIF ::ncStyle == 1  // sunken
-           DrawEdge( hDC, x1, y1, x2, y2,BDR_SUNKEN,BF_LEFT+BF_TOP+BF_RIGHT+BF_BOTTOM ) // sunken mais forte
+           DrawEdge(hDC, x1, y1, x2, y2,BDR_SUNKEN,BF_LEFT+BF_TOP+BF_RIGHT+BF_BOTTOM) // sunken mais forte
          ELSEIF ::ncStyle == 2  // FRAME
-           DrawEdge( hDC, x1, y1, x2, y2,BDR_RAISED+BDR_RAISEDOUTER,BF_LEFT+BF_TOP+BF_RIGHT+BF_BOTTOM) // FRAME
+           DrawEdge(hDC, x1, y1, x2, y2,BDR_RAISED+BDR_RAISEDOUTER,BF_LEFT+BF_TOP+BF_RIGHT+BF_BOTTOM) // FRAME
          ELSE                   // FLAT
-           DrawEdge( hDC, x1, y1, x2, y2,BDR_SUNKENINNER,BF_TOP)
-           DrawEdge( hDC, x1, y1, x2, y2,BDR_RAISEDOUTER,BF_BOTTOM)
-           DrawEdge( hDC, x1, y2, x2, y1,BDR_SUNKENINNER,BF_LEFT)
-           DrawEdge( hDC, x1, y2, x2, y1,BDR_RAISEDOUTER,BF_RIGHT)
+           DrawEdge(hDC, x1, y1, x2, y2, BDR_SUNKENINNER, BF_TOP)
+           DrawEdge(hDC, x1, y1, x2, y2, BDR_RAISEDOUTER, BF_BOTTOM)
+           DrawEdge(hDC, x1, y2, x2, y1, BDR_SUNKENINNER, BF_LEFT)
+           DrawEdge(hDC, x1, y2, x2, y1, BDR_RAISEDOUTER, BF_RIGHT)
          ENDIF
       ELSE
-         DrawEdge( hDC, x1, y1, x2, y2,0,0)
+         DrawEdge(hDC, x1, y1, x2, y2, 0, 0)
       ENDIF
       IF ::backStyle != TRANSPARENT
          IF ::Brush != Nil
             FillRect( hDC, x1 + 2, y1 + 2, x2 - 2, y2 - 2 , ::brush:handle )
          ENDIF
       ELSE
-         FillRect( hDC, x1 + 2, y1 + 2, x2 - 2, y2 - 2 , GetStockObject( 5 ) )
+         FillRect( hDC, x1 + 2, y1 + 2, x2 - 2, y2 - 2 , GetStockObject(5) )
       ENDIF
-      //SetBkMode( hDC, 0 )
+      //SetBkMode(hDC, 0)
    ENDIF
 
    Return 1

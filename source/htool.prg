@@ -38,11 +38,11 @@ CLASS HToolButton INHERIT HObject
    METHOD New(oParent,cName,nBitIp,nId,bState,bStyle,cText,bClick,ctip, aMenu )
    METHOD Enable() INLINE ::oParent:EnableButton( ::id, .T. )
    METHOD Disable() INLINE ::oParent:EnableButton( ::id, .F. )
-   METHOD Show() INLINE SENDMESSAGE( ::oParent:handle, TB_HIDEBUTTON, INT( ::id ), MAKELONG( 0, 0 ) )
-   METHOD Hide() INLINE SENDMESSAGE( ::oParent:handle, TB_HIDEBUTTON, INT( ::id ), MAKELONG( 1, 0 ) )
-   METHOD Enabled( lEnabled ) SETGET
-   METHOD Checked( lCheck ) SETGET
-   METHOD Pressed( lPressed ) SETGET
+   METHOD Show() INLINE SENDMESSAGE(::oParent:handle, TB_HIDEBUTTON, INT( ::id ), MAKELONG( 0, 0 ))
+   METHOD Hide() INLINE SENDMESSAGE(::oParent:handle, TB_HIDEBUTTON, INT( ::id ), MAKELONG( 1, 0 ))
+   METHOD Enabled(lEnabled) SETGET
+   METHOD Checked(lCheck) SETGET
+   METHOD Pressed(lPressed) SETGET
    METHOD onClick()
    METHOD Caption( cText ) SETGET
 
@@ -80,7 +80,7 @@ METHOD onClick() CLASS HToolButton
    ENDIF
 RETURN Nil
 
- METHOD Enabled( lEnabled ) CLASS HToolButton
+ METHOD Enabled(lEnabled) CLASS HToolButton
   IF lEnabled != Nil
      IF lEnabled
         ::enable()
@@ -91,24 +91,24 @@ RETURN Nil
   ENDIF
   RETURN ::lEnabled
 
-METHOD Pressed( lPressed ) CLASS HToolButton
+METHOD Pressed(lPressed) CLASS HToolButton
 LOCAL nState
 
    IF lPressed != Nil
-      nState := SENDMESSAGE( ::oParent:handle, TB_GETSTATE, INT( ::id ), 0 )
-      SENDMESSAGE( ::oParent:handle, TB_SETSTATE, INT( ::id ),;
-        MAKELONG( IIF( lPressed, HWG_BITOR( nState, TBSTATE_PRESSED ), nState - HWG_BITAND( nState, TBSTATE_PRESSED ) ), 0 ) )
+      nState := SENDMESSAGE(::oParent:handle, TB_GETSTATE, INT( ::id ), 0)
+      SENDMESSAGE(::oParent:handle, TB_SETSTATE, INT( ::id ),;
+        MAKELONG( IIF( lPressed, HWG_BITOR( nState, TBSTATE_PRESSED ), nState - HWG_BITAND(nState, TBSTATE_PRESSED) ), 0 ))
       ::lPressed := lPressed
    ENDIF
    RETURN ::lPressed
 
-METHOD Checked( lcheck ) CLASS HToolButton
+METHOD Checked(lcheck) CLASS HToolButton
 LOCAL nState
 
    IF lCheck != Nil
-      nState := SENDMESSAGE( ::oParent:handle, TB_GETSTATE, INT( ::id ), 0 )
-      SENDMESSAGE( ::oParent:handle, TB_SETSTATE, INT( ::id ),;
-        MAKELONG( IIF( lCheck, HWG_BITOR( nState, TBSTATE_CHECKED ), nState - HWG_BITAND( nState, TBSTATE_CHECKED ) ), 0 ) )
+      nState := SENDMESSAGE(::oParent:handle, TB_GETSTATE, INT( ::id ), 0)
+      SENDMESSAGE(::oParent:handle, TB_SETSTATE, INT( ::id ),;
+        MAKELONG( IIF( lCheck, HWG_BITOR( nState, TBSTATE_CHECKED ), nState - HWG_BITAND(nState, TBSTATE_CHECKED) ), 0 ))
       ::lChecked := lCheck
    ENDIF
    RETURN ::lChecked
@@ -142,19 +142,19 @@ CLASS HToolBar INHERIT HControl
 
    METHOD New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,btnWidth,oFont,bInit, ;
                   bSize,bPaint,ctooltip,tcolor,bcolor,lTransp, lVertical ,aItem, nWSize,nHSize, nIndent, nIDB )
-   METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
-                    bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem )
+   METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, ;
+                    bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem)
 
    METHOD Activate()
    METHOD INIT()
    METHOD CreateTool()
    METHOD AddButton( nBitIp, nId, bState, bStyle, cText, bClick, c, aMenu, cName, nIndex )
    METHOD Notify( lParam )
-   METHOD EnableButton( idButton, lEnable ) INLINE SENDMESSAGE( ::handle, TB_ENABLEBUTTON, INT( idButton ), MAKELONG( IIF( lEnable, 1, 0 ), 0) )
-   METHOD ShowButton( idButton ) INLINE SENDMESSAGE( ::handle, TB_HIDEBUTTON, INT( idButton ), MAKELONG( 0, 0 ) )
-   METHOD HideButton( idButton ) INLINE SENDMESSAGE( ::handle, TB_HIDEBUTTON, INT( idButton ), MAKELONG( 1, 0 ) )
+   METHOD EnableButton( idButton, lEnable ) INLINE SENDMESSAGE(::handle, TB_ENABLEBUTTON, INT( idButton ), MAKELONG( IIF( lEnable, 1, 0 ), 0))
+   METHOD ShowButton( idButton ) INLINE SENDMESSAGE(::handle, TB_HIDEBUTTON, INT( idButton ), MAKELONG( 0, 0 ))
+   METHOD HideButton( idButton ) INLINE SENDMESSAGE(::handle, TB_HIDEBUTTON, INT( idButton ), MAKELONG( 1, 0 ))
    METHOD REFRESH() VIRTUAL
-   METHOD RESIZE( xIncrSize, lWidth, lHeight  )
+   METHOD RESIZE(xIncrSize, lWidth, lHeight)
 
 ENDCLASS
 
@@ -167,9 +167,9 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
    DEFAULT  aitem TO {}
 
    //nStyle := Hwg_BitOr( IIf( nStyle == NIL, 0, nStyle ), TBSTYLE_FLAT )
-   nStyle := Hwg_BitOr( IIf( nStyle == NIL, 0, nStyle ), IIF( Hwg_BitAnd( nStyle, WS_DLGFRAME + WS_BORDER ) > 0, CCS_NODIVIDER , 0 ) )
-   nHeight += IIF( Hwg_BitAnd( nStyle, WS_DLGFRAME + WS_BORDER ) > 0, 1, 0 )
-   nWidth  -= IIF( Hwg_BitAnd( nStyle, WS_DLGFRAME + WS_BORDER ) > 0, 2, 0 )
+   nStyle := Hwg_BitOr( IIf( nStyle == NIL, 0, nStyle ), IIF( Hwg_BitAnd(nStyle, WS_DLGFRAME + WS_BORDER) > 0, CCS_NODIVIDER , 0 ) )
+   nHeight += IIF( Hwg_BitAnd(nStyle, WS_DLGFRAME + WS_BORDER) > 0, 1, 0 )
+   nWidth  -= IIF( Hwg_BitAnd(nStyle, WS_DLGFRAME + WS_BORDER) > 0, 2, 0 )
 
    ::lTransp := IIF( lTransp != NIL, lTransp, .F. )
    ::lVertical := IIF( lVertical != NIL .AND. hb_IsLogical(lVertical), lVertical, ::lVertical )
@@ -187,10 +187,10 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
    ::nwSize := IIF( nwSize != NIL .AND. nwSize > 11 , nwSize, 16 )
    ::nhSize := IIF( nhSize != NIL .AND. nhSize > 11 , nhSize, ::nwSize - 1 )
    ::lnoThemes := !ISTHEMEACTIVE() .OR. !::WindowsManifest
-   IF Hwg_BitAnd( ::Style, WS_DLGFRAME + WS_BORDER + CCS_NODIVIDER ) = 0
+   IF Hwg_BitAnd(::Style, WS_DLGFRAME + WS_BORDER + CCS_NODIVIDER) = 0
       IF !::lVertical
          ::Line := HLine():New( oWndParent,,, nLeft, nTop + nHeight + ;
-                   IIF( ::lnoThemes .AND. Hwg_BitAnd( nStyle,  TBSTYLE_FLAT ) > 0, 2, 1 ) , nWidth )
+                   IIF( ::lnoThemes .AND. Hwg_BitAnd(nStyle, TBSTYLE_FLAT) > 0, 2, 1 ) , nWidth )
       ELSE
          ::Line := HLine():New(oWndParent,,::lVertical,nLeft + nWidth + 1 ,nTop,nHeight )
       ENDIF
@@ -217,8 +217,8 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
    RETURN Self
 
 
-METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
-                 bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem ) CLASS hToolBar
+METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, ;
+                 bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem) CLASS hToolBar
 
    HB_SYMBOL_UNUSED(cCaption)
    HB_SYMBOL_UNUSED(lTransp)
@@ -286,19 +286,19 @@ METHOD CREATETOOL() CLASS hToolBar
    ENDIF
      /*
      IF ::lVertical
-        nStyle := SendMessage( ::handle, TB_GETSTYLE, 0, 0 ) + CCS_VERT
-        SendMessage( ::handle, TB_SETSTYLE, 0, nStyle )
+        nStyle := SendMessage(::handle, TB_GETSTYLE, 0, 0) + CCS_VERT
+        SendMessage(::handle, TB_SETSTYLE, 0, nStyle)
      ENDIF
      */
    nlistimg := 0
    IF ::nIDB != Nil .AND. ::nIDB >= 0
-      nlistimg := TOOLBAR_LOADSTANDARTIMAGE( ::handle, ::nIDB )
+      nlistimg := TOOLBAR_LOADSTANDARTIMAGE(::handle, ::nIDB)
    ENDIF
-       IF Hwg_BitAnd( ::Style,  TBSTYLE_LIST ) > 0 .AND. ::nwSize = Nil
+       IF Hwg_BitAnd(::Style, TBSTYLE_LIST) > 0 .AND. ::nwSize = Nil
           ::nwSize := MAX( 16, ( ::nHeight - 16 )  )
      ENDIF
      IF ::nwSize != Nil
-        SendMessage( ::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( ::nwSize, ::nhSize ) )
+        SendMessage(::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( ::nwSize, ::nhSize ))
      ENDIF
 
    FOR n := 1 TO Len( ::aItem )
@@ -323,48 +323,48 @@ METHOD CREATETOOL() CLASS hToolBar
                IIF( Hwg_Bitand(::aItem[ n, 4 ], BTNS_DROPDOWN ) != 0, 8,0 ) ) )
              /*
              IF ::nSize != Nil
-                SendMessage( ::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( ::nSize, ::nSize ) )
+                SendMessage(::HANDLE, TB_SETBITMAPSIZE, 0, MAKELONG(::nSize, ::nSize))
              ENDIF
          */
       IF hb_IsChar(::aItem[n, 1]) .OR. ::aItem[ n, 1 ] > 1
          IF hb_IsChar(::aItem[n, 1]) .AND. At(".", ::aitem[ n, 1 ] ) != 0
-            IF !File( ::aitem[ n, 1 ] )
+            IF !File(::aitem[ n, 1 ])
                Loop
             ENDIF
-               //AAdd( aButton, LoadImage( , ::aitem[ n, 1 ] , IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION+ LR_LOADFROMFILE ) )
-            hImage := HBITMAP():AddFile( ::aitem[ n, 1 ], , .T., ::nwSize, ::nhSize ):handle
+               //AAdd(aButton, LoadImage(, ::aitem[ n, 1 ], IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION+ LR_LOADFROMFILE))
+            hImage := HBITMAP():AddFile(::aitem[ n, 1 ], , .T., ::nwSize, ::nhSize):handle
          ELSE
-              // AAdd( aButton, HBitmap():AddResource( ::aitem[ n, 1 ] ):handle )
-            hImage := HBitmap():AddResource( ::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS, ,::nwSize,::nhSize ):handle
+              // AAdd(aButton, HBitmap():AddResource(::aitem[ n, 1 ] ):handle)
+            hImage := HBitmap():AddResource(::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS, ,::nwSize,::nhSize):handle
          ENDIF
          IF ( img := Ascan( aButton, hImage )) = 0
-            AAdd( aButton, hImage )
+            AAdd(aButton, hImage)
             img := Len( aButton )
          ENDIF
          ::aItem[ n ,1 ] := img + nlistimg //n
          IF !::lResource
-            TOOLBAR_LOADIMAGE( ::Handle, aButton[ img ])
+            TOOLBAR_LOADIMAGE(::Handle, aButton[ img ])
          ENDIF
       ELSE
            /*
            IF ::aItem[ n, 1 ] > 1
-               hImage := HBitmap():AddResource( ::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS,,::nSize,::nSize ):handle 
+               hImage := HBitmap():AddResource(::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS,,::nSize,::nSize):handle
            ENDIF
            */
-               // AAdd( aButton, LoadImage( , ::aitem[ n, 1 ] , IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION ) )
-           //  hImage := HBitmap():AddResource( ::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS + LR_SHARED,,::nSize,::nSize ):handle
+               // AAdd(aButton, LoadImage(, ::aitem[ n, 1 ] , IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION))
+           //  hImage := HBitmap():AddResource(::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS + LR_SHARED,,::nSize,::nSize):handle
       ENDIF
    NEXT
    IF Len( aButton ) > 0 //.AND. ::lResource
-      aBmpSize := GetBitmapSize( aButton[ 1 ] )
+      aBmpSize := GetBitmapSize(aButton[ 1 ])
          /*
          nmax := aBmpSize[ 3 ]
 
          FOR n := 2 TO Len( aButton )
-            aBmpSize := GetBitmapSize( aButton[ n ] )
+            aBmpSize := GetBitmapSize(aButton[ n ])
             nmax := Max( nmax, aBmpSize[ 3 ] )
          NEXT
-         aBmpSize := GetBitmapSize( aButton[ 1 ] )
+         aBmpSize := GetBitmapSize(aButton[ 1 ])
 
          IF nmax == 4
             hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR4 + ILC_MASK )
@@ -379,51 +379,51 @@ METHOD CREATETOOL() CLASS hToolBar
       hIm := CreateImageList( {} ,aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )
       FOR nPos := 1 TO Len( aButton )
 
-//            aBmpSize := GetBitmapSize( aButton[ nPos ] )
+//            aBmpSize := GetBitmapSize(aButton[ nPos ])
             /*
             IF aBmpSize[ 3 ] == 24
-//             Imagelist_AddMasked( hIm,aButton[nPos],RGB(236,223,216) )
-               Imagelist_Add( hIm, aButton[ nPos ] )
+//             Imagelist_AddMasked(hIm, aButton[nPos], RGB(236, 223, 216))
+               Imagelist_Add(hIm, aButton[ nPos ])
             ELSE
-               Imagelist_Add( hIm, aButton[ nPos ] )
+               Imagelist_Add(hIm, aButton[ nPos ])
             ENDIF
             */
-         Imagelist_Add( hIm, aButton[ nPos ] )
+         Imagelist_Add(hIm, aButton[ nPos ])
       NEXT
-      SendMessage( ::Handle, TB_SETIMAGELIST, 0, hIm )
+      SendMessage(::Handle, TB_SETIMAGELIST, 0, hIm)
    ELSEIF Len(aButton ) = 0
-      SendMessage( ::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( 0, 0 ) )
-          //SendMessage( ::handle, TB_SETDRAWTEXTFLAGS, DT_CENTER+DT_VCENTER, DT_CENTER+DT_VCENTER )
+      SendMessage(::HANDLE ,TB_SETBITMAPSIZE,0, MAKELONG ( 0, 0 ))
+          //SendMessage(::handle, TB_SETDRAWTEXTFLAGS, DT_CENTER+DT_VCENTER, DT_CENTER+DT_VCENTER)
    ENDIF
-   SENDMESSAGE( ::Handle, TB_SETINDENT, ::nIndent,  0)
+   SENDMESSAGE(::Handle, TB_SETINDENT, ::nIndent, 0)
    IF !Empty( ::BtnWidth )
-      SENDMESSAGE( ::Handle, TB_SETBUTTONWIDTH, 0, MAKELPARAM( ::BtnWidth -1, ::BtnWidth + 1  ) )
-         //SENDMESSAGE( ::Handle, TB_SETBUTTONWIDTH, MAKELPARAM( ::BtnWidth, ::BtnWidth ) )
+      SENDMESSAGE(::Handle, TB_SETBUTTONWIDTH, 0, MAKELPARAM( ::BtnWidth -1, ::BtnWidth + 1  ))
+         //SENDMESSAGE(::Handle, TB_SETBUTTONWIDTH, MAKELPARAM( ::BtnWidth, ::BtnWidth ))
    ENDIF
    IF Len( ::aItem ) > 0
       TOOLBARADDBUTTONS( ::handle, ::aItem, Len( ::aItem ) )
-      SendMessage( ::handle, TB_SETEXTENDEDSTYLE, 0, TBSTYLE_EX_DRAWDDARROWS )
+      SendMessage(::handle, TB_SETEXTENDEDSTYLE, 0, TBSTYLE_EX_DRAWDDARROWS)
    ENDIF
    IF ::BtnWidth != Nil
-      IF Hwg_BitAnd( ::Style, CCS_NODIVIDER  ) > 0
-         nMax := IIF( Hwg_BitAnd( ::Style, WS_DLGFRAME + WS_BORDER ) > 0 , 4, 2 )
-      ELSEIF Hwg_BitAnd( ::Style,  TBSTYLE_FLAT ) > 0
+      IF Hwg_BitAnd(::Style, CCS_NODIVIDER) > 0
+         nMax := IIF( Hwg_BitAnd(::Style, WS_DLGFRAME + WS_BORDER) > 0 , 4, 2 )
+      ELSEIF Hwg_BitAnd(::Style, TBSTYLE_FLAT) > 0
          nMax := 2
       ENDIF
       ::ndrop := nMax + IIF( !::WindowsManifest , 0, nDrop )
-      ::BtnHeight := MAX( HIWORD( SENDMESSAGE( ::handle, TB_GETBUTTONSIZE, 0, 0 ) ),;
-                     ::nHeight - ::nDrop - IIF( !::lnoThemes .AND. Hwg_BitAnd( ::Style,  TBSTYLE_FLAT ) > 0, 0, 2 ) )
+      ::BtnHeight := MAX( HIWORD(SENDMESSAGE(::handle, TB_GETBUTTONSIZE, 0, 0)),;
+                     ::nHeight - ::nDrop - IIF( !::lnoThemes .AND. Hwg_BitAnd(::Style, TBSTYLE_FLAT) > 0, 0, 2 ) )
       IF !::lVertical
-         SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::BtnWidth , ::BtnHeight ) )
+         SENDMESSAGE(::handle, TB_SETBUTTONSIZE, 0, MAKELPARAM( ::BtnWidth , ::BtnHeight ))
       ELSE
-         SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::nWidth - ::nDrop - 1, ::BtnWidth )  )
+         SENDMESSAGE(::handle, TB_SETBUTTONSIZE, 0, MAKELPARAM( ::nWidth - ::nDrop - 1, ::BtnWidth ))
       ENDIF
    ENDIF
-   ::BtnWidth := LOWORD( SENDMESSAGE( ::handle, TB_GETBUTTONSIZE, 0, 0 ) )
+   ::BtnWidth := LOWORD(SENDMESSAGE(::handle, TB_GETBUTTONSIZE, 0, 0))
       /*
       IF ::lTransp
-         nStyle := SendMessage( ::handle, TB_GETSTYLE, 0, 0 ) + TBSTYLE_TRANSPARENT
-         SendMessage( ::handle, TB_SETSTYLE, 0, nStyle )
+         nStyle := SendMessage(::handle, TB_GETSTYLE, 0, 0 ) + TBSTYLE_TRANSPARENT
+         SendMessage(::handle, TB_SETSTYLE, 0, nStyle)
       ENDIF
       */
 
@@ -432,7 +432,7 @@ METHOD CREATETOOL() CLASS hToolBar
 
 METHOD Notify( lParam ) CLASS hToolBar
 
-   LOCAL nCode :=  GetNotifyCode( lParam )
+   LOCAL nCode :=  GetNotifyCode(lParam)
    LOCAL nId
 
    LOCAL nButton
@@ -440,28 +440,28 @@ METHOD Notify( lParam ) CLASS hToolBar
 
    IF nCode == TTN_GETDISPINFO
 
-      nButton := TOOLBAR_GETDISPINFOID( lParam )
-      nPos := AScan( ::aItem,  { | x | x[ 2 ] == nButton } )
+      nButton := TOOLBAR_GETDISPINFOID(lParam)
+      nPos := AScan( ::aItem, { | x | x[ 2 ] == nButton } )
       TOOLBAR_SETDISPINFO( lParam, ::aItem[ nPos, 8 ] )
 
    ELSEIF nCode == TBN_GETINFOTIP
 
-      nId := TOOLBAR_GETINFOTIPID( lParam )
-      nPos := AScan( ::aItem,  { | x | x[ 2 ] == nId } )
-      TOOLBAR_GETINFOTIP( lParam, ::aItem[ nPos, 8 ] )
+      nId := TOOLBAR_GETINFOTIPID(lParam)
+      nPos := AScan( ::aItem, { | x | x[ 2 ] == nId } )
+      TOOLBAR_GETINFOTIP(lParam, ::aItem[ nPos, 8 ])
 
    ELSEIF nCode == TBN_DROPDOWN
-      nId := TOOLBAR_SUBMENUEXGETID( lParam )
+      nId := TOOLBAR_SUBMENUEXGETID(lParam)
       IF nId > 0 //hb_IsArray(::aItem[1, 9])
-//       nid := TOOLBAR_SUBMENUEXGETID( lParam )
-         nPos := AScan( ::aItem,  { | x | x[ 2 ] == nId } )
+//       nid := TOOLBAR_SUBMENUEXGETID(lParam)
+         nPos := AScan( ::aItem, { | x | x[ 2 ] == nId } )
          TOOLBAR_SUBMENUEx( lParam, ::aItem[ nPos, 10 ], ::oParent:handle )
       ELSE
          TOOLBAR_SUBMENU( lParam, 1, ::oParent:handle )
       ENDIF
    elseif nCode == NM_CLICK  //.AND. ::GetParentForm():Type  <= WND_MAIN 
       nId := TOOLBAR_IDCLICK( lParam )     
-      nPos := AScan( ::aItem,  { | x | x[ 2 ] == nId } )
+      nPos := AScan( ::aItem, { | x | x[ 2 ] == nId } )
       if nPos > 0 .AND. ::aItem[nPos,7] != NIL
          Eval( ::aItem[nPos,7], ::aItem[nPos,11], nId )
       endif
@@ -485,46 +485,46 @@ METHOD AddButton( nBitIp, nId, bState, bStyle, cText, bClick, c, aMenu, cName, n
 
    IF bStyle != BTNS_SEP  //1
       DEFAULT cName to "oToolButton" + LTRIM( STR( LEN( ::aButtons ) + 1 ) )
-      AAdd( ::aButtons,{ Alltrim( cName ), nid } )
+      AAdd(::aButtons,{ Alltrim( cName ), nid })
    ELSE
       bstate :=  IIF( !( ::lVertical .AND. LEN( ::aButtons) = 0 ), bState, 8 )//TBSTATE_HIDE
       DEFAULT nBitIp to 0
       DEFAULT cName to "oSeparator"+LTRIM( STR( LEN( ::aSeparators ) + 1 ) )
-      AAdd( ::aSeparators,{ cName, nid } )
+      AAdd(::aSeparators,{ cName, nid })
       //bStyle := TBSTYLE_SEP //TBSTYLE_FLAT
    ENDIF
 
    oButton := HToolButton():New(Self,cName,nBitIp,nId,bState,bStyle,cText,bClick, c ,aMenu)
    IF !::lResource
-      AAdd( ::aItem ,{ nBitIp, nId, bState, bStyle, 0, cText, bClick, c, aMenu, hMenu, oButton } )
+      AAdd(::aItem ,{ nBitIp, nId, bState, bStyle, 0, cText, bClick, c, aMenu, hMenu, oButton })
    ELSE
       ::aItem[ nIndex ] := { nBitIp, nId, bState, bStyle, 0, cText, bClick, c, aMenu, hMenu, oButton }
    Endif
    RETURN oButton
 
-METHOD RESIZE( xIncrSize, lWidth, lHeight  ) CLASS hToolBar
+METHOD RESIZE(xIncrSize, lWidth, lHeight) CLASS hToolBar
    LOCAL nSize
 
    IF ::Anchor = 0 .OR. ( !lWidth .AND. !lHeight )
       RETURN Nil
    ENDIF
-   nSize := SENDMESSAGE( ::handle, TB_GETBUTTONSIZE, 0, 0 )
+   nSize := SENDMESSAGE(::handle, TB_GETBUTTONSIZE, 0, 0)
    IF xIncrSize != 1
-      ::Move( ::nLeft, ::nTop, ::nWidth, ::nHeight, 0 )
+      ::Move(::nLeft, ::nTop, ::nWidth, ::nHeight, 0)
    ENDIF
-   IF xIncrSize < 1 .OR. LOWORD( nSize) <= ::BtnWidth
+   IF xIncrSize < 1 .OR. LOWORD(nSize) <= ::BtnWidth
       ::BtnWidth :=  ::BtnWidth  * xIncrSize
    ELSE
-      ::BtnWidth :=  LOWORD( nSize) * xIncrSize
+      ::BtnWidth :=  LOWORD(nSize) * xIncrSize
    ENDIF
-   SENDMESSAGE( ::Handle, TB_SETBUTTONWIDTH, MAKELPARAM( ::BtnWidth - 1, ::BtnWidth + 1 ) )
+   SENDMESSAGE(::Handle, TB_SETBUTTONWIDTH, MAKELPARAM( ::BtnWidth - 1, ::BtnWidth + 1 ))
    IF ::BtnWidth != Nil
       IF !::lVertical
-         SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::BtnWidth, ::BtnHeight ))
+         SENDMESSAGE(::handle, TB_SETBUTTONSIZE, 0, MAKELPARAM(::BtnWidth, ::BtnHeight))
       ELSE
-         SENDMESSAGE( ::handle, TB_SETBUTTONSIZE, 0,  MAKELPARAM( ::nWidth - ::nDrop - 1, ::BtnWidth )  )
+         SENDMESSAGE(::handle, TB_SETBUTTONSIZE, 0, MAKELPARAM(::nWidth - ::nDrop - 1, ::BtnWidth))
           ENDIF
-          SENDMESSAGE( ::handle, WM_SIZE, 0,  0 )
+          SENDMESSAGE(::handle, WM_SIZE, 0, 0)
    ENDIF
    RETURN NIL
 
@@ -540,8 +540,8 @@ END CLASS
 
 METHOD init() CLASS htoolbarex
    ::Super:init()
-   SetWindowObject( ::handle, Self )
-   SETTOOLHANDLE( ::handle )
+   SetWindowObject(::handle, Self)
+   SETTOOLHANDLE(::handle)
    Sethook()
    RETURN Self
 
@@ -560,7 +560,7 @@ METHOD init() CLASS htoolbarex
 METHOD ExecuteTool( nid ) CLASS htoolbarex
 
    IF nid > 0
-      SendMessage( ::oParent:handle, WM_COMMAND, makewparam( nid, BN_CLICKED ), ::handle )
+      SendMessage(::oParent:handle, WM_COMMAND, makewparam( nid, BN_CLICKED ), ::handle)
       RETURN 0
    ENDIF
    RETURN - 200
@@ -570,7 +570,7 @@ STATIC FUNCTION IsAltShift( lAlt )
    LOCAL cKeyb := GetKeyboardState()
 
    IF lAlt == Nil ; lAlt := .T. ; ENDIF
-   RETURN ( lAlt .AND. ( Asc( SubStr( cKeyb, VK_MENU + 1, 1 ) ) >= 128 ) )
+   RETURN ( lAlt .AND. ( Asc(SubStr( cKeyb, VK_MENU + 1, 1 )) >= 128 ) )
    */
 
 PROCEDURE MyDestructor CLASS htoolbarex

@@ -82,8 +82,8 @@ HB_FUNC(CREATEACTIVEX)
                             ISNIL(7) ? 544 : hb_parni(7),                        // nWidth
                             ISNIL(8) ? 375 : hb_parni(8),                        // nHeight
                             ISNIL(9) ? HWND_DESKTOP : (HWND)hb_parnl(9),         // oParent:handle
-                            // ISNIL( 10 ) ? NULL                : (HMENU) hb_parnl( 10 ),  // Id
-                            // GetModuleHandle( 0 ),
+                            // ISNIL(10) ? NULL                : (HMENU) hb_parnl(10),  // Id
+                            // GetModuleHandle(0),
                             0, 0, NULL);
 
   HB_RETHANDLE(hWndCtrl);
@@ -466,15 +466,15 @@ static ULONG STDMETHODCALLTYPE Invoke(IEventHandler *this, DISPID dispid, REFIID
             //    pArg->ppdispVal = va_arg(argList, LPDISPATCH*);
             //    break;
 
-          } // EOF switch( (&(params->rgvarg[iArg-i]))->n1.n2.vt )
+          } // EOF switch ((&(params->rgvarg[iArg-i]))->n1.n2.vt)
 
-        } // EOF if( (&(params->rgvarg[iArg-i]))->n1.n2.vt & VT_BYREF == VT_BYREF )
+        } // EOF if ((&(params->rgvarg[iArg-i]))->n1.n2.vt & VT_BYREF == VT_BYREF)
 
-      } // EOF for( i=iArg; i > 0; i-- )
+      } // EOF for (i=iArg; i > 0; i--)
 
       hb_vmPopState();
 
-    } // EOF if ( pExec )
+    } // EOF if (pExec)
 
   } // EOF If Scan
 
@@ -500,8 +500,8 @@ static const IEventHandlerVtbl IEventHandler_Vtbl = {QueryInterface, AddRef,    
 
 typedef IEventHandler device_interface;
 
-// Hash  // SetupConnectionPoint( oOle:hObj, @hSink, hEvents )             -> nError
-// Array // SetupConnectionPoint( oOle:hObj, @hSink, aEvents, aExecEvent ) -> nError
+// Hash  // SetupConnectionPoint(oOle:hObj, @hSink, hEvents)             -> nError
+// Array // SetupConnectionPoint(oOle:hObj, @hSink, aEvents, aExecEvent) -> nError
 
 HB_FUNC(SETUPCONNECTIONPOINT)
 {

@@ -24,16 +24,16 @@ REQUEST DBSkip
 REQUEST DBGoTop
 REQUEST DBCloseArea
 
-FUNCTION ClonePaintRep( ar )
-   aPaintRep := AClone( ar )
+FUNCTION ClonePaintRep(ar)
+   aPaintRep := AClone(ar)
    RETURN Nil
 
-FUNCTION SetPaintRep( ar )
+FUNCTION SetPaintRep(ar)
    aPaintRep := ar
    RETURN Nil
 
 FUNCTION OpenReport( fname, repName )
-   LOCAL strbuf := Space( 512 ), poz := 513, stroka, nMode := 0
+   LOCAL strbuf := Space(512), poz := 513, stroka, nMode := 0
    LOCAL han
    LOCAL itemName, aItem, res := .T.
    LOCAL nFormWidth
@@ -53,9 +53,9 @@ FUNCTION OpenReport( fname, repName )
          ENDIF
          IF nMode == 0
             IF Left( stroka, 1 ) == "#"
-               IF Upper( SubStr( stroka, 2, 6 ) ) == "REPORT"
+               IF Upper(SubStr(stroka, 2, 6)) == "REPORT"
                   stroka := LTrim( SubStr( stroka, 9 ) )
-                  IF Upper( stroka ) == Upper( repName )
+                  IF Upper(stroka) == Upper(repName)
                      nMode := 1
                      aPaintRep := { 0, 0, 0, 0, 0, {}, fname, repName, .F., 0, Nil }
                   ENDIF
@@ -63,9 +63,9 @@ FUNCTION OpenReport( fname, repName )
             ENDIF
          ELSEIF nMode == 1
             IF Left( stroka, 1 ) == "#"
-               IF Upper( SubStr( stroka, 2, 6 ) ) == "ENDREP"
+               IF Upper(SubStr(stroka, 2, 6)) == "ENDREP"
                   EXIT
-               ELSEIF Upper( SubStr( stroka, 2, 6 ) ) == "SCRIPT"
+               ELSEIF Upper(SubStr(stroka, 2, 6)) == "SCRIPT"
                   nMode := 2
                   IF aItem != Nil
                      aItem[ ITEM_SCRIPT ] := ""
@@ -80,81 +80,81 @@ FUNCTION OpenReport( fname, repName )
                   nFormWidth := Val( NextItem( stroka ) )
                   aPaintRep[ FORM_XKOEF ] := nFormWidth / aPaintRep[ FORM_WIDTH ]
                ELSEIF itemName == "TEXT"
-                  AAdd( aPaintRep[ FORM_ITEMS ], { 1, NextItem( stroka ), Val( NextItem( stroka ) ), ;
+                  AAdd(aPaintRep[ FORM_ITEMS ], { 1, NextItem( stroka ), Val( NextItem( stroka ) ), ;
                                                    Val( NextItem( stroka ) ), Val( NextItem( stroka ) ), ;
                                                    Val( NextItem( stroka ) ), Val( NextItem( stroka ) ), 0, NextItem( stroka ), ;
-                                                   Val( NextItem( stroka ) ), 0, Nil, 0 } )
+                                                   Val( NextItem( stroka ) ), 0, Nil, 0 })
                   aItem := ATail( aPaintRep[ FORM_ITEMS ] )
-                  aItem[ ITEM_FONT ] := HFont():Add( NextItem( aItem[ ITEM_FONT ], .T., "," ), ;
+                  aItem[ ITEM_FONT ] := HFont():Add(NextItem( aItem[ ITEM_FONT ], .T., "," ), ;
                                                      Val( NextItem( aItem[ ITEM_FONT ],, "," ) ), Val( NextItem( aItem[ ITEM_FONT ],, "," ) ), ;
                                                      Val( NextItem( aItem[ ITEM_FONT ],, "," ) ), Val( NextItem( aItem[ ITEM_FONT ],, "," ) ), ;
                                                      Val( NextItem( aItem[ ITEM_FONT ],, "," ) ), Val( NextItem( aItem[ ITEM_FONT ],, "," ) ), ;
-                                                     Val( NextItem( aItem[ ITEM_FONT ],, "," ) ) )
+                                                     Val( NextItem( aItem[ ITEM_FONT ],, "," ) ))
                   IF aItem[ ITEM_X1 ] == Nil .OR. aItem[ ITEM_X1 ] == 0 .OR. ;
                   aItem[ ITEM_Y1 ] == Nil .OR. aItem[ ITEM_Y1 ] == 0 .OR. ;
                   aItem[ ITEM_WIDTH ] == Nil .OR. aItem[ ITEM_WIDTH ] == 0 .OR. ;
                   aItem[ ITEM_HEIGHT ] == Nil .OR. aItem[ ITEM_HEIGHT ] == 0
-                  MsgStop( "Error: " + stroka )
+                  MsgStop("Error: " + stroka)
                   res := .F.
                   EXIT
                ENDIF
             ELSEIF itemName == "HLINE" .OR. itemName == "VLINE" .OR. itemName == "BOX"
-               AAdd( aPaintRep[ FORM_ITEMS ], { IIf( itemName == "HLINE", 2, IIf( itemName == "VLINE", 3, 4 ) ), ;
+               AAdd(aPaintRep[ FORM_ITEMS ], { IIf( itemName == "HLINE", 2, IIf( itemName == "VLINE", 3, 4 ) ), ;
                                                 "", Val( NextItem( stroka ) ), ;
                                                 Val( NextItem( stroka ) ), Val( NextItem( stroka ) ), ;
-                                                Val( NextItem( stroka ) ), 0, NextItem( stroka ), 0, 0, 0, Nil, 0 } )
+                                                Val( NextItem( stroka ) ), 0, NextItem( stroka ), 0, 0, 0, Nil, 0 })
                aItem := ATail( aPaintRep[ FORM_ITEMS ] )
-               aItem[ ITEM_PEN ] := HPen():Add( Val( NextItem( aItem[ ITEM_PEN ], .T., "," ) ), ;
-                                                Val( NextItem( aItem[ ITEM_PEN ],, "," ) ), Val( NextItem( aItem[ ITEM_PEN ],, "," ) ) )
+               aItem[ ITEM_PEN ] := HPen():Add(Val( NextItem( aItem[ ITEM_PEN ], .T., "," ) ), ;
+                                                Val( NextItem( aItem[ ITEM_PEN ],, "," ) ), Val( NextItem( aItem[ ITEM_PEN ],, "," ) ))
                IF aItem[ ITEM_X1 ] == Nil .OR. aItem[ ITEM_X1 ] == 0 .OR. ;
                aItem[ ITEM_Y1 ] == Nil .OR. aItem[ ITEM_Y1 ] == 0 .OR. ;
                aItem[ ITEM_WIDTH ] == Nil .OR. aItem[ ITEM_WIDTH ] == 0 .OR. ;
                aItem[ ITEM_HEIGHT ] == Nil .OR. aItem[ ITEM_HEIGHT ] == 0
-               MsgStop( "Error: " + stroka )
+               MsgStop("Error: " + stroka)
                res := .F.
                EXIT
             ENDIF
          ELSEIF itemName == "BITMAP"
-            AAdd( aPaintRep[ FORM_ITEMS ], { 5, NextItem( stroka ), ;
+            AAdd(aPaintRep[ FORM_ITEMS ], { 5, NextItem( stroka ), ;
                                              Val( NextItem( stroka ) ), ;
                                              Val( NextItem( stroka ) ), Val( NextItem( stroka ) ), ;
-                                             Val( NextItem( stroka ) ), 0, 0, 0, 0, 0, Nil, 0 } )
+                                             Val( NextItem( stroka ) ), 0, 0, 0, 0, 0, Nil, 0 })
             aItem := ATail( aPaintRep[ FORM_ITEMS ] )
             IF aItem[ ITEM_X1 ] == Nil .OR. aItem[ ITEM_X1 ] == 0 .OR. ;
                aItem[ ITEM_Y1 ] == Nil .OR. aItem[ ITEM_Y1 ] == 0 .OR. ;
                aItem[ ITEM_WIDTH ] == Nil .OR. aItem[ ITEM_WIDTH ] == 0 .OR. ;
                aItem[ ITEM_HEIGHT ] == Nil .OR. aItem[ ITEM_HEIGHT ] == 0
-               MsgStop( "Error: " + stroka )
+               MsgStop("Error: " + stroka)
                res := .F.
                EXIT
             ENDIF
          ELSEIF itemName == "MARKER"
-            AAdd( aPaintRep[ FORM_ITEMS ], { 6, NextItem( stroka ), Val( NextItem( stroka ) ), ;
+            AAdd(aPaintRep[ FORM_ITEMS ], { 6, NextItem( stroka ), Val( NextItem( stroka ) ), ;
                                              Val( NextItem( stroka ) ), Val( NextItem( stroka ) ), ;
                                              Val( NextItem( stroka ) ), Val( NextItem( stroka ) ), ;
-                                             0, 0, 0, 0, Nil, 0 } )
+                                             0, 0, 0, 0, Nil, 0 })
             aItem := ATail( aPaintRep[ FORM_ITEMS ] )
          ENDIF
       ENDIF
    ELSEIF nMode == 2
-      IF Left( stroka, 1 ) == "#" .AND. Upper( SubStr( stroka, 2, 6 ) ) == "ENDSCR"
+      IF Left( stroka, 1 ) == "#" .AND. Upper(SubStr(stroka, 2, 6)) == "ENDSCR"
          nMode := 1
       ELSE
          IF aItem != Nil
-            aItem[ ITEM_SCRIPT ] += stroka + Chr( 13 ) + Chr( 10 )
+            aItem[ ITEM_SCRIPT ] += stroka + Chr(13) + Chr(10)
          ELSE
-            aPaintRep[ FORM_VARS ] += stroka + Chr( 13 ) + Chr( 10 )
+            aPaintRep[ FORM_VARS ] += stroka + Chr(13) + Chr(10)
          ENDIF
       ENDIF
    ENDIF
 ENDDO
-FClose( han )
+FClose(han)
 ELSE
-   MsgStop( "Can't open " + fname )
+   MsgStop("Can't open " + fname)
    RETURN .F.
 ENDIF
 IF Empty( aPaintRep[ FORM_ITEMS ] )
-   MsgStop( repName + " not found or empty!" )
+   MsgStop(repName + " not found or empty!")
    res := .F.
 ELSE
    aPaintRep[ FORM_ITEMS ] := ASort( aPaintRep[ FORM_ITEMS ],,, { | z, y | z[ ITEM_Y1 ] < y[ ITEM_Y1 ] .OR.( z[ ITEM_Y1 ] == y[ ITEM_Y1 ] .AND.z[ ITEM_X1 ] < y[ ITEM_X1 ] ) .OR.( z[ ITEM_Y1 ] == y[ ITEM_Y1 ] .AND.z[ ITEM_X1 ] == y[ ITEM_X1 ] .AND.( z[ ITEM_WIDTH ] < y[ ITEM_WIDTH ] .OR.z[ ITEM_HEIGHT ] < y[ ITEM_HEIGHT ] ) ) } )
@@ -163,18 +163,18 @@ RETURN res
 
 FUNCTION RecalcForm( aPaintRep, nFormWidth )
    LOCAL hDC, aMetr, aItem, i
-   hDC := GetDC( GetActiveWindow() )
-   aMetr := GetDeviceArea( hDC )
+   hDC := GetDC(GetActiveWindow())
+   aMetr := GetDeviceArea(hDC)
    aPaintRep[ FORM_XKOEF ] := ( aMetr[ 1 ] - XINDENT ) / aPaintRep[ FORM_WIDTH ]
-   ReleaseDC( GetActiveWindow(), hDC )
+   ReleaseDC(GetActiveWindow(), hDC)
 
    IF nFormWidth != aMetr[ 1 ] - XINDENT
       FOR i := 1 TO Len( aPaintRep[ FORM_ITEMS ] )
          aItem := aPaintRep[ FORM_ITEMS, i ]
-         aItem[ ITEM_X1 ] := Round( aItem[ ITEM_X1 ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0 )
-         aItem[ ITEM_Y1 ] := Round( aItem[ ITEM_Y1 ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0 )
-         aItem[ ITEM_WIDTH ] := Round( aItem[ ITEM_WIDTH ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0 )
-         aItem[ ITEM_HEIGHT ] := Round( aItem[ ITEM_HEIGHT ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0 )
+         aItem[ ITEM_X1 ] := Round(aItem[ ITEM_X1 ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0)
+         aItem[ ITEM_Y1 ] := Round(aItem[ ITEM_Y1 ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0)
+         aItem[ ITEM_WIDTH ] := Round(aItem[ ITEM_WIDTH ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0)
+         aItem[ ITEM_HEIGHT ] := Round(aItem[ ITEM_HEIGHT ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0)
       NEXT
    ENDIF
    RETURN Nil
@@ -195,21 +195,21 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
       RETURN .F.
    ENDIF
 
-   aPrnCoors := GetDeviceArea( oPrinter:hDCPrn )
+   aPrnCoors := GetDeviceArea(oPrinter:hDCPrn)
    prnXCoef := ( aPrnCoors[ 1 ] / aPaintRep[ FORM_WIDTH ] ) / aPaintRep[ FORM_XKOEF ]
    prnYCoef := ( aPrnCoors[ 2 ] / aPaintRep[ FORM_HEIGHT ] ) / aPaintRep[ FORM_XKOEF ]
    // writelog( oPrinter:cPrinterName + str(aPrnCoors[1])+str(aPrnCoors[2])+" / "+str(aPaintRep[FORM_WIDTH])+" "+str(aPaintRep[FORM_HEIGHT])+str(aPaintRep[FORM_XKOEF])+" / "+str(prnXCoef)+str(prnYCoef) )
 
-   IF Type( "oFontStandard" ) = "U"
-      PRIVATE oFontStandard := HFont():Add( "Arial", 0, - 13, 400, 204 )
+   IF Type("oFontStandard") = "U"
+      PRIVATE oFontStandard := HFont():Add("Arial", 0, -13, 400, 204)
    ENDIF
 
    FOR i := 1 TO Len( aPaintRep[ FORM_ITEMS ] )
       IF aPaintRep[ FORM_ITEMS, i, ITEM_TYPE ] == TYPE_TEXT
          oFont := aPaintRep[ FORM_ITEMS, i, ITEM_FONT ]
-         aPaintRep[ FORM_ITEMS, i, ITEM_STATE ] := HFont():Add( oFont:name, ;
-                                                                oFont:width, Round( oFont:height * prnYCoef, 0 ), oFont:weight, ;
-                                                                oFont:charset, oFont:italic )
+         aPaintRep[ FORM_ITEMS, i, ITEM_STATE ] := HFont():Add(oFont:name, ;
+                                                                oFont:width, Round(oFont:height * prnYCoef, 0), oFont:weight, ;
+                                                                oFont:charset, oFont:italic)
       ENDIF
    NEXT
 
@@ -256,19 +256,19 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
       ENDIF
    NEXT
    IF iPH > 0 .AND. iSL == 0
-      MsgStop( "'Start Line' marker is absent" )
+      MsgStop("'Start Line' marker is absent")
       oPrinter:END()
       RETURN .F.
    ELSEIF iSL > 0 .AND. iEL == 0
-      MsgStop( "'End Line' marker is absent" )
+      MsgStop("'End Line' marker is absent")
       oPrinter:END()
       RETURN .F.
    ELSEIF iPF > 0 .AND. iEPF == 0
-      MsgStop( "'End of Page Footer' marker is absent" )
+      MsgStop("'End of Page Footer' marker is absent")
       oPrinter:END()
       RETURN .F.
    ELSEIF iSL > 0 .AND. iPF == 0 .AND. iDF == 0
-      MsgStop( "'Page Footer' and 'Document Footer' markers are absent" )
+      MsgStop("'Page Footer' and 'Document Footer' markers are absent")
       oPrinter:END()
       RETURN .F.
    ENDIF
@@ -278,7 +278,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
       // Writelog( "Startdoc" )
       // Writelog( "Startpage" )
    #else
-      oPrinter:StartDoc( lPreview )
+      oPrinter:StartDoc(lPreview)
       oPrinter:StartPage()
    #endif
 
@@ -307,7 +307,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
                   NEXT
                   // ENDIF
                   aItem[ ITEM_STATE ] := 1
-                  IF !ScriptExecute( aItem )
+                  IF !ScriptExecute(aItem)
                      #ifdef __DEBUG__
                         // Writelog( "Endpage" )
                         // Writelog( "Enddoc" )
@@ -330,7 +330,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
                      PrintItem( oPrinter, aPaintRep, aPaintRep[ FORM_ITEMS, i ], prnXCoef, prnYCoef, IIf( lAddMode, nYadd, 0 ), .T. )
                   ENDIF
                NEXT
-               IF !ScriptExecute( aItem )
+               IF !ScriptExecute(aItem)
                   #ifdef __DEBUG__
                      // Writelog( "Endpage" )
                      // Writelog( "Enddoc" )
@@ -399,7 +399,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
             ENDIF
          ELSE
             IF aItem[ ITEM_TYPE ] == TYPE_TEXT
-               IF !ScriptExecute( aItem )
+               IF !ScriptExecute(aItem)
                   #ifdef __DEBUG__
                      // Writelog( "Endpage" )
                      // Writelog( "Enddoc" )
@@ -457,10 +457,10 @@ FUNCTION PrintItem( oPrinter, aPaintRep, aItem, prnXCoef, prnYCoef, nYadd, lCalc
    x2 := x1 + aItem[ ITEM_WIDTH ] - 1
    y2 := y1 + aItem[ ITEM_HEIGHT ] - 1
    // writelog( Str(aItem[ITEM_TYPE])+": "+Iif(aItem[ITEM_TYPE]==TYPE_TEXT,aItem[ITEM_CAPTION],"")+str(x1)+str(y1)+str(x2)+str(y2) )
-   x1 := Round( x1 * prnXCoef, 0 )
-   y1 := Round( y1 * prnYCoef, 0 )
-   x2 := Round( x2 * prnXCoef, 0 )
-   y2 := Round( y2 * prnYCoef, 0 )
+   x1 := Round(x1 * prnXCoef, 0)
+   y1 := Round(y1 * prnYCoef, 0)
+   x2 := Round(x2 * prnXCoef, 0)
+   y2 := Round(y2 * prnYCoef, 0)
    // writelog( "PrintItem-2: "+str(x1)+str(y1)+str(x2)+str(y2))
 
    #ifdef __DEBUG__
@@ -479,28 +479,28 @@ FUNCTION PrintItem( oPrinter, aPaintRep, aItem, prnXCoef, prnYCoef, nYadd, lCalc
                           aItem[ ITEM_STATE ] )
          ENDIF
       ELSEIF aItem[ ITEM_TYPE ] == TYPE_HLINE
-         oPrinter:Line( x1, Round( ( y1 + y2 ) / 2, 0 ), x2, Round( ( y1 + y2 ) / 2, 0 ), aItem[ ITEM_PEN ] )
+         oPrinter:Line(x1, Round((y1 + y2) / 2, 0), x2, Round((y1 + y2) / 2, 0), aItem[ITEM_PEN])
       ELSEIF aItem[ ITEM_TYPE ] == TYPE_VLINE
-         oPrinter:Line( Round( ( x1 + x2 ) / 2, 0 ), y1, Round( ( x1 + x2 ) / 2, 0 ), y2, aItem[ ITEM_PEN ] )
+         oPrinter:Line(Round((x1 + x2) / 2, 0), y1, Round((x1 + x2) / 2, 0), y2, aItem[ITEM_PEN])
       ELSEIF aItem[ ITEM_TYPE ] == TYPE_BOX
          oPrinter:Box( x1, y1, x2, y2, aItem[ ITEM_PEN ] )
       ELSEIF aItem[ ITEM_TYPE ] == TYPE_BITMAP
-         hBitmap := OpenBitmap( aItem[ ITEM_CAPTION ], oPrinter:hDC )
+         hBitmap := OpenBitmap(aItem[ ITEM_CAPTION ], oPrinter:hDC)
          // writelog( "hBitmap: "+str(hBitmap) )
-         oPrinter:Bitmap( x1, y1, x2, y2,, hBitmap )
-         DeleteObject( hBitmap )
-         // DrawBitmap( hDC, aItem[ITEM_BITMAP],SRCAND, x1, y1, x2-x1+1, y2-y1+1 )
+         oPrinter:Bitmap(x1, y1, x2, y2,, hBitmap)
+         DeleteObject(hBitmap)
+         // DrawBitmap(hDC, aItem[ITEM_BITMAP],SRCAND, x1, y1, x2-x1+1, y2-y1+1)
       ENDIF
    #endif
    RETURN Nil
 
-STATIC FUNCTION ScriptExecute( aItem )
+STATIC FUNCTION ScriptExecute(aItem)
    LOCAL nError, nLineEr
    IF aItem[ ITEM_SCRIPT ] != Nil .AND. !Empty( aItem[ ITEM_SCRIPT ] )
       IF hb_IsChar(aItem[ITEM_SCRIPT])
          IF ( aItem[ ITEM_SCRIPT ] := RdScript( , aItem[ ITEM_SCRIPT ] ) ) == Nil
             nError := CompileErr( @nLineEr )
-            MsgStop( "Script error (" + LTrim( Str( nError ) ) + "), line " + LTrim( Str( nLineEr ) ) )
+            MsgStop("Script error (" + LTrim( Str( nError ) ) + "), line " + LTrim( Str( nLineEr ) ))
             RETURN .F.
          ENDIF
       ENDIF

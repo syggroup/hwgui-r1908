@@ -26,15 +26,15 @@ CLASS VAR aImages   INIT {}
    DATA nWidth, nHeight
    DATA nCounter   INIT 1
 
-   METHOD AddFile( name )
+   METHOD AddFile(name)
    METHOD AddFromVar( cImage, cType )
-   METHOD FromBitmap( oBitmap )
+   METHOD FromBitmap(oBitmap)
    METHOD Draw( hDC, nLeft, nTop, nWidth, nHeight )
    METHOD Release()
 
 ENDCLASS
 
-METHOD AddFile( name ) CLASS HFreeImage
+METHOD AddFile(name) CLASS HFreeImage
    LOCAL i
 
    #ifdef __XHARBOUR__
@@ -52,13 +52,13 @@ METHOD AddFile( name ) CLASS HFreeImage
          ENDIF
       NEXT
    #endif
-   IF Empty( ::handle := FI_Load( name ) )
+   IF Empty( ::handle := FI_Load(name) )
       RETURN Nil
    ENDIF
    ::name := name
    ::nWidth  := FI_GetWidth( ::handle )
    ::nHeight := FI_GetHeight( ::handle )
-   AAdd( ::aImages, Self )
+   AAdd(::aImages, Self)
 
    RETURN Self
 
@@ -70,24 +70,24 @@ METHOD AddFromVar( cImage, cType ) CLASS HFreeImage
    ::name := LTrim( Str( ::handle ) )
    ::nWidth  := FI_GetWidth( ::handle )
    ::nHeight := FI_GetHeight( ::handle )
-   AAdd( ::aImages, Self )
+   AAdd(::aImages, Self)
 
    RETURN Self
 
-METHOD FromBitmap( oBitmap ) CLASS HFreeImage
+METHOD FromBitmap(oBitmap) CLASS HFreeImage
 
    ::handle := FI_Bmp2FI( oBitmap:handle )
    ::name := LTrim( Str( oBitmap:handle ) )
    ::nWidth  := FI_GetWidth( ::handle )
    ::nHeight := FI_GetHeight( ::handle )
-   AAdd( ::aImages, Self )
+   AAdd(::aImages, Self)
 
    RETURN Self
 
 METHOD Draw( hDC, nLeft, nTop, nWidth, nHeight ) CLASS HFreeImage
 
    FI_Draw( ::handle, hDC, ::nWidth, ::nHeight, nLeft, nTop, nWidth, nHeight )
-   // DrawBitmap( hDC, ::hBitmap,, nLeft, nTop, ::nWidth, ::nHeight )
+   // DrawBitmap(hDC, ::hBitmap,, nLeft, nTop, ::nWidth, ::nHeight)
    RETURN Nil
 
 METHOD Release() CLASS HFreeImage
@@ -98,24 +98,24 @@ METHOD Release() CLASS HFreeImage
       #ifdef __XHARBOUR__
          FOR EACH i IN ::aImages
             IF i:handle == ::handle
-               FI_Unload( ::handle )
+               FI_Unload(::handle)
                IF ::hBitmap != Nil
-                  DeleteObject( ::hBitmap )
+                  DeleteObject(::hBitmap)
                ENDIF
                ADel( ::aImages, hB_enumIndex() )
-               ASize( ::aImages, nlen - 1 )
+               ASize(::aImages, nlen - 1)
                EXIT
             ENDIF
          NEXT
       #else
          FOR i := 1 TO nlen
             IF ::aImages[ i ]:handle == ::handle
-               FI_Unload( ::handle )
+               FI_Unload(::handle)
                IF ::hBitmap != Nil
-                  DeleteObject( ::hBitmap )
+                  DeleteObject(::hBitmap)
                ENDIF
                ADel( ::aImages, i )
-               ASize( ::aImages, nlen - 1 )
+               ASize(::aImages, nlen - 1)
                EXIT
             ENDIF
          NEXT
@@ -133,8 +133,8 @@ CLASS HSayFImage INHERIT HSayImage
 
    METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, bInit, ;
                bSize, ctooltip, cType )
-   METHOD Redefine( oWndParent, nId, Image, bInit, bSize, ctooltip )
-   METHOD ReplaceImage( Image, cType )
+   METHOD Redefine(oWndParent, nId, Image, bInit, bSize, ctooltip)
+   METHOD ReplaceImage(Image, cType)
    METHOD Paint( lpdis )
 
 ENDCLASS
@@ -144,7 +144,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, bInit, ;
 
    IF Image != Nil
       ::oImage := IIf( hb_IsChar(Image), ;
-                       IIf( cType != Nil, HFreeImage():AddFromVar( Image, cType ), HFreeImage():AddFile( Image ) ), Image )
+                       IIf( cType != Nil, HFreeImage():AddFromVar( Image, cType ), HFreeImage():AddFile(Image) ), Image )
       IF nWidth == Nil
          nWidth  := ::oImage:nWidth
          nHeight := ::oImage:nHeight
@@ -159,24 +159,24 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, bInit, ;
 
    RETURN Self
 
-METHOD Redefine( oWndParent, nId, Image, bInit, bSize, ctooltip ) CLASS HSayFImage
+METHOD Redefine(oWndParent, nId, Image, bInit, bSize, ctooltip) CLASS HSayFImage
 
-   ::oImage := IIf( hb_IsChar(Image), HFreeImage():AddFile( Image ), Image )
+   ::oImage := IIf( hb_IsChar(Image), HFreeImage():AddFile(Image), Image )
 
-   ::Super:Redefine( oWndParent, nId, bInit, bSize, ctooltip )
+   ::Super:Redefine(oWndParent, nId, bInit, bSize, ctooltip)
    // ::classname:= "HSAYFIMAGE"
 
    ::bPaint  := { | o, lpdis | o:Paint( lpdis ) }
 
    RETURN Self
 
-METHOD ReplaceImage( Image, cType )
+METHOD ReplaceImage(Image, cType)
 
    IF ::oImage != Nil
       ::oImage:Release()
    ENDIF
    ::oImage := IIf( hb_IsChar(Image), ;
-                    IIf( cType != Nil, HFreeImage():AddFromVar( Image, cType ), HFreeImage():AddFile( Image ) ), Image )
+                    IIf( cType != Nil, HFreeImage():AddFromVar( Image, cType ), HFreeImage():AddFile(Image) ), Image )
 
    RETURN Nil
 
@@ -199,9 +199,9 @@ METHOD Paint( lpdis ) CLASS HSayFImage
    LOCAL i
 
    FOR i := 1 TO Len( HFreeImage():aImages )
-      FI_Unload( HFreeImage():aImages[ i ]:handle )
+      FI_Unload(HFreeImage():aImages[ i ]:handle)
       IF HFreeImage():aImages[ i ]:hBitmap != Nil
-         DeleteObject( HFreeImage():aImages[ i ]:hBitmap )
+         DeleteObject(HFreeImage():aImages[ i ]:hBitmap)
       ENDIF
    NEXT
    FI_End()

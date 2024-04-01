@@ -87,13 +87,13 @@ FUNCTION Hwg_AddMenuItem( aMenu, cItem, nMenuId, lSubMenu, bItem, nPos )
 
    IF nPos > Len( aMenu[ 1 ] )
       IF lSubMenu
-         AAdd( aMenu[ 1 ], { {}, cItem, nMenuId, 0, hSubMenu } )
+         AAdd(aMenu[ 1 ], { {}, cItem, nMenuId, 0, hSubMenu })
       ELSE
-         AAdd( aMenu[ 1 ], { bItem, cItem, nMenuId, 0 } )
+         AAdd(aMenu[ 1 ], { bItem, cItem, nMenuId, 0 })
       ENDIF
       RETURN ATail( aMenu[ 1 ] )
    ELSE
-      AAdd( aMenu[ 1 ], Nil )
+      AAdd(aMenu[ 1 ], Nil)
       AIns( aMenu[ 1 ], nPos )
       IF lSubMenu
          aMenu[ 1, nPos ] := { {}, cItem, nMenuId, 0, hSubMenu }
@@ -121,7 +121,7 @@ FUNCTION Hwg_FindMenuItem( aMenu, nId, nPos )
    ENDDO
    RETURN Nil
 
-FUNCTION Hwg_GetSubMenuHandle( aMenu, nId )
+FUNCTION Hwg_GetSubMenuHandle(aMenu, nId)
    LOCAL aSubMenu := Hwg_FindMenuItem( aMenu, nId )
 
    RETURN IIf( aSubMenu == Nil, 0, aSubMenu[ 5 ] )
@@ -144,7 +144,7 @@ FUNCTION BuildMenu( aMenuInit, hWnd, oWnd, nPosParent, lPopup )
       IIf( hb_IsLogical(aMenu[4]), aMenu[ 4 ] := .F., )
       hMenu := hwg__AddMenuItem( hMenu, aMenu[ 2 ], nPos + 1, .T., aMenu[ 3 ], aMenu[ 4 ], .T. )
       IF Len( aMenu ) < 5
-         AAdd( aMenu, hMenu )
+         AAdd(aMenu, hMenu)
       ELSE
          aMenu[ 5 ] := hMenu
       ENDIF
@@ -160,7 +160,7 @@ FUNCTION BuildMenu( aMenuInit, hWnd, oWnd, nPosParent, lPopup )
             IIf( hb_IsLogical(aMenu[1, nPos, 4]), aMenu[ 1, nPos, 4 ] := .F., )
             hwg__AddMenuItem( hMenu, aMenu[ 1, nPos, 2 ], nPos, .T., ;
                               aMenu[ 1, nPos, 3 ], aMenu[ 1, nPos, 4 ], .F. )
-            oBmp := Hwg_SearchPosBitmap( aMenu[ 1, nPos, 3 ] )
+            oBmp := Hwg_SearchPosBitmap(aMenu[ 1, nPos, 3 ])
             IF oBmp[ 1 ]
                SetMenuItemBitmaps( hMenu, aMenu[ 1, nPos, 3 ], oBmp[ 2 ], "" )
             ENDIF
@@ -200,7 +200,7 @@ FUNCTION Hwg_BeginMenu( oWnd, nId, cTitle, nbkColor, nWidthBmp, nHeightBmp )
          aMenu := ATail( aMenu )[ 1 ]
       NEXT
       _nLevel ++
-      AAdd( aMenu, { {}, cTitle, nId, 0 } )
+      AAdd(aMenu, { {}, cTitle, nId, 0 })
    ENDIF
    RETURN .T.
 
@@ -217,10 +217,10 @@ FUNCTION Hwg_EndMenu()
    IF _nLevel > 0
       _nLevel --
    ELSE
-      BuildMenu( AClone( _aMenuDef ), IIf( _oWnd != Nil, _oWnd:handle, Nil ), ;
+      BuildMenu( AClone(_aMenuDef), IIf( _oWnd != Nil, _oWnd:handle, Nil ), ;
                  _oWnd,, IIf( _oWnd != Nil, .F., .T. ) )
       IF _oWnd != Nil .AND. _aAccel != Nil .AND. !Empty( _aAccel )
-         _oWnd:hAccel := CreateAcceleratorTable( _aAccel )
+         _oWnd:hAccel := CreateAcceleratorTable(_aAccel)
       ENDIF
       _aMenuDef := Nil
       _oBitmap  := Nil
@@ -242,23 +242,23 @@ FUNCTION Hwg_DefineMenuItem( cItem, nId, bItem, lDisabled, accFlag, accKey, lBit
       aMenu := ATail( aMenu )[ 1 ]
    NEXT
    IF !Empty( cItem )
-      cItem := StrTran( cItem, "\t", Chr( 9 ) )
+      cItem := StrTran( cItem, "\t", Chr(9) )
    ENDIF
    nId := IIf( nId == Nil .AND. cItem != Nil, ++ _Id, nId )
-   AAdd( aMenu, { bItem, cItem, nId, nFlag } )
+   AAdd(aMenu, { bItem, cItem, nId, nFlag })
    IF lBitmap != Nil .or. !Empty( lBitmap )
       IF lResource == Nil ;lResource := .F. ; ENDIF
       IF lResource .OR. AT("." ,lBitmap ) = 0
-         oBmp := HBitmap():AddResource( lBitmap, LR_LOADMAP3DCOLORS + LR_SHARED + LR_LOADTRANSPARENT , ,s_nWidthBmp, s_nHeightBmp  )
+         oBmp := HBitmap():AddResource(lBitmap, LR_LOADMAP3DCOLORS + LR_SHARED + LR_LOADTRANSPARENT , ,s_nWidthBmp, s_nHeightBmp)
       ELSE
-         oBmp := HBitmap():AddFile( lBitmap, , .T. , s_nWidthBmp, s_nHeightBmp  )
+         oBmp := HBitmap():AddFile(lBitmap, , .T. , s_nWidthBmp, s_nHeightBmp)
       ENDIF
-      AAdd( _oBitmap, { .T., oBmp:Handle, cItem, nId } )
+      AAdd(_oBitmap, { .T., oBmp:Handle, cItem, nId })
    ELSE
-      AAdd( _oBitmap, { .F., "", cItem, nId } )
+      AAdd(_oBitmap, { .F., "", cItem, nId })
    ENDIF
    IF accFlag != Nil .AND. accKey != Nil
-      AAdd( _aAccel, { accFlag, accKey, nId } )
+      AAdd(_aAccel, { accFlag, accKey, nId })
    ENDIF
    RETURN .T.
 
@@ -269,8 +269,8 @@ FUNCTION Hwg_DefineAccelItem( nId, bItem, accFlag, accKey )
       aMenu := ATail( aMenu )[ 1 ]
    NEXT
    nId := IIf( nId == Nil, ++ _Id, nId )
-   AAdd( aMenu, { bItem, Nil, nId, 0 } )
-   AAdd( _aAccel, { accFlag, accKey, nId } )
+   AAdd(aMenu, { bItem, Nil, nId, 0 })
+   AAdd(_aAccel, { accFlag, accKey, nId })
    RETURN .T.
 
 
@@ -288,15 +288,15 @@ FUNCTION Hwg_InsertBitmapMenu( aMenu, nId, lBitmap, oResource )
 
    //Serge(seohic) sugest
    IF oResource == Nil .or. !oResource
-      oBmp := HBitmap():AddFile( lBitmap )
+      oBmp := HBitmap():AddFile(lBitmap)
    ELSE
-      oBmp := HBitmap():AddResource( lBitmap )
+      oBmp := HBitmap():AddResource(lBitmap)
    ENDIF
    oMenu := IIf( aSubMenu == Nil, 0, aSubMenu[ 5 ] )
    HWG__InsertBitmapMenu( oMenu, nId, oBmp:handle )
    RETURN Nil
 
-FUNCTION Hwg_SearchPosBitmap( nPos_Id )
+FUNCTION Hwg_SearchPosBitmap(nPos_Id)
 
    LOCAL nPos := 1, lBmp := { .F., "" }
 
@@ -319,8 +319,8 @@ FUNCTION DeleteMenuItem( oWnd, nId )
 
    IF ( aSubMenu := Hwg_FindMenuItem( oWnd:menu, nId, @nPos ) ) != Nil
       ADel( aSubMenu[ 1 ], nPos )
-      ASize( aSubMenu[ 1 ], Len( aSubMenu[ 1 ] ) - 1 )
+      ASize(aSubMenu[ 1 ], Len( aSubMenu[ 1 ] ) - 1)
 
-      hwg_DeleteMenu( GetMenuHandle( oWnd:handle ), nId )
+      hwg_DeleteMenu( GetMenuHandle(oWnd:handle), nId )
    ENDIF
    RETURN Nil

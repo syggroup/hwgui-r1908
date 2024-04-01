@@ -108,7 +108,7 @@ HB_FUNC(HWG__ADDMENUITEM)
 }
 
 /*
-HB_FUNC( HWG__ADDMENUITEM )
+HB_FUNC(HWG__ADDMENUITEM)
 {
 
    MENUITEMINFO mii;
@@ -130,10 +130,10 @@ HB_FUNC( HWG__ADDMENUITEM )
       mii.fType = MFT_SEPARATOR;
    }
 
-   hb_retl( InsertMenuItem( ( HMENU ) HB_PARHANDLE( 1 ),
+   hb_retl( InsertMenuItem( ( HMENU ) HB_PARHANDLE(1),
                             hb_parni( 3 ), fByPosition, &mii
                           ) );
-   hb_strfree( hData );
+   hb_strfree(hData);
 }
 */
 
@@ -344,7 +344,7 @@ HB_FUNC(HWG_DESTROYMENU)
 }
 
 /*
- * CreateAcceleratorTable( _aAccel )
+ * CreateAcceleratorTable(_aAccel)
  */
 HB_FUNC(CREATEACCELERATORTABLE)
 {
@@ -369,7 +369,7 @@ HB_FUNC(CREATEACCELERATORTABLE)
 }
 
 /*
- * DestroyAcceleratorTable( hAccel )
+ * DestroyAcceleratorTable(hAccel)
  */
 HB_FUNC(DESTROYACCELERATORTABLE)
 {

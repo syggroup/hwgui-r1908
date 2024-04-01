@@ -643,7 +643,7 @@ HB_FUNC(HWG_SETFILEATTRIBUTES)
 }
 
 /* Add by Richard Roesnadi (based on What32) */
-// GETCOMPUTERNAME( [@nLengthChar] ) -> cComputerName
+// GETCOMPUTERNAME([@nLengthChar]) -> cComputerName
 HB_FUNC(HWG_GETCOMPUTERNAME)
 {
   TCHAR cText[64] = {0};
@@ -653,7 +653,7 @@ HB_FUNC(HWG_GETCOMPUTERNAME)
   hb_stornl(nSize, 1);
 }
 
-// GETUSERNAME( [@nLengthChar] ) -> cUserName
+// GETUSERNAME([@nLengthChar]) -> cUserName
 HB_FUNC(HWG_GETUSERNAME)
 {
   TCHAR cText[64] = {0};

@@ -102,12 +102,12 @@ CLASS HTreeNode INHERIT HObject
    DATA lchecked INIT .F.
 
    METHOD New( oTree, oParent, oPrev, oNext, cTitle, bAction, aImages, lchecked, bClick )
-   METHOD AddNode( cTitle, oPrev, oNext, bAction, aImages )
-   METHOD Delete( lInternal )
-   METHOD FindChild( h )
+   METHOD AddNode(cTitle, oPrev, oNext, bAction, aImages)
+   METHOD Delete(lInternal)
+   METHOD FindChild(h)
    METHOD GetText() INLINE TreeGetNodeText( ::oTree:handle, ::handle )
    METHOD SetText( cText ) INLINE TreeSetItem( ::oTree:handle, ::handle, TREE_SETITEM_TEXT, cText ), ::title := cText
-   METHOD Checked( lChecked )  SETGET
+   METHOD Checked(lChecked)  SETGET
    METHOD GetLevel( h )
 
 ENDCLASS
@@ -131,11 +131,11 @@ METHOD New( oTree, oParent, oPrev, oNext, cTitle, bAction, aImages, lchecked, bC
       ENDIF
    ELSE
       FOR i := 1 TO Len( aImages )
-         cImage := Upper( aImages[ i ] )
+         cImage := Upper(aImages[i])
          IF ( h := AScan( oTree:aImages, cImage ) ) == 0
-            AAdd( oTree:aImages, cImage )
-            aImages[ i ] := IIf( oTree:Type, LoadBitmap( aImages[ i ] ), OpenBitmap( aImages[ i ] ) )
-            Imagelist_Add( oTree:himl, aImages[ i ] )
+            AAdd(oTree:aImages, cImage)
+            aImages[ i ] := IIf( oTree:Type, LoadBitmap(aImages[ i ]), OpenBitmap(aImages[ i ]) )
+            Imagelist_Add(oTree:himl, aImages[ i ])
             h := Len( oTree:aImages )
          ENDIF
          h --
@@ -165,19 +165,19 @@ METHOD New( oTree, oParent, oPrev, oNext, cTitle, bAction, aImages, lchecked, bC
          nPos := 1
       ENDIF
    ENDIF
-   ::handle := TreeAddNode( Self, oTree:handle,               ;
+   ::handle := TreeAddNode(Self, oTree:handle,               ;
                             IIf( oParent == Nil, Nil, oParent:handle ), ;
-                            IIf( oPrev == Nil, Nil, oPrev:handle ), nPos, cTitle, im1, im2 )
+                            IIf( oPrev == Nil, Nil, oPrev:handle ), nPos, cTitle, im1, im2)
 
    aItems := IIf( oParent == Nil, oTree:aItems, oParent:aItems )
    IF nPos == 2
-      AAdd( aItems, Self )
+      AAdd(aItems, Self)
    ELSEIF nPos == 1
-      AAdd( aItems, Nil )
+      AAdd(aItems, Nil)
       AIns( aItems, 1 )
       aItems[ 1 ] := Self
    ELSE
-      AAdd( aItems, Nil )
+      AAdd(aItems, Nil)
       h := oPrev:handle
       IF ( i := AScan( aItems, { | o | o:handle == h } ) ) == 0
          aItems[ Len( aItems ) ] := Self
@@ -191,55 +191,55 @@ METHOD New( oTree, oParent, oPrev, oNext, cTitle, bAction, aImages, lchecked, bC
 
    RETURN Self
 
-METHOD AddNode( cTitle, oPrev, oNext, bAction, aImages ) CLASS HTreeNode
+METHOD AddNode(cTitle, oPrev, oNext, bAction, aImages) CLASS HTreeNode
    LOCAL oParent := Self
    LOCAL oNode := HTreeNode():New( ::oTree, oParent, oPrev, oNext, cTitle, bAction, aImages )
 
    RETURN oNode
 
-METHOD Delete( lInternal ) CLASS HTreeNode
+METHOD Delete(lInternal) CLASS HTreeNode
    LOCAL h := ::handle, j, alen, aItems
 
    IF !Empty( ::aItems )
       alen := Len( ::aItems )
       FOR j := 1 TO alen
-         ::aItems[ j ]:Delete( .T. )
+         ::aItems[ j ]:Delete(.T.)
          ::aItems[ j ] := Nil
       NEXT
    ENDIF
-   tree_ReleaseNode( ::oTree:handle, ::handle )
-   SendMessage( ::oTree:handle, TVM_DELETEITEM, 0, ::handle )
+   tree_ReleaseNode(::oTree:handle, ::handle)
+   SendMessage(::oTree:handle, TVM_DELETEITEM, 0, ::handle)
    IF lInternal == Nil
       aItems := IIf( ::oParent == Nil, ::oTree:aItems, ::oParent:aItems )
       j := AScan( aItems, { | o | o:handle == h } )
       ADel( aItems, j )
-      ASize( aItems, Len( aItems ) - 1 )
+      ASize(aItems, Len( aItems ) - 1)
    ENDIF
    // hwg_DecreaseHolders( ::handle )
 
    RETURN Nil
 
-METHOD FindChild( h ) CLASS HTreeNode
+METHOD FindChild(h) CLASS HTreeNode
    LOCAL aItems := ::aItems, i, alen := Len( aItems ), oNode
    FOR i := 1 TO alen
       IF aItems[ i ]:handle == h
          RETURN aItems[ i ]
       ELSEIF !Empty( aItems[ i ]:aItems )
-         IF ( oNode := aItems[ i ]:FindChild( h ) ) != Nil
+         IF ( oNode := aItems[ i ]:FindChild(h) ) != Nil
             RETURN oNode
          ENDIF
       ENDIF
    NEXT
    RETURN Nil
 
-METHOD Checked( lChecked ) CLASS HTreeNode
+METHOD Checked(lChecked) CLASS HTreeNode
    LOCAL state
 
    IF lChecked != NIL
       TreeSetItem( ::oTree:handle, ::handle, TREE_SETITEM_CHECK, IIF( lChecked, 2, 1 ) )
       ::lChecked := lChecked
    ELSE
-      state =  SendMessage( ::oTree:handle, TVM_GETITEMSTATE, ::handle,, TVIS_STATEIMAGEMASK ) - 1
+      state =  SendMessage(::oTree:handle, TVM_GETITEMSTATE, ::handle,, TVIS_STATEIMAGEMASK) - 1
       ::lChecked := int( state/4092 ) = 2
    ENDIF
    RETURN ::lChecked
@@ -273,31 +273,31 @@ CLASS VAR winclass   INIT "SysTreeView32"
    DATA  hitemDrag, hitemDrop HIDDEN
 
    METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, bSize, color, bcolor, ;
-               aImages, lResour, lEditLabels, bAction, nBC, bRClick, bDblClick, lCheckbox,  bCheck, lDragDrop, bDrag, bDrop, bOther )
+               aImages, lResour, lEditLabels, bAction, nBC, bRClick, bDblClick, lCheckbox, bCheck, lDragDrop, bDrag, bDrop, bOther )
    METHOD Init()
    METHOD Activate()
-   METHOD AddNode( cTitle, oPrev, oNext, bAction, aImages )
-   METHOD FindChild( h )
+   METHOD AddNode(cTitle, oPrev, oNext, bAction, aImages)
+   METHOD FindChild(h)
    METHOD FindChildPos( oNode, h )
-   METHOD GetSelected() INLINE IIF( hb_IsObject(::oItem := TreeGetSelected( ::handle )), ::oItem, Nil )
-   METHOD EditLabel( oNode ) BLOCK { | Self, o | SendMessage( ::handle, TVM_EDITLABEL, 0, o:handle ) }
-   METHOD Expand( oNode, lAllNode )   //BLOCK { | Self, o | SendMessage( ::handle, TVM_EXPAND, TVE_EXPAND, o:handle ), REDRAWWINDOW( ::handle , RDW_NOERASE + RDW_FRAME + RDW_INVALIDATE  )}
-   METHOD Select( oNode ) BLOCK { | Self, o | SendMessage( ::handle, TVM_SELECTITEM, TVGN_CARET, o:handle ), ::oItem := TreeGetSelected( ::handle ) }
+   METHOD GetSelected() INLINE IIF( hb_IsObject(::oItem := TreeGetSelected(::handle)), ::oItem, Nil )
+   METHOD EditLabel( oNode ) BLOCK { | Self, o | SendMessage(::handle, TVM_EDITLABEL, 0, o:handle) }
+   METHOD Expand(oNode, lAllNode)   //BLOCK { | Self, o | SendMessage(::handle, TVM_EXPAND, TVE_EXPAND, o:handle), REDRAWWINDOW( ::handle , RDW_NOERASE + RDW_FRAME + RDW_INVALIDATE  )}
+   METHOD Select( oNode ) BLOCK { | Self, o | SendMessage(::handle, TVM_SELECTITEM, TVGN_CARET, o:handle), ::oItem := TreeGetSelected(::handle) }
    METHOD Clean()
    METHOD Notify( lParam )
-   METHOD END() INLINE ( ::Super:END(), ReleaseTree( ::aItems ) )
-   METHOD isExpand( oNodo ) INLINE !CheckBit( oNodo, TVE_EXPAND )
+   METHOD END() INLINE ( ::Super:END(), ReleaseTree(::aItems) )
+   METHOD isExpand(oNodo) INLINE !CheckBit( oNodo, TVE_EXPAND )
    METHOD onEvent( msg, wParam, lParam )
    METHOD ItemHeight( nHeight ) SETGET
    METHOD SearchString( cText, iNivel, oNode, inodo )
    METHOD Selecteds( oItem, aSels )
-   METHOD Top() INLINE IIF( !Empty( ::aItems ), ( ::Select( ::aItems[ 1 ] ), SendMessage( ::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_TOP ), Nil ) ), )
-   METHOD Bottom() INLINE IIF( !Empty( ::aItems ), ( ::Select( ::aItems[ LEN( ::aItems ) ] ), SendMessage( ::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_BOTTOM ), Nil ) ),)
+   METHOD Top() INLINE IIF( !Empty( ::aItems ), ( ::Select( ::aItems[ 1 ] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_TOP ), Nil) ), )
+   METHOD Bottom() INLINE IIF( !Empty( ::aItems ), ( ::Select( ::aItems[ LEN( ::aItems ) ] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_BOTTOM ), Nil) ),)
 
 ENDCLASS
 
 METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, bSize, color, bcolor, ;
-            aImages, lResour, lEditLabels, bAction, nBC, bRClick, bDblClick, lcheckbox,  bCheck, lDragDrop, bDrag, bDrop, bOther ) CLASS HTree
+            aImages, lResour, lEditLabels, bAction, nBC, bRClick, bDblClick, lcheckbox, bCheck, lDragDrop, bDrag, bDrop, bOther ) CLASS HTree
    LOCAL i, aBmpSize
 
 
@@ -332,10 +332,10 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit,
    IF aImages != Nil .AND. !Empty( aImages )
       ::aImages := {}
       FOR i := 1 TO Len( aImages )
-         AAdd( ::aImages, Upper( aImages[ i ] ) )
-         aImages[ i ] := IIf( lResour != NIL.and.lResour, LoadBitmap( aImages[ i ] ), OpenBitmap( aImages[ i ] ) )
+         AAdd(::aImages, Upper(aImages[i]))
+         aImages[ i ] := IIf( lResour != NIL.and.lResour, LoadBitmap(aImages[ i ]), OpenBitmap(aImages[ i ]) )
       NEXT
-      aBmpSize := GetBitmapSize( aImages[ 1 ] )
+      aBmpSize := GetBitmapSize(aImages[ 1 ])
       ::himl := CreateImageList( aImages, aBmpSize[ 1 ], aBmpSize[ 2 ], 12, nBC )
       ::Image1 := 0
       IF Len( aImages ) > 1
@@ -352,10 +352,10 @@ METHOD Init() CLASS HTree
    IF !::lInit
       ::Super:Init()
       ::nHolder := 1
-      SetWindowObject( ::handle, Self )
+      SetWindowObject(::handle, Self)
       Hwg_InitTreeView( ::handle )
       IF ::himl != Nil
-         SendMessage( ::handle, TVM_SETIMAGELIST, TVSIL_NORMAL, ::himl )
+         SendMessage(::handle, TVM_SETIMAGELIST, TVSIL_NORMAL, ::himl)
       ENDIF
 
    ENDIF
@@ -365,8 +365,8 @@ METHOD Init() CLASS HTree
 METHOD Activate() CLASS HTree
 
    IF !Empty( ::oParent:handle )
-      ::handle := CreateTree( ::oParent:handle, ::id, ;
-                              ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::tcolor, ::bcolor )
+      ::handle := CreateTree(::oParent:handle, ::id, ;
+                              ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::tcolor, ::bcolor)
       ::Init()
    ENDIF
 
@@ -398,7 +398,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
 
    ELSEIF msg == WM_LBUTTONUP .AND. ::lDragging .AND. ::hitemDrop != Nil
       ::lDragging := .F.
-      SendMessage( ::handle, TVM_SELECTITEM, TVGN_DROPHILITE, Nil )
+      SendMessage(::handle, TVM_SELECTITEM, TVGN_DROPHILITE, Nil)
 
       IF hb_IsBlock(::bDrag)
          nEval :=  Eval( ::bDrag, Self, ::hitemDrag, ::hitemDrop )
@@ -433,14 +433,14 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
       // fazr a arotina para copias os nodos filhos ao arrastar
       IF !IsCtrlShift( .T. )
          IF ::hitemDrop:oParent != Nil
-            hitemNew := ::hitemDrop:oParent:AddNode( ::hitemDrag:GetText(), htiPrev ,htiNext, ::hitemDrag:bAction,, ::hitemDrag:lchecked, ::hitemDrag:bClick  ) //, ::hitemDrop:aImages )
+            hitemNew := ::hitemDrop:oParent:AddNode(::hitemDrag:GetText(), htiPrev ,htiNext, ::hitemDrag:bAction,, ::hitemDrag:lchecked, ::hitemDrag:bClick) //, ::hitemDrop:aImages)
          ELSE
-            hitemNew := ::AddNode( ::hitemDrag:GetText(), htiPrev ,htiNext, ::hitemDrag:bAction,, ::hitemDrag:lchecked, ::hitemDrag:bClick  ) //, ::hitemDrop:aImages )
+            hitemNew := ::AddNode(::hitemDrag:GetText(), htiPrev, htiNext, ::hitemDrag:bAction, , ::hitemDrag:lchecked, ::hitemDrag:bClick) //, ::hitemDrop:aImages)
          ENDIF
-         DragDropTree( ::hitemDrag, hitemNew , ::hitemDrop ) //htiParent )
+         DragDropTree(::hitemDrag, hitemNew, ::hitemDrop) //htiParent)
       ELSEIF ::hitemDrop != Nil
-         hitemNew := ::hitemDrop:AddNode( ::hitemDrag:Title, htiPrev ,htiNext, ::hitemDrag:bAction,, ::hitemDrag:lchecked, ::hitemDrag:bClick  ) //, ::hitemDrop:aImages )
-         DragDropTree( ::hitemDrag, hitemNew,::hitemDrop )
+         hitemNew := ::hitemDrop:AddNode(::hitemDrag:Title, htiPrev, htiNext, ::hitemDrag:bAction, , ::hitemDrag:lchecked, ::hitemDrag:bClick) //, ::hitemDrop:aImages)
+         DragDropTree(::hitemDrag, hitemNew, ::hitemDrop)
       ENDIF
       hitemNew:cargo  := ::hitemDrag:cargo
       hitemNew:image1 := ::hitemDrag:image1
@@ -459,18 +459,18 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
    RETURN -1
 
 
-METHOD AddNode( cTitle, oPrev, oNext, bAction, aImages ) CLASS HTree
+METHOD AddNode(cTitle, oPrev, oNext, bAction, aImages) CLASS HTree
    LOCAL oNode := HTreeNode():New( Self, Nil, oPrev, oNext, cTitle, bAction, aImages )
    ::lEmpty := .F.
    RETURN oNode
 
-METHOD FindChild( h ) CLASS HTree
+METHOD FindChild(h) CLASS HTree
    LOCAL aItems := ::aItems, i, alen := Len( aItems ), oNode
    FOR i := 1 TO alen
       IF aItems[ i ]:handle == h
          RETURN aItems[ i ]
       ELSEIF !Empty( aItems[ i ]:aItems )
-         IF ( oNode := aItems[ i ]:FindChild( h ) ) != Nil
+         IF ( oNode := aItems[ i ]:FindChild(h) ) != Nil
             RETURN oNode
          ENDIF
       ENDIF
@@ -478,7 +478,7 @@ METHOD FindChild( h ) CLASS HTree
    RETURN Nil
 
 METHOD FindChildPos( oNode, h ) CLASS HTree
-   LOCAL aItems := IIF( oNode = Nil, ::aItems,  oNode:aItems )
+   LOCAL aItems := IIF( oNode = Nil, ::aItems, oNode:aItems )
    LOCAL  i, alen := Len( aItems )
 
    FOR i := 1 TO alen
@@ -491,7 +491,7 @@ METHOD FindChildPos( oNode, h ) CLASS HTree
    RETURN 0
 
 METHOD SearchString( cText, iNivel, oNode, inodo ) CLASS HTree
-   LOCAL aItems := IIF( oNode = Nil, ::aItems,  oNode:aItems )
+   LOCAL aItems := IIF( oNode = Nil, ::aItems, oNode:aItems )
    Local  i , alen := Len( aItems )
    LOCAL oNodeRet
    
@@ -513,8 +513,8 @@ METHOD SearchString( cText, iNivel, oNode, inodo ) CLASS HTree
 METHOD Clean() CLASS HTree
 
    ::lEmpty := .T.
-   ReleaseTree( ::aItems )
-   SendMessage( ::handle, TVM_DELETEITEM, 0, TVI_ROOT )
+   ReleaseTree(::aItems)
+   SendMessage(::handle, TVM_DELETEITEM, 0, TVI_ROOT)
    ::aItems := {}
 
    RETURN Nil
@@ -522,20 +522,20 @@ METHOD Clean() CLASS HTree
 METHOD ItemHeight( nHeight ) CLASS HTree
 
    IF nHeight != Nil
-      SendMessage( ::handle, TVM_SETITEMHEIGHT, nHeight, 0 )
+      SendMessage(::handle, TVM_SETITEMHEIGHT, nHeight, 0)
    ELSE
-      nHeight := SendMessage( ::handle, TVM_GETITEMHEIGHT, 0, 0 )
+      nHeight := SendMessage(::handle, TVM_GETITEMHEIGHT, 0, 0)
    ENDIF
    RETURN  nHeight
 
 METHOD Notify( lParam ) CLASS HTree
-   LOCAL nCode := GetNotifyCode( lParam ), oItem, cText, nAct, nHitem, leval
+   LOCAL nCode := GetNotifyCode(lParam), oItem, cText, nAct, nHitem, leval
    LOCAL nkeyDown := GetNotifyKeydown( lParam )
     
    IF ncode = NM_SETCURSOR .AND. ::lDragging
       ::hitemDrop := tree_Hittest( ::handle,,, @nAct )
       IF ::hitemDrop != Nil
-         SendMessage( ::handle, TVM_SELECTITEM, TVGN_DROPHILITE, ::hitemDrop:handle )
+         SendMessage(::handle, TVM_SELECTITEM, TVGN_DROPHILITE, ::hitemDrop:handle)
       ENDIF
    ENDIF
    
@@ -552,14 +552,14 @@ METHOD Notify( lParam ) CLASS HTree
             ELSEIF oItem:oTree:bAction != Nil
                Eval( oItem:oTree:bAction, oItem, Self )
             ENDIF
-            SENDMESSAGE( ::handle,TVM_SETITEM, , oitem:HANDLE)
+            SENDMESSAGE(::handle, TVM_SETITEM, , oitem:HANDLE)
          ENDIF
       ENDIF
    
    ELSEIF nCode == TVN_BEGINLABELEDIT .or. nCode == TVN_BEGINLABELEDITW
-      s_aEvents := aClone( ::oParent:aEvents )
-      ::oParent:AddEvent( 0, IDOK, { || SendMessage( ::handle, TVM_ENDEDITLABELNOW , 0, 0 ) } )
-      ::oParent:AddEvent( 0, IDCANCEL, { || SendMessage( ::handle, TVM_ENDEDITLABELNOW , 1, 0 ) } )
+      s_aEvents := aClone(::oParent:aEvents)
+      ::oParent:AddEvent( 0, IDOK, { || SendMessage(::handle, TVM_ENDEDITLABELNOW, 0, 0) } )
+      ::oParent:AddEvent( 0, IDCANCEL, { || SendMessage(::handle, TVM_ENDEDITLABELNOW, 1, 0) } )
 
       // Return 1
 
@@ -596,7 +596,7 @@ METHOD Notify( lParam ) CLASS HTree
 
     ELSEIF nCode = NM_CLICK  //.AND. ::oitem != Nil // .AND. !::lEditLabels
        nHitem :=  Tree_GetNotify( lParam, 1 )
-       //nHitem :=  GETNOTIFYcode( lParam )
+       //nHitem :=  GETNOTIFYcode(lParam)
        oItem  := tree_Hittest( ::handle,,, @nAct )
        IF nAct = TVHT_ONITEMSTATEICON
           IF ::oItem == Nil .OR. oItem:Handle != ::oitem:Handle 
@@ -607,7 +607,7 @@ METHOD Notify( lParam ) CLASS HTree
             lEval := Eval( ::bCheck, !::oItem:checked, ::oItem, Self )
          ENDIF
          IF lEval == Nil .OR. !EMPTY( lEval )
-            MarkCheckTree( ::oItem, IIF( ::oItem:checked, 1, 2 ) )
+            MarkCheckTree(::oItem, IIF( ::oItem:checked, 1, 2 ))
             RETURN 0   
          ENDIF
          RETURN 1   
@@ -637,7 +637,7 @@ METHOD Notify( lParam ) CLASS HTree
          lEval := Eval( ::bCheck, !::oItem:checked, ::oItem, Self )
       ENDIF
       IF lEval == Nil .OR. !EMPTY( lEval )
-         MarkCheckTree( ::oItem, IIF( ::oItem:checked, 1, 2 ) )
+         MarkCheckTree(::oItem, IIF( ::oItem:checked, 1, 2 ))
       ELSE
          RETURN 1
       ENDIF
@@ -658,41 +658,41 @@ METHOD Selecteds( oItem, aSels ) CLASS HTree
    
    FOR i := 1 TO iLen
       IF oItem:aItems[ i ]:checked
-         AADD( aSelecteds, oItem:aItems[ i ] )
+         AADD(aSelecteds, oItem:aItems[ i ])
       ENDIF   
       ::Selecteds( oItem:aItems[ i ], aSelecteds )
    NEXT
    RETURN aSelecteds
 
-METHOD Expand( oNode, lAllNode ) CLASS HTree
+METHOD Expand(oNode, lAllNode) CLASS HTree
    LOCAL i, iLen := Len( oNode:aitems  )
    
-   SendMessage( ::handle, TVM_EXPAND, TVE_EXPAND, oNode:handle )
+   SendMessage(::handle, TVM_EXPAND, TVE_EXPAND, oNode:handle)
    FOR i := 1 TO iLen
       IF !EMPTY( lAllNode ) .AND. Len( oNode:aitems ) > 0
-         ::Expand( oNode:aItems[ i ], lAllNode )
+         ::Expand(oNode:aItems[ i ], lAllNode)
       ENDIF
    NEXT
    REDRAWWINDOW( ::handle , RDW_NOERASE + RDW_FRAME + RDW_INVALIDATE  )
    RETURN Nil
 
-STATIC PROCEDURE ReleaseTree( aItems )
+STATIC PROCEDURE ReleaseTree(aItems)
    LOCAL i, iLen := Len( aItems )
 
    FOR i := 1 TO iLen
-      tree_ReleaseNode( aItems[ i ]:oTree:handle, aItems[ i ]:handle )
-      ReleaseTree( aItems[ i ]:aItems )
+      tree_ReleaseNode(aItems[ i ]:oTree:handle, aItems[ i ]:handle)
+      ReleaseTree(aItems[ i ]:aItems)
       // hwg_DecreaseHolders( aItems[i]:handle )
    NEXT
 
    RETURN
 
-STATIC PROCEDURE MarkCheckTree( oItem, state )
+STATIC PROCEDURE MarkCheckTree(oItem, state)
    LOCAL i, iLen := Len( oItem:aitems  ), oParent
 
    FOR i := 1 TO iLen
       TreeSetItem( oItem:oTree:handle, oItem:aitems[ i ]:handle, TREE_SETITEM_CHECK, state )
-      MarkCheckTree( oItem:aItems[ i ], state )   
+      MarkCheckTree(oItem:aItems[ i ], state)
    NEXT
    IF state = 1
       oParent = oItem:oParent
@@ -704,17 +704,17 @@ STATIC PROCEDURE MarkCheckTree( oItem, state )
    RETURN 
 
 
-STATIC PROCEDURE DragDropTree( oDrag, oItem, oDrop )
+STATIC PROCEDURE DragDropTree(oDrag, oItem, oDrop)
    LOCAL i, iLen := Len( oDrag:aitems  ), hitemNew
 
    FOR i := 1 TO iLen
-      hitemNew := oItem:AddNode( oDrag:aItems[ i ]:GetText(), ,, oDrag:aItems[ i ]:bAction,, oDrag:aItems[ i ]:lchecked, oDrag:aItems[ i ]:bClick  ) //, ::hitemDrop:aImages )
+      hitemNew := oItem:AddNode(oDrag:aItems[ i ]:GetText(), , , oDrag:aItems[ i ]:bAction, , oDrag:aItems[ i ]:lchecked, oDrag:aItems[ i ]:bClick) //, ::hitemDrop:aImages)
       hitemNew:oTree  := oDrag:aItems[ i ]:oTree
       hitemNew:cargo := oDrag:aItems[ i ]:cargo
       hitemNew:image1 := oDrag:aItems[ i ]:image1
       hitemNew:image2 := oDrag:aItems[ i ]:image2
       IF Len( oDrag:aitems[ i ]:aitems ) > 0
-         DragDropTree( oDrag:aItems[ i ], hitemNew, oDrop )
+         DragDropTree(oDrag:aItems[ i ], hitemNew, oDrop)
       ENDIF
       //oDrag:aItems[ i ]:delete()
    NEXT

@@ -29,7 +29,7 @@ CLASS VAR winclass   INIT "SysIPAddress32"
                oFont, bGetFocus, bKillFocus )
    METHOD Activate()
    METHOD Init()
-   METHOD SetValue( aValue )
+   METHOD SetValue(aValue)
    METHOD GetValue()
    METHOD Clear()
    METHOD END()
@@ -96,13 +96,13 @@ METHOD Init() CLASS HIPedit
 
    IF !::lInit
       ::Super:Init()
-      ::SetValue( ::aValue )
+      ::SetValue(::aValue)
       ::lInit := .T.
    ENDIF
 
    RETURN Nil
 
-METHOD SetValue( aValue ) CLASS HIPedit
+METHOD SetValue(aValue) CLASS HIPedit
    SETIPADDRESS( ::handle , aValue[ 1 ], aValue[ 2 ], aValue[ 3 ], aValue[ 4 ] )
    ::aValue := aValue
    RETURN Nil

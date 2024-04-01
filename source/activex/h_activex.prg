@@ -44,11 +44,11 @@ CLASS HActiveX FROM HControl
 
    DATA aAxEv        INIT {}              // oSkAr 20070829
    DATA aAxExec      INIT {}              // oSkAr 20070829
-   METHOD EventMap( nMsg, xExec, oSelf )  // oSkAr 20070829
+   METHOD EventMap(nMsg, xExec, oSelf)    // oSkAr 20070829
 
 ENDCLASS
 
-METHOD New( oWnd, cProgId, nTop, nLeft, nWidth, nHeight, bSize ) CLASS HActiveX
+METHOD New(oWnd, cProgId, nTop, nLeft, nWidth, nHeight, bSize) CLASS HActiveX
    LOCAL nStyle, nExStyle, cClsName, hSink
    LOCAL i,a,h,n
    LOCAL oError, bErrorBlock
@@ -57,35 +57,33 @@ METHOD New( oWnd, cProgId, nTop, nLeft, nWidth, nHeight, bSize ) CLASS HActiveX
    nExStyle := 0
    cClsName := "AtlAxWin"
 
-   ::Super:New( oWnd, , nStyle, nLeft, nTop, nWidth, nHeight )   // ,,,,bSize)
+   ::Super:New(oWnd, , nStyle, nLeft, nTop, nWidth, nHeight)   // ,,,,bSize)
    ::title = cProgId
 
-   ::handle = CreateActivex(  nExStyle, cClsName, cProgId, ::style, ;
-                              ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
-                              ::oParent:handle, ::Id     ;
-                            )
+   ::handle = CreateActivex(nExStyle, cClsName, cProgId, ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
+      ::oParent:handle, ::Id)
 
    ::Init()
 
-   ::hObj   := AtlAxGetDisp( ::handle )
+   ::hObj   := AtlAxGetDisp(::handle)
 
-   bErrorBlock := ErrorBlock( { |x| break( x ) } )
+   bErrorBlock := ErrorBlock({|x|break(x)})
    #ifdef __XHARBOUR__
       TRY
-         ::oOle := ToleAuto():New( ::hObj )
+         ::oOle := ToleAuto():New(::hObj)
       CATCH oError
-         MsgInfo( oError:Description )
+         MsgInfo(oError:Description)
       END
    #else
       BEGIN SEQUENCE
-         ::oOle := ToleAuto():New( ::hObj )
+         ::oOle := ToleAuto():New(::hObj)
       RECOVER USING oError
-         MsgInfo( oError:Description )
+         MsgInfo(oError:Description)
       END
    #endif
-   ErrorBlock( bErrorBlock )
+   ErrorBlock(bErrorBlock)
 
-   SetupConnectionPoint( ::hObj, @hSink, ::aAxEv , ::aAxExec )
+   SetupConnectionPoint(::hObj, @hSink, ::aAxEv, ::aAxExec)
    ::hSink := hSink
 
    RETURN SELF
@@ -93,30 +91,30 @@ METHOD New( oWnd, cProgId, nTop, nLeft, nWidth, nHeight, bSize ) CLASS HActiveX
 *-----------------------------------------------------------------------------*
 METHOD Release() CLASS HActiveX
 *-----------------------------------------------------------------------------*
-   SHUTDOWNCONNECTIONPOINT( ::hSink )
-   ReleaseDispatch( ::hObj )
+   SHUTDOWNCONNECTIONPOINT(::hSink)
+   ReleaseDispatch(::hObj)
 Return ::Super:Release()
 
 *-----------------------------------------------------------------------------* 
-METHOD __Error( ... ) CLASS HActiveX 
+METHOD __Error(...) CLASS HActiveX 
 *-----------------------------------------------------------------------------* 
 Local cMessage, uRet 
 cMessage := __GetMessage() 
 
-   IF SubStr( cMessage, 1, 1 ) == "_"
-      cMessage := SubStr( cMessage, 2 )
+   IF SubStr(cMessage, 1, 1) == "_"
+      cMessage := SubStr(cMessage, 2)
    ENDIF
 
-   RETURN HB_ExecFromArray( ::oOle, cMessage, HB_aParams() )
+   RETURN HB_ExecFromArray(::oOle, cMessage, HB_aParams())
 
 //-----------------------------------------------------------------------------------------------//
-METHOD EventMap( nMsg, xExec, oSelf ) CLASS HActiveX
+METHOD EventMap(nMsg, xExec, oSelf) CLASS HActiveX
    LOCAL nAt
-   nAt := AScan( ::aAxEv, nMsg )
+   nAt := AScan(::aAxEv, nMsg)
    IF nAt == 0
-      AAdd( ::aAxEv, nMsg )
-      AAdd( ::aAxExec, { NIL, NIL } )
-      nAt := Len( ::aAxEv )
+      AAdd(::aAxEv, nMsg)
+      AAdd(::aAxExec, { NIL, NIL })
+      nAt := Len(::aAxEv)
    ENDIF
    ::aAxExec[ nAt ] := { xExec, oSelf }
 RETURN NIL

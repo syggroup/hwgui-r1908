@@ -29,12 +29,12 @@ CLASS VAR winclass   INIT "STATIC"
    METHOD New( oWndParent, nId, aValues, nLeft, nTop, nWidth, nHeight, oFont, ;
                bSize, ctooltip, tcolor, bcolor )
    METHOD Activate()
-   METHOD Redefine( oWndParent, nId, aValues, oFont, ;
-                    bSize, ctooltip, tcolor, bcolor )
+   METHOD Redefine(oWndParent, nId, aValues, oFont, ;
+                    bSize, ctooltip, tcolor, bcolor)
    METHOD Init()
    METHOD CalcMinMax()
    METHOD Paint( lpDis )
-   METHOD Rebuild( aValues, nType )
+   METHOD Rebuild(aValues, nType)
 
 ENDCLASS
 
@@ -43,7 +43,7 @@ METHOD New( oWndParent, nId, aValues, nLeft, nTop, nWidth, nHeight, oFont, ;
 
    ::Super:New( oWndParent, nId, SS_OWNERDRAW, nLeft, nTop, nWidth, nHeight, oFont,, ;
               bSize, { | o, lpdis | o:Paint( lpdis ) }, ctooltip, ;
-              IIf( tcolor == Nil, Vcolor( "FFFFFF" ), tcolor ), IIf( bcolor == Nil, 0, bcolor ) )
+              IIf( tcolor == Nil, Vcolor("FFFFFF"), tcolor ), IIf( bcolor == Nil, 0, bcolor ) )
 
    ::aValues := aValues
    ::nType   := 1
@@ -53,12 +53,12 @@ METHOD New( oWndParent, nId, aValues, nLeft, nTop, nWidth, nHeight, oFont, ;
 
    RETURN Self
 
-METHOD Redefine( oWndParent, nId, aValues, oFont, ;
-                 bSize, ctooltip, tcolor, bcolor ) CLASS HGraph
+METHOD Redefine(oWndParent, nId, aValues, oFont, ;
+                 bSize, ctooltip, tcolor, bcolor) CLASS HGraph
 
    ::Super:New( oWndParent, nId, SS_OWNERDRAW, 0, 0, 0, 0, oFont,, ;
               bSize, { | o, lpdis | o:Paint( lpdis ) }, ctooltip, ;
-              IIf( tcolor == Nil, Vcolor( "FFFFFF" ), tcolor ), IIf( bcolor == Nil, 0, bcolor ) )
+              IIf( tcolor == Nil, Vcolor("FFFFFF"), tcolor ), IIf( bcolor == Nil, 0, bcolor ) )
 
    ::aValues := aValues
 
@@ -66,8 +66,8 @@ METHOD Redefine( oWndParent, nId, aValues, oFont, ;
 
 METHOD Activate() CLASS HGraph
    IF !Empty( ::oParent:handle )
-      ::handle := CreateStatic( ::oParent:handle, ::id, ;
-                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight )
+      ::handle := CreateStatic(::oParent:handle, ::id, ;
+                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ::Init()
    ENDIF
    RETURN Nil
@@ -115,10 +115,10 @@ METHOD Paint( lpdis ) CLASS HGraph
    LOCAL i, j, nLen
    LOCAL px1, px2, py1, py2, nWidth
 
-   i := Round( ( x2 - x1 ) / 10, 0 )
+   i := Round(( x2 - x1 ) / 10, 0)
    x1 += i
    x2 -= i
-   i := Round( ( y2 - y1 ) / 10, 0 )
+   i := Round(( y2 - y1 ) / 10, 0)
    y1 += i
    y2 -= i
 
@@ -128,59 +128,59 @@ METHOD Paint( lpdis ) CLASS HGraph
    ENDIF
 
    IF ::oPenCoor == Nil
-      ::oPenCoor := HPen():Add( PS_SOLID, 1, ::colorCoor )
+      ::oPenCoor := HPen():Add(PS_SOLID, 1, ::colorCoor)
    ENDIF
    IF ::oPen == Nil
-      ::oPen := HPen():Add( PS_SOLID, 2, ::tcolor )
+      ::oPen := HPen():Add(PS_SOLID, 2, ::tcolor)
    ENDIF
 
    FillRect( hDC, drawInfo[ 4 ], drawInfo[ 5 ], drawInfo[ 6 ], drawInfo[ 7 ], ::brush:handle )
    IF ::nType != 3
-      SelectObject( hDC, ::oPenCoor:handle )
-      Drawline( hDC, x1 + ( 0 - ::xmin ) / ::scaleX, drawInfo[ 5 ] + 3, x1 + ( 0 - ::xmin ) / ::scaleX, drawInfo[ 7 ] - 3 )
-      Drawline( hDC, drawInfo[ 4 ] + 3, y2 - ( 0 - ::ymin ) / ::scaleY, drawInfo[ 6 ] - 3, y2 - ( 0 - ::ymin ) / ::scaleY )
+      SelectObject(hDC, ::oPenCoor:handle)
+      Drawline(hDC, x1 + ( 0 - ::xmin ) / ::scaleX, drawInfo[ 5 ] + 3, x1 + ( 0 - ::xmin ) / ::scaleX, drawInfo[ 7 ] - 3)
+      Drawline(hDC, drawInfo[ 4 ] + 3, y2 - ( 0 - ::ymin ) / ::scaleY, drawInfo[ 6 ] - 3, y2 - ( 0 - ::ymin ) / ::scaleY)
    ENDIF
 
    IF ::ymax == ::ymin .AND. ::ymax == 0
       RETURN Nil
    ENDIF
 
-   SelectObject( hDC, ::oPen:handle )
+   SelectObject(hDC, ::oPen:handle)
    FOR i := 1 TO ::nGraphs
       nLen := Len( ::aValues[ i ] )
       IF ::nType == 1
          FOR j := 2 TO nLen
-            px1 := Round( x1 + ( ::aValues[ i, j - 1, 1 ] - ::xmin ) / ::scaleX, 0 )
-            py1 := Round( y2 - ( ::aValues[ i, j - 1, 2 ] - ::ymin ) / ::scaleY, 0 )
-            px2 := Round( x1 + ( ::aValues[ i, j, 1 ] - ::xmin ) / ::scaleX, 0 )
-            py2 := Round( y2 - ( ::aValues[ i, j, 2 ] - ::ymin ) / ::scaleY, 0 )
+            px1 := Round(x1 + ( ::aValues[ i, j - 1, 1 ] - ::xmin ) / ::scaleX, 0)
+            py1 := Round(y2 - ( ::aValues[ i, j - 1, 2 ] - ::ymin ) / ::scaleY, 0)
+            px2 := Round(x1 + ( ::aValues[ i, j, 1 ] - ::xmin ) / ::scaleX, 0)
+            py2 := Round(y2 - ( ::aValues[ i, j, 2 ] - ::ymin ) / ::scaleY, 0)
             IF px2 != px1 .OR. py2 != py1
-               Drawline( hDC, px1, py1, px2, py2 )
+               Drawline(hDC, px1, py1, px2, py2)
             ENDIF
          NEXT
       ELSEIF ::nType == 2
          IF ::tbrush == Nil
-            ::tbrush := HBrush():Add( ::tcolor )
+            ::tbrush := HBrush():Add(::tcolor)
          ENDIF
-         nWidth := Round( ( x2 - x1 ) / ( nLen * 2 + 1 ), 0 )
+         nWidth := Round(( x2 - x1 ) / ( nLen * 2 + 1 ), 0)
          FOR j := 1 TO nLen
-            px1 := Round( x1 + nWidth * ( j * 2 - 1 ), 0 )
-            py1 := Round( y2 - ( ::aValues[ i, j, 2 ] - ::ymin ) / ::scaleY, 0 )
+            px1 := Round(x1 + nWidth * ( j * 2 - 1 ), 0)
+            py1 := Round(y2 - ( ::aValues[ i, j, 2 ] - ::ymin ) / ::scaleY, 0)
             FillRect( hDC, px1, y2 - 2, px1 + nWidth, py1, ::tbrush:handle )
          NEXT
       ELSEIF ::nType == 3
          IF ::tbrush == Nil
-            ::tbrush := HBrush():Add( ::tcolor )
+            ::tbrush := HBrush():Add(::tcolor)
          ENDIF
-         SelectObject( hDC, ::oPenCoor:handle )
-         SelectObject( hDC, ::tbrush:handle )
-         pie( hDC, x1 + 10, y1 + 10, x2 - 10, y2 - 10, x1, Round( y1 + ( y2 - y1 ) / 2, 0 ), Round( x1 + ( x2 - x1 ) / 2, 0 ), y1 )
+         SelectObject(hDC, ::oPenCoor:handle)
+         SelectObject(hDC, ::tbrush:handle)
+         pie(hDC, x1 + 10, y1 + 10, x2 - 10, y2 - 10, x1, Round(y1 + ( y2 - y1 ) / 2, 0), Round(x1 + ( x2 - x1 ) / 2, 0), y1)
       ENDIF
    NEXT
 
    RETURN Nil
 
-METHOD Rebuild( aValues, nType ) CLASS HGraph
+METHOD Rebuild(aValues, nType) CLASS HGraph
 
    ::aValues := aValues
    IF nType != Nil

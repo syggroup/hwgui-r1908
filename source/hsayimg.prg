@@ -25,7 +25,7 @@ CLASS VAR winclass   INIT "STATIC"
 
    METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, bInit, ;
                bSize, ctooltip, bClick, bDblClick )
-   METHOD Redefine( oWndParent, nId, bInit, bSize, ctooltip )
+   METHOD Redefine(oWndParent, nId, bInit, bSize, ctooltip)
    METHOD Activate()
    METHOD END() INLINE ( ::Super:END(), IIf( ::oImage != Nil, ::oImage:Release(), ::oImage := Nil ), ::oImage := Nil )
    METHOD onClick()
@@ -51,7 +51,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, bInit, ;
 
    RETURN Self
 
-METHOD Redefine( oWndParent, nId, bInit, bSize, ctooltip ) CLASS HSayImage
+METHOD Redefine(oWndParent, nId, bInit, bSize, ctooltip) CLASS HSayImage
 
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0,, bInit, bSize,, ctooltip )
 
@@ -60,8 +60,8 @@ METHOD Redefine( oWndParent, nId, bInit, bSize, ctooltip ) CLASS HSayImage
 METHOD Activate() CLASS HSayImage
 
    IF !Empty( ::oParent:handle )
-      ::handle := CreateStatic( ::oParent:handle, ::id, ;
-                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle )
+      ::handle := CreateStatic(::oParent:handle, ::id, ;
+                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle)
       ::Init()
    ENDIF
    RETURN Nil
@@ -95,11 +95,11 @@ CLASS HSayBmp INHERIT HSayImage
 
    METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
                bSize, ctooltip, bClick, bDblClick, lTransp, nStretch, nStyle )
-   METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip, lTransp )
+   METHOD Redefine(oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip, lTransp)
    METHOD Init()
    METHOD Paint( lpdis )
-   METHOD ReplaceBitmap( Image, lRes )
-   //METHOD REFRESH() INLINE ::HIDE(), SENDMESSAGE( ::handle, WM_PAINT, 0, 0 ), ::SHOW()
+   METHOD ReplaceBitmap(Image, lRes)
+   //METHOD REFRESH() INLINE ::HIDE(), SENDMESSAGE(::handle, WM_PAINT, 0, 0), ::SHOW()
    METHOD Refresh() INLINE RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE + RDW_UPDATENOW )
 
 ENDCLASS
@@ -120,9 +120,9 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
    IF Image != Nil .AND. !Empty( Image )
       IF lRes == Nil ; lRes := .F. ; ENDIF
       ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),     ;
-                       HBitmap():AddResource( Image ), ;
+                       HBitmap():AddResource(Image), ;
                        IIf( hb_IsChar(Image),     ;
-                            HBitmap():AddFile( Image ), Image ) )
+                            HBitmap():AddFile(Image), Image ) )
       IF nWidth == Nil .OR. nHeight == Nil
          ::nWidth  := ::oImage:nWidth
          ::nHeight := ::oImage:nHeight
@@ -133,10 +133,10 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
 
    RETURN Self
 
-METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip, lTransp ) CLASS HSayBmp
+METHOD Redefine(oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip, lTransp) CLASS HSayBmp
 
 
-   ::Super:Redefine( oWndParent, nId, bInit, bSize, ctooltip )
+   ::Super:Redefine(oWndParent, nId, bInit, bSize, ctooltip)
    ::bPaint := { | o, lpdis | o:Paint( lpdis ) }
    IF lTransp != Nil .AND. lTransp
       ::BackStyle := TRANSPARENT
@@ -144,9 +144,9 @@ METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip, lTransp 
    ENDIF
    IF lRes == Nil ; lRes := .F. ; ENDIF
    ::oImage := IIf( lRes .OR. hb_IsNumeric(xImage),     ;
-                    HBitmap():AddResource( xImage ), ;
+                    HBitmap():AddResource(xImage), ;
                     IIf( hb_IsChar(xImage),     ;
-                         HBitmap():AddFile( xImage ), xImage ) )
+                         HBitmap():AddFile(xImage), xImage ) )
    RETURN Self
 
 METHOD Init() CLASS HSayBmp
@@ -154,7 +154,7 @@ METHOD Init() CLASS HSayBmp
    IF !::lInit
       ::Super:Init()
       IF ::oImage != Nil .AND. !empty( ::oImage:Handle )
-         SendMessage( ::handle,STM_SETIMAGE, IMAGE_BITMAP, ::oImage:handle )
+         SendMessage(::handle,STM_SETIMAGE, IMAGE_BITMAP, ::oImage:handle)
       ENDIF
    ENDIF
 Return Nil
@@ -166,45 +166,45 @@ METHOD Paint( lpdis ) CLASS HSayBmp
       IF ::nZoom == Nil
          IF ::BackStyle = TRANSPARENT
             IF ::nStretch = 1  // isometric
-               DrawTransparentBitmap( drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
-                                      drawInfo[ 5 ] + ::nOffsetV,, ) // ::nWidth+1, ::nHeight+1 )
+               DrawTransparentBitmap(drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
+                                      drawInfo[ 5 ] + ::nOffsetV,,) // ::nWidth+1, ::nHeight+1)
 ELSEIF ::nStretch = 2  // CLIP
-   DrawTransparentBitmap( drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
+   DrawTransparentBitmap(drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
                           drawInfo[ 5 ] + ::nOffsetV,, ::nWidth + 1, ::nHeight + 1 )
 ELSE // stretch (DEFAULT)
-   DrawTransparentBitmap( drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
-                          drawInfo[ 5 ] + ::nOffsetV,, drawInfo[ 6 ] - drawInfo[ 4 ] + 1, drawInfo[ 7 ] - drawInfo[ 5 ] + 1  )
+   DrawTransparentBitmap(drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
+                          drawInfo[ 5 ] + ::nOffsetV,, drawInfo[ 6 ] - drawInfo[ 4 ] + 1, drawInfo[ 7 ] - drawInfo[ 5 ] + 1)
 ENDIF
 ELSE
    IF ::nStretch = 1  // isometric
-      DrawBitmap( drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
-                  drawInfo[ 5 ] + ::nOffsetV ) //, ::nWidth+1, ::nHeight+1 )
+      DrawBitmap(drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
+                  drawInfo[ 5 ] + ::nOffsetV) //, ::nWidth+1, ::nHeight+1)
 ELSEIF ::nStretch = 2  // CLIP
-   DrawBitmap( drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
-               drawInfo[ 5 ] + ::nOffsetV, ::nWidth + 1, ::nHeight + 1 )
+   DrawBitmap(drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
+               drawInfo[ 5 ] + ::nOffsetV, ::nWidth + 1, ::nHeight + 1)
 ELSE // stretch (DEFAULT)
-   DrawBitmap( drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
-               drawInfo[ 5 ] + ::nOffsetV, drawInfo[ 6 ] - drawInfo[ 4 ] + 1, drawInfo[ 7 ] - drawInfo[ 5 ] + 1 )
+   DrawBitmap(drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
+               drawInfo[ 5 ] + ::nOffsetV, drawInfo[ 6 ] - drawInfo[ 4 ] + 1, drawInfo[ 7 ] - drawInfo[ 5 ] + 1)
 ENDIF
 ENDIF
 ELSE
-   DrawBitmap( drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
-               drawInfo[ 5 ] + ::nOffsetV, ::oImage:nWidth * ::nZoom, ::oImage:nHeight * ::nZoom )
+   DrawBitmap(drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
+               drawInfo[ 5 ] + ::nOffsetV, ::oImage:nWidth * ::nZoom, ::oImage:nHeight * ::nZoom)
 ENDIF
 ENDIF
 
 RETURN Nil
 
-METHOD ReplaceBitmap( Image, lRes ) CLASS HSayBmp
+METHOD ReplaceBitmap(Image, lRes) CLASS HSayBmp
 
    IF ::oImage != Nil
       ::oImage:Release()
    ENDIF
    IF lRes == Nil ; lRes := .F. ; ENDIF
    ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),     ;
-                    HBitmap():AddResource( Image ), ;
+                    HBitmap():AddResource(Image), ;
                     IIf( hb_IsChar(Image),     ;
-                         HBitmap():AddFile( Image ), Image ) )
+                         HBitmap():AddFile(Image), Image ) )
 
    RETURN Nil
 
@@ -215,9 +215,9 @@ CLASS HSayIcon INHERIT HSayImage
 
    METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
                bSize, ctooltip, lOEM, bClick, bDblClick )
-   METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip )
+   METHOD Redefine(oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip)
    METHOD Init()
-   METHOD REFRESH() INLINE SendMessage( ::handle, STM_SETIMAGE, IMAGE_ICON, ::oImage:handle )
+   METHOD REFRESH() INLINE SendMessage(::handle, STM_SETIMAGE, IMAGE_ICON, ::oImage:handle)
 
 ENDCLASS
 
@@ -230,24 +230,24 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
    IF lOEM == Nil ; lOEM := .F. ; ENDIF
    IF ::oImage == NIL
       ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),  ;
-                       HIcon():AddResource( Image,,,, lOEM ),  ;
-                       IIf( hb_IsChar(Image),    ;
-                            HIcon():AddFile( Image ), Image ) )
+                       HIcon():AddResource(Image, , , , lOEM), ;
+                       IIf( hb_IsChar(Image), ;
+                            HIcon():AddFile(Image), Image ) )
    ENDIF
    ::Activate()
 
    RETURN Self
 
-METHOD Redefine( oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip ) CLASS HSayIcon
+METHOD Redefine(oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip) CLASS HSayIcon
 
-   ::Super:Redefine( oWndParent, nId, bInit, bSize, ctooltip )
+   ::Super:Redefine(oWndParent, nId, bInit, bSize, ctooltip)
 
    IF lRes == Nil ; lRes := .F. ; ENDIF
    IF ::oImage == NIL
-      ::oImage := IIf( lRes .OR. hb_IsNumeric(xImage),   ;
-                       HIcon():AddResource( xImage ), ;
-                       IIf( hb_IsChar(xImage),   ;
-                            HIcon():AddFile( xImage ), xImage ) )
+      ::oImage := IIf( lRes .OR. hb_IsNumeric(xImage), ;
+                       HIcon():AddResource(xImage), ;
+                       IIf( hb_IsChar(xImage), ;
+                            HIcon():AddFile(xImage), xImage ) )
    ENDIF
    RETURN Self
 
@@ -255,7 +255,7 @@ METHOD Init() CLASS HSayIcon
 
    IF !::lInit
       ::Super:Init()
-      SendMessage( ::handle, STM_SETIMAGE, IMAGE_ICON, ::oImage:handle )
+      SendMessage(::handle, STM_SETIMAGE, IMAGE_ICON, ::oImage:handle)
    ENDIF
    RETURN Nil
 

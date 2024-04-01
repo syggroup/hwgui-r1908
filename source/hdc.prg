@@ -46,33 +46,33 @@ CLASS HDC
    DATA m_hAttribDC
 
    METHOD NEW()
-   METHOD SetAttribDC( hDC )
+   METHOD SetAttribDC(hDC)
    METHOD ATTACH( hDc )
    METHOD MOVETO( x1, y1 )
    METHOD LINETO( x1, y1 )
    METHOD fillsolidrect( lpRect, clr )
    METHOD fillrect( lpRect, clr )
    METHOD SelectClipRgn( pRgn )
-   METHOD SetTextcolor( xColor )
-   METHOD SetBkMode( xMode )
-   METHOD SetBkColor(  clr ) INLINE    SetBkColor( ::m_hDC, clr )
-   METHOD SelectObject( xMode )
+   METHOD SetTextcolor(xColor)
+   METHOD SetBkMode(xMode)
+   METHOD SetBkColor(clr) INLINE    SetBkColor(::m_hDC, clr)
+   METHOD SelectObject(xMode)
    METHOD DrawText( strText, Rect, dwFlags )
-   METHOD CreateCompatibleDc( x )
+   METHOD CreateCompatibleDc(x)
    METHOD patblt( a, s, d, f, g ) INLINE patblt( ::m_hDc, a, s, d, f, g )
    METHOD Savedc()
-   METHOD RestoreDC( nSavedDC )
-   METHOD SetMapMode( nMapMode )
+   METHOD RestoreDC(nSavedDC)
+   METHOD SetMapMode(nMapMode)
    METHOD SetWindowOrg( x, y )
    METHOD SetWindowExt( x, y )
    METHOD SetViewportOrg( x, y )
    METHOD SetViewportExt( x, y )
    METHOD SetArcDirection( nArcDirection )
-   METHOD GetTextMetric() INLINE GetTextMetric( ::m_hDC )
+   METHOD GetTextMetric() INLINE GetTextMetric(::m_hDC)
    METHOD SetROP2( nDrawMode )
-   METHOD BitBlt( x,  y,  nWidth,  nHeight,  pSrcDC,  xSrc, ySrc,  dwRop ) INLINE    BitBlt( ::m_hDc, x, y, nWidth, nHeight,  pSrcDC,       xSrc,  ySrc,  dwRop )
+   METHOD BitBlt( x, y, nWidth, nHeight, pSrcDC, xSrc, ySrc, dwRop ) INLINE    BitBlt( ::m_hDc, x, y, nWidth, nHeight, pSrcDC, xSrc, ySrc, dwRop )
 
-   METHOD PIE( arect, apt1, apt2 )
+   METHOD PIE(arect, apt1, apt2)
    METHOD DeleteDc()
 ENDCLASS
 
@@ -99,16 +99,16 @@ METHOD Attach( hDC ) CLASS HDC
 
    ::m_hDC := hDC
 
-   ::SetAttribDC( ::m_hDC )
+   ::SetAttribDC(::m_hDC)
    return.T.
 
 METHOD deletedc() CLASS HDC
-   DeleteDc( ::m_hDC )
+   DeleteDc(::m_hDC)
    ::m_hDC := NIL
    ::m_hAttribDC := NIL
    RETURN NIL
 
-METHOD SetAttribDC( hDC ) CLASS HDC
+METHOD SetAttribDC(hDC) CLASS HDC
 
    ::m_hAttribDC := hDC
    RETURN NIL
@@ -129,22 +129,22 @@ METHOD SelectClipRgn( pRgn ) CLASS HDC
 
 METHOD fillsolidrect( lpRect, clr ) CLASS HDC
 
-   SetBkColor( ::m_hDC, clr )
+   SetBkColor(::m_hDC, clr)
    ExtTextOut( ::m_hDC, 0, 0, lpRect[ 1 ], lpRect[ 2 ], lpRect[ 3 ], lpRect[ 4 ], NIL )
 
    RETURN NIL
 
-METHOD SetTextColor( xColor ) CLASS HDC
+METHOD SetTextColor(xColor) CLASS HDC
 
-   RETURN SetTextColor( ::m_hDc, xColor )
+   RETURN SetTextColor(::m_hDc, xColor)
 
-METHOD SetBkMode( xMode ) CLASS HDC
+METHOD SetBkMode(xMode) CLASS HDC
 
-   RETURN SetBkMode( ::m_hDc, xMode )
+   RETURN SetBkMode(::m_hDc, xMode)
 
-METHOD SelectObject( xMode ) CLASS HDC
+METHOD SelectObject(xMode) CLASS HDC
 
-   RETURN SelectObject( ::m_hDc, xMode )
+   RETURN SelectObject(::m_hDc, xMode)
 
 METHOD DrawText( strText, Rect, dwFlags ) CLASS HDC
 
@@ -159,42 +159,42 @@ METHOD fillrect( lpRect, clr ) CLASS HDC
    RETURN NIL
 
 
-METHOD CreateCompatibleDc( x ) CLASS HDC
-   RETURN ::Attach( CreateCompatibleDC( x ) )
+METHOD CreateCompatibleDc(x) CLASS HDC
+   RETURN ::Attach( CreateCompatibleDC(x) )
 
 METHOD SAVEDC() CLASS HDC
    LOCAL nRetVal := 0
 
    IF ( !Empty( ::m_hAttribDC ) )
-      nRetVal := SaveDC( ::m_hAttribDC )
+      nRetVal := SaveDC(::m_hAttribDC)
    ENDIF
-   IF ( ::m_hDC != ::m_hAttribDC .and. SaveDC( ::m_hDC ) != 0 )
+   IF ( ::m_hDC != ::m_hAttribDC .and. SaveDC(::m_hDC) != 0 )
       nRetVal := - 1   // -1 is the only valid restore value for complex DCs
    ENDIF
    RETURN nRetVal
 
-METHOD RestoreDC( nSavedDC ) CLASS HDC
+METHOD RestoreDC(nSavedDC) CLASS HDC
 
    // if two distinct DCs, nSavedDC can only be -1
 
    LOCAL bRetVal := .T.
    IF ( ::m_hDC != ::m_hAttribDC )
-      bRetVal := RestoreDC( ::m_hDC, nSavedDC )
+      bRetVal := RestoreDC(::m_hDC, nSavedDC)
    ENDIF
    IF ( !Empty( ::m_hAttribDC ) )
-      bRetVal := ( bRetVal .and. RestoreDC( ::m_hAttribDC, nSavedDC ) )
+      bRetVal := ( bRetVal .and. RestoreDC(::m_hAttribDC, nSavedDC) )
    ENDIF
    RETURN bRetVal
 
-METHOD SetMapMode( nMapMode ) CLASS HDC
+METHOD SetMapMode(nMapMode) CLASS HDC
 
    LOCAL nRetVal := 0
 
    IF ( ::m_hDC != ::m_hAttribDC )
-      nRetVal := ::SetMapMode( ::m_hDC, nMapMode )
+      nRetVal := ::SetMapMode(::m_hDC, nMapMode)
    ENDIF
    IF !Empty( ::m_hAttribDC )
-      nRetVal := SetMapMode( ::m_hAttribDC, nMapMode )
+      nRetVal := SetMapMode(::m_hAttribDC, nMapMode)
    ENDIF
    RETURN nRetVal
 
@@ -268,8 +268,8 @@ METHOD SetArcDirection( nArcDirection )
    RETURN nResult
 
 
-METHOD PIE( arect, apt1, apt2 )
-   RETURN PIE( ::m_hdc, arect[ 1 ], arect[ 2 ], arect[ 3 ], arect[ 4 ], apt1[ 1 ], apt1[ 2 ], apt2[ 1 ], apt2[ 2 ] )
+METHOD PIE(arect, apt1, apt2)
+   RETURN PIE(::m_hdc, arect[ 1 ], arect[ 2 ], arect[ 3 ], arect[ 4 ], apt1[ 1 ], apt1[ 2 ], apt2[ 1 ], apt2[ 2 ])
 
 METHOD SetROP2( nDrawMode )
 
@@ -300,13 +300,13 @@ METHOD NEW( nWnd ) CLASS HCLIENTDC
 
    ::Super:new()
    ::m_hWnd := nWnd
-   ::Attach( GetDc( ::m_hWnd ) )
+   ::Attach( GetDc(::m_hWnd) )
 
    RETURN Self
 
 METHOD END () CLASS HCLIENTDC
 
-   ReleaseDc( ::m_hWnd, ::m_hDC )
+   ReleaseDc(::m_hWnd, ::m_hDC)
    ::m_hDC       := NIL
    ::m_hAttribDC := NIL
 

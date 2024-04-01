@@ -53,7 +53,7 @@ HB_FUNC(HWG_DIALOGBOX)
 }
 
 /*  Creates modeless dialog
-    CreateDialog( hParentWindow, aDialog )
+    CreateDialog(hParentWindow, aDialog)
 */
 HB_FUNC(HWG_CREATEDIALOG)
 {
@@ -351,7 +351,7 @@ HB_FUNC(RELEASEDLGTEMPLATE)
 }
 
 /*
- *  _CreatePropertySheetPage( aDlg, x1, y1, nWidth, nHeight, nStyle ) --> hPage
+ *  _CreatePropertySheetPage(aDlg, x1, y1, nWidth, nHeight, nStyle) --> hPage
  */
 HB_FUNC(_CREATEPROPERTYSHEETPAGE)
 {
@@ -415,14 +415,13 @@ HB_FUNC(_CREATEPROPERTYSHEETPAGE)
 
   h = CreatePropertySheetPage(&psp);
   HB_RETHANDLE(h);
-  // if( pdlgtemplate )
-  //    s_ReleaseDlgTemplate( pdlgtemplate );
+  // if (pdlgtemplate)
+  //    s_ReleaseDlgTemplate(pdlgtemplate);
   hb_strfree(hTitle);
 }
 
 /*
- * _PropertySheet( hWndParent, aPageHandles, nPageHandles, cTitle,
- *                [ lModeless ], [ lNoApply ], [ lWizard ] ) --> hPropertySheet
+ * _PropertySheet(hWndParent, aPageHandles, nPageHandles, cTitle, [lModeless], [lNoApply], [lWizard]) --> hPropertySheet
  */
 HB_FUNC(_PROPERTYSHEET)
 {
@@ -468,7 +467,7 @@ HB_FUNC(_PROPERTYSHEET)
   hb_strfree(hCaption);
 }
 
-/* Hwg_CreateDlgIndirect( hParentWnd, pArray, x1, y1, nWidth, nHeight, nStyle )
+/* Hwg_CreateDlgIndirect(hParentWnd, pArray, x1, y1, nWidth, nHeight, nStyle)
  */
 
 HB_FUNC(HWG_CREATEDLGINDIRECT)
@@ -499,7 +498,7 @@ HB_FUNC(HWG_CREATEDLGINDIRECT)
   }  
 }
 
-/* Hwg_DlgBoxIndirect( hParentWnd, pArray, x1, y1, nWidth, nHeight, nStyle )
+/* Hwg_DlgBoxIndirect(hParentWnd, pArray, x1, y1, nWidth, nHeight, nStyle)
  */
 
 HB_FUNC(HWG_DLGBOXINDIRECT)
@@ -553,7 +552,7 @@ static LRESULT CALLBACK s_ModalDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPAR
     hb_vmPush(pObject);
     hb_vmPushLong((LONG)uMsg);
     hb_vmPushLong((LONG)wParam);
-    //      hb_vmPushLong( (LONG )  lParam );
+    //      hb_vmPushLong((LONG)lParam);
     HB_PUSHITEM(lParam);
     hb_vmSend(3);
 #ifdef HWG_USE_POINTER_ITEM
@@ -640,7 +639,7 @@ static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
     hb_vmPush(pObject);
     hb_vmPushLong((LONG)uMsg);
     hb_vmPushLong((LONG)wParam);
-    //      hb_vmPushLong( (LONG ) lParam );
+    //      hb_vmPushLong((LONG)lParam);
     HB_PUSHITEM(lParam);
     hb_vmSend(3);
 #ifdef HWG_USE_POINTER_ITEM
@@ -703,7 +702,7 @@ static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
       }
     }
     aDialogs[iDialogs++] = hDlg;
-    // hb_itemRelease( pObj );
+    // hb_itemRelease(pObj);
   }
   else if (uMsg == WM_NOTIFY)
   {
@@ -735,7 +734,7 @@ static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
     hb_vmPush(pObject);
     hb_vmPushLong((LONG)uMsg);
     hb_vmPushLong((LONG)wParam);
-    //      hb_vmPushLong( (LONG ) lParam );
+    //      hb_vmPushLong((LONG)lParam);
     HB_PUSHITEM(lParam);
     hb_vmSend(3);
     res = hb_parnl(-1);

@@ -53,7 +53,7 @@ CLASS PrintDos
 
    METHOD SetCols( nPRow, nPCol )
 
-   METHOD gWrite( oText )
+   METHOD gWrite(oText)
 
    METHOD NewLine()
 
@@ -72,11 +72,11 @@ CLASS PrintDos
    METHOD Comando( oComm1, oComm2, oComm3, oComm4, oComm5, oComm6, oComm7, ;
                 oComm8, oComm9, oComm10 )
 
-   METHOD SetPrc( x, y )
+   METHOD SetPrc(x, y)
 
-   METHOD PrinterFile( fName )
+   METHOD PrinterFile(fName)
 
-   METHOD TxttoGraphic( fName, osize, oPreview )
+   METHOD TxttoGraphic(fName, osize, oPreview)
 
    METHOD Preview( fname, cTitle )
 
@@ -85,11 +85,11 @@ CLASS PrintDos
 ENDCLASS
 
 METHOD New( oPorta ) CLASS PrintDos
-   LOCAL oDouble  := { oMATRIXDOUBLE,   oINKJETDOUBLE,   oLASER10CPI }
-   LOCAL oNormal  := { oMATRIXNORMAL,   oINKJETNORMAL,   oLASER12CPI }
+   LOCAL oDouble  := { oMATRIXDOUBLE, oINKJETDOUBLE, oLASER10CPI }
+   LOCAL oNormal  := { oMATRIXNORMAL, oINKJETNORMAL, oLASER12CPI }
    LOCAL oCompress := { oMATRIXCOMPRESS, oINKJETCOMPRESS, oLASER18CPI }
-   LOCAL oBold    := { oMATRIXBOLD,     oINKJETBOLD,     oLASERBOLD  }       //Added by  por Fernando Athayde
-   LOCAL oUnBold  := { oMATRIXUNBOLD,   oINKJETUNBOLD,   oLASERUNBOLD }       //Added by  por Fernando Athayde
+   LOCAL oBold    := { oMATRIXBOLD, oINKJETBOLD, oLASERBOLD  }       //Added by  por Fernando Athayde
+   LOCAL oUnBold  := { oMATRIXUNBOLD, oINKJETUNBOLD, oLASERUNBOLD }       //Added by  por Fernando Athayde
    LOCAL oPtrSetup, oPtrName
 
    ::cCompr   := oCompress[ ::oPrintStyle ]
@@ -148,7 +148,7 @@ METHOD New( oPorta ) CLASS PrintDos
       ::gText := ""
    ELSE
       // tracelog([          ::gText:=fCreate(::oPorta)])
-      ::gText := FCreate( ::oPorta )
+      ::gText := FCreate(::oPorta)
       //tracelog([depois           ::gText:=fCreate(::oPorta)],::gtext)
       IF ::gText < 0
          ::LastError := FError()
@@ -166,17 +166,17 @@ METHOD Comando( oComm1, oComm2, oComm3, oComm4, oComm5, oComm6, oComm7, ;
 
    LOCAL oStr //:= oComm1 (value not used)
 
-   oStr := Chr( Val ( oComm1 ) )
+   oStr := Chr(Val(oComm1))
 
-   IF oComm2  != NIL ;  oStr += Chr( Val( oComm2 ) ) ;   ENDIF
-   IF oComm3  != NIL ;  oStr += Chr( Val( oComm3 ) ) ;   ENDIF
-   IF oComm4  != NIL ;  oStr += Chr( Val( oComm4 ) ) ;   ENDIF
-   IF oComm5  != NIL ;  oStr += Chr( Val( oComm5 ) ) ;   ENDIF
-   IF oComm6  != NIL ;  oStr += Chr( Val( oComm6 ) ) ;   ENDIF
-   IF oComm7  != NIL ;  oStr += Chr( Val( oComm7 ) ) ;   ENDIF
-   IF oComm8  != NIL ;  oStr += Chr( Val( oComm8 ) ) ;   ENDIF
-   IF oComm9  != NIL ;  oStr += Chr( Val( oComm9 ) ) ;   ENDIF
-   IF oComm10 != NIL ;  oStr += Chr( Val( oComm10 ) ) ;   ENDIF
+   IF oComm2  != NIL ;  oStr += Chr(Val(oComm2)) ;   ENDIF
+   IF oComm3  != NIL ;  oStr += Chr(Val(oComm3)) ;   ENDIF
+   IF oComm4  != NIL ;  oStr += Chr(Val(oComm4)) ;   ENDIF
+   IF oComm5  != NIL ;  oStr += Chr(Val(oComm5)) ;   ENDIF
+   IF oComm6  != NIL ;  oStr += Chr(Val(oComm6)) ;   ENDIF
+   IF oComm7  != NIL ;  oStr += Chr(Val(oComm7)) ;   ENDIF
+   IF oComm8  != NIL ;  oStr += Chr(Val(oComm8)) ;   ENDIF
+   IF oComm9  != NIL ;  oStr += Chr(Val(oComm9)) ;   ENDIF
+   IF oComm10 != NIL ;  oStr += Chr(Val(oComm10)) ;   ENDIF
 
 
    IF ::oAns2Oem
@@ -188,7 +188,7 @@ METHOD Comando( oComm1, oComm2, oComm3, oComm4, oComm5, oComm6, oComm7, ;
    RETURN Nil
 
 
-METHOD gWrite( oText ) CLASS PrintDos
+METHOD gWrite(oText) CLASS PrintDos
 
    //tracelog(otext)
    IF ::oAns2Oem
@@ -205,14 +205,14 @@ METHOD gWrite( oText ) CLASS PrintDos
 METHOD Eject() CLASS PrintDos
 //tracelog( ::gText, ::oText )
 
-   FWrite( ::gText, ::oText )
+   FWrite(::gText, ::oText)
 
    IF ::oAns2Oem
-      FWrite( ::gText, HB_ANSITOOEM( Chr( 13 ) + Chr( 10 ) + Chr( Val( ::cEject ) ) ) )
-      FWrite( ::gText, HB_ANSITOOEM( Chr( 13 ) + Chr( 10 ) ) )
+      FWrite(::gText, HB_ANSITOOEM( Chr(13) + Chr(10) + Chr(Val(::cEject)) ))
+      FWrite(::gText, HB_ANSITOOEM( Chr(13) + Chr(10) ))
    ELSE
-      FWrite( ::gText, Chr( 13 ) + Chr( 10 ) + Chr( Val( ::cEject ) ) )
-      FWrite( ::gText, Chr( 13 ) + Chr( 10 ) )
+      FWrite(::gText, Chr(13) + Chr(10) + Chr(Val(::cEject)))
+      FWrite(::gText, Chr(13) + Chr(10))
    ENDIF
 
    ::oText := ""
@@ -257,9 +257,9 @@ METHOD UnBold() CLASS PrintDos
 METHOD NewLine() CLASS PrintDos
 
    IF ::oAns2Oem
-      ::oText += HB_ANSITOOEM( Chr( 13 ) + Chr( 10 ) )
+      ::oText += HB_ANSITOOEM( Chr(13) + Chr(10) )
    ELSE
-      ::oText += Chr( 13 ) + Chr( 10 )
+      ::oText += Chr(13) + Chr(10)
    ENDIF
    ::nPcol := 0
    RETURN Nil
@@ -275,7 +275,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
       ENDIF
 
    ELSEIF hb_IsDate(oTexto)
-      oTexto := DToC( oTexto )
+      oTexto := DToC(oTexto)
    ELSE
       IF !Empty( oPicture ) .or. oPicture != Nil
          oTexto := Transform( oTexto, oPicture )
@@ -284,7 +284,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
    //tracelog([antes     ::SetCols(oProw, oPcol)])
    ::SetCols( oProw, oPcol )
    //tracelog([depois de ::SetCols(oProw, oPcol) e  antes         ::gWrite(oTexto))])
-   ::gWrite( oTexto )
+   ::gWrite(oTexto)
 
    RETURN Nil
 
@@ -306,29 +306,29 @@ METHOD SetCols( nProw, nPcol ) CLASS PrintDos
    ENDIF
 
    IF nPcol > ::nPcol
-      ::gWrite( Space( nPcol - ::nPcol ) )
+      ::gWrite(Space(nPcol - ::nPcol))
    ENDIF
 
    RETURN Nil
 
-METHOD SetPrc( x, y ) CLASS PrintDos
+METHOD SetPrc(x, y) CLASS PrintDos
    ::nProw := x
    ::nPCol := y
    RETURN Nil
 
 METHOD END() CLASS PrintDos
 
-   FWrite( ::gText, ::oText )
-   FClose( ::gText )
+   FWrite(::gText, ::oText)
+   FClose(::gText)
 
    RETURN Nil
 
-METHOD PrinterFile( fname ) CLASS PrintDos
-   LOCAL strbuf := Space( PF_BUFFERS )
+METHOD PrinterFile(fname) CLASS PrintDos
+   LOCAL strbuf := Space(PF_BUFFERS)
    LOCAL han, nRead
 
-   IF !File( fname )
-      MsgStop( "Error open file " + fname, "Error" )
+   IF !File(fname)
+      MsgStop("Error open file " + fname, "Error")
       RETURN .F.
    ENDIF
 
@@ -338,13 +338,13 @@ METHOD PrinterFile( fname ) CLASS PrintDos
 
       DO WHILE .T.
 
-         nRead := FRead( han, @strbuf, PF_BUFFERS )
+         nRead := FRead(han, @strbuf, PF_BUFFERS)
 
          IF nRead = 0 ; EXIT ; ENDIF
 
-         IF FWrite( ::gText, Left( strbuf, nRead ) ) < nRead
+         IF FWrite(::gText, Left( strbuf, nRead )) < nRead
             ::ErrosAnt := FError()
-            FClose( han )
+            FClose(han)
             RETURN .F.
          ENDIF
 
@@ -352,8 +352,8 @@ METHOD PrinterFile( fname ) CLASS PrintDos
 
    ELSE
 
-      MsgStop( "Can't Open port" )
-      FClose( han )
+      MsgStop("Can't Open port")
+      FClose(han)
 
    ENDIF
 
@@ -365,13 +365,13 @@ FUNCTION wProw( oPrinter )
 FUNCTION wPCol( oPrinter )
    RETURN oPrinter:nPcol
 
-FUNCTION wSetPrc( x, y, oPrinter )
-   oPrinter:SetPrc( x, y )
+FUNCTION wSetPrc(x, y, oPrinter)
+   oPrinter:SetPrc(x, y)
    RETURN Nil
 
-METHOD TxttoGraphic( fName, osize, oPreview ) CLASS PrintDos
+METHOD TxttoGraphic(fName, osize, oPreview) CLASS PrintDos
 
-   LOCAL strbuf := Space( 2052 ), poz := 2052, stroka
+   LOCAL strbuf := Space(2052), poz := 2052, stroka
    LOCAL han := FOpen( fName, FO_READ + FO_SHARED )
    LOCAL oCol := 0 //Added by  Por Fernando Athayde
    LOCAL oPrinter
@@ -385,10 +385,10 @@ METHOD TxttoGraphic( fName, osize, oPreview ) CLASS PrintDos
 // end of added code
    oFont := oPrinter:AddFont( "Courier New", osize )
 
-   oPrinter:StartDoc( oPreview  )
+   oPrinter:StartDoc(oPreview)
    oPrinter:StartPage()
 
-   SelectObject( oPrinter:hDC, oFont:handle )
+   SelectObject(oPrinter:hDC, oFont:handle)
 
    IF han != - 1
       DO WHILE .T.
@@ -404,16 +404,16 @@ METHOD TxttoGraphic( fName, osize, oPreview ) CLASS PrintDos
             oCol := oCol + ( osize + 2 )   //Added by  Por Fernando Athayde
          ENDIF
 
-         IF Left( stroka, 1 ) == Chr( 12 )
+         IF Left( stroka, 1 ) == Chr(12)
             oPrinter:EndPage()
             oPrinter:StartPage()
             oCol := 0  //Added by  Por Fernando Athayde
          ENDIF
 
       ENDDO
-      FClose( han )
+      FClose(han)
    ELSE
-      MsgStop( "Can't open " + fName )
+      MsgStop("Can't open " + fName)
       RETURN .F.
    ENDIF
    oPrinter:EndPage()
@@ -426,10 +426,10 @@ METHOD TxttoGraphic( fName, osize, oPreview ) CLASS PrintDos
 
 METHOD Preview( fName, cTitle ) CLASS PrintDos
    LOCAL oedit1
-   LOCAL strbuf := Space( 2052 ), poz := 2052, stroka
+   LOCAL strbuf := Space(2052), poz := 2052, stroka
    LOCAL han := FOpen( fName, FO_READ + FO_SHARED )
    LOCAL oPage := 1, nPage := 1
-   LOCAL oFont := HFont():Add( "Courier New", 0, - 13 )
+   LOCAL oFont := HFont():Add("Courier New", 0, - 13)
    LOCAL oText := { "" }
    LOCAL oDlg, oColor1, oColor2
    LOCAL oEdit
@@ -442,18 +442,18 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
             EXIT
          ENDIF
          IF ::oAns2Oem
-            oText[ oPage ] += HB_ANSITOOEM( stroka ) + Chr( 13 ) + Chr( 10 )
+            oText[ oPage ] += HB_ANSITOOEM( stroka ) + Chr(13) + Chr(10)
          ELSE
-            oText[ oPage ] += stroka + Chr( 13 ) + Chr( 10 )
+            oText[ oPage ] += stroka + Chr(13) + Chr(10)
          ENDIF
-         IF Left( stroka, 1 ) == Chr( 12 )
-            AAdd( oText, "" )
+         IF Left( stroka, 1 ) == Chr(12)
+            AAdd(oText, "")
             ++ oPage
          ENDIF
       ENDDO
-      FClose( han )
+      FClose(han)
    ELSE
-      MsgStop( "Can't open " + fName )
+      MsgStop("Can't open " + fName)
       RETURN .F.
    ENDIF
 
@@ -470,7 +470,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
    IIf( cTitle == Nil, cTitle := "Print Preview", cTitle := cTitle )
 
    INIT DIALOG oDlg TITLE cTitle ;
-        At 0, 0 SIZE GETDESKTOPWIDTH(), GETDESKTOPHEIGHT() on init { || Sendmessage( oedit1:handle, WM_VSCROLL  , SB_TOP, 0 ) }
+        At 0, 0 SIZE GETDESKTOPWIDTH(), GETDESKTOPHEIGHT() on init { || Sendmessage(oedit1:handle, WM_VSCROLL, SB_TOP, 0) }
 
 
 
@@ -499,11 +499,11 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
 
 STATIC FUNCTION PrintDosPrint( oText, oPrt )
    LOCAL i
-   LOCAL nText := FCreate( oPrt )
+   LOCAL nText := FCreate(oPrt)
    FOR i := 1 TO Len( oText )
-      FWrite( nText, oText[ i ] )
+      FWrite(nText, oText[ i ])
    NEXT
-   FClose( nText )
+   FClose(nText)
    RETURN Nil
 
 
@@ -525,7 +525,7 @@ STATIC FUNCTION PrintDosNext( oPage, nPage, oText )
    SetDlgItemText( oDlg, 1001, oText[ nPage ] )
    RETURN nPage
 
-FUNCTION regenfile( o, new )
+FUNCTION regenfile(o, new)
    LOCAL aText := AFillText( o )
    LOCAL stroka
    LOCAL o1 := printdos():new( new )
@@ -536,7 +536,7 @@ FUNCTION regenfile( o, new )
    FOR i := 1 TO Len( aText )
 
       stroka := aText[ i ]
-      nChr12 := At( Chr( 12 ), stroka )
+      nChr12 := At( Chr(12), stroka )
 
       IF nChr12 > 0
          stroka := SubStr( stroka, 1, nChr12 - 1 )
@@ -557,7 +557,7 @@ FUNCTION regenfile( o, new )
 /*
    txtfile.c
    AFILLTEXT( cFile ) -> aArray
-   NTXTLINE( cFile )  -> nLines
+   NTXTLINE(cFile)  -> nLines
 */
 
 #include "guilib.h"
@@ -605,7 +605,7 @@ static HB_BOOL file_read ( FILE *stream, char *string )
 }
 
 //----------------------------------------------------------------------------//
-HB_FUNC( AFILLTEXT )
+HB_FUNC(AFILLTEXT)
 {
    FILE *inFile ;
    const char *pSrc = hb_parc(1) ;
@@ -615,7 +615,7 @@ HB_FUNC( AFILLTEXT )
 
    if (!pSrc)
    {
-     hb_reta( 0 );
+     hb_reta(0);
      return;
    }
 
@@ -632,18 +632,18 @@ HB_FUNC( AFILLTEXT )
      return;
    }
 
-   string = (char*) hb_xgrab( LINE_MAX + 1 );
+   string = (char*) hb_xgrab(LINE_MAX + 1);
    hb_arrayNew( pArray, 0 );
 
    while ( file_read ( inFile, string ) )
    {
-      hb_arrayAddForward( pArray, hb_itemPutC( pTemp, string ));
+      hb_arrayAddForward(pArray, hb_itemPutC(pTemp, string));
    }
 
-   hb_itemRelease( hb_itemReturn( pArray ) );
-   hb_itemRelease( pTemp );
-   hb_xfree( string );
-   fclose( inFile );
+   hb_itemRelease(hb_itemReturn( pArray ));
+   hb_itemRelease(pTemp);
+   hb_xfree(string);
+   fclose(inFile);
 }
 
 #PRAGMA ENDDUMP

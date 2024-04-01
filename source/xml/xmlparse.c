@@ -112,7 +112,7 @@ HB_FUNC(HBXML_TRANSFORM)
 }
 
 /*
- * hbxml_pp( unsigned char * ptr, HB_ULONG ulLen )
+ * hbxml_pp(unsigned char * ptr, HB_ULONG ulLen)
  * Translation of the predefined entities ( &lt;, etc. )
  */
 PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
@@ -499,7 +499,7 @@ HB_BOOL hbxml_readElement(PHB_ITEM pParent, unsigned char **pBuffer)
 }
 
 /*
- * hbxml_Getdoc( PHB_ITEM pDoc, char * cData || HB_FHANDLE handle )
+ * hbxml_Getdoc(PHB_ITEM pDoc, char * cData || HB_FHANDLE handle)
  */
 
 HB_FUNC(HBXML_GETDOC)

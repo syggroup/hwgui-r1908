@@ -441,7 +441,7 @@ HB_FUNC(FI_FI2DIB)
 
   if (hdib)
   {
-    /* int scan_width = pGetPitch( dib ); unused */
+    /* int scan_width = pGetPitch(dib); unused */
     LPBITMAPINFO lpbi = (LPBITMAPINFO)GlobalLock(hdib);
     memcpy((LPBYTE)((BYTE *)lpbi) + lpbi->bmiHeader.biSize, pGetbits(dib), lpbi->bmiHeader.biSizeImage);
     GlobalUnlock(hdib);
@@ -553,10 +553,10 @@ HB_FUNC(FI_DRAW)
   pp[0].y = hb_parni(6);
   pp[1].x = pp[0].x + nDestWidth;
   pp[1].y = pp[0].y + nDestHeight;
-  // sprintf( cres,"\n %d %d %d %d",pp[0].x,pp[0].y,pp[1].x,pp[1].y );
+  // sprintf(cres, "\n %d %d %d %d", pp[0].x, pp[0].y, pp[1].x, pp[1].y);
   // writelog(cres);
-  // l = DPtoLP( hDC, pp, 2 );
-  // sprintf( cres,"\n %d %d %d %d %d",pp[0].x,pp[0].y,pp[1].x,pp[1].y,l );
+  // l = DPtoLP(hDC, pp, 2);
+  // sprintf(cres, "\n %d %d %d %d %d", pp[0].x, pp[0].y, pp[1].x, pp[1].y, l);
   // writelog(cres);
 
   pGetbits = (FREEIMAGE_GETBITS)s_getFunction((FARPROC)pGetbits, "_FreeImage_GetBits@4");
@@ -656,7 +656,7 @@ HB_FUNC(FI_DIB2FI)
 
     if (pConvertFromRawBits && lpbi)
     {
-      // int pitch = (((( lpbi->biWidth * lpbi->biBitCount) + 31) &~31) >> 3);
+      // int pitch = ((((lpbi->biWidth * lpbi->biBitCount) + 31) &~31) >> 3);
       int pitch = ((((lpbi->biBitCount * lpbi->biWidth) + 31) / 32) * 4);
 
       dib = pConvertFromRawBits(DibBits(lpbi), lpbi->biWidth, lpbi->biHeight, pitch, lpbi->biBitCount, FI_RGBA_RED_MASK,
@@ -754,7 +754,7 @@ unsigned DLL_CALLCONV _WriteProc(void *buffer, unsigned size, unsigned count, fi
 
 int DLL_CALLCONV _SeekProc(fi_handle handle, long offset, int origin)
 {
-  /* assert( origin != SEEK_END ); */
+  /* assert(origin != SEEK_END); */
 
   g_load_address = ((origin == SEEK_SET) ? (BYTE *)handle : (BYTE *)g_load_address) + offset;
   return 0;
@@ -762,7 +762,7 @@ int DLL_CALLCONV _SeekProc(fi_handle handle, long offset, int origin)
 
 long DLL_CALLCONV _TellProc(fi_handle handle)
 {
-  /* assert( (long int)handle >= (long int)g_load_address ); */
+  /* assert((long int)handle >= (long int)g_load_address); */
 
   return ((long int)g_load_address - (long int)handle);
 }
@@ -979,6 +979,6 @@ HB_FUNC(FI_SETPIXELINDEX)
 }
 
 /* todo
-typedef BOOL ( WINAPI *FREEIMAGE_GETPIXELCOLOR )(FIBITMAP *dib, unsigned x, unsigned y, RGBQUAD *value);
-typedef BOOL ( WINAPI *FREEIMAGE_SETPIXELCOLOR )(FIBITMAP *dib, unsigned x, unsigned y, RGBQUAD *value);
+typedef BOOL (WINAPI *FREEIMAGE_GETPIXELCOLOR)(FIBITMAP *dib, unsigned x, unsigned y, RGBQUAD *value);
+typedef BOOL (WINAPI *FREEIMAGE_SETPIXELCOLOR)(FIBITMAP *dib, unsigned x, unsigned y, RGBQUAD *value);
 */

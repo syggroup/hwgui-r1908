@@ -30,7 +30,7 @@ Local nFirst, i
    IF Len( aScript ) < 3
       Return .F.
    ELSEIF Len( aScript ) == 3
-      Aadd( aScript, Nil )
+      Aadd(aScript, Nil)
    ENDIF
    IF Empty( aScript[4] )
       nScriptSch ++
@@ -42,8 +42,8 @@ Local nFirst, i
 
    IF oDlgDebug == Nil .AND. iscr > 0
 
-      oDlgFont := HFont():Add( "Georgia",0,-15,,204 )
-      oScrFont := HFont():Add( "Courier New",0,-15,,204 )
+      oDlgFont := HFont():Add("Georgia", 0, -15, , 204)
+      oScrFont := HFont():Add("Courier New", 0, -15, , 204)
 #ifndef __LINUX__
       oBmpCurr := HBitmap():AddStandard(OBM_RGARROWD)
       oBmpPoint:= HBitmap():AddStandard(OBM_CHECK)
@@ -105,14 +105,14 @@ Local nFirst, i
 
       ACTIVATE DIALOG oDlgDebug NOMODAL
 
-      oDlgDebug:Move( ,,,400 )
+      oDlgDebug:Move(, , , 400)
    ENDIF
 
    IF aScriptCurr[4] != aScript[4]
       IF !Empty( aBreakPoints )
          IF ( i := Ascan( aBreaks, {|a|a[1]==aBreakPoints[1]} ) ) == 0
             HB_SYMBOL_UNUSED(i)
-            Aadd( aBreaks, aBreakPoints )
+            Aadd(aBreaks, aBreakPoints)
          ENDIF
          IF ( i := Ascan( aBreaks, {|a|a[1]==aScript[4]} ) ) == 0
             aBreakPoints := Nil
@@ -192,7 +192,7 @@ Local i
          ENDIF
       NEXT
       IF i > Len(aBreakPoints[2])
-         Aadd( aBreakPoints[2], oBrwScript:nCurrent )
+         Aadd(aBreakPoints[2], oBrwScript:nCurrent)
       ENDIF
    ELSE
       Adel( aBreakPoints[2], i )
@@ -220,14 +220,14 @@ Local xRes, bCodeblock, bOldError, lRes := .T.
 
    IF lRes
       IF Ascan( aWatches, {|s|s[1] == xRes} ) == 0
-         Aadd( aWatches, { xRes,bCodeblock, Nil, Nil } )
+         Aadd(aWatches, { xRes,bCodeblock, Nil, Nil })
          CalcWatch( Len(aWatches) )
       ENDIF
       IF oBrwData:nHeight < 20
-         oSplit:Move( ,56)
-         oBrwScript:Move( ,60,,oDlgDebug:nHeight-oSplit:nTop-oSplit:nHeight-64)
-         oBrwData:Move( ,,,56 )
-         oDlgDebug:Move( ,,,oDlgDebug:nHeight+4 )
+         oSplit:Move(, 56)
+         oBrwScript:Move(, 60, , oDlgDebug:nHeight - oSplit:nTop - oSplit:nHeight - 64)
+         oBrwData:Move(, , , 56)
+         oDlgDebug:Move(, , , oDlgDebug:nHeight + 4)
       ENDIF
       oBrwData:Refresh()
    ELSE
@@ -247,7 +247,7 @@ Local xRes, bOldError, lRes := .T., cType
    ERRORBLOCK( bOldError )
 
    IF lRes
-      IF ( cType := Valtype( xRes ) ) == "N"
+      IF ( cType := Valtype(xRes) ) == "N"
          aWatches[n,4] := Ltrim(Str(xRes))
       ELSEIF cType == "D"
          aWatches[n,4] := Dtoc(xRes)
@@ -284,7 +284,7 @@ Local xRes, bOldError, lRes := .T., cType
    ENDIF
 
    IF lRes
-      IF ( cType := Valtype( xRes ) ) == "N"
+      IF ( cType := Valtype(xRes) ) == "N"
          oEditRes:SetText( Ltrim(Str(xRes)) )
       ELSEIF cType == "D"
          oEditRes:SetText( Dtoc(xRes) )

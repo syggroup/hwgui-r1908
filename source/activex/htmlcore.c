@@ -1578,16 +1578,13 @@ IDispatch *WINAPI CreateWebEvtHandler(HWND hwnd, IHTMLDocument2 *htmlDoc2, DWORD
 #if 0
                VARIANT_BOOL varResult;
 
-               if( userdata && id < 0 )
+               if (userdata && id < 0)
                {
-                  attachObj->lpVtbl->attachEvent( attachObj,
-                        ( BSTR ) userdata, ( LPDISPATCH ) lpDispatchEx,
-                        &varResult );
-                  if( !varResult )
+                  attachObj->lpVtbl->attachEvent(attachObj, (BSTR)userdata, (LPDISPATCH)lpDispatchEx, &varResult);
+                  if (!varResult)
                   {
                      // ERROR: Detach the "beforeunload" event handler we just attached above.
-                     htmlWindow3->lpVtbl->detachEvent( htmlWindow3,
-                           OnBeforeOnLoad, ( LPDISPATCH ) lpDispatchEx );
+                     htmlWindow3->lpVtbl->detachEvent(htmlWindow3, OnBeforeOnLoad, (LPDISPATCH)lpDispatchEx);
 
                      // Fail.
                      goto bad;

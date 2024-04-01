@@ -52,8 +52,8 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
 
 METHOD Activate() CLASS HAnimation
    IF !Empty( ::oParent:handle )
-      ::handle := Animate_Create( ::oParent:handle, ::id, ::style, ;
-                                  ::nLeft, ::nTop, ::nWidth, ::nHeight )
+      ::handle := Animate_Create(::oParent:handle, ::id, ::style, ;
+                                  ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ::Init()
    ENDIF
    RETURN Nil
@@ -77,7 +77,7 @@ METHOD Open( cFileName ) CLASS HAnimation
    RETURN Nil
 
 METHOD Play( nFrom, nTo, nRep ) CLASS HAnimation
-   nFrom := IIf( nFrom == Nil,  0, nFrom )
+   nFrom := IIf( nFrom == Nil, 0, nFrom )
    nTo   := IIf( nTo   == Nil, - 1, nTo   )
    nRep  := IIf( nRep  == Nil, - 1, nRep  )
    Animate_Play( ::handle, nFrom, nTo, nRep )
@@ -89,11 +89,11 @@ METHOD Seek( nFrame ) CLASS HAnimation
    RETURN Self
 
 METHOD Stop() CLASS HAnimation
-   Animate_Stop( ::handle )
+   Animate_Stop(::handle)
    RETURN Self
 
 METHOD Close() CLASS HAnimation
-   Animate_Close( ::handle )
+   Animate_Close(::handle)
    RETURN Nil
 
 METHOD Destroy() CLASS HAnimation

@@ -23,7 +23,7 @@ CLASS HQhtm INHERIT HControl
    METHOD New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,caption, ;
                   bInit,bSize,bLink,bSubmit,fname,resname )
    METHOD Activate()
-   METHOD Redefine( oWndParent,nId,caption,bInit,bSize,bLink,bSubmit,fname,resname )
+   METHOD Redefine(oWndParent, nId, caption, bInit, bSize, bLink, bSubmit, fname, resname)
    METHOD Init()
    METHOD Notify( lParam )
 
@@ -68,7 +68,7 @@ METHOD Activate CLASS HQhtm
    ENDIF
 Return Nil
 
-METHOD Redefine( oWndParent,nId,caption,bInit,bSize,bLink,bSubmit,fname,resname ) CLASS HQhtm
+METHOD Redefine(oWndParent, nId, caption, bInit, bSize, bLink, bSubmit, fname, resname) CLASS HQhtm
    // ::classname:= "HQHTM"
    ::oParent := Iif( oWndParent==Nil, ::oDefaultParent, oWndParent )
    ::id      := nId
@@ -97,7 +97,7 @@ METHOD Init CLASS HQhtm
       IF !Empty( ::cText )
          SetWindowText( ::handle,::cText )
       ELSEIF !Empty( ::filename )
-         QHTM_LoadFile( ::handle,::filename )
+         QHTM_LoadFile(::handle, ::filename)
       ELSEIF !Empty( ::resname )
          QHTM_LoadRes( ::handle,::resname )
       ENDIF
@@ -113,17 +113,17 @@ Local cLink := QHTM_GetNotify( lParam )
       IF "tp://" $ clink
          Return 0
       ELSE
-         IF File( cLink )
-            QHTM_LoadFile( ::handle,cLink )
+         IF File(cLink)
+            QHTM_LoadFile(::handle, cLink)
          ELSE
-            MsgStop( cLink,"File not found" )
+            MsgStop(cLink, "File not found")
          ENDIF
       ENDIF
    ENDIF
-   QHTM_SetReturnValue( lParam,.F. )
+   QHTM_SetReturnValue(lParam, .F.)
 Return 0
 
-Function QhtmFormProc( hCtrl,cMethod,cAction,cName,aFields )
+Function QhtmFormProc(hCtrl, cMethod, cAction, cName, aFields)
 Local oCtrl := FindSelf( hCtrl )
 
    IF oCtrl != Nil
@@ -142,7 +142,7 @@ CLASS HQhtmButton INHERIT HButton
    DATA  cHtml
    METHOD New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,cCaption,oFont, ;
                   bInit,bSize,bClick,ctooltip )
-   METHOD Redefine( oWnd,nId,cCaption,oFont,bInit,bSize,bClick,ctooltip )
+   METHOD Redefine(oWnd, nId, cCaption, oFont, bInit, bSize, bClick, ctooltip)
    METHOD Init()
 
 ENDCLASS
@@ -157,10 +157,10 @@ METHOD New( oWndParent,nId,nStyle,nLeft,nTop,nWidth,nHeight,cCaption,oFont, ;
 
 Return Self
 
-METHOD Redefine( oWndParent,nId,cCaption,oFont,bInit,bSize,bClick,ctooltip) CLASS HQhtmButton
+METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, bSize, bClick, ctooltip) CLASS HQhtmButton
 
    ::cHtml := cCaption
-   ::Super:Redefine( oWndParent,nId,,bInit,bSize,,bClick,ctooltip )
+   ::Super:Redefine(oWndParent, nId, , bInit, bSize, , bClick, ctooltip)
    // ::classname:= "HQHTMBUTTON"
 
 Return Self

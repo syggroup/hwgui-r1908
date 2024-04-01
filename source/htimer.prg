@@ -27,10 +27,10 @@ CLASS VAR aTimers   INIT {}
 
    DATA   xName          HIDDEN
    ACCESS Name INLINE ::xName
-   ASSIGN Name( cName ) INLINE IIF( !EMPTY( cName ) .AND. hb_IsChar(cName) .AND. !(":" $ cName) .AND. !("[" $ cName),;
-         ( ::xName := cName, __objAddData( ::oParent, cName ), ::oParent: & ( cName ) := Self), Nil)
+   ASSIGN Name(cName) INLINE IIF( !EMPTY( cName ) .AND. hb_IsChar(cName) .AND. !(":" $ cName) .AND. !("[" $ cName),;
+         ( ::xName := cName, __objAddData(::oParent, cName), ::oParent: & ( cName ) := Self), Nil)
    ACCESS Interval INLINE ::value
-   ASSIGN Interval( x ) INLINE ::value := x,     ;
+   ASSIGN Interval( x ) INLINE ::value := x, ;
                                            SetTimer( ::oParent:handle, ::id, ::value )
 
    METHOD New( oParent, nId, value, bAction )
@@ -59,8 +59,8 @@ METHOD New( oParent, nId, value, bAction ) CLASS HTimer
    endif
    */
    ::Init()
-   AAdd( ::aTimers, Self )
-   ::oParent:AddObject( Self )
+   AAdd(::aTimers, Self)
+   ::oParent:AddObject(Self)
 
    RETURN Self
 
@@ -80,19 +80,19 @@ METHOD END() CLASS HTimer
    ENDIF
    IF ( i := AScan( ::aTimers, { | o | o:id == ::id } ) ) > 0
       ADel( ::aTimers, i )
-      ASize( ::aTimers, Len( ::aTimers ) - 1 )
+      ASize(::aTimers, Len( ::aTimers ) - 1)
    ENDIF
 
    RETURN Nil
 
 METHOD onAction()
 
-   TimerProc( , ::id, ::interval )
+   TimerProc(, ::id, ::interval)
 
 RETURN Nil
 
 
-FUNCTION TimerProc( hWnd, idTimer, Time )
+FUNCTION TimerProc(hWnd, idTimer, Time)
    LOCAL i := AScan( HTimer():aTimers, { | o | o:id == idTimer } )
 
    HB_SYMBOL_UNUSED(hWnd)

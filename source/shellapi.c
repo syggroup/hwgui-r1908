@@ -138,7 +138,7 @@ HB_FUNC(SHELLMODIFYICON)
 }
 
 /*
- * ShellExecute( cFile, cOperation, cParams, cDir, nFlag )
+ * ShellExecute(cFile, cOperation, cParams, cDir, nFlag)
  */
 HB_FUNC(SHELLEXECUTE)
 {

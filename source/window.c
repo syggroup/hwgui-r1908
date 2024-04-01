@@ -445,7 +445,7 @@ HB_FUNC(HWG_ACTIVATEMDIWINDOW)
 
   while (GetMessage(&msg, NULL, 0, 0))
   {
-    // ProcessMessage( msg, hAcceler, 0 );
+    // ProcessMessage(msg, hAcceler, 0);
     ProcessMdiMessage(aWindows[0], aWindows[1], msg, hAcceler);
   }
 }
@@ -681,7 +681,7 @@ HB_FUNC(HWG_BRINGWINDOWTOTOP)
   hb_retl(BringWindowToTop((HWND)HB_PARHANDLE(1)));
 }
 
-// HB_FUNC( HWG_SETACTIVEWINDOW )
+// HB_FUNC(HWG_SETACTIVEWINDOW)
 //{
 //    hb_retnl( SetActiveWindow( (HWND) HB_PARHANDLE(1) ) );
 // }
@@ -1445,7 +1445,7 @@ HB_FUNC(MINMAXWINDOW)
   lpMMI->ptMaxTrackSize.x = m_fxMax;
   lpMMI->ptMaxTrackSize.y = m_fyMax;
 
-  //   SendMessage((HWND) HB_PARHANDLE( 1 ),           // handle of window
+  //   SendMessage((HWND) HB_PARHANDLE(1),           // handle of window
   //               WM_GETMINMAXINFO, 0, (LPARAM) lpMMI)  ;
 }
 

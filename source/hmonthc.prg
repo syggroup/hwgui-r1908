@@ -35,7 +35,7 @@ CLASS VAR winclass   INIT "SysMonthCal32"
                lWeekNumbers, bSelect )
    METHOD Activate()
    METHOD Init()
-   METHOD SetValue( dValue )
+   METHOD SetValue(dValue)
    METHOD GetValue()
    METHOD onChange()
    METHOD onSelect()
@@ -92,7 +92,7 @@ METHOD Init() CLASS HMonthCalendar
    IF !::lInit
       ::Super:Init()
       IF !Empty( ::value )
-         SetMonthCalendarDate( ::handle , ::value )
+         SetMonthCalendarDate(::handle, ::value)
       ENDIF
       ::oParent:AddEvent( MCN_SELECT, Self, { || ::onSelect() }, .T., "onSelect" )
       ::oParent:AddEvent( MCN_SELCHANGE, Self, { || ::onChange() },.T. , "onChange" )
@@ -103,10 +103,10 @@ METHOD Init() CLASS HMonthCalendar
 
 //--------------------------------------------------------------------------//
 
-METHOD SetValue( dValue ) CLASS HMonthCalendar
+METHOD SetValue(dValue) CLASS HMonthCalendar
 
    IF hb_IsDate(dValue) .And. !Empty( dValue )
-      SetMonthCalendarDate( ::handle, dValue )
+      SetMonthCalendarDate(::handle, dValue)
       ::value := dValue
    ENDIF
 
@@ -116,14 +116,14 @@ METHOD SetValue( dValue ) CLASS HMonthCalendar
 
 METHOD GetValue() CLASS HMonthCalendar
 
-   ::value := GetMonthCalendarDate( ::handle )
+   ::value := GetMonthCalendarDate(::handle)
 
    RETURN ( ::value )
 
 METHOD onChange() CLASS HMonthCalendar
 
    IF hb_IsBlock(::bChange) .AND. !::oparent:lSuspendMsgsHandling
-      SendMessage( ::handle, WM_LBUTTONDOWN, 0, MAKELPARAM( 1, 1 ) )
+      SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM( 1, 1 ))
       ::oparent:lSuspendMsgsHandling := .T.
       Eval( ::bChange, ::value, Self )
       ::oparent:lSuspendMsgsHandling := .F.
@@ -174,7 +174,7 @@ HB_FUNC ( INITMONTHCALENDAR )
    //SetWindowPos( hMC, NULL, hb_parni(4), hb_parni(5), rc.right, rc.bottom, SWP_NOZORDER );
    SetWindowPos( hMC, NULL, hb_parni(4), hb_parni(5), hb_parni(6),hb_parni(7), SWP_NOZORDER );
 
-    HB_RETHANDLE(  hMC );
+    HB_RETHANDLE(hMC);
 }
 
 HB_FUNC ( SETMONTHCALENDARDATE ) // adaptation of function SetDatePicker of file Control.c
@@ -190,7 +190,7 @@ HB_FUNC ( SETMONTHCALENDARDATE ) // adaptation of function SetDatePicker of file
       long lYear, lMonth, lDay;
       #endif
 
-      hb_dateDecode( hb_itemGetDL( pDate ), &lYear, &lMonth, &lDay );
+      hb_dateDecode(hb_itemGetDL( pDate ), &lYear, &lMonth, &lDay);
 
       sysTime.wYear = (unsigned short) lYear;
       sysTime.wMonth = (unsigned short) lMonth;
@@ -211,7 +211,7 @@ HB_FUNC ( GETMONTHCALENDARDATE ) // adaptation of function GetDatePicker of file
    SYSTEMTIME st;
    char szDate[9];
 
-   SendMessage( (HWND) HB_PARHANDLE (1), MCM_GETCURSEL, 0, (LPARAM) &st);
+   SendMessage((HWND)HB_PARHANDLE(1), MCM_GETCURSEL, 0, (LPARAM)&st);
 
    hb_dateStrPut( szDate, st.wYear, st.wMonth, st.wDay );
    szDate[8] = 0;

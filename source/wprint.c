@@ -456,7 +456,7 @@ HB_FUNC(PRINTENHMETAFILE)
 
   /*
      di.cbSize = sizeof(DOCINFO);
-     di.lpszDocName = hb_parc( 3 );
+     di.lpszDocName = hb_parc(3);
      di.lpszOutput = NULL;
      di.lpszDatatype = NULL;
      di.fwType = 0;
@@ -464,11 +464,11 @@ HB_FUNC(PRINTENHMETAFILE)
 
   SetRect(&rc, 0, 0, GetDeviceCaps(hDC, HORZRES), GetDeviceCaps(hDC, VERTRES));
 
-  // StartDoc( hDC, &di );
+  // StartDoc(hDC, &di);
   StartPage(hDC);
   hb_retnl((LONG)PlayEnhMetaFile(hDC, (HENHMETAFILE)HB_PARHANDLE(2), &rc));
   EndPage(hDC);
-  // EndDoc( hDC );
+  // EndDoc(hDC);
 }
 
 HB_FUNC(HWG_SETDOCUMENTPROPERTIES)

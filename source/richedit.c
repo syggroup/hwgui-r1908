@@ -292,7 +292,7 @@ HB_FUNC(RE_CHARFROMPOS)
 }
 
 /*
- * re_GetTextRange( hEdit, n1, n2 )
+ * re_GetTextRange(hEdit, n1, n2)
  */
 HB_FUNC(RE_GETTEXTRANGE)
 {
@@ -310,7 +310,7 @@ HB_FUNC(RE_GETTEXTRANGE)
 }
 
 /*
- * re_GetLine( hEdit, nLine )
+ * re_GetLine(hEdit, nLine)
  */
 HB_FUNC(RE_GETLINE)
 {

@@ -35,10 +35,10 @@ CLASS VAR winclass   INIT "SYSDATETIMEPICK32"
    METHOD OnEvent( msg, wParam, lParam )
    METHOD Refresh()
    METHOD GetValue()
-   METHOD SetValue( xValue )
-   METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, ;
-                    bGfocus, bLfocus, bChange, ctooltip, tcolor, bcolor, lShowTime )
-   METHOD onChange( nMess )
+   METHOD SetValue(xValue)
+   METHOD Redefine(oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, ;
+                    bGfocus, bLfocus, bChange, ctooltip, tcolor, bcolor, lShowTime)
+   METHOD onChange(nMess)
    METHOD When()
    METHOD Valid()
    METHOD Value ( Value ) SETGET
@@ -53,8 +53,8 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, ;
               ,, ctooltip, tcolor, bcolor )
 
-   ::lShowTime := Hwg_BitAnd( nStyle, DTS_TIMEFORMAT ) > 0
-   ::dValue    := IIF( vari == Nil .OR. !hb_IsDate(vari), CToD( Space( 8 ) ), vari )
+   ::lShowTime := Hwg_BitAnd(nStyle, DTS_TIMEFORMAT) > 0
+   ::dValue    := IIF( vari == Nil .OR. !hb_IsDate(vari), CToD(Space(8)), vari )
    ::tValue    := IIF( vari == Nil .OR. !hb_IsChar(vari), SPACE(6), vari )
    ::title     := IIF( !::lShowTime, ::dValue, ::tValue )
 
@@ -68,7 +68,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
       ::bGetFocus := bGfocus
       ::bLostFocus := bLfocus
       ::oParent:AddEvent( NM_SETFOCUS, Self, { | o, id | ::When( o:FindControl( id ) ) }, .T., "onGotFocus" )
-      ::oParent:AddEvent( NM_KILLFOCUS, Self, { | o, id | ::Valid( o:FindControl( id ) ) }, .T., "onLostFocus" )
+      ::oParent:AddEvent( NM_KILLFOCUS, Self, { | o, id | ::Valid(o:FindControl( id )) }, .T., "onLostFocus" )
    ELSE
       IF bGfocus != Nil
          ::lnoValid := .T.
@@ -78,18 +78,18 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
          ::oParent:AddEvent( NM_KILLFOCUS, Self, bLfocus, .T., "onLostFocus" )
       ENDIF
    ENDIF
-   ::oParent:AddEvent( DTN_DATETIMECHANGE, Self, { | | ::onChange( DTN_DATETIMECHANGE ) }, .T., "onChange" )
-   ::oParent:AddEvent( DTN_CLOSEUP, Self, { | | ::onChange( DTN_CLOSEUP ) }, .T., "onClose" )
+   ::oParent:AddEvent( DTN_DATETIMECHANGE, Self, { | | ::onChange(DTN_DATETIMECHANGE) }, .T., "onChange" )
+   ::oParent:AddEvent( DTN_CLOSEUP, Self, { | | ::onChange(DTN_CLOSEUP) }, .T., "onClose" )
 
    RETURN Self
 
-METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, ;
-                 bGfocus, bLfocus, bChange, ctooltip, tcolor, bcolor, lShowTime ) CLASS  HDatePicker
+METHOD Redefine(oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, ;
+                 bGfocus, bLfocus, bChange, ctooltip, tcolor, bcolor, lShowTime) CLASS  HDatePicker
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0, oFont, bInit, ;
               bSize,, ctooltip, tcolor, bcolor )
               
    HWG_InitCommonControlsEx()
-   ::dValue   := IIf( vari == Nil .OR. !hb_IsDate(vari), CToD( Space( 8 ) ), vari )
+   ::dValue   := IIf( vari == Nil .OR. !hb_IsDate(vari), CToD(Space(8)), vari )
    ::tValue    := IIF( vari == Nil .OR. !hb_IsChar(vari), SPACE(6), vari )
    ::bSetGet := bSetGet
    ::bChange := bChange
@@ -97,11 +97,11 @@ METHOD Redefine( oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, ;
    IF bGfocus != Nil
       ::oParent:AddEvent( NM_SETFOCUS, Self, bGfocus, .T., "onGotFocus" )
    ENDIF
-   ::oParent:AddEvent( DTN_DATETIMECHANGE, Self, { | | ::onChange( DTN_DATETIMECHANGE ) }, .T., "onChange" )
-   ::oParent:AddEvent( DTN_CLOSEUP, Self, { | | ::onChange(  DTN_CLOSEUP ) }, .T., "onClose" )
+   ::oParent:AddEvent( DTN_DATETIMECHANGE, Self, { | | ::onChange(DTN_DATETIMECHANGE) }, .T., "onChange" )
+   ::oParent:AddEvent( DTN_CLOSEUP, Self, { | | ::onChange(DTN_CLOSEUP) }, .T., "onClose" )
    IF bSetGet != Nil
       ::bLostFocus := bLfocus
-      ::oParent:AddEvent( NM_KILLFOCUS, Self, { | o, id | ::Valid( o:FindControl( id ) ) }, .T., "onLostFocus" )
+      ::oParent:AddEvent( NM_KILLFOCUS, Self, { | o, id | ::Valid(o:FindControl( id )) }, .T., "onLostFocus" )
    ELSE
       IF bLfocus != Nil
          ::oParent:AddEvent( NM_KILLFOCUS, Self, bLfocus, .T., "onLostFocus" )
@@ -122,8 +122,8 @@ METHOD Activate() CLASS HDatePicker
 METHOD Init() CLASS HDatePicker
    IF !::lInit
       ::nHolder := 1
-      SetWindowObject( ::handle, Self )
-      HWG_INITDATEPICKERPROC( ::handle )
+      SetWindowObject(::handle, Self)
+      HWG_INITDATEPICKERPROC(::handle)
       ::Super:Init()
       ::Refresh()
    ENDIF
@@ -138,10 +138,10 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HDatePicker
    ENDIF
    IF msg == WM_CHAR
       IF wParam = VK_TAB
-        GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
+        GetSkip(::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1))
         RETURN 0
       ELSEIF wParam == VK_RETURN
-         GetSkip( ::oParent, ::handle, , 1 )
+         GetSkip(::oParent, ::handle, , 1)
          RETURN 0
         ENDIF
     ELSEIF msg = WM_KEYDOWN
@@ -150,24 +150,24 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HDatePicker
         ENDIF
    ELSEIF msg = WM_GETDLGCODE
       IF wParam = VK_TAB //.AND.  ::GetParentForm( Self ):Type < WND_DLG_RESOURCE
-        // GetSkip( ::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1) )
+        // GetSkip(::oParent, ::handle, , iif( IsCtrlShift(.F., .T.), -1, 1))
          RETURN DLGC_WANTTAB
       ENDIF
     ENDIF
 
 RETURN -1
 
-METHOD Value( Value ) CLASS HDatePicker
+METHOD Value(Value) CLASS HDatePicker
 
    IF Value != Nil
-      ::SetValue( Value  )
+      ::SetValue(Value)
    ENDIF
    RETURN IIF( ::lShowTime, ::tValue, ::dValue )
 
 METHOD GetValue() CLASS HDatePicker
    RETURN IIF( !::lShowTime, GetDatePicker( ::handle ), GetTimePicker( ::handle ) )
 
-METHOD SetValue( xValue ) CLASS HDatePicker
+METHOD SetValue(xValue) CLASS HDatePicker
 
    IF Empty( xValue )
       SetDatePickerNull( ::handle )
@@ -197,18 +197,18 @@ METHOD Refresh() CLASS HDatePicker
       //SetDatePickerNull( ::handle )
       SetDatePicker( ::handle, date(), STRTRAN( Time(), ":", "" ) )
    ELSE
-      ::SetValue( IIF( !::lShowTime, ::dValue, ::tValue ) )
+      ::SetValue(IIF( !::lShowTime, ::dValue, ::tValue ))
    ENDIF
    RETURN Nil
 
 
-METHOD onChange( nMess ) CLASS HDatePicker
+METHOD onChange(nMess) CLASS HDatePicker
 
    IF ( nMess == DTN_DATETIMECHANGE .AND. ;
-        SendMessage( ::handle, DTM_GETMONTHCAL, 0, 0 ) == 0 ) .OR. ;
+        SendMessage(::handle, DTM_GETMONTHCAL, 0, 0) == 0 ) .OR. ;
       nMess == DTN_CLOSEUP
       IF nMess = DTN_CLOSEUP
-         POSTMESSAGE( ::handle, WM_KEYDOWN, VK_RIGHT, 0 )
+         POSTMESSAGE(::handle, WM_KEYDOWN, VK_RIGHT, 0)
          ::SetFocus()
       ENDIF
       ::dValue := GetDatePicker( ::handle )
@@ -225,13 +225,13 @@ METHOD onChange( nMess ) CLASS HDatePicker
    RETURN .T.
 
 METHOD When() CLASS HDatePicker
-   LOCAL res := .T.,  nSkip
+   LOCAL res := .T., nSkip
 
    IF !CheckFocus( Self, .F. )
       RETURN .T.
    ENDIF
    IF hb_IsBlock(::bGetFocus)
-      nSkip := IIf( GetKeyState( VK_UP ) < 0 .or. ( GetKeyState( VK_TAB ) < 0 .and. GetKeyState( VK_SHIFT ) < 0 ), - 1, 1 )
+      nSkip := IIf( GetKeyState(VK_UP) < 0 .or. ( GetKeyState(VK_TAB) < 0 .and. GetKeyState(VK_SHIFT) < 0 ), - 1, 1 )
       ::oParent:lSuspendMsgsHandling := .T.
       ::lnoValid := .T.
       res :=  Eval( ::bGetFocus, IIF( ::lShowTime, ::tValue, ::dValue ), Self )
@@ -239,7 +239,7 @@ METHOD When() CLASS HDatePicker
       ::oParent:lSuspendMsgsHandling := .F.
       IF hb_IsLogical(res) .AND. !res
          WhenSetFocus( Self, nSkip )
-         SendMessage( ::handle, DTM_CLOSEMONTHCAL, 0, 0 )
+         SendMessage(::handle, DTM_CLOSEMONTHCAL, 0, 0)
       ELSE
          ::SetFocus()
       ENDIF
@@ -268,7 +268,7 @@ METHOD Valid() CLASS HDatePicker
       res := IIF( hb_IsLogical(res), res, .T. )
       ::oparent:lSuspendMsgsHandling := .F.
       IF !res
-         POSTMESSAGE( ::handle, WM_KEYDOWN, VK_RIGHT, 0 )
+         POSTMESSAGE(::handle, WM_KEYDOWN, VK_RIGHT, 0)
          ::SetFocus( .T. )
       ENDIF
    ENDIF

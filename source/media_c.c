@@ -16,7 +16,7 @@
 #include "hbstack.h"
 
 /*
- *  PlaySound( cName, lSync, lLoop )
+ *  PlaySound(cName, lSync, lLoop)
  */
 HB_FUNC(PLAYSOUND)
 {

@@ -36,9 +36,9 @@ CLASS HNiceButton INHERIT HControl
                bInit, bClick, ;
                cText, cTooltip, r, g, b )
 
-   METHOD Redefine( oWndParent, nId, nStyleEx, ;
+   METHOD Redefine(oWndParent, nId, nStyleEx, ;
                     bInit, bClick, ;
-                    cText, cTooltip, r, g, b )
+                    cText, cTooltip, r, g, b)
 
    METHOD Activate()
    METHOD INIT()
@@ -46,10 +46,10 @@ CLASS HNiceButton INHERIT HControl
    METHOD Size()
    METHOD Moving()
    METHOD Paint()
-   METHOD MouseMove( wParam, lParam )
+   METHOD MouseMove(wParam, lParam)
    METHOD MDown()
    METHOD MUp()
-   METHOD Press() INLINE( ::lPress := .T., ::MDown() )
+   METHOD Press() INLINE(::lPress := .T., ::MDown())
    METHOD RELEASE()
    METHOD END ()
 
@@ -84,9 +84,9 @@ METHOD New( oWndParent, nId, nStyle, nStyleEx, nLeft, nTop, nWidth, nHeight, ;
    RETURN Self
 
 
-METHOD Redefine( oWndParent, nId, nStyleEx, ;
+METHOD Redefine(oWndParent, nId, nStyleEx, ;
                  bInit, bClick, ;
-                 cText, cTooltip, r, g, b ) CLASS HNiceButton
+                 cText, cTooltip, r, g, b) CLASS HNiceButton
 
    ::Super:New( oWndParent, nId, 0, 0, 0, 0, 0,, bInit,,, cTooltip )
 
@@ -125,7 +125,7 @@ METHOD INIT() CLASS HNiceButton
    ENDIF
    RETURN Nil
 
-FUNCTION NICEBUTTPROC( hBtn, msg, wParam, lParam )
+FUNCTION NICEBUTTPROC(hBtn, msg, wParam, lParam)
 
    LOCAL oBtn
    IF msg != WM_CREATE
@@ -141,7 +141,7 @@ FUNCTION NICEBUTTPROC( hBtn, msg, wParam, lParam )
          ELSEIF msg == WM_LBUTTONDOWN
             oBtn:MDown()
          ELSEIF msg == WM_MOUSEMOVE
-            oBtn:MouseMove( wParam, lParam )
+            oBtn:MouseMove(wParam, lParam)
          ELSEIF msg == WM_SIZE
             oBtn:Size()
 
@@ -184,7 +184,7 @@ METHOD Moving() CLASS HNICEButton
 
    RETURN Self
 
-METHOD MouseMove( wParam, lParam ) CLASS HNICEButton
+METHOD MouseMove(wParam, lParam) CLASS HNICEButton
 
    LOCAL otmp
 
@@ -197,8 +197,8 @@ METHOD MouseMove( wParam, lParam ) CLASS HNICEButton
       IF otmp != Nil .AND. otmp:id != ::id .AND. !otmp:lPress
          otmp:state := OBTN_NORMAL
          InvalidateRect( otmp:handle, 0 )
-         PostMessage( otmp:handle, WM_PAINT, 0, 0 )
-         SetNiceBtnSelected( Nil )
+         PostMessage(otmp:handle, WM_PAINT, 0, 0)
+         SetNiceBtnSelected(Nil)
       ENDIF
 
       IF ::state == OBTN_NORMAL
@@ -206,8 +206,8 @@ METHOD MouseMove( wParam, lParam ) CLASS HNICEButton
 
          // aBtn[ CTRL_HANDLE ] := hBtn
          InvalidateRect( ::handle, 0 )
-         PostMessage( ::handle, WM_PAINT, 0, 0 )
-         SetNiceBtnSelected( Self )
+         PostMessage(::handle, WM_PAINT, 0, 0)
+         SetNiceBtnSelected(Self)
       ENDIF
    ENDIF
 
@@ -219,10 +219,10 @@ METHOD MUp() CLASS HNICEButton
       IF !::lPress
          ::state := IIf( ::lFlat, OBTN_MOUSOVER, OBTN_NORMAL )
          InvalidateRect( ::handle, 0 )
-         PostMessage( ::handle, WM_PAINT, 0, 0 )
+         PostMessage(::handle, WM_PAINT, 0, 0)
       ENDIF
       IF !::lFlat
-         SetNiceBtnSelected( Nil )
+         SetNiceBtnSelected(Nil)
       ENDIF
       IF hb_IsBlock(::bClick)
          Eval( ::bClick, ::oParent, ::id )
@@ -237,8 +237,8 @@ METHOD MDown() CLASS HNICEButton
       ::state := OBTN_PRESSED
 
       InvalidateRect( ::Handle, 0, 0 )
-      PostMessage( ::handle, WM_PAINT, 0, 0 )
-      SetNiceBtnSelected( Self )
+      PostMessage(::handle, WM_PAINT, 0, 0)
+      SetNiceBtnSelected(Self)
    ENDIF
 
    RETURN Self
@@ -274,16 +274,16 @@ METHOD PAINT() CLASS HNICEButton
       ::state := OBTN_NORMAL
    ENDIF
 
-   Size := GetTextSize( hDC, T )
+   Size := GetTextSize(hDC, T)
 
    Draw_Gradient( hDC, x, y, w, h, ::r, ::g, ::b )
-   SetBkMode( hDC, TRANSPARENT )
+   SetBkMode(hDC, TRANSPARENT)
 
    IF ( ::State == OBTN_MOUSOVER )
-      SetTextColor( hDC, VCOLOR( "FF0000" ) )
+      SetTextColor(hDC, VCOLOR("FF0000"))
       TextOut( hDC, XCtr - ( Size[ 1 ] / 2 ) + 1, YCtr - ( Size[ 2 ] / 2 ) + 1, T )
    ELSE
-      SetTextColor( hDC, VCOLOR( "0000FF" ) )
+      SetTextColor(hDC, VCOLOR("0000FF"))
       TextOut( hDC, XCtr - Size[ 1 ] / 2, YCtr - Size[ 2 ] / 2, T )
    ENDIF
 
@@ -300,11 +300,11 @@ METHOD RELEASE() CLASS HNiceButton
    ::lPress := .F.
    ::state  := OBTN_NORMAL
    InvalidateRect( ::handle, 0 )
-   PostMessage( ::handle, WM_PAINT, 0, 0 )
+   PostMessage(::handle, WM_PAINT, 0, 0)
 
    RETURN Nil
 
-FUNCTION SetNiceBtnSelected( oBtn )
+FUNCTION SetNiceBtnSelected(oBtn)
 
    LOCAL otmp := HNiceButton() :oSelected
 

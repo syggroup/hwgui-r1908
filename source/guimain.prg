@@ -93,7 +93,7 @@ FUNCTION FindParent( hCtrl, nLevel )
    IF nLevel == Nil ; nLevel := 0 ; ENDIF
    IF nLevel < 2
       IF ( oParent := FindParent( hParent, nLevel + 1 ) ) != Nil
-         RETURN oParent:FindControl( , hParent )
+         RETURN oParent:FindControl(, hParent )
       ENDIF
    ENDIF
    RETURN Nil
@@ -105,7 +105,7 @@ FUNCTION FindSelf( hCtrl )
       oParent := GetAncestor( hCtrl, GA_PARENT )
    ENDIF
    IF oParent != Nil  .AND. !hb_IsNumeric(oParent)
-      RETURN oParent:FindControl( , hCtrl )
+      RETURN oParent:FindControl(, hCtrl )
    ENDIF
    RETURN Nil
 
@@ -124,17 +124,17 @@ FUNCTION ReadStatus( oWnd, nPart )
    LOCAL aControls, i, ntxtLen, cText := ""
    aControls := oWnd:aControls
    IF ( i := AScan( aControls, { | o | o:ClassName() == "HSTATUS" } ) ) > 0
-      ntxtLen := SendMessage( aControls[ i ]:handle, SB_GETTEXTLENGTH, nPart - 1, 0 )
-      cText := Replicate( Chr( 0 ), ntxtLen )
-      SendMessage( aControls[ i ]:handle, SB_GETTEXT, nPart - 1, @cText )
+      ntxtLen := SendMessage(aControls[ i ]:handle, SB_GETTEXTLENGTH, nPart - 1, 0)
+      cText := Replicate(Chr(0), ntxtLen)
+      SendMessage(aControls[ i ]:handle, SB_GETTEXT, nPart - 1, @cText)
    ENDIF
    RETURN cText
 
-FUNCTION VColor( cColor )
+FUNCTION VColor(cColor)
    LOCAL i, res := 0, n := 1, iValue
    cColor := Trim( cColor )
    FOR i := 1 TO Len( cColor )
-      iValue := Asc( SubStr( cColor, Len( cColor ) - i + 1, 1 ) )
+      iValue := Asc(SubStr( cColor, Len( cColor ) - i + 1, 1 ))
       IF iValue < 58 .and. iValue > 47
          iValue -= 48
       ELSEIF iValue >= 65 .and. iValue <= 70
@@ -150,7 +150,7 @@ FUNCTION VColor( cColor )
    RETURN res
 
 FUNCTION MsgGet( cTitle, cText, nStyle, x, y, nDlgStyle, cResIni )
-   LOCAL oModDlg, oFont := HFont():Add( "MS Sans Serif", 0, - 13 )
+   LOCAL oModDlg, oFont := HFont():Add("MS Sans Serif", 0, -13)
    LOCAL cRes := IIf( cResIni != Nil, Trim( cResIni ), "" )
    /*
    IF !Empty( cRes )
@@ -188,15 +188,15 @@ FUNCTION WAITRUN( cRun )
 //#ifdef __XHARBOUR__
 Local hIn, hOut, nRet, hProc
    // "Launching process", cProc
-   hProc := hb_processOpen( cRun , @hIn, @hOut, @hOut )
+   hProc := hb_processOpen( cRun, @hIn, @hOut, @hOut )
 
    // "Reading output"
    // "Waiting for process termination"
-   nRet := HB_ProcessValue( hProc )
+   nRet := HB_ProcessValue(hProc)
 
-   FClose( hProc )
-   FClose( hIn )
-   FClose( hOut )
+   FClose(hProc)
+   FClose(hIn)
+   FClose(hOut)
 
    Return nRet
 //#else
@@ -204,7 +204,7 @@ Local hIn, hOut, nRet, hProc
 //   Return 0
 //#endif
 
-FUNCTION WChoice( arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel, cOk, cCancel )
+FUNCTION WChoice(arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel, cOk, cCancel)
    LOCAL oDlg, oBrw, nChoice := 0, lArray := .T., nField, lNewFont := .F.
    LOCAL i, aLen, nLen := 0, addX := 20, addY := 20, minWidth := 0, x1
    LOCAL hDC, aMetr, width, height, aArea, aRect
@@ -215,7 +215,7 @@ FUNCTION WChoice( arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel,
    IF nLeft == Nil ; nLeft := 0 ; ENDIF
    IF nTop == Nil ; nTop := 0 ; ENDIF
    IF oFont == Nil
-      oFont := HFont():Add( "MS Sans Serif", 0, - 13 )
+      oFont := HFont():Add("MS Sans Serif", 0, -13)
       lNewFont := .T.
    ENDIF
    IF cOk != Nil
@@ -246,12 +246,12 @@ FUNCTION WChoice( arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel,
       ENDIF
    ENDIF
 
-   hDC := GetDC( GetActiveWindow() )
-   SelectObject( hDC, oFont:handle )
-   aMetr := GetTextMetric( hDC )
-   aArea := GetDeviceArea( hDC )
+   hDC := GetDC(GetActiveWindow())
+   SelectObject(hDC, oFont:handle)
+   aMetr := GetTextMetric(hDC)
+   aArea := GetDeviceArea(hDC)
    aRect := GetWindowRect( GetActiveWindow() )
-   ReleaseDC( GetActiveWindow(), hDC )
+   ReleaseDC(GetActiveWindow(), hDC)
    height := ( aMetr[ 1 ] + 1 ) * aLen + 4 + addY + 8
    IF height > aArea[ 2 ] - aRect[ 2 ] - nTop - 60
       height := aArea[ 2 ] - aRect[ 2 ] - nTop - 60
@@ -269,13 +269,13 @@ FUNCTION WChoice( arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel,
       @ 0, 0 Browse oBrw Array
       oBrw:aArray := arr
       IF hb_IsArray(arr[1])
-         oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED(value), o:aArray[ o:nCurrent, 1 ] }, "C", nLen ) )
+         oBrw:AddColumn( HColumn():New(, { | value, o | HB_SYMBOL_UNUSED(value), o:aArray[ o:nCurrent, 1 ] }, "C", nLen ) )
       ELSE
-         oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED(value), o:aArray[ o:nCurrent ] }, "C", nLen ) )
+         oBrw:AddColumn( HColumn():New(, { | value, o | HB_SYMBOL_UNUSED(value), o:aArray[ o:nCurrent ] }, "C", nLen ) )
       ENDIF
    ELSE
       @ 0, 0 Browse oBrw DATABASE
-      oBrw:AddColumn( HColumn():New( , { | value, o | HB_SYMBOL_UNUSED(value), ( o:Alias ) ->( FieldGet( nField ) ) }, "C", nLen ) )
+      oBrw:AddColumn( HColumn():New(, { | value, o | HB_SYMBOL_UNUSED(value), ( o:Alias ) ->( FieldGet( nField ) ) }, "C", nLen ) )
    ENDIF
 
    oBrw:oFont  := oFont
@@ -360,7 +360,7 @@ FUNCTION ShowProgress( nStep, maxPos, nRange, cTitle, oWnd, x1, y1, width, heigh
 
 FUNCTION EndWindow()
    IF HWindow():GetMain() != Nil
-      SendMessage( HWindow():aWindows[ 1 ]:handle, WM_SYSCOMMAND, SC_CLOSE, 0 )
+      SendMessage(HWindow():aWindows[ 1 ]:handle, WM_SYSCOMMAND, SC_CLOSE, 0)
    ENDIF
    RETURN Nil
 
@@ -408,38 +408,37 @@ FUNCTION SelectMultipleFiles( cDescr, cTip, cIniDir, cTitle )
    LOCAL nFlags := NIL
    LOCAL nIndex := 1
 
-   cFilter := cDescr + Chr( 0 ) + cTip + Chr( 0 )
+   cFilter := cDescr + Chr(0) + cTip + Chr(0)
    /* initialize buffer with 0 bytes. Important is the 1-st character,
     * from MSDN:  The first character of this buffer must be NULL
     *             if initialization is not necessary
     */
-   cFile := repl( chr( 0 ), 32000 )
+   cFile := repl( chr(0), 32000 )
    aFiles := {}
 
-   cPath := _GetOpenFileName( hWnd, @cFile, cTitle, cFilter, nFlags, cIniDir, Nil, @nIndex )
+   cPath := _GetOpenFileName(hWnd, @cFile, cTitle, cFilter, nFlags, cIniDir, Nil, @nIndex)
 
-   nAt := At( Chr( 0 ) + Chr( 0 ), cFile )
+   nAt := At( Chr(0) + Chr(0), cFile )
    IF nAt != 0
       cFile := Left( cFile, nAt - 1 )
-      nAt := At( Chr( 0 ), cFile )
+      nAt := At( Chr(0), cFile )
       IF nAt != 0
          /* skip path which is already in cPath variable */
          cFile := SubStr( cFile, nAt + 1 )
          /* decode files */
          DO WHILE !(cFile == "")
-            nAt := At( Chr( 0 ), cFile )
+            nAt := At( Chr(0), cFile )
             IF nAt != 0
-               AAdd( aFiles, cPath + hb_osPathSeparator() + ;
-                             Left( cFile, nAt - 1 ) )
+               AAdd(aFiles, cPath + hb_osPathSeparator() + Left( cFile, nAt - 1 ))
                cFile := SubStr( cFile, nAt + 1 )
             ELSE
-               AAdd( aFiles, cPath + hb_osPathSeparator() + cFile )
+               AAdd(aFiles, cPath + hb_osPathSeparator() + cFile)
                EXIT
             ENDIF
          ENDDO
       ELSE
          /* only single file selected */
-         AAdd( aFiles, cPath )
+         AAdd(aFiles, cPath)
       ENDIF
    ENDIF
    RETURN aFiles
@@ -461,18 +460,18 @@ FUNCTION TxtRect( cTxt, oWin, oFont )
 
    oFont := IIF( oFont != Nil, oFont, oWin:oFont )
 
-   hDC       := GetDC( oWin:handle )
+   hDC       := GetDC(oWin:handle)
    IF oFont == Nil .AND. oWin:oParent != Nil
       oFont := oWin:oParent:oFont
    ENDIF
    IF oFont != Nil
-      hFont := SelectObject( hDC, oFont:handle )
+      hFont := SelectObject(hDC, oFont:handle)
    ENDIF
-   ASize     := GetTextSize( hDC, cTxt )
+   ASize     := GetTextSize(hDC, cTxt)
    IF oFont != Nil
-      SelectObject( hDC, hFont )
+      SelectObject(hDC, hFont)
    ENDIF
-   ReleaseDC( oWin:handle, hDC )
+   ReleaseDC(oWin:handle, hDC)
    RETURN ASize
 
 

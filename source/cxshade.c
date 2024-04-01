@@ -415,7 +415,7 @@ void cxshade_Draw(PCXSHADE pshade, HDC pRealDC, short state)
       // if needed, draw the standard 3D rectangular border
       if ((pshade->m_Border) && ((state & STATE_OVER) || !(pshade->m_flat)))
       {
-        if (!(pshade->m_flat)) // ( state & STATE_DEFAULT )
+        if (!(pshade->m_flat)) // (state & STATE_DEFAULT)
         {
           DrawEdge(pDC, &r, EDGE_SUNKEN, BF_RECT);
           InflateRect(&r, -1, -1);
@@ -436,13 +436,13 @@ void cxshade_Draw(PCXSHADE pshade, HDC pRealDC, short state)
     }
     /*
        // paint the focus rect
-       if( (state & STATE_FOCUS) && (pshade->m_FocusRectMargin > 0) )
+       if ((state & STATE_FOCUS) && (pshade->m_FocusRectMargin > 0))
        {
-       InflateRect( &r,-pshade->m_FocusRectMargin,-pshade->m_FocusRectMargin );
-       cxdib_Draw( &(pshade->m_dh), pDC, 1+r.left, r.top );
-       cxdib_Draw( &(pshade->m_dh), pDC, 1+r.left, r.bottom );
-       cxdib_Draw( &(pshade->m_dv), pDC, r.left, 1+r.top );
-       cxdib_Draw( &(pshade->m_dv), pDC, r.right, 1+r.top );
+       InflateRect(&r, -pshade->m_FocusRectMargin, -pshade->m_FocusRectMargin);
+       cxdib_Draw(&(pshade->m_dh), pDC, 1 + r.left, r.top);
+       cxdib_Draw(&(pshade->m_dh), pDC, 1 + r.left, r.bottom);
+       cxdib_Draw(&(pshade->m_dv), pDC, r.left, 1 + r.top);
+       cxdib_Draw(&(pshade->m_dv), pDC, r.right, 1 + r.top);
        }
      */
   }
@@ -672,7 +672,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
       {
         bb = a * (sXSize - j) / sXSize;
         aa = idxmin + a * (i / sYSize);
-        //                posDst[j] = (BYTE) ( idxmin + a *( i / sYSize) + a * (sXSize-j) /sXSize );
+        //                posDst[j] = (BYTE) (idxmin + a *(i / sYSize) + a * (sXSize - j) / sXSize);
         posDst[j] = (BYTE)(aa + bb);
         posDst[j] += rand() / grainx2 - granularity;
       }
@@ -727,7 +727,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
 /* --------------------------------------------------------------- */
 
 /*
- * shade_New( nLeft, nTop, nRight, nBottom, lFlat ) -> pshade
+ * shade_New(nLeft, nTop, nRight, nBottom, lFlat) -> pshade
  */
 HB_FUNC(SHADE_NEW)
 {
@@ -740,7 +740,7 @@ HB_FUNC(SHADE_NEW)
 }
 
 /*
- * shade_Release( pshade )
+ * shade_Release(pshade)
  */
 HB_FUNC(SHADE_RELEASE)
 {
@@ -748,7 +748,7 @@ HB_FUNC(SHADE_RELEASE)
 }
 
 /*
- * shade_Set( pshade, shadeID, palette, granularity, highlight, coloring, color, nLeft, nTop, nRight, nBottom )
+ * shade_Set(pshade, shadeID, palette, granularity, highlight, coloring, color, nLeft, nTop, nRight, nBottom)
  */
 HB_FUNC(SHADE_SET)
 {
@@ -770,7 +770,7 @@ HB_FUNC(SHADE_SET)
 }
 
 /*
- * shade_Draw( pshade, hDC, nState )
+ * shade_Draw(pshade, hDC, nState)
  */
 HB_FUNC(SHADE_DRAW)
 {

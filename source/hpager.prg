@@ -29,25 +29,25 @@ CLASS HPager INHERIT HControl
 
    METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFont, bInit, ;
                bSize, bPaint, ctooltip, tcolor, bcolor, lVert )
-   METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
-                    bSize, bPaint, ctooltip, tcolor, bcolor, lVert )
-   METHOD SetScrollArea( nWidth, nHeight ) INLINE  ::m_nWidth := nWidth, ::m_nHeight := nHeight
+   METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, ;
+                    bSize, bPaint, ctooltip, tcolor, bcolor, lVert)
+   METHOD SetScrollArea(nWidth, nHeight) INLINE  ::m_nWidth := nWidth, ::m_nHeight := nHeight
    METHOD Activate()
    METHOD INIT()
 
    METHOD Notify( lParam )
-   METHOD PAGERSETCHILD( b ) INLINE ::hTool := b, PAGERSETCHILD( ::handle, b )
-   METHOD PAGERRECALCSIZE() INLINE PAGERRECALCSIZE( ::handle )
-   METHOD PAGERFORWARDMOUSE( b ) INLINE PAGERFORWARDMOUSE( ::handle, b )
-   METHOD PAGERSETBKCOLOR(  b ) INLINE PAGERSETBKCOLOR( ::handle, b )
-   METHOD PAGERGETBKCOLOR() INLINE PAGERGETBKCOLOR( ::handle )
+   METHOD PAGERSETCHILD(b) INLINE ::hTool := b, PAGERSETCHILD(::handle, b)
+   METHOD PAGERRECALCSIZE() INLINE PAGERRECALCSIZE(::handle)
+   METHOD PAGERFORWARDMOUSE(b) INLINE PAGERFORWARDMOUSE(::handle, b)
+   METHOD PAGERSETBKCOLOR(b) INLINE PAGERSETBKCOLOR(::handle, b)
+   METHOD PAGERGETBKCOLOR() INLINE PAGERGETBKCOLOR(::handle)
    METHOD PAGERSETBORDER(  b ) INLINE PAGERSETBORDER( ::handle, b )
    METHOD PAGERGETBORDER() INLINE PAGERGETBORDER( ::handle )
    METHOD PAGERSETPOS(  b ) INLINE PAGERSETPOS( ::handle, b )
    METHOD PAGERGETPOS() INLINE PAGERGETPOS( ::handle )
-   METHOD PAGERSETBUTTONSIZE(  b ) INLINE PAGERSETBUTTONSIZE( ::handle, b )
-   METHOD PAGERGETBUTTONSIZE() INLINE PAGERGETBUTTONSIZE( ::handle )
-   METHOD PAGERGETBUTTONSTATE() INLINE PAGERGETBUTTONSTATE( ::handle )
+   METHOD PAGERSETBUTTONSIZE(b) INLINE PAGERSETBUTTONSIZE(::handle, b)
+   METHOD PAGERGETBUTTONSIZE() INLINE PAGERGETBUTTONSIZE(::handle)
+   METHOD PAGERGETBUTTONSTATE() INLINE PAGERGETBUTTONSTATE(::handle)
 
 ENDCLASS
 
@@ -72,8 +72,8 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFo
 
 
 
-METHOD Redefine( oWndParent, nId, cCaption, oFont, bInit, ;
-                 bSize, bPaint, ctooltip, tcolor, bcolor, lVert ) CLASS HPager
+METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, ;
+                 bSize, bPaint, ctooltip, tcolor, bcolor, lVert) CLASS HPager
 
    HB_SYMBOL_UNUSED(cCaption)
 
@@ -107,10 +107,10 @@ METHOD INIT() CLASS HPager
 
 METHOD Notify( lParam ) CLASS HPager
 
-   LOCAL nCode :=  GetNotifyCode( lParam )
+   LOCAL nCode :=  GetNotifyCode(lParam)
 
    IF nCode == PGN_CALCSIZE
-      PAGERONPAGERCALCSIZE( lParam, ::hTool )
+      PAGERONPAGERCALCSIZE(lParam, ::hTool)
    ELSEIF nCode == PGN_SCROLL
       PAGERONPAGERSCROLL( lParam )
    ENDIF
