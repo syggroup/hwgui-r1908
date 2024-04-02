@@ -66,7 +66,7 @@ __inline long PtrToLong(const void *p)
 
 HB_FUNC(REGCLOSEKEY)
 {
-  HKEY hwHandle = (HKEY)hb_parnl(1);
+  HKEY hwHandle = (HKEY)(ULONG_PTR)hb_parnl(1);
 
   if (RegCloseKey(hwHandle) == ERROR_SUCCESS)
   {
@@ -80,7 +80,7 @@ HB_FUNC(REGCLOSEKEY)
 
 HB_FUNC(REGOPENKEYEX)
 {
-  HKEY hwKey = ((HKEY)hb_parnl(1));
+  HKEY hwKey = ((HKEY)(ULONG_PTR)hb_parnl(1));
   void *hValue;
   LPCTSTR lpValue = HB_PARSTRDEF(2, &hValue, NULL);
   LONG lError;
@@ -101,7 +101,7 @@ HB_FUNC(REGOPENKEYEX)
 
 HB_FUNC(REGQUERYVALUEEX)
 {
-  HKEY hwKey = ((HKEY)hb_parnl(1));
+  HKEY hwKey = ((HKEY)(ULONG_PTR)hb_parnl(1));
   LONG lError;
   DWORD lpType = hb_parnl(4);
   DWORD lpcbData = 0;
@@ -137,7 +137,7 @@ HB_FUNC(REGENUMKEYEX)
   TCHAR Class[255];
   DWORD dwClass = 255;
 
-  nErr = RegEnumKeyEx((HKEY)hb_parnl(1), hb_parnl(2), Buffer, &dwBuffSize, NULL, Class, &dwClass, &ft);
+  nErr = RegEnumKeyEx((HKEY)(ULONG_PTR)hb_parnl(1), hb_parnl(2), Buffer, &dwBuffSize, NULL, Class, &dwClass, &ft);
 
   if (nErr == ERROR_SUCCESS)
   {
@@ -153,7 +153,7 @@ HB_FUNC(REGSETVALUEEX)
 {
   void *hValue;
 
-  hb_retnl(RegSetValueEx((HKEY)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), 0, hb_parnl(4), (const BYTE *)hb_parcx(5),
+  hb_retnl(RegSetValueEx((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), 0, hb_parnl(4), (const BYTE *)hb_parcx(5),
                          hb_parclen(5) + 1));
   hb_strfree(hValue);
 }
@@ -164,7 +164,7 @@ HB_FUNC(REGCREATEKEY)
   LONG nErr;
   void *hValue;
 
-  nErr = RegCreateKey((HKEY)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), &hKey);
+  nErr = RegCreateKey((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), &hKey);
   if (nErr == ERROR_SUCCESS)
   {
     hb_stornl(PtrToLong(hKey), 3);
@@ -203,7 +203,7 @@ HB_FUNC(REGCREATEKEYEX)
     sa = (SECURITY_ATTRIBUTES *)hb_parc(7);
   }
 
-  nErr = RegCreateKeyEx((HKEY)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), (DWORD)0,
+  nErr = RegCreateKeyEx((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), (DWORD)0,
                         (LPTSTR)HB_PARSTRDEF(4, &hClass, NULL), (DWORD)hb_parnl(5), (DWORD)hb_parnl(6), sa, &hkResult,
                         &dwDisposition);
 
@@ -221,7 +221,7 @@ HB_FUNC(REGDELETEKEY)
 {
   void *hValue;
 
-  hb_retni(RegDeleteKey((HKEY)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL)) == ERROR_SUCCESS ? 0 : -1);
+  hb_retni(RegDeleteKey((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL)) == ERROR_SUCCESS ? 0 : -1);
   hb_strfree(hValue);
 }
 
@@ -232,6 +232,6 @@ HB_FUNC(REGDELETEVALUE)
 {
   void *hValue;
 
-  hb_retni(RegDeleteValue((HKEY)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL)) == ERROR_SUCCESS ? 0 : -1);
+  hb_retni(RegDeleteValue((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL)) == ERROR_SUCCESS ? 0 : -1);
   hb_strfree(hValue);
 }
