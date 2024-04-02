@@ -165,7 +165,7 @@ HB_FUNC ( INITMONTHCALENDAR )
                          hb_parni(4), hb_parni(5),      /* x, y       */
                          hb_parni(6), hb_parni(7),      /* nWidth, nHeight */
                          (HWND) HB_PARHANDLE(1),
-                         (HMENU) hb_parni(2),
+                         (HMENU)(INT_PTR)hb_parni(2),
                          GetModuleHandle(NULL),
                          NULL );
 

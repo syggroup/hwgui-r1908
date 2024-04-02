@@ -68,7 +68,7 @@ HB_FUNC(INITIPADDRESS)
 
   hIpAddress =
       CreateWindowEx(WS_EX_CLIENTEDGE, WC_IPADDRESS, TEXT(""), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6),
-                     hb_parni(7), (HWND)HB_PARHANDLE(1), (HMENU)hb_parni(2), GetModuleHandle(NULL), NULL);
+                     hb_parni(7), (HWND)HB_PARHANDLE(1), (HMENU)(INT_PTR)hb_parni(2), GetModuleHandle(NULL), NULL);
 
   HB_RETHANDLE(hIpAddress);
 }

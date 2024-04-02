@@ -94,7 +94,7 @@ HB_FUNC(CREATEQHTM)
                                hb_parni(4), hb_parni(5),            /* x, y       */
                                hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
                                (HWND)hb_parnl(1),                   /* parent window    */
-                               (HMENU)hb_parni(2),                  /* control ID  */
+                               (HMENU)(INT_PTR)hb_parni(2),                  /* control ID  */
                                GetModuleHandle(NULL), NULL);
 
     hb_retnl((LONG)handle);
