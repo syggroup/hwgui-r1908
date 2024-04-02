@@ -93,11 +93,11 @@ HB_FUNC(CREATEQHTM)
                                WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
                                hb_parni(4), hb_parni(5),            /* x, y       */
                                hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
-                               (HWND)hb_parnl(1),                   /* parent window    */
+                               (HWND)(ULONG_PTR)hb_parnl(1),                   /* parent window    */
                                (HMENU)(INT_PTR)hb_parni(2),                  /* control ID  */
                                GetModuleHandle(NULL), NULL);
 
-    hb_retnl((LONG)handle);
+    hb_retnl((ULONG_PTR)handle);
   }
   else
   {
@@ -107,14 +107,14 @@ HB_FUNC(CREATEQHTM)
 
 HB_FUNC(QHTM_GETNOTIFY)
 {
-  LPNMQHTM pnm = (LPNMQHTM)hb_parnl(1);
+  LPNMQHTM pnm = (LPNMQHTM)(ULONG_PTR)hb_parnl(1);
 
   HB_RETSTR(pnm->pcszLinkText);
 }
 
 HB_FUNC(QHTM_SETRETURNVALUE)
 {
-  LPNMQHTM pnm = (LPNMQHTM)hb_parnl(1);
+  LPNMQHTM pnm = (LPNMQHTM)(ULONG_PTR)hb_parnl(1);
   pnm->resReturnValue = hb_parl(2);
 }
 
@@ -142,7 +142,7 @@ void CALLBACK FormCallback(HWND hWndQHTM, LPQHTMFORMSubmit pFormSubmit, LPARAM l
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSymTest));
     hb_vmPushNil();
-    hb_vmPushLong((LONG)hWndQHTM);
+    hb_vmPushLong((ULONG_PTR)hWndQHTM);
     temp = HB_ITEMPUTSTR(NULL, pFormSubmit->pcszMethod);
     hb_vmPush(temp);
     hb_vmPush(HB_ITEMPUTSTR(temp, pFormSubmit->pcszAction));
@@ -185,7 +185,7 @@ HB_FUNC(QHTM_LOADFILE)
 {
   if (s_qhtmInit(NULL))
   {
-    hb_retl(SendMessage((HWND)hb_parnl(1), QHTM_LOAD_FROM_FILE, 0, (LPARAM)hb_parc(2)));
+    hb_retl(SendMessage((HWND)(ULONG_PTR)hb_parnl(1), QHTM_LOAD_FROM_FILE, 0, (LPARAM)hb_parc(2)));
   }
 }
 
@@ -193,7 +193,7 @@ HB_FUNC(QHTM_LOADRES)
 {
   if (s_qhtmInit(NULL))
   {
-    hb_retl(SendMessage((HWND)hb_parnl(1), QHTM_LOAD_FROM_RESOURCE, (WPARAM)GetModuleHandle(NULL), (LPARAM)hb_parc(2)));
+    hb_retl(SendMessage((HWND)(ULONG_PTR)hb_parnl(1), QHTM_LOAD_FROM_RESOURCE, (WPARAM)GetModuleHandle(NULL), (LPARAM)hb_parc(2)));
   }
 }
 
@@ -201,7 +201,7 @@ HB_FUNC(QHTM_ADDHTML)
 {
   if (s_qhtmInit(NULL))
   {
-    SendMessage((HWND)hb_parnl(1), QHTM_ADD_HTML, 0, (LPARAM)hb_parc(2));
+    SendMessage((HWND)(ULONG_PTR)hb_parnl(1), QHTM_ADD_HTML, 0, (LPARAM)hb_parc(2));
   }
 }
 
@@ -210,7 +210,7 @@ HB_FUNC(QHTM_GETTITLE)
   if (s_qhtmInit(NULL))
   {
     TCHAR szBuffer[256] = {0};
-    SendMessage((HWND)hb_parnl(1), QHTM_GET_HTML_TITLE, 256, (LPARAM)szBuffer);
+    SendMessage((HWND)(ULONG_PTR)hb_parnl(1), QHTM_GET_HTML_TITLE, 256, (LPARAM)szBuffer);
     HB_RETSTR(szBuffer);
   }
 }
@@ -221,7 +221,7 @@ HB_FUNC(QHTM_GETSIZE)
   {
     SIZE size;
 
-    if (SendMessage((HWND)hb_parnl(1), QHTM_GET_DRAWN_SIZE, 0, (LPARAM)&size))
+    if (SendMessage((HWND)(ULONG_PTR)hb_parnl(1), QHTM_GET_DRAWN_SIZE, 0, (LPARAM)&size))
     {
       PHB_ITEM aMetr = hb_itemArrayNew(2);
       PHB_ITEM temp;
@@ -248,7 +248,7 @@ HB_FUNC(QHTM_FORMCALLBACK)
 {
   if (s_qhtmInit(NULL))
   {
-    hb_retl(SendMessage((HWND)hb_parnl(1), QHTM_SET_OPTION, (WPARAM)QHTM_OPT_SET_FORM_SUBMIT_CALLBACK,
+    hb_retl(SendMessage((HWND)(ULONG_PTR)hb_parnl(1), QHTM_SET_OPTION, (WPARAM)QHTM_OPT_SET_FORM_SUBMIT_CALLBACK,
                         (LPARAM)FormCallback));
   }
   else
@@ -284,7 +284,7 @@ HB_FUNC(QHTM_SETHTMLBUTTON)
     QHTM_SETHTMLBUTTON pFunc = (QHTM_SETHTMLBUTTON)GetProcAddress(s_hQhtmDll, "QHTM_SetHTMLButton");
     if (pFunc)
     {
-      hb_retl(pFunc((HWND)hb_parnl(1)));
+      hb_retl(pFunc((HWND)(ULONG_PTR)hb_parnl(1)));
     }
     else
     {
@@ -363,7 +363,7 @@ HB_FUNC(QHTM_PRINTLAYOUT)
 {
   if (s_qhtmInit(NULL))
   {
-    HDC hDC = (HDC)hb_parnl(1);
+    HDC hDC = (HDC)(ULONG_PTR)hb_parnl(1);
     QHTMCONTEXT qhtmCtx = (QHTMCONTEXT)hb_parnl(2);
     RECT rcPage;
     int nNumberOfPages;
@@ -386,7 +386,7 @@ HB_FUNC(QHTM_PRINTPAGE)
 {
   if (s_qhtmInit(NULL))
   {
-    HDC hDC = (HDC)hb_parnl(1);
+    HDC hDC = (HDC)(ULONG_PTR)hb_parnl(1);
     QHTMCONTEXT qhtmCtx = (QHTMCONTEXT)hb_parnl(2);
     RECT rcPage;
     QHTM_PRINTPAGE pFunc = (QHTM_PRINTPAGE)GetProcAddress(s_hQhtmDll, "QHTM_PrintPage");
