@@ -53,9 +53,9 @@ HB_FUNC(ANIMATE_OPENEX)
   if (!lpResource && HB_ISNUM(3))
   {
     lpResource = MAKEINTRESOURCE(hb_parni(3));
-  }  
+  }
 
-  Animate_OpenEx((HWND)HB_PARHANDLE(1), (HINSTANCE)hb_parnl(2), lpResource);
+  Animate_OpenEx((HWND)HB_PARHANDLE(1), (HINSTANCE)HB_PARHANDLE(2), lpResource);
 
   hb_strfree(hResource);
 }
