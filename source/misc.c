@@ -32,7 +32,7 @@ void writelog(char *s)
   {
     handle = hb_fsCreate("ac.log", 0);
   }
-  
+
   hb_fsSeek(handle, 0, SEEK_END);
   hb_fsWrite(handle, (const char *)s, (USHORT)strlen(s));
   hb_fsWrite(handle, "\n\r", 2);
@@ -47,7 +47,7 @@ HB_FUNC(HWG_SETDLGRESULT)
 
 HB_FUNC(SETCAPTURE)
 {
-  hb_retnl((LONG)SetCapture((HWND)HB_PARHANDLE(1)));
+  HB_RETHANDLE(SetCapture((HWND)HB_PARHANDLE(1)));
 }
 
 HB_FUNC(RELEASECAPTURE)
@@ -91,7 +91,7 @@ HB_FUNC(COPYSTRINGTOCLIPBOARD)
 
 HB_FUNC(GETCLIPBOARDTEXT)
 {
-  HWND hWnd = (HWND)hb_parnl(1);
+  HWND hWnd = (HWND)HB_PARHANDLE(1);
   LPTSTR lpText = NULL;
 
   if (OpenClipboard(hWnd))
@@ -449,7 +449,7 @@ HB_FUNC(WINHELP)
     context = 0;
   }
 
-  hb_retni(WinHelp((HWND)hb_parnl(1), HB_PARSTR(2, &hStr, NULL), style, context));
+  hb_retni(WinHelp((HWND)HB_PARHANDLE(1), HB_PARSTR(2, &hStr, NULL), style, context));
   hb_strfree(hStr);
 }
 
