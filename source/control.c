@@ -1264,7 +1264,7 @@ BOOL RegisterWinCtrl(void) // Added by jamaj - Used by WinCtrl
 
 HB_FUNC(HWG_INITTREEVIEW)
 {
-  wpOrigTreeViewProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)TreeViewSubclassProc);
+  wpOrigTreeViewProc = (WNDPROC)SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)TreeViewSubclassProc);
 }
 
 LRESULT APIENTRY TreeViewSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1304,7 +1304,7 @@ LRESULT APIENTRY TreeViewSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LP
 
 HB_FUNC(HWG_INITWINCTRL)
 {
-  SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)WinCtrlProc);
+  SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)WinCtrlProc);
 }
 
 LRESULT CALLBACK WinCtrlProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1339,12 +1339,12 @@ LRESULT CALLBACK WinCtrlProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
   else
   {
     return (DefWindowProc(hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITSTATICPROC)
 {
-  wpOrigStaticProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)StaticSubclassProc);
+  wpOrigStaticProc = (WNDPROC)SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)StaticSubclassProc);
 }
 
 LRESULT APIENTRY StaticSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1419,7 +1419,7 @@ LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   else
   {
     return (CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITBUTTONPROC)
@@ -1500,7 +1500,7 @@ LRESULT APIENTRY ComboSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 
 HB_FUNC(HWG_INITCOMBOPROC)
 {
-  wpOrigComboProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)ComboSubclassProc);
+  wpOrigComboProc = (WNDPROC)SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)ComboSubclassProc);
 }
 
 LRESULT APIENTRY ListSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1540,12 +1540,12 @@ LRESULT APIENTRY ListSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 
 HB_FUNC(HWG_INITLISTPROC)
 {
-  wpOrigListProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)ListSubclassProc);
+  wpOrigListProc = (WNDPROC)SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)ListSubclassProc);
 }
 
 HB_FUNC(HWG_INITUPDOWNPROC)
 {
-  wpOrigUpDownProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)UpDownSubclassProc);
+  wpOrigUpDownProc = (WNDPROC)SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)UpDownSubclassProc);
 }
 
 LRESULT APIENTRY UpDownSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1585,7 +1585,7 @@ LRESULT APIENTRY UpDownSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 
 HB_FUNC(HWG_INITDATEPICKERPROC)
 {
-  wpOrigDatePickerProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)DatePickerSubclassProc);
+  wpOrigDatePickerProc = (WNDPROC)SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)DatePickerSubclassProc);
 }
 
 LRESULT APIENTRY DatePickerSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1625,7 +1625,7 @@ LRESULT APIENTRY DatePickerSubclassProc(HWND hWnd, UINT message, WPARAM wParam, 
 
 HB_FUNC(HWG_INITTRACKPROC)
 {
-  wpOrigTrackProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)TrackSubclassProc);
+  wpOrigTrackProc = (WNDPROC)SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)TrackSubclassProc);
 }
 
 LRESULT APIENTRY TrackSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1665,7 +1665,7 @@ LRESULT APIENTRY TrackSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 
 HB_FUNC(HWG_INITTABPROC)
 {
-  wpOrigTabProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)TabSubclassProc);
+  wpOrigTabProc = (WNDPROC)SetWindowLongPtr((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)TabSubclassProc);
 }
 
 LRESULT APIENTRY TabSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
