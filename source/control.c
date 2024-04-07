@@ -825,14 +825,14 @@ HB_FUNC(TREEADDNODE)
   {
     if (tvi.iImage)
     {
-      DeleteObject((HGDIOBJ)tvi.iImage);
+      DeleteObject((HGDIOBJ)(INT_PTR)tvi.iImage);
     }
   }
   if (tvi.mask & TVIF_SELECTEDIMAGE)
   {
     if (tvi.iSelectedImage)
     {
-      DeleteObject((HGDIOBJ)tvi.iSelectedImage);
+      DeleteObject((HGDIOBJ)(INT_PTR)tvi.iSelectedImage);
     }
   }
 
@@ -944,7 +944,7 @@ HB_FUNC(TREE_GETNOTIFY)
 
   if (iType == TREE_GETNOTIFY_HANDLE)
   {
-    hb_retnl((LONG)(((NM_TREEVIEW *)HB_PARHANDLE(1))->itemNew.hItem));
+    hb_retnl((LONG_PTR)(((NM_TREEVIEW *)HB_PARHANDLE(1))->itemNew.hItem));
   }
 
   if (iType == TREE_GETNOTIFY_ACTION)
@@ -1084,7 +1084,7 @@ HB_FUNC(IMAGELIST_ADDMASKED)
 HB_FUNC(SETTIMER)
 {
   SetTimer((HWND)HB_PARHANDLE(1), (UINT)hb_parni(2), (UINT)hb_parni(3),
-           hb_pcount() == 3 ? s_timerProc : (TIMERPROC)NULL);
+           hb_pcount() == 3 ? (TIMERPROC)s_timerProc : (TIMERPROC)NULL);
 }
 
 /*
@@ -1384,7 +1384,7 @@ LRESULT APIENTRY StaticSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 
 HB_FUNC(HWG_INITEDITPROC)
 {
-  wpOrigEditProc = (WNDPROC)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG)EditSubclassProc);
+  wpOrigEditProc = (WNDPROC)(LONG_PTR)SetWindowLong((HWND)HB_PARHANDLE(1), GWLP_WNDPROC, (LONG_PTR)EditSubclassProc); // TODO: SetWindowLongPtr
 }
 
 LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1787,7 +1787,7 @@ HB_FUNC(TOOLBARADDBUTTONS)
     tb[ulCount].fsState = hb_arrayGetNI(pTemp, 3);
     tb[ulCount].fsStyle = hb_arrayGetNI(pTemp, 4);
     tb[ulCount].dwData = hb_arrayGetNI(pTemp, 5);
-    tb[ulCount].iString = hb_arrayGetCLen(pTemp, 6) > 0 ? (int)hb_arrayGetCPtr(pTemp, 6) : 0;
+    tb[ulCount].iString = hb_arrayGetCLen(pTemp, 6) > 0 ? (INT_PTR)hb_arrayGetCPtr(pTemp, 6) : 0;
   }
 
   SendMessage(hWndCtrl, TB_ADDBUTTONS, (WPARAM)iButtons, (LPARAM)(LPTBBUTTON)tb);
@@ -2088,7 +2088,7 @@ HB_FUNC(ADDBARCOLORS)
 
 HB_FUNC(GETCOMBOWNDPROC)
 {
-  hb_retnl((LONG)wpOrigComboProc);
+  hb_retnl((LONG_PTR)wpOrigComboProc);
 }
 
 HB_FUNC(COMBOGETITEMRECT)
@@ -2097,7 +2097,7 @@ HB_FUNC(COMBOGETITEMRECT)
 
   int nIndex = hb_parnl(2);
   RECT rcItem;
-  SendMessage(hWnd, LB_GETITEMRECT, nIndex, (LONG)(VOID *)&rcItem);
+  SendMessage(hWnd, LB_GETITEMRECT, nIndex, (LONG_PTR)(VOID *)&rcItem);
   hb_itemRelease(hb_itemReturn(Rect2Array(&rcItem)));
 }
 
@@ -2147,7 +2147,7 @@ HB_FUNC(DEFWINDOWPROC)
 
 HB_FUNC(CALLWINDOWPROC)
 {
-  WNDPROC wpProc = (WNDPROC)hb_parnl(1);
+  WNDPROC wpProc = (WNDPROC)(LONG_PTR)hb_parnl(1);
   HWND hWnd = (HWND)HB_PARHANDLE(2);
   LONG message = hb_parnl(3);
   WPARAM wParam = (WPARAM)hb_parnl(4);
