@@ -164,7 +164,7 @@ HB_FUNC(INITTRACKBAR)
                            hb_parni(5),
                            hb_parni(6),
                            hb_parni(7),
-                           (HWND)HB_PARHANDLE(1),
+                           hwg_par_HWND(1),
                            (HMENU)(INT_PTR)hb_parni(2),
                            GetModuleHandle(NULL),
                            NULL) ;
@@ -174,7 +174,7 @@ HB_FUNC(INITTRACKBAR)
 
 HB_FUNC(TRACKBARSETRANGE)
 {
-  SendMessage((HWND)HB_PARHANDLE(1), TBM_SETRANGE, TRUE, MAKELONG(hb_parni(2), hb_parni(3)));
+  SendMessage(hwg_par_HWND(1), TBM_SETRANGE, TRUE, MAKELONG(hb_parni(2), hb_parni(3)));
 }
 
 #pragma ENDDUMP

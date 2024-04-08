@@ -1599,7 +1599,7 @@ static void DrawTheIcon(HWND hButtonWnd, HDC dc, BOOL bHasTitle, RECT *rpItem, R
 
 HB_FUNC(HB_OPENTHEMEDATA)
 {
-  HWND hwnd = (HWND)HB_PARHANDLE(1);
+  HWND hwnd = hwg_par_HWND(1);
   LPCSTR pText = hb_parc(2);
   HTHEME p;
   int mlen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pText, -1, NULL, 0);
@@ -1643,7 +1643,7 @@ HB_FUNC(HB_DRAWTHEMEBACKGROUND)
 
 HB_FUNC(DRAWTHEICON)
 {
-  HWND hButtonWnd = (HWND)HB_PARHANDLE(1);
+  HWND hButtonWnd = hwg_par_HWND(1);
   HDC dc = (HDC)HB_PARHANDLE(2);
   BOOL bHasTitle = hb_parl(3);
   RECT rpItem;
@@ -1681,7 +1681,7 @@ HB_FUNC(DRAWTHEICON)
 HB_FUNC(PREPAREIMAGERECT)
 {
 
-  HWND hButtonWnd = (HWND)HB_PARHANDLE(1);
+  HWND hButtonWnd = hwg_par_HWND(1);
   HDC dc = (HDC)HB_PARHANDLE(2);
   BOOL bHasTitle = hb_parl(3);
   RECT rpItem;
@@ -1757,7 +1757,7 @@ HB_FUNC(HB_CLOSETHEMEDATA)
 
 HB_FUNC(TRACKMOUSEVENT)
 {
-  HWND m_hWnd = (HWND)HB_PARHANDLE(1);
+  HWND m_hWnd = hwg_par_HWND(1);
   DWORD dwFlags = (DWORD)hb_parnl(2);
   DWORD dwHoverTime = (DWORD)hb_parnl(3);
   TRACKMOUSEEVENT csTME;
@@ -1773,7 +1773,7 @@ HB_FUNC(BUTTONEXONSETSTYLE)
 {
   WPARAM wParam = (WPARAM)hb_parnl(1);
   LPARAM lParam = (LPARAM)hb_parnl(2);
-  HWND h = (HWND)HB_PARHANDLE(3);
+  HWND h = hwg_par_HWND(3);
 
   UINT nNewType = (wParam & BS_TYPEMASK);
 
@@ -1813,7 +1813,7 @@ HB_FUNC(MODSTYLE)
 
 HB_FUNC(HB_DRAWTHEMEPARENTBACKGROUND)
 {
-  HWND hTheme = (HWND)HB_PARHANDLE(1);
+  HWND hTheme = hwg_par_HWND(1);
   HDC hdc = (HDC)HB_PARHANDLE(2);
   RECT pRect;
 
@@ -1832,7 +1832,7 @@ HB_FUNC(ISTHEMEACTIVE)
 
 HB_FUNC(HWG_GETTHEMESYSCOLOR)
 {
-  HWND hTheme = (HWND)HB_PARHANDLE(1);
+  HWND hTheme = hwg_par_HWND(1);
   int iColor = (int)hb_parnl(2);
 
   HB_RETHANDLE(hb_GetThemeSysColor(hTheme, iColor));
@@ -1842,7 +1842,7 @@ HB_FUNC(HWG_GETTHEMESYSCOLOR)
 
 HB_FUNC(HWG_SETWINDOWTHEME)
 {
-  HWND hwnd = (HWND)HB_PARHANDLE(1);
+  HWND hwnd = hwg_par_HWND(1);
   // LPCWSTR pszSubAppName = hb_parc(2);
   // LPCWSTR pszSubIdList = hb_parc(3);
   int ienable = hb_parni(2);
@@ -1879,7 +1879,7 @@ HB_FUNC(HWG_GETWINDOWTHEME)
   {
     // Windows XP detected
     HTHEME hTheme; // = (HTHEME) hb_parptr(1) ;
-    hTheme = hb_GetWindowTheme((HWND)HB_PARHANDLE(1));
+    hTheme = hb_GetWindowTheme(hwg_par_HWND(1));
     HB_RETHANDLE(hTheme);
   }
   else

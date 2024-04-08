@@ -5,7 +5,7 @@ HB_FUNC(ANIMATE_CREATE)
 {
   HWND hwnd;
 
-  hwnd = Animate_Create((HWND)HB_PARHANDLE(1), (LONG)hb_parnl(2), (LONG)hb_parnl(3), GetModuleHandle(NULL));
+  hwnd = Animate_Create(hwg_par_HWND(1), (LONG)hb_parnl(2), (LONG)hb_parnl(3), GetModuleHandle(NULL));
   MoveWindow(hwnd, hb_parnl(4), hb_parnl(5), hb_parnl(6), hb_parnl(7), TRUE);
   HB_RETHANDLE(hwnd);
 }
@@ -13,33 +13,33 @@ HB_FUNC(ANIMATE_CREATE)
 HB_FUNC(ANIMATE_OPEN)
 {
   void *hStr;
-  Animate_Open((HWND)HB_PARHANDLE(1), HB_PARSTR(2, &hStr, NULL));
+  Animate_Open(hwg_par_HWND(1), HB_PARSTR(2, &hStr, NULL));
   hb_strfree(hStr);
 }
 
 HB_FUNC(ANIMATE_PLAY)
 {
-  Animate_Play((HWND)HB_PARHANDLE(1), hb_parni(2), hb_parni(3), hb_parni(4));
+  Animate_Play(hwg_par_HWND(1), hb_parni(2), hb_parni(3), hb_parni(4));
 }
 
 HB_FUNC(ANIMATE_SEEK)
 {
-  Animate_Seek((HWND)HB_PARHANDLE(1), hb_parni(2));
+  Animate_Seek(hwg_par_HWND(1), hb_parni(2));
 }
 
 HB_FUNC(ANIMATE_STOP)
 {
-  Animate_Stop((HWND)HB_PARHANDLE(1));
+  Animate_Stop(hwg_par_HWND(1));
 }
 
 HB_FUNC(ANIMATE_CLOSE)
 {
-  Animate_Close((HWND)HB_PARHANDLE(1));
+  Animate_Close(hwg_par_HWND(1));
 }
 
 HB_FUNC(ANIMATE_DESTROY)
 {
-  DestroyWindow((HWND)HB_PARHANDLE(1));
+  DestroyWindow(hwg_par_HWND(1));
 }
 
 HB_FUNC(ANIMATE_OPENEX)
@@ -55,7 +55,7 @@ HB_FUNC(ANIMATE_OPENEX)
     lpResource = MAKEINTRESOURCE(hb_parni(3));
   }
 
-  Animate_OpenEx((HWND)HB_PARHANDLE(1), (HINSTANCE)HB_PARHANDLE(2), lpResource);
+  Animate_OpenEx(hwg_par_HWND(1), (HINSTANCE)HB_PARHANDLE(2), lpResource);
 
   hb_strfree(hResource);
 }

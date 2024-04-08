@@ -165,12 +165,12 @@ HB_FUNC(HWG__CREATESUBMENU)
  */
 HB_FUNC(HWG__SETMENU)
 {
-  hb_retl(SetMenu((HWND)HB_PARHANDLE(1), (HMENU)HB_PARHANDLE(2)));
+  hb_retl(SetMenu(hwg_par_HWND(1), (HMENU)HB_PARHANDLE(2)));
 }
 
 HB_FUNC(GETMENUHANDLE)
 {
-  HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (HWND)HB_PARHANDLE(1) : aWindows[0];
+  HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? hwg_par_HWND(1) : aWindows[0];
   HB_RETHANDLE(GetMenu(handle));
 }
 
@@ -186,7 +186,7 @@ HB_FUNC(CHECKMENUITEM)
   }
   else
   {
-    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? ((HWND)HB_PARHANDLE(1)) : aWindows[0];
+    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (hwg_par_HWND(1)) : aWindows[0];
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
@@ -219,7 +219,7 @@ HB_FUNC(ISCHECKEDMENUITEM)
   }
   else
   {
-    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? ((HWND)HB_PARHANDLE(1)) : aWindows[0];
+    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (hwg_par_HWND(1)) : aWindows[0];
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
@@ -254,7 +254,7 @@ HB_FUNC(ENABLEMENUITEM)
   }
   else
   {
-    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? ((HWND)HB_PARHANDLE(1)) : aWindows[0];
+    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (hwg_par_HWND(1)) : aWindows[0];
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
@@ -289,7 +289,7 @@ HB_FUNC(ISENABLEDMENUITEM)
   }
   else
   {
-    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? ((HWND)HB_PARHANDLE(1)) : aWindows[0];
+    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (hwg_par_HWND(1)) : aWindows[0];
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
@@ -326,7 +326,7 @@ HB_FUNC(HWG_DELETEMENU)
 
 HB_FUNC(HWG_TRACKMENU)
 {
-  HWND hWnd = (HWND)HB_PARHANDLE(4);
+  HWND hWnd = hwg_par_HWND(4);
   SetForegroundWindow(hWnd);
   hb_retl(TrackPopupMenu((HMENU)HB_PARHANDLE(1),                     // handle of shortcut menu
                          HB_ISNIL(5) ? TPM_RIGHTALIGN : hb_parni(5), // screen-position and mouse-button flags
@@ -378,7 +378,7 @@ HB_FUNC(DESTROYACCELERATORTABLE)
 
 HB_FUNC(DRAWMENUBAR)
 {
-  hb_retl((BOOL)DrawMenuBar((HWND)HB_PARHANDLE(1)));
+  hb_retl((BOOL)DrawMenuBar(hwg_par_HWND(1)));
 }
 
 /*
@@ -396,7 +396,7 @@ HB_FUNC(GETMENUCAPTION)
   }
   else
   {
-    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? ((HWND)HB_PARHANDLE(1)) : aWindows[0];
+    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (hwg_par_HWND(1)) : aWindows[0];
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
@@ -449,7 +449,7 @@ HB_FUNC(SETMENUCAPTION)
   }
   else
   {
-    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? ((HWND)HB_PARHANDLE(1)) : aWindows[0];
+    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (hwg_par_HWND(1)) : aWindows[0];
     hMenu = GetMenu(handle);
   }
   if (!hMenu)
@@ -553,7 +553,7 @@ HB_FUNC(ENABLEMENUSYSTEMITEM)
   UINT uEnable = (hb_pcount() < 3 || !HB_ISLOG(3) || hb_parl(3)) ? MF_ENABLED : MF_GRAYED;
   UINT uFlag = (hb_pcount() < 4 || !HB_ISLOG(4) || hb_parl(4)) ? MF_BYCOMMAND : MF_BYPOSITION;
 
-  hMenu = (HMENU)GetSystemMenu((HWND)HB_PARHANDLE(1), 0);
+  hMenu = (HMENU)GetSystemMenu(hwg_par_HWND(1), 0);
   if (!hMenu)
   {
     HB_RETHANDLE(NULL);
@@ -581,7 +581,7 @@ HB_FUNC(HWG_SETMENUINFO)
   }
   else
   {
-    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? ((HWND)HB_PARHANDLE(1)) : aWindows[0];
+    HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (hwg_par_HWND(1)) : aWindows[0];
     hMenu = GetMenu(handle);
   }
   if (!hMenu)

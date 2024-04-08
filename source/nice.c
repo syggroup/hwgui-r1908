@@ -166,7 +166,7 @@ HB_FUNC(CREATEROUNDRECTRGN)
 
 HB_FUNC(SETWINDOWRGN)
 {
-  hb_retni(SetWindowRgn((HWND)HB_PARHANDLE(1), (HRGN)hb_parnl(2), hb_parl(3)));
+  hb_retni(SetWindowRgn(hwg_par_HWND(1), (HRGN)hb_parnl(2), hb_parl(3)));
 }
 
 HB_FUNC(HWG_REGNICE)
@@ -209,7 +209,7 @@ HB_FUNC(CREATENICEBTN)
                              WS_CHILD | WS_VISIBLE | ulStyle, /* style  */
                              hb_parni(4), hb_parni(5),        /* x, y       */
                              hb_parni(6), hb_parni(7),        /* nWidth, nHeight */
-                             (HWND)HB_PARHANDLE(1),           /* parent window    */
+                             hwg_par_HWND(1),           /* parent window    */
                              (HMENU)(INT_PTR)hb_parni(2),              /* control ID  */
                              GetModuleHandle(NULL), NULL);
   hb_strfree(hTitle);
@@ -221,7 +221,7 @@ HB_FUNC(ISMOUSEOVER)
 {
   RECT Rect;
   POINT Pt;
-  GetWindowRect((HWND)HB_PARHANDLE(1), &Rect);
+  GetWindowRect(hwg_par_HWND(1), &Rect);
   GetCursorPos(&Pt);
   hb_retl(PtInRect(&Rect, Pt));
 }
@@ -258,7 +258,7 @@ HB_FUNC(MAKELONG)
 
 HB_FUNC(GETWINDOWLONG)
 {
-  hb_retnl(GetWindowLong((HWND)HB_PARHANDLE(1), hb_parni(2)));
+  hb_retnl(GetWindowLong(hwg_par_HWND(1), hb_parni(2)));
 }
 
 HB_FUNC(SETBKMODE)

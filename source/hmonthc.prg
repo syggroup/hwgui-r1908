@@ -211,7 +211,7 @@ HB_FUNC ( GETMONTHCALENDARDATE ) // adaptation of function GetDatePicker of file
    SYSTEMTIME st;
    char szDate[9];
 
-   SendMessage((HWND)HB_PARHANDLE(1), MCM_GETCURSEL, 0, (LPARAM)&st);
+   SendMessage(hwg_par_HWND(1), MCM_GETCURSEL, 0, (LPARAM)&st);
 
    hb_dateStrPut( szDate, st.wYear, st.wMonth, st.wDay );
    szDate[8] = 0;

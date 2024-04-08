@@ -525,7 +525,7 @@ HB_FUNC(_GETOPENFILENAME)
   ZeroMemory(&ofn, sizeof(ofn));
   ofn.hInstance = GetModuleHandle(NULL);
   ofn.lStructSize = sizeof(ofn);
-  ofn.hwndOwner = (HB_ISNIL(1) ? GetActiveWindow() : (HWND)HB_PARHANDLE(1));
+  ofn.hwndOwner = (HB_ISNIL(1) ? GetActiveWindow() : hwg_par_HWND(1));
   ofn.lpstrTitle = HB_PARSTR(3, &hTitle, NULL);
   ofn.lpstrFilter = HB_PARSTR(4, &hFilter, NULL);
   ofn.Flags = OFN_EXPLORER | OFN_ALLOWMULTISELECT;

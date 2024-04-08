@@ -101,7 +101,7 @@ HB_FUNC(INVALIDATERECT)
     rc.bottom = hb_parni(6);
   }
 
-  InvalidateRect((HWND)HB_PARHANDLE(1),          // handle of window with changed update region
+  InvalidateRect(hwg_par_HWND(1),          // handle of window with changed update region
                  (hb_pcount() > 2) ? &rc : NULL, // address of rectangle coordinates
                  hb_parni(2)                     // erase-background flag
   );
@@ -205,7 +205,7 @@ HB_FUNC(ROUNDRECT)
 /*
 HB_FUNC(REDRAWWINDOW)
 {
-   RedrawWindow((HWND)HB_PARHANDLE(1), // handle of window
+   RedrawWindow(hwg_par_HWND(1), // handle of window
          NULL,                  // address of structure with update rectangle
          NULL,                  // handle of update region
          (UINT)hb_parni(2) // array of redraw flags
@@ -227,7 +227,7 @@ HB_FUNC(REDRAWWINDOW)
     rc.right = x + w + 1;
     rc.bottom = y + h + 1;
   }
-  RedrawWindow((HWND)HB_PARHANDLE(1),          // handle of window
+  RedrawWindow(hwg_par_HWND(1),          // handle of window
                (hb_pcount() > 3) ? &rc : NULL, // address of structure with update rectangle
                NULL,                           // handle of update region
                (UINT)hb_parni(2)               // array of redraw flags
@@ -343,7 +343,7 @@ HB_FUNC(LOADBITMAP)
  */
 HB_FUNC(WINDOW2BITMAP)
 {
-  HWND hWnd = (HWND)HB_PARHANDLE(1);
+  HWND hWnd = hwg_par_HWND(1);
   BOOL lFull = (HB_ISNIL(2)) ? 0 : (BOOL)hb_parl(2);
   HDC hDC = (lFull) ? GetWindowDC(hWnd) : GetDC(hWnd);
   HDC hDCmem = CreateCompatibleDC(hDC);
@@ -477,7 +477,7 @@ HB_FUNC(SPREADBITMAP)
 
   SelectObject(hDCmem, hBitmap);
   GetObject(hBitmap, sizeof(BITMAP), (LPVOID)&bitmap);
-  GetClientRect((HWND)HB_PARHANDLE(2), &rc);
+  GetClientRect(hwg_par_HWND(2), &rc);
 
   while (rc.top < rc.bottom)
   {
@@ -508,7 +508,7 @@ HB_FUNC(CENTERBITMAP)
 
   SelectObject(hDCmem, hBitmap);
   GetObject(hBitmap, sizeof(BITMAP), (LPVOID)&bitmap);
-  GetClientRect((HWND)HB_PARHANDLE(2), &rc);
+  GetClientRect(hwg_par_HWND(2), &rc);
 
   FillRect(hDC, &rc, hBrush);
   BitBlt(hDC, (rc.right - bitmap.bmWidth) / 2, (rc.bottom - bitmap.bmHeight) / 2, bitmap.bmWidth, bitmap.bmHeight,
@@ -720,12 +720,12 @@ HB_FUNC(DELETEOBJECT)
 
 HB_FUNC(GETDC)
 {
-  HB_RETHANDLE(GetDC((HWND)HB_PARHANDLE(1)));
+  HB_RETHANDLE(GetDC(hwg_par_HWND(1)));
 }
 
 HB_FUNC(RELEASEDC)
 {
-  HB_RETHANDLE(ReleaseDC((HWND)HB_PARHANDLE(1), (HDC)HB_PARHANDLE(2)));
+  HB_RETHANDLE(ReleaseDC(hwg_par_HWND(1), (HDC)HB_PARHANDLE(2)));
 }
 
 HB_FUNC(GETDRAWITEMINFO)
@@ -1139,14 +1139,14 @@ HB_FUNC(COPYRECT)
 
 HB_FUNC(GETWINDOWDC)
 {
-  HWND hWnd = (HWND)HB_PARHANDLE(1);
+  HWND hWnd = hwg_par_HWND(1);
   HDC hDC = GetWindowDC(hWnd);
   HB_RETHANDLE(hDC);
 }
 
 HB_FUNC(MODIFYSTYLE)
 {
-  HWND hWnd = (HWND)HB_PARHANDLE(1);
+  HWND hWnd = hwg_par_HWND(1);
   DWORD dwStyle = GetWindowLongPtr((HWND)hWnd, GWL_STYLE);
   DWORD a = hb_parnl(2);
   DWORD b = hb_parnl(3);

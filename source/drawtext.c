@@ -27,14 +27,14 @@ HB_FUNC(DEFINEPAINTSTRU)
 HB_FUNC(BEGINPAINT)
 {
   PAINTSTRUCT *pps = (PAINTSTRUCT *)HB_PARHANDLE(2);
-  HDC hDC = BeginPaint((HWND)HB_PARHANDLE(1), pps);
+  HDC hDC = BeginPaint(hwg_par_HWND(1), pps);
   HB_RETHANDLE(hDC);
 }
 
 HB_FUNC(ENDPAINT)
 {
   PAINTSTRUCT *pps = (PAINTSTRUCT *)HB_PARHANDLE(2);
-  EndPaint((HWND)HB_PARHANDLE(1), pps);
+  EndPaint(hwg_par_HWND(1), pps);
   hb_xfree(pps);
 }
 
@@ -175,7 +175,7 @@ HB_FUNC(GETCLIENTRECT)
   PHB_ITEM aMetr = hb_itemArrayNew(4);
   PHB_ITEM temp;
 
-  GetClientRect((HWND)HB_PARHANDLE(1), &rc);
+  GetClientRect(hwg_par_HWND(1), &rc);
 
   temp = hb_itemPutNL(NULL, rc.left);
   hb_itemArrayPut(aMetr, 1, temp);
@@ -203,7 +203,7 @@ HB_FUNC(GETWINDOWRECT)
   PHB_ITEM aMetr = hb_itemArrayNew(4);
   PHB_ITEM temp;
 
-  GetWindowRect((HWND)HB_PARHANDLE(1), &rc);
+  GetWindowRect(hwg_par_HWND(1), &rc);
 
   temp = hb_itemPutNL(NULL, rc.left);
   hb_itemArrayPut(aMetr, 1, temp);
@@ -288,7 +288,7 @@ HB_FUNC(GETBKCOLOR)
 HB_FUNC(GETTEXTSIZE)
 {
 
-   HDC hdc = GetDC((HWND)HB_PARHANDLE(1));
+   HDC hdc = GetDC(hwg_par_HWND(1));
    SIZE size;
    PHB_ITEM aMetr = hb_itemArrayNew(2);
    PHB_ITEM temp;
@@ -343,7 +343,7 @@ HB_FUNC(EXTTEXTOUT)
 HB_FUNC(WRITESTATUSWINDOW)
 {
   void *hString;
-  SendMessage((HWND)HB_PARHANDLE(1), SB_SETTEXT, hb_parni(2), (LPARAM)HB_PARSTR(3, &hString, NULL));
+  SendMessage(hwg_par_HWND(1), SB_SETTEXT, hb_parni(2), (LPARAM)HB_PARSTR(3, &hString, NULL));
   hb_strfree(hString);
 }
 
@@ -388,7 +388,7 @@ HB_FUNC(CREATEFONT)
  */
 HB_FUNC(SETCTRLFONT)
 {
-  SendDlgItemMessage((HWND)HB_PARHANDLE(1), hb_parni(2), WM_SETFONT, (WPARAM)HB_PARHANDLE(3), 0L);
+  SendDlgItemMessage(hwg_par_HWND(1), hb_parni(2), WM_SETFONT, (WPARAM)HB_PARHANDLE(3), 0L);
 }
 
 HB_FUNC(OEMTOANSI)

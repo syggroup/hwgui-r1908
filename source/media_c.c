@@ -53,7 +53,7 @@ HB_FUNC(MCISENDSTRING)
   void *hCommand;
 
   hb_retnl((LONG)mciSendString(HB_PARSTR(1, &hCommand, NULL), cBuffer, HB_SIZEOFARRAY(cBuffer),
-                               (HB_ISNIL(3)) ? GetActiveWindow() : (HWND)HB_PARHANDLE(3)));
+                               (HB_ISNIL(3)) ? GetActiveWindow() : hwg_par_HWND(3)));
   if (!HB_ISNIL(2))
   {
     HB_STORSTR(cBuffer, 2);
@@ -137,7 +137,7 @@ HB_FUNC(NMCIPLAY)
 HB_FUNC(NMCIWINDOW)
 {
   MCI_ANIM_WINDOW_PARMS mciWindowParms;
-  HWND hWnd = (HWND)HB_PARHANDLE(2);
+  HWND hWnd = hwg_par_HWND(2);
 
   mciWindowParms.hWnd = hWnd;
 
