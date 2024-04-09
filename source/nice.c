@@ -233,7 +233,7 @@ HB_FUNC(RGB)
 
 HB_FUNC(DRAW_GRADIENT)
 {
-  Draw_Gradient((HDC)HB_PARHANDLE(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7),
+  Draw_Gradient(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7),
                 hb_parni(8));
 }
 
@@ -245,7 +245,7 @@ HB_FUNC(GRADIENT)
   }
   // void Gradient( HDC hdc, int x, int y, int w, int h, int color1, int color2, int nmode )
 
-  Gradient((HDC)HB_PARHANDLE(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5),
+  Gradient(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5),
            (hb_pcount() > 5 && !HB_ISNIL(6)) ? hb_parni(6) : 16777215,
            (hb_pcount() > 6 && !HB_ISNIL(7)) ? hb_parni(7) : 16777215,
            (hb_pcount() > 7 && !HB_ISNIL(8)) ? hb_parni(8) : 0);
@@ -263,5 +263,5 @@ HB_FUNC(GETWINDOWLONG)
 
 HB_FUNC(SETBKMODE)
 {
-  hb_retni(SetBkMode((HDC)HB_PARHANDLE(1), hb_parni(2)));
+  hb_retni(SetBkMode(hwg_par_HDC(1), hb_parni(2)));
 }

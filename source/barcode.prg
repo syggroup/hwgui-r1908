@@ -912,7 +912,7 @@ METHOD InitMatrix25(lCheck) CLASS BarCode
 
 HB_FUNC(RICH_RECTANGLE)
 {
-  hb_retl(Rectangle((HDC)HB_PARHANDLE(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+  hb_retl(Rectangle(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
 }
 
 // (1) = pen style (2) = pen width (3) = pen color
@@ -923,7 +923,7 @@ HB_FUNC(RICH_CREATEPEN)
 
 HB_FUNC(RICH_SELECTOBJECT)
 {
-  HB_RETHANDLE(SelectObject((HDC)HB_PARHANDLE(1), (HGDIOBJ)HB_PARHANDLE(2)));
+  HB_RETHANDLE(SelectObject(hwg_par_HDC(1), (HGDIOBJ)HB_PARHANDLE(2)));
 }
 
 // (1) = brush color

@@ -531,7 +531,7 @@ HB_FUNC(FI_FI2DIBEX)
 HB_FUNC(FI_DRAW)
 {
   FIBITMAP *dib = (FIBITMAP *)HB_PARHANDLE(1);
-  HDC hDC = (HDC)HB_PARHANDLE(2);
+  HDC hDC = hwg_par_HDC(2);
   int nWidth = (int)hb_parnl(3), nHeight = (int)hb_parnl(4);
   int nDestWidth, nDestHeight;
   POINT pp[2];

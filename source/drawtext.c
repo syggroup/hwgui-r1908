@@ -40,7 +40,7 @@ HB_FUNC(ENDPAINT)
 
 HB_FUNC(DELETEDC)
 {
-  DeleteDC((HDC)HB_PARHANDLE(1));
+  DeleteDC(hwg_par_HDC(1));
 }
 
 HB_FUNC(TEXTOUT)
@@ -49,7 +49,7 @@ HB_FUNC(TEXTOUT)
   HB_SIZE nLen;
   LPCTSTR lpText = HB_PARSTR(4, &hText, &nLen);
 
-  TextOut((HDC)HB_PARHANDLE(1), // handle of device context
+  TextOut(hwg_par_HDC(1), // handle of device context
           hb_parni(2),          // x-coordinate of starting position
           hb_parni(3),          // y-coordinate of starting position
           lpText,               // address of string
@@ -81,7 +81,7 @@ HB_FUNC(DRAWTEXT)
     Array2Rect(hb_param(3, HB_IT_ARRAY), &rc);
   }
 
-  heigh = DrawText((HDC)HB_PARHANDLE(1), // handle of device context
+  heigh = DrawText(hwg_par_HDC(1), // handle of device context
                    lpText,               // address of string
                    nLen,                 // number of characters in string
                    &rc, uFormat);
@@ -104,7 +104,7 @@ HB_FUNC(GETTEXTMETRIC)
   PHB_ITEM aMetr = hb_itemArrayNew(8);
   PHB_ITEM temp;
 
-  GetTextMetrics((HDC)HB_PARHANDLE(1), // handle of device context
+  GetTextMetrics(hwg_par_HDC(1), // handle of device context
                  &tm                   // address of text metrics structure
   );
 
@@ -154,7 +154,7 @@ HB_FUNC(GETTEXTSIZE)
   PHB_ITEM aMetr = hb_itemArrayNew(2);
   PHB_ITEM temp;
 
-  GetTextExtentPoint32((HDC)HB_PARHANDLE(1), lpText, nLen, &sz);
+  GetTextExtentPoint32(hwg_par_HDC(1), lpText, nLen, &sz);
   hb_strfree(hText);
 
   temp = hb_itemPutNL(NULL, sz.cx);
@@ -253,7 +253,7 @@ HB_FUNC(GETCLIENTAREA)
 
 HB_FUNC(SETTEXTCOLOR)
 {
-  COLORREF crColor = SetTextColor((HDC)HB_PARHANDLE(1), // handle of device context
+  COLORREF crColor = SetTextColor(hwg_par_HDC(1), // handle of device context
                                   (COLORREF)hb_parnl(2) // text color
   );
   hb_retnl((LONG)crColor);
@@ -261,7 +261,7 @@ HB_FUNC(SETTEXTCOLOR)
 
 HB_FUNC(SETBKCOLOR)
 {
-  COLORREF crColor = SetBkColor((HDC)HB_PARHANDLE(1), // handle of device context
+  COLORREF crColor = SetBkColor(hwg_par_HDC(1), // handle of device context
                                 (COLORREF)hb_parnl(2) // text color
   );
   hb_retnl((LONG)crColor);
@@ -269,19 +269,19 @@ HB_FUNC(SETBKCOLOR)
 
 HB_FUNC(SETTRANSPARENTMODE)
 {
-  int iMode = SetBkMode((HDC)HB_PARHANDLE(1), // handle of device context
+  int iMode = SetBkMode(hwg_par_HDC(1), // handle of device context
                         (hb_parl(2)) ? TRANSPARENT : OPAQUE);
   hb_retl(iMode == TRANSPARENT);
 }
 
 HB_FUNC(GETTEXTCOLOR)
 {
-  hb_retnl((LONG)GetTextColor((HDC)HB_PARHANDLE(1)));
+  hb_retnl((LONG)GetTextColor(hwg_par_HDC(1)));
 }
 
 HB_FUNC(GETBKCOLOR)
 {
-  hb_retnl((LONG)GetBkColor((HDC)HB_PARHANDLE(1)));
+  hb_retnl((LONG)GetBkColor(hwg_par_HDC(1)));
 }
 
 /*
@@ -328,7 +328,7 @@ HB_FUNC(EXTTEXTOUT)
   rc.right = hb_parni(6);
   rc.bottom = hb_parni(7);
 
-  ExtTextOut((HDC)HB_PARHANDLE(1), // handle to device context
+  ExtTextOut(hwg_par_HDC(1), // handle to device context
              hb_parni(2),          // x-coordinate of reference point
              hb_parni(3),          // y-coordinate of reference point
              ETO_OPAQUE,           // text-output options
@@ -349,7 +349,7 @@ HB_FUNC(WRITESTATUSWINDOW)
 
 HB_FUNC(WINDOWFROMDC)
 {
-  HB_RETHANDLE(WindowFromDC((HDC)HB_PARHANDLE(1)));
+  HB_RETHANDLE(WindowFromDC(hwg_par_HDC(1)));
 }
 
 /* CreateFont(fontName, nWidth, hHeight [,fnWeight] [,fdwCharSet], [,fdwItalic] [,fdwUnderline] [,fdwStrikeOut])
@@ -426,12 +426,12 @@ HB_FUNC(CREATERECTRGNINDIRECT)
 
 HB_FUNC(EXTSELECTCLIPRGN)
 {
-  hb_retni(ExtSelectClipRgn((HDC)HB_PARHANDLE(1), (HRGN)HB_PARHANDLE(2), hb_parni(3)));
+  hb_retni(ExtSelectClipRgn(hwg_par_HDC(1), (HRGN)HB_PARHANDLE(2), hb_parni(3)));
 }
 
 HB_FUNC(SELECTCLIPRGN)
 {
-  hb_retni(SelectClipRgn((HDC)HB_PARHANDLE(1), (HRGN)HB_PARHANDLE(2)));
+  hb_retni(SelectClipRgn(hwg_par_HDC(1), (HRGN)HB_PARHANDLE(2)));
 }
 
 HB_FUNC(CREATEFONTINDIRECT)

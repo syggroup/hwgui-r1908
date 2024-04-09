@@ -90,34 +90,34 @@ HB_FUNC(STARTDOC)
   di.lpszDatatype = NULL;
   di.fwType = 0;
 
-  hb_retnl((LONG)StartDoc((HDC)HB_PARHANDLE(1), &di));
+  hb_retnl((LONG)StartDoc(hwg_par_HDC(1), &di));
 
   hb_strfree(hStr);
 }
 
 HB_FUNC(ENDDOC)
 {
-  EndDoc((HDC)HB_PARHANDLE(1));
+  EndDoc(hwg_par_HDC(1));
 }
 
 HB_FUNC(STARTPAGE)
 {
-  hb_retnl((LONG)StartPage((HDC)HB_PARHANDLE(1)));
+  hb_retnl((LONG)StartPage(hwg_par_HDC(1)));
 }
 
 HB_FUNC(ENDPAGE)
 {
-  hb_retnl((LONG)EndPage((HDC)HB_PARHANDLE(1)));
+  hb_retnl((LONG)EndPage(hwg_par_HDC(1)));
 }
 
 HB_FUNC(DELETEDC)
 {
-  DeleteDC((HDC)HB_PARHANDLE(1));
+  DeleteDC(hwg_par_HDC(1));
 }
 
 HB_FUNC(GETDEVICEAREA)
 {
-  HDC hDC = (HDC)HB_PARHANDLE(1);
+  HDC hDC = hwg_par_HDC(1);
   PHB_ITEM temp;
   PHB_ITEM aMetr = hb_itemArrayNew(9);
 
@@ -176,7 +176,7 @@ HB_FUNC(DRAWTEXT)
     rc.right = hb_parni(5);
     rc.bottom = hb_parni(6);
 
-    DrawText((HDC)HB_PARHANDLE(1), // handle of device context
+    DrawText(hwg_par_HDC(1), // handle of device context
              lpText,               // address of string
              nSize,                // number of characters in string
              &rc, hb_parni(7));
