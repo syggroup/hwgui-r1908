@@ -185,7 +185,7 @@ HB_FUNC(FILLRECT)
   rc.right = hb_parni(4);
   rc.bottom = hb_parni(5);
 
-  FillRect(HB_ISPOINTER(1) ? (HDC)HB_PARHANDLE(1) : (HDC)hb_parnl(1), // handle to device context
+  FillRect(HB_ISPOINTER(1) ? (HDC)HB_PARHANDLE(1) : (HDC)(LONG_PTR)hb_parnl(1), // handle to device context
            &rc,                                                       // pointer to structure with rectangle
            (HBRUSH)HB_PARHANDLE(6)                                    // handle to brush
   );
@@ -251,18 +251,18 @@ HB_FUNC(DRAWBUTTON)
   }
   else
   {
-    FillRect(hDC, &rc, (HBRUSH)(((iType & 2) ? COLOR_3DSHADOW : COLOR_3DHILIGHT) + 1));
+    FillRect(hDC, &rc, (HBRUSH)(LONG_PTR)(((iType & 2) ? COLOR_3DSHADOW : COLOR_3DHILIGHT) + 1));
     rc.left++;
     rc.top++;
-    FillRect(hDC, &rc, (HBRUSH)(((iType & 2) ? COLOR_3DHILIGHT : (iType & 4) ? COLOR_3DDKSHADOW : COLOR_3DSHADOW) + 1));
+    FillRect(hDC, &rc, (HBRUSH)(LONG_PTR)(((iType & 2) ? COLOR_3DHILIGHT : (iType & 4) ? COLOR_3DDKSHADOW : COLOR_3DSHADOW) + 1));
     rc.right--;
     rc.bottom--;
     if (iType & 4)
     {
-      FillRect(hDC, &rc, (HBRUSH)(((iType & 2) ? COLOR_3DSHADOW : COLOR_3DLIGHT) + 1));
+      FillRect(hDC, &rc, (HBRUSH)(LONG_PTR)(((iType & 2) ? COLOR_3DSHADOW : COLOR_3DLIGHT) + 1));
       rc.left++;
       rc.top++;
-      FillRect(hDC, &rc, (HBRUSH)(((iType & 2) ? COLOR_3DLIGHT : COLOR_3DSHADOW) + 1));
+      FillRect(hDC, &rc, (HBRUSH)(LONG_PTR)(((iType & 2) ? COLOR_3DLIGHT : COLOR_3DSHADOW) + 1));
       rc.right--;
       rc.bottom--;
     }
@@ -307,7 +307,7 @@ HB_FUNC(LOADIMAGE)
   void *hString = NULL;
 
   HB_RETHANDLE(LoadImage(
-      HB_ISNIL(1) ? GetModuleHandle(NULL) : (HINSTANCE)hb_parnl(1), // handle of the instance that contains the image
+      HB_ISNIL(1) ? GetModuleHandle(NULL) : (HINSTANCE)(LONG_PTR)hb_parnl(1), // handle of the instance that contains the image
       HB_ISNUM(2) ? MAKEINTRESOURCE(hb_parni(2)) : HB_PARSTR(2, &hString, NULL), // name or identifier of image
       (UINT)hb_parni(3),                                                         // type of image
       hb_parni(4),                                                               // desired width
@@ -468,7 +468,7 @@ HB_FUNC(DRAWTRANSPARENTBITMAP)
  */
 HB_FUNC(SPREADBITMAP)
 {
-  HDC hDC = HB_ISPOINTER(1) ? (HDC)HB_PARHANDLE(1) : (HDC)hb_parnl(1);
+  HDC hDC = HB_ISPOINTER(1) ? (HDC)HB_PARHANDLE(1) : (HDC)(LONG_PTR)hb_parnl(1);
   HDC hDCmem = CreateCompatibleDC(hDC);
   DWORD dwraster = (HB_ISNIL(4)) ? SRCCOPY : (DWORD)hb_parnl(4);
   HBITMAP hBitmap = (HBITMAP)HB_PARHANDLE(3);
@@ -587,7 +587,7 @@ HB_FUNC(OPENBITMAP)
   hfbm = CreateFile(HB_PARSTR(1, &hString, NULL), GENERIC_READ, FILE_SHARE_READ, (LPSECURITY_ATTRIBUTES)NULL,
                     OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, (HANDLE)NULL);
   hb_strfree(hString);
-  if (((long int)hfbm) <= 0)
+  if (((long int)(LONG_PTR)hfbm) <= 0)
   {
     HB_RETHANDLE(NULL);
     return;
@@ -763,7 +763,7 @@ HB_FUNC(GETDRAWITEMINFO)
   hb_itemArrayPut(aMetr, 7, temp);
   hb_itemRelease(temp);
 
-  temp = hb_itemPutNL(NULL, (LONG)lpdis->hwndItem);
+  temp = hb_itemPutNL(NULL, (LONG_PTR)lpdis->hwndItem);
   hb_itemArrayPut(aMetr, 8, temp);
   hb_itemRelease(temp);
 
