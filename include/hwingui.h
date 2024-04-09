@@ -130,10 +130,13 @@ HB_EXTERN_END
 
 #ifdef HWG_USE_POINTER_ITEM
    #define hwg_par_HWND(n)             (HWND)hb_parptr(n)
+   #define hwg_par_HDC(n)              (HDC)hb_parptr(n)
 #else
    #ifdef __XHARBOUR__
       #define hwg_par_HWND(n)          ((HWND)(LONG)hb_parnl(n))
+      #define hwg_par_HDC(n)           ((HDC)(LONG)hb_parnl(n))
    #else
       #define hwg_par_HWND(n)          ((HWND)(HB_PTRUINT)hb_parnint(n))
+      #define hwg_par_HDC(n)           ((HDC)(HB_PTRUINT)hb_parnint(n))
    #endif
 #endif
