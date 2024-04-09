@@ -209,7 +209,7 @@ HB_FUNC(REGCREATEKEYEX)
 
   if (nErr == ERROR_SUCCESS)
   {
-    hb_stornl((LONG)hkResult, 8);
+    hb_stornl((LONG_PTR)hkResult, 8);
     hb_stornl((LONG)dwDisposition, 9);
   }
   hb_retnl(nErr);
