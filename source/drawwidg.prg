@@ -458,7 +458,7 @@ METHOD AddWindow(oWnd, lFull) CLASS HBitmap
    LOCAL aBmpSize
 
    ::handle := Window2Bitmap(oWnd:handle, lFull)
-   ::name := LTrim(hb_valToStr(oWnd:handle))
+   ::name := LTrim(hb_valToStr(oWnd:handle)) // TODO: verificar o que ocorre quando for tipo P
    aBmpSize  := GetBitmapSize(::handle)
    ::nWidth  := aBmpSize[ 1 ]
    ::nHeight := aBmpSize[ 2 ]
