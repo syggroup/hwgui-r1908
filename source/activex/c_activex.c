@@ -81,7 +81,7 @@ HB_FUNC(CREATEACTIVEX)
                             ISNIL(6) ? CW_USEDEFAULT : hb_parni(6),              // nTop
                             ISNIL(7) ? 544 : hb_parni(7),                        // nWidth
                             ISNIL(8) ? 375 : hb_parni(8),                        // nHeight
-                            ISNIL(9) ? HWND_DESKTOP : (HWND)hb_parnl(9),         // oParent:handle TODO: hwg_par_HWND
+                            ISNIL(9) ? HWND_DESKTOP : hwg_par_HWND(9),           // oParent:handle
                             // ISNIL(10) ? NULL                : (HMENU) hb_parnl(10),  // Id
                             // GetModuleHandle(0),
                             0, 0, NULL);
