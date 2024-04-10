@@ -61,7 +61,7 @@ FUNCTION InitControls( oWnd, lNoActivate )
             pArray[ i ]:lInit := .T.
          ENDIF
 //           IF empty(pArray[i]:handle)// <= 0
-         IF IF( hb_IsPointer(pArray[i]:handle), ptrtoulong( pArray[ i ]:handle ), pArray[ i ]:handle ) <= 0
+         IF IF( hb_IsPointer(pArray[i]:handle), ptrtoulong( pArray[ i ]:handle ), pArray[ i ]:handle ) <= 0 // TODO: verificar
             pArray[ i ]:handle := GetDlgItem( oWnd:handle, pArray[ i ]:id )
 
             // writelog( "InitControl2"+str(pArray[i]:handle)+"/"+pArray[i]:classname )
@@ -81,7 +81,7 @@ FUNCTION InitControls( oWnd, lNoActivate )
 
 FUNCTION FindParent( hCtrl, nLevel )
    LOCAL i, oParent, hParent := GetParent( hCtrl )
-   IF hParent > 0
+   IF !Empty(hParent)
       IF ( i := AScan( HDialog():aModalDialogs, { | o | o:handle == hParent } ) ) != 0
          RETURN HDialog():aModalDialogs[ i ]
       ELSEIF ( oParent := HDialog():FindDialog( hParent ) ) != Nil
