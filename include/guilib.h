@@ -21,13 +21,13 @@
    #define HB_PUSHITEM( i )         hb_vmPushPointer( ( void * )i )
 #else
    //#ifdef __XHARBOUR__
-      #define HB_RETHANDLE( h )        hb_retnl( ( LONG ) ( h ) )
-      #define HB_PARHANDLE( n )        ( ( LONG ) hb_parnl( n ) )
-      #define HB_STOREHANDLE( h, n )   hb_stornl( ( LONG ) ( h ), n )
-      #define HB_PUTHANDLE( i, h )     hb_itemPutNL( i, ( LONG ) ( h ) )
-      #define HB_GETHANDLE( i )        ( ( LONG ) hb_itemGetNL( i ) )
-      #define HB_GETPTRHANDLE( i ,n )  hb_arrayGetNL( i , n )
-      #define HB_PUSHITEM( i )         hb_vmPushLong( ( LONG )i )
+      #define HB_RETHANDLE( h )        hb_retnl( ( LONG_PTR ) ( h ) )
+      #define HB_PARHANDLE( n )        ( ( LONG_PTR ) hb_parnl( n ) )
+      #define HB_STOREHANDLE( h, n )   hb_stornl( ( LONG_PTR ) ( h ), n )
+      #define HB_PUTHANDLE( i, h )     hb_itemPutNL( i, ( LONG_PTR ) ( h ) )
+      #define HB_GETHANDLE( i )        ( ( LONG_PTR ) hb_itemGetNL( i ) )
+      #define HB_GETPTRHANDLE( i ,n )  ( ( LONG_PTR ) hb_arrayGetNL( i , n ) )
+      #define HB_PUSHITEM( i )         hb_vmPushLong( ( LONG_PTR )i )
    //#else
    //   #define HB_RETHANDLE( h )        hb_retnint( ( HB_PTRUINT ) ( h ) )
    //   #define HB_PARHANDLE( n )        ( ( HB_PTRUINT ) hb_parnint( n ) )
