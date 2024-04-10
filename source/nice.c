@@ -137,7 +137,7 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSymTest));
     hb_vmPushNil();            /* places NIL at self */
-    hb_vmPushLong((LONG)hWnd); /* pushes parameters on to the hvm stack */
+    hb_vmPushLong((LONG_PTR)hWnd); /* pushes parameters on to the hvm stack */
     hb_vmPushLong((LONG)message);
     hb_vmPushLong((LONG)wParam);
     hb_vmPushLong((LONG)lParam);
@@ -166,7 +166,7 @@ HB_FUNC(CREATEROUNDRECTRGN)
 
 HB_FUNC(SETWINDOWRGN)
 {
-  hb_retni(SetWindowRgn(hwg_par_HWND(1), (HRGN)hb_parnl(2), hb_parl(3)));
+  hb_retni(SetWindowRgn(hwg_par_HWND(1), (HRGN)(LONG_PTR)hb_parnl(2), hb_parl(3)));
 }
 
 HB_FUNC(HWG_REGNICE)

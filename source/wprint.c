@@ -630,7 +630,7 @@ HB_FUNC(HWG_SETDOCUMENTPROPERTIES)
               hb_stornl((LONG)pDevMode->dmPaperWidth, 10);
             }
 
-            Result = (BOOL)ResetDC(hDC, pDevMode);
+            Result = (BOOL)(INT_PTR)ResetDC(hDC, pDevMode);
           }
 
           hb_xfree(pDevMode);

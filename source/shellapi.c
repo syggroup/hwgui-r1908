@@ -157,7 +157,7 @@ HB_FUNC(SHELLEXECUTE)
     lpDirectory = TEXT("C:\\");
   }
 
-  hb_retnl((LONG)ShellExecute(GetActiveWindow(), HB_PARSTRDEF(2, &hOperation, NULL), HB_PARSTR(1, &hFile, NULL),
+  hb_retnl((LONG_PTR)ShellExecute(GetActiveWindow(), HB_PARSTRDEF(2, &hOperation, NULL), HB_PARSTR(1, &hFile, NULL),
                               HB_PARSTR(3, &hParameters, NULL), lpDirectory,
                               HB_ISNUM(5) ? hb_parni(5) : SW_SHOWNORMAL));
 

@@ -418,7 +418,7 @@ HB_FUNC(GETDESKTOPHEIGHT)
 
 HB_FUNC(GETHELPDATA)
 {
-  hb_retnl((LONG)(((HELPINFO FAR *)hb_parnl(1))->hItemHandle));
+  hb_retnl((LONG_PTR)(((HELPINFO FAR *)(LONG_PTR)hb_parnl(1))->hItemHandle));
 }
 
 HB_FUNC(WINHELP)
@@ -711,7 +711,7 @@ HB_FUNC(HEDITEX_CTLCOLOR)
 
   if (!pObject)
   {
-    hb_retnl((LONG)GetStockObject(HOLLOW_BRUSH));
+    hb_retnl((LONG_PTR)GetStockObject(HOLLOW_BRUSH));
     SetBkMode(hdc, TRANSPARENT);
     return;
   }

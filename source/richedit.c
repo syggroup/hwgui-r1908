@@ -426,7 +426,7 @@ HB_FUNC(PRINTRTF)
 
 HB_FUNC(HWG_INITRICHPROC)
 {
-  wpOrigRichProc = (WNDPROC)SetWindowLong(hwg_par_HWND(1), GWLP_WNDPROC, (LONG)RichSubclassProc);
+  wpOrigRichProc = (WNDPROC)(LONG_PTR)SetWindowLong(hwg_par_HWND(1), GWLP_WNDPROC, (LONG_PTR)RichSubclassProc);
 }
 
 LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -465,7 +465,7 @@ LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 
 static DWORD CALLBACK RichStreamOutCallback(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
 {
-  HANDLE pFile = (HANDLE)dwCookie;
+  HANDLE pFile = (HANDLE)(LONG_PTR)dwCookie;
   DWORD dwW;
   HB_SYMBOL_UNUSED(pcb);
 
@@ -501,7 +501,7 @@ HB_FUNC(SAVERICHEDIT)
     hb_retni(0);
     return;
   }
-  es.dwCookie = (DWORD)hFile;
+  es.dwCookie = (DWORD_PTR)hFile;
   es.pfnCallback = RichStreamOutCallback;
 
   SendMessage(hWnd, EM_STREAMOUT, (WPARAM)SF_RTF, (LPARAM)&es);
@@ -526,7 +526,7 @@ HB_FUNC(LOADRICHEDIT)
     hb_retni(0);
     return;
   }
-  es.dwCookie = (DWORD)hFile;
+  es.dwCookie = (DWORD_PTR)hFile;
   es.pfnCallback = EditStreamCallback;
   SendMessage(hWnd, EM_STREAMIN, (WPARAM)SF_RTF, (LPARAM)&es);
   CloseHandle(hFile);

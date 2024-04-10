@@ -80,7 +80,7 @@ HB_FUNC(HWG__ADDMENUITEM)
 
     uFlags |= MF_POPUP;
     InsertMenu((HMENU)HB_PARHANDLE(1), hb_parni(3), uFlags, // menu item flags
-               (UINT)hSubMenu, // menu item identifier or handle of drop-down menu or submenu
+               (UINT_PTR)hSubMenu, // menu item identifier or handle of drop-down menu or submenu
                lpNewItem       // menu item content
     );
     HB_RETHANDLE(hSubMenu);
@@ -373,7 +373,7 @@ HB_FUNC(CREATEACCELERATORTABLE)
  */
 HB_FUNC(DESTROYACCELERATORTABLE)
 {
-  hb_retl(DestroyAcceleratorTable((HACCEL)hb_parnl(1)));
+  hb_retl(DestroyAcceleratorTable((HACCEL)(LONG_PTR)hb_parnl(1)));
 }
 
 HB_FUNC(DRAWMENUBAR)
