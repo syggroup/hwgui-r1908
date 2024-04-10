@@ -136,7 +136,7 @@ HB_EXTERN_END
       #define hwg_par_HWND(n)          ((HWND)(LONG)hb_parnl(n))
       #define hwg_par_HDC(n)           ((HDC)(LONG)hb_parnl(n))
    #else
-      #define hwg_par_HWND(n)          ((HWND)(HB_PTRUINT)hb_parnint(n))
-      #define hwg_par_HDC(n)           ((HDC)(HB_PTRUINT)hb_parnint(n))
+      #define hwg_par_HWND(n)          ((HWND)HB_PARHANDLE(n)) //((HWND)(HB_PTRUINT)hb_parnint(n))
+      #define hwg_par_HDC(n)           ((HDC)HB_PARHANDLE(n)) //((HDC)(HB_PTRUINT)hb_parnint(n))
    #endif
 #endif
