@@ -174,7 +174,7 @@ METHOD INIT() CLASS HControl
         ::oparent:lSuspendMsgsHandling := .F.
       ENDIF
       IF ::lnoThemes      
-          HWG_SETWINDOWTHEME(::handle, 0) 
+          HWG_SETWINDOWTHEME(::handle, 0)
       ENDIF   
 
       ::lInit := .T.
@@ -212,7 +212,7 @@ METHOD SetFocus( lValid ) CLASS HControl
    IF !IsWindowEnabled(::Handle)
        ::oParent:lSuspendMsgsHandling  := .T.
       // GetSkip(::oParent, ::handle, , 1)
-       SendMessage(GetActiveWindow(), WM_NEXTDLGCTL, 0, 0) 
+       SendMessage(GetActiveWindow(), WM_NEXTDLGCTL, 0, 0)
        ::oParent:lSuspendMsgsHandling  := lSuspend
    ELSE
       ::oParent:lSuspendMsgsHandling  := !Empty( lValid )
@@ -235,7 +235,7 @@ METHOD Enable() CLASS HControl
    EnableWindow( ::handle, .T. )
    IF ::oParent:lGetSkipLostFocus .AND. !lEnable .AND. Hwg_BitaND(HWG_GETWINDOWSTYLE(::Handle), WS_TABSTOP) > 0
       nNext := Ascan( ::oParent:aControls, { | o | PtrtouLong( o:Handle ) = PtrtouLong( GetFocus() ) } )
-      nPos  := Ascan( ::oParent:acontrols, { | o | PtrtouLong( o:Handle ) = PtrtouLong( ::handle ) } )  
+      nPos  := Ascan( ::oParent:acontrols, { | o | PtrtouLong( o:Handle ) = PtrtouLong( ::handle ) } )
       IF nPos < nNext
          SendMessage(GetActiveWindow(), WM_NEXTDLGCTL, ::handle, 1)
       ENDIF    
@@ -875,13 +875,13 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS  HStatic
 METHOD SetValue(cValue) CLASS HStatic
 
     ::Auto_Size(cValue)
-    IF ::Title != cValue 
-       IF ::backstyle = TRANSPARENT .AND. ::Title != cValue .AND. isWindowVisible(::handle) 
+    IF ::Title != cValue
+       IF ::backstyle = TRANSPARENT .AND. ::Title != cValue .AND. isWindowVisible(::handle)
           RedrawWindow( ::oParent:Handle, RDW_NOERASE + RDW_INVALIDATE + RDW_ERASENOW, ::nLeft, ::nTop, ::nWidth, ::nHeight )
           InvalidateRect( ::oParent:Handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight  )
        ENDIF
        SetDlgItemText( ::oParent:handle, ::id, cValue )
-   ELSEIF ::backstyle != TRANSPARENT       
+   ELSEIF ::backstyle != TRANSPARENT
       SetDlgItemText( ::oParent:handle, ::id, cValue )
    ENDIF
    ::Title := cValue
@@ -1333,7 +1333,7 @@ METHOD Redefine(oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ;
 METHOD SetBitmap(hBitMap) CLASS HButtonEX
 
    DEFAULT hBitmap TO ::hBitmap
-   IF hb_IsNumeric(hBitmap)
+   IF hb_IsNumeric(hBitmap) // TODO: verificar
       ::hBitmap := hBitmap
       SendMessage(::handle, BM_SETIMAGE, IMAGE_BITMAP, ::hBitmap)
       REDRAWWINDOW( ::Handle, RDW_NOERASE + RDW_INVALIDATE + RDW_INTERNALPAINT )
@@ -1344,7 +1344,7 @@ METHOD SetBitmap(hBitMap) CLASS HButtonEX
 METHOD SetIcon( hIcon ) CLASS HButtonEX
 
    DEFAULT hIcon TO ::hIcon
-   IF hb_IsNumeric(::hIcon)
+   IF hb_IsNumeric(::hIcon) // TODO: verificar
       ::hIcon := hIcon
       SendMessage(::handle, BM_SETIMAGE, IMAGE_ICON, ::hIcon)
       REDRAWWINDOW( ::Handle, RDW_NOERASE + RDW_INVALIDATE + RDW_INTERNALPAINT)
@@ -1362,9 +1362,9 @@ METHOD INIT() CLASS HButtonEx
       //SetWindowObject(::handle, Self)
       //HWG_INITBUTTONPROC(::handle)
       // call in HBUTTON CLASS
-      
+
       //::SetDefaultColor(, , .F.)
-      IF HB_IsNumeric(::handle) .and. ::handle > 0
+      IF HB_IsNumeric(::handle) .and. ::handle > 0 // TODO: verificar
          nbs := HWG_GETWINDOWSTYLE(::handle)
 
          ::m_nTypeStyle :=  GetTheStyle(nbs, BS_TYPEMASK)
@@ -1857,7 +1857,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
          captionRect[ 3 ] -= ::PictureMargin 
        ENDIF  
        DrawTheIcon( ::handle, dc, bHasTitle, @itemRect, @captionRect, bIsPressed, bIsDisabled, ::hIcon, ::hbitmap, ::iStyle )
-   ELSE    
+   ELSE
        InflateRect( @captionRect, - 3, - 3 )       
    ENDIF
    itemRect1    := aclone(itemRect)
