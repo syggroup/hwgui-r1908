@@ -406,7 +406,7 @@ HB_FUNC(DRAWTRANSPARENTBITMAP)
 {
   HDC hDC = hwg_par_HDC(1);
   HBITMAP hBitmap = (HBITMAP)HB_PARHANDLE(2);
-  COLORREF trColor = (HB_ISNIL(5)) ? 0x00FFFFFF : (COLORREF)hb_parnl(5);
+  COLORREF trColor = (HB_ISNIL(5)) ? 0x00FFFFFF : hwg_par_COLORREF(5);
   COLORREF crOldBack = SetBkColor(hDC, 0x00FFFFFF);
   COLORREF crOldText = SetTextColor(hDC, 0);
   HBITMAP bitmapTrans;
@@ -690,19 +690,19 @@ HB_FUNC(CREATEPEN)
 {
   HB_RETHANDLE(CreatePen(hb_parni(1),          // pen style
                          hb_parni(2),          // pen width
-                         (COLORREF)hb_parnl(3) // pen color
+                         hwg_par_COLORREF(3) // pen color
                          ));
 }
 
 HB_FUNC(CREATESOLIDBRUSH)
 {
-  HB_RETHANDLE(CreateSolidBrush((COLORREF)hb_parnl(1) // brush color
+  HB_RETHANDLE(CreateSolidBrush(hwg_par_COLORREF(1) // brush color
                                 ));
 }
 
 HB_FUNC(CREATEHATCHBRUSH)
 {
-  HB_RETHANDLE(CreateHatchBrush(hb_parni(1), (COLORREF)hb_parnl(2)));
+  HB_RETHANDLE(CreateHatchBrush(hb_parni(1), hwg_par_COLORREF(2)));
 }
 
 HB_FUNC(SELECTOBJECT)

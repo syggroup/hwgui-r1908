@@ -254,7 +254,7 @@ HB_FUNC(GETCLIENTAREA)
 HB_FUNC(SETTEXTCOLOR)
 {
   COLORREF crColor = SetTextColor(hwg_par_HDC(1), // handle of device context
-                                  (COLORREF)hb_parnl(2) // text color
+                                  hwg_par_COLORREF(2) // text color
   );
   hb_retnl((LONG)crColor);
 }
@@ -262,7 +262,7 @@ HB_FUNC(SETTEXTCOLOR)
 HB_FUNC(SETBKCOLOR)
 {
   COLORREF crColor = SetBkColor(hwg_par_HDC(1), // handle of device context
-                                (COLORREF)hb_parnl(2) // text color
+                                hwg_par_COLORREF(2) // text color
   );
   hb_retnl((LONG)crColor);
 }

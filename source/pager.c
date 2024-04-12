@@ -47,7 +47,7 @@ HB_FUNC(PAGERFORWARDMOUSE)
 HB_FUNC(PAGERSETBKCOLOR)
 {
   HWND m_hWnd = hwg_par_HWND(1);
-  COLORREF clr = (COLORREF)hb_parnl(2);
+  COLORREF clr = hwg_par_COLORREF(2);
 
 #ifndef __GNUC__
   hb_retnl((LONG)Pager_SetBkColor(m_hWnd, clr));
