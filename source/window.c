@@ -515,7 +515,7 @@ HB_FUNC(SENDMESSAGE)
                              (WPARAM)hb_parnl(3),   // first message parameter
                              lpText            ? (LPARAM)lpText
                              : HB_ISPOINTER(4) ? (LPARAM)HB_PARHANDLE(4)
-                                               : (LPARAM)hb_parnl(4) // second message parameter
+                                               : hwg_par_LPARAM(4) // second message parameter
                              ));
   hb_strfree(hText);
 }
@@ -526,7 +526,7 @@ HB_FUNC(POSTMESSAGE)
   hb_retnl((LONG)PostMessage(hwg_par_HWND(1), // handle of destination window
                              (UINT)hb_parni(2),     // message to send
                              HB_ISPOINTER(3) ? (WPARAM)HB_PARHANDLE(3) : (WPARAM)hb_parnl(3), // first message parameter
-                             (LPARAM)hb_parnl(4) // second message parameter
+                             hwg_par_LPARAM(4) // second message parameter
                              ));
 }
 
