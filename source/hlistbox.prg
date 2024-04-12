@@ -139,7 +139,7 @@ METHOD Init() CLASS HListBox
          ENDIF
          SendMessage(::handle, LB_RESETCONTENT, 0, 0)
          FOR i := 1 TO Len( ::aItems )
-            ListboxAddString( ::handle, ::aItems[ i ] )
+            ListboxAddString( ::handle, ::aItems[i] )
          NEXT
          ListboxSetString( ::handle, ::value )
       ENDIF
@@ -312,7 +312,7 @@ METHOD Valid(oCtrl) CLASS HListBox
          res := Eval( ::bLostFocus, ::value, Self )
          ::oparent:lSuspendMsgsHandling := .F.
          IF !res
-            ::SetFocus( .T. ) //( ::handle )
+            ::SetFocus( .T. ) //(::handle)
             IF oDlg != Nil
                oDlg:nLastKey := 0
             ENDIF

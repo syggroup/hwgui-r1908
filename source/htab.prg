@@ -757,7 +757,7 @@ METHOD Notify( lParam ) CLASS HTab
      /*
    CASE nCode == TCN_CLICK
       IF !Empty(::pages) .AND. ::nActive > 0 .AND. ::pages[::nActive]:enabled
-         SetFocus( ::handle )
+         SetFocus(::handle)
          IF hb_IsBlock(::bAction)
             Eval( ::bAction, Self, GetCurrentTab(::handle) )
          ENDIF
@@ -898,7 +898,7 @@ METHOD OnEvent( msg, wParam, lParam ) CLASS HTab
       ::oparent:lSuspendMsgsHandling := .F.
    ENDIF
    IF !( ( msg == WM_COMMAND .OR. msg == WM_NOTIFY) .AND. ::oParent:lSuspendMsgsHandling .AND. ::lSuspendMsgsHandling )
-      IF msg == WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. PtrtouLong( GetParent( ::GetParentForm():nInitFocus ) ) == PtrtouLong( ::Handle )
+      IF msg == WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. PtrtouLong( GetParent( ::GetParentForm():nInitFocus ) ) == PtrtouLong(::Handle)
           GetSkip(::oParent, ::GetParentForm():nInitFocus, , 0)
           ::GetParentForm():nInitFocus := 0
       ENDIF

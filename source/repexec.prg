@@ -165,16 +165,16 @@ FUNCTION RecalcForm( aPaintRep, nFormWidth )
    LOCAL hDC, aMetr, aItem, i
    hDC := GetDC(GetActiveWindow())
    aMetr := GetDeviceArea(hDC)
-   aPaintRep[ FORM_XKOEF ] := ( aMetr[ 1 ] - XINDENT ) / aPaintRep[ FORM_WIDTH ]
+   aPaintRep[ FORM_XKOEF ] := ( aMetr[1] - XINDENT ) / aPaintRep[ FORM_WIDTH ]
    ReleaseDC(GetActiveWindow(), hDC)
 
-   IF nFormWidth != aMetr[ 1 ] - XINDENT
+   IF nFormWidth != aMetr[1] - XINDENT
       FOR i := 1 TO Len( aPaintRep[ FORM_ITEMS ] )
          aItem := aPaintRep[ FORM_ITEMS, i ]
-         aItem[ ITEM_X1 ] := Round(aItem[ ITEM_X1 ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0)
-         aItem[ ITEM_Y1 ] := Round(aItem[ ITEM_Y1 ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0)
-         aItem[ ITEM_WIDTH ] := Round(aItem[ ITEM_WIDTH ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0)
-         aItem[ ITEM_HEIGHT ] := Round(aItem[ ITEM_HEIGHT ] * ( aMetr[ 1 ] - XINDENT ) / nFormWidth, 0)
+         aItem[ ITEM_X1 ] := Round(aItem[ ITEM_X1 ] * ( aMetr[1] - XINDENT ) / nFormWidth, 0)
+         aItem[ ITEM_Y1 ] := Round(aItem[ ITEM_Y1 ] * ( aMetr[1] - XINDENT ) / nFormWidth, 0)
+         aItem[ ITEM_WIDTH ] := Round(aItem[ ITEM_WIDTH ] * ( aMetr[1] - XINDENT ) / nFormWidth, 0)
+         aItem[ ITEM_HEIGHT ] := Round(aItem[ ITEM_HEIGHT ] * ( aMetr[1] - XINDENT ) / nFormWidth, 0)
       NEXT
    ENDIF
    RETURN Nil
@@ -196,8 +196,8 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
    ENDIF
 
    aPrnCoors := GetDeviceArea(oPrinter:hDCPrn)
-   prnXCoef := ( aPrnCoors[ 1 ] / aPaintRep[ FORM_WIDTH ] ) / aPaintRep[ FORM_XKOEF ]
-   prnYCoef := ( aPrnCoors[ 2 ] / aPaintRep[ FORM_HEIGHT ] ) / aPaintRep[ FORM_XKOEF ]
+   prnXCoef := ( aPrnCoors[1] / aPaintRep[ FORM_WIDTH ] ) / aPaintRep[ FORM_XKOEF ]
+   prnYCoef := ( aPrnCoors[2] / aPaintRep[ FORM_HEIGHT ] ) / aPaintRep[ FORM_XKOEF ]
    // writelog( oPrinter:cPrinterName + str(aPrnCoors[1])+str(aPrnCoors[2])+" / "+str(aPaintRep[FORM_WIDTH])+" "+str(aPaintRep[FORM_HEIGHT])+str(aPaintRep[FORM_XKOEF])+" / "+str(prnXCoef)+str(prnYCoef) )
 
    IF Type("oFontStandard") = "U"

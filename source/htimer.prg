@@ -97,9 +97,9 @@ FUNCTION TimerProc(hWnd, idTimer, Time)
 
    HB_SYMBOL_UNUSED(hWnd)
 
-   IF i != 0 .AND. HTimer():aTimers[ i ]:value > 0 .AND. HTimer():aTimers[ i ]:bAction != Nil .AND.;
+   IF i != 0 .AND. HTimer():aTimers[i]:value > 0 .AND. HTimer():aTimers[i]:bAction != Nil .AND.;
       hb_IsBlock(HTimer():aTimers[i]:bAction)
-      Eval( HTimer():aTimers[ i ]:bAction, HTimer():aTimers[i], time )
+      Eval( HTimer():aTimers[i]:bAction, HTimer():aTimers[i], time )
    ENDIF
 
    RETURN Nil
@@ -110,7 +110,7 @@ FUNCTION TimerProc(hWnd, idTimer, Time)
    LOCAL oTimer, i
 
    FOR i := 1 TO Len( HTimer():aTimers )
-      oTimer := HTimer():aTimers[ i ]
+      oTimer := HTimer():aTimers[i]
       KillTimer( oTimer:oParent:handle, oTimer:id )
    NEXT
 

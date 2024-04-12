@@ -130,7 +130,7 @@ METHOD SelectClipRgn( pRgn ) CLASS HDC
 METHOD fillsolidrect( lpRect, clr ) CLASS HDC
 
    SetBkColor(::m_hDC, clr)
-   ExtTextOut( ::m_hDC, 0, 0, lpRect[ 1 ], lpRect[ 2 ], lpRect[ 3 ], lpRect[ 4 ], NIL )
+   ExtTextOut( ::m_hDC, 0, 0, lpRect[1], lpRect[2], lpRect[3], lpRect[4], NIL )
 
    RETURN NIL
 
@@ -148,13 +148,13 @@ METHOD SelectObject(xMode) CLASS HDC
 
 METHOD DrawText( strText, Rect, dwFlags ) CLASS HDC
 
-   DrawText( ::m_hDC, strText, Rect[ 1 ], Rect[ 2 ], Rect[ 3 ], Rect[ 4 ], dwFlags )
+   DrawText( ::m_hDC, strText, Rect[1], Rect[2], Rect[3], Rect[4], dwFlags )
 
    RETURN NIL
 
 METHOD fillrect( lpRect, clr ) CLASS HDC
 
-   FillRect( ::m_hDC, lpRect[ 1 ], lpRect[ 2 ], lpRect[ 3 ], lpRect[ 4 ], clr )
+   FillRect( ::m_hDC, lpRect[1], lpRect[2], lpRect[3], lpRect[4], clr )
 
    RETURN NIL
 
@@ -269,7 +269,7 @@ METHOD SetArcDirection( nArcDirection )
 
 
 METHOD PIE(arect, apt1, apt2)
-   RETURN PIE(::m_hdc, arect[ 1 ], arect[ 2 ], arect[ 3 ], arect[ 4 ], apt1[ 1 ], apt1[ 2 ], apt2[ 1 ], apt2[ 2 ])
+   RETURN PIE(::m_hdc, arect[1], arect[2], arect[3], arect[4], apt1[1], apt1[2], apt2[1], apt2[2])
 
 METHOD SetROP2( nDrawMode )
 

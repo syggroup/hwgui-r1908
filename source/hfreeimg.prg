@@ -46,9 +46,9 @@ METHOD AddFile(name) CLASS HFreeImage
       NEXT
    #else
       FOR i := 1 TO Len( ::aImages )
-         IF ::aImages[ i ]:name == name
-            ::aImages[ i ]:nCounter ++
-            RETURN ::aImages[ i ]
+         IF ::aImages[i]:name == name
+            ::aImages[i]:nCounter++
+            RETURN ::aImages[i]
          ENDIF
       NEXT
    #endif
@@ -56,8 +56,8 @@ METHOD AddFile(name) CLASS HFreeImage
       RETURN Nil
    ENDIF
    ::name := name
-   ::nWidth  := FI_GetWidth( ::handle )
-   ::nHeight := FI_GetHeight( ::handle )
+   ::nWidth  := FI_GetWidth(::handle)
+   ::nHeight := FI_GetHeight(::handle)
    AAdd(::aImages, Self)
 
    RETURN Self
@@ -67,9 +67,9 @@ METHOD AddFromVar( cImage, cType ) CLASS HFreeImage
    IF Empty( ::handle := FI_LoadFromMem( cImage, cType ) )
       RETURN Nil
    ENDIF
-   ::name := LTrim( Str( ::handle ) )
-   ::nWidth  := FI_GetWidth( ::handle )
-   ::nHeight := FI_GetHeight( ::handle )
+   ::name := LTrim( Str(::handle) )
+   ::nWidth  := FI_GetWidth(::handle)
+   ::nHeight := FI_GetHeight(::handle)
    AAdd(::aImages, Self)
 
    RETURN Self
@@ -78,8 +78,8 @@ METHOD FromBitmap(oBitmap) CLASS HFreeImage
 
    ::handle := FI_Bmp2FI( oBitmap:handle )
    ::name := LTrim( Str( oBitmap:handle ) )
-   ::nWidth  := FI_GetWidth( ::handle )
-   ::nHeight := FI_GetHeight( ::handle )
+   ::nWidth  := FI_GetWidth(::handle)
+   ::nHeight := FI_GetHeight(::handle)
    AAdd(::aImages, Self)
 
    RETURN Self
@@ -109,7 +109,7 @@ METHOD Release() CLASS HFreeImage
          NEXT
       #else
          FOR i := 1 TO nlen
-            IF ::aImages[ i ]:handle == ::handle
+            IF ::aImages[i]:handle == ::handle
                FI_Unload(::handle)
                IF ::hBitmap != Nil
                   DeleteObject(::hBitmap)
@@ -182,7 +182,7 @@ METHOD ReplaceImage(Image, cType)
 
 METHOD Paint( lpdis ) CLASS HSayFImage
    LOCAL drawInfo := GetDrawItemInfo( lpdis )
-   LOCAL hDC := drawInfo[ 3 ] // , x1 := drawInfo[ 4 ], y1 := drawInfo[ 5 ], x2 := drawInfo[ 6 ], y2 := drawInfo[ 7 ]
+   LOCAL hDC := drawInfo[3] // , x1 := drawInfo[4], y1 := drawInfo[5], x2 := drawInfo[6], y2 := drawInfo[7]
 
    IF ::oImage != Nil
       IF ::nZoom == Nil
@@ -199,9 +199,9 @@ METHOD Paint( lpdis ) CLASS HSayFImage
    LOCAL i
 
    FOR i := 1 TO Len( HFreeImage():aImages )
-      FI_Unload(HFreeImage():aImages[ i ]:handle)
-      IF HFreeImage():aImages[ i ]:hBitmap != Nil
-         DeleteObject(HFreeImage():aImages[ i ]:hBitmap)
+      FI_Unload(HFreeImage():aImages[i]:handle)
+      IF HFreeImage():aImages[i]:hBitmap != Nil
+         DeleteObject(HFreeImage():aImages[i]:hBitmap)
       ENDIF
    NEXT
    FI_End()

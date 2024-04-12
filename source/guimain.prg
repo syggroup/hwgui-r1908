@@ -26,17 +26,17 @@ FUNCTION InitObjects( oWnd )
    IF !EMPTY( LoadArray )
       FOR i := 1 TO Len( LoadArray )
          IF !EMPTY( oWnd:Handle )
-            IF __ObjHasMsg( LoadArray[ i ],"INIT")
-               LoadArray[ i ]:Init( oWnd )
-               LoadArray[ i ]:lInit := .T.
+            IF __ObjHasMsg( LoadArray[i],"INIT")
+               LoadArray[i]:Init( oWnd )
+               LoadArray[i]:lInit := .T.
             ENDIF
          ENDIF
       NEXT   
    ENDIF
    IF pArray != Nil
       FOR i := 1 TO Len( pArray )
-         IF __ObjHasMsg( pArray[ i ], "INIT" )
-            pArray[ i ]:Init( oWnd )
+         IF __ObjHasMsg( pArray[i], "INIT" )
+            pArray[i]:Init( oWnd )
          ENDIF
       NEXT
    ENDIF
@@ -51,25 +51,25 @@ FUNCTION InitControls( oWnd, lNoActivate )
    IF pArray != Nil
       FOR i := 1 TO Len( pArray )
          // writelog( "InitControl1"+str(pArray[i]:handle)+"/"+pArray[i]:classname+" "+str(pArray[i]:nWidth)+"/"+str(pArray[i]:nHeight) )
-         IF Empty( pArray[ i ]:handle ) .AND. !lNoActivate
+         IF Empty( pArray[i]:handle ) .AND. !lNoActivate
 //         IF empty(pArray[i]:handle ) .AND. !lNoActivate
-            lInit := pArray[ i ]:lInit
-            pArray[ i ]:lInit := .T.
-            pArray[ i ]:Activate()
-            pArray[ i ]:lInit := lInit
+            lInit := pArray[i]:lInit
+            pArray[i]:lInit := .T.
+            pArray[i]:Activate()
+            pArray[i]:lInit := lInit
          ELSEIF !lNoActivate
-            pArray[ i ]:lInit := .T.
+            pArray[i]:lInit := .T.
          ENDIF
 //           IF empty(pArray[i]:handle)// <= 0
-         IF IF( hb_IsPointer(pArray[i]:handle), ptrtoulong( pArray[ i ]:handle ), pArray[ i ]:handle ) <= 0 // TODO: verificar
-            pArray[ i ]:handle := GetDlgItem( oWnd:handle, pArray[ i ]:id )
+         IF IF( hb_IsPointer(pArray[i]:handle), ptrtoulong( pArray[i]:handle ), pArray[i]:handle ) <= 0 // TODO: verificar
+            pArray[i]:handle := GetDlgItem( oWnd:handle, pArray[i]:id )
 
             // writelog( "InitControl2"+str(pArray[i]:handle)+"/"+pArray[i]:classname )
          ENDIF
-         IF !Empty( pArray[ i ]:aControls )
-            InitControls( pArray[ i ] )
+         IF !Empty( pArray[i]:aControls )
+            InitControls( pArray[i] )
          ENDIF
-         pArray[ i ]:Init()
+         pArray[i]:Init()
           // nando required to classes that inherit the class of patterns hwgui
          IF !pArray[i]:lInit
             pArray[i]:Super:Init()
@@ -83,7 +83,7 @@ FUNCTION FindParent( hCtrl, nLevel )
    LOCAL i, oParent, hParent := GetParent( hCtrl )
    IF !Empty(hParent)
       IF ( i := AScan( HDialog():aModalDialogs, { | o | o:handle == hParent } ) ) != 0
-         RETURN HDialog():aModalDialogs[ i ]
+         RETURN HDialog():aModalDialogs[i]
       ELSEIF ( oParent := HDialog():FindDialog( hParent ) ) != Nil
          RETURN oParent
       ELSEIF ( oParent := HWindow():FindWindow( hParent ) ) != Nil
@@ -113,9 +113,9 @@ FUNCTION WriteStatus( oWnd, nPart, cText, lRedraw )
    LOCAL aControls, i
    aControls := oWnd:aControls
    IF ( i := AScan( aControls, { | o | o:ClassName() == "HSTATUS" } ) ) > 0
-      WriteStatusWindow( aControls[ i ]:handle, nPart - 1, cText )
+      WriteStatusWindow( aControls[i]:handle, nPart - 1, cText )
       IF lRedraw != Nil .AND. lRedraw
-         RedrawWindow( aControls[ i ]:handle, RDW_ERASE + RDW_INVALIDATE )
+         RedrawWindow( aControls[i]:handle, RDW_ERASE + RDW_INVALIDATE )
       ENDIF
    ENDIF
    RETURN Nil
@@ -124,9 +124,9 @@ FUNCTION ReadStatus( oWnd, nPart )
    LOCAL aControls, i, ntxtLen, cText := ""
    aControls := oWnd:aControls
    IF ( i := AScan( aControls, { | o | o:ClassName() == "HSTATUS" } ) ) > 0
-      ntxtLen := SendMessage(aControls[ i ]:handle, SB_GETTEXTLENGTH, nPart - 1, 0)
+      ntxtLen := SendMessage(aControls[i]:handle, SB_GETTEXTLENGTH, nPart - 1, 0)
       cText := Replicate(Chr(0), ntxtLen)
-      SendMessage(aControls[ i ]:handle, SB_GETTEXT, nPart - 1, @cText)
+      SendMessage(aControls[i]:handle, SB_GETTEXT, nPart - 1, @cText)
    ENDIF
    RETURN cText
 
@@ -168,10 +168,10 @@ FUNCTION MsgGet( cTitle, cText, nStyle, x, y, nDlgStyle, cResIni )
 
    @ 20, 10 SAY cText SIZE 260, 22
    @ 20, 35 GET cRes  SIZE 260, 26 STYLE WS_TABSTOP + ES_AUTOHSCROLL + nStyle
-   oModDlg:aControls[ 2 ]:Anchor := 11
+   oModDlg:aControls[2]:Anchor := 11
    @ 20, 95 BUTTON "Ok" ID IDOK SIZE 100, 32
    @ 180, 95 BUTTON "Cancel" ID IDCANCEL SIZE 100, 32
-   oModDlg:aControls[ 4 ]:Anchor := 9
+   oModDlg:aControls[4]:Anchor := 9
    
    ACTIVATE DIALOG oModDlg ON ACTIVATE { || IIF( !EMPTY( cRes ), KEYB_EVENT( VK_END ), .T. ) }
 
@@ -241,7 +241,7 @@ FUNCTION WChoice(arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel, 
          NEXT
       ELSE
          FOR i := 1 TO aLen
-            nLen := Max( nLen, Len( arr[ i ] ) )
+            nLen := Max( nLen, Len( arr[i] ) )
          NEXT
       ENDIF
    ENDIF
@@ -252,11 +252,11 @@ FUNCTION WChoice(arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel, 
    aArea := GetDeviceArea(hDC)
    aRect := GetWindowRect( GetActiveWindow() )
    ReleaseDC(GetActiveWindow(), hDC)
-   height := ( aMetr[ 1 ] + 1 ) * aLen + 4 + addY + 8
-   IF height > aArea[ 2 ] - aRect[ 2 ] - nTop - 60
-      height := aArea[ 2 ] - aRect[ 2 ] - nTop - 60
+   height := ( aMetr[1] + 1 ) * aLen + 4 + addY + 8
+   IF height > aArea[2] - aRect[2] - nTop - 60
+      height := aArea[2] - aRect[2] - nTop - 60
    ENDIF
-   width := Max( aMetr[ 2 ] * 2 * nLen + addX, minWidth )
+   width := Max( aMetr[2] * 2 * nLen + addX, minWidth )
 
    INIT DIALOG oDlg TITLE cTitle ;
         At nLeft, nTop           ;
@@ -360,7 +360,7 @@ FUNCTION ShowProgress( nStep, maxPos, nRange, cTitle, oWnd, x1, y1, width, heigh
 
 FUNCTION EndWindow()
    IF HWindow():GetMain() != Nil
-      SendMessage(HWindow():aWindows[ 1 ]:handle, WM_SYSCOMMAND, SC_CLOSE, 0)
+      SendMessage(HWindow():aWindows[1]:handle, WM_SYSCOMMAND, SC_CLOSE, 0)
    ENDIF
    RETURN Nil
 

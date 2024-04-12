@@ -105,13 +105,13 @@ METHOD EndGroup(nSelected) CLASS HRadioGroup
       IF nSelected != 0 .AND. nSelected <= nLen
          IF ::oGroupCurrent:aButtons[ nLen ]:handle > 0
             CheckRadioButton( ::oGroupCurrent:aButtons[ nLen ]:oParent:handle, ;
-                              ::oGroupCurrent:aButtons[ 1 ]:id,    ;
+                              ::oGroupCurrent:aButtons[1]:id,    ;
                               ::oGroupCurrent:aButtons[ nLen ]:id, ;
                               ::oGroupCurrent:aButtons[ nSelected ]:id )
          ELSE
             ::oGroupCurrent:aButtons[ nLen ]:bInit :=                     ;
                                                       &( "{|o|CheckRadioButton(o:oParent:handle," +           ;
-                                                                                LTrim( Str( ::oGroupCurrent:aButtons[ 1 ]:id ) ) + "," +    ;
+                                                                                LTrim( Str( ::oGroupCurrent:aButtons[1]:id ) ) + "," +    ;
                                                                                 LTrim( Str( ::oGroupCurrent:aButtons[ nLen ]:id ) ) + "," + ;
                                                                                 LTrim( Str( ::oGroupCurrent:aButtons[ nSelected ]:id ) ) + ")}" )
          ENDIF
@@ -142,7 +142,7 @@ METHOD SetValue(nValue) CLASS HRadioGroup
 
    IF ( nLen := Len( ::aButtons ) ) > 0 .AND. nValue > 0 .AND. nValue <= nLen
       CheckRadioButton( ::aButtons[ nLen ]:oParent:handle, ;
-                        ::aButtons[ 1 ]:id,    ;
+                        ::aButtons[1]:id,    ;
                         ::aButtons[ nLen ]:id, ;
                         ::aButtons[ nValue ]:id )
       ::nValue := nValue
@@ -151,7 +151,7 @@ METHOD SetValue(nValue) CLASS HRadioGroup
       ENDIF
    ELSEIF nLen > 0
       CheckRadioButton( ::aButtons[ nlen ]:oParent:handle, ;
-            ::aButtons[ 1 ]:id,    ;
+            ::aButtons[1]:id,    ;
             ::aButtons[ nLen ]:id, ;
             0 )
    ENDIF
@@ -181,7 +181,7 @@ METHOD Enable() CLASS HRadioGroup
    LOCAL i, nLen := Len( ::aButtons )
 
    FOR i = 1 TO nLen
-       ::aButtons[ i ]:Enable()
+       ::aButtons[i]:Enable()
     NEXT
    RETURN Nil
 
@@ -189,7 +189,7 @@ METHOD Disable() CLASS HRadioGroup
    LOCAL i, nLen := Len( ::aButtons )
 
    FOR i = 1 TO nLen
-       ::aButtons[ i ]:Disable()
+       ::aButtons[i]:Disable()
     NEXT
    RETURN Nil
 

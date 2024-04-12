@@ -97,5 +97,5 @@ METHOD Close() CLASS HAnimation
    RETURN Nil
 
 METHOD Destroy() CLASS HAnimation
-   Animate_Destroy( ::handle )
+   Animate_Destroy(::handle)
    RETURN Nil

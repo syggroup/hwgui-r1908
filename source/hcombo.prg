@@ -897,7 +897,7 @@ RETURN .T.
 
 METHOD onChange(lForce) CLASS HComboBox
 
-   IF !SelfFocus( ::handle ) .AND. Empty( lForce )
+   IF !SelfFocus(::handle) .AND. Empty( lForce )
       RETURN Nil
    ENDIF
    IF !isWindowVisible(::handle)
@@ -1230,7 +1230,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS hCheckComboBox
 
    ELSEIF msg == WM_LBUTTONDOWN
 
-      rcClient := GetClientRect( ::handle )
+      rcClient := GetClientRect(::handle)
 
       pt := {, }
       pt[1] = LOWORD(lParam)
@@ -1560,7 +1560,7 @@ RETURN Self
 
 METHOD MeasureItem( l ) CLASS hCheckComboBox
 
-   LOCAL dc := HCLIENTDC():new( ::handle )
+   LOCAL dc := HCLIENTDC():new(::handle)
    LOCAL lpMeasureItemStruct := GETMEASUREITEMINFO( l )
    LOCAL metrics
    LOCAL pFont

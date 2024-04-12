@@ -101,7 +101,7 @@ METHOD Init CLASS HQhtm
       ELSEIF !Empty( ::resname )
          QHTM_LoadRes( ::handle,::resname )
       ENDIF
-      QHTM_FormCallBack( ::handle )
+      QHTM_FormCallBack(::handle)
    ENDIF
 
 Return Nil
@@ -172,7 +172,7 @@ METHOD Init() CLASS HQhtmButton
       SetCtrlFont( ::oParent:handle, ::id, GetStockObject(SYSTEM_FONT) )
    ENDIF
    SetWindowText( ::handle,::cHtml )
-   QHTM_SetHtmlButton( ::handle )
+   QHTM_SetHtmlButton(::handle)
 
 Return Nil
 

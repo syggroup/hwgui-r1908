@@ -86,7 +86,7 @@ METHOD CalcMinMax() CLASS HGraph
       ::ymax := ::ymaxSet
    ENDIF
    FOR i := 1 TO ::nGraphs
-      nLen := Len( ::aValues[ i ] )
+      nLen := Len( ::aValues[i] )
       IF ::nType == 1
          FOR j := 1 TO nLen
             ::xmax := Max( ::xmax, ::aValues[ i, j, 1 ] )
@@ -111,7 +111,7 @@ METHOD CalcMinMax() CLASS HGraph
 
 METHOD Paint( lpdis ) CLASS HGraph
    LOCAL drawInfo := GetDrawItemInfo( lpdis )
-   LOCAL hDC := drawInfo[ 3 ], x1 := drawInfo[ 4 ], y1 := drawInfo[ 5 ], x2 := drawInfo[ 6 ], y2 := drawInfo[ 7 ]
+   LOCAL hDC := drawInfo[3], x1 := drawInfo[4], y1 := drawInfo[5], x2 := drawInfo[6], y2 := drawInfo[7]
    LOCAL i, j, nLen
    LOCAL px1, px2, py1, py2, nWidth
 
@@ -134,11 +134,11 @@ METHOD Paint( lpdis ) CLASS HGraph
       ::oPen := HPen():Add(PS_SOLID, 2, ::tcolor)
    ENDIF
 
-   FillRect( hDC, drawInfo[ 4 ], drawInfo[ 5 ], drawInfo[ 6 ], drawInfo[ 7 ], ::brush:handle )
+   FillRect( hDC, drawInfo[4], drawInfo[5], drawInfo[6], drawInfo[7], ::brush:handle )
    IF ::nType != 3
       SelectObject(hDC, ::oPenCoor:handle)
-      Drawline(hDC, x1 + ( 0 - ::xmin ) / ::scaleX, drawInfo[ 5 ] + 3, x1 + ( 0 - ::xmin ) / ::scaleX, drawInfo[ 7 ] - 3)
-      Drawline(hDC, drawInfo[ 4 ] + 3, y2 - ( 0 - ::ymin ) / ::scaleY, drawInfo[ 6 ] - 3, y2 - ( 0 - ::ymin ) / ::scaleY)
+      Drawline(hDC, x1 + ( 0 - ::xmin ) / ::scaleX, drawInfo[5] + 3, x1 + ( 0 - ::xmin ) / ::scaleX, drawInfo[7] - 3)
+      Drawline(hDC, drawInfo[4] + 3, y2 - ( 0 - ::ymin ) / ::scaleY, drawInfo[6] - 3, y2 - ( 0 - ::ymin ) / ::scaleY)
    ENDIF
 
    IF ::ymax == ::ymin .AND. ::ymax == 0
@@ -147,7 +147,7 @@ METHOD Paint( lpdis ) CLASS HGraph
 
    SelectObject(hDC, ::oPen:handle)
    FOR i := 1 TO ::nGraphs
-      nLen := Len( ::aValues[ i ] )
+      nLen := Len( ::aValues[i] )
       IF ::nType == 1
          FOR j := 2 TO nLen
             px1 := Round(x1 + ( ::aValues[ i, j - 1, 1 ] - ::xmin ) / ::scaleX, 0)

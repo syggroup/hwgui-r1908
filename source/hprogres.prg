@@ -30,13 +30,13 @@ CLASS VAR winclass   INIT "msctls_progress32"
    METHOD NewBox( cTitle, nLeft, nTop, nWidth, nHeight, maxPos, nRange, bExit, lPercent )
    METHOD Init()
    METHOD Activate()
-   METHOD Increment() INLINE UpdateProgressBar( ::handle )
+   METHOD Increment() INLINE UpdateProgressBar(::handle)
    METHOD STEP(cTitle)
    METHOD SET( cTitle, nPos )
    METHOD SetLabel( cCaption )
    METHOD SetAnimation( nAnimation ) SETGET
    METHOD Close()
-   METHOD End() INLINE DestroyWindow( ::handle )
+   METHOD End() INLINE DestroyWindow(::handle)
 
 ENDCLASS
 
@@ -121,7 +121,7 @@ METHOD STEP(cTitle)
    ::nCount ++
    IF ::nCount == ::nLimit
       ::nCount := 0
-      UpdateProgressBar( ::handle )
+      UpdateProgressBar(::handle)
       ::SET( cTitle )
       IF !EMPTY( ::lPercent )
          ::nPercent += ::maxPos  //::nLimit
@@ -170,7 +170,7 @@ METHOD SetAnimation( nAnimation ) CLASS HProgressBar
 
 METHOD Close()
 
-   DestroyWindow( ::handle )
+   DestroyWindow(::handle)
    IF ::lNewBox
       EndDialog( ::oParent:handle )
    ENDIF

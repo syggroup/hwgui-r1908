@@ -73,7 +73,7 @@ METHOD Init() CLASS HSplitter
       ::Super:Init()
       ::nHolder := 1
       SetWindowObject(::handle, Self)
-      Hwg_InitWinCtrl( ::handle )
+      Hwg_InitWinCtrl(::handle)
    ENDIF
 
    RETURN Nil
@@ -123,12 +123,12 @@ METHOD Paint() CLASS HSplitter
 
    pps := DefinePaintStru()
    hDC := BeginPaint( ::handle, pps )
-   aCoors := GetClientRect( ::handle )
+   aCoors := GetClientRect(::handle)
    
-   x1 := aCoors[ 1 ] //+ IIf( ::lVertical, 1, 2 )
-   y1 := aCoors[ 2 ] //+ IIf( ::lVertical, 2, 1 )
-   x2 := aCoors[ 3 ] //- IIf( ::lVertical, 0, 3 )
-   y2 := aCoors[ 4 ] //- IIf( ::lVertical, 3, 0 )
+   x1 := aCoors[1] //+ IIf( ::lVertical, 1, 2 )
+   y1 := aCoors[2] //+ IIf( ::lVertical, 2, 1 )
+   x2 := aCoors[3] //- IIf( ::lVertical, 0, 3 )
+   y2 := aCoors[4] //- IIf( ::lVertical, 3, 0 )
 
    SetBkMode(hDC, ::backStyle)
    IF hb_IsBlock(::bPaint)
@@ -177,7 +177,7 @@ METHOD DragAll( lScroll ) CLASS HSplitter
    lScroll := IIF(  Len( ::aLeft ) = 0 .OR. Len( ::aRight ) = 0, .F., lScroll )
 
    FOR i := 1 TO Len( ::aRight )
-      oCtrl := ::aRight[ i ]
+      oCtrl := ::aRight[i]
       IF ::lVertical
          xDiff := ::nLeft + ::nWidth - oCtrl:nLeft
          //oCtrl:nLeft += nDiff
@@ -193,7 +193,7 @@ METHOD DragAll( lScroll ) CLASS HSplitter
       //ENDIF
    NEXT
    FOR i := 1 TO Len( ::aLeft )
-      oCtrl := ::aLeft[ i ]
+      oCtrl := ::aLeft[i]
       IF ::lVertical
          xDiff := ::nLeft - ( oCtrl:nLeft + oCtrl:nWidth )
          //oCtrl:nWidth += nDiff

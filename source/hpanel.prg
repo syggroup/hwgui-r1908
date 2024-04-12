@@ -54,12 +54,12 @@ LOCAL oParent := Iif( oWndParent == Nil, ::oDefaultParent, oWndParent )
    /*
    IF __ObjHasMsg( ::oParent, "AOFFSET" ) .AND. ::oParent:Type == WND_MDI
       IF ::nWidth > ::nHeight .OR. ::nWidth == 0
-         ::oParent:aOffset[ 2 ] := ::nHeight
+         ::oParent:aOffset[2] := ::nHeight
       ELSEIF ::nHeight > ::nWidth .OR. ::nHeight == 0
          IF ::nLeft == 0
-            ::oParent:aOffset[ 1 ] := ::nWidth
+            ::oParent:aOffset[1] := ::nWidth
          ELSE
-            ::oParent:aOffset[ 3 ] := ::nWidth
+            ::oParent:aOffset[3] := ::nWidth
          ENDIF
       ENDIF
    ENDIF
@@ -101,9 +101,9 @@ METHOD Activate() CLASS HPanel
       ::ResizeOffSet( 0 )
       /*
       IF __ObjHasMsg( ::oParent, "AOFFSET" ) .AND. ::oParent:type == WND_MDI
-         aCoors := GetWindowRect( ::handle )
-         nWidth := aCoors[ 3 ] - aCoors[ 1 ]
-         nHeight:= aCoors[ 4 ] - aCoors[ 2 ]
+         aCoors := GetWindowRect(::handle)
+         nWidth := aCoors[3] - aCoors[1]
+         nHeight:= aCoors[4] - aCoors[2]
          IF nWidth > nHeight .OR. nWidth == 0
             ::oParent:aOffset[2] += nHeight
          ELSEIF nHeight > nWidth .OR. nHeight == 0
@@ -132,7 +132,7 @@ METHOD Init() CLASS HPanel
       ::Super:Init()
       ::nHolder := 1
       SetWindowObject(::handle, Self)
-      Hwg_InitWinCtrl( ::handle )
+      Hwg_InitWinCtrl(::handle)
 
       ::RedefineScrollbars()
       
@@ -192,7 +192,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
    ENDIF
    IF msg = WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. ;
        ( SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), ::Handle  ) .OR. ;
-         SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), GetParent( ::Handle ) ) )
+         SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), GetParent(::Handle) ) )
       GetSkip(::oParent, ::GetParentForm():nInitFocus , , IIF( SelfFocus( ::GetParentForm():nInitFocus, ::Handle ), 1, 0 ))
       ::GetParentForm():nInitFocus := 0
 
@@ -235,17 +235,17 @@ LOCAL pps, hDC, aCoors, oPenLight, oPenGray
 
    pps    := DefinePaintStru()
    hDC    := BeginPaint( ::handle, pps )
-   aCoors := GetClientRect( ::handle )
+   aCoors := GetClientRect(::handle)
 
    SetBkMode(hDC, ::backStyle)
    IF ::backstyle = OPAQUE .AND. ::nrePaint = -1
-      aCoors := GetClientRect( ::handle )
+      aCoors := GetClientRect(::handle)
       IF ::brush != Nil
          IF !hb_IsNumeric(::brush)
-            FillRect( hDC, aCoors[ 1 ], aCoors[ 2 ], aCoors[ 3 ], aCoors[ 4 ], ::brush:handle )
+            FillRect( hDC, aCoors[1], aCoors[2], aCoors[3], aCoors[4], ::brush:handle )
          ENDIF
       ELSE
-         FillRect( hDC, aCoors[ 1 ], aCoors[ 2 ], aCoors[ 3 ], aCoors[ 4 ], COLOR_3DFACE + 1 )
+         FillRect( hDC, aCoors[1], aCoors[2], aCoors[3], aCoors[4], COLOR_3DFACE + 1 )
       ENDIF
    ENDIF
    ::nrePaint := -1
@@ -255,9 +255,9 @@ LOCAL pps, hDC, aCoors, oPenLight, oPenGray
          oPenGray := HPen():Add(BS_SOLID, 1, GetSysColor(COLOR_3DSHADOW))
 
          SelectObject(hDC, oPenLight:handle)
-         DrawLine(hDC, 0, 1, aCoors[ 3 ] - 1, 1)
+         DrawLine(hDC, 0, 1, aCoors[3] - 1, 1)
          SelectObject(hDC, oPenGray:handle)
-         DrawLine(hDC, 0, 0, aCoors[ 3 ] - 1, 0)
+         DrawLine(hDC, 0, 0, aCoors[3] - 1, 0)
          oPenGray:Release()
          oPenLight:Release()
       ENDIF
@@ -272,17 +272,17 @@ METHOD Release() CLASS HPanel
    /*
    IF __ObjHasMsg( ::oParent, "AOFFSET" ) .AND. ::oParent:type == WND_MDI
       IF (::nWidth > ::nHeight .OR. ::nWidth == 0 ).AND. ::oParent:aOffset[2] > 0
-         ::oParent:aOffset[ 2 ] -= ::nHeight
+         ::oParent:aOffset[2] -= ::nHeight
       ELSEIF ::nHeight > ::nWidth .OR. ::nHeight == 0
          IF ::nLeft == 0
-            ::oParent:aOffset[ 1 ] -= ::nWidth
+            ::oParent:aOffset[1] -= ::nWidth
          ELSE
-            ::oParent:aOffset[ 3 ] -= ::nWidth
+            ::oParent:aOffset[3] -= ::nWidth
          ENDIF
       ENDIF
-      ::oParent:aOffset[ 1 ] := MAX( ::oParent:aOffset[ 1 ] , 0 )
-      ::oParent:aOffset[ 2 ] := MAX( ::oParent:aOffset[ 2 ] , 0 )
-      ::oParent:aOffset[ 3 ] := MAX( ::oParent:aOffset[ 3 ] , 0 )
+      ::oParent:aOffset[1] := MAX( ::oParent:aOffset[1] , 0 )
+      ::oParent:aOffset[2] := MAX( ::oParent:aOffset[2] , 0 )
+      ::oParent:aOffset[3] := MAX( ::oParent:aOffset[3] , 0 )
       SENDMESSAGE(::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ))
       ::nHeight := 0
       ::nWidth := 0
@@ -352,9 +352,9 @@ METHOD Show() CLASS HPanel
    RETURN Nil
 
 METHOD Resize() CLASS HPanel
-   LOCAL aCoors := GetWindowRect( ::handle )
-   Local nHeight := aCoors[ 4 ] - aCoors[ 2 ]
-   Local nWidth  := aCoors[ 3 ] - aCoors[ 1 ]
+   LOCAL aCoors := GetWindowRect(::handle)
+   Local nHeight := aCoors[4] - aCoors[2]
+   Local nWidth  := aCoors[3] - aCoors[1]
    
    IF !isWindowVisible(::handle) .OR.  ( ::nHeight = nHeight .AND. ::nWidth = nWidth )
       Return Nil
@@ -379,17 +379,17 @@ METHOD Resize() CLASS HPanel
       RETURN Nil
    ENDIF
    */
-   ::nWidth  := aCoors[ 3 ] - aCoors[ 1 ]
-   ::nHeight := aCoors[ 4 ] - aCoors[ 2 ]
+   ::nWidth  := aCoors[3] - aCoors[1]
+   ::nHeight := aCoors[4] - aCoors[2]
  //  RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW )  // Force a complete redraw
  
    RETURN Nil
 
 /* nMode => nMode = 0 INIT  / nMode = 1 RESIZE  / nMode = 2 SHOW  / nMode = 3 HIDE */
 METHOD ResizeOffSet( nMode ) CLASS HPanel
-   LOCAL aCoors := GetWindowRect( ::handle )
-   LOCAL nHeight := aCoors[ 4 ] - aCoors[ 2 ]
-   LOCAL nWidth  := aCoors[ 3 ] - aCoors[ 1 ]
+   LOCAL aCoors := GetWindowRect(::handle)
+   LOCAL nHeight := aCoors[4] - aCoors[2]
+   LOCAL nWidth  := aCoors[3] - aCoors[1]
    LOCAL nWinc :=  nWidth  - ::nWidth
    LOCAL nHinc :=  nHeight - ::nHeight
    LOCAL lres := .F.
@@ -404,15 +404,15 @@ METHOD ResizeOffSet( nMode ) CLASS HPanel
          lRes := .T.
       ELSEIF ::nHeight > ::nWidth .OR. ::nHeight == 0
          IF ::nLeft == 0
-            ::oParent:aOffset[ 1 ] += IIF( nMode != 3, nWinc, - nWinc )
+            ::oParent:aOffset[1] += IIF( nMode != 3, nWinc, - nWinc )
          ELSE
-            ::oParent:aOffset[ 3 ] += IIF( nMode != 3, nWinc, - nWinc )
+            ::oParent:aOffset[3] += IIF( nMode != 3, nWinc, - nWinc )
          ENDIF
          lRes := .T.
       ENDIF
-      ::oParent:aOffset[ 1 ] := MAX( ::oParent:aOffset[ 1 ] , 0 )
-      ::oParent:aOffset[ 2 ] := MAX( ::oParent:aOffset[ 2 ] , 0 )
-      ::oParent:aOffset[ 3 ] := MAX( ::oParent:aOffset[ 3 ] , 0 )
+      ::oParent:aOffset[1] := MAX( ::oParent:aOffset[1] , 0 )
+      ::oParent:aOffset[2] := MAX( ::oParent:aOffset[2] , 0 )
+      ::oParent:aOffset[3] := MAX( ::oParent:aOffset[3] , 0 )
       IF lRes
          SENDMESSAGE(::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ))
       ENDIF

@@ -269,14 +269,14 @@ METHOD Paint() CLASS HOwnButton
 
    hDC := BeginPaint( ::handle, pps )
 
-   aCoors := GetClientRect( ::handle )
+   aCoors := GetClientRect(::handle)
 
    IF ::state == OBTN_INIT
       ::state := OBTN_NORMAL
    ENDIF
-   IF ::nWidth != aCoors[ 3 ] .OR. ::nHeight != aCoors[ 4 ]
-      ::nWidth  := aCoors[ 3 ]
-      ::nHeight := aCoors[ 4 ]
+   IF ::nWidth != aCoors[3] .OR. ::nHeight != aCoors[4]
+      ::nWidth  := aCoors[3]
+      ::nHeight := aCoors[4]
    ENDIF
    IF ::Themed .AND. ::m_bFirstTime
       ::m_bFirstTime := .F.
@@ -313,20 +313,20 @@ METHOD Paint() CLASS HOwnButton
              hb_DrawThemeBackground(::hTheme, hdc, BP_PUSHBUTTON, state, aCoors, Nil)
          ELSE
             // SetBkMode(hdc, 1)
-            DrawButton( hDC, 0, 0, aCoors[ 3 ], aCoors[ 4 ], 0 )
+            DrawButton( hDC, 0, 0, aCoors[3], aCoors[4], 0 )
          ENDIF
       ELSE
          IF ::state == OBTN_NORMAL
             IF !SelfFocus( ::handle, GetFocus() )
                // NORM
-               DrawButton( hDC, 0, 0, aCoors[ 3 ], aCoors[ 4 ], 0 )
+               DrawButton( hDC, 0, 0, aCoors[3], aCoors[4], 0 )
             ELSE
-               DrawButton( hDC, 0, 0, aCoors[ 3 ], aCoors[ 4 ], 1 )
+               DrawButton( hDC, 0, 0, aCoors[3], aCoors[4], 1 )
             ENDIF
          ELSEIF ::state == OBTN_MOUSOVER
-            DrawButton( hDC, 0, 0, aCoors[ 3 ], aCoors[ 4 ], 1 )
+            DrawButton( hDC, 0, 0, aCoors[3], aCoors[4], 1 )
          ELSEIF ::state == OBTN_PRESSED
-            DrawButton( hDC, 0, 0, aCoors[ 3 ], aCoors[ 4 ], 2 )
+            DrawButton( hDC, 0, 0, aCoors[3], aCoors[4], 2 )
          ENDIF
       ENDIF
    ELSE
@@ -341,9 +341,9 @@ METHOD Paint() CLASS HOwnButton
          ENDIF
       ELSE
          IF ::state == OBTN_NORMAL
-            DrawButton( hDC, 0, 0, aCoors[ 3 ], aCoors[ 4 ], 5 )
+            DrawButton( hDC, 0, 0, aCoors[3], aCoors[4], 5 )
          ELSEIF ::state == OBTN_PRESSED
-            DrawButton( hDC, 0, 0, aCoors[ 3 ], aCoors[ 4 ], 6 )
+            DrawButton( hDC, 0, 0, aCoors[3], aCoors[4], 6 )
          ENDIF
       ENDIF
    ENDIF
@@ -356,9 +356,9 @@ METHOD Paint() CLASS HOwnButton
 METHOD DrawItems( hDC ) CLASS HOwnButton
    LOCAL x1, y1, x2, y2, aCoors
 
-   aCoors := GetClientRect( ::handle )
+   aCoors := GetClientRect(::handle)
    IF !EMPTY( ::brush )
-      FillRect( hDC, aCoors[ 1 ] + 2, aCoors[ 2 ] + 2, aCoors[ 3 ] - 2, aCoors[ 4 ] - 2, ::Brush:handle )
+      FillRect( hDC, aCoors[1] + 2, aCoors[2] + 2, aCoors[3] - 2, aCoors[4] - 2, ::Brush:handle )
    ENDIF
 
    IF ::oBitmap != Nil

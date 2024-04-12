@@ -69,16 +69,16 @@ CLASS VAR winclass INIT "SYSLISTVIEW32"
    METHOD Init()
    METHOD AddColumn( cHeader, nWidth, nJusHead, nBit ) INLINE AAdd(::aColumns, { cHeader, nWidth, nJusHead, nBit })
    METHOD Refresh()
-   METHOD RefreshLine() INLINE Listview_update(::handle, Listview_getfirstitem( ::handle ))
+   METHOD RefreshLine() INLINE Listview_update(::handle, Listview_getfirstitem(::handle))
    METHOD SetItemCount( nItem ) INLINE Listview_setitemcount( ::handle, nItem )
-   METHOD Row() INLINE Listview_getfirstitem( ::handle )
+   METHOD Row() INLINE Listview_getfirstitem(::handle)
    METHOD AddRow( a, bUpdate )
    METHOD Notify( lParam )
 
    METHOD DELETEROW() INLINE IF( ::bFlag , ( SendMessage(::HANDLE, LVM_DELETEITEM, ::iRowSelect, 0), ::bFlag := .F. ), .T. )
    METHOD DELETEALLROW() INLINE ::aItems := NIL, ::aColors := {}, SendMessage(::Handle, LVM_DELETEALLITEMS, 0, 0)
-   METHOD SELECTALL() INLINE ListViewSelectAll( ::Handle )
-   METHOD SELECTLAST() INLINE ListViewSelectLastItem( ::handle )
+   METHOD SELECTALL() INLINE ListViewSelectAll(::Handle)
+   METHOD SELECTLAST() INLINE ListViewSelectLastItem(::handle)
    METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem)
    METHOD UpdateData()
    METHOD SETVIEW( style ) INLINE LISTVIEW_SETVIEW( ::handle, style )
@@ -144,32 +144,32 @@ METHOD Init() CLASS HGridEx
       ::nHolder := 1
 
       FOR n := 1 TO Len( ::aBitmaps )
-         AAdd(aButton, LoadImage(, ::aBitmaps[ n ], IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION))
+         AAdd(aButton, LoadImage(, ::aBitmaps[n], IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION))
       NEXT
 
       IF Len( aButton ) > 0
 
-         aBmpSize := GetBitmapSize(aButton[ 1 ])
-         nmax := aBmpSize[ 3 ]
+         aBmpSize := GetBitmapSize(aButton[1])
+         nmax := aBmpSize[3]
          FOR n := 2 TO Len( aButton )
-            aBmpSize := GetBitmapSize(aButton[ n ])
-            nmax := Max( nmax, aBmpSize[ 3 ] )
+            aBmpSize := GetBitmapSize(aButton[n])
+            nmax := Max( nmax, aBmpSize[3] )
          NEXT
 
 
          IF nmax == 4
-            ::hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR4 + ILC_MASK )
+            ::hIm := CreateImageList( {} , aBmpSize[1], aBmpSize[2], 1, ILC_COLOR4 + ILC_MASK )
          ELSEIF nmax == 8
-            ::hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR8 + ILC_MASK )
+            ::hIm := CreateImageList( {} , aBmpSize[1], aBmpSize[2], 1, ILC_COLOR8 + ILC_MASK )
          ELSEIF nmax == 24
-            ::hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )
+            ::hIm := CreateImageList( {} , aBmpSize[1], aBmpSize[2], 1, ILC_COLORDDB + ILC_MASK )
          ENDIF
 
          FOR nPos := 1 TO Len( aButton )
 
             aBmpSize := GetBitmapSize(aButton[ nPos ])
 
-            IF aBmpSize[ 3 ] == 24
+            IF aBmpSize[3] == 24
                Imagelist_Add(::hIm, aButton[ nPos ])
             ELSE
                Imagelist_Add(::hIm, aButton[ nPos ])
@@ -189,8 +189,8 @@ METHOD Init() CLASS HGridEx
       NEXT
       IF Len( ::aRow ) > 0
          FOR n := 1 TO Len( ::aRow )
-            aTemp := ::aRow[ n ]
-            aTemp1 := ::aRowBitMap[ n ]
+            aTemp := ::aRow[n]
+            aTemp1 := ::aRowBitMap[n]
             FOR n1 := 1 TO Len( aTemp )
                LISTVIEW_INSERTITEMEX( ::handle, n, n1, aTemp[ n1 ], aTemp1[ n1 ] )
             NEXT
@@ -212,7 +212,7 @@ METHOD Init() CLASS HGridEx
 METHOD Refresh() CLASS HGridEx
    LOCAL iFirst, iLast
 
-   iFirst := ListView_GetTopIndex( ::handle )
+   iFirst := ListView_GetTopIndex(::handle)
 
    iLast := iFirst + ListView_GetCountPerPage(::handle)
 
@@ -230,7 +230,7 @@ METHOD AddRow( a , bupdate ) CLASS HGRIDEX
 
    DEFAULT bupdate TO .F.
    FOR n := 1 TO nLen STEP 4
-      AAdd(aTmp1, a[ n ])
+      AAdd(aTmp1, a[n])
       AAdd(aTmp, IF( hb_IsNumeric(a[n + 1]), a[ n + 1 ], - 1 ))
 
       AAdd(aTmp2, IF( hb_IsNumeric(a[n + 2]), a[ n + 2 ], RGB(12, 15, 46) ))
@@ -314,8 +314,8 @@ METHOD UpdateData() CLASS hGridex
    LOCAL n := Len( ::aRow ), n1
    LOCAL aTemp, atemp1
 
-   aTemp := ::aRow[ n ]
-   atemp1 := ::aRowBitMap[ n ]
+   aTemp := ::aRow[n]
+   atemp1 := ::aRowBitMap[n]
 
    FOR n1 := 1 TO Len( aTemp )
 

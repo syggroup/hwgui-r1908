@@ -460,8 +460,8 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
    oEdit := SUBS( oText[ nPage ], 2 )  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
 
    IF !Empty( ::colorpreview )
-      oColor1 := ::colorpreview[ 1 ]
-      oColor2 := ::colorpreview[ 2 ]
+      oColor1 := ::colorpreview[1]
+      oColor2 := ::colorpreview[2]
    ELSE
       oColor1 := 16777088
       oColor2 := 0
@@ -501,7 +501,7 @@ STATIC FUNCTION PrintDosPrint( oText, oPrt )
    LOCAL i
    LOCAL nText := FCreate(oPrt)
    FOR i := 1 TO Len( oText )
-      FWrite(nText, oText[ i ])
+      FWrite(nText, oText[i])
    NEXT
    FClose(nText)
    RETURN Nil
@@ -535,7 +535,7 @@ FUNCTION regenfile(o, new)
 
    FOR i := 1 TO Len( aText )
 
-      stroka := aText[ i ]
+      stroka := aText[i]
       nChr12 := At( Chr(12), stroka )
 
       IF nChr12 > 0

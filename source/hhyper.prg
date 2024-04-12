@@ -174,7 +174,7 @@ METHOD INIT() CLASS HStaticLink
       IF ::GetParentForm():Type <= WND_MDICHILD .OR. ::TYPE = NIL
          ::nHolder := 1
          SetWindowObject(::handle, Self)
-       //  Hwg_InitWinCtrl( ::handle )
+       //  Hwg_InitWinCtrl(::handle)
          HWG_INITSTATICPROC(::handle)
       ENDIF
       */
@@ -200,7 +200,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HStaticLink
          IF ::state != LBL_MOUSEOVER
             //::allMouseOver := .T.
       //      ::state := LBL_MOUSEOVER
-            TRACKMOUSEVENT( ::handle )
+            TRACKMOUSEVENT(::handle)
           ELSE
             TRACKMOUSEVENT( ::handle, TME_HOVER + TME_LEAVE  )
          ENDIF
@@ -344,7 +344,7 @@ METHOD OnMouseMove(nFlags, lParam) CLASS HStaticLink
 
 METHOD PAint( lpDis ) CLASS HStaticLink
    LOCAL drawInfo := GetDrawItemInfo( lpDis )
-   LOCAL dc := drawInfo[ 3 ]
+   LOCAL dc := drawInfo[3]
    LOCAL strtext    := ::Title
 //   LOCAL nOldBkMode
    LOCAL dwFlags
@@ -354,31 +354,31 @@ METHOD PAint( lpDis ) CLASS HStaticLink
 //   LOCAL DWSTYLE
    LOCAL bHasTitle
    LOCAL aBmpSize    := IIF( !EMPTY( ::hbitmap ), GetBitmapSize(::hbitmap),{0,0} )
-   LOCAL itemRect    := copyrect( { drawInfo[ 4 ], drawInfo[ 5 ], drawInfo[ 6 ], drawInfo[ 7 ] } )
-   LOCAL captionRect := { drawInfo[ 4 ]  , drawInfo[ 5 ], drawInfo[ 6 ] , drawInfo[ 7 ]  }
+   LOCAL itemRect    := copyrect( { drawInfo[4], drawInfo[5], drawInfo[6], drawInfo[7] } )
+   LOCAL captionRect := { drawInfo[4]  , drawInfo[5], drawInfo[6] , drawInfo[7]  }
    LOCAL bmpRect
    
    IF ::state == LBL_INIT
       ::State := LBL_NORMAL
    ENDIF
-   rcClient   := CopyRect( { drawInfo[ 4 ] , drawInfo[ 5 ], drawInfo[ 6 ], drawInfo[ 7 ] } )
+   rcClient   := CopyRect( { drawInfo[4] , drawInfo[5], drawInfo[6], drawInfo[7] } )
    
    IF hb_IsNumeric(::hbitmap)
       bHasTitle := hb_IsChar(strtext) .and. !Empty( strtext )
-      itemRect[ 4 ] := aBmpSize[ 2 ] + 1
+      itemRect[4] := aBmpSize[2] + 1
       bmpRect := PrepareImageRect( ::handle, dc, bHasTitle, @itemRect, @captionRect, , , ::hbitmap, ::iStyle )
-      itemRect[ 4 ] := drawInfo[ 7 ]
+      itemRect[4] := drawInfo[7]
       IF ::backstyle = TRANSPARENT
-         DrawTransparentBitmap(dc, ::hbitmap, bmpRect[ 1 ], bmpRect[ 2 ])
+         DrawTransparentBitmap(dc, ::hbitmap, bmpRect[1], bmpRect[2])
       ELSE
-         DrawBitmap(dc, ::hbitmap, , bmpRect[ 1 ], bmpRect[ 2 ])
+         DrawBitmap(dc, ::hbitmap, , bmpRect[1], bmpRect[2])
       ENDIF
-      rcclient[ 1 ] +=  IIF( ::iStyle = ST_ALIGN_HORIZ, aBmpSize[ 1 ] + 8, 1 )
+      rcclient[1] +=  IIF( ::iStyle = ST_ALIGN_HORIZ, aBmpSize[1] + 8, 1 )
    ENDIF
    SetBkMode(DC, ::backstyle)
    IF ::backstyle != TRANSPARENT
        SetBkColor(DC, IIF( ::bColor = NIL, GetSysColor(COLOR_3DFACE), ::bcolor ))
-       FillRect( dc, rcclient[ 1 ], rcclient[ 2 ], rcclient[ 3 ], rcclient[ 4 ] ) //, ::brush:handle )
+       FillRect( dc, rcclient[1], rcclient[2], rcclient[3], rcclient[4] ) //, ::brush:handle )
    ENDIF
    dwFlags    := DT_LEFT + DT_WORDBREAK
    //dwstyle    := ::style
@@ -414,7 +414,7 @@ METHOD PAint( lpDis ) CLASS HStaticLink
 
 
 METHOD Resize(x, y) CLASS HStaticLink
-   //LOCAL aCoors := GetClientRect( ::handle )
+   //LOCAL aCoors := GetClientRect(::handle)
    LOCAL aBmpSize, aTxtSize
    LOCAL nHeight := ::nHeight
    
@@ -424,18 +424,18 @@ METHOD Resize(x, y) CLASS HStaticLink
 
    x := iif( x == Nil, 0, x - ::nWidth + 1 )
    aBmpSize := IIF( !EMPTY( ::hbitmap ), GetBitmapSize(::hbitmap), { 0,0 } )
-   aBmpSize[ 1 ] += IIF( aBmpSize[ 1 ] > 0, 6, 0 )
+   aBmpSize[1] += IIF( aBmpSize[1] > 0, 6, 0 )
    ::Move(, , ::nWidth + x, , 0)
    aTxtSize := TxtRect( ::Title, Self )
-   aTxtSize[ 2 ] += IIF( ::lAllUnderline, 0, 3 )
-   IF aTxtSize[ 1 ] + 1  <  ::nWidth - aBmpSize[ 1 ] //tava 20
-      ::nHeight := aTxtSize[ 2 ] + 2
+   aTxtSize[2] += IIF( ::lAllUnderline, 0, 3 )
+   IF aTxtSize[1] + 1  <  ::nWidth - aBmpSize[1] //tava 20
+      ::nHeight := aTxtSize[2] + 2
    ELSE
-      ::nHeight := aTxtSize[ 2 ] * 2 + 1
+      ::nHeight := aTxtSize[2] * 2 + 1
    ENDIF
-   ::nWidthOver  := MIN( aTxtSize[ 1 ] + 1 + aBmpSize[ 1 ], ::nWidth )
-   ::nHeight := MAX( ::nHeight, aTxtSize[ 2 ] )
-   ::nHeight := MAX( ::nHeight, aBmpSize[ 2 ] + 4 )
+   ::nWidthOver  := MIN( aTxtSize[1] + 1 + aBmpSize[1], ::nWidth )
+   ::nHeight := MAX( ::nHeight, aTxtSize[2] )
+   ::nHeight := MAX( ::nHeight, aBmpSize[2] + 4 )
 
    IF nHeight != ::nHeight
       ::Move(, , , ::nHeight, 0)

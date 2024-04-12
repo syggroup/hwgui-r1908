@@ -93,7 +93,7 @@ CLASS VAR aModalDialogs  SHARED INIT {}
    METHOD Restore() INLINE SendMessage(::handle, WM_SYSCOMMAND, SC_RESTORE, 0)
    METHOD Maximize() INLINE SendMessage(::handle, WM_SYSCOMMAND, SC_MAXIMIZE, 0)
    METHOD Minimize() INLINE SendMessage(::handle, WM_SYSCOMMAND, SC_MINIMIZE, 0)
-   METHOD Close() INLINE EndDialog( ::handle )
+   METHOD Close() INLINE EndDialog(::handle)
    METHOD Release() INLINE ::Close(), Self := Nil
 
 ENDCLASS
@@ -195,7 +195,7 @@ METHOD Activate(lNoModal, bOnActivate, nShow) CLASS HDialog
          IF ::WindowState > SW_HIDE
            //InvalidateRect( ::handle, 1 )
             //BRINGTOTOP(::handle)
-            //UPDATEWINDOW( ::handle )
+            //UPDATEWINDOW(::handle)
             SetWindowPos( ::Handle, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_FRAMECHANGED )
             RedrawWindow( ::handle, RDW_UPDATENOW + RDW_NOCHILDREN ) 
          ENDIF
@@ -226,9 +226,9 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HDialog
    ELSEIF msg = WM_MENUCHAR
       RETURN onSysCommand(Self, SC_KEYMENU, LoWord(wParam))
     ELSEIF msg = WM_MOVE //.or. msg = 0x216
-      aCoors := GetWindowRect( ::handle )
-      ::nLeft := aCoors[ 1 ]
-         ::nTop  := aCoors[ 2 ]
+      aCoors := GetWindowRect(::handle)
+      ::nLeft := aCoors[1]
+         ::nTop  := aCoors[2]
     ELSEIF msg = WM_UPDATEUISTATE .AND. HIWORD(wParam) != UISF_HIDEFOCUS 
       // prevent the screen flicker
        RETURN 1
@@ -239,7 +239,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HDialog
          POSTMESSAGE(::Handle, WM_ACTIVATE, MAKEWPARAM( WA_ACTIVE, 0 ), ::handle)
       ENDIF
    ENDIF
-   IF ( i := AScan( aMessModalDlg, { | a | a[ 1 ] == msg } ) ) != 0
+   IF ( i := AScan( aMessModalDlg, { | a | a[1] == msg } ) ) != 0
       IF ::lRouteCommand .and. ( msg == WM_COMMAND .or. msg == WM_NOTIFY )
          nPos := AScan( ::aControls, { | x | x:className() == "HTAB" } )
          IF nPos > 0
@@ -292,21 +292,21 @@ METHOD FindDialog( hWndTitle, lAll ) CLASS HDialog
       i := AScan( ::aDialogs, { | o | SelfFocus( o:handle, hWndTitle ) } )
       IF i = 0 .AND. ( lAll != Nil .AND. lAll )
           i := AScan( ::aModalDialogs, {| o | SelfFocus( o:handle, hWndTitle ) } )
-          RETURN Iif( i == 0, Nil, ::aModalDialogs[ i ] )
+          RETURN Iif( i == 0, Nil, ::aModalDialogs[i] )
       ENDIF
    ELSE
       i := AScan( ::aDialogs, { | o | hb_IsChar(o:Title) .AND. o:Title == hWndTitle } )
       IF i = 0 .AND. ( lAll != Nil .AND. lAll )
          i := AScan( ::aModalDialogs, { | o | hb_IsChar(o:Title) .AND. o:Title == hWndTitle } )
-         RETURN Iif( i == 0, Nil, ::aModalDialogs[ i ] )
+         RETURN Iif( i == 0, Nil, ::aModalDialogs[i] )
       ENDIF
    ENDIF
-   RETURN IIf( i == 0, Nil, ::aDialogs[ i ] )
+   RETURN IIf( i == 0, Nil, ::aDialogs[i] )
 
 METHOD GetActive() CLASS HDialog
    LOCAL handle := GetFocus()
    LOCAL i := AScan( ::Getlist, { | o | o:handle == handle } )
-   RETURN IIf( i == 0, Nil, ::Getlist[ i ] )
+   RETURN IIf( i == 0, Nil, ::Getlist[i] )
 
 // End of class
 // ------------------------------------
@@ -459,10 +459,10 @@ STATIC FUNCTION onEraseBk( oDlg, hDC )
        aCoors := GetClientRect( oDlg:handle )
        IF oDlg:brush != Nil
           IF !hb_IsNumeric(oDlg:brush)
-             FillRect( hDC, aCoors[ 1 ], aCoors[ 2 ], aCoors[ 3 ] + 1, aCoors[ 4 ] + 1, oDlg:brush:handle )
+             FillRect( hDC, aCoors[1], aCoors[2], aCoors[3] + 1, aCoors[4] + 1, oDlg:brush:handle )
           ENDIF
        ELSE
-          FillRect( hDC, aCoors[ 1 ], aCoors[ 2 ], aCoors[ 3 ] + 1, aCoors[ 4 ] + 1, COLOR_3DFACE + 1 )
+          FillRect( hDC, aCoors[1], aCoors[2], aCoors[3] + 1, aCoors[4] + 1, COLOR_3DFACE + 1 )
        ENDIF
        RETURN 1
        */
@@ -559,7 +559,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
       PostMessage(oDlg:Handle, WM_NEXTDLGCTL, oDlg:nInitFocus, 1)
    ENDIF
    IF oDlg:aEvents != Nil .AND. ;
-      ( i := AScan( oDlg:aEvents, { | a | a[ 1 ] == iParHigh.and.a[ 2 ] == iParLow } ) ) > 0
+      ( i := AScan( oDlg:aEvents, { | a | a[1] == iParHigh.and.a[2] == iParLow } ) ) > 0
       IF !oDlg:lSuspendMsgsHandling
          Eval( oDlg:aEvents[ i, 3 ], oDlg, iParLow )
       ENDIF
@@ -583,16 +583,16 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
       ENDIF
    ELSEIF __ObjHasMsg( oDlg, "MENU" ) .AND. hb_IsArray(oDlg:menu) .AND. ;
       ( aMenu := Hwg_FindMenuItem( oDlg:menu, iParLow, @i ) ) != Nil
-      IF Hwg_BitAnd(aMenu[ 1, i, 4 ], FLAG_CHECK) > 0
-         CheckMenuItem( , aMenu[ 1, i, 3 ], !IsCheckedMenuItem( , aMenu[ 1, i, 3 ] ) )
+      IF Hwg_BitAnd(aMenu[1, i, 4], FLAG_CHECK) > 0
+         CheckMenuItem( , aMenu[1, i, 3], !IsCheckedMenuItem( , aMenu[1, i, 3] ) )
       ENDIF
-      IF aMenu[ 1, i, 1 ] != Nil
-         Eval( aMenu[ 1, i, 1 ], i, iParlow )
+      IF aMenu[1, i, 1] != Nil
+         Eval( aMenu[1, i, 1], i, iParlow )
       ENDIF
    ELSEIF __ObjHasMsg( oDlg, "OPOPUP" ) .AND. oDlg:oPopup != Nil .AND. ;
       ( aMenu := Hwg_FindMenuItem( oDlg:oPopup:aMenu, wParam, @i ) ) != Nil ;
-      .AND. aMenu[ 1, i, 1 ] != Nil
-      Eval( aMenu[ 1, i, 1 ], i, wParam )
+      .AND. aMenu[1, i, 1] != Nil
+      Eval( aMenu[1, i, 1], i, wParam )
    ENDIF
    IF !Empty( oDlg:nInitFocus )
       oDlg:nInitFocus := 0
@@ -778,20 +778,20 @@ FUNCTION PropertySheet( hParentWindow, aPages, cTitle, x1, y1, width, height, ;
 
    aSheet := Array( Len( aPages ) )
    FOR i := 1 TO Len( aPages )
-      IF aPages[ i ]:Type == WND_DLG_RESOURCE
-         aHandles[ i ] := _CreatePropertySheetPage(aPages[ i ])
+      IF aPages[i]:Type == WND_DLG_RESOURCE
+         aHandles[i] := _CreatePropertySheetPage(aPages[i])
       ELSE
-         aTemplates[ i ] := CreateDlgTemplate(aPages[ i ], x1, y1, width, height, WS_CHILD + WS_VISIBLE + WS_BORDER)
-         aHandles[ i ] := _CreatePropertySheetPage(aPages[ i ], aTemplates[ i ])
+         aTemplates[i] := CreateDlgTemplate(aPages[i], x1, y1, width, height, WS_CHILD + WS_VISIBLE + WS_BORDER)
+         aHandles[i] := _CreatePropertySheetPage(aPages[i], aTemplates[i])
       ENDIF
-      aSheet[ i ] := { aHandles[ i ], aPages[ i ] }
+      aSheet[i] := { aHandles[i], aPages[i] }
       // Writelog( "h: "+str(aHandles[i]) )
    NEXT
    hSheet := _PropertySheet( hParentWindow, aHandles, Len( aHandles ), cTitle, ;
                              lModeless, lNoApply, lWizard )
    FOR i := 1 TO Len( aPages )
-      IF aPages[ i ]:Type != WND_DLG_RESOURCE
-         ReleaseDlgTemplate(aTemplates[ i ])
+      IF aPages[i]:Type != WND_DLG_RESOURCE
+         ReleaseDlgTemplate(aTemplates[i])
       ENDIF
    NEXT
 
@@ -799,11 +799,11 @@ FUNCTION PropertySheet( hParentWindow, aPages, cTitle, x1, y1, width, height, ;
 
 FUNCTION GetModalDlg
    LOCAL i := Len( HDialog():aModalDialogs )
-   RETURN IIf( i > 0, HDialog():aModalDialogs[ i ], 0 )
+   RETURN IIf( i > 0, HDialog():aModalDialogs[i], 0 )
 
 FUNCTION GetModalHandle
    LOCAL i := Len( HDialog():aModalDialogs )
-   RETURN IIf( i > 0, HDialog():aModalDialogs[ i ]:handle, 0 )
+   RETURN IIf( i > 0, HDialog():aModalDialogs[i]:handle, 0 )
 
 FUNCTION EndDialog( handle )
    LOCAL oDlg, hFocus := GetFocus(), oCtrl
@@ -846,7 +846,7 @@ FUNCTION SetDlgKey( oDlg, nctrl, nkey, block )
       RETURN NIL
    ENDIF
    aKeys := oDlg:KeyList
-   IF ( i := AScan( aKeys, { | a | a[ 1 ] == nctrl.AND.a[ 2 ] == nkey } ) ) > 0
+   IF ( i := AScan( aKeys, { | a | a[1] == nctrl.AND.a[2] == nkey } ) ) > 0
       bOldSet := aKeys[ i, 3 ]
    ENDIF
    IF block == Nil

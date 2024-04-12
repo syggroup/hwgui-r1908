@@ -103,17 +103,17 @@ METHOD Init() CLASS HIPedit
    RETURN Nil
 
 METHOD SetValue(aValue) CLASS HIPedit
-   SETIPADDRESS( ::handle , aValue[ 1 ], aValue[ 2 ], aValue[ 3 ], aValue[ 4 ] )
+   SETIPADDRESS( ::handle , aValue[1], aValue[2], aValue[3], aValue[4] )
    ::aValue := aValue
    RETURN Nil
 
 
 METHOD GetValue() CLASS HIPedit
-   ::aValue := GETIPADDRESS( ::handle )
+   ::aValue := GETIPADDRESS(::handle)
    RETURN ( ::aValue )
 
 METHOD Clear() CLASS HIPedit
-   CLEARIPADDRESS( ::handle )
+   CLEARIPADDRESS(::handle)
    ::aValue := { 0, 0, 0, 0 }
    RETURN ( ::aValue )
 

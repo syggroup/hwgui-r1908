@@ -116,8 +116,8 @@ CLASS VAR WindowsManifest INIT !EMPTY(FindResource(, 1, RT_MANIFEST) ) SHARED
    METHOD DelControl( oCtrl )
    METHOD AddEvent( nEvent, oCtrl, bAction, lNotify, cMethName )
    METHOD FindControl( nId, nHandle )
-   METHOD Hide() INLINE ( ::lHide := .T., HideWindow( ::handle ) )
-   //METHOD Show() INLINE ( ::lHide := .F., ShowWindow( ::handle ) )
+   METHOD Hide() INLINE ( ::lHide := .T., HideWindow(::handle) )
+   //METHOD Show() INLINE ( ::lHide := .F., ShowWindow(::handle) )
    METHOD Show( nShow ) INLINE ( ::lHide := .F., IIF( nShow = Nil, ShowWindow( ::handle  ),;
                                        ShowWindow( ::handle, nShow  )  ) )
    METHOD Move(x1, y1, width, height, nRePaint)
@@ -159,12 +159,12 @@ METHOD FindControl( nId, nHandle ) CLASS HCustomWindow
    LOCAL oCtrl
 
    DO WHILE i > 0
-      IF Len( ::aControls[ i ]:aControls ) > 0 .and. ;
-         ( oCtrl := ::aControls[ i ]:FindControl( nId, nHandle ) ) != NIL
+      IF Len( ::aControls[i]:aControls ) > 0 .and. ;
+         ( oCtrl := ::aControls[i]:FindControl( nId, nHandle ) ) != NIL
          RETURN oCtrl
       ENDIF
-      IF Eval( bSearch, ::aControls[ i ] )
-         RETURN ::aControls[ i ]
+      IF Eval( bSearch, ::aControls[i] )
+         RETURN ::aControls[i]
       ENDIF
       i --
    ENDDO
@@ -214,10 +214,10 @@ METHOD Move(x1, y1, width, height, nRePaint) CLASS HCustomWindow
    width  := IIF( width  = NIL, ::nWidth, width )
    height := IIF( height = NIL, ::nHeight, height )
    IF Hwg_BitAnd(::style, WS_CHILD) = 0
-      rect := GetwindowRect( ::Handle )
-      nHx := rect[ 4 ] - rect[ 2 ]  - GetclientRect( ::Handle )[ 4 ] - ;
+      rect := GetwindowRect(::Handle)
+      nHx := rect[4] - rect[2]  - GetclientRect(::Handle)[4] - ;
                  IIF( Hwg_BitAnd(::style, WS_HSCROLL) > 0, GetSystemMetrics( SM_CYHSCROLL ), 0 )
-      nWx := rect[ 3 ] - rect[ 1 ]  - GetclientRect( ::Handle )[ 3 ] - ;
+      nWx := rect[3] - rect[1]  - GetclientRect(::Handle)[3] - ;
                  IIF( Hwg_BitAnd(::style, WS_VSCROLL) > 0, GetSystemMetrics( SM_CXVSCROLL ), 0 )
    ENDIF
 
@@ -277,11 +277,11 @@ LOCAL aControls, i, nLen
    IF ::nHolder != 0
 
       ::nHolder := 0
-      hwg_DecreaseHolders( ::handle ) // Self )
+      hwg_DecreaseHolders(::handle) // Self )
       aControls := ::aControls
       nLen := Len( aControls )
       FOR i := 1 TO nLen
-          aControls[ i ]:End()
+          aControls[i]:End()
       NEXT
    ENDIF
 
@@ -308,7 +308,7 @@ METHOD RefreshCtrl( oCtrl, nSeek ) CLASS HCustomWindow
       n := 3
    ENDIF
 
-   nPos := AScan( ::aControls, { | x | x[ n ] == oCtrl } )
+   nPos := AScan( ::aControls, { | x | x[n] == oCtrl } )
 
    IF nPos > 0
       ::aControls[ nPos, 2 ]:Refresh()
@@ -320,7 +320,7 @@ METHOD RefreshCtrl( oCtrl, nSeek ) CLASS HCustomWindow
 METHOD SetFocusCtrl( oCtrl ) CLASS HCustomWindow
    LOCAL nPos
 
-   nPos := AScan( ::aControls, { | x | x[ 1 ] == oCtrl } )
+   nPos := AScan( ::aControls, { | x | x[1] == oCtrl } )
 
    IF nPos > 0
       ::aControls[ nPos, 2 ]:SetFocus()
@@ -338,7 +338,7 @@ METHOD Refresh( lAll, oCtrl ) CLASS HCustomWindow
 
    IF IsWindowVisible(::Handle) .OR. nLen > 0
       FOR i = 1 to nLen
-         oCtrlTmp :=  oCtrl:aControls[ i ]
+         oCtrlTmp :=  oCtrl:aControls[i]
          lRefresh :=  !Empty( __ObjHasMethod(oCtrlTmp, "REFRESH") )
          IF ( ( oCtrlTmp:Handle != hCtrl .OR. LEN( oCtrlTmp:aControls) = 0) .OR.  lAll ) .AND. ;
             ( !oCtrlTmp:lHide .OR.  __ObjHasMsg( oCtrlTmp, "BSETGET" ) ) 
@@ -407,13 +407,13 @@ METHOD Anchor( oCtrl, x, y, w, h ) CLASS HCustomWindow
 
    nlen := Len( oCtrl:aControls )
    FOR i = nLen TO 1 STEP -1
-      IF __ObjHasMsg( oCtrl:aControls[ i ], "ANCHOR" ) .AND. oCtrl:aControls[ i ]:anchor > 0
-         x1 := oCtrl:aControls[ i ]:nWidth
-         y1 := oCtrl:aControls[ i ]:nHeight
-         oCtrl:aControls[ i ]:onAnchor( x, y, w, h )
-         IF Len( oCtrl:aControls[ i ]:aControls ) > 0
-            ::Anchor( oCtrl:aControls[ i ], x1, y1, oCtrl:aControls[ i ]:nWidth, oCtrl:aControls[ i ]:nHeight )
-            //::Anchor( oCtrl:aControls[ i ], x, y, oCtrl:nWidth, oCtrl:nHeight )
+      IF __ObjHasMsg( oCtrl:aControls[i], "ANCHOR" ) .AND. oCtrl:aControls[i]:anchor > 0
+         x1 := oCtrl:aControls[i]:nWidth
+         y1 := oCtrl:aControls[i]:nHeight
+         oCtrl:aControls[i]:onAnchor( x, y, w, h )
+         IF Len( oCtrl:aControls[i]:aControls ) > 0
+            ::Anchor( oCtrl:aControls[i], x1, y1, oCtrl:aControls[i]:nWidth, oCtrl:aControls[i]:nHeight )
+            //::Anchor( oCtrl:aControls[i], x, y, oCtrl:nWidth, oCtrl:nHeight )
          ENDIF
       ENDIF
    NEXT
@@ -531,7 +531,7 @@ METHOD ScrollHV( oForm, msg,wParam,lParam ) CLASS HCustomWindow
 
 METHOD RedefineScrollbars() CLASS HCustomWindow
 
-   ::rect := GetClientRect( ::handle )
+   ::rect := GetClientRect(::handle)
    IF ::nScrollBars > - 1 .AND. ::bScroll = Nil
       IF ::nVscrollPos = 0
           ::ncurHeight := 0                                                              //* 4
@@ -552,19 +552,19 @@ METHOD RedefineScrollbars() CLASS HCustomWindow
 METHOD SetupScrollbars() CLASS HCustomWindow
    LOCAL tempRect, nwMax, nhMax , aMenu, nPos
 
-   tempRect := GetClientRect( ::handle )
+   tempRect := GetClientRect(::handle)
    aMenu := IIF( __objHasData(Self, "MENU"), ::menu, Nil )
     // Calculate how many scrolling increments for the client area
    IF ::Type = WND_MDICHILD //.AND. ::aRectSave != Nil
-      nwMax := Max( ::ncurWidth, tempRect[ 3 ] ) //::maxWidth
-      nhMax := Max( ::ncurHeight , tempRect[ 4 ] ) //::maxHeight
-      ::nHorzInc := INT( ( nwMax - tempRect[ 3 ] ) / HORZ_PTS )
-      ::nVertInc := INT( ( nhMax - tempRect[ 4 ] ) / VERT_PTS )
+      nwMax := Max( ::ncurWidth, tempRect[3] ) //::maxWidth
+      nhMax := Max( ::ncurHeight , tempRect[4] ) //::maxHeight
+      ::nHorzInc := INT( ( nwMax - tempRect[3] ) / HORZ_PTS )
+      ::nVertInc := INT( ( nhMax - tempRect[4] ) / VERT_PTS )
    ELSE
-      nwMax := Max( ::ncurWidth, ::Rect[ 3 ] )
-      nhMax := Max( ::ncurHeight, ::Rect[ 4 ] )
-      ::nHorzInc := INT( ( nwMax - tempRect[ 3 ] ) / HORZ_PTS + HORZ_PTS )
-      ::nVertInc := INT( ( nhMax - tempRect[ 4 ] ) / VERT_PTS + VERT_PTS - ;
+      nwMax := Max( ::ncurWidth, ::Rect[3] )
+      nhMax := Max( ::ncurHeight, ::Rect[4] )
+      ::nHorzInc := INT( ( nwMax - tempRect[3] ) / HORZ_PTS + HORZ_PTS )
+      ::nVertInc := INT( ( nhMax - tempRect[4] ) / VERT_PTS + VERT_PTS - ;
                       IIF( amenu != Nil, GetSystemMetrics( SM_CYMENU ), 0 ) )  // MENU
    ENDIF
     // Set the vertical and horizontal scrolling info
@@ -609,7 +609,7 @@ METHOD SetupScrollbars() CLASS HCustomWindow
 
 METHOD ResetScrollbars() CLASS HCustomWindow
     // Reset our window scrolling information
-   Local lMaximized := GetWindowPlacement( ::handle ) == SW_MAXIMIZE
+   Local lMaximized := GetWindowPlacement(::handle) == SW_MAXIMIZE
    
    IF lMaximized
       ScrollWindow( ::Handle, ::nHscrollPos * HORZ_PTS, 0 )
@@ -639,7 +639,7 @@ METHOD  ScrollHV( oForm, msg, wParam, lParam ) CLASS HCustomWindow
    wmsg := LOWORD(wParam)
 
    IF msg = WM_VSCROLL .OR. msg = WM_HSCROLL
-      nMaxPos := IIf( msg = WM_VSCROLL, oForm:rect[ 4 ] - oForm:nCurHeight, oForm:rect[ 3 ] - oForm:nCurWidth )
+      nMaxPos := IIf( msg = WM_VSCROLL, oForm:rect[4] - oForm:nCurHeight, oForm:rect[3] - oForm:nCurWidth )
       IF wmsg =  SB_LINEDOWN
          IF ( oForm:nScrollPos >= nMaxPos )
             RETURN 0
@@ -705,14 +705,14 @@ METHOD SetAll( cProperty, Value, aControls, cClass ) CLASS HCustomWindow
    nLen := IIF( hb_IsChar(aControls), Len( ::&aControls ), LEN( aControls ) )
     FOR i = 1 TO nLen
        IF hb_IsChar(aControls)
-          ::&aControls[ i ]:&cProperty := Value
-       ELSEIF cClass == Nil .OR. UPPER(cClass) == aControls[ i ]:ClassName
+          ::&aControls[i]:&cProperty := Value
+       ELSEIF cClass == Nil .OR. UPPER(cClass) == aControls[i]:ClassName
           IF Value = Nil
              __mvPrivate("oCtrl")
-             &( "oCtrl" ) := aControls[ i ]
+             &( "oCtrl" ) := aControls[i]
              &( "oCtrl:" + cProperty )
           ELSE
-             aControls[ i ]:&cProperty := Value
+             aControls[i]:&cProperty := Value
           ENDIF
       ENDIF
    NEXT
@@ -727,7 +727,7 @@ STATIC FUNCTION onNotify( oWnd, wParam, lParam )
 
    IF oCtrl == NIL
       FOR n := 1 TO Len( oWnd:aControls )
-         oCtrl := oWnd:aControls[ n ]:FindControl( wParam )
+         oCtrl := oWnd:aControls[n]:FindControl( wParam )
          IF oCtrl != NIL
             EXIT
          ENDIF
@@ -743,8 +743,8 @@ STATIC FUNCTION onNotify( oWnd, wParam, lParam )
          IF nCode == EN_PROTECTED
             RETURN 1
          ELSEIF oWnd:aNotify != NIL .AND. !oWnd:lSuspendMsgsHandling .AND. ;
-            ( iItem := AScan( oWnd:aNotify, { | a | a[ 1 ] == nCode .AND. ;
-                                              a[ 2 ] == wParam } ) ) > 0
+            ( iItem := AScan( oWnd:aNotify, { | a | a[1] == nCode .AND. ;
+                                              a[2] == wParam } ) ) > 0
             IF ( res := Eval( oWnd:aNotify[ iItem, 3 ], oWnd, wParam ) ) != NIL
                RETURN res
             ENDIF
@@ -759,11 +759,11 @@ STATIC FUNCTION onDestroy( oWnd )
    LOCAL i, nLen   := Len( aControls )
 
    FOR i := 1 TO nLen
-      aControls[ i ]:END()
+      aControls[i]:END()
    NEXT
    nLen := Len( oWnd:aObjects )
    FOR i := 1 TO nLen
-      oWnd:aObjects[ i ]:END()
+      oWnd:aObjects[i]:END()
    NEXT
    oWnd:END()
 
@@ -826,8 +826,8 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
    
    HB_SYMBOL_UNUSED(lParam)
    IF oWnd:aEvents != NIL .AND. !oForm:lSuspendMsgsHandling .AND. !oWnd:lSuspendMsgsHandling .AND. ;
-      ( iItem := AScan( oWnd:aEvents, { | a | a[ 1 ] == iParHigh .AND. ;
-                                        a[ 2 ] == iParLow } ) ) > 0
+      ( iItem := AScan( oWnd:aEvents, { | a | a[1] == iParHigh .AND. ;
+                                        a[2] == iParLow } ) ) > 0
 
       IF oForm:Type < WND_DLG_RESOURCE
          IF SelfFocus( GetParent( GetFocus() ) , oForm:Handle )
@@ -847,13 +847,13 @@ STATIC FUNCTION onSize(oWnd, wParam, lParam)
    nh1 := oWnd:nHeight
    aCoors := GetWindowRect( oWnd:handle )
    IF EMPTY( oWnd:Type )
-      oWnd:nWidth  := aCoors[ 3 ] - aCoors[ 1 ]
-      oWnd:nHeight := aCoors[ 4 ] - aCoors[ 2 ]
+      oWnd:nWidth  := aCoors[3] - aCoors[1]
+      oWnd:nHeight := aCoors[4] - aCoors[2]
    ELSE
       nWindowState := oWnd:WindowState
-      IF wParam != 1 .AND. ( oWnd:GETMDIMAIN() != Nil .AND. !oWnd:GETMDIMAIN():IsMinimized() ) //SIZE_MINIMIZED 
-         oWnd:nWidth  := aCoors[ 3 ] - aCoors[ 1 ]
-         oWnd:nHeight := aCoors[ 4 ] - aCoors[ 2 ]
+      IF wParam != 1 .AND. ( oWnd:GETMDIMAIN() != Nil .AND. !oWnd:GETMDIMAIN():IsMinimized() ) //SIZE_MINIMIZED
+         oWnd:nWidth  := aCoors[3] - aCoors[1]
+         oWnd:nHeight := aCoors[4] - aCoors[2]
          IF oWnd:Type = WND_MDICHILD .AND. oWnd:GETMDIMAIN() != Nil .AND. wParam != 1 .AND. oWnd:GETMDIMAIN():WindowState = 2
              nWindowState := SW_SHOWMINIMIZED
          ENDIF 
@@ -921,13 +921,13 @@ LOCAL oParent, nCtrl,nPos
       oParent := IIF( oMain != Nil, oMain, ParentGetDialog( oCtrl ) )
       IF oParent != Nil .AND. !Empty( oParent:KeyList )
          nctrl := IIf( IsCtrlShift(.T., .F.), FCONTROL, iif(IsCtrlShift(.F., .T.), FSHIFT, 0 ) )
-         IF ( nPos := AScan( oParent:KeyList, { | a | a[ 1 ] == nctrl.AND.a[ 2 ] == wParam } ) ) > 0
+         IF ( nPos := AScan( oParent:KeyList, { | a | a[1] == nctrl.AND.a[2] == wParam } ) ) > 0
             Eval( oParent:KeyList[ nPos, 3 ], oCtrl )
             RETURN .T.
          ENDIF
       ENDIF
       IF oParent != Nil .AND. oMain = Nil .AND. HWindow():GetMain() != Nil
-          ProcKeyList( oCtrl, wParam, HWindow():GetMain():aWindows[ 1 ] )
+          ProcKeyList( oCtrl, wParam, HWindow():GetMain():aWindows[1] )
       ENDIF
    ENDIF
    RETURN .F.
@@ -1025,20 +1025,20 @@ FUNCTION FindAccelerator( oCtrl, lParam )
 
   nlen := LEN( oCtrl:aControls )
   FOR i = 1 to nLen
-      IF oCtrl:aControls[ i ]:classname = "HTAB"
-         IF ( pos := FindTabAccelerator( oCtrl:aControls[ i ], lParam ) ) > 0 .AND. ;
-             oCtrl:aControls[ i ]:Pages[ pos ]:Enabled
-             oCtrl:aControls[ i ]:SetTab(pos)
-             RETURN oCtrl:aControls[ i ]
+      IF oCtrl:aControls[i]:classname = "HTAB"
+         IF ( pos := FindTabAccelerator( oCtrl:aControls[i], lParam ) ) > 0 .AND. ;
+             oCtrl:aControls[i]:Pages[ pos ]:Enabled
+             oCtrl:aControls[i]:SetTab(pos)
+             RETURN oCtrl:aControls[i]
          ENDIF
       ENDIF
-     IF LEN(oCtrl:aControls[ i ]:aControls ) > 0
-         RETURN FindAccelerator( oCtrl:aControls[ i ], lParam)
+     IF LEN(oCtrl:aControls[i]:aControls ) > 0
+         RETURN FindAccelerator( oCtrl:aControls[i], lParam)
       ENDIF
-     IF __ObjHasMsg( oCtrl:aControls[ i ],"TITLE") .AND. hb_IsChar(oCtrl:aControls[i]:title) .AND. ;
-         !oCtrl:aControls[ i ]:lHide .AND. IsWindowEnabled(oCtrl:aControls[ i ]:handle)
-        IF ( pos := At( "&", oCtrl:aControls[ i ]:title ) ) > 0 .AND.  Upper(Chr(lParam)) ==  Upper(SubStr(oCtrl:aControls[i]:title, ++pos, 1))
-           RETURN oCtrl:aControls[ i ]
+     IF __ObjHasMsg( oCtrl:aControls[i],"TITLE") .AND. hb_IsChar(oCtrl:aControls[i]:title) .AND. ;
+         !oCtrl:aControls[i]:lHide .AND. IsWindowEnabled(oCtrl:aControls[i]:handle)
+        IF ( pos := At( "&", oCtrl:aControls[i]:title ) ) > 0 .AND.  Upper(Chr(lParam)) ==  Upper(SubStr(oCtrl:aControls[i]:title, ++pos, 1))
+           RETURN oCtrl:aControls[i]
         ENDIF
      ENDIF
    NEXT

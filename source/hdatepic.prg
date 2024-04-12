@@ -165,19 +165,19 @@ METHOD Value(Value) CLASS HDatePicker
    RETURN IIF( ::lShowTime, ::tValue, ::dValue )
 
 METHOD GetValue() CLASS HDatePicker
-   RETURN IIF( !::lShowTime, GetDatePicker( ::handle ), GetTimePicker( ::handle ) )
+   RETURN IIF( !::lShowTime, GetDatePicker(::handle), GetTimePicker(::handle) )
 
 METHOD SetValue(xValue) CLASS HDatePicker
 
    IF Empty( xValue )
-      SetDatePickerNull( ::handle )
+      SetDatePickerNull(::handle)
    ELSEIF ::lShowTime
       SetDatePicker( ::handle, Date(), STRTRAN( xValue, ":", "" ) )
    ELSE
       SetDatePicker( ::handle, xValue, STRTRAN( ::tValue, ":", "" ) )
    ENDIF
-   ::dValue := GetDatePicker( ::handle )
-   ::tValue := GetTimePicker( ::handle )
+   ::dValue := GetDatePicker(::handle)
+   ::tValue := GetTimePicker(::handle)
    ::title := IIF( ::lShowTime, ::tValue, ::dValue )
    IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, IIF( ::lShowTime, ::tValue,::dValue ), Self )
@@ -194,7 +194,7 @@ METHOD Refresh() CLASS HDatePicker
       ENDIF
    ENDIF
    IF Empty( ::dValue ) .AND. !::lShowTime
-      //SetDatePickerNull( ::handle )
+      //SetDatePickerNull(::handle)
       SetDatePicker( ::handle, date(), STRTRAN( Time(), ":", "" ) )
    ELSE
       ::SetValue(IIF( !::lShowTime, ::dValue, ::tValue ))
@@ -211,8 +211,8 @@ METHOD onChange(nMess) CLASS HDatePicker
          POSTMESSAGE(::handle, WM_KEYDOWN, VK_RIGHT, 0)
          ::SetFocus()
       ENDIF
-      ::dValue := GetDatePicker( ::handle )
-      ::tValue := GetTimePicker( ::handle )
+      ::dValue := GetDatePicker(::handle)
+      ::tValue := GetTimePicker(::handle)
       IF hb_IsBlock(::bSetGet)
          Eval( ::bSetGet, IIF( ::lShowTime, ::tValue, ::dValue ), Self )
       ENDIF
@@ -258,7 +258,7 @@ METHOD Valid() CLASS HDatePicker
    IF !CheckFocus( Self, .T. ) .OR. ::lnoValid
       RETURN .T.
    ENDIF
-   ::dValue := GetDatePicker( ::handle )
+   ::dValue := GetDatePicker(::handle)
    IF hb_IsBlock(::bSetGet)
       Eval( ::bSetGet, IIF( ::lShowTime, ::tValue,::dValue ), Self )
    ENDIF

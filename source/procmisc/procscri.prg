@@ -69,7 +69,7 @@ LOCAL aFormCode, aFormName
                RETURN Nil
             ENDIF
             rejim  := 0
-            scrkod := aFormCode[ i ]
+            scrkod := aFormCode[i]
          ENDIF
       ENDDO
       FCLOSE(han)
@@ -345,21 +345,21 @@ LOCAL i, j, bOldError
    ENDIF
    j := LEN( rezArray[2] )
    FOR i := j TO 1 STEP - 1
-      IF UPPER(LEFT(tmpArray[ i ], 2)) == "IF"
-         bOldError := ERRORBLOCK( { | e | MacroError(1,e,tmpArray[ i ]) } )
+      IF UPPER(LEFT(tmpArray[i], 2)) == "IF"
+         bOldError := ERRORBLOCK( { | e | MacroError(1,e,tmpArray[i]) } )
          BEGIN SEQUENCE
-            rezArray[ 2,i ] := &( "{||IIF(" + ALLTRIM( SUBSTR( tmpArray[ i ], 4 ) ) + ;
+            rezArray[2, i] := &( "{||IIF(" + ALLTRIM( SUBSTR( tmpArray[i], 4 ) ) + ;
                  ",.T.,iscr:=" + LTRIM( STR( j, 5 ) ) + ")}" )
          RECOVER
             ERRORBLOCK( bOldError )
             RETURN .F.
          END SEQUENCE
          ERRORBLOCK( bOldError )
-         tmpArray[ i ] := ""
+         tmpArray[i] := ""
          i --
-         IF i > 0 .AND. tmpArray[ i ] == "JUMP"
-            rezArray[ 2,i ] := &( "{||iscr:=" + LTRIM( STR( IIF( prju, j - 1, j ), 5 ) ) + "}" )
-            tmpArray[ i ] := ""
+         IF i > 0 .AND. tmpArray[i] == "JUMP"
+            rezArray[2, i] := &( "{||iscr:=" + LTRIM( STR( IIF( prju, j - 1, j ), 5 ) ) + "}" )
+            tmpArray[i] := ""
          ENDIF
          RETURN .T.
       ENDIF
@@ -373,18 +373,18 @@ LOCAL bOldError
 
    j := LEN( rezArray )
    FOR i := j TO 1 STEP - 1
-      IF !EMPTY( tmpArray[ i ] ) .AND. LEFT( tmpArray[ i ], 4 ) == "EXIT"
-         rezArray[ i ] = &( "{||iscr:=" + LTRIM( STR( j + 1, 5 ) ) + "}" )
-         tmpArray[ i ] = ""
+      IF !EMPTY( tmpArray[i] ) .AND. LEFT( tmpArray[i], 4 ) == "EXIT"
+         rezArray[i] = &( "{||iscr:=" + LTRIM( STR( j + 1, 5 ) ) + "}" )
+         tmpArray[i] = ""
       ENDIF
-      IF !EMPTY( tmpArray[ i ] ) .AND. LEFT( tmpArray[ i ], 4 ) == "LOOP"
+      IF !EMPTY( tmpArray[i] ) .AND. LEFT( tmpArray[i], 4 ) == "LOOP"
          iloop := i
       ENDIF
       IF !EMPTY(tmpArray[i]) .AND. (UPPER(LEFT(tmpArray[i], 8)) = "DO WHILE" .OR. ;
          UPPER(LEFT(tmpArray[i], 5)) = "WHILE")
-         bOldError := ERRORBLOCK( { | e | MacroError(1,e,tmpArray[ i ] ) } )
+         bOldError := ERRORBLOCK( { | e | MacroError(1,e,tmpArray[i] ) } )
          BEGIN SEQUENCE
-            rezArray[ i ] = &( "{||IIF(" + ALLTRIM( SUBSTR( tmpArray[ i ], ;
+            rezArray[i] = &( "{||IIF(" + ALLTRIM( SUBSTR( tmpArray[i], ;
                  IIF(UPPER(LEFT(tmpArray[i], 1)) == "D", 10, 7))) + ;
                  ",.T.,iscr:=" + LTRIM( STR( j + 1, 5 ) ) + ")}" )
          RECOVER
@@ -392,7 +392,7 @@ LOCAL bOldError
             RETURN .F.
          END SEQUENCE
          ERRORBLOCK( bOldError )
-         tmpArray[ i ] = ""
+         tmpArray[i] = ""
          AADD(rezArray, &( "{||iscr:=" + LTRIM( STR( i - 1, 5 ) ) + "}" ))
          AADD(tmpArray, "")
          IF iloop > 0
@@ -419,14 +419,14 @@ PRIVATE iscr := 1, bOldError
    lDebug := ( Len( aScript ) >= 3 )
    DO WHILE !hb_IsBlock(aScript[2, iscr])
       IF hb_IsChar(aScript[2, iscr])
-         IF Left( aScript[ 2,iscr ],1 ) == "#"
+         IF Left( aScript[2, iscr],1 ) == "#"
             IF !lDebugger
                lSetDebugger := .T.
                SetDebugger()
             ENDIF
          ELSE
-            stroka := Substr( aScript[ 2,iscr ],2 )
-            lParam := ( Left( aScript[ 2,iscr ],1 ) == "/" )
+            stroka := Substr( aScript[2, iscr],2 )
+            lParam := ( Left( aScript[2, iscr],1 ) == "/" )
             bOldError := ERRORBLOCK( { | e | MacroError(2,e) } )
             BEGIN SEQUENCE
             j := 1
@@ -467,7 +467,7 @@ PRIVATE iscr := 1, bOldError
                ENDDO
             ENDIF
 #endif
-            EVAL( aScript[ 2,iscr ] )
+            EVAL( aScript[2, iscr] )
             iscr ++
          ENDDO
 #ifdef __WINDOWS__
@@ -478,7 +478,7 @@ PRIVATE iscr := 1, bOldError
 #endif
       ELSE
          DO WHILE iscr > 0 .AND. iscr <= arlen
-            EVAL( aScript[ 2,iscr ] )
+            EVAL( aScript[2, iscr] )
             iscr ++
          ENDDO
       ENDIF

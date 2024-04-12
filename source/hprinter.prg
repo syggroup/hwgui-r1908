@@ -133,18 +133,18 @@ METHOD New( cPrinter, lmm, nFormType, nBin, lLandScape, nCopies, lProprierties, 
       endif
 
       aPrnCoors := GetDeviceArea(::hDCPrn)
-      ::nWidth  := IIf( ::lmm, aPrnCoors[ 3 ], aPrnCoors[ 1 ] )
-      ::nHeight := IIf( ::lmm, aPrnCoors[ 4 ], aPrnCoors[ 2 ] )
-      ::nPWidth  := IIf( ::lmm, aPrnCoors[ 8 ], aPrnCoors[ 1 ] )
-      ::nPHeight := IIf( ::lmm, aPrnCoors[ 9 ], aPrnCoors[ 2 ] )
-      ::nHRes   := aPrnCoors[ 1 ] / aPrnCoors[ 3 ]
-      ::nVRes   := aPrnCoors[ 2 ] / aPrnCoors[ 4 ]
-      ::PixelsPerInchY   := aPrnCoors[ 6 ]
-      ::PixelsPerInchX   := aPrnCoors[ 5 ]
+      ::nWidth  := IIf( ::lmm, aPrnCoors[3], aPrnCoors[1] )
+      ::nHeight := IIf( ::lmm, aPrnCoors[4], aPrnCoors[2] )
+      ::nPWidth  := IIf( ::lmm, aPrnCoors[8], aPrnCoors[1] )
+      ::nPHeight := IIf( ::lmm, aPrnCoors[9], aPrnCoors[2] )
+      ::nHRes   := aPrnCoors[1] / aPrnCoors[3]
+      ::nVRes   := aPrnCoors[2] / aPrnCoors[4]
+      ::PixelsPerInchY   := aPrnCoors[6]
+      ::PixelsPerInchX   := aPrnCoors[5]
 
-      ::TopMargin        := aPrnCoors[ 10 ]
+      ::TopMargin        := aPrnCoors[10]
       ::BottomMargin     := (::nPHeight - ::TopMargin)+1
-      ::LeftMargin       := aPrnCoors[ 11]
+      ::LeftMargin       := aPrnCoors[11]
       ::RightMargin      := (::nPWidth - ::LeftMargin)+1
       // writelog( ::cPrinterName + str(aPrnCoors[1])+str(aPrnCoors[2])+str(aPrnCoors[3])+str(aPrnCoors[4])+str(aPrnCoors[5])+str(aPrnCoors[6])+str(aPrnCoors[8])+str(aPrnCoors[9]) )
    ENDIF
@@ -162,12 +162,12 @@ METHOD SetMode(nOrientation) CLASS HPrinter
       ::hDCPrn := hDC
       ::hPrinter := hPrinter
       aPrnCoors := GetDeviceArea(::hDCPrn)
-      ::nWidth  := IIf( ::lmm, aPrnCoors[ 3 ], aPrnCoors[ 1 ] )
-      ::nHeight := IIf( ::lmm, aPrnCoors[ 4 ], aPrnCoors[ 2 ] )
-      ::nPWidth  := IIf( ::lmm, aPrnCoors[ 8 ], aPrnCoors[ 1 ] )
-      ::nPHeight := IIf( ::lmm, aPrnCoors[ 9 ], aPrnCoors[ 2 ] )
-      ::nHRes   := aPrnCoors[ 1 ] / aPrnCoors[ 3 ]
-      ::nVRes   := aPrnCoors[ 2 ] / aPrnCoors[ 4 ]
+      ::nWidth  := IIf( ::lmm, aPrnCoors[3], aPrnCoors[1] )
+      ::nHeight := IIf( ::lmm, aPrnCoors[4], aPrnCoors[2] )
+      ::nPWidth  := IIf( ::lmm, aPrnCoors[8], aPrnCoors[1] )
+      ::nPHeight := IIf( ::lmm, aPrnCoors[9], aPrnCoors[2] )
+      ::nHRes   := aPrnCoors[1] / aPrnCoors[3]
+      ::nVRes   := aPrnCoors[2] / aPrnCoors[4]
       // writelog( ":"+str(aPrnCoors[1])+str(aPrnCoors[2])+str(aPrnCoors[3])+str(aPrnCoors[4])+str(aPrnCoors[5])+str(aPrnCoors[6])+str(aPrnCoors[8])+str(aPrnCoors[9]) )
       RETURN .T.
    ENDIF
@@ -282,7 +282,7 @@ METHOD GetTextWidth( cString, oFont ) CLASS HPrinter
       SelectObject(::hDC, hFont)
    ENDIF
 
-   RETURN IIf( ::lmm, Int( arr[ 1 ] / ::nHRes ), arr[ 1 ] )
+   RETURN IIf( ::lmm, Int( arr[1] / ::nHRes ), arr[1] )
 
 METHOD StartDoc(lPreview, cMetaName) CLASS HPrinter
 
@@ -342,7 +342,7 @@ METHOD ReleaseMeta() CLASS HPrinter
 
    nLen := Len( ::aMeta )
    FOR i := 1 TO nLen
-      DeleteEnhMetaFile(::aMeta[ i ])
+      DeleteEnhMetaFile(::aMeta[i])
    NEXT
    ::aMeta := Nil
 
@@ -351,7 +351,7 @@ METHOD ReleaseMeta() CLASS HPrinter
 METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
    LOCAL oDlg, oToolBar, oSayPage, oBtn, oCanvas, oTimer, i, nLastPage := Len( ::aMeta ), aPage := {}
    LOCAL oFont := HFont():Add("Times New Roman", 0, -13, 700)
-   LOCAL lTransp := ( aBitmaps != Nil .AND. Len( aBitmaps ) > 9 .AND. aBitmaps[ 10 ] != Nil .AND. aBitmaps[ 10 ] )
+   LOCAL lTransp := ( aBitmaps != Nil .AND. Len( aBitmaps ) > 9 .AND. aBitmaps[10] != Nil .AND. aBitmaps[10] )
 
    FOR i := 1 TO nLastPage
       AAdd(aPage, Str( i, 4 ) + ":" + Str( nLastPage, 4 ))
@@ -390,9 +390,9 @@ METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
 
    @ 3, 2 OWNERBUTTON oBtn OF oToolBar ON CLICK { || EndDialog() } ;
       SIZE oToolBar:nWidth - 6, 24 TEXT "Exit" FONT oFont        ;
-      TOOLTIP IIf( aTooltips != Nil, aTooltips[ 1 ], "Exit Preview" )
-   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 1 .AND. aBitmaps[ 2 ] != Nil
-      oBtn:oBitmap  := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBitmaps[ 2 ]), HBitmap():AddFile(aBitmaps[ 2 ]) )
+      TOOLTIP IIf( aTooltips != Nil, aTooltips[1], "Exit Preview" )
+   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 1 .AND. aBitmaps[2] != Nil
+      oBtn:oBitmap  := IIf( aBitmaps[1], HBitmap():AddResource(aBitmaps[2]), HBitmap():AddFile(aBitmaps[2]) )
       oBtn:title    := Nil
       oBtn:lTransp := lTransp
    ENDIF
@@ -401,9 +401,9 @@ METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
 
    @ 3, 36 OWNERBUTTON oBtn OF oToolBar ON CLICK { || ::PrintMeta() } ;   // removed ::nCurrPage by Giuseppe Mastrangelo
       SIZE oToolBar:nWidth - 6, 24 TEXT "Print" FONT oFont         ;
-      TOOLTIP IIf( aTooltips != Nil, aTooltips[ 2 ], "Print file" )
-   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 2 .AND. aBitmaps[ 3 ] != Nil
-      oBtn:oBitmap := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBitmaps[ 3 ]), HBitmap():AddFile(aBitmaps[ 3 ]) )
+      TOOLTIP IIf( aTooltips != Nil, aTooltips[2], "Print file" )
+   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 2 .AND. aBitmaps[3] != Nil
+      oBtn:oBitmap := IIf( aBitmaps[1], HBitmap():AddResource(aBitmaps[3]), HBitmap():AddFile(aBitmaps[3]) )
       oBtn:title   := Nil
       oBtn:lTransp := lTransp
    ENDIF
@@ -415,36 +415,36 @@ METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
 
    @ 3, 86 OWNERBUTTON oBtn OF oToolBar ON CLICK { || ::ChangePage(oSayPage, 0) } ;
       SIZE oToolBar:nWidth - 6, 24 TEXT "|<<" FONT oFont                 ;
-      TOOLTIP IIf( aTooltips != Nil, aTooltips[ 3 ], "First page" )
-   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 3 .AND. aBitmaps[ 4 ] != Nil
-      oBtn:oBitmap := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBitmaps[ 4 ]), HBitmap():AddFile(aBitmaps[ 4 ]) )
+      TOOLTIP IIf( aTooltips != Nil, aTooltips[3], "First page" )
+   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 3 .AND. aBitmaps[4] != Nil
+      oBtn:oBitmap := IIf( aBitmaps[1], HBitmap():AddResource(aBitmaps[4]), HBitmap():AddFile(aBitmaps[4]) )
       oBtn:title   := Nil
       oBtn:lTransp := lTransp
    ENDIF
 
    @ 3, 110 OWNERBUTTON oBtn OF oToolBar ON CLICK { || ::ChangePage(oSayPage, 1) } ;
       SIZE oToolBar:nWidth - 6, 24 TEXT ">>" FONT oFont                  ;
-      TOOLTIP IIf( aTooltips != Nil, aTooltips[ 4 ], "Next page" )
-   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 4 .AND. aBitmaps[ 5 ] != Nil
-      oBtn:oBitmap := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBitmaps[ 5 ]), HBitmap():AddFile(aBitmaps[ 5 ]) )
+      TOOLTIP IIf( aTooltips != Nil, aTooltips[4], "Next page" )
+   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 4 .AND. aBitmaps[5] != Nil
+      oBtn:oBitmap := IIf( aBitmaps[1], HBitmap():AddResource(aBitmaps[5]), HBitmap():AddFile(aBitmaps[5]) )
       oBtn:title   := Nil
       oBtn:lTransp := lTransp
    ENDIF
 
    @ 3, 134 OWNERBUTTON oBtn OF oToolBar ON CLICK { || ::ChangePage(oSayPage, - 1) } ;
       SIZE oToolBar:nWidth - 6, 24 TEXT "<<" FONT oFont    ;
-      TOOLTIP IIf( aTooltips != Nil, aTooltips[ 5 ], "Previous page" )
-   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 5 .AND. aBitmaps[ 6 ] != Nil
-      oBtn:oBitmap := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBitmaps[ 6 ]), HBitmap():AddFile(aBitmaps[ 6 ]) )
+      TOOLTIP IIf( aTooltips != Nil, aTooltips[5], "Previous page" )
+   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 5 .AND. aBitmaps[6] != Nil
+      oBtn:oBitmap := IIf( aBitmaps[1], HBitmap():AddResource(aBitmaps[6]), HBitmap():AddFile(aBitmaps[6]) )
       oBtn:title   := Nil
       oBtn:lTransp := lTransp
    ENDIF
 
    @ 3, 158 OWNERBUTTON oBtn OF oToolBar ON CLICK { || ::ChangePage(oSayPage, 2) } ;
       SIZE oToolBar:nWidth - 6, 24 TEXT ">>|" FONT oFont   ;
-      TOOLTIP IIf( aTooltips != Nil, aTooltips[ 6 ], "Last page" )
-   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 6 .AND. aBitmaps[ 7 ] != Nil
-      oBtn:oBitmap := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBitmaps[ 7 ]), HBitmap():AddFile(aBitmaps[ 7 ]) )
+      TOOLTIP IIf( aTooltips != Nil, aTooltips[6], "Last page" )
+   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 6 .AND. aBitmaps[7] != Nil
+      oBtn:oBitmap := IIf( aBitmaps[1], HBitmap():AddResource(aBitmaps[7]), HBitmap():AddFile(aBitmaps[7]) )
       oBtn:title   := Nil
       oBtn:lTransp := lTransp
    ENDIF
@@ -453,18 +453,18 @@ METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
 
    @ 3, 192 OWNERBUTTON oBtn OF oToolBar ON CLICK { || ::ResizePreviewDlg( oCanvas, - 1 ) } ;
       SIZE oToolBar:nWidth - 6, 24 TEXT "(-)" FONT oFont   ;
-      TOOLTIP IIf( aTooltips != Nil, aTooltips[ 7 ], "Zoom out" )
-   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 7 .AND. aBitmaps[ 8 ] != Nil
-      oBtn:oBitmap := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBitmaps[ 8 ]), HBitmap():AddFile(aBitmaps[ 8 ]) )
+      TOOLTIP IIf( aTooltips != Nil, aTooltips[7], "Zoom out" )
+   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 7 .AND. aBitmaps[8] != Nil
+      oBtn:oBitmap := IIf( aBitmaps[1], HBitmap():AddResource(aBitmaps[8]), HBitmap():AddFile(aBitmaps[8]) )
       oBtn:title   := Nil
       oBtn:lTransp := lTransp
    ENDIF
 
    @ 3, 216 OWNERBUTTON oBtn OF oToolBar ON CLICK { || ::ResizePreviewDlg( oCanvas, 1 ) } ;
       SIZE oToolBar:nWidth - 6, 24 TEXT "(+)" FONT oFont   ;
-      TOOLTIP IIf( aTooltips != Nil, aTooltips[ 8 ], "Zoom in" )
-   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 8 .AND. aBitmaps[ 9 ] != Nil
-      oBtn:oBitmap := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBitmaps[ 9 ]), HBitmap():AddFile(aBitmaps[ 9 ]) )
+      TOOLTIP IIf( aTooltips != Nil, aTooltips[8], "Zoom in" )
+   IF aBitmaps != Nil .AND. Len( aBitmaps ) > 8 .AND. aBitmaps[9] != Nil
+      oBtn:oBitmap := IIf( aBitmaps[1], HBitmap():AddResource(aBitmaps[9]), HBitmap():AddFile(aBitmaps[9]) )
       oBtn:title   := Nil
       oBtn:lTransp := lTransp
    ENDIF
@@ -477,14 +477,14 @@ METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
 
       @ 3, 316 OWNERBUTTON oBtn OF oToolBar  ;
          SIZE oToolBar:nWidth - 6, 24        ;
-         TEXT IIf( Len( aBootUser ) == 4, aBootUser[ 4 ], "User Button" ) ;
+         TEXT IIf( Len( aBootUser ) == 4, aBootUser[4], "User Button" ) ;
          FONT oFont                   ;
-         TOOLTIP IIf( aBootUser[ 3 ] != Nil, aBootUser[ 3 ], "User Button" )
+         TOOLTIP IIf( aBootUser[3] != Nil, aBootUser[3], "User Button" )
 
-      oBtn:bClick := aBootUser[ 1 ]
+      oBtn:bClick := aBootUser[1]
 
-      IF aBootUser[ 2 ] != Nil
-         oBtn:oBitmap := IIf( aBitmaps[ 1 ], HBitmap():AddResource(aBootUser[ 2 ]), HBitmap():AddFile(aBootUser[ 2 ]) )
+      IF aBootUser[2] != Nil
+         oBtn:oBitmap := IIf( aBitmaps[1], HBitmap():AddResource(aBootUser[2]), HBitmap():AddFile(aBootUser[2]) )
          oBtn:title   := Nil
          oBtn:lTransp := lTransp
       ENDIF
@@ -720,12 +720,12 @@ METHOD PlayMeta(oWnd) CLASS HPrinter
    aArray = GetPPSRect( pps )
    // tracelog( "PPS"+str(aArray[1])+str(aArray[2])+str(aArray[3])+str(aArray[4]) )
 
-   IF ( aArray[ 1 ] == 0 .AND. aArray[ 2 ] == 0 )  // IF WHOLE AREA
+   IF ( aArray[1] == 0 .AND. aArray[2] == 0 )  // IF WHOLE AREA
       IF ( ::NeedsRedraw .OR. lRefreshVideo )
          IF ValType(::memDC) == "U"
             ::memDC := hDC():New()
             ::memDC:CreateCompatibleDC(hDC)
-            ::memBitmap := CreateCompatibleBitmap(hDC, rect[ 3 ] - rect[ 1 ], rect[ 4 ] - rect[ 2 ])
+            ::memBitmap := CreateCompatibleBitmap(hDC, rect[3] - rect[1], rect[4] - rect[2])
             ::memDC:SelectObject(::memBitmap)
             Brush           := HBrush():Add(GetSysColor(COLOR_3DHILIGHT + 1)):handle
             BrushWhite      := HBrush():Add(RGB(255, 255, 255)):handle
@@ -738,9 +738,9 @@ METHOD PlayMeta(oWnd) CLASS HPrinter
 
          IF ::NeedsRedraw
             // Draw the canvas background (gray)
-            FillRect( ::memDC:m_hDC, rect[ 1 ], rect[ 2 ], rect[ 3 ], rect[ 4 ], BrushBackground )
-            FillRect( ::memDC:m_hDC, rect[ 1 ], rect[ 2 ], rect[ 1 ], rect[ 4 ], BrushBorder )
-            FillRect( ::memDC:m_hDC, rect[ 1 ], rect[ 2 ], rect[ 3 ], rect[ 2 ], BrushBorder )
+            FillRect( ::memDC:m_hDC, rect[1], rect[2], rect[3], rect[4], BrushBackground )
+            FillRect( ::memDC:m_hDC, rect[1], rect[2], rect[1], rect[4], BrushBorder )
+            FillRect( ::memDC:m_hDC, rect[1], rect[2], rect[3], rect[2], BrushBorder )
             // Draw the PAPER background (white)
             FillRect( ::memDC:m_hDC, ::x1 - 1, ::y1 - 1, ::x2 + 1, ::y2 + 1, BrushLine )
             FillRect( ::memDC:m_hDC, ::x1, ::y1, ::x2, ::y2, BrushWhite )
@@ -762,7 +762,7 @@ METHOD PlayMeta(oWnd) CLASS HPrinter
          ENDIF
          // tracelog("bitblt")
          lRefreshVideo := .F.
-         BitBlt( hDC, rect[ 1 ], rect[ 2 ], rect[ 3 ], rect[ 4 ], ::memDC:m_hDC, 0, 0, SRCCOPY )
+         BitBlt( hDC, rect[1], rect[2], rect[3], rect[4], ::memDC:m_hDC, 0, 0, SRCCOPY )
       ELSE   // window fully uncovered... force a repaint
          lRefreshVideo := .T.
       ENDIF

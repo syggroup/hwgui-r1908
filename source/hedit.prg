@@ -148,7 +148,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    ::DisableBackColor := bDisablecolor
    // defines the number of characters based on the size of control
    IF EMPTY( ::nMaxLength ) .AND. ::cType = "C" .AND. Empty( cPicture ) .AND. Hwg_BitAnd(nStyle, ES_AUTOHSCROLL) = 0
-       nWidth :=  ( TxtRect( " ", Self ) )[ 1 ]
+       nWidth :=  ( TxtRect( " ", Self ) )[1]
        ::nMaxLength := INT( ( ::nWidth - nWidth ) / nWidth ) - 1
        ::nMaxLength := IIF( ::nMaxLength < 10, 10, ::nMaxLength )
    ENDIF    
@@ -385,7 +385,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
 
          ELSEIF msg == WM_LBUTTONDOWN
             IF GetFocus() != ::handle
-               //SetFocus( ::handle )
+               //SetFocus(::handle)
                //RETURN 0
             ENDIF
 
@@ -505,7 +505,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
          ENDDO
          IF oParent != Nil .AND. !Empty( oParent:KeyList )
             nctrl := IIf( IsCtrlShift( .T., .F. ), FCONTROL, IIf( IsCtrlShift( .F., .T. ), FSHIFT, 0 ) )
-            IF ( nPos := AScan( oParent:KeyList, { | a | a[ 1 ] == nctrl.AND.a[ 2 ] == wParam } ) ) > 0
+            IF ( nPos := AScan( oParent:KeyList, { | a | a[1] == nctrl.AND.a[2] == wParam } ) ) > 0
                Eval( oParent:KeyList[ nPos, 3 ], Self )
             ENDIF
          ENDIF
@@ -603,7 +603,7 @@ METHOD Refresh() CLASS HEdit
       ::Title := vari
    ENDIF
    SetDlgItemText( ::oParent:handle, ::id, ::title )
-   IF isWindowVisible(::handle) .AND.   !Empty( GetWindowParent( ::handle ) ) //PtrtouLong( GetFocus() ) == PtrtouLong( ::handle )  
+   IF isWindowVisible(::handle) .AND.   !Empty( GetWindowParent(::handle) ) //PtrtouLong( GetFocus() ) == PtrtouLong(::handle)
       RedrawWindow( ::Handle, RDW_NOERASE + RDW_INVALIDATE + RDW_FRAME + RDW_UPDATENOW ) //+ RDW_NOCHILDREN ) 
    ENDIF
    RETURN Nil                           
@@ -1247,7 +1247,7 @@ METHOD onChange(lForce) CLASS HEdit
    //-LOCAL  nPos := HIWORD(SendMessage(::handle, EM_GETSEL, 0, 0)) + 1
    LOCAL vari
    
-   IF !SelfFocus( ::handle ) .AND. Empty( lForce )
+   IF !SelfFocus(::handle) .AND. Empty( lForce )
       RETURN Nil
    ENDIF
    IF ::cType == "N"
@@ -1430,13 +1430,13 @@ FUNCTION CreateGetList( oDlg )
    LOCAL i, j, aLen1 := Len( oDlg:aControls ), aLen2
 
    FOR i := 1 TO aLen1
-      IF __ObjHasMsg( oDlg:aControls[ i ], "BSETGET" ) .AND. oDlg:aControls[ i ]:bSetGet != Nil
-         AAdd(oDlg:GetList, oDlg:aControls[ i ])
-      ELSEIF !Empty( oDlg:aControls[ i ]:aControls )
-         aLen2 := Len( oDlg:aControls[ i ]:aControls )
+      IF __ObjHasMsg( oDlg:aControls[i], "BSETGET" ) .AND. oDlg:aControls[i]:bSetGet != Nil
+         AAdd(oDlg:GetList, oDlg:aControls[i])
+      ELSEIF !Empty( oDlg:aControls[i]:aControls )
+         aLen2 := Len( oDlg:aControls[i]:aControls )
          FOR j := 1 TO aLen2
-            IF __ObjHasMsg( oDlg:aControls[ i ]:aControls[ j ], "BSETGET" ) .AND. oDlg:aControls[ i ]:aControls[ j ]:bSetGet != Nil
-               AAdd(oDlg:GetList, oDlg:aControls[ i ]:aControls[ j ])
+            IF __ObjHasMsg( oDlg:aControls[i]:aControls[ j ], "BSETGET" ) .AND. oDlg:aControls[i]:aControls[ j ]:bSetGet != Nil
+               AAdd(oDlg:GetList, oDlg:aControls[i]:aControls[ j ])
             ENDIF
          NEXT
       ENDIF
@@ -1455,11 +1455,11 @@ FUNCTION CreateGetList( oDlg, oCnt )
      oCtrl := oCnt
    ENDIF
    FOR i := 1 TO aLen1
-      IF LEN( oCtrl:aControls[ i ]:aControls ) > 0
-         CreateGetList( oDlg, oCtrl:aControls[ i ] )
+      IF LEN( oCtrl:aControls[i]:aControls ) > 0
+         CreateGetList( oDlg, oCtrl:aControls[i] )
       ENDIF
-      IF __ObjHasMsg( oCtrl:aControls[ i ], "BSETGET" ) .AND. oCtrl:aControls[ i ]:bSetGet != Nil
-         AAdd(oDlg:GetList, oCtrl:aControls[ i ])
+      IF __ObjHasMsg( oCtrl:aControls[i], "BSETGET" ) .AND. oCtrl:aControls[i]:bSetGet != Nil
+         AAdd(oDlg:GetList, oCtrl:aControls[i])
       ENDIF
    NEXT
    RETURN oCtrl
@@ -1473,7 +1473,7 @@ FUNCTION GetSkip(oParent, hCtrl, lClipper, nSkip)
       RETURN .F.
    ENDIF
    i := AScan( oParent:acontrols, { | o | PtrtouLong( o:handle ) == PtrtouLong( hCtrl ) } )
-   oCtrl := IIf( i > 0, oParent:acontrols[ i ], oParent )
+   oCtrl := IIf( i > 0, oParent:acontrols[i], oParent )
 
    IF nSkip != 0
       nextHandle := IIF( oParent:className == "HTAB", NextFocusTab(oParent, hCtrl, nSkip), ;
@@ -1528,7 +1528,7 @@ STATIC FUNCTION NextFocusTab(oParent, hCtrl, nSkip)
          i += IIf( i == 0, nFirst, nSkip ) //nLast, nSkip)
          IF i >= nFirst .and. i <= nLast
             nextHandle := GetNextDlgTabItem ( oParent:handle , hCtrl, ( nSkip < 0 ) )
-            IF i != AScan( oParent:aControls, { | o | o:handle == nextHandle } ) .AND. oParent:aControls[ i ]:CLASSNAME = "HRADIOB"
+            IF i != AScan( oParent:aControls, { | o | o:handle == nextHandle } ) .AND. oParent:aControls[i]:CLASSNAME = "HRADIOB"
                nextHandle := GetNextDlgGroupItem( oParent:handle , hCtrl, ( nSkip < 0 ) )
             ENDIF
             k := AScan( oParent:acontrols, { | o | o:Handle == nextHandle } )
@@ -1538,7 +1538,7 @@ STATIC FUNCTION NextFocusTab(oParent, hCtrl, nSkip)
             ENDIF
          ENDIF
       ELSE
-         SETFOCUS( oParent:aPages[ nPage, 1 ]:aControls[ 1 ]:Handle )
+         SETFOCUS( oParent:aPages[ nPage, 1 ]:aControls[1]:Handle )
          RETURN 0
       ENDIF
       IF ( nSkip < 0 .AND. ( k > i .OR. k == 0 ) ) .OR. ( nSkip > 0 .AND. i > k )
@@ -1581,14 +1581,14 @@ STATIC FUNCTION NextFocus( oParent, hCtrl, nSkip )
    nWindow := IIF( oParent:Type <= WND_DLG_RESOURCE, oParent:Handle, GetActiveWindow() )
 
    i := AScan( oparent:acontrols, { | o | SelfFocus( o:Handle, hCtrl ) } )
-   IF i > 0 .and. Len( oParent:acontrols[ i ]:aControls ) > 0 .AND.;
-      oParent:aControls[ i ]:className != "HTAB" .AND. ( PtrtouLong( hCtrl ) != PtrtouLong( nextHandle ) )
-      nextHandle := NextFocusContainer( oParent:aControls[ i ], hCtrl , nSkip )
+   IF i > 0 .and. Len( oParent:acontrols[i]:aControls ) > 0 .AND.;
+      oParent:aControls[i]:className != "HTAB" .AND. ( PtrtouLong( hCtrl ) != PtrtouLong( nextHandle ) )
+      nextHandle := NextFocusContainer( oParent:aControls[i], hCtrl , nSkip )
       IF !Empty( nextHandle  )
          RETURN nextHandle
       ENDIF
    ENDIF
-   lHradio :=  i > 0 .AND. oParent:acontrols[ i ]:CLASSNAME = "HRADIOB"
+   lHradio :=  i > 0 .AND. oParent:acontrols[i]:CLASSNAME = "HRADIOB"
       // TABs DO resource
    //IF oParent:Type = WND_DLG_RESOURCE
       nextHandle := GetNextDlgTabItem( nWindow , hctrl,( nSkip < 0 ) )
@@ -1596,7 +1596,7 @@ STATIC FUNCTION NextFocus( oParent, hCtrl, nSkip )
       IF lHradio .OR.  lGroup
          nexthandle := GetNextDlgGroupItem( nWindow , hctrl,( nSkip < 0 ) )
          i := AScan( oParent:aControls, { | o | PtrtouLong( o:Handle ) == PtrtouLong( nextHandle ) } )
-         lnoTabStop := !( i > 0 .AND. oParent:aControls[ i ]:CLASSNAME = "HRADIOB")
+         lnoTabStop := !( i > 0 .AND. oParent:aControls[i]:CLASSNAME = "HRADIOB")
       ENDIF
          
       IF ( lGroup .AND. nSkip < 0 ) .OR. lnoTabStop
@@ -1608,7 +1608,7 @@ STATIC FUNCTION NextFocus( oParent, hCtrl, nSkip )
       i := AScan( oParent:aControls, { | o | SelfFocus( o:Handle, nextHandle ) } )
                                                          
       IF ( lnoTabStop .AND. i > 0 .AND. !SelfFocus( hCtrl, NextHandle ) ) .OR. ( i > 0 .AND. i <= LEN( oParent:aControls ).AND. ;
-           oparent:acontrols[ i ]:classname = "HGROUP") .OR. ( i = 0 .AND. !Empty( nextHandle ) )
+           oparent:acontrols[i]:classname = "HGROUP") .OR. ( i = 0 .AND. !Empty( nextHandle ) )
           RETURN NextFocus( oParent, nextHandle, nSkip )
       ENDIF
    //ENDIF
@@ -1626,7 +1626,7 @@ STATIC FUNCTION NextFocusContainer(oParent,hCtrl,nSkip)
    ENDIF
    nWindow := oParent:handle
    i := AScan( oparent:acontrols, { | o | PtrtouLong( o:handle ) == PtrtouLong( hCtrl ) } )
-    lHradio :=  i > 0 .AND. oParent:acontrols[ i ]:CLASSNAME = "HRADIOB"
+    lHradio :=  i > 0 .AND. oParent:acontrols[i]:CLASSNAME = "HRADIOB"
       // TABs DO resource
    IF oParent:Type = WND_DLG_RESOURCE
       nexthandle := GetNextDlgGroupItem( oParent:handle , hctrl,( nSkip < 0 ) )
@@ -1634,7 +1634,7 @@ STATIC FUNCTION NextFocusContainer(oParent,hCtrl,nSkip)
       IF lHradio .OR.  lGroup
          nextHandle := GetNextDlgGroupItem( nWindow , hCtrl,( nSkip < 0 ) )
          i := AScan( oParent:aControls, { | o | o:Handle == nextHandle } )
-         lnoTabStop := !( i > 0 .AND. oParent:aControls[ i ]:CLASSNAME = "HRADIOB")  //Hwg_BitAND(HWG_GETWINDOWSTYLE(nexthandle), WS_TABSTOP) = 0
+         lnoTabStop := !( i > 0 .AND. oParent:aControls[i]:CLASSNAME = "HRADIOB")  //Hwg_BitAND(HWG_GETWINDOWSTYLE(nexthandle), WS_TABSTOP) = 0
       ENDIF
       IF ( lGroup .AND. nSkip < 0 ) .OR. lnoTabStop
          nextHandle := GetNextDlgTabItem ( nWindow , hctrl, ( nSkip < 0 ) )

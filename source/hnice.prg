@@ -161,9 +161,9 @@ METHOD Create() CLASS HNICEButton
    LOCAL w
    LOCAL h
 
-   Rct    := GetClientRect( ::handle )
-   w      := Rct[ 3 ] - Rct[ 1 ]
-   h      := Rct[ 4 ] - Rct[ 2 ]
+   Rct    := GetClientRect(::handle)
+   w      := Rct[3] - Rct[1]
+   h      := Rct[4] - Rct[2]
    Region := CreateRoundRectRgn( 0, 0, w, h, h * 0.90, h * 0.90 )
    SetWindowRgn( ::Handle, Region, .T. )
    InvalidateRect( ::Handle, 0, 0 )
@@ -258,14 +258,14 @@ METHOD PAINT() CLASS HNICEButton
    LOCAL h
    //  *******************
 
-   Rct  := GetClientRect( ::Handle )
-   x    := Rct[ 1 ]
-   y    := Rct[ 2 ]
-   w    := Rct[ 3 ] - Rct[ 1 ]
-   h    := Rct[ 4 ] - Rct[ 2 ]
-   XCtr := ( Rct[ 1 ] + Rct[ 3 ] ) / 2
-   YCtr := ( Rct[ 2 ] + Rct[ 4 ] ) / 2
-   T    := GetWindowText( ::Handle )
+   Rct  := GetClientRect(::Handle)
+   x    := Rct[1]
+   y    := Rct[2]
+   w    := Rct[3] - Rct[1]
+   h    := Rct[4] - Rct[2]
+   XCtr := ( Rct[1] + Rct[3] ) / 2
+   YCtr := ( Rct[2] + Rct[4] ) / 2
+   T    := GetWindowText(::Handle)
    // **********************************
    //         Draw our control
    // **********************************
@@ -281,10 +281,10 @@ METHOD PAINT() CLASS HNICEButton
 
    IF ( ::State == OBTN_MOUSOVER )
       SetTextColor(hDC, VCOLOR("FF0000"))
-      TextOut( hDC, XCtr - ( Size[ 1 ] / 2 ) + 1, YCtr - ( Size[ 2 ] / 2 ) + 1, T )
+      TextOut( hDC, XCtr - ( Size[1] / 2 ) + 1, YCtr - ( Size[2] / 2 ) + 1, T )
    ELSE
       SetTextColor(hDC, VCOLOR("0000FF"))
-      TextOut( hDC, XCtr - Size[ 1 ] / 2, YCtr - Size[ 2 ] / 2, T )
+      TextOut( hDC, XCtr - Size[1] / 2, YCtr - Size[2] / 2, T )
    ENDIF
 
    EndPaint( ::Handle, ps )

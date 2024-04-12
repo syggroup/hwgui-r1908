@@ -166,30 +166,30 @@ METHOD Paint( lpdis ) CLASS HSayBmp
       IF ::nZoom == Nil
          IF ::BackStyle = TRANSPARENT
             IF ::nStretch = 1  // isometric
-               DrawTransparentBitmap(drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
-                                      drawInfo[ 5 ] + ::nOffsetV,,) // ::nWidth+1, ::nHeight+1)
+               DrawTransparentBitmap(drawInfo[3], ::oImage:handle, drawInfo[4] + ::nOffsetH, ;
+                                      drawInfo[5] + ::nOffsetV,,) // ::nWidth+1, ::nHeight+1)
 ELSEIF ::nStretch = 2  // CLIP
-   DrawTransparentBitmap(drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
-                          drawInfo[ 5 ] + ::nOffsetV,, ::nWidth + 1, ::nHeight + 1 )
+   DrawTransparentBitmap(drawInfo[3], ::oImage:handle, drawInfo[4] + ::nOffsetH, ;
+                          drawInfo[5] + ::nOffsetV,, ::nWidth + 1, ::nHeight + 1 )
 ELSE // stretch (DEFAULT)
-   DrawTransparentBitmap(drawInfo[ 3 ], ::oImage:handle, drawInfo[ 4 ] + ::nOffsetH, ;
-                          drawInfo[ 5 ] + ::nOffsetV,, drawInfo[ 6 ] - drawInfo[ 4 ] + 1, drawInfo[ 7 ] - drawInfo[ 5 ] + 1)
+   DrawTransparentBitmap(drawInfo[3], ::oImage:handle, drawInfo[4] + ::nOffsetH, ;
+                          drawInfo[5] + ::nOffsetV,, drawInfo[6] - drawInfo[4] + 1, drawInfo[7] - drawInfo[5] + 1)
 ENDIF
 ELSE
    IF ::nStretch = 1  // isometric
-      DrawBitmap(drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
-                  drawInfo[ 5 ] + ::nOffsetV) //, ::nWidth+1, ::nHeight+1)
+      DrawBitmap(drawInfo[3], ::oImage:handle,, drawInfo[4] + ::nOffsetH, ;
+                  drawInfo[5] + ::nOffsetV) //, ::nWidth+1, ::nHeight+1)
 ELSEIF ::nStretch = 2  // CLIP
-   DrawBitmap(drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
-               drawInfo[ 5 ] + ::nOffsetV, ::nWidth + 1, ::nHeight + 1)
+   DrawBitmap(drawInfo[3], ::oImage:handle,, drawInfo[4] + ::nOffsetH, ;
+               drawInfo[5] + ::nOffsetV, ::nWidth + 1, ::nHeight + 1)
 ELSE // stretch (DEFAULT)
-   DrawBitmap(drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
-               drawInfo[ 5 ] + ::nOffsetV, drawInfo[ 6 ] - drawInfo[ 4 ] + 1, drawInfo[ 7 ] - drawInfo[ 5 ] + 1)
+   DrawBitmap(drawInfo[3], ::oImage:handle,, drawInfo[4] + ::nOffsetH, ;
+               drawInfo[5] + ::nOffsetV, drawInfo[6] - drawInfo[4] + 1, drawInfo[7] - drawInfo[5] + 1)
 ENDIF
 ENDIF
 ELSE
-   DrawBitmap(drawInfo[ 3 ], ::oImage:handle,, drawInfo[ 4 ] + ::nOffsetH, ;
-               drawInfo[ 5 ] + ::nOffsetV, ::oImage:nWidth * ::nZoom, ::oImage:nHeight * ::nZoom)
+   DrawBitmap(drawInfo[3], ::oImage:handle,, drawInfo[4] + ::nOffsetH, ;
+               drawInfo[5] + ::nOffsetV, ::oImage:nWidth * ::nZoom, ::oImage:nHeight * ::nZoom)
 ENDIF
 ENDIF
 

@@ -196,14 +196,14 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, btnWidth, oFo
       ENDIF
    ENDIF
    IF __ObjHasMsg( ::oParent,"AOFFSET" ) .AND. ::oParent:type == WND_MDI .AND. ;
-        ::oParent:aOffset[ 2 ] + ::oParent:aOffset[ 3 ] = 0
+        ::oParent:aOffset[2] + ::oParent:aOffset[3] = 0
       IF ::nWidth > ::nHeight .OR. ::nWidth == 0
-         ::oParent:aOffset[ 2 ] := ::nHeight
+         ::oParent:aOffset[2] := ::nHeight
       ELSEIF ::nHeight > ::nWidth .OR. ::nHeight == 0
          IF ::nLeft == 0
-            ::oParent:aOffset[ 1 ] += ::nWidth
+            ::oParent:aOffset[1] += ::nWidth
          ELSE
-            ::oParent:aOffset[ 3 ] += ::nWidth
+            ::oParent:aOffset[3] += ::nWidth
          ENDIF
       ENDIF
    ENDIF
@@ -268,11 +268,11 @@ METHOD CREATETOOL() CLASS hToolBar
    Local hImage, img, nlistimg, ndrop := 0
 
    IF !::lResource
-      IF Empty( ::handle )
+      IF Empty(::handle)
          RETURN Nil
             ENDIF
             IF !::lCreate
-               DESTROYWINDOW( ::Handle )
+               DESTROYWINDOW(::Handle)
                ::Activate()
                //IF !EMPTY( ::oFont )
                ::SetFont( ::oFont )
@@ -356,32 +356,32 @@ METHOD CREATETOOL() CLASS hToolBar
       ENDIF
    NEXT
    IF Len( aButton ) > 0 //.AND. ::lResource
-      aBmpSize := GetBitmapSize(aButton[ 1 ])
+      aBmpSize := GetBitmapSize(aButton[1])
          /*
-         nmax := aBmpSize[ 3 ]
+         nmax := aBmpSize[3]
 
          FOR n := 2 TO Len( aButton )
-            aBmpSize := GetBitmapSize(aButton[ n ])
-            nmax := Max( nmax, aBmpSize[ 3 ] )
+            aBmpSize := GetBitmapSize(aButton[n])
+            nmax := Max( nmax, aBmpSize[3] )
          NEXT
-         aBmpSize := GetBitmapSize(aButton[ 1 ])
+         aBmpSize := GetBitmapSize(aButton[1])
 
          IF nmax == 4
-            hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR4 + ILC_MASK )
+            hIm := CreateImageList( {} , aBmpSize[1], aBmpSize[2], 1, ILC_COLOR4 + ILC_MASK )
          ELSEIF nmax == 8
-            hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLOR8 + ILC_MASK )
+            hIm := CreateImageList( {} , aBmpSize[1], aBmpSize[2], 1, ILC_COLOR8 + ILC_MASK )
          ELSEIF nMax == 16 //
-             hIm := CreateImageList( {} ,aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )
+             hIm := CreateImageList( {} ,aBmpSize[1], aBmpSize[2], 1, ILC_COLORDDB + ILC_MASK )
          ELSEIF nmax == 24
-            hIm := CreateImageList( {} , aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )
+            hIm := CreateImageList( {} , aBmpSize[1], aBmpSize[2], 1, ILC_COLORDDB + ILC_MASK )
          ENDIF
          */
-      hIm := CreateImageList( {} ,aBmpSize[ 1 ], aBmpSize[ 2 ], 1, ILC_COLORDDB + ILC_MASK )
+      hIm := CreateImageList( {} ,aBmpSize[1], aBmpSize[2], 1, ILC_COLORDDB + ILC_MASK )
       FOR nPos := 1 TO Len( aButton )
 
 //            aBmpSize := GetBitmapSize(aButton[ nPos ])
             /*
-            IF aBmpSize[ 3 ] == 24
+            IF aBmpSize[3] == 24
 //             Imagelist_AddMasked(hIm, aButton[nPos], RGB(236, 223, 216))
                Imagelist_Add(hIm, aButton[ nPos ])
             ELSE
@@ -441,27 +441,27 @@ METHOD Notify( lParam ) CLASS hToolBar
    IF nCode == TTN_GETDISPINFO
 
       nButton := TOOLBAR_GETDISPINFOID(lParam)
-      nPos := AScan( ::aItem, { | x | x[ 2 ] == nButton } )
+      nPos := AScan( ::aItem, { | x | x[2] == nButton } )
       TOOLBAR_SETDISPINFO( lParam, ::aItem[ nPos, 8 ] )
 
    ELSEIF nCode == TBN_GETINFOTIP
 
       nId := TOOLBAR_GETINFOTIPID(lParam)
-      nPos := AScan( ::aItem, { | x | x[ 2 ] == nId } )
+      nPos := AScan( ::aItem, { | x | x[2] == nId } )
       TOOLBAR_GETINFOTIP(lParam, ::aItem[ nPos, 8 ])
 
    ELSEIF nCode == TBN_DROPDOWN
       nId := TOOLBAR_SUBMENUEXGETID(lParam)
       IF nId > 0 //hb_IsArray(::aItem[1, 9])
 //       nid := TOOLBAR_SUBMENUEXGETID(lParam)
-         nPos := AScan( ::aItem, { | x | x[ 2 ] == nId } )
+         nPos := AScan( ::aItem, { | x | x[2] == nId } )
          TOOLBAR_SUBMENUEx( lParam, ::aItem[ nPos, 10 ], ::oParent:handle )
       ELSE
          TOOLBAR_SUBMENU( lParam, 1, ::oParent:handle )
       ENDIF
    elseif nCode == NM_CLICK  //.AND. ::GetParentForm():Type  <= WND_MAIN 
       nId := TOOLBAR_IDCLICK( lParam )     
-      nPos := AScan( ::aItem, { | x | x[ 2 ] == nId } )
+      nPos := AScan( ::aItem, { | x | x[2] == nId } )
       if nPos > 0 .AND. ::aItem[nPos,7] != NIL
          Eval( ::aItem[nPos,7], ::aItem[nPos,11], nId )
       endif
