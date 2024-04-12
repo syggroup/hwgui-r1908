@@ -21,7 +21,7 @@
    #define HB_PUSHITEM( i )         hb_vmPushPointer( ( void * )i )
 #else
    //#ifdef __XHARBOUR__
-      #define HB_RETHANDLE( h )        hb_retnl( ( LONG_PTR ) ( h ) )
+      #define HB_RETHANDLE( h )        hb_retnl( ( LONG ) ( LONG_PTR ) ( h ) )
       #define HB_PARHANDLE( n )        ( ( LONG_PTR ) hb_parnl( n ) )
       #define HB_STOREHANDLE( h, n )   hb_stornl( ( LONG_PTR ) ( h ), n )
       #define HB_PUTHANDLE( i, h )     hb_itemPutNL( i, ( LONG_PTR ) ( h ) )
