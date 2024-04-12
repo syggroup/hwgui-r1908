@@ -107,7 +107,7 @@ HB_FUNC(HWG_INITMAINWINDOW)
         (hb_pcount() > 4 && !HB_ISNIL(5)) ? (HICON)HB_PARHANDLE(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
     wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
     wndclass.hbrBackground =
-        (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? (HBRUSH)NULL : (HBRUSH)HB_PARHANDLE(6))
+        (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? (HBRUSH)NULL : hwg_par_HBRUSH(6))
                                             : (HBRUSH)(COLOR_WINDOW + 1)));
     wndclass.lpszMenuName = lpMenu;
     wndclass.lpszClassName = lpAppName;
@@ -275,7 +275,7 @@ HB_FUNC(HWG_INITCHILDWINDOW)
         (hb_pcount() > 4 && !HB_ISNIL(5)) ? (HICON)HB_PARHANDLE(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
     wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
     wndclass.hbrBackground =
-        (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? (HBRUSH)NULL : (HBRUSH)HB_PARHANDLE(6))
+        (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? (HBRUSH)NULL : hwg_par_HBRUSH(6))
                                             : (HBRUSH)(COLOR_WINDOW + 1)));
     /*
        wndclass.hbrBackground = ( ( (hb_pcount()>5 && !HB_ISNIL(6))?
@@ -369,7 +369,7 @@ HB_FUNC(HWG_INITMDIWINDOW)
       // Register client window
       wc.lpfnWndProc = (WNDPROC)s_MDIChildWndProc;
       wc.hIcon = (hb_pcount() > 4 && !HB_ISNIL(5)) ? (HICON)HB_PARHANDLE(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
-      wc.hbrBackground = (hb_pcount() > 5 && !HB_ISNIL(6)) ? (HBRUSH)HB_PARHANDLE(6) : (HBRUSH)(COLOR_WINDOW + 1);
+      wc.hbrBackground = (hb_pcount() > 5 && !HB_ISNIL(6)) ? hwg_par_HBRUSH(6) : (HBRUSH)(COLOR_WINDOW + 1);
       wc.lpszMenuName = NULL;
       wc.cbWndExtra = 0;
       wc.lpszClassName = s_szChild;
