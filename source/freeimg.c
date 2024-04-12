@@ -572,7 +572,7 @@ HB_FUNC(FI_DRAW)
 
 HB_FUNC(FI_BMP2FI)
 {
-  HBITMAP hbmp = (HBITMAP)HB_PARHANDLE(1);
+  HBITMAP hbmp = hwg_par_HBITMAP(1);
 
   if (hbmp)
   {

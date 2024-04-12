@@ -1651,7 +1651,7 @@ HB_FUNC(DRAWTHEICON)
   BOOL bIsPressed = hb_parl(6);
   BOOL bIsDisabled = hb_parl(7);
   HICON hIco = (HB_ISNUM(8) || HB_ISPOINTER(8)) ? (HICON)HB_PARHANDLE(8) : NULL;
-  HBITMAP hBit = (HB_ISNUM(9) || HB_ISPOINTER(9)) ? (HBITMAP)HB_PARHANDLE(9) : NULL;
+  HBITMAP hBit = (HB_ISNUM(9) || HB_ISPOINTER(9)) ? hwg_par_HBITMAP(9) : NULL;
   int iStyle = hb_parni(10);
 
   if (HB_ISARRAY(4))
@@ -1693,7 +1693,7 @@ HB_FUNC(PREPAREIMAGERECT)
   //
   BOOL bIsPressed = hb_parl(6);
   HICON hIco = (HB_ISNUM(7) || HB_ISPOINTER(7)) ? (HICON)HB_PARHANDLE(7) : NULL;
-  HBITMAP hBitmap = (HB_ISNUM(8) || HB_ISPOINTER(8)) ? (HBITMAP)HB_PARHANDLE(8) : NULL;
+  HBITMAP hBitmap = (HB_ISNUM(8) || HB_ISPOINTER(8)) ? hwg_par_HBITMAP(8) : NULL;
   int iStyle = hb_parni(9);
 
   if (HB_ISARRAY(4))

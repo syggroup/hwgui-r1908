@@ -378,7 +378,7 @@ HB_FUNC(DRAWBITMAP)
   HDC hDC = hwg_par_HDC(1);
   HDC hDCmem = CreateCompatibleDC(hDC);
   DWORD dwraster = (HB_ISNIL(3)) ? SRCCOPY : (DWORD)hb_parnl(3);
-  HBITMAP hBitmap = (HBITMAP)HB_PARHANDLE(2);
+  HBITMAP hBitmap = hwg_par_HBITMAP(2);
   BITMAP bitmap;
   int nWidthDest = (hb_pcount() >= 5 && !HB_ISNIL(6)) ? hb_parni(6) : 0;
   int nHeightDest = (hb_pcount() >= 6 && !HB_ISNIL(7)) ? hb_parni(7) : 0;
@@ -405,7 +405,7 @@ HB_FUNC(DRAWBITMAP)
 HB_FUNC(DRAWTRANSPARENTBITMAP)
 {
   HDC hDC = hwg_par_HDC(1);
-  HBITMAP hBitmap = (HBITMAP)HB_PARHANDLE(2);
+  HBITMAP hBitmap = hwg_par_HBITMAP(2);
   COLORREF trColor = (HB_ISNIL(5)) ? 0x00FFFFFF : hwg_par_COLORREF(5);
   COLORREF crOldBack = SetBkColor(hDC, 0x00FFFFFF);
   COLORREF crOldText = SetTextColor(hDC, 0);
@@ -471,7 +471,7 @@ HB_FUNC(SPREADBITMAP)
   HDC hDC = HB_ISPOINTER(1) ? hwg_par_HDC(1) : (HDC)(LONG_PTR)hb_parnl(1);
   HDC hDCmem = CreateCompatibleDC(hDC);
   DWORD dwraster = (HB_ISNIL(4)) ? SRCCOPY : (DWORD)hb_parnl(4);
-  HBITMAP hBitmap = (HBITMAP)HB_PARHANDLE(3);
+  HBITMAP hBitmap = hwg_par_HBITMAP(3);
   BITMAP bitmap;
   RECT rc;
 
@@ -501,7 +501,7 @@ HB_FUNC(CENTERBITMAP)
   HDC hDC = hwg_par_HDC(1);
   HDC hDCmem = CreateCompatibleDC(hDC);
   DWORD dwraster = (HB_ISNIL(4)) ? SRCCOPY : (DWORD)hb_parnl(4);
-  HBITMAP hBitmap = (HBITMAP)HB_PARHANDLE(3);
+  HBITMAP hBitmap = hwg_par_HBITMAP(3);
   BITMAP bitmap;
   RECT rc;
   HBRUSH hBrush = (HB_ISNIL(5)) ? (HBRUSH)(COLOR_WINDOW + 1) : hwg_par_HBRUSH(5);
@@ -524,7 +524,7 @@ HB_FUNC(GETBITMAPSIZE)
   PHB_ITEM temp;
   int nret;
 
-  nret = GetObject((HBITMAP)HB_PARHANDLE(1), sizeof(BITMAP), (LPVOID)&bitmap);
+  nret = GetObject(hwg_par_HBITMAP(1), sizeof(BITMAP), (LPVOID)&bitmap);
 
   temp = hb_itemPutNL(NULL, bitmap.bmWidth);
   hb_itemArrayPut(aMetr, 1, temp);
@@ -781,7 +781,7 @@ HB_FUNC(GETDRAWITEMINFO)
 HB_FUNC(DRAWGRAYBITMAP)
 {
   HDC hDC = hwg_par_HDC(1);
-  HBITMAP hBitmap = (HBITMAP)HB_PARHANDLE(2);
+  HBITMAP hBitmap = hwg_par_HBITMAP(2);
   HBITMAP bitmapgray;
   HBITMAP pOldBitmapImage, pOldbitmapgray;
   BITMAP bitmap;
