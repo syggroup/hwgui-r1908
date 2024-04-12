@@ -151,7 +151,7 @@ HB_FUNC(UPDATEPROGRESSBAR)
 
 HB_FUNC(SETPROGRESSBAR)
 {
-  SendMessage(hwg_par_HWND(1), PBM_SETPOS, (WPARAM)hb_parni(2), 0);
+  SendMessage(hwg_par_HWND(1), PBM_SETPOS, hwg_par_WPARAM(2), 0);
 }
 
 /*
@@ -2139,7 +2139,7 @@ HB_FUNC(DEFWINDOWPROC)
   //   WNDPROC wpProc = (WNDPROC) hb_parnl(1);
   HWND hWnd = hwg_par_HWND(1);
   LONG message = hb_parnl(2);
-  WPARAM wParam = (WPARAM)hb_parnl(3);
+  WPARAM wParam = hwg_par_WPARAM(3);
   LPARAM lParam = hwg_par_LPARAM(4);
 
   hb_retnl(DefWindowProc(hWnd, message, wParam, lParam));
@@ -2150,7 +2150,7 @@ HB_FUNC(CALLWINDOWPROC)
   WNDPROC wpProc = (WNDPROC)(LONG_PTR)hb_parnl(1);
   HWND hWnd = hwg_par_HWND(2);
   LONG message = hb_parnl(3);
-  WPARAM wParam = (WPARAM)hb_parnl(4);
+  WPARAM wParam = hwg_par_WPARAM(4);
   LPARAM lParam = hwg_par_LPARAM(5);
 
   hb_retnl(CallWindowProc(wpProc, hWnd, message, wParam, lParam));

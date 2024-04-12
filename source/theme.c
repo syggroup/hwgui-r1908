@@ -1771,7 +1771,7 @@ HB_FUNC(TRACKMOUSEVENT)
 
 HB_FUNC(BUTTONEXONSETSTYLE)
 {
-  WPARAM wParam = (WPARAM)hb_parnl(1);
+  WPARAM wParam = hwg_par_WPARAM(1);
   LPARAM lParam = hwg_par_LPARAM(2);
   HWND h = hwg_par_HWND(3);
 

@@ -179,13 +179,13 @@ HB_FUNC(COMBOINSERTSTRING)
 {
   void *hText;
 
-  SendMessage(hwg_par_HWND(1), CB_INSERTSTRING, (WPARAM)hb_parni(2), (LPARAM)HB_PARSTR(3, &hText, NULL));
+  SendMessage(hwg_par_HWND(1), CB_INSERTSTRING, hwg_par_WPARAM(2), (LPARAM)HB_PARSTR(3, &hText, NULL));
   hb_strfree(hText);
 }
 
 HB_FUNC(COMBOSETSTRING)
 {
-  SendMessage(hwg_par_HWND(1), CB_SETCURSEL, (WPARAM)hb_parni(2) - 1, 0);
+  SendMessage(hwg_par_HWND(1), CB_SETCURSEL, hwg_par_WPARAM(2) - 1, 0);
 }
 
 HB_FUNC(GETNOTIFYCODE)
