@@ -1064,12 +1064,12 @@ HB_FUNC(CREATEIMAGELIST)
 
 HB_FUNC(IMAGELIST_ADD)
 {
-  hb_retnl(ImageList_Add((HIMAGELIST)HB_PARHANDLE(1), hwg_par_HBITMAP(2), (HBITMAP)NULL));
+  hb_retnl(ImageList_Add(hwg_par_HIMAGELIST(1), hwg_par_HBITMAP(2), (HBITMAP)NULL));
 }
 
 HB_FUNC(IMAGELIST_ADDMASKED)
 {
-  hb_retnl(ImageList_AddMasked((HIMAGELIST)HB_PARHANDLE(1), hwg_par_HBITMAP(2), hwg_par_COLORREF(3)));
+  hb_retnl(ImageList_AddMasked(hwg_par_HIMAGELIST(1), hwg_par_HBITMAP(2), hwg_par_COLORREF(3)));
 }
 
 /*
@@ -1840,7 +1840,7 @@ HB_FUNC(TOOLBAR_LOADSTANDARTIMAGE)
 
 HB_FUNC(ImageList_GetImageCount)
 {
-  HIMAGELIST hWndCtrl = (HIMAGELIST)HB_PARHANDLE(1);
+  HIMAGELIST hWndCtrl = hwg_par_HIMAGELIST(1);
   hb_retni(ImageList_GetImageCount(hWndCtrl));
 }
 
@@ -1989,7 +1989,7 @@ HB_FUNC(CREATEREBAR)
 HB_FUNC(REBARSETIMAGELIST)
 {
   HWND hWnd = hwg_par_HWND(1);
-  HIMAGELIST p = (HB_ISNUM(2) || HB_ISPOINTER(2)) ? (HIMAGELIST)HB_PARHANDLE(2) : NULL;
+  HIMAGELIST p = (HB_ISNUM(2) || HB_ISPOINTER(2)) ? hwg_par_HIMAGELIST(2) : NULL;
   REBARINFO rbi;
 
   memset(&rbi, '\0', sizeof(rbi));

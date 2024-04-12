@@ -275,7 +275,7 @@ HB_FUNC(GETCURSORCOL)
 HB_FUNC(LISTVIEW_SETIMAGELIST)
 {
   HWND hList = hwg_par_HWND(1);
-  HIMAGELIST p = (HIMAGELIST)HB_PARHANDLE(2);
+  HIMAGELIST p = hwg_par_HIMAGELIST(2);
 
 // #ifdef __BORLANDC__
 #if 1
@@ -322,7 +322,7 @@ HB_FUNC(LISTVIEW_ADDCOLUMNEX)
   {
     lvcolumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM | LVCF_WIDTH;
   }
-  
+
   lvcolumn.pszText = (LPTSTR)HB_PARSTR(3, &hText, NULL);
   lvcolumn.iSubItem = lCol;
   lvcolumn.cx = hb_parni(4);
