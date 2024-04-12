@@ -18,6 +18,8 @@
 
 {!xhb}-gc3
 
+{allmsvc}-cflag=-D_CRT_SECURE_NO_WARNINGS
+
 -iinclude
 
 source/animat.c
