@@ -104,7 +104,7 @@ HB_FUNC(HWG_INITMAINWINDOW)
     wndclass.cbWndExtra = 0;
     wndclass.hInstance = (HINSTANCE)hInstance;
     wndclass.hIcon =
-        (hb_pcount() > 4 && !HB_ISNIL(5)) ? (HICON)HB_PARHANDLE(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
+        (hb_pcount() > 4 && !HB_ISNIL(5)) ? hwg_par_HICON(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
     wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
     wndclass.hbrBackground =
         (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? (HBRUSH)NULL : hwg_par_HBRUSH(6))
@@ -272,7 +272,7 @@ HB_FUNC(HWG_INITCHILDWINDOW)
     wndclass.cbWndExtra = 0;
     wndclass.hInstance = (HINSTANCE)hInstance;
     wndclass.hIcon =
-        (hb_pcount() > 4 && !HB_ISNIL(5)) ? (HICON)HB_PARHANDLE(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
+        (hb_pcount() > 4 && !HB_ISNIL(5)) ? hwg_par_HICON(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
     wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
     wndclass.hbrBackground =
         (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? (HBRUSH)NULL : hwg_par_HBRUSH(6))
@@ -354,7 +354,7 @@ HB_FUNC(HWG_INITMDIWINDOW)
     wndclass.cbWndExtra = 0;
     wndclass.hInstance = (HINSTANCE)hInstance;
     wndclass.hIcon =
-        (hb_pcount() > 4 && !HB_ISNIL(5)) ? (HICON)HB_PARHANDLE(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
+        (hb_pcount() > 4 && !HB_ISNIL(5)) ? hwg_par_HICON(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
     wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
     wndclass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wndclass.lpszMenuName = lpMenu;
@@ -368,7 +368,7 @@ HB_FUNC(HWG_INITMDIWINDOW)
     {
       // Register client window
       wc.lpfnWndProc = (WNDPROC)s_MDIChildWndProc;
-      wc.hIcon = (hb_pcount() > 4 && !HB_ISNIL(5)) ? (HICON)HB_PARHANDLE(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
+      wc.hIcon = (hb_pcount() > 4 && !HB_ISNIL(5)) ? hwg_par_HICON(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
       wc.hbrBackground = (hb_pcount() > 5 && !HB_ISNIL(6)) ? hwg_par_HBRUSH(6) : (HBRUSH)(COLOR_WINDOW + 1);
       wc.lpszMenuName = NULL;
       wc.cbWndExtra = 0;
