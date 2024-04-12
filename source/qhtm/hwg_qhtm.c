@@ -88,7 +88,7 @@ HB_FUNC(CREATEQHTM)
 {
   if (s_qhtmInit(NULL))
   {
-    HWND handle = CreateWindow(TEXT("QHTM_Window_Class_001"),       /* predefined class  */
+    HWND handle = CreateWindowEx(0, TEXT("QHTM_Window_Class_001"),       /* predefined class  */
                                NULL,                                /* no window title   */
                                WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
                                hb_parni(4), hb_parni(5),            /* x, y       */

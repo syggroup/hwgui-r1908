@@ -36,7 +36,7 @@ HB_FUNC(LISTBOXSETSTRING)
 */
 HB_FUNC(CREATELISTBOX)
 {
-  HWND hListbox = CreateWindow(TEXT("LISTBOX"),                     /* predefined class  */
+  HWND hListbox = CreateWindowEx(0, TEXT("LISTBOX"),                     /* predefined class  */
                                TEXT(""),                            /*   */
                                WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
                                hb_parni(4), hb_parni(5),            /* x, y       */
