@@ -140,3 +140,5 @@ HB_EXTERN_END
       #define hwg_par_HDC(n)           ((HDC)HB_PARHANDLE(n)) //((HDC)(HB_PTRUINT)hb_parnint(n))
    #endif
 #endif
+
+#define hwg_par_COLORREF(n) (COLORREF)hb_parnl(n)
