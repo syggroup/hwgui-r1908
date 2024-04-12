@@ -136,7 +136,7 @@ HB_FUNC(CREATEPROGRESSBAR)
                          (HMENU)NULL, GetModuleHandle(NULL), NULL);
 
   SendMessage(hPBar, PBM_SETRANGE, 0, MAKELPARAM(0, hb_parni(2)));
-  SendMessage(hPBar, PBM_SETSTEP, (WPARAM)1, 0);
+  SendMessage(hPBar, PBM_SETSTEP, 1, 0);
 
   HB_RETHANDLE(hPBar);
 }
@@ -596,7 +596,7 @@ HB_FUNC(SETDATEPICKER)
 
 HB_FUNC(SETDATEPICKERNULL)
 {
-  SendMessage(hwg_par_HWND(1), DTM_SETSYSTEMTIME, GDT_NONE, (LPARAM)0);
+  SendMessage(hwg_par_HWND(1), DTM_SETSYSTEMTIME, GDT_NONE, 0);
 }
 
 HB_FUNC(GETDATEPICKER)
