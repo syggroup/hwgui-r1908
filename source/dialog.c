@@ -364,7 +364,7 @@ HB_FUNC(_CREATEPROPERTYSHEETPAGE)
   memset((void *)&psp, 0, sizeof(PROPSHEETPAGE));
 
   psp.dwSize = sizeof(PROPSHEETPAGE);
-  psp.hInstance = (HINSTANCE)NULL;
+  psp.hInstance = NULL;
   psp.pszTitle = NULL;
   psp.pfnDlgProc = (DLGPROC)s_PSPProc;
   psp.lParam = (LPARAM)hb_itemNew(pObj);
@@ -446,7 +446,7 @@ HB_FUNC(_PROPERTYSHEET)
   psh.dwSize = sizeof(PROPSHEETHEADER);
   psh.dwFlags = dwFlags;
   psh.hwndParent = hwg_par_HWND(1);
-  psh.hInstance = (HINSTANCE)NULL;
+  psh.hInstance = NULL;
 #if !defined(__BORLANDC__) || (__BORLANDC__ > 1424)
   psh.pszIcon = NULL;
 #else

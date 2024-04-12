@@ -48,7 +48,7 @@ static void s_doEvents(void)
 {
   MSG msg;
 
-  while (PeekMessage(&msg, (HWND)NULL, 0, 0, PM_REMOVE))
+  while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
   {
     TranslateMessage(&msg);
     DispatchMessage(&msg);
@@ -60,10 +60,10 @@ static void s_ClearKeyboard(void)
   MSG msg;
 
   // For keyboard
-  while (PeekMessage(&msg, (HWND)NULL, WM_KEYFIRST, WM_KEYLAST, PM_REMOVE))
+  while (PeekMessage(&msg, NULL, WM_KEYFIRST, WM_KEYLAST, PM_REMOVE))
     ;
   // For Mouse
-  while (PeekMessage(&msg, (HWND)NULL, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE))
+  while (PeekMessage(&msg, NULL, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE))
     ;
 }
 
@@ -107,7 +107,7 @@ HB_FUNC(HWG_INITMAINWINDOW)
         (hb_pcount() > 4 && !HB_ISNIL(5)) ? hwg_par_HICON(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
     wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
     wndclass.hbrBackground =
-        (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? (HBRUSH)NULL : hwg_par_HBRUSH(6))
+        (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? NULL : hwg_par_HBRUSH(6))
                                             : (HBRUSH)(COLOR_WINDOW + 1)));
     wndclass.lpszMenuName = lpMenu;
     wndclass.lpszClassName = lpAppName;
@@ -275,7 +275,7 @@ HB_FUNC(HWG_INITCHILDWINDOW)
         (hb_pcount() > 4 && !HB_ISNIL(5)) ? hwg_par_HICON(5) : LoadIcon((HINSTANCE)hInstance, TEXT(""));
     wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
     wndclass.hbrBackground =
-        (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? (HBRUSH)NULL : hwg_par_HBRUSH(6))
+        (((hb_pcount() > 5 && !HB_ISNIL(6)) ? ((hb_parnl(6) == -1) ? NULL : hwg_par_HBRUSH(6))
                                             : (HBRUSH)(COLOR_WINDOW + 1)));
     /*
        wndclass.hbrBackground = ( ( (hb_pcount()>5 && !HB_ISNIL(6))?

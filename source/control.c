@@ -133,7 +133,7 @@ HB_FUNC(CREATEPROGRESSBAR)
                          y1,                                                       /* y */
                          nwidth, nheight,                                          /* nWidth, nHeight */
                          hParentWindow,                                            /* parent window    */
-                         (HMENU)NULL, GetModuleHandle(NULL), NULL);
+                         NULL, GetModuleHandle(NULL), NULL);
 
   SendMessage(hPBar, PBM_SETRANGE, 0, MAKELPARAM(0, hb_parni(2)));
   SendMessage(hPBar, PBM_SETSTEP, 1, 0);
@@ -418,7 +418,7 @@ HB_FUNC(ADDTOOLTIP) // changed by MAG
   if (!hWndTT)
   {
     hWndTT = CreateWindowEx(0, TOOLTIPS_CLASS, NULL, WS_POPUP | TTS_ALWAYSTIP | iStyle, CW_USEDEFAULT, CW_USEDEFAULT,
-                          CW_USEDEFAULT, CW_USEDEFAULT, NULL, (HMENU)NULL, GetModuleHandle(NULL), NULL);
+                          CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, GetModuleHandle(NULL), NULL);
   }
   if (!hWndTT)
   {
@@ -1055,7 +1055,7 @@ HB_FUNC(CREATEIMAGELIST)
   for (ul = 1; ul <= ulLen; ul++)
   {
     hbmp = (HBITMAP)HB_GETPTRHANDLE(pArray, ul);
-    ImageList_Add(himl, hbmp, (HBITMAP)NULL);
+    ImageList_Add(himl, hbmp, NULL);
     DeleteObject(hbmp);
   }
 
@@ -1064,7 +1064,7 @@ HB_FUNC(CREATEIMAGELIST)
 
 HB_FUNC(IMAGELIST_ADD)
 {
-  hb_retnl(ImageList_Add(hwg_par_HIMAGELIST(1), hwg_par_HBITMAP(2), (HBITMAP)NULL));
+  hb_retnl(ImageList_Add(hwg_par_HIMAGELIST(1), hwg_par_HBITMAP(2), NULL));
 }
 
 HB_FUNC(IMAGELIST_ADDMASKED)
@@ -1084,7 +1084,7 @@ HB_FUNC(IMAGELIST_ADDMASKED)
 HB_FUNC(SETTIMER)
 {
   SetTimer(hwg_par_HWND(1), (UINT)hb_parni(2), (UINT)hb_parni(3),
-           hb_pcount() == 3 ? (TIMERPROC)s_timerProc : (TIMERPROC)NULL);
+           hb_pcount() == 3 ? (TIMERPROC)s_timerProc : NULL);
 }
 
 /*
@@ -1995,7 +1995,7 @@ HB_FUNC(REBARSETIMAGELIST)
   memset(&rbi, '\0', sizeof(rbi));
   rbi.cbSize = sizeof(REBARINFO);
   rbi.fMask = (HB_ISNUM(2) || HB_ISPOINTER(2)) ? RBIM_IMAGELIST : 0;
-  rbi.himl = (HB_ISNUM(2) || HB_ISPOINTER(2)) ? (HIMAGELIST)p : (HIMAGELIST)NULL;
+  rbi.himl = (HB_ISNUM(2) || HB_ISPOINTER(2)) ? (HIMAGELIST)p : NULL;
   SendMessage(hWnd, RB_SETBARINFO, 0, (LPARAM)&rbi);
 }
 

@@ -47,17 +47,17 @@ HB_FUNC(SELECTFONT)
   }
 
   cf.lStructSize = sizeof(CHOOSEFONT);
-  cf.hwndOwner = (HWND)NULL;
-  cf.hDC = (HDC)NULL;
+  cf.hwndOwner = NULL;
+  cf.hDC = NULL;
   cf.lpLogFont = &lf;
   cf.iPointSize = 0;
   cf.Flags = CF_SCREENFONTS | ((pObj) ? CF_INITTOLOGFONTSTRUCT : 0);
   cf.rgbColors = RGB(0, 0, 0);
   cf.lCustData = 0L;
-  cf.lpfnHook = (LPCFHOOKPROC)NULL;
+  cf.lpfnHook = NULL;
   cf.lpTemplateName = NULL;
 
-  cf.hInstance = (HINSTANCE)NULL;
+  cf.hInstance = NULL;
   cf.lpszStyle = NULL;
   cf.nFontType = SCREEN_FONTTYPE;
   cf.nSizeMin = 0;

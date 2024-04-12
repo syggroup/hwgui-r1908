@@ -143,7 +143,7 @@ static FARPROC s_getFunction(FARPROC h, LPCSTR funcname)
   {
     if (!hFreeImageDll && !s_freeImgInit())
     {
-      return (FARPROC)NULL;
+      return NULL;
     }
     else
     {
