@@ -142,3 +142,4 @@ HB_EXTERN_END
 #endif
 
 #define hwg_par_COLORREF(n) (COLORREF)hb_parnl(n)
+#define hwg_par_LPARAM(n) (LPARAM)hb_parnl(n)
