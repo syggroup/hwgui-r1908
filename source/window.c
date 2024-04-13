@@ -1481,7 +1481,11 @@ HB_FUNC(ANSITOUNICODE)
 #else
   hwg_wstrget(hb_param(1, HB_IT_ANY), &hText, NULL);
 #endif
+#if defined(__HARBOURPP__)
+  HB_RETSTRLEN((const char *)hText, 1024);
+#else
   HB_RETSTRLEN(hText, 1024);
+#endif
   hb_strfree(hText);
 }
 
