@@ -32,7 +32,7 @@ STATIC aMessModalDlg := { ;
 
 STATIC FUNCTION onDestroy( oDlg )
 
-   IF oDlg:oEmbedded != Nil
+   IF hb_IsObject(oDlg:oEmbedded)
       oDlg:oEmbedded:END()
    ENDIF
    // IN CLASS INHERIT DIALOG DESTROY APLICATION
@@ -148,7 +148,7 @@ METHOD Activate(lNoModal, bOnActivate, nShow) CLASS HDialog
    ::lOnActivated := .T.
    ::bOnActivate := IIF( bOnActivate != Nil, bOnActivate, ::bOnActivate )
    CreateGetList( Self )
-   hParent := IIf( ::oParent != Nil .AND. ;
+   hParent := IIf( hb_IsObject(::oParent) .AND. ;
                    __ObjHasMsg( ::oParent, "HANDLE" ) .AND. ::oParent:handle != Nil ;
                    .AND. !Empty( ::oParent:handle ) , ::oParent:handle, ;
                    IIf( ( oWnd := HWindow():GetMain() ) != Nil,    ;
@@ -329,10 +329,10 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
   //- oDlg:rect := GetWindowRect( odlg:handle )
    oDlg:rect := GetclientRect( oDlg:handle )
 
-   IF oDlg:oIcon != Nil
+   IF hb_IsObject(oDlg:oIcon)
       SendMessage(oDlg:handle, WM_SETICON, 1, oDlg:oIcon:handle)
    ENDIF
-   IF oDlg:oFont != Nil
+   IF hb_IsObject(oDlg:oFont)
       SendMessage(oDlg:handle, WM_SETFONT, oDlg:oFont:handle, 0)
    ENDIF
    IF oDlg:Title != NIL
@@ -447,7 +447,7 @@ STATIC FUNCTION onDlgColor(oDlg, wParam, lParam)
 
 STATIC FUNCTION onEraseBk( oDlg, hDC )
 
-    IF __ObjHasMsg( oDlg,"OBMP") .AND. oDlg:oBmp != Nil
+    IF __ObjHasMsg( oDlg,"OBMP") .AND. hb_IsObject(oDlg:oBmp)
        IF oDlg:lBmpCenter
           CenterBitmap(hDC, oDlg:handle, oDlg:oBmp:handle, , oDlg:nBmpClr)
        ELSE
@@ -491,13 +491,13 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
             ENDIF
          ENDIF
 
-         IF oCtrl != Nil .AND. oCtrl:classname = "HTAB"
+         IF hb_IsObject(oCtrl) .AND. oCtrl:classname = "HTAB"
             RETURN 1
          ENDIF
-         IF oCtrl != Nil .AND. GetNextDlgTabItem( GetActiveWindow() , hCtrl, 1 ) == hCtrl .OR. SelfFocus( oCtrl:Handle, hCtrl )
+         IF hb_IsObject(oCtrl) .AND. (GetNextDlgTabItem(GetActiveWindow(), hCtrl, 1) == hCtrl .OR. SelfFocus(oCtrl:Handle, hCtrl))
             SendMessage(oCtrl:Handle, WM_KILLFOCUS, 0, 0)
          ENDIF
-         IF oCtrl != Nil .AND. oCtrl:id == IDOK .AND.  __ObjHasMsg( oCtrl,"BCLICK" ) .AND. oCtrl:bClick = Nil
+         IF hb_IsObject(oCtrl) .AND. oCtrl:id == IDOK .AND.  __ObjHasMsg( oCtrl,"BCLICK" ) .AND. oCtrl:bClick = Nil
             oDlg:lResult := .T.
             EndDialog( oDlg:handle )   // VER AQUI
             RETURN 1
@@ -512,7 +512,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
          ENDIF
          */
          IF oDlg:lClipper
-            IF oCtrl != Nil .AND. !GetSkip(oCtrl:oParent, hCtrl, , 1)
+            IF hb_IsObject(oCtrl) .AND. !GetSkip(oCtrl:oParent, hCtrl, , 1)
                IF oDlg:lExitOnEnter
                   oDlg:lResult := .T.
                   EndDialog( oDlg:handle )
@@ -530,17 +530,17 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
             oDlg:bDestroy := Nil
             SENDMessage(oCtrl:handle, WM_CLOSE, 0, 0)
             RETURN 0
-         ELSEIF oCtrl != Nil .AND. oCtrl:IsEnabled() .AND. !Selffocus( oCtrl:Handle )
+         ELSEIF hb_IsObject(oCtrl) .AND. oCtrl:IsEnabled() .AND. !Selffocus( oCtrl:Handle )
             //oCtrl:SetFocus()
             PostMessage(oDlg:handle, WM_NEXTDLGCTL, oCtrl:Handle, 1)
          ELSEIF oDlg:lGetSkiponEsc
             hCtrl := GetFocus()
             oCtrl := oDlg:FindControl( , hctrl )
-            IF oCtrl  != Nil .AND. __ObjHasMsg( oCtrl, "OGROUP" )  .AND. oCtrl:oGroup:oHGroup != Nil
+            IF hb_IsObject(oCtrl) .AND. __ObjHasMsg( oCtrl, "OGROUP" )  .AND. hb_IsObject(oCtrl:oGroup:oHGroup)
                 oCtrl := oCtrl:oGroup:oHGroup
                 hCtrl := oCtrl:handle
             ENDIF
-            IF oCtrl  != Nil .and. GetSkip(oCtrl:oParent, hCtrl, , -1)
+            IF hb_IsObject(oCtrl) .and. GetSkip(oCtrl:oParent, hCtrl, , -1)
                IF AScan( oDlg:GetList, { | o | o:handle == hCtrl } ) > 1
                   RETURN 1
                ENDIF
@@ -567,12 +567,12 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
         ( iParLow == IDOK .AND. oDlg:FindControl( IDOK ) != NIL ) .OR. ;
           iParLow == IDCANCEL )
       IF iParLow == IDOK
-         oDlg:lResult := .T.          
+         oDlg:lResult := .T.
          IF ( oCtrl := oDlg:FindControl( IDOK ) ) != Nil .AND. __ObjHasMsg( oCtrl, "BCLICK" ) .AND. oCtrl:bClick != Nil
               RETURN 1
-           ELSEIF oDlg:lExitOnEnter  .OR. oCtrl  != Nil
+           ELSEIF oDlg:lExitOnEnter  .OR. hb_IsObject(oCtrl)
               EndDialog( oDlg:handle )
-         ENDIF    
+         ENDIF
       ENDIF
       //Replaced by Sandro
       IF iParLow == IDCANCEL .AND. (oDlg:lExitOnEsc .OR. !nEsc )
@@ -589,7 +589,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
       IF aMenu[1, i, 1] != Nil
          Eval( aMenu[1, i, 1], i, iParlow )
       ENDIF
-   ELSEIF __ObjHasMsg( oDlg, "OPOPUP" ) .AND. oDlg:oPopup != Nil .AND. ;
+   ELSEIF __ObjHasMsg( oDlg, "OPOPUP" ) .AND. hb_IsObject(oDlg:oPopup) .AND. ;
       ( aMenu := Hwg_FindMenuItem( oDlg:oPopup:aMenu, wParam, @i ) ) != Nil ;
       .AND. aMenu[1, i, 1] != Nil
       Eval( aMenu[1, i, 1], i, wParam )
@@ -603,7 +603,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
 FUNCTION DlgMouseMove()
    LOCAL oBtn := SetNiceBtnSelected()
 
-   IF oBtn != Nil .AND. !oBtn:lPress
+   IF hb_IsObject(oBtn) .AND. !oBtn:lPress
       oBtn:state := OBTN_NORMAL
       InvalidateRect( oBtn:handle, 0 )
      // PostMessage(oBtn:handle, WM_PAINT, 0, 0)
@@ -618,7 +618,7 @@ STATIC FUNCTION onSize(oDlg, wParam, lParam)
 
    //HB_SYMBOL_UNUSED(wParam)
 
-   IF oDlg:oEmbedded != Nil
+   IF hb_IsObject(oDlg:oEmbedded)
       oDlg:oEmbedded:Resize(LOWORD(lParam), HIWORD(lParam))
    ENDIF
    // VERIFY MIN SIZES AND MAX SIZES
@@ -708,7 +708,7 @@ FUNCTION onHelp(oDlg, wParam, lParam)
       IF !Empty( lParam )
          oCtrl := oDlg:FindControl( Nil, GetHelpData(lParam) )
       ENDIF
-      IF oCtrl != NIL
+      IF hb_IsObject(oCtrl)
          nHelpId := oCtrl:HelpId
          IF Empty( nHelpId )
             oParent := oCtrl:oParent
