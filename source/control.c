@@ -1927,7 +1927,7 @@ HB_FUNC(TOOLBAR_SUBMENUEX)
   LPNMTOOLBAR lpnmTB = (LPNMTOOLBAR)HB_PARHANDLE(1);
   RECT rc = {0, 0, 0, 0};
   TPMPARAMS tpm;
-  HMENU hPopupMenu = (HMENU)HB_PARHANDLE(2);
+  HMENU hPopupMenu = hwg_par_HMENU(2);
   HWND g_hwndMain = hwg_par_HWND(3);
 
   SendMessage(lpnmTB->hdr.hwndFrom, TB_GETRECT, (WPARAM)lpnmTB->iItem, (LPARAM)&rc);

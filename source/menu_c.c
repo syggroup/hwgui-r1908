@@ -79,7 +79,7 @@ HB_FUNC(HWG__ADDMENUITEM)
     HMENU hSubMenu = CreateMenu();
 
     uFlags |= MF_POPUP;
-    InsertMenu((HMENU)HB_PARHANDLE(1), hb_parni(3), uFlags, // menu item flags
+    InsertMenu(hwg_par_HMENU(1), hb_parni(3), uFlags, // menu item flags
                (UINT_PTR)hSubMenu, // menu item identifier or handle of drop-down menu or submenu
                lpNewItem       // menu item content
     );
@@ -87,18 +87,18 @@ HB_FUNC(HWG__ADDMENUITEM)
 
     // Code to set the ID of submenus, the API seems to assume that you wouldn't really want to,
     // but if you are used to getting help via IDs for popups in 16bit, then this will help you.
-    nPos = GetMenuItemCount((HMENU)HB_PARHANDLE(1));
+    nPos = GetMenuItemCount(hwg_par_HMENU(1));
     mii.cbSize = sizeof(MENUITEMINFO);
     mii.fMask = MIIM_ID;
-    if (GetMenuItemInfo((HMENU)HB_PARHANDLE(1), nPos - 1, TRUE, &mii))
+    if (GetMenuItemInfo(hwg_par_HMENU(1), nPos - 1, TRUE, &mii))
     {
       mii.wID = hb_parni(5);
-      SetMenuItemInfo((HMENU)HB_PARHANDLE(1), nPos - 1, TRUE, &mii);
+      SetMenuItemInfo(hwg_par_HMENU(1), nPos - 1, TRUE, &mii);
     }
   }
   else
   {
-    InsertMenu((HMENU)HB_PARHANDLE(1), hb_parni(3), uFlags, // menu item flags
+    InsertMenu(hwg_par_HMENU(1), hb_parni(3), uFlags, // menu item flags
                hb_parni(5), // menu item identifier or handle of drop-down menu or submenu
                lpNewItem    // menu item content
     );
@@ -150,7 +150,7 @@ HB_FUNC(HWG__CREATESUBMENU)
   mii.fMask = MIIM_SUBMENU;
   mii.hSubMenu = hSubMenu;
 
-  if (SetMenuItemInfo((HMENU)HB_PARHANDLE(1), hb_parni(2), 0, &mii))
+  if (SetMenuItemInfo(hwg_par_HMENU(1), hb_parni(2), 0, &mii))
   {
     HB_RETHANDLE(hSubMenu);
   }
@@ -165,7 +165,7 @@ HB_FUNC(HWG__CREATESUBMENU)
  */
 HB_FUNC(HWG__SETMENU)
 {
-  hb_retl(SetMenu(hwg_par_HWND(1), (HMENU)HB_PARHANDLE(2)));
+  hb_retl(SetMenu(hwg_par_HWND(1), hwg_par_HMENU(2)));
 }
 
 HB_FUNC(GETMENUHANDLE)
@@ -191,7 +191,7 @@ HB_FUNC(CHECKMENUITEM)
   }
   if (!hMenu)
   {
-    hMenu = (HMENU)HB_PARHANDLE(1);
+    hMenu = hwg_par_HMENU(1);
   }
 
   if (!hMenu)
@@ -224,7 +224,7 @@ HB_FUNC(ISCHECKEDMENUITEM)
   }
   if (!hMenu)
   {
-    hMenu = (HMENU)HB_PARHANDLE(1);
+    hMenu = hwg_par_HMENU(1);
   }
 
   if (!hMenu)
@@ -259,7 +259,7 @@ HB_FUNC(ENABLEMENUITEM)
   }
   if (!hMenu)
   {
-    hMenu = (HMENU)HB_PARHANDLE(1);
+    hMenu = hwg_par_HMENU(1);
   }
 
   if (!hMenu)
@@ -294,7 +294,7 @@ HB_FUNC(ISENABLEDMENUITEM)
   }
   if (!hMenu)
   {
-    hMenu = (HMENU)HB_PARHANDLE(1);
+    hMenu = hwg_par_HMENU(1);
   }
 
   if (!hMenu)
@@ -313,7 +313,7 @@ HB_FUNC(ISENABLEDMENUITEM)
 
 HB_FUNC(HWG_DELETEMENU)
 {
-  HMENU hMenu = (hb_pcount() > 0 && !HB_ISNIL(1)) ? ((HMENU)HB_PARHANDLE(1)) : GetMenu(aWindows[0]);
+  HMENU hMenu = (hb_pcount() > 0 && !HB_ISNIL(1)) ? (hwg_par_HMENU(1)) : GetMenu(aWindows[0]);
 
   if (hMenu)
   {
@@ -328,7 +328,7 @@ HB_FUNC(HWG_TRACKMENU)
 {
   HWND hWnd = hwg_par_HWND(4);
   SetForegroundWindow(hWnd);
-  hb_retl(TrackPopupMenu((HMENU)HB_PARHANDLE(1),                     // handle of shortcut menu
+  hb_retl(TrackPopupMenu(hwg_par_HMENU(1),                     // handle of shortcut menu
                          HB_ISNIL(5) ? TPM_RIGHTALIGN : hb_parni(5), // screen-position and mouse-button flags
                          hb_parni(2),                                // horizontal position, in screen coordinates
                          hb_parni(3),                                // vertical position, in screen coordinates
@@ -340,7 +340,7 @@ HB_FUNC(HWG_TRACKMENU)
 
 HB_FUNC(HWG_DESTROYMENU)
 {
-  hb_retl(DestroyMenu((HMENU)HB_PARHANDLE(1)));
+  hb_retl(DestroyMenu(hwg_par_HMENU(1)));
 }
 
 /*
@@ -401,7 +401,7 @@ HB_FUNC(GETMENUCAPTION)
   }
   if (!hMenu)
   {
-    hMenu = (HMENU)HB_PARHANDLE(1);
+    hMenu = hwg_par_HMENU(1);
   }
 
   if (!hMenu)
@@ -454,7 +454,7 @@ HB_FUNC(SETMENUCAPTION)
   }
   if (!hMenu)
   {
-    hMenu = (HMENU)HB_PARHANDLE(1);
+    hMenu = hwg_par_HMENU(1);
   }
 
   if (!hMenu)
@@ -485,7 +485,7 @@ HB_FUNC(SETMENUCAPTION)
 
 HB_FUNC(SETMENUITEMBITMAPS)
 {
-  hb_retl(SetMenuItemBitmaps((HMENU)HB_PARHANDLE(1), hb_parni(2), MF_BYCOMMAND, hwg_par_HBITMAP(3),
+  hb_retl(SetMenuItemBitmaps(hwg_par_HMENU(1), hb_parni(2), MF_BYCOMMAND, hwg_par_HBITMAP(3),
                              hwg_par_HBITMAP(4)));
 }
 
@@ -528,13 +528,13 @@ HB_FUNC(HWG__INSERTBITMAPMENU)
   mii.fMask = MIIM_ID | MIIM_BITMAP | MIIM_DATA;
   mii.hbmpItem = hwg_par_HBITMAP(3);
 
-  hb_retl((LONG)SetMenuItemInfo((HMENU)HB_PARHANDLE(1), hb_parni(2), 0, &mii));
+  hb_retl((LONG)SetMenuItemInfo(hwg_par_HMENU(1), hb_parni(2), 0, &mii));
 }
 
 HB_FUNC(CHANGEMENU)
 {
   void *hStr;
-  hb_retl(ChangeMenu((HMENU)HB_PARHANDLE(1), hwg_par_UINT(2), HB_PARSTR(3, &hStr, NULL), hwg_par_UINT(4),
+  hb_retl(ChangeMenu(hwg_par_HMENU(1), hwg_par_UINT(2), HB_PARSTR(3, &hStr, NULL), hwg_par_UINT(4),
                      hwg_par_UINT(5)));
   hb_strfree(hStr);
 }
@@ -542,7 +542,7 @@ HB_FUNC(CHANGEMENU)
 HB_FUNC(MODIFYMENU)
 {
   void *hStr;
-  hb_retl(ModifyMenu((HMENU)HB_PARHANDLE(1), hwg_par_UINT(2), hwg_par_UINT(3), (UINT)hb_parni(4),
+  hb_retl(ModifyMenu(hwg_par_HMENU(1), hwg_par_UINT(2), hwg_par_UINT(3), (UINT)hb_parni(4),
                      HB_PARSTR(5, &hStr, NULL)));
   hb_strfree(hStr);
 }
@@ -586,7 +586,7 @@ HB_FUNC(HWG_SETMENUINFO)
   }
   if (!hMenu)
   {
-    hMenu = (HMENU)HB_PARHANDLE(1);
+    hMenu = hwg_par_HMENU(1);
   }
   if (hMenu)
   {
