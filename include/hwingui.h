@@ -128,27 +128,16 @@ extern PHB_DYNS pSym_onEvent;
 
 HB_EXTERN_END
 
-#ifdef HWG_USE_POINTER_ITEM
-   #define hwg_par_HWND(n)             (HWND)hb_parptr(n)
-   #define hwg_par_HDC(n)              (HDC)hb_parptr(n)
-#else
-   #ifdef __XHARBOUR__
-      #define hwg_par_HWND(n)          ((HWND)(LONG)hb_parnl(n))
-      #define hwg_par_HDC(n)           ((HDC)(LONG)hb_parnl(n))
-   #else
-      #define hwg_par_HWND(n)          ((HWND)HB_PARHANDLE(n)) //((HWND)(HB_PTRUINT)hb_parnint(n))
-      #define hwg_par_HDC(n)           ((HDC)HB_PARHANDLE(n)) //((HDC)(HB_PTRUINT)hb_parnint(n))
-   #endif
-#endif
-
 #define hwg_par_COLORREF(n) (COLORREF)hb_parnl(n)
-#define hwg_par_WPARAM(n) (WPARAM)hb_parnl(n)
-#define hwg_par_LPARAM(n) (LPARAM)hb_parnl(n)
-#define hwg_par_HBRUSH(n) (HBRUSH)HB_PARHANDLE(n)
 #define hwg_par_HBITMAP(n) (HBITMAP)HB_PARHANDLE(n)
+#define hwg_par_HBRUSH(n) (HBRUSH)HB_PARHANDLE(n)
+#define hwg_par_HDC(n) (HDC)HB_PARHANDLE(n)
 #define hwg_par_HICON(n) (HICON)HB_PARHANDLE(n)
 #define hwg_par_HIMAGELIST(n) (HIMAGELIST)HB_PARHANDLE(n)
-#define hwg_par_UINT(n) (UINT)hb_parni(n)
 #define hwg_par_HMENU(n) (HMENU)HB_PARHANDLE(n)
+#define hwg_par_HWND(n) (HWND)HB_PARHANDLE(n)
+#define hwg_par_LPARAM(n) (LPARAM)hb_parnl(n)
+#define hwg_par_UINT(n) (UINT)hb_parni(n)
+#define hwg_par_WPARAM(n) (WPARAM)hb_parnl(n)
 
 #define hwg_ret_HWND(n) HB_RETHANDLE(n)
