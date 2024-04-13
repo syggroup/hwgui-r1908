@@ -1703,7 +1703,7 @@ LRESULT APIENTRY TabSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
   }  
 }
 
-#if defined(__MINGW32__) && !defined(LPNMTBGETINFOTIP)
+#if (defined(__MINGW32__) || defined(__MINGW64__)) && !defined(LPNMTBGETINFOTIP)
 typedef struct tagNMTBGETINFOTIPA
 {
   NMHDR hdr;

@@ -22,7 +22,7 @@
 #endif
 #include "hbapiitm.h"
 
-#if defined(__MINGW32__) && !defined(CDRF_NOTIFYSUBITEMDRAW)
+#if (defined(__MINGW32__) || defined(__MINGW64__)) && !defined(CDRF_NOTIFYSUBITEMDRAW)
 #define CDRF_NOTIFYSUBITEMDRAW 0x00000020
 #endif
 
