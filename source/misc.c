@@ -278,7 +278,7 @@ HB_FUNC(GETCURRENTDIR)
 
 HB_FUNC(WINEXEC)
 {
-  hb_retni(WinExec(hb_parc(1), (UINT)hb_parni(2)));
+  hb_retni(WinExec(hb_parc(1), hwg_par_UINT(2)));
 }
 
 HB_FUNC(GETKEYBOARDSTATE)

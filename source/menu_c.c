@@ -534,15 +534,15 @@ HB_FUNC(HWG__INSERTBITMAPMENU)
 HB_FUNC(CHANGEMENU)
 {
   void *hStr;
-  hb_retl(ChangeMenu((HMENU)HB_PARHANDLE(1), (UINT)hb_parni(2), HB_PARSTR(3, &hStr, NULL), (UINT)hb_parni(4),
-                     (UINT)hb_parni(5)));
+  hb_retl(ChangeMenu((HMENU)HB_PARHANDLE(1), hwg_par_UINT(2), HB_PARSTR(3, &hStr, NULL), hwg_par_UINT(4),
+                     hwg_par_UINT(5)));
   hb_strfree(hStr);
 }
 
 HB_FUNC(MODIFYMENU)
 {
   void *hStr;
-  hb_retl(ModifyMenu((HMENU)HB_PARHANDLE(1), (UINT)hb_parni(2), (UINT)hb_parni(3), (UINT)hb_parni(4),
+  hb_retl(ModifyMenu((HMENU)HB_PARHANDLE(1), hwg_par_UINT(2), hwg_par_UINT(3), (UINT)hb_parni(4),
                      HB_PARSTR(5, &hStr, NULL)));
   hb_strfree(hStr);
 }

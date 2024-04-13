@@ -230,7 +230,7 @@ HB_FUNC(REDRAWWINDOW)
   RedrawWindow(hwg_par_HWND(1),          // handle of window
                (hb_pcount() > 3) ? &rc : NULL, // address of structure with update rectangle
                NULL,                           // handle of update region
-               (UINT)hb_parni(2)               // array of redraw flags
+               hwg_par_UINT(2)               // array of redraw flags
   );
 }
 
@@ -277,8 +277,8 @@ HB_FUNC(DRAWEDGE)
 {
   RECT rc;
   HDC hDC = hwg_par_HDC(1);
-  UINT edge = (HB_ISNIL(6)) ? EDGE_RAISED : (UINT)hb_parni(6);
-  UINT grfFlags = (HB_ISNIL(7)) ? BF_RECT : (UINT)hb_parni(7);
+  UINT edge = (HB_ISNIL(6)) ? EDGE_RAISED : hwg_par_UINT(6);
+  UINT grfFlags = (HB_ISNIL(7)) ? BF_RECT : hwg_par_UINT(7);
 
   rc.left = hb_parni(2);
   rc.top = hb_parni(3);
@@ -309,10 +309,10 @@ HB_FUNC(LOADIMAGE)
   HB_RETHANDLE(LoadImage(
       HB_ISNIL(1) ? GetModuleHandle(NULL) : (HINSTANCE)(LONG_PTR)hb_parnl(1), // handle of the instance that contains the image
       HB_ISNUM(2) ? MAKEINTRESOURCE(hb_parni(2)) : HB_PARSTR(2, &hString, NULL), // name or identifier of image
-      (UINT)hb_parni(3),                                                         // type of image
+      hwg_par_UINT(3),                                                         // type of image
       hb_parni(4),                                                               // desired width
       hb_parni(5),                                                               // desired height
-      (UINT)hb_parni(6)                                                          // load flags
+      hwg_par_UINT(6)                                                          // load flags
       ));
   hb_strfree(hString);
 }
