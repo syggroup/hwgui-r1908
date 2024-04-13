@@ -86,7 +86,7 @@ HB_FUNC(CREATEACTIVEX)
                             // GetModuleHandle(0),
                             0, 0, NULL);
 
-  HB_RETHANDLE(hWndCtrl);
+  hwg_ret_HWND(hWndCtrl);
 }
 
 HB_FUNC(ATLAXGETDISP) // hWnd -> pDisp

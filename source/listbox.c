@@ -45,7 +45,7 @@ HB_FUNC(CREATELISTBOX)
                                (HMENU)(INT_PTR)hb_parni(2),                  /* listbox ID      */
                                GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hListbox);
+  hwg_ret_HWND(hListbox);
 }
 
 HB_FUNC(LISTBOXDELETESTRING)

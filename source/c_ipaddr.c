@@ -70,7 +70,7 @@ HB_FUNC(INITIPADDRESS)
       CreateWindowEx(WS_EX_CLIENTEDGE, WC_IPADDRESS, TEXT(""), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6),
                      hb_parni(7), hwg_par_HWND(1), (HMENU)(INT_PTR)hb_parni(2), GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hIpAddress);
+  hwg_ret_HWND(hIpAddress);
 }
 
 HB_FUNC(SETIPADDRESS)

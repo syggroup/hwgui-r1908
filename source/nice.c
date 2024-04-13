@@ -214,7 +214,7 @@ HB_FUNC(CREATENICEBTN)
                              GetModuleHandle(NULL), NULL);
   hb_strfree(hTitle);
 
-  HB_RETHANDLE(hWndPanel);
+  hwg_ret_HWND(hWndPanel);
 }
 
 HB_FUNC(ISMOUSEOVER)

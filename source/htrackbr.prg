@@ -169,7 +169,7 @@ HB_FUNC(INITTRACKBAR)
                            GetModuleHandle(NULL),
                            NULL) ;
 
-  HB_RETHANDLE(hTrackBar);
+  hwg_ret_HWND(hTrackBar);
 }
 
 HB_FUNC(TRACKBARSETRANGE)

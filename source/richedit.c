@@ -64,7 +64,7 @@ HB_FUNC(CREATERICHEDIT)
   }
   hb_strfree(hText);
 
-  HB_RETHANDLE(hCtrl);
+  hwg_ret_HWND(hCtrl);
 }
 
 /*

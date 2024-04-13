@@ -174,7 +174,7 @@ HB_FUNC ( INITMONTHCALENDAR )
    //SetWindowPos( hMC, NULL, hb_parni(4), hb_parni(5), rc.right, rc.bottom, SWP_NOZORDER );
    SetWindowPos( hMC, NULL, hb_parni(4), hb_parni(5), hb_parni(6),hb_parni(7), SWP_NOZORDER );
 
-    HB_RETHANDLE(hMC);
+   hwg_ret_HWND(hMC);
 }
 
 HB_FUNC ( SETMONTHCALENDARDATE ) // adaptation of function SetDatePicker of file Control.c

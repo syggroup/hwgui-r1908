@@ -138,7 +138,7 @@ HB_FUNC(CREATEPROGRESSBAR)
   SendMessage(hPBar, PBM_SETRANGE, 0, MAKELPARAM(0, hb_parni(2)));
   SendMessage(hPBar, PBM_SETSTEP, 1, 0);
 
-  HB_RETHANDLE(hPBar);
+  hwg_ret_HWND(hPBar);
 }
 
 /*
@@ -169,7 +169,7 @@ HB_FUNC(CREATEPANEL)
                            (HMENU)(INT_PTR)hb_parni(2),       /* control ID  */
                            GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hWndPanel);
+  hwg_ret_HWND(hWndPanel);
   // SS_ETCHEDHORZ
 }
 
@@ -188,7 +188,7 @@ HB_FUNC(CREATEOWNBTN)
                            (HMENU)(INT_PTR)hb_parni(2),                                 /* control ID  */
                            GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hWndPanel);
+  hwg_ret_HWND(hWndPanel);
 }
 
 /*
@@ -219,7 +219,7 @@ HB_FUNC(CREATESTATIC)
      }
    */
 
-  HB_RETHANDLE(hWndCtrl);
+  hwg_ret_HWND(hWndCtrl);
 }
 
 /*
@@ -238,7 +238,7 @@ HB_FUNC(CREATEBUTTON)
                            GetModuleHandle(NULL), NULL);
   hb_strfree(hStr);
 
-  HB_RETHANDLE(hBtn);
+  hwg_ret_HWND(hBtn);
 }
 
 /*
@@ -265,11 +265,11 @@ HB_FUNC(CREATEEDIT)
     if (lpText)
     {
       SendMessage(hWndEdit, WM_SETTEXT, 0, (LPARAM)lpText);
-    }  
+    }
     hb_strfree(hStr);
   }
 
-  HB_RETHANDLE(hWndEdit);
+  hwg_ret_HWND(hWndEdit);
 }
 
 /*
@@ -286,7 +286,7 @@ HB_FUNC(CREATECOMBO)
                              (HMENU)(INT_PTR)hb_parni(2),         /* combobox ID      */
                              GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hCombo);
+  hwg_ret_HWND(hCombo);
 }
 
 /*
@@ -310,7 +310,7 @@ HB_FUNC(CREATEBROWSE)
                            GetModuleHandle(NULL), NULL);
   hb_strfree(hStr);
 
-  HB_RETHANDLE(hWndBrw);
+  hwg_ret_HWND(hWndBrw);
 }
 
 /* CreateStatusWindow - creates a status window and divides it into
@@ -341,7 +341,7 @@ HB_FUNC(CREATESTATUSWINDOW)
                               GetModuleHandle(NULL), // handle to application instance
                               NULL);                 // no window creation data
 
-  HB_RETHANDLE(hwndStatus);
+  hwg_ret_HWND(hwndStatus);
 }
 
 HB_FUNC(HWG_INITSTATUS)
@@ -528,7 +528,7 @@ HB_FUNC(CREATEDATEPICKER)
                          (HMENU)(INT_PTR)hb_parni(2),       /* control ID  */
                          GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hCtrl);
+  hwg_ret_HWND(hCtrl);
 }
 
 HB_FUNC(SETDATEPICKER)
@@ -631,7 +631,7 @@ HB_FUNC(CREATETABCONTROL)
                       (HMENU)(INT_PTR)hb_parni(2),                                                        /* control ID  */
                       GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hTab);
+  hwg_ret_HWND(hTab);
 }
 
 HB_FUNC(INITTABCONTROL)
@@ -769,8 +769,8 @@ HB_FUNC(CREATETREE)
   {
     SendMessage(hCtrl, TVM_SETBKCOLOR, 0, hwg_par_LPARAM(9));
   }
-  
-  HB_RETHANDLE(hCtrl);
+
+  hwg_ret_HWND(hCtrl);
 }
 
 HB_FUNC(TREEADDNODE)
@@ -1747,7 +1747,7 @@ HB_FUNC(CREATETOOLBAR)
                                  (HMENU)(INT_PTR)hb_parni(2),                                      /* control ID  */
                                  GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hWndCtrl);
+  hwg_ret_HWND(hWndCtrl);
 }
 
 HB_FUNC(TOOLBARADDBUTTONS)
@@ -1964,7 +1964,7 @@ HB_FUNC(CREATEPAGER)
                            (HMENU)(INT_PTR)hb_parni(2),                                                /* control ID  */
                            GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hWndPanel);
+  hwg_ret_HWND(hWndPanel);
 }
 
 HB_FUNC(CREATEREBAR)
@@ -1983,7 +1983,7 @@ HB_FUNC(CREATEREBAR)
                                  (HMENU)(INT_PTR)hb_parni(2),          /* control ID  */
                                  GetModuleHandle(NULL), NULL);
 
-  HB_RETHANDLE(hWndCtrl);
+  hwg_ret_HWND(hWndCtrl);
 }
 
 HB_FUNC(REBARSETIMAGELIST)

@@ -130,7 +130,7 @@ HB_FUNC(HWG_INITMAINWINDOW)
   hb_strfree(hTitle);
   hb_strfree(hMenu);
 
-  HB_RETHANDLE(hWnd);
+  hwg_ret_HWND(hWnd);
 }
 
 HB_FUNC(HWG_CENTERWINDOW)
@@ -308,7 +308,7 @@ HB_FUNC(HWG_INITCHILDWINDOW)
     SetWindowObject(hWnd, pObject);
   }
 
-  HB_RETHANDLE(hWnd);
+  hwg_ret_HWND(hWnd);
 
   hb_strfree(hAppName);
   hb_strfree(hTitle);
@@ -399,7 +399,7 @@ HB_FUNC(HWG_INITMDIWINDOW)
           SetWindowObject(hWnd, pObject);
 
           aWindows[0] = hWnd;
-          HB_RETHANDLE(hWnd);
+          hwg_ret_HWND(hWnd);
         }
       }
     }
@@ -427,7 +427,7 @@ HB_FUNC(HWG_INITCLIENTWINDOW)
                       aWindows[0], NULL, GetModuleHandle(NULL), (LPVOID)&ccs);
 
   aWindows[1] = hWnd;
-  HB_RETHANDLE(hWnd);
+  hwg_ret_HWND(hWnd);
 }
 
 HB_FUNC(HWG_ACTIVATEMDIWINDOW)
