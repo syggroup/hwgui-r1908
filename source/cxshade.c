@@ -481,9 +481,9 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
   sXSize = pshade->m_rect.right - pshade->m_rect.left;
 
   // create the horizontal focus bitmap
-  cxdib_Create(&(pshade->m_dh), max(1, sXSize - 2 * pshade->m_FocusRectMargin - 1), 1, 8);
+  cxdib_Create(&(pshade->m_dh), HB_MAX(1, sXSize - 2 * pshade->m_FocusRectMargin - 1), 1, 8);
   // create the vertical focus bitmap
-  cxdib_Create(&(pshade->m_dv), 1, max(1, sYSize - 2 * pshade->m_FocusRectMargin), 8);
+  cxdib_Create(&(pshade->m_dv), 1, HB_MAX(1, sYSize - 2 * pshade->m_FocusRectMargin), 8);
   // create the default bitmap
   cxdib_Create(&(pshade->m_dNormal), sXSize, sYSize, 8);
 
@@ -529,7 +529,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
   iDst = cxdib_GetBits(&(pshade->m_dNormal));
   posDst = iDst;
 
-  grainx2 = RAND_MAX / (max(1, 2 * granularity));
+  grainx2 = RAND_MAX / (HB_MAX(1, 2 * granularity));
   idxmax = 255 - granularity;
   idxmin = granularity;
 
@@ -543,7 +543,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
     {
       x = rand() / (RAND_MAX / sXSize);                   // stroke postion
       y = rand() / (RAND_MAX / sYSize);                   // stroke position
-      xs = rand() / (RAND_MAX / min(sXSize, sYSize)) / 2; // stroke lenght
+      xs = rand() / (RAND_MAX / HB_MIN(sXSize, sYSize)) / 2; // stroke lenght
       d = rand() / (RAND_MAX / k);                        // stroke color
       for (i = 0; i < xs; i++)
       {
@@ -587,7 +587,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
       posDst += bytes;
     }
     // set vertical bump
-    d = min(16, sXSize / 6); // max edge=16
+    d = HB_MIN(16, sXSize / 6); // max edge=16
     a = sYSize * sYSize / 4;
     posDst = iDst;
     for (i = 0; i < sYSize; i++)
