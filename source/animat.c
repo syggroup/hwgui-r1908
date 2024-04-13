@@ -1,11 +1,18 @@
+/*
+ * HWGUI - Harbour Win32 GUI library source code:
+ * C functions for HAnimation class
+ *
+ * Copyright 2004 Marcos Antonio Gambeta <marcos_gambeta@hotmail.com>
+ * www - http://geocities.yahoo.com.br/marcosgambeta/
+ */
+
 #include "hwingui.h"
 #include <commctrl.h>
 
 HB_FUNC(ANIMATE_CREATE)
 {
   HWND hwnd;
-
-  hwnd = Animate_Create(hwg_par_HWND(1), (LONG)hb_parnl(2), (LONG)hb_parnl(3), GetModuleHandle(NULL));
+  hwnd = Animate_Create(hwg_par_HWND(1), hwg_par_UINT(2), (LONG)hb_parnl(3), GetModuleHandle(NULL));
   MoveWindow(hwnd, hb_parnl(4), hb_parnl(5), hb_parnl(6), hb_parnl(7), TRUE);
   HB_RETHANDLE(hwnd);
 }
@@ -19,12 +26,12 @@ HB_FUNC(ANIMATE_OPEN)
 
 HB_FUNC(ANIMATE_PLAY)
 {
-  Animate_Play(hwg_par_HWND(1), hb_parni(2), hb_parni(3), hb_parni(4));
+  Animate_Play(hwg_par_HWND(1), hwg_par_UINT(2), hwg_par_UINT(3), hwg_par_UINT(4));
 }
 
 HB_FUNC(ANIMATE_SEEK)
 {
-  Animate_Seek(hwg_par_HWND(1), hb_parni(2));
+  Animate_Seek(hwg_par_HWND(1), hwg_par_UINT(2));
 }
 
 HB_FUNC(ANIMATE_STOP)
