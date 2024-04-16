@@ -1,5 +1,5 @@
 # hwgui-r1908
-HWGUI r1908 para testes com Harbour 32-bit/64-bit
+HWGUI r1908 para testes com Harbour e xHarbour 32-bit/64-bit
 
 # Compatibilidade
 
