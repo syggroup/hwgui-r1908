@@ -17,8 +17,8 @@ xHarbour/MSVC64 - ?
 xHarbour/Clang32 - ?  
 xHarbour/Clang64 - ?  
 
-Harbour++/MinGW32 - ?  
-Harbour++/MinGW64 - ?  
+Harbour++/MinGW32 - estável  
+Harbour++/MinGW64 - instável (requer flag -fpermissive)  
 Harbour++/MSVC32 - ?  
 Harbour++/MSVC64 - ?  
 Harbour++/Clang32 - ?  
