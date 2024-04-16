@@ -63,7 +63,7 @@ HB_FUNC(LISTVIEW_CREATE)
   }
 
   handle = CreateWindowEx(WS_EX_CLIENTEDGE, WC_LISTVIEW, NULL, style, hb_parni(3), hb_parni(4), hb_parni(5),
-                          hb_parni(6), hwnd, (HMENU)(INT_PTR)hb_parni(2), GetModuleHandle(NULL), NULL);
+                          hb_parni(6), hwnd, hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(handle);
 }

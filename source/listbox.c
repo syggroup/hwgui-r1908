@@ -42,7 +42,7 @@ HB_FUNC(CREATELISTBOX)
                                hb_parni(4), hb_parni(5),            /* x, y       */
                                hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
                                hwg_par_HWND(1),               /* parent window    */
-                               (HMENU)(INT_PTR)hb_parni(2),                  /* listbox ID      */
+                               hwg_par_HMENU_ID(2),                  /* listbox ID      */
                                GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hListbox);
