@@ -144,5 +144,6 @@ HB_EXTERN_END
 #define hwg_par_WNDPROC(n) (WNDPROC)(LONG_PTR)hb_parnl(n)
 #define hwg_par_WPARAM(n) (WPARAM)hb_parnl(n)
 
+#define hwg_ret_BOOL(x) hb_retl(x)
 #define hwg_ret_HWND(n) HB_RETHANDLE(n)
 #define hwg_ret_LRESULT(x) hb_retnl(x)
