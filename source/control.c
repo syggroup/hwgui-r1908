@@ -2134,26 +2134,21 @@ HB_FUNC(COMBOBOXGETLBTEXT)
   HB_STORSTR(lpszText, 3);
 }
 
+/*
+DEFWINDOWPROC(HWND, nMsg, wParam, lParam) --> numeric
+*/
 HB_FUNC(DEFWINDOWPROC)
 {
-  //   WNDPROC wpProc = (WNDPROC) hb_parnl(1);
-  HWND hWnd = hwg_par_HWND(1);
-  LONG message = hb_parnl(2);
-  WPARAM wParam = hwg_par_WPARAM(3);
-  LPARAM lParam = hwg_par_LPARAM(4);
-
-  hb_retnl(DefWindowProc(hWnd, message, wParam, lParam));
+  // WNDPROC wpProc = (WNDPROC) hb_parnl(1);
+  hwg_ret_LRESULT(DefWindowProc(hwg_par_HWND(1), hwg_par_UINT(2), hwg_par_WPARAM(3), hwg_par_LPARAM(4)));
 }
 
+/*
+CALLWINDOWPROC(WNDPROC, HWND, nMsg, wParam, lParam) --> numeric
+*/
 HB_FUNC(CALLWINDOWPROC)
 {
-  WNDPROC wpProc = (WNDPROC)(LONG_PTR)hb_parnl(1);
-  HWND hWnd = hwg_par_HWND(2);
-  LONG message = hb_parnl(3);
-  WPARAM wParam = hwg_par_WPARAM(4);
-  LPARAM lParam = hwg_par_LPARAM(5);
-
-  hb_retnl(CallWindowProc(wpProc, hWnd, message, wParam, lParam));
+  hwg_ret_LRESULT(CallWindowProc(hwg_par_WNDPROC(1), hwg_par_HWND(2), hwg_par_UINT(3), hwg_par_WPARAM(4), hwg_par_LPARAM(5)));
 }
 
 HB_FUNC(BUTTONGETDLGCODE)
