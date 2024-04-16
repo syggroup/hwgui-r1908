@@ -36,14 +36,14 @@ HB_FUNC(LISTBOXSETSTRING)
 */
 HB_FUNC(CREATELISTBOX)
 {
-  HWND hListbox = CreateWindowEx(0, TEXT("LISTBOX"),                     /* predefined class  */
-                               TEXT(""),                            /*   */
-                               WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
-                               hb_parni(4), hb_parni(5),            /* x, y       */
-                               hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
-                               hwg_par_HWND(1),               /* parent window    */
-                               hwg_par_HMENU_ID(2),                  /* listbox ID      */
-                               GetModuleHandle(NULL), NULL);
+  HWND hListbox = CreateWindowEx(0, TEXT("LISTBOX"),                  /* predefined class  */
+                                 TEXT(""),                            /*   */
+                                 WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
+                                 hb_parni(4), hb_parni(5),            /* x, y       */
+                                 hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
+                                 hwg_par_HWND(1),                     /* parent window    */
+                                 hwg_par_HMENU_ID(2),                 /* listbox ID      */
+                                 GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hListbox);
 }

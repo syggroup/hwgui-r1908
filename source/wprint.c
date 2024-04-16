@@ -182,7 +182,7 @@ HB_FUNC(HWG_GETPRINTERS)
   {
     hb_ret();
   }
-  
+
   if (pBuffer)
   {
     hb_xfree(pBuffer);

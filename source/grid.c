@@ -108,7 +108,7 @@ HB_FUNC(LISTVIEW_ADDCOLUMN)
   {
     COL.iImage = -1;
   }
-  
+
   ListView_InsertColumn(hwg_par_HWND(1), hb_parni(2) - 1, &COL);
 
   RedrawWindow(hwg_par_HWND(1), NULL, NULL,
@@ -169,7 +169,7 @@ HB_FUNC(LISTVIEW_SETDISPINFO)
   if (pDispInfo->item.iSubItem == 0)
   {
     pDispInfo->item.state = 2;
-  }  
+  }
 }
 
 HB_FUNC(LISTVIEW_GETGRIDKEY)
@@ -337,7 +337,7 @@ HB_FUNC(LISTVIEW_ADDCOLUMNEX)
   {
     iResult = 1;
   }
-  
+
   RedrawWindow(hwndListView, NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_ERASENOW | RDW_UPDATENOW);
 
   hb_retnl(iResult);
@@ -368,7 +368,7 @@ HB_FUNC(LISTVIEW_INSERTITEMEX)
   {
     lvi.mask = LVIF_TEXT | LVIF_STATE;
   }
-  
+
   lvi.iImage = iBitMap >= 0 ? lCol : -1;
   lvi.state = 0;
   lvi.stateMask = 0;
@@ -518,7 +518,7 @@ int CALLBACK CompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
   {
     rc = -rc;
   }
-  
+
   return rc;
 }
 
@@ -551,7 +551,7 @@ HB_FUNC(LISTVIEWSORTINFOFREE)
   if (p)
   {
     hb_xfree(p);
-  }  
+  }
 }
 
 HB_FUNC(LISTVIEWSORT)

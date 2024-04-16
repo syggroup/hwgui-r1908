@@ -65,9 +65,9 @@ HB_FUNC(MCISENDSTRING)
 
 HB_FUNC(MCISENDCOMMAND) // ()
 {
-  hb_retnl(mciSendCommand(hb_parni(1),         // Device ID
-                          hb_parni(2),         // Command Message
-                          hb_parnl(3),         // Flags
+  hb_retnl(mciSendCommand(hb_parni(1),             // Device ID
+                          hb_parni(2),             // Command Message
+                          hb_parnl(3),             // Flags
                           (DWORD_PTR)hb_parc(4))); // Parameter Block
 }
 

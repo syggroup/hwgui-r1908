@@ -108,7 +108,7 @@ void cxdib_Release(PCXDIB pdib)
   if (pdib->hDib)
   {
     hb_xfree(pdib->hDib);
-  }  
+  }
 }
 
 WORD cxdib_GetPaletteSize(PCXDIB pdib)
@@ -141,7 +141,7 @@ void cxdib_Clone(PCXDIB pdib, PCXDIB src)
   if (pdib->hDib)
   {
     memcpy(pdib->hDib, src->hDib, cxdib_GetSize(pdib));
-  }  
+  }
 }
 
 void cxdib_Clear(PCXDIB pdib, BYTE bval)
@@ -149,7 +149,7 @@ void cxdib_Clear(PCXDIB pdib, BYTE bval)
   if (pdib->hDib)
   {
     memset(cxdib_GetBits(pdib), bval, pdib->m_bi.biSizeImage);
-  }  
+  }
 }
 
 HDIB cxdib_Create(PCXDIB pdib, DWORD dwWidth, DWORD dwHeight, WORD wBitCount)
@@ -160,7 +160,7 @@ HDIB cxdib_Create(PCXDIB pdib, DWORD dwWidth, DWORD dwHeight, WORD wBitCount)
   if (pdib->hDib)
   {
     hb_xfree(pdib->hDib);
-  }  
+  }
   pdib->hDib = NULL;
 
   // Make sure bits per pixel is valid
@@ -180,7 +180,7 @@ HDIB cxdib_Create(PCXDIB pdib, DWORD dwWidth, DWORD dwHeight, WORD wBitCount)
   {
     wBitCount = 24;
   }
-  
+
   switch (wBitCount)
   {
   case 1:
@@ -222,7 +222,7 @@ HDIB cxdib_Create(PCXDIB pdib, DWORD dwWidth, DWORD dwHeight, WORD wBitCount)
   {
     return NULL;
   }
-  
+
   // use our bitmap info structure to fill in first part of
   // our DIB with the BITMAPINFOHEADER
   lpbi = (LPBITMAPINFOHEADER)(pdib->hDib);
@@ -395,7 +395,7 @@ void cxshade_Draw(PCXSHADE pshade, HDC pRealDC, short state)
         else
         {
           DrawEdge(pDC, &r, EDGE_SUNKEN, BF_RECT);
-        }  
+        }
       }
     }
     else
@@ -430,7 +430,7 @@ void cxshade_Draw(PCXSHADE pshade, HDC pRealDC, short state)
           else
           {
             DrawEdge(pDC, &r, EDGE_RAISED, BF_RECT);
-          }  
+          }
         }
       }
     }
@@ -541,10 +541,10 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
     k = 40; // stroke granularity
     for (a = 0; a < 200; a++)
     {
-      x = rand() / (RAND_MAX / sXSize);                   // stroke postion
-      y = rand() / (RAND_MAX / sYSize);                   // stroke position
+      x = rand() / (RAND_MAX / sXSize);                      // stroke postion
+      y = rand() / (RAND_MAX / sYSize);                      // stroke position
       xs = rand() / (RAND_MAX / HB_MIN(sXSize, sYSize)) / 2; // stroke lenght
-      d = rand() / (RAND_MAX / k);                        // stroke color
+      d = rand() / (RAND_MAX / k);                           // stroke color
       for (i = 0; i < xs; i++)
       {
         if (((x - i) > 0) && ((y + i) < sYSize))

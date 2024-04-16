@@ -45,7 +45,7 @@ HB_FUNC(CREATERICHEDIT)
   if (!hRichEd)
   {
     hRichEd = LoadLibrary(TEXT("riched20.dll"));
-  }  
+  }
 
   hCtrl = CreateWindowEx(0,                                   /* extended style    */
                          TEXT("RichEdit20A"),                 /* predefined class  */
@@ -53,8 +53,8 @@ HB_FUNC(CREATERICHEDIT)
                          WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
                          hb_parni(4), hb_parni(5),            /* x, y   */
                          hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
-                         hwg_par_HWND(1),               /* parent window    */
-                         hwg_par_HMENU_ID(2),                  /* control ID  */
+                         hwg_par_HWND(1),                     /* parent window    */
+                         hwg_par_HMENU_ID(2),                 /* control ID  */
                          GetModuleHandle(NULL), NULL);
 
   lpText = HB_PARSTR(8, &hText, NULL);
@@ -460,7 +460,7 @@ LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   else
   {
     return (CallWindowProc(wpOrigRichProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 static DWORD CALLBACK RichStreamOutCallback(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)

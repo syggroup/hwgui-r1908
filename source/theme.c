@@ -649,7 +649,7 @@ static FARPROC GetProc(LPCSTR lpProc, FARPROC pfnFail)
     if (pProcAddr)
     {
       return pProcAddr;
-    }  
+    }
   }
   return pfnFail;
 }
@@ -1063,7 +1063,7 @@ void draw_bitmap(HDC hDC, const RECT *Rect, DWORD style, HWND m_hWnd)
   {
     return;
   }
-  
+
   // determine size of bitmap image
 
   memset(&bmi, 0, sizeof(BITMAPINFO));
@@ -1094,7 +1094,7 @@ void draw_icon(HDC hDC, const RECT *Rect, DWORD style, HWND m_hWnd)
   {
     return;
   }
-  
+
   // determine size of icon image
   GetIconInfo(hIcon, &ii);
   memset(&bmi, 0, sizeof(BITMAPINFO));
@@ -1146,7 +1146,7 @@ static int image_left(int cx, const RECT *Rect, DWORD style)
   {
     x = Rect->left + ((Rect->right - Rect->left) - cx) / 2;
   }
-  
+
   return (x);
 }
 
@@ -1173,7 +1173,7 @@ static int image_top(int cy, const RECT *Rect, DWORD style)
   {
     y = Rect->top + ((Rect->bottom - Rect->top) - cy) / 2;
   }
-  
+
   return (y);
 }
 
@@ -1558,7 +1558,7 @@ static void PrepareImageRect(HWND hButtonWnd, BOOL bHasTitle, RECT *rpItem, RECT
   if (bIsPressed && !Themed)
   {
     OffsetRect(rpImage, 1, 1);
-  }  
+  }
   //    rpItem=rpImage;
 
 } // End of PrepareImageRect
@@ -1574,7 +1574,7 @@ static void DrawTheIcon(HWND hButtonWnd, HDC dc, BOOL bHasTitle, RECT *rpItem, R
   {
     Calc_iconWidthHeight(hButtonWnd, &cx, &cy, dc, hIco);
   }
-  
+
   if (hBitmap)
   {
     //      SetBkColor(dc,RGB(255,255,255));
@@ -1637,7 +1637,7 @@ HB_FUNC(HB_DRAWTHEMEBACKGROUND)
   {
     Array2Rect(hb_param(6, HB_IT_ARRAY), &pClipRect);
   }
-  
+
   hb_retnl(hb_DrawThemeBackground(hTheme, hdc, iPartId, iStateId, &pRect, NULL));
 }
 
@@ -1863,7 +1863,7 @@ HB_FUNC(HWG_SETWINDOWTHEME)
     else
     {
       hb_SetWindowTheme(hwnd, NULL, NULL);
-    }  
+    }
   }
 }
 

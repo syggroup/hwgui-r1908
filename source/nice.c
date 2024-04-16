@@ -136,7 +136,7 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
   if ((pSymTest = hb_dynsymFind("NICEBUTTPROC")) != NULL)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSymTest));
-    hb_vmPushNil();            /* places NIL at self */
+    hb_vmPushNil();                /* places NIL at self */
     hb_vmPushLong((LONG_PTR)hWnd); /* pushes parameters on to the hvm stack */
     hb_vmPushLong((LONG)message);
     hb_vmPushLong((LONG)wParam);
@@ -155,7 +155,7 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
   else
   {
     return (DefWindowProc(hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(CREATEROUNDRECTRGN)
@@ -209,8 +209,8 @@ HB_FUNC(CREATENICEBTN)
                              WS_CHILD | WS_VISIBLE | ulStyle, /* style  */
                              hb_parni(4), hb_parni(5),        /* x, y       */
                              hb_parni(6), hb_parni(7),        /* nWidth, nHeight */
-                             hwg_par_HWND(1),           /* parent window    */
-                             hwg_par_HMENU_ID(2),              /* control ID  */
+                             hwg_par_HWND(1),                 /* parent window    */
+                             hwg_par_HMENU_ID(2),             /* control ID  */
                              GetModuleHandle(NULL), NULL);
   hb_strfree(hTitle);
 

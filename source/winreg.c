@@ -153,8 +153,8 @@ HB_FUNC(REGSETVALUEEX)
 {
   void *hValue;
 
-  hb_retnl(RegSetValueEx((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), 0, hb_parnl(4), (const BYTE *)hb_parcx(5),
-                         hb_parclen(5) + 1));
+  hb_retnl(RegSetValueEx((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), 0, hb_parnl(4),
+                         (const BYTE *)hb_parcx(5), hb_parclen(5) + 1));
   hb_strfree(hValue);
 }
 

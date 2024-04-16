@@ -227,7 +227,7 @@ HB_FUNC(SAVEFILE)
   {
     lpFileBuff = HB_STRUNSHARE(&hFileName, lpFileName, nSize);
   }
-  
+
   lpStr1 = HB_PARSTRDEF(2, &hStr1, &nLen1);
   lpStr2 = HB_PARSTRDEF(3, &hStr2, &nLen2);
 
@@ -311,7 +311,7 @@ HB_FUNC(PRINTSETUP)
   else
   {
     HB_RETHANDLE(0);
-  }  
+  }
 }
 
 HB_FUNC(HWG_CHOOSECOLOR)
@@ -339,7 +339,7 @@ HB_FUNC(HWG_CHOOSECOLOR)
   else
   {
     hb_ret();
-  }  
+  }
 }
 
 static unsigned long Get_SerialNumber(LPCTSTR RootPathName)
@@ -381,7 +381,7 @@ HB_FUNC(GETPRIVATEPROFILESTRING)
   else
   {
     HB_RETSTR(lpDefault);
-  }  
+  }
 
   hb_strfree(hSection);
   hb_strfree(hEntry);
@@ -520,7 +520,7 @@ HB_FUNC(_GETOPENFILENAME)
   else
   {
     lpFileBuff = HB_STRUNSHARE(&hFileName, lpFileName, nSize);
-  }  
+  }
 
   ZeroMemory(&ofn, sizeof(ofn));
   ofn.hInstance = GetModuleHandle(NULL);

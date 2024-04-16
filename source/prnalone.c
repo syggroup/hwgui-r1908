@@ -37,7 +37,7 @@ HB_FUNC(PRINTSETUP)
   else
   {
     HB_RETHANDLE(0);
-  }  
+  }
 }
 
 HB_FUNC(OPENPRINTER)
@@ -177,8 +177,8 @@ HB_FUNC(DRAWTEXT)
     rc.bottom = hb_parni(6);
 
     DrawText(hwg_par_HDC(1), // handle of device context
-             lpText,               // address of string
-             nSize,                // number of characters in string
+             lpText,         // address of string
+             nSize,          // number of characters in string
              &rc, hb_parni(7));
   }
   hb_strfree(hText);

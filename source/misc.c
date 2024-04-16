@@ -164,7 +164,7 @@ HB_FUNC(SETBIT)
   else
   {
     hb_retnl(hb_parnl(1) & ~(1 << (hb_parni(2) - 1)));
-  }  
+  }
 }
 
 HB_FUNC(CHECKBIT)
@@ -302,7 +302,7 @@ HB_FUNC(GETKEYNAMETEXT)
   if (iRet)
   {
     HB_RETSTRLEN(cText, iRet);
-  }  
+  }
 }
 
 HB_FUNC(ACTIVATEKEYBOARDLAYOUT)
@@ -329,7 +329,7 @@ HB_FUNC(ACTIVATEKEYBOARDLAYOUT)
   {
     ActivateKeyboardLayout(curr, 0);
   }
-  
+
   hb_strfree(hLayout);
 }
 
@@ -352,13 +352,13 @@ HB_FUNC(PTS2PIX)
   else
   {
     hDC = CreateDC(TEXT("DISPLAY"), NULL, NULL, NULL);
-  }  
+  }
 
   hb_retni(MulDiv(hb_parni(1), GetDeviceCaps(hDC, LOGPIXELSY), 72));
   if (lDC)
   {
     DeleteDC(hDC);
-  }  
+  }
 }
 
 /* Functions Contributed  By Luiz Rafael Culik Guimaraes( culikr@uol.com.br) */
@@ -463,7 +463,7 @@ HB_FUNC(SLEEP)
   if (hb_parinfo(1))
   {
     Sleep(hb_parnl(1));
-  }  
+  }
 }
 
 HB_FUNC(KEYB_EVENT)
@@ -533,8 +533,8 @@ HB_FUNC(SETSCROLLINFO)
   si.fMask = fMask;
 
   SetScrollInfo(hwg_par_HWND(1), // handle of window with scroll bar
-                hb_parni(2),           // scroll bar flags
-                &si, hb_parni(3)       // redraw flag
+                hb_parni(2),     // scroll bar flags
+                &si, hb_parni(3) // redraw flag
   );
 }
 
@@ -543,9 +543,9 @@ HB_FUNC(GETSCROLLRANGE)
   int MinPos, MaxPos;
 
   GetScrollRange(hwg_par_HWND(1), // handle of window with scroll bar
-                 hb_parni(2),           // scroll bar flags
-                 &MinPos,               // address of variable that receives minimum position
-                 &MaxPos                // address of variable that receives maximum position
+                 hb_parni(2),     // scroll bar flags
+                 &MinPos,         // address of variable that receives minimum position
+                 &MaxPos          // address of variable that receives maximum position
   );
   hb_storni(MinPos, 3);
   hb_storni(MaxPos, 4);
@@ -559,22 +559,22 @@ HB_FUNC(SETSCROLLRANGE)
 HB_FUNC(GETSCROLLPOS)
 {
   hb_retni(GetScrollPos(hwg_par_HWND(1), // handle of window with scroll bar
-                        hb_parni(2)            // scroll bar flags
+                        hb_parni(2)      // scroll bar flags
                         ));
 }
 
 HB_FUNC(SETSCROLLPOS)
 {
   SetScrollPos(hwg_par_HWND(1), // handle of window with scroll bar
-               hb_parni(2),           // scroll bar flags
+               hb_parni(2),     // scroll bar flags
                hb_parni(3), TRUE);
 }
 
 HB_FUNC(SHOWSCROLLBAR)
 {
   ShowScrollBar(hwg_par_HWND(1), // handle of window with scroll bar
-                hb_parni(2),           // scroll bar flags
-                hb_parl(3)             // scroll bar visibility
+                hb_parni(2),     // scroll bar flags
+                hb_parl(3)       // scroll bar visibility
   );
 }
 

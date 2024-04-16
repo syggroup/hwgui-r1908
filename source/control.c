@@ -161,13 +161,13 @@ HB_FUNC(CREATEPANEL)
 {
   HWND hWndPanel;
   hWndPanel = CreateWindowEx(0, TEXT("PANEL"), /* predefined class  */
-                           NULL,          /* no window title   */
-                           WS_CHILD | WS_VISIBLE | SS_GRAYRECT | SS_OWNERDRAW | CCS_TOP | hb_parnl(3), /* style  */
-                           hb_parni(4), hb_parni(5),                                                   /* x, y       */
-                           hb_parni(6), hb_parni(7), /* nWidth, nHeight */
-                           hwg_par_HWND(1),    /* parent window    */
-                           hwg_par_HMENU_ID(2),       /* control ID  */
-                           GetModuleHandle(NULL), NULL);
+                             NULL,             /* no window title   */
+                             WS_CHILD | WS_VISIBLE | SS_GRAYRECT | SS_OWNERDRAW | CCS_TOP | hb_parnl(3), /* style  */
+                             hb_parni(4), hb_parni(5), /* x, y       */
+                             hb_parni(6), hb_parni(7), /* nWidth, nHeight */
+                             hwg_par_HWND(1),          /* parent window    */
+                             hwg_par_HMENU_ID(2),      /* control ID  */
+                             GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hWndPanel);
   // SS_ETCHEDHORZ
@@ -179,14 +179,14 @@ HB_FUNC(CREATEPANEL)
 HB_FUNC(CREATEOWNBTN)
 {
   HWND hWndPanel;
-  hWndPanel = CreateWindowEx(0, TEXT("OWNBTN"),                                     /* predefined class  */
-                           NULL,                                               /* no window title   */
-                           WS_CHILD | WS_VISIBLE | SS_GRAYRECT | SS_OWNERDRAW, /* style  */
-                           hb_parni(3), hb_parni(4),                           /* x, y       */
-                           hb_parni(5), hb_parni(6),                           /* nWidth, nHeight */
-                           hwg_par_HWND(1),                              /* parent window    */
-                           hwg_par_HMENU_ID(2),                                 /* control ID  */
-                           GetModuleHandle(NULL), NULL);
+  hWndPanel = CreateWindowEx(0, TEXT("OWNBTN"),                                  /* predefined class  */
+                             NULL,                                               /* no window title   */
+                             WS_CHILD | WS_VISIBLE | SS_GRAYRECT | SS_OWNERDRAW, /* style  */
+                             hb_parni(3), hb_parni(4),                           /* x, y       */
+                             hb_parni(5), hb_parni(6),                           /* nWidth, nHeight */
+                             hwg_par_HWND(1),                                    /* parent window    */
+                             hwg_par_HMENU_ID(2),                                /* control ID  */
+                             GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hWndPanel);
 }
@@ -204,8 +204,8 @@ HB_FUNC(CREATESTATIC)
                                  WS_CHILD | WS_VISIBLE | ulStyle, /* style  */
                                  hb_parni(4), hb_parni(5),        /* x, y       */
                                  hb_parni(6), hb_parni(7),        /* nWidth, nHeight */
-                                 hwg_par_HWND(1),           /* parent window    */
-                                 hwg_par_HMENU_ID(2),              /* control ID  */
+                                 hwg_par_HWND(1),                 /* parent window    */
+                                 hwg_par_HMENU_ID(2),             /* control ID  */
                                  GetModuleHandle(NULL), NULL);
 
   /*
@@ -228,14 +228,14 @@ HB_FUNC(CREATESTATIC)
 HB_FUNC(CREATEBUTTON)
 {
   void *hStr;
-  HWND hBtn = CreateWindowEx(0, TEXT("BUTTON"),                      /* predefined class  */
-                           HB_PARSTR(8, &hStr, NULL),           /* button text   */
-                           WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
-                           hb_parni(4), hb_parni(5),            /* x, y       */
-                           hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
-                           hwg_par_HWND(1),               /* parent window    */
-                           hwg_par_HMENU_ID(2),                  /* button       ID  */
-                           GetModuleHandle(NULL), NULL);
+  HWND hBtn = CreateWindowEx(0, TEXT("BUTTON"),                   /* predefined class  */
+                             HB_PARSTR(8, &hStr, NULL),           /* button text   */
+                             WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
+                             hb_parni(4), hb_parni(5),            /* x, y       */
+                             hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
+                             hwg_par_HWND(1),                     /* parent window    */
+                             hwg_par_HMENU_ID(2),                 /* button       ID  */
+                             GetModuleHandle(NULL), NULL);
   hb_strfree(hStr);
 
   hwg_ret_HWND(hBtn);
@@ -277,14 +277,14 @@ HB_FUNC(CREATEEDIT)
 */
 HB_FUNC(CREATECOMBO)
 {
-  HWND hCombo = CreateWindowEx(0, TEXT("COMBOBOX"),                    /* predefined class  */
-                             TEXT(""),                            /*   */
-                             WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
-                             hb_parni(4), hb_parni(5),            /* x, y       */
-                             hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
-                             hwg_par_HWND(1),                     /* parent window    */
-                             hwg_par_HMENU_ID(2),         /* combobox ID      */
-                             GetModuleHandle(NULL), NULL);
+  HWND hCombo = CreateWindowEx(0, TEXT("COMBOBOX"),                 /* predefined class  */
+                               TEXT(""),                            /*   */
+                               WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
+                               hb_parni(4), hb_parni(5),            /* x, y       */
+                               hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
+                               hwg_par_HWND(1),                     /* parent window    */
+                               hwg_par_HMENU_ID(2),                 /* combobox ID      */
+                               GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hCombo);
 }
@@ -306,7 +306,7 @@ HB_FUNC(CREATEBROWSE)
                            hb_parni(4), hb_parni(5),                     /* x, y  */
                            hb_parni(6), hb_parni(7),                     /* nWidth, nHeight */
                            hwg_par_HWND(1),                              /* parent window */
-                           hwg_par_HMENU_ID(2),                  /* control ID  */
+                           hwg_par_HMENU_ID(2),                          /* control ID  */
                            GetModuleHandle(NULL), NULL);
   hb_strfree(hStr);
 
@@ -337,7 +337,7 @@ HB_FUNC(CREATESTATUSWINDOW)
                                   WS_CHILD | WS_VISIBLE | WS_OVERLAPPED | WS_CLIPSIBLINGS, // creates a child window
                               0, 0, 0, 0,                                                  // ignores size and position
                               hwndParent,                                                  // handle to parent window
-                              hwg_par_HMENU_ID(2),                                          // child window identifier
+                              hwg_par_HMENU_ID(2),                                         // child window identifier
                               GetModuleHandle(NULL), // handle to application instance
                               NULL);                 // no window creation data
 
@@ -418,7 +418,7 @@ HB_FUNC(ADDTOOLTIP) // changed by MAG
   if (!hWndTT)
   {
     hWndTT = CreateWindowEx(0, TOOLTIPS_CLASS, NULL, WS_POPUP | TTS_ALWAYSTIP | iStyle, CW_USEDEFAULT, CW_USEDEFAULT,
-                          CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, GetModuleHandle(NULL), NULL);
+                            CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, GetModuleHandle(NULL), NULL);
   }
   if (!hWndTT)
   {
@@ -514,7 +514,7 @@ HB_FUNC(GETNOTIFYDELTAPOS)
   else
   {
     hb_retni((LONG)(((NMUPDOWN *)HB_PARHANDLE(1))->iDelta));
-  }  
+  }
 }
 
 HB_FUNC(CREATEDATEPICKER)
@@ -525,7 +525,7 @@ HB_FUNC(CREATEDATEPICKER)
   hCtrl = CreateWindowEx(WS_EX_CLIENTEDGE, TEXT("SYSDATETIMEPICK32"), NULL, nStyle, hb_parni(3), hb_parni(4), /* x, y */
                          hb_parni(5), hb_parni(6), /* nWidth, nHeight */
                          hwg_par_HWND(1),          /* parent window    */
-                         hwg_par_HMENU_ID(2),       /* control ID  */
+                         hwg_par_HMENU_ID(2),      /* control ID  */
                          GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hCtrl);
@@ -626,10 +626,10 @@ HB_FUNC(CREATETABCONTROL)
 {
   HWND hTab;
 
-  hTab = CreateWindowEx(0, WC_TABCONTROL, NULL, WS_CHILD | WS_VISIBLE | hb_parnl(3),                  /* style  */
-                      hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hwg_par_HWND(1), /* parent window    */
-                      hwg_par_HMENU_ID(2),                                                        /* control ID  */
-                      GetModuleHandle(NULL), NULL);
+  hTab = CreateWindowEx(0, WC_TABCONTROL, NULL, WS_CHILD | WS_VISIBLE | hb_parnl(3),         /* style  */
+                        hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hwg_par_HWND(1), /* parent window    */
+                        hwg_par_HMENU_ID(2),                                                 /* control ID  */
+                        GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hTab);
 }
@@ -654,7 +654,7 @@ HB_FUNC(INITTABCONTROL)
     {
       tie.pszText = (LPTSTR)TEXT("");
     }
-    
+
     if (TabCtrl_InsertItem(hTab, ul - 1, &tie) == -1)
     {
       DestroyWindow(hTab);
@@ -665,7 +665,7 @@ HB_FUNC(INITTABCONTROL)
     if (tie.iImage > -1)
     {
       tie.iImage++;
-    }  
+    }
   }
 }
 
@@ -757,8 +757,8 @@ HB_FUNC(CREATETREE)
   hCtrl = CreateWindowEx(WS_EX_CLIENTEDGE, WC_TREEVIEW, 0, WS_CHILD | WS_VISIBLE | WS_TABSTOP | hb_parnl(3),
                          hb_parni(4), hb_parni(5), /* x, y       */
                          hb_parni(6), hb_parni(7), /* nWidth, nHeight */
-                         hwg_par_HWND(1),    /* parent window    */
-                         hwg_par_HMENU_ID(2),       /* control ID  */
+                         hwg_par_HWND(1),          /* parent window    */
+                         hwg_par_HMENU_ID(2),      /* control ID  */
                          GetModuleHandle(NULL), NULL);
 
   if (!HB_ISNIL(8))
@@ -818,7 +818,7 @@ HB_FUNC(TREEADDNODE)
   {
     is.hInsertAfter = TVI_LAST;
   }
-  
+
   HB_RETHANDLE(SendMessage(hwg_par_HWND(2), TVM_INSERTITEM, 0, (LPARAM)(&is)));
 
   if (tvi.mask & TVIF_IMAGE)
@@ -966,7 +966,7 @@ HB_FUNC(TREE_GETNOTIFY)
     {
       oNode = (PHB_ITEM)(((NM_TREEVIEW *)HB_PARHANDLE(1))->itemNew.lParam);
     }
-    
+
     hb_itemReturn(oNode);
   }
   else if (iType == TREE_GETNOTIFY_EDIT)
@@ -1019,7 +1019,7 @@ HB_FUNC(TREE_HITTEST)
   else
   {
     hb_ret();
-  }  
+  }
 }
 
 HB_FUNC(TREE_RELEASENODE)
@@ -1083,8 +1083,7 @@ HB_FUNC(IMAGELIST_ADDMASKED)
 */
 HB_FUNC(SETTIMER)
 {
-  SetTimer(hwg_par_HWND(1), (UINT)hb_parni(2), hwg_par_UINT(3),
-           hb_pcount() == 3 ? (TIMERPROC)s_timerProc : NULL);
+  SetTimer(hwg_par_HWND(1), (UINT)hb_parni(2), hwg_par_UINT(3), hb_pcount() == 3 ? (TIMERPROC)s_timerProc : NULL);
 }
 
 /*
@@ -1232,7 +1231,7 @@ static void CALLBACK s_timerProc(HWND hWnd, UINT message, UINT idTimer, DWORD dw
   {
     s_pSymTest = hb_dynsymGetCase("TIMERPROC");
   }
-  
+
   if (hb_dynsymIsFunction(s_pSymTest))
   {
     hb_vmPushDynSym(s_pSymTest);
@@ -1299,7 +1298,7 @@ LRESULT APIENTRY TreeViewSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LP
   else
   {
     return (CallWindowProc(wpOrigTreeViewProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITWINCTRL)
@@ -1379,12 +1378,13 @@ LRESULT APIENTRY StaticSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   else
   {
     return (CallWindowProc(wpOrigStaticProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITEDITPROC)
 {
-  wpOrigEditProc = (WNDPROC)(LONG_PTR)SetWindowLong(hwg_par_HWND(1), GWLP_WNDPROC, (LONG_PTR)EditSubclassProc); // TODO: SetWindowLongPtr
+  wpOrigEditProc = (WNDPROC)(LONG_PTR)SetWindowLong(hwg_par_HWND(1), GWLP_WNDPROC,
+                                                    (LONG_PTR)EditSubclassProc); // TODO: SetWindowLongPtr
 }
 
 LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1437,7 +1437,7 @@ LRESULT APIENTRY ButtonSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
   }
-  
+
   if (pSym_onEvent && pObject)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
@@ -1460,7 +1460,7 @@ LRESULT APIENTRY ButtonSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   else
   {
     return (CallWindowProc((WNDPROC)wpOrigButtonProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 LRESULT APIENTRY ComboSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1472,7 +1472,7 @@ LRESULT APIENTRY ComboSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
   {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
   }
-  
+
   if (pSym_onEvent && pObject)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
@@ -1495,7 +1495,7 @@ LRESULT APIENTRY ComboSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
   else
   {
     return (CallWindowProc(wpOrigComboProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITCOMBOPROC)
@@ -1512,7 +1512,7 @@ LRESULT APIENTRY ListSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
   }
-  
+
   if (pSym_onEvent && pObject)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
@@ -1535,7 +1535,7 @@ LRESULT APIENTRY ListSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   else
   {
     return (CallWindowProc(wpOrigListProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITLISTPROC)
@@ -1557,7 +1557,7 @@ LRESULT APIENTRY UpDownSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
   }
-  
+
   if (pSym_onEvent && pObject)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
@@ -1580,7 +1580,7 @@ LRESULT APIENTRY UpDownSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   else
   {
     return (CallWindowProc(wpOrigUpDownProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITDATEPICKERPROC)
@@ -1597,7 +1597,7 @@ LRESULT APIENTRY DatePickerSubclassProc(HWND hWnd, UINT message, WPARAM wParam, 
   {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
   }
-  
+
   if (pSym_onEvent && pObject)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
@@ -1620,7 +1620,7 @@ LRESULT APIENTRY DatePickerSubclassProc(HWND hWnd, UINT message, WPARAM wParam, 
   else
   {
     return (CallWindowProc(wpOrigDatePickerProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITTRACKPROC)
@@ -1637,7 +1637,7 @@ LRESULT APIENTRY TrackSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
   {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
   }
-  
+
   if (pSym_onEvent && pObject)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
@@ -1660,7 +1660,7 @@ LRESULT APIENTRY TrackSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
   else
   {
     return (CallWindowProc(wpOrigTrackProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 HB_FUNC(HWG_INITTABPROC)
@@ -1677,7 +1677,7 @@ LRESULT APIENTRY TabSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
   {
     pSym_onEvent = hb_dynsymFindName("ONEVENT");
   }
-  
+
   if (pSym_onEvent && pObject)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
@@ -1700,7 +1700,7 @@ LRESULT APIENTRY TabSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
   else
   {
     return (CallWindowProc(wpOrigTabProc, hWnd, message, wParam, lParam));
-  }  
+  }
 }
 
 #if (defined(__MINGW32__) || defined(__MINGW64__)) && !defined(LPNMTBGETINFOTIP)
@@ -1744,7 +1744,7 @@ HB_FUNC(CREATETOOLBAR)
                                  hb_parni(4), hb_parni(5),                                /* x, y       */
                                  hb_parni(6), hb_parni(7),                                /* nWidth, nHeight */
                                  hwg_par_HWND(1),                                         /* parent window    */
-                                 hwg_par_HMENU_ID(2),                                      /* control ID  */
+                                 hwg_par_HMENU_ID(2),                                     /* control ID  */
                                  GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hWndCtrl);
@@ -1955,14 +1955,14 @@ HB_FUNC(CREATEPAGER)
 {
   HWND hWndPanel;
   BOOL bVert = hb_parl(8);
-  hWndPanel = CreateWindowEx(0, WC_PAGESCROLLER,                                                   /* predefined class  */
-                           NULL,                                                              /* no window title   */
-                           WS_CHILD | WS_VISIBLE | bVert ? PGS_VERT : PGS_HORZ | hb_parnl(3), /* style  */
-                           hb_parni(4), hb_parni(5),                                          /* x, y       */
-                           hb_parni(6), hb_parni(7),                                          /* nWidth, nHeight */
-                           hwg_par_HWND(1),                                                  /* parent window    */
-                           hwg_par_HMENU_ID(2),                                                /* control ID  */
-                           GetModuleHandle(NULL), NULL);
+  hWndPanel = CreateWindowEx(0, WC_PAGESCROLLER,                                                /* predefined class  */
+                             NULL,                                                              /* no window title   */
+                             WS_CHILD | WS_VISIBLE | bVert ? PGS_VERT : PGS_HORZ | hb_parnl(3), /* style  */
+                             hb_parni(4), hb_parni(5),                                          /* x, y       */
+                             hb_parni(6), hb_parni(7),                                          /* nWidth, nHeight */
+                             hwg_par_HWND(1),                                                   /* parent window    */
+                             hwg_par_HMENU_ID(2),                                               /* control ID  */
+                             GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hWndPanel);
 }
@@ -1979,8 +1979,8 @@ HB_FUNC(CREATEREBAR)
                                      CCS_NODIVIDER | ulStyle, /* style  */
                                  hb_parni(4), hb_parni(5),    /* x, y       */
                                  hb_parni(6), hb_parni(7),    /* nWidth, nHeight */
-                                 hwg_par_HWND(1),            /* parent window    */
-                                 hwg_par_HMENU_ID(2),          /* control ID  */
+                                 hwg_par_HWND(1),             /* parent window    */
+                                 hwg_par_HMENU_ID(2),         /* control ID  */
                                  GetModuleHandle(NULL), NULL);
 
   hwg_ret_HWND(hWndCtrl);
@@ -2148,7 +2148,8 @@ CALLWINDOWPROC(WNDPROC, HWND, nMsg, wParam, lParam) --> numeric
 */
 HB_FUNC(CALLWINDOWPROC)
 {
-  hwg_ret_LRESULT(CallWindowProc(hwg_par_WNDPROC(1), hwg_par_HWND(2), hwg_par_UINT(3), hwg_par_WPARAM(4), hwg_par_LPARAM(5)));
+  hwg_ret_LRESULT(
+      CallWindowProc(hwg_par_WNDPROC(1), hwg_par_HWND(2), hwg_par_UINT(3), hwg_par_WPARAM(4), hwg_par_LPARAM(5)));
 }
 
 HB_FUNC(BUTTONGETDLGCODE)

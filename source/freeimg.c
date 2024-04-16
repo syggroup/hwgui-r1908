@@ -238,7 +238,7 @@ HB_FUNC(FI_LOAD)
   else
   {
     hb_retnl(0);
-  }  
+  }
 }
 
 /* 24/03/2006 - <maurilio.longo@libero.it>
@@ -256,7 +256,7 @@ HB_FUNC(FI_LOADTYPE)
   else
   {
     hb_retnl(0);
-  }  
+  }
 }
 
 HB_FUNC(FI_SAVE)
@@ -292,7 +292,7 @@ HB_FUNC(FI_SAVETYPE)
   else
   {
     hb_retl(FALSE);
-  }  
+  }
 }
 
 HB_FUNC(FI_GETWIDTH)
@@ -368,7 +368,7 @@ static HANDLE CreateDIB(DWORD dwWidth, DWORD dwHeight, WORD wBitCount)
   else
   {
     wBitCount = 4; // set default value to 4 if parameter is bogus
-  }  
+  }
 
   // initialize BITMAPINFOHEADER
   bi.biSize = sizeof(BITMAPINFOHEADER);
@@ -694,9 +694,9 @@ HB_FUNC(FI_RESCALE)
 {
   pRescale = (FREEIMAGE_RESCALE)s_getFunction((FARPROC)pRescale, "_FreeImage_Rescale@16");
 
-  hb_retnl((pRescale)
-               ? (LONG_PTR)pRescale((FIBITMAP *)HB_PARHANDLE(1), hb_parnl(2), hb_parnl(3), (FREE_IMAGE_FILTER)hb_parni(4))
-               : 0);
+  hb_retnl((pRescale) ? (LONG_PTR)pRescale((FIBITMAP *)HB_PARHANDLE(1), hb_parnl(2), hb_parnl(3),
+                                           (FREE_IMAGE_FILTER)hb_parni(4))
+                      : 0);
 }
 
 /* Channel is an enumerated type from freeimage.h passed as second parameter */
@@ -884,9 +884,9 @@ HB_FUNC(FI_PASTE)
 
   hb_retl(pPaste((FIBITMAP *)HB_PARHANDLE(1), // dest
                  (FIBITMAP *)HB_PARHANDLE(2), // src
-                 hb_parnl(3),             // top
-                 hb_parnl(4),             // left
-                 hb_parnl(5)));           // alpha
+                 hb_parnl(3),                 // top
+                 hb_parnl(4),                 // left
+                 hb_parnl(5)));               // alpha
 }
 
 HB_FUNC(FI_COPY)
@@ -894,10 +894,10 @@ HB_FUNC(FI_COPY)
   pCopy = (FREEIMAGE_COPY)s_getFunction((FARPROC)pCopy, "_FreeImage_Copy@20");
 
   hb_retnl((ULONG_PTR)pCopy((FIBITMAP *)HB_PARHANDLE(1), // dib
-                        hb_parnl(2),             // left
-                        hb_parnl(3),             // top
-                        hb_parnl(4),             // right
-                        hb_parnl(5)));           // bottom
+                            hb_parnl(2),                 // left
+                            hb_parnl(3),                 // top
+                            hb_parnl(4),                 // right
+                            hb_parnl(5)));               // bottom
 }
 
 /* just a test, should receive a RGBQUAD structure, a xharbour array */
