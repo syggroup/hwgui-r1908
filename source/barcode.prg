@@ -912,7 +912,7 @@ METHOD InitMatrix25(lCheck) CLASS BarCode
 
 HB_FUNC(RICH_RECTANGLE)
 {
-  hb_retl(Rectangle(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+  hwg_ret_BOOL(Rectangle(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
 }
 
 // (1) = pen style (2) = pen width (3) = pen color

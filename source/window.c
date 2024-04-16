@@ -238,7 +238,7 @@ HB_FUNC(HWG_PEEKMESSAGE)
 {
   MSG msg;
 
-  hb_retl(PeekMessage(&msg, hwg_par_HWND(1), // handle of window whose message queue will be searched
+  hwg_ret_BOOL(PeekMessage(&msg, hwg_par_HWND(1), // handle of window whose message queue will be searched
                       hwg_par_UINT(2),       // wMsgFilterMin,
                       hwg_par_UINT(3),       // wMsgFilterMax,
                       PM_NOREMOVE));
@@ -614,17 +614,17 @@ HB_FUNC(HWG_RESTOREWINDOW)
 
 HB_FUNC(HWG_ISICONIC)
 {
-  hb_retl(IsIconic(hwg_par_HWND(1)));
+  hwg_ret_BOOL(IsIconic(hwg_par_HWND(1)));
 }
 
 HB_FUNC(ISWINDOWENABLED)
 {
-  hb_retl(IsWindowEnabled(hwg_par_HWND(1)));
+  hwg_ret_BOOL(IsWindowEnabled(hwg_par_HWND(1)));
 }
 
 HB_FUNC(ISWINDOWVISIBLE)
 {
-  hb_retl(IsWindowVisible(hwg_par_HWND(1)));
+  hwg_ret_BOOL(IsWindowVisible(hwg_par_HWND(1)));
 }
 
 HB_FUNC(GETACTIVEWINDOW)
@@ -668,12 +668,12 @@ HB_FUNC(HWG_FINDWINDOW)
 
 HB_FUNC(HWG_SETFOREGROUNDWINDOW)
 {
-  hb_retl(SetForegroundWindow(hwg_par_HWND(1)));
+  hwg_ret_BOOL(SetForegroundWindow(hwg_par_HWND(1)));
 }
 
 HB_FUNC(HWG_BRINGWINDOWTOTOP)
 {
-  hb_retl(BringWindowToTop(hwg_par_HWND(1)));
+  hwg_ret_BOOL(BringWindowToTop(hwg_par_HWND(1)));
 }
 
 // HB_FUNC(HWG_SETACTIVEWINDOW)
@@ -1145,16 +1145,12 @@ HB_FUNC(HWG_DECREASEHOLDERS)
 
 HB_FUNC(SETTOPMOST)
 {
-  BOOL i = SetWindowPos(hwg_par_HWND(1), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-
-  hb_retl(i);
+  hwg_ret_BOOL(SetWindowPos(hwg_par_HWND(1), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE));
 }
 
 HB_FUNC(REMOVETOPMOST)
 {
-  BOOL i = SetWindowPos(hwg_par_HWND(1), HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-
-  hb_retl(i);
+  hwg_ret_BOOL(SetWindowPos(hwg_par_HWND(1), HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE));
 }
 
 HB_FUNC(CHILDWINDOWFROMPOINT)
@@ -1202,7 +1198,6 @@ HB_FUNC(MAKELPARAM)
 
 HB_FUNC(SETWINDOWPOS)
 {
-  BOOL res;
   HWND hWnd = (HB_ISNUM(1) || HB_ISPOINTER(1)) ? hwg_par_HWND(1) : NULL;
   HWND hWndInsertAfter = (HB_ISNUM(2) || HB_ISPOINTER(2)) ? hwg_par_HWND(2) : NULL;
   int X = hb_parni(3);
@@ -1211,9 +1206,7 @@ HB_FUNC(SETWINDOWPOS)
   int cy = hb_parni(6);
   UINT uFlags = hb_parni(7);
 
-  res = SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, uFlags);
-
-  hb_retl(res);
+  hwg_ret_BOOL(SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, uFlags));
 }
 
 HB_FUNC(SETASTYLE)
@@ -1420,7 +1413,7 @@ HB_FUNC(GETTOOLBARID)
 
 HB_FUNC(ISWINDOW)
 {
-  hb_retl(IsWindow(hwg_par_HWND(1)));
+  hwg_ret_BOOL(IsWindow(hwg_par_HWND(1)));
 }
 
 HB_FUNC(MINMAXWINDOW)

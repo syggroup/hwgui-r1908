@@ -393,7 +393,7 @@ HB_FUNC(WRITEPRIVATEPROFILESTRING)
 {
   void *hSection, *hEntry, *hData, *hFileName;
 
-  hb_retl(WritePrivateProfileString(HB_PARSTR(1, &hSection, NULL), HB_PARSTR(2, &hEntry, NULL),
+  hwg_ret_BOOL(WritePrivateProfileString(HB_PARSTR(1, &hSection, NULL), HB_PARSTR(2, &hEntry, NULL),
                                     HB_PARSTR(3, &hData, NULL), HB_PARSTR(4, &hFileName, NULL))
               ? TRUE
               : FALSE);

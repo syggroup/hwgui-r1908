@@ -223,7 +223,7 @@ HB_FUNC(ISMOUSEOVER)
   POINT Pt;
   GetWindowRect(hwg_par_HWND(1), &Rect);
   GetCursorPos(&Pt);
-  hb_retl(PtInRect(&Rect, Pt));
+  hwg_ret_BOOL(PtInRect(&Rect, Pt));
 }
 
 HB_FUNC(RGB)

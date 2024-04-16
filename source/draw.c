@@ -289,7 +289,7 @@ HB_FUNC(DRAWEDGE)
   rc.right = hb_parni(4);
   rc.bottom = hb_parni(5);
 
-  hb_retl(DrawEdge(hDC, &rc, edge, grfFlags));
+  hwg_ret_BOOL(DrawEdge(hDC, &rc, edge, grfFlags));
 }
 
 HB_FUNC(LOADICON)
@@ -917,7 +917,7 @@ HB_FUNC(OPENIMAGE)
 
 HB_FUNC(PATBLT)
 {
-  hb_retl(PatBlt(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parnl(6)));
+  hwg_ret_BOOL(PatBlt(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parnl(6)));
 }
 
 HB_FUNC(SAVEDC)
@@ -927,7 +927,7 @@ HB_FUNC(SAVEDC)
 
 HB_FUNC(RESTOREDC)
 {
-  hb_retl(RestoreDC(hwg_par_HDC(1), hb_parni(2)));
+  hwg_ret_BOOL(RestoreDC(hwg_par_HDC(1), hb_parni(2)));
 }
 
 HB_FUNC(CREATECOMPATIBLEDC)
@@ -996,7 +996,7 @@ HB_FUNC(BITBLT)
   HDC hDC = hwg_par_HDC(1);
   HDC hDC1 = hwg_par_HDC(6);
 
-  hb_retl(BitBlt(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hDC1, hb_parni(7), hb_parni(8), hb_parnl(9)));
+  hwg_ret_BOOL(BitBlt(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hDC1, hb_parni(7), hb_parni(8), hb_parnl(9)));
 }
 
 HB_FUNC(CREATECOMPATIBLEBITMAP)
@@ -1018,7 +1018,7 @@ HB_FUNC(INFLATERECT)
   {
     Array2Rect(hb_param(1, HB_IT_ARRAY), &pRect);
   }
-  hb_retl(InflateRect(&pRect, x, y));
+  hwg_ret_BOOL(InflateRect(&pRect, x, y));
 
   hb_storvni(pRect.left, 1, 1);
   hb_storvni(pRect.top, 1, 2);
@@ -1052,7 +1052,7 @@ HB_FUNC(DRAWFRAMECONTROL)
     Array2Rect(hb_param(2, HB_IT_ARRAY), &pRect);
   }
 
-  hb_retl(DrawFrameControl(hdc, &pRect, uType, uState));
+  hwg_ret_BOOL(DrawFrameControl(hdc, &pRect, uType, uState));
 }
 
 HB_FUNC(OFFSETRECT)
@@ -1066,7 +1066,7 @@ HB_FUNC(OFFSETRECT)
     Array2Rect(hb_param(1, HB_IT_ARRAY), &pRect);
   }
 
-  hb_retl(OffsetRect(&pRect, x, y));
+  hwg_ret_BOOL(OffsetRect(&pRect, x, y));
   hb_storvni(pRect.left, 1, 1);
   hb_storvni(pRect.top, 1, 2);
   hb_storvni(pRect.right, 1, 3);
@@ -1081,7 +1081,7 @@ HB_FUNC(DRAWFOCUSRECT)
   {
     Array2Rect(hb_param(2, HB_IT_ARRAY), &pRect);
   }
-  hb_retl(DrawFocusRect(hc, &pRect));
+  hwg_ret_BOOL(DrawFocusRect(hc, &pRect));
 }
 
 BOOL Array2Point(PHB_ITEM aPoint, POINT *pt)
@@ -1102,7 +1102,7 @@ HB_FUNC(PTINRECT)
 
   Array2Rect(hb_param(1, HB_IT_ARRAY), &rect);
   Array2Point(hb_param(2, HB_IT_ARRAY), &pt);
-  hb_retl(PtInRect(&rect, pt));
+  hwg_ret_BOOL(PtInRect(&rect, pt));
 }
 
 HB_FUNC(GETMEASUREITEMINFO)

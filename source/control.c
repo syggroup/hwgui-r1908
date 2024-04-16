@@ -1092,7 +1092,7 @@ HB_FUNC(SETTIMER)
 
 HB_FUNC(KILLTIMER)
 {
-  hb_retl(KillTimer(hwg_par_HWND(1), (UINT)hb_parni(2)));
+  hwg_ret_BOOL(KillTimer(hwg_par_HWND(1), (UINT)hb_parni(2)));
 }
 
 HB_FUNC(GETPARENT)

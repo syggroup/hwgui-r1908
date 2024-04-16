@@ -52,7 +52,7 @@ HB_FUNC(SETCAPTURE)
 
 HB_FUNC(RELEASECAPTURE)
 {
-  hb_retl(ReleaseCapture());
+  hwg_ret_BOOL(ReleaseCapture());
 }
 
 HB_FUNC(COPYSTRINGTOCLIPBOARD)
@@ -553,7 +553,7 @@ HB_FUNC(GETSCROLLRANGE)
 
 HB_FUNC(SETSCROLLRANGE)
 {
-  hb_retl(SetScrollRange(hwg_par_HWND(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parl(5)));
+  hwg_ret_BOOL(SetScrollRange(hwg_par_HWND(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parl(5)));
 }
 
 HB_FUNC(GETSCROLLPOS)
@@ -610,7 +610,7 @@ HB_FUNC(HWG_CREATEDIRECTORY)
 HB_FUNC(HWG_REMOVEDIRECTORY)
 {
   void *hStr;
-  hb_retl(RemoveDirectory(HB_PARSTR(1, &hStr, NULL)));
+  hwg_ret_BOOL(RemoveDirectory(HB_PARSTR(1, &hStr, NULL)));
   hb_strfree(hStr);
 }
 
@@ -624,7 +624,7 @@ HB_FUNC(HWG_SETCURRENTDIRECTORY)
 HB_FUNC(HWG_DELETEFILE)
 {
   void *hStr;
-  hb_retl(DeleteFile(HB_PARSTR(1, &hStr, NULL)));
+  hwg_ret_BOOL(DeleteFile(HB_PARSTR(1, &hStr, NULL)));
   hb_strfree(hStr);
 }
 
@@ -638,7 +638,7 @@ HB_FUNC(HWG_GETFILEATTRIBUTES)
 HB_FUNC(HWG_SETFILEATTRIBUTES)
 {
   void *hStr;
-  hb_retl(SetFileAttributes(HB_PARSTR(1, &hStr, NULL), (DWORD)hb_parnl(2)));
+  hwg_ret_BOOL(SetFileAttributes(HB_PARSTR(1, &hStr, NULL), (DWORD)hb_parnl(2)));
   hb_strfree(hStr);
 }
 

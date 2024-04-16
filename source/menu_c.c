@@ -165,7 +165,7 @@ HB_FUNC(HWG__CREATESUBMENU)
  */
 HB_FUNC(HWG__SETMENU)
 {
-  hb_retl(SetMenu(hwg_par_HWND(1), hwg_par_HMENU(2)));
+  hwg_ret_BOOL(SetMenu(hwg_par_HWND(1), hwg_par_HMENU(2)));
 }
 
 HB_FUNC(GETMENUHANDLE)
@@ -328,7 +328,7 @@ HB_FUNC(HWG_TRACKMENU)
 {
   HWND hWnd = hwg_par_HWND(4);
   SetForegroundWindow(hWnd);
-  hb_retl(TrackPopupMenu(hwg_par_HMENU(1),                           // handle of shortcut menu
+  hwg_ret_BOOL(TrackPopupMenu(hwg_par_HMENU(1),                           // handle of shortcut menu
                          HB_ISNIL(5) ? TPM_RIGHTALIGN : hb_parni(5), // screen-position and mouse-button flags
                          hb_parni(2),                                // horizontal position, in screen coordinates
                          hb_parni(3),                                // vertical position, in screen coordinates
@@ -340,7 +340,7 @@ HB_FUNC(HWG_TRACKMENU)
 
 HB_FUNC(HWG_DESTROYMENU)
 {
-  hb_retl(DestroyMenu(hwg_par_HMENU(1)));
+  hwg_ret_BOOL(DestroyMenu(hwg_par_HMENU(1)));
 }
 
 /*
@@ -373,12 +373,12 @@ HB_FUNC(CREATEACCELERATORTABLE)
  */
 HB_FUNC(DESTROYACCELERATORTABLE)
 {
-  hb_retl(DestroyAcceleratorTable((HACCEL)(LONG_PTR)hb_parnl(1)));
+  hwg_ret_BOOL(DestroyAcceleratorTable((HACCEL)(LONG_PTR)hb_parnl(1)));
 }
 
 HB_FUNC(DRAWMENUBAR)
 {
-  hb_retl((BOOL)DrawMenuBar(hwg_par_HWND(1)));
+  hwg_ret_BOOL(DrawMenuBar(hwg_par_HWND(1)));
 }
 
 /*
@@ -485,7 +485,7 @@ HB_FUNC(SETMENUCAPTION)
 
 HB_FUNC(SETMENUITEMBITMAPS)
 {
-  hb_retl(SetMenuItemBitmaps(hwg_par_HMENU(1), hb_parni(2), MF_BYCOMMAND, hwg_par_HBITMAP(3), hwg_par_HBITMAP(4)));
+  hwg_ret_BOOL(SetMenuItemBitmaps(hwg_par_HMENU(1), hb_parni(2), MF_BYCOMMAND, hwg_par_HBITMAP(3), hwg_par_HBITMAP(4)));
 }
 
 HB_FUNC(GETMENUCHECKMARKDIMENSIONS)
@@ -515,7 +515,7 @@ HB_FUNC(GETMENUCHECKMARKHEIGHT)
 
 HB_FUNC(STRETCHBLT)
 {
-  hb_retl(StretchBlt(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hwg_par_HDC(6), hb_parni(7),
+  hwg_ret_BOOL(StretchBlt(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hwg_par_HDC(6), hb_parni(7),
                      hb_parni(8), hb_parni(9), hb_parni(10), (DWORD)hb_parnl(11)));
 }
 
@@ -527,7 +527,7 @@ HB_FUNC(HWG__INSERTBITMAPMENU)
   mii.fMask = MIIM_ID | MIIM_BITMAP | MIIM_DATA;
   mii.hbmpItem = hwg_par_HBITMAP(3);
 
-  hb_retl((LONG)SetMenuItemInfo(hwg_par_HMENU(1), hb_parni(2), 0, &mii));
+  hwg_ret_BOOL(SetMenuItemInfo(hwg_par_HMENU(1), hb_parni(2), 0, &mii));
 }
 
 HB_FUNC(CHANGEMENU)
@@ -540,7 +540,7 @@ HB_FUNC(CHANGEMENU)
 HB_FUNC(MODIFYMENU)
 {
   void *hStr;
-  hb_retl(ModifyMenu(hwg_par_HMENU(1), hwg_par_UINT(2), hwg_par_UINT(3), (UINT)hb_parni(4), HB_PARSTR(5, &hStr, NULL)));
+  hwg_ret_BOOL(ModifyMenu(hwg_par_HMENU(1), hwg_par_UINT(2), hwg_par_UINT(3), (UINT)hb_parni(4), HB_PARSTR(5, &hStr, NULL)));
   hb_strfree(hStr);
 }
 

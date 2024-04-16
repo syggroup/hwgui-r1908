@@ -43,7 +43,7 @@ HB_FUNC(PLAYSOUND)
     fdwSound |= SND_PURGE;
   }
 
-  hb_retl(PlaySound(lpSound, hmod, fdwSound) != 0);
+  hwg_ret_BOOL(PlaySound(lpSound, hmod, fdwSound) != 0); // TODO: != 0 desnecessário
   hb_strfree(hSound);
 }
 
@@ -77,7 +77,7 @@ HB_FUNC(MCIGETERRORSTRING) // ()
 {
   TCHAR cBuffer[256] = {0};
 
-  hb_retl(mciGetErrorString(hb_parnl(1), // Error Code
+  hwg_ret_BOOL(mciGetErrorString(hb_parnl(1), // Error Code
                             cBuffer, HB_SIZEOFARRAY(cBuffer)));
   HB_STORSTR(cBuffer, 2);
 }
