@@ -415,7 +415,7 @@ HB_FUNC(LISTVIEWSELECTALL)
   ListView_SetItemState(hList, -1, 0, LVIS_SELECTED);
   SendMessage(hList, LVM_ENSUREVISIBLE, (WPARAM)-1, FALSE);
   ListView_SetItemState(hList, -1, LVIS_SELECTED, LVIS_SELECTED);
-  hb_retl(1);
+  hb_retl(TRUE);
 }
 
 HB_FUNC(LISTVIEWSELECTLASTITEM)
@@ -429,7 +429,7 @@ HB_FUNC(LISTVIEWSELECTLASTITEM)
   SendMessage(hList, LVM_ENSUREVISIBLE, (WPARAM)items, FALSE);
   ListView_SetItemState(hList, items, LVIS_SELECTED, LVIS_SELECTED);
   ListView_SetItemState(hList, items, LVIS_FOCUSED, LVIS_FOCUSED);
-  hb_retl(1);
+  hb_retl(TRUE);
 }
 
 LRESULT ProcessCustomDraw(LPARAM lParam, PHB_ITEM pArray)

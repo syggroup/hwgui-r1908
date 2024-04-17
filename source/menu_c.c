@@ -229,7 +229,7 @@ HB_FUNC(ISCHECKEDMENUITEM)
 
   if (!hMenu)
   {
-    hb_retl(0);
+    hb_retl(FALSE);
   }
   else
   {
@@ -299,7 +299,7 @@ HB_FUNC(ISENABLEDMENUITEM)
 
   if (!hMenu)
   {
-    hb_retl(0);
+    hb_retl(FALSE);
   }
   else
   {
@@ -407,7 +407,7 @@ HB_FUNC(GETMENUCAPTION)
   if (!hMenu)
   {
     MessageBox(GetActiveWindow(), TEXT(""), TEXT("No Menu!"), MB_OK | MB_ICONINFORMATION);
-    hb_retl(0);
+    hb_retl(FALSE);
   }
   else
   {
@@ -460,7 +460,7 @@ HB_FUNC(SETMENUCAPTION)
   if (!hMenu)
   {
     MessageBox(GetActiveWindow(), TEXT(""), TEXT("No Menu!"), MB_OK | MB_ICONINFORMATION);
-    hb_retl(0);
+    hb_retl(FALSE);
   }
   else
   {
@@ -473,11 +473,11 @@ HB_FUNC(SETMENUCAPTION)
 
     if (SetMenuItemInfo(hMenu, hb_parni(2), 0, &mii))
     {
-      hb_retl(1);
+      hb_retl(TRUE);
     }
     else
     {
-      hb_retl(0);
+      hb_retl(FALSE);
     }
     hb_strfree(hData);
   }
