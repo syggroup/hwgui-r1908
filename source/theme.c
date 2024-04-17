@@ -1884,6 +1884,6 @@ HB_FUNC(HWG_GETWINDOWTHEME)
   }
   else
   {
-    HB_RETHANDLE(0);
+    HB_RETHANDLE(NULL);
   }
 }

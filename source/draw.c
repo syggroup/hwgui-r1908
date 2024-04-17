@@ -847,7 +847,7 @@ HB_FUNC(OPENIMAGE)
     hG = GlobalAlloc(GPTR, iFileSize);
     if (!hG)
     {
-      HB_RETHANDLE(0);
+      HB_RETHANDLE(NULL);
       return;
     }
     memcpy((void *)hG, (void *)cFileName, iFileSize);
@@ -857,7 +857,7 @@ HB_FUNC(OPENIMAGE)
     fp = fopen(cFileName, "rb");
     if (!fp)
     {
-      HB_RETHANDLE(0);
+      HB_RETHANDLE(NULL);
       return;
     }
 
@@ -867,7 +867,7 @@ HB_FUNC(OPENIMAGE)
     if (!hG)
     {
       fclose(fp);
-      HB_RETHANDLE(0);
+      HB_RETHANDLE(NULL);
       return;
     }
     fseek(fp, 0, SEEK_SET);
@@ -880,7 +880,7 @@ HB_FUNC(OPENIMAGE)
   if (!pStream)
   {
     GlobalFree(hG);
-    HB_RETHANDLE(0);
+    HB_RETHANDLE(NULL);
     return;
   }
 
@@ -896,7 +896,7 @@ HB_FUNC(OPENIMAGE)
 
   if (!pPic)
   {
-    HB_RETHANDLE(0);
+    HB_RETHANDLE(NULL);
     return;
   }
 

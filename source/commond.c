@@ -310,7 +310,7 @@ HB_FUNC(PRINTSETUP)
   }
   else
   {
-    HB_RETHANDLE(0);
+    HB_RETHANDLE(NULL);
   }
 }
 
@@ -475,7 +475,7 @@ HB_FUNC(PRINTSETUPDOS)
   else
   {
     s_fPName = TRUE;
-    HB_RETHANDLE(0);
+    HB_RETHANDLE(NULL);
   }
 }
 
