@@ -496,7 +496,7 @@ HB_FUNC(HWG_CREATEMDICHILDWINDOW)
         (LPARAM)&pObj          // application-defined value
     );
   }
-  HB_RETHANDLE(hWnd);
+  hwg_ret_HWND(hWnd);
   hb_strfree(hTitle);
 }
 
@@ -527,12 +527,12 @@ HB_FUNC(POSTMESSAGE)
 
 HB_FUNC(SETFOCUS)
 {
-  HB_RETHANDLE(SetFocus(hwg_par_HWND(1)));
+  hwg_ret_HWND(SetFocus(hwg_par_HWND(1)));
 }
 
 HB_FUNC(GETFOCUS)
 {
-  HB_RETHANDLE(GetFocus());
+  hwg_ret_HWND(GetFocus());
 }
 
 HB_FUNC(SELFFOCUS)
@@ -629,7 +629,7 @@ HB_FUNC(ISWINDOWVISIBLE)
 
 HB_FUNC(GETACTIVEWINDOW)
 {
-  HB_RETHANDLE(GetActiveWindow());
+  hwg_ret_HWND(GetActiveWindow());
 }
 
 HB_FUNC(GETINSTANCE)
@@ -661,7 +661,7 @@ HB_FUNC(HWG_FINDWINDOW)
 {
   void *hClassName, *hWindowName;
 
-  HB_RETHANDLE(FindWindow(HB_PARSTR(1, &hClassName, NULL), HB_PARSTR(2, &hWindowName, NULL)));
+  hwg_ret_HWND(FindWindow(HB_PARSTR(1, &hClassName, NULL), HB_PARSTR(2, &hWindowName, NULL)));
   hb_strfree(hClassName);
   hb_strfree(hWindowName);
 }
@@ -1163,7 +1163,7 @@ HB_FUNC(CHILDWINDOWFROMPOINT)
   pt.y = hb_parnl(3);
   child = ChildWindowFromPoint(hWnd, pt);
 
-  HB_RETHANDLE(child);
+  hwg_ret_HWND(child);
 }
 
 HB_FUNC(WINDOWFROMPOINT)
@@ -1177,7 +1177,7 @@ HB_FUNC(WINDOWFROMPOINT)
   ClientToScreen(hWnd, &pt);
   child = WindowFromPoint(pt);
 
-  HB_RETHANDLE(child);
+  hwg_ret_HWND(child);
 }
 
 HB_FUNC(MAKEWPARAM)

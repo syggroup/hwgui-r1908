@@ -14,7 +14,7 @@ HB_FUNC(ANIMATE_CREATE)
   HWND hwnd;
   hwnd = Animate_Create(hwg_par_HWND(1), hwg_par_UINT(2), (LONG)hb_parnl(3), GetModuleHandle(NULL));
   MoveWindow(hwnd, hb_parnl(4), hb_parnl(5), hb_parnl(6), hb_parnl(7), TRUE);
-  HB_RETHANDLE(hwnd);
+  hwg_ret_HWND(hwnd);
 }
 
 HB_FUNC(ANIMATE_OPEN)

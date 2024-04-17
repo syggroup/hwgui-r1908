@@ -349,7 +349,7 @@ HB_FUNC(WRITESTATUSWINDOW)
 
 HB_FUNC(WINDOWFROMDC)
 {
-  HB_RETHANDLE(WindowFromDC(hwg_par_HDC(1)));
+  hwg_ret_HWND(WindowFromDC(hwg_par_HDC(1)));
 }
 
 /* CreateFont(fontName, nWidth, hHeight [,fnWeight] [,fdwCharSet], [,fdwItalic] [,fdwUnderline] [,fdwStrikeOut])

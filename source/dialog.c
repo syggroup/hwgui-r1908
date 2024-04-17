@@ -72,7 +72,7 @@ HB_FUNC(HWG_CREATEDIALOG)
   hb_strfree(hResource);
 
   ShowWindow(hDlg, SW_SHOW);
-  HB_RETHANDLE(hDlg);
+  hwg_ret_HWND(hDlg);
 }
 
 HB_FUNC(HWG_ENDDIALOG)
@@ -85,7 +85,7 @@ HB_FUNC(GETDLGITEM)
   HWND hWnd = GetDlgItem(hwg_par_HWND(1), // handle of dialog box
                          hb_parni(2)      // identifier of control
   );
-  HB_RETHANDLE(hWnd);
+  hwg_ret_HWND(hWnd);
 }
 
 HB_FUNC(GETDLGCTRLID)

@@ -489,7 +489,7 @@ HB_FUNC(SHOWTOOLTIP)
 
 HB_FUNC(CREATEUPDOWNCONTROL)
 {
-  HB_RETHANDLE(CreateUpDownControl(WS_CHILD | WS_BORDER | WS_VISIBLE | hb_parni(3), hb_parni(4), hb_parni(5),
+  hwg_ret_HWND(CreateUpDownControl(WS_CHILD | WS_BORDER | WS_VISIBLE | hb_parni(3), hb_parni(4), hb_parni(5),
                                    hb_parni(6), hb_parni(7), hwg_par_HWND(1), hb_parni(2), GetModuleHandle(NULL),
                                    hwg_par_HWND(8), hb_parni(9), hb_parni(10), hb_parni(11)));
 }
@@ -1097,12 +1097,12 @@ HB_FUNC(KILLTIMER)
 
 HB_FUNC(GETPARENT)
 {
-  HB_RETHANDLE(GetParent(hwg_par_HWND(1)));
+  hwg_ret_HWND(GetParent(hwg_par_HWND(1)));
 }
 
 HB_FUNC(GETANCESTOR)
 {
-  HB_RETHANDLE(GetAncestor(hwg_par_HWND(1), hb_parni(2)));
+  hwg_ret_HWND(GetAncestor(hwg_par_HWND(1), hb_parni(2)));
 }
 
 HB_FUNC(LOADCURSOR)
@@ -1133,7 +1133,7 @@ HB_FUNC(HWG_GETCURSOR)
 
 HB_FUNC(GETTOOLTIPHANDLE) // added by MAG
 {
-  HB_RETHANDLE(hWndTT);
+  hwg_ret_HWND(hWndTT);
 }
 
 HB_FUNC(SETTOOLTIPBALLOON) // added by MAG

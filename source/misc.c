@@ -47,7 +47,7 @@ HB_FUNC(HWG_SETDLGRESULT)
 
 HB_FUNC(SETCAPTURE)
 {
-  HB_RETHANDLE(SetCapture(hwg_par_HWND(1)));
+  hwg_ret_HWND(SetCapture(hwg_par_HWND(1)));
 }
 
 HB_FUNC(RELEASECAPTURE)
@@ -455,7 +455,7 @@ HB_FUNC(WINHELP)
 
 HB_FUNC(GETNEXTDLGTABITEM)
 {
-  HB_RETHANDLE(GetNextDlgTabItem(hwg_par_HWND(1), hwg_par_HWND(2), hb_parl(3)));
+  hwg_ret_HWND(GetNextDlgTabItem(hwg_par_HWND(1), hwg_par_HWND(2), hb_parl(3)));
 }
 
 HB_FUNC(SLEEP)
@@ -753,7 +753,7 @@ HB_FUNC(GETKEYBOARDCOUNT)
 
 HB_FUNC(GETNEXTDLGGROUPITEM)
 {
-  HB_RETHANDLE(GetNextDlgGroupItem(hwg_par_HWND(1), hwg_par_HWND(2), hb_parl(3)));
+  hwg_ret_HWND(GetNextDlgGroupItem(hwg_par_HWND(1), hwg_par_HWND(2), hb_parl(3)));
 }
 
 HB_FUNC(PTRTOULONG)
