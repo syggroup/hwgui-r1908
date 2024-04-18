@@ -140,6 +140,8 @@ HB_EXTERN_END
 #define hwg_par_HMENU_ID(n)(HMENU)(INT_PTR)hb_parni(n)
 #define hwg_par_HWND(n) (HWND)HB_PARHANDLE(n)
 #define hwg_par_LPARAM(n) (LPARAM)hb_parnl(n)
+//#define hwg_par_PAINTSTRUCT(n) (PAINTSTRUCT *)HB_PARHANDLE(n)
+#define hwg_par_PAINTSTRUCT(n) (PAINTSTRUCT *)hb_parptr(n)
 #define hwg_par_UINT(n) (UINT)hb_parni(n)
 #define hwg_par_WNDPROC(n) (WNDPROC)(LONG_PTR)hb_parnl(n)
 #define hwg_par_WPARAM(n) (WPARAM)hb_parnl(n)
@@ -147,6 +149,8 @@ HB_EXTERN_END
 #define hwg_ret_BOOL(x) hb_retl(x)
 #define hwg_ret_HWND(n) HB_RETHANDLE(n)
 #define hwg_ret_LRESULT(x) hb_retnl(x)
+//#define hwg_ret_PAINTSTRUCT(n) HB_RETHANDLE(n)
+#define hwg_ret_PAINTSTRUCT(n) hb_retptr(n)
 
 #define hwg_vmPushUINT(x) hb_vmPushInteger(x)
 #define hwg_vmPushWPARAM(x) hb_vmPushLong(x)
