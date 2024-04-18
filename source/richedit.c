@@ -443,9 +443,9 @@ LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
     hb_vmPush(pObject);
-    hb_vmPushLong((LONG)message);
-    hb_vmPushLong((LONG)wParam);
-    hb_vmPushLong((LONG)lParam);
+    hwg_vmPushUINT(message);
+    hwg_vmPushWPARAM(wParam);
+    hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
     res = hb_parnl(-1);
     if (res == -1)

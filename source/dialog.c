@@ -587,10 +587,9 @@ static LRESULT CALLBACK s_ModalDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPAR
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
     hb_vmPush(pObject);
-    hb_vmPushLong((LONG)uMsg);
-    hb_vmPushLong((LONG)wParam);
-    //      hb_vmPushLong((LONG)lParam);
-    HB_PUSHITEM(lParam);
+    hwg_vmPushUINT(uMsg);
+    hwg_vmPushWPARAM(wParam);
+    hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
 #ifdef HWG_USE_POINTER_ITEM
     if (uMsg == WM_CTLCOLORSTATIC || uMsg == WM_CTLCOLOREDIT || uMsg == WM_CTLCOLORBTN || uMsg == WM_CTLCOLORLISTBOX ||
@@ -674,10 +673,9 @@ static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
     hb_vmPush(pObject);
-    hb_vmPushLong((LONG)uMsg);
-    hb_vmPushLong((LONG)wParam);
-    //      hb_vmPushLong((LONG)lParam);
-    HB_PUSHITEM(lParam);
+    hwg_vmPushUINT(uMsg);
+    hwg_vmPushWPARAM(wParam);
+    hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
 #ifdef HWG_USE_POINTER_ITEM
     if (uMsg == WM_CTLCOLORSTATIC || uMsg == WM_CTLCOLOREDIT || uMsg == WM_CTLCOLORBTN || uMsg == WM_CTLCOLORLISTBOX ||
@@ -769,10 +767,9 @@ static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
     hb_vmPush(pObject);
-    hb_vmPushLong((LONG)uMsg);
-    hb_vmPushLong((LONG)wParam);
-    //      hb_vmPushLong((LONG)lParam);
-    HB_PUSHITEM(lParam);
+    hwg_vmPushUINT(uMsg);
+    hwg_vmPushWPARAM(wParam);
+    hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
     res = hb_parnl(-1);
     if (res == -1)
