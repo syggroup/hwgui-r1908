@@ -21,19 +21,18 @@ HB_FUNC_EXTERN(HB_ANSITOOEM);
 HB_FUNC(DEFINEPAINTSTRU)
 {
   PAINTSTRUCT *pps = (PAINTSTRUCT *)hb_xgrab(sizeof(PAINTSTRUCT));
-  HB_RETHANDLE(pps);
+  hwg_ret_PAINTSTRUCT(pps);
 }
 
 HB_FUNC(BEGINPAINT)
 {
-  PAINTSTRUCT *pps = (PAINTSTRUCT *)HB_PARHANDLE(2);
-  HDC hDC = BeginPaint(hwg_par_HWND(1), pps);
+  HDC hDC = BeginPaint(hwg_par_HWND(1), hwg_par_PAINTSTRUCT(2));
   HB_RETHANDLE(hDC);
 }
 
 HB_FUNC(ENDPAINT)
 {
-  PAINTSTRUCT *pps = (PAINTSTRUCT *)HB_PARHANDLE(2);
+  PAINTSTRUCT *pps = hwg_par_PAINTSTRUCT(2);
   EndPaint(hwg_par_HWND(1), pps);
   hb_xfree(pps);
 }
@@ -227,7 +226,7 @@ HB_FUNC(GETWINDOWRECT)
 
 HB_FUNC(GETCLIENTAREA)
 {
-  PAINTSTRUCT *pps = (PAINTSTRUCT *)HB_PARHANDLE(1);
+  PAINTSTRUCT *pps = hwg_par_PAINTSTRUCT(1);
   PHB_ITEM aMetr = hb_itemArrayNew(4);
   PHB_ITEM temp;
 
