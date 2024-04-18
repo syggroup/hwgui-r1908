@@ -81,7 +81,7 @@ PHB_ITEM Rect2Array(RECT *rc)
 
 HB_FUNC(GETPPSRECT)
 {
-  PAINTSTRUCT *pps = (PAINTSTRUCT *)HB_PARHANDLE(1);
+  PAINTSTRUCT *pps = hwg_par_PAINTSTRUCT(1);
 
   PHB_ITEM aMetr = Rect2Array(&pps->rcPaint);
 
