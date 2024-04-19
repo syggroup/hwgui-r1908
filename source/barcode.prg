@@ -923,7 +923,7 @@ HB_FUNC(RICH_CREATEPEN)
 
 HB_FUNC(RICH_SELECTOBJECT)
 {
-  HB_RETHANDLE(SelectObject(hwg_par_HDC(1), hwg_par_HGDIOBJ(2)));
+  hwg_ret_HGDIOBJ(SelectObject(hwg_par_HDC(1), hwg_par_HGDIOBJ(2)));
 }
 
 // (1) = brush color

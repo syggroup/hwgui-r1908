@@ -711,7 +711,7 @@ HB_FUNC(CREATEHATCHBRUSH)
 
 HB_FUNC(SELECTOBJECT)
 {
-  HB_RETHANDLE(SelectObject(hwg_par_HDC(1),          // handle of device context
+  hwg_ret_HGDIOBJ(SelectObject(hwg_par_HDC(1),          // handle of device context
                             hwg_par_HGDIOBJ(2) // handle of object
                             ));
 }

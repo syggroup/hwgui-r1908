@@ -127,7 +127,7 @@ HB_FUNC(GETCLIPBOARDTEXT)
 
 HB_FUNC(GETSTOCKOBJECT)
 {
-  HB_RETHANDLE(GetStockObject(hb_parni(1)));
+  hwg_ret_HGDIOBJ(GetStockObject(hb_parni(1)));
 }
 
 HB_FUNC(LOWORD)
