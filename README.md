@@ -20,8 +20,8 @@ HWGUI r1908 para testes com Harbour e xHarbour 32-bit/64-bit
 | xHarbour  | BCC 7.3 32-bit   | estável  | ...   |
 | Harbour++ | MinGW32          | estável  | ...   |
 | Harbour++ | MinGW64          | estável  | requer flag -fpermissive |
-| Harbour++ | MSVC32           | ?        | ... |
-| Harbour++ | MSVC64           | ?        | ... |
+| Harbour++ | MSVC32           | estável  | ... |
+| Harbour++ | MSVC64           | estável  | ... |
 | Harbour++ | Clang32          | estável  | ... |
 | Harbour++ | Clang64          | estável  | requer flag -fpermissive |
 
@@ -32,7 +32,7 @@ Problemas na compilação ou na utilização podem ser informados na seção
 
 # Notas
 
-Este repositório é um 'fork'. O código-fonte do projeto original poderá
+Este repositório é um 'fork' (projeto derivado). O código-fonte original poderá
 ser encontrado nos link's abaixo:
 
 https://sourceforge.net/projects/hwgui/  
