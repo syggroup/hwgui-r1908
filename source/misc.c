@@ -711,7 +711,7 @@ HB_FUNC(HEDITEX_CTLCOLOR)
 
   if (!pObject)
   {
-    hb_retnl((LONG_PTR)GetStockObject(HOLLOW_BRUSH));
+    hb_retnl((LONG_PTR)GetStockObject(HOLLOW_BRUSH)); // TODO: revisar (retornar HBRUSH ?)
     SetBkMode(hdc, TRANSPARENT);
     return;
   }
@@ -741,7 +741,7 @@ HB_FUNC(HEDITEX_CTLCOLOR)
   hb_itemRelease(temp);
 
   SetTextColor(hdc, cColor);
-  HB_RETHANDLE(hBrush);
+  hwg_ret_HBRUSH(hBrush);
 }
 
 HB_FUNC(GETKEYBOARDCOUNT)

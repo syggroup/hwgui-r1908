@@ -929,7 +929,7 @@ HB_FUNC(RICH_SELECTOBJECT)
 // (1) = brush color
 HB_FUNC(RICH_CREATESOLIDBRUSH)
 {
-  HB_RETHANDLE(CreateSolidBrush(hwg_par_COLORREF(1)));
+  hwg_ret_HBRUSH(CreateSolidBrush(hwg_par_COLORREF(1)));
 }
 
 #pragma ENDDUMP

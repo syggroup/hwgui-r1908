@@ -688,7 +688,7 @@ HB_FUNC(GETSYSCOLOR)
 
 HB_FUNC(GETSYSCOLORBRUSH)
 {
-  HB_RETHANDLE(GetSysColorBrush(hb_parni(1)));
+  hwg_ret_HBRUSH(GetSysColorBrush(hb_parni(1)));
 }
 
 HB_FUNC(CREATEPEN)
@@ -701,13 +701,12 @@ HB_FUNC(CREATEPEN)
 
 HB_FUNC(CREATESOLIDBRUSH)
 {
-  HB_RETHANDLE(CreateSolidBrush(hwg_par_COLORREF(1) // brush color
-                                ));
+  hwg_ret_HBRUSH(CreateSolidBrush(hwg_par_COLORREF(1)));
 }
 
 HB_FUNC(CREATEHATCHBRUSH)
 {
-  HB_RETHANDLE(CreateHatchBrush(hb_parni(1), hwg_par_COLORREF(2)));
+  hwg_ret_HBRUSH(CreateHatchBrush(hb_parni(1), hwg_par_COLORREF(2)));
 }
 
 HB_FUNC(SELECTOBJECT)
