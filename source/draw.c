@@ -328,17 +328,17 @@ HB_FUNC(LOADBITMAP)
   {
     if (!HB_ISNIL(2) && hb_parl(2))
     {
-      HB_RETHANDLE(LoadBitmap(NULL, MAKEINTRESOURCE(hb_parni(1))));
+      hwg_ret_HBITMAP(LoadBitmap(NULL, MAKEINTRESOURCE(hb_parni(1))));
     }
     else
     {
-      HB_RETHANDLE(LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(hb_parni(1))));
+      hwg_ret_HBITMAP(LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(hb_parni(1))));
     }
   }
   else
   {
     void *hString;
-    HB_RETHANDLE(LoadBitmap(GetModuleHandle(NULL), HB_PARSTR(1, &hString, NULL)));
+    hwg_ret_HBITMAP(LoadBitmap(GetModuleHandle(NULL), HB_PARSTR(1, &hString, NULL)));
     hb_strfree(hString);
   }
 }
@@ -372,7 +372,7 @@ HB_FUNC(WINDOW2BITMAP)
   DeleteDC(hDCmem);
   DeleteDC(hDC);
   // hb_retnl((LONG)hBitmap);
-  HB_RETHANDLE(hBitmap);
+  hwg_ret_HBITMAP(hBitmap);
 }
 
 /*
@@ -673,7 +673,7 @@ HB_FUNC(OPENBITMAP)
   GlobalFree(hmem2);
   CloseHandle(hfbm);
 
-  HB_RETHANDLE(hbm);
+  hwg_ret_HBITMAP(hbm);
 }
 
 HB_FUNC(DRAWICON)
@@ -1004,7 +1004,7 @@ HB_FUNC(CREATECOMPATIBLEBITMAP)
   HBITMAP hBitmap;
   hBitmap = CreateCompatibleBitmap(hDC, hb_parni(2), hb_parni(3));
 
-  HB_RETHANDLE(hBitmap);
+  hwg_ret_HBITMAP(hBitmap);
 }
 
 HB_FUNC(INFLATERECT)
