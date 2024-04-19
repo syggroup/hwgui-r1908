@@ -502,7 +502,7 @@ HB_FUNC(SAVERICHEDIT)
     return;
   }
   es.dwCookie = (DWORD_PTR)hFile;
-  es.pfnCallback = RichStreamOutCallback;
+  es.pfnCallback = (EDITSTREAMCALLBACK)RichStreamOutCallback;
 
   SendMessage(hWnd, EM_STREAMOUT, (WPARAM)SF_RTF, (LPARAM)&es);
   CloseHandle(hFile);
