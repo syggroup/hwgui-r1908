@@ -724,12 +724,12 @@ HB_FUNC(DELETEOBJECT)
 
 HB_FUNC(GETDC)
 {
-  HB_RETHANDLE(GetDC(hwg_par_HWND(1)));
+  hwg_ret_HDC(GetDC(hwg_par_HWND(1)));
 }
 
 HB_FUNC(RELEASEDC)
 {
-  HB_RETHANDLE(ReleaseDC(hwg_par_HWND(1), hwg_par_HDC(2)));
+  HB_RETHANDLE(ReleaseDC(hwg_par_HWND(1), hwg_par_HDC(2))); // TODO: revisar retorno (retorna um int e não um handle)
 }
 
 HB_FUNC(GETDRAWITEMINFO)
@@ -934,7 +934,7 @@ HB_FUNC(CREATECOMPATIBLEDC)
   HDC hDC = hwg_par_HDC(1);
   HDC hDCmem = CreateCompatibleDC(hDC);
 
-  HB_RETHANDLE(hDCmem);
+  hwg_ret_HDC(hDCmem);
 }
 
 HB_FUNC(SETMAPMODE)
@@ -1145,7 +1145,7 @@ HB_FUNC(GETWINDOWDC)
 {
   HWND hWnd = hwg_par_HWND(1);
   HDC hDC = GetWindowDC(hWnd);
-  HB_RETHANDLE(hDC);
+  hwg_ret_HDC(hDC);
 }
 
 HB_FUNC(MODIFYSTYLE)

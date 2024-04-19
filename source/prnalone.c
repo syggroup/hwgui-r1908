@@ -32,18 +32,18 @@ HB_FUNC(PRINTSETUP)
 
   if (PrintDlg(&pd))
   {
-    HB_RETHANDLE((LONG)pd.hDC);
+    hwg_ret_HDC(pd.hDC);
   }
   else
   {
-    HB_RETHANDLE(NULL);
+    hwg_ret_HDC(NULL);
   }
 }
 
 HB_FUNC(OPENPRINTER)
 {
   void *hStr;
-  HB_RETHANDLE(CreateDC(NULL, HB_PARSTR(1, &hStr, NULL), NULL, NULL));
+  hwg_ret_HDC(CreateDC(NULL, HB_PARSTR(1, &hStr, NULL), NULL, NULL));
   hb_strfree(hStr);
 }
 
@@ -76,7 +76,7 @@ HB_FUNC(OPENDEFAULTPRINTER)
 
     hb_xfree(pinfo4);
   }
-  HB_RETHANDLE(hDC);
+  hwg_ret_HDC(hDC);
 }
 
 HB_FUNC(STARTDOC)

@@ -32,7 +32,7 @@ BOOL WINAPI GetDefaultPrinterW(LPWSTR, LPDWORD);
 HB_FUNC(HWG_OPENPRINTER)
 {
   void *hText;
-  HB_RETHANDLE(CreateDC(NULL, HB_PARSTR(1, &hText, NULL), NULL, NULL));
+  hwg_ret_HDC(CreateDC(NULL, HB_PARSTR(1, &hText, NULL), NULL, NULL));
   hb_strfree(hText);
 }
 
@@ -74,7 +74,7 @@ HB_FUNC(HWG_OPENDEFAULTPRINTER)
 
     hb_xfree(pinfo4);
   }
-  HB_RETHANDLE(hDC);
+  hwg_ret_HDC(hDC);
 }
 
 HB_FUNC(HWG_GETDEFAULTPRINTER)
@@ -222,7 +222,7 @@ HB_FUNC(SETPRINTERMODE)
     DocumentProperties(NULL, hPrinter, (LPTSTR)lpPrinterName, pdm, pdm, DM_OUT_BUFFER | DM_IN_BUFFER);
 
     // создадим контекст устройства принтера
-    HB_RETHANDLE(CreateDC(NULL, lpPrinterName, NULL, pdm));
+    hwg_ret_HDC(CreateDC(NULL, lpPrinterName, NULL, pdm));
     HB_STOREHANDLE(hPrinter, 2);
     GlobalFree(pdm);
   }
@@ -380,7 +380,7 @@ HB_FUNC(CREATEENHMETAFILE)
 
   hDCmeta = CreateEnhMetaFile(hDCref, HB_PARSTR(2, &hFileName, NULL), &rc, NULL);
   ReleaseDC(hWnd, hDCref);
-  HB_RETHANDLE(hDCmeta);
+  hwg_ret_HDC(hDCmeta);
   hb_strfree(hFileName);
 }
 
@@ -415,7 +415,7 @@ HB_FUNC(CREATEMETAFILE)
   rc.bottom = iHeightMM * 100;
 
   hDCmeta = CreateEnhMetaFile(hDCref, HB_PARSTR(2, &hFileName, NULL), &rc, NULL);
-  HB_RETHANDLE(hDCmeta);
+  hwg_ret_HDC(hDCmeta);
   hb_strfree(hFileName);
 }
 
@@ -426,7 +426,7 @@ HB_FUNC(CLOSEENHMETAFILE)
 
 HB_FUNC(DELETEENHMETAFILE)
 {
-  HB_RETHANDLE((LONG)DeleteEnhMetaFile((HENHMETAFILE)HB_PARHANDLE(1)));
+  HB_RETHANDLE((LONG)DeleteEnhMetaFile((HENHMETAFILE)HB_PARHANDLE(1))); // TODO: revisar (o retorno щ BOOL)
 }
 
 HB_FUNC(PLAYENHMETAFILE)

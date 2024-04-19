@@ -306,11 +306,11 @@ HB_FUNC(PRINTSETUP)
       GlobalFree(pd.hDevNames);
       GlobalFree(pd.hDevMode);
     }
-    HB_RETHANDLE(pd.hDC);
+    hwg_ret_HDC(pd.hDC);
   }
   else
   {
-    HB_RETHANDLE(NULL);
+    hwg_ret_HDC(NULL);
   }
 }
 
@@ -470,12 +470,12 @@ HB_FUNC(PRINTSETUPDOS)
     hb_stornl(s_pd.nFromPage, 1);
     hb_stornl(s_pd.nToPage, 2);
     hb_stornl(s_pd.nCopies, 3);
-    HB_RETHANDLE(s_pd.hDC);
+    hwg_ret_HDC(s_pd.hDC);
   }
   else
   {
     s_fPName = TRUE;
-    HB_RETHANDLE(NULL);
+    hwg_ret_HDC(NULL);
   }
 }
 

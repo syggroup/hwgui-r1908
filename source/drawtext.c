@@ -27,7 +27,7 @@ HB_FUNC(DEFINEPAINTSTRU)
 HB_FUNC(BEGINPAINT)
 {
   HDC hDC = BeginPaint(hwg_par_HWND(1), hwg_par_PAINTSTRUCT(2));
-  HB_RETHANDLE(hDC);
+  hwg_ret_HDC(hDC);
 }
 
 HB_FUNC(ENDPAINT)
