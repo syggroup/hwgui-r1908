@@ -26,13 +26,13 @@
 HB_FUNC(HWG__CREATEMENU)
 {
   HMENU hMenu = CreateMenu();
-  HB_RETHANDLE(hMenu);
+  hwg_ret_HMENU(hMenu);
 }
 
 HB_FUNC(HWG__CREATEPOPUPMENU)
 {
   HMENU hMenu = CreatePopupMenu();
-  HB_RETHANDLE(hMenu);
+  hwg_ret_HMENU(hMenu);
 }
 
 /*
@@ -83,7 +83,7 @@ HB_FUNC(HWG__ADDMENUITEM)
                (UINT_PTR)hSubMenu,                    // menu item identifier or handle of drop-down menu or submenu
                lpNewItem                              // menu item content
     );
-    HB_RETHANDLE(hSubMenu);
+    hwg_ret_HMENU(hSubMenu);
 
     // Code to set the ID of submenus, the API seems to assume that you wouldn't really want to,
     // but if you are used to getting help via IDs for popups in 16bit, then this will help you.
@@ -152,11 +152,11 @@ HB_FUNC(HWG__CREATESUBMENU)
 
   if (SetMenuItemInfo(hwg_par_HMENU(1), hb_parni(2), 0, &mii))
   {
-    HB_RETHANDLE(hSubMenu);
+    hwg_ret_HMENU(hSubMenu);
   }
   else
   {
-    HB_RETHANDLE(NULL);
+    hwg_ret_HMENU(NULL);
   }
 }
 
@@ -171,7 +171,7 @@ HB_FUNC(HWG__SETMENU)
 HB_FUNC(GETMENUHANDLE)
 {
   HWND handle = (hb_pcount() > 0 && !HB_ISNIL(1)) ? hwg_par_HWND(1) : aWindows[0];
-  HB_RETHANDLE(GetMenu(handle));
+  hwg_ret_HMENU(GetMenu(handle));
 }
 
 HB_FUNC(CHECKMENUITEM)
@@ -272,7 +272,7 @@ HB_FUNC(ENABLEMENUITEM)
     HB_RETHANDLE(EnableMenuItem(hMenu,          // handle to menu
                                 hb_parni(2),    // menu item to check or uncheck
                                 uFlag | uEnable // menu item flags
-                                ));
+                                )); // TODO: revisar retorno (o retorno é BOOL e não um handle)
   }
 }
 
@@ -560,7 +560,7 @@ HB_FUNC(ENABLEMENUSYSTEMITEM)
     HB_RETHANDLE(EnableMenuItem(hMenu,          // handle to menu
                                 hb_parni(2),    // menu item to check or uncheck
                                 uFlag | uEnable // menu item flags
-                                ));
+                                )); // TODO: revisar retorno (o retorno é BOOL e não um handle)
   }
 }
 
