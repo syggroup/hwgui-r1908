@@ -154,6 +154,7 @@ HB_EXTERN_END
 #define hwg_ret_PAINTSTRUCT(n) hb_retptr(n)
 #define hwg_ret_HBRUSH(x) HB_RETHANDLE(x)
 #define hwg_ret_HDC(x) HB_RETHANDLE(x)
+#define hwg_ret_HGDIOBJ(x) HB_RETHANDLE(x)
 
 #define hwg_vmPushUINT(x) hb_vmPushInteger(x)
 #define hwg_vmPushWPARAM(x) hb_vmPushLong(x)
