@@ -1112,23 +1112,23 @@ HB_FUNC(LOADCURSOR)
 
   if (lpStr)
   {
-    HB_RETHANDLE(LoadCursor(GetModuleHandle(NULL), lpStr));
+    hwg_ret_HCURSOR(LoadCursor(GetModuleHandle(NULL), lpStr));
   }
   else
   {
-    HB_RETHANDLE(LoadCursor(NULL, MAKEINTRESOURCE(hb_parni(1))));
+    hwg_ret_HCURSOR(LoadCursor(NULL, MAKEINTRESOURCE(hb_parni(1))));
   }
   hb_strfree(hStr);
 }
 
 HB_FUNC(HWG_SETCURSOR)
 {
-  HB_RETHANDLE(SetCursor((HCURSOR)HB_PARHANDLE(1)));
+  hwg_ret_HCURSOR(SetCursor((HCURSOR)HB_PARHANDLE(1)));
 }
 
 HB_FUNC(HWG_GETCURSOR)
 {
-  HB_RETHANDLE(GetCursor());
+  hwg_ret_HCURSOR(GetCursor());
 }
 
 HB_FUNC(GETTOOLTIPHANDLE) // added by MAG
