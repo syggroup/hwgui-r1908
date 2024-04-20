@@ -329,7 +329,7 @@ HB_FUNC(LISTVIEW_ADDCOLUMNEX)
   lvcolumn.fmt = hb_parni(5);
   lvcolumn.iImage = iImage > 0 ? lCol : -1;
 
-  if (SendMessage((HWND)hwndListView, (UINT)LVM_INSERTCOLUMN, (WPARAM)(int)lCol, (LPARAM)&lvcolumn) == -1)
+  if (SendMessage(hwndListView, (UINT)LVM_INSERTCOLUMN, (WPARAM)(int)lCol, (LPARAM)&lvcolumn) == -1)
   {
     iResult = 0;
   }
@@ -379,7 +379,7 @@ HB_FUNC(LISTVIEW_INSERTITEMEX)
   switch (iSubItemYesNo)
   {
   case 0:
-    if (SendMessage((HWND)hwndListView, (UINT)LVM_INSERTITEM, 0, (LPARAM)&lvi) == -1)
+    if (SendMessage(hwndListView, (UINT)LVM_INSERTITEM, 0, (LPARAM)&lvi) == -1)
     {
       iResult = 0;
     }
@@ -390,7 +390,7 @@ HB_FUNC(LISTVIEW_INSERTITEMEX)
     break;
 
   case 1:
-    if (SendMessage((HWND)hwndListView, (UINT)LVM_SETITEM, 0, (LPARAM)&lvi) == FALSE)
+    if (SendMessage(hwndListView, (UINT)LVM_SETITEM, 0, (LPARAM)&lvi) == FALSE)
     {
       iResult = 0;
     }

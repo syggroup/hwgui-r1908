@@ -1151,7 +1151,7 @@ HB_FUNC(GETWINDOWDC)
 HB_FUNC(MODIFYSTYLE)
 {
   HWND hWnd = hwg_par_HWND(1);
-  DWORD dwStyle = GetWindowLongPtr((HWND)hWnd, GWL_STYLE);
+  DWORD dwStyle = GetWindowLongPtr(hWnd, GWL_STYLE);
   DWORD a = hb_parnl(2);
   DWORD b = hb_parnl(3);
   DWORD dwNewStyle = (dwStyle & ~a) | b;

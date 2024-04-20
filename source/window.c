@@ -140,7 +140,7 @@ HB_FUNC(HWG_CENTERWINDOW)
 
   if (hb_parni(2) == WND_MDICHILD)
   {
-    GetWindowRect((HWND)aWindows[1], &rectcli);
+    GetWindowRect(aWindows[1], &rectcli);
     x = rectcli.right - rectcli.left;
     y = rectcli.bottom - rectcli.top;
     w = rect.right - rect.left;
@@ -491,7 +491,7 @@ HB_FUNC(HWG_CREATEMDICHILDWINDOW)
         y,                     // vertical position of window
         width,                 // width of window
         height,                // height of window
-        (HWND)aWindows[1],     // handle to parent window (MDI client)
+        aWindows[1],     // handle to parent window (MDI client)
         GetModuleHandle(NULL), // handle to application instance
         (LPARAM)&pObj          // application-defined value
     );
@@ -537,7 +537,7 @@ HB_FUNC(GETFOCUS)
 
 HB_FUNC(SELFFOCUS)
 {
-  HWND hWnd = HB_ISNIL(2) ? (HWND)GetFocus() : hwg_par_HWND(2);
+  HWND hWnd = HB_ISNIL(2) ? GetFocus() : hwg_par_HWND(2);
   hb_retl(hwg_par_HWND(1) == hWnd);
 }
 
@@ -1375,7 +1375,7 @@ HB_FUNC(SETTOOLHANDLE)
 {
   HWND h = hwg_par_HWND(1);
 
-  s_hMytoolMenu = (HWND)h;
+  s_hMytoolMenu = h;
 }
 
 HB_FUNC(SETHOOK)
