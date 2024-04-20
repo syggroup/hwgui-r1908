@@ -166,7 +166,7 @@ HB_FUNC(CREATEROUNDRECTRGN)
 
 HB_FUNC(SETWINDOWRGN)
 {
-  hb_retni(SetWindowRgn(hwg_par_HWND(1), (HRGN)(LONG_PTR)hb_parnl(2), hb_parl(3)));
+  hb_retni(SetWindowRgn(hwg_par_HWND(1), hwg_par_HRGN(2), hb_parl(3)));
 }
 
 HB_FUNC(HWG_REGNICE)
