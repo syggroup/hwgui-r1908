@@ -296,12 +296,12 @@ HB_FUNC(LOADICON)
 {
   if (HB_ISNUM(1))
   {
-    HB_RETHANDLE(LoadIcon(NULL, MAKEINTRESOURCE(hb_parni(1))));
+    hwg_ret_HICON(LoadIcon(NULL, MAKEINTRESOURCE(hb_parni(1))));
   }
   else
   {
     void *hString;
-    HB_RETHANDLE(LoadIcon(GetModuleHandle(NULL), HB_PARSTR(1, &hString, NULL)));
+    hwg_ret_HICON(LoadIcon(GetModuleHandle(NULL), HB_PARSTR(1, &hString, NULL)));
     hb_strfree(hString);
   }
 }
