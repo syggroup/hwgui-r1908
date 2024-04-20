@@ -1298,7 +1298,7 @@ LONG GetFontDialogUnits(HWND h, HFONT f)
 
 HB_FUNC(GETFONTDIALOGUNITS)
 {
-  hb_retnl(GetFontDialogUnits(hwg_par_HWND(1), (HFONT)HB_PARHANDLE(2)));
+  hb_retnl(GetFontDialogUnits(hwg_par_HWND(1), hwg_par_HFONT(2)));
 }
 
 LRESULT CALLBACK KbdHook(int code, WPARAM wp, LPARAM lp)
