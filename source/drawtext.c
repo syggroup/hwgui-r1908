@@ -406,7 +406,7 @@ HB_FUNC(CREATERECTRGN)
 
   reg = CreateRectRgn(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4));
 
-  HB_RETHANDLE(reg);
+  hwg_ret_HRGN(reg);
 }
 
 HB_FUNC(CREATERECTRGNINDIRECT)
@@ -420,7 +420,7 @@ HB_FUNC(CREATERECTRGNINDIRECT)
   rc.bottom = hb_parni(5);
 
   reg = CreateRectRgnIndirect(&rc);
-  HB_RETHANDLE(reg);
+  hwg_ret_HRGN(reg);
 }
 
 HB_FUNC(EXTSELECTCLIPRGN)
