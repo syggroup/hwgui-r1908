@@ -817,7 +817,7 @@ GETNOTIFYCODEFROM() -->
 */
 HB_FUNC(GETNOTIFYCODEFROM)
 {
-  HB_RETHANDLE((((NMHDR *)HB_PARHANDLE(1))->hwndFrom));
+  hwg_ret_HWND((((NMHDR *)HB_PARHANDLE(1))->hwndFrom));
 }
 
 /*
