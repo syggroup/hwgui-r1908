@@ -62,7 +62,7 @@ HB_FUNC(ANIMATE_OPENEX)
     lpResource = MAKEINTRESOURCE(hb_parni(3));
   }
 
-  Animate_OpenEx(hwg_par_HWND(1), (HINSTANCE)HB_PARHANDLE(2), lpResource);
+  Animate_OpenEx(hwg_par_HWND(1), hwg_par_HINSTANCE(2), lpResource);
 
   hb_strfree(hResource);
 }
