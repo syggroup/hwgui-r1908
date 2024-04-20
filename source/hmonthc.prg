@@ -164,7 +164,7 @@ HB_FUNC ( INITMONTHCALENDAR )
                          (LONG) hb_parnl(3), /* 0,0,0,0, */
                          hb_parni(4), hb_parni(5),      /* x, y       */
                          hb_parni(6), hb_parni(7),      /* nWidth, nHeight */
-                         (HWND) HB_PARHANDLE(1),
+                         hwg_par_HWND(1),
                          hwg_par_HMENU_ID(2),
                          GetModuleHandle(NULL),
                          NULL );
@@ -201,7 +201,7 @@ HB_FUNC ( SETMONTHCALENDARDATE ) // adaptation of function SetDatePicker of file
       sysTime.wSecond = 0;
       sysTime.wMilliseconds = 0;
 
-      MonthCal_SetCurSel( (HWND) HB_PARHANDLE (1), &sysTime);
+      MonthCal_SetCurSel( hwg_par_HWND(1), &sysTime);
 
    }
 }
