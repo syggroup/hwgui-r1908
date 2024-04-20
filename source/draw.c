@@ -310,7 +310,7 @@ HB_FUNC(LOADIMAGE)
 {
   void *hString = NULL;
 
-  HB_RETHANDLE(LoadImage(
+  hwg_ret_HANDLE(LoadImage(
       HB_ISNIL(1) ? GetModuleHandle(NULL)
                   : hwg_par_HINSTANCE(1), // handle of the instance that contains the image
       HB_ISNUM(2) ? MAKEINTRESOURCE(hb_parni(2)) : HB_PARSTR(2, &hString, NULL), // name or identifier of image
@@ -905,7 +905,7 @@ HB_FUNC(OPENIMAGE)
   pPic->lpVtbl->get_Handle(pPic, (OLE_HANDLE *)(void *)&hBitmap);
 #endif
 
-  HB_RETHANDLE(CopyImage(hBitmap, IMAGE_BITMAP, 0, 0, LR_COPYRETURNORG));
+  hwg_ret_HANDLE(CopyImage(hBitmap, IMAGE_BITMAP, 0, 0, LR_COPYRETURNORG));
 
 #if defined(__cplusplus)
   pPic->Release();
