@@ -138,6 +138,7 @@ HB_EXTERN_END
 #define hwg_par_HGDIOBJ(n) (HGDIOBJ)HB_PARHANDLE(n)
 #define hwg_par_HICON(n) (HICON)HB_PARHANDLE(n)
 #define hwg_par_HIMAGELIST(n) (HIMAGELIST)HB_PARHANDLE(n)
+#define hwg_par_HINSTANCE(n) (HINSTANCE)HB_PARHANDLE(n)
 #define hwg_par_HMENU(n) (HMENU)HB_PARHANDLE(n)
 #define hwg_par_HMENU_ID(n)(HMENU)(INT_PTR)hb_parni(n)
 #define hwg_par_HRGN(n) (HRGN)HB_PARHANDLE(n)
