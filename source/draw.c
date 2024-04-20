@@ -693,7 +693,7 @@ HB_FUNC(GETSYSCOLORBRUSH)
 
 HB_FUNC(CREATEPEN)
 {
-  HB_RETHANDLE(CreatePen(hb_parni(1),        // pen style
+  hwg_ret_HPEN(CreatePen(hb_parni(1),        // pen style
                          hb_parni(2),        // pen width
                          hwg_par_COLORREF(3) // pen color
                          ));

@@ -918,7 +918,7 @@ HB_FUNC(RICH_RECTANGLE)
 // (1) = pen style (2) = pen width (3) = pen color
 HB_FUNC(RICH_CREATEPEN)
 {
-  HB_RETHANDLE(CreatePen(hb_parni(1), hb_parni(2), hwg_par_COLORREF(3)));
+  hwg_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), hwg_par_COLORREF(3)));
 }
 
 HB_FUNC(RICH_SELECTOBJECT)
