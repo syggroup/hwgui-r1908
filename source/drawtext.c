@@ -379,7 +379,7 @@ HB_FUNC(CREATEFONT)
                      HB_PARSTR(1, &hString, NULL) // pointer to typeface name string
   );
   hb_strfree(hString);
-  HB_RETHANDLE(hFont);
+  hwg_ret_HFONT(hFont);
 }
 
 /*
@@ -445,5 +445,5 @@ HB_FUNC(CREATEFONTINDIRECT)
   lf.lfFaceName[HB_SIZEOFARRAY(lf.lfFaceName) - 1] = '\0';
 
   f = CreateFontIndirect(&lf);
-  HB_RETHANDLE(f);
+  hwg_ret_HFONT(f);
 }
