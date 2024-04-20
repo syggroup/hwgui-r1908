@@ -312,7 +312,7 @@ HB_FUNC(LOADIMAGE)
 
   HB_RETHANDLE(LoadImage(
       HB_ISNIL(1) ? GetModuleHandle(NULL)
-                  : (HINSTANCE)(LONG_PTR)hb_parnl(1), // handle of the instance that contains the image
+                  : hwg_par_HINSTANCE(1), // handle of the instance that contains the image
       HB_ISNUM(2) ? MAKEINTRESOURCE(hb_parni(2)) : HB_PARSTR(2, &hString, NULL), // name or identifier of image
       hwg_par_UINT(3),                                                           // type of image
       hb_parni(4),                                                               // desired width
