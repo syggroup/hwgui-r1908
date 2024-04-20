@@ -425,12 +425,12 @@ HB_FUNC(CREATERECTRGNINDIRECT)
 
 HB_FUNC(EXTSELECTCLIPRGN)
 {
-  hb_retni(ExtSelectClipRgn(hwg_par_HDC(1), (HRGN)HB_PARHANDLE(2), hb_parni(3)));
+  hb_retni(ExtSelectClipRgn(hwg_par_HDC(1), hwg_par_HRGN(2), hb_parni(3)));
 }
 
 HB_FUNC(SELECTCLIPRGN)
 {
-  hb_retni(SelectClipRgn(hwg_par_HDC(1), (HRGN)HB_PARHANDLE(2)));
+  hb_retni(SelectClipRgn(hwg_par_HDC(1), hwg_par_HRGN(2)));
 }
 
 HB_FUNC(CREATEFONTINDIRECT)
