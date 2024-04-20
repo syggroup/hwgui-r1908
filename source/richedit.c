@@ -498,7 +498,7 @@ HB_FUNC(SAVERICHEDIT)
   hFile = CreateFile(lpFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
   if (hFile == INVALID_HANDLE_VALUE)
   {
-    hb_retni(0);
+    hb_retni(0); // TODO: revisar valor de retorno
     return;
   }
   es.dwCookie = (DWORD_PTR)hFile;
@@ -506,7 +506,7 @@ HB_FUNC(SAVERICHEDIT)
 
   SendMessage(hWnd, EM_STREAMOUT, (WPARAM)SF_RTF, (LPARAM)&es);
   CloseHandle(hFile);
-  HB_RETHANDLE(hFile);
+  hwg_ret_HANDLE(hFile);
 }
 
 HB_FUNC(LOADRICHEDIT)
@@ -523,12 +523,12 @@ HB_FUNC(LOADRICHEDIT)
   hFile = CreateFile(lpFileName, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
   if (hFile == INVALID_HANDLE_VALUE)
   {
-    hb_retni(0);
+    hb_retni(0); // TODO: revisar valor de retorno
     return;
   }
   es.dwCookie = (DWORD_PTR)hFile;
   es.pfnCallback = EditStreamCallback;
   SendMessage(hWnd, EM_STREAMIN, (WPARAM)SF_RTF, (LPARAM)&es);
   CloseHandle(hFile);
-  HB_RETHANDLE(hFile);
+  hwg_ret_HANDLE(hFile);
 }
