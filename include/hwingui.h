@@ -157,6 +157,7 @@ HB_EXTERN_END
 #define hwg_ret_HGDIOBJ(x) HB_RETHANDLE(x)
 #define hwg_ret_HBITMAP(x) HB_RETHANDLE(x)
 #define hwg_ret_HMENU(x) HB_RETHANDLE(x)
+#define hwg_ret_HCURSOR(x) HB_RETHANDLE(x)
 
 #define hwg_vmPushUINT(x) hb_vmPushInteger(x)
 #define hwg_vmPushWPARAM(x) hb_vmPushLong(x)
