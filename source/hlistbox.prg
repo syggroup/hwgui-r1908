@@ -92,7 +92,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    RETURN Self
 
 METHOD Activate() CLASS HListBox
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateListbox( ::oParent:handle, ::id, ;
                                  ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
@@ -134,7 +134,7 @@ METHOD Init() CLASS HListBox
          IF ::value == Nil
             ::value := 1
          ENDIF
-         IF !EMPTY( ::nItemHeight )
+         IF !Empty(::nItemHeight)
             SendMessage(::handle, LB_SETITEMHEIGHT, 0, ::nItemHeight)
          ENDIF
          SendMessage(::handle, LB_RESETCONTENT, 0, 0)
@@ -323,7 +323,7 @@ METHOD Valid(oCtrl) CLASS HListBox
          oDlg:nLastKey := 0
       ENDIF
    ENDIF
-   IF Empty( GetFocus() )
+   IF Empty(GetFocus())
        GetSkip(::oParent, ::handle,, ::nGetSkip)
    ENDIF
 

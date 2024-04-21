@@ -60,7 +60,7 @@ METHOD DelObject(oCtrl) CLASS HObject
 CLASS HCustomWindow INHERIT HObject
 
 CLASS VAR oDefaultParent SHARED
-CLASS VAR WindowsManifest INIT !EMPTY(FindResource(, 1, RT_MANIFEST) ) SHARED
+CLASS VAR WindowsManifest INIT !Empty(FindResource(, 1, RT_MANIFEST) ) SHARED
 
    DATA handle        INIT 0
    DATA oParent
@@ -290,7 +290,7 @@ LOCAL aControls, i, nLen
 //----------------------------------------------------------------------------//
 
 METHOD GetParentForm( oCtrl ) CLASS HCustomWindow
-LOCAL oForm := IIF( EMPTY( oCtrl ), Self, oCtrl )
+LOCAL oForm := IIF( Empty(oCtrl), Self, oCtrl )
    DO WHILE ( oForm:oParent ) != Nil .AND. !__ObjHasMsg( oForm, "GETLIST" )
       oForm := oForm:oParent
    ENDDO
@@ -339,12 +339,12 @@ METHOD Refresh( lAll, oCtrl ) CLASS HCustomWindow
    IF IsWindowVisible(::Handle) .OR. nLen > 0
       FOR i = 1 to nLen
          oCtrlTmp :=  oCtrl:aControls[i]
-         lRefresh :=  !Empty( __ObjHasMethod(oCtrlTmp, "REFRESH") )
+         lRefresh :=  !Empty(__ObjHasMethod(oCtrlTmp, "REFRESH"))
          IF ( ( oCtrlTmp:Handle != hCtrl .OR. LEN( oCtrlTmp:aControls) = 0) .OR.  lAll ) .AND. ;
             ( !oCtrlTmp:lHide .OR.  __ObjHasMsg( oCtrlTmp, "BSETGET" ) ) 
              IF LEN( oCtrlTmp:aControls) > 0
                  ::Refresh( lAll, oCtrlTmp )
-              ELSEIF !Empty( lRefresh ) .AND. ( lAll .OR. ASCAN( ::GetList, {| o | o:Handle == oCtrlTmp:handle } ) > 0 ) 
+              ELSEIF !Empty(lRefresh) .AND. ( lAll .OR. ASCAN( ::GetList, {| o | o:Handle == oCtrlTmp:handle } ) > 0 ) 
                oCtrlTmp:Refresh()
                IF oCtrlTmp:bRefresh != Nil  
                   EVAL( oCtrlTmp:bRefresh, oCtrlTmp )
@@ -688,7 +688,7 @@ METHOD Closable(lClosable) CLASS HCustomWindow
       ELSE
          hMenu := EnableMenuSystemItem( ::Handle, SC_CLOSE, .T. )
       ENDIF
-      IF !EMPTY( hMenu )
+      IF !Empty(hMenu)
          ::lClosable := lClosable
       ENDIF
    ENDIF
@@ -701,7 +701,7 @@ METHOD SetAll( cProperty, Value, aControls, cClass ) CLASS HCustomWindow
  // cClass baseclass hwgui
    Local nLen , i //, oCtrl
 
-   aControls := IIF( EMPTY( aControls ), ::aControls, aControls )
+   aControls := IIF( Empty(aControls), ::aControls, aControls )
    nLen := IIF( hb_IsChar(aControls), Len( ::&aControls ), LEN( aControls ) )
     FOR i = 1 TO nLen
        IF hb_IsChar(aControls)
@@ -811,7 +811,7 @@ STATIC FUNCTION onCtlColor(oWnd, wParam, lParam)
 
 STATIC FUNCTION onDrawItem( oWnd, wParam, lParam )
    LOCAL oCtrl
-   IF !EMPTY( wParam ) .AND. ( oCtrl := oWnd:FindControl( wParam ) ) != NIL .AND. ;
+   IF !Empty(wParam) .AND. ( oCtrl := oWnd:FindControl( wParam ) ) != NIL .AND. ;
                  !hb_IsNumeric(oCtrl) .AND. oCtrl:bPaint != NIL
       Eval( oCtrl:bPaint, oCtrl, lParam )
       RETURN 1
@@ -846,7 +846,7 @@ STATIC FUNCTION onSize(oWnd, wParam, lParam)
    nw1 := oWnd:nWidth
    nh1 := oWnd:nHeight
    aCoors := GetWindowRect( oWnd:handle )
-   IF EMPTY( oWnd:Type )
+   IF Empty(oWnd:Type)
       oWnd:nWidth  := aCoors[3] - aCoors[1]
       oWnd:nHeight := aCoors[4] - aCoors[2]
    ELSE
@@ -859,16 +859,16 @@ STATIC FUNCTION onSize(oWnd, wParam, lParam)
          ENDIF 
       ENDIF
    ENDIF
-   IF oWnd:nScrollBars > - 1 .AND. oWnd:lAutoScroll .AND. !EMPTY( oWnd:Type )
+   IF oWnd:nScrollBars > - 1 .AND. oWnd:lAutoScroll .AND. !Empty(oWnd:Type)
       onMove(oWnd)
       oWnd:ResetScrollbars()
       oWnd:SetupScrollbars()
    ENDIF
    IF wParam != 1 .AND. nWindowState != 2
-      IF !EMPTY( oWnd:Type) .AND. oWnd:Type = WND_MDI  .AND. !EMPTY( oWnd:Screen )
+      IF !Empty(oWnd:Type) .AND. oWnd:Type = WND_MDI  .AND. !Empty(oWnd:Screen)
          oWnd:Anchor( oWnd:Screen, nw1, nh1, oWnd:nWidth, oWnd:nHeight )
       ENDIF
-      IF !EMPTY( oWnd:Type)
+      IF !Empty(oWnd:Type)
          oWnd:Anchor( oWnd, nw1, nh1, oWnd:nWidth, oWnd:nHeight)
       ENDIF
    ENDIF
@@ -919,7 +919,7 @@ LOCAL oParent, nCtrl,nPos
    ENDIF
    IF wParam != VK_SHIFT  .AND. wParam != VK_CONTROL .AND. wParam != VK_MENU
       oParent := IIF( oMain != Nil, oMain, ParentGetDialog( oCtrl ) )
-      IF oParent != Nil .AND. !Empty( oParent:KeyList )
+      IF oParent != Nil .AND. !Empty(oParent:KeyList)
          nctrl := IIf( IsCtrlShift(.T., .F.), FCONTROL, iif(IsCtrlShift(.F., .T.), FSHIFT, 0 ) )
          IF ( nPos := AScan( oParent:KeyList, { | a | a[1] == nctrl.AND.a[2] == wParam } ) ) > 0
             Eval( oParent:KeyList[ nPos, 3 ], oCtrl )
@@ -937,7 +937,7 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
    Local iParHigh := IIF( nKey = VK_RETURN, IDOK, IDCANCEL )
    LOCAL oCtrlFocu := oCtrl
 
-   lForce := !Empty( lForce )
+   lForce := !Empty(lForce)
    lEscape := nKey = VK_ESCAPE .AND. ( oCtrl := oWin:FindControl( IDCANCEL ) ) != Nil .AND. !oCtrl:IsEnabled()
    IF ( ( oWin:Type >= WND_DLG_RESOURCE .AND. oWin:lModal) .AND. !lForce .and. !lEscape )  .OR. ( nKey != VK_RETURN .AND. nKey != VK_ESCAPE )
       Return .F.
@@ -984,7 +984,7 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
 
 FUNCTION ADDMETHOD(oObjectName, cMethodName, pFunction)
 
-   IF hb_IsObject(oObjectName) .AND. !EMPTY( cMethodName )
+   IF hb_IsObject(oObjectName) .AND. !Empty(cMethodName)
       IF !__ObjHasMsg( oObjectName, cMethodName )
           __objAddMethod(oObjectName, cMethodName, pFunction)
       ENDIF   
@@ -994,13 +994,13 @@ FUNCTION ADDMETHOD(oObjectName, cMethodName, pFunction)
 
 FUNCTION ADDPROPERTY( oObjectName, cPropertyName, eNewValue )
 
-   IF hb_IsObject(oObjectName) .AND. !EMPTY( cPropertyName )
+   IF hb_IsObject(oObjectName) .AND. !Empty(cPropertyName)
       IF !__objHasData(oObjectName, cPropertyName)
-         IF EMPTY( __objAddData(oObjectName, cPropertyName) )
+         IF Empty(__objAddData(oObjectName, cPropertyName))
               RETURN .F.
          ENDIF
       ENDIF
-      IF !EMPTY( eNewValue )
+      IF !Empty(eNewValue)
          IF hb_IsBlock(eNewValue)
             oObjectName: & ( cPropertyName ) := EVAL( eNewValue )
          ELSE
@@ -1013,9 +1013,9 @@ FUNCTION ADDPROPERTY( oObjectName, cPropertyName, eNewValue )
 
 FUNCTION REMOVEPROPERTY( oObjectName, cPropertyName )
 
-   IF hb_IsObject(oObjectName) .AND. !EMPTY( cPropertyName ) .AND.;
+   IF hb_IsObject(oObjectName) .AND. !Empty(cPropertyName) .AND.;
        __objHasData(oObjectName, cPropertyName)
-       RETURN EMPTY( __objDelData(oObjectName, cPropertyName) )
+       RETURN Empty(__objDelData(oObjectName, cPropertyName))
    ENDIF
    RETURN .F.
 
@@ -1059,7 +1059,7 @@ FUNCTION GetBackColorParent( oCtrl, lSelf, lTransparent )
           bColor := oCtrl:Pages[ oCtrl:GetActivePage() ]:bColor
        ELSEIF ISTHEMEACTIVE() .AND. oCtrl:WindowsManifest
           hTheme := hb_OpenThemeData(oCtrl:handle, "TAB") //oCtrl:oParent:WinClass )
-          IF !EMPTY( hTheme )
+          IF !Empty(hTheme)
              bColor := HWG_GETTHEMESYSCOLOR(hTheme, COLOR_WINDOW)
              HB_CLOSETHEMEDATA(hTheme)
              //-brush := HBrush():Add(bColor)

@@ -113,7 +113,7 @@ METHOD New( cPrinter, lmm, nFormType, nBin, lLandScape, nCopies, lProprierties, 
       IF cPrinter == Nil
          ::hDCPrn := PrintSetup(@cPrinterName)
          ::cPrinterName := cPrinterName
-     ELSEIF Empty( cPrinter )
+     ELSEIF Empty(cPrinter)
          cPrinterName := HWG_GETDEFAULTPRINTER()
          ::hDCPrn := Hwg_OpenPrinter( cPrinterName )
          ::cPrinterName := cPrinterName
@@ -123,7 +123,7 @@ METHOD New( cPrinter, lmm, nFormType, nBin, lLandScape, nCopies, lProprierties, 
       ENDIF
    ENDIF
 
-   IF empty( ::hDCPrn )
+   IF Empty(::hDCPrn)
       RETURN Nil
    ELSE
       if lProprierties
@@ -188,11 +188,11 @@ METHOD AddFont( fontName, nHeight , lBold, lItalic, lUnderline, nCharset ) CLASS
 
 METHOD END() CLASS HPrinter
 
-   IF !empty( ::hDCPrn )
+   IF !Empty(::hDCPrn)
       DeleteDC(::hDCPrn)
       ::hDCPrn := NIL
    ENDIF
-   IF !empty( ::hPrinter )
+   IF !Empty(::hPrinter)
       ClosePrinter( ::hPrinter )
    ENDIF
    ::ReleaseMeta()
@@ -336,7 +336,7 @@ METHOD EndPage() CLASS HPrinter
 METHOD ReleaseMeta() CLASS HPrinter
    LOCAL i, nLen
 
-   IF ::aMeta == Nil .OR. Empty( ::aMeta )
+   IF ::aMeta == Nil .OR. Empty(::aMeta)
       RETURN Nil
    ENDIF
 

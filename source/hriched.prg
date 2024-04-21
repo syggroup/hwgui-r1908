@@ -67,7 +67,7 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
    ::title   := vari
    ::bOther  := bOther
    ::bChange := bChange
-   ::lAllowTabs := IIF( EMPTY( lAllowTabs ), ::lAllowTabs, lAllowTabs )
+   ::lAllowTabs := IIF( Empty(lAllowTabs), ::lAllowTabs, lAllowTabs )
    ::lReadOnly := Hwg_BitAnd(nStyle, ES_READONLY) != 0
 
    hwg_InitRichEdit()
@@ -88,7 +88,7 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
    RETURN Self
 
 METHOD Activate() CLASS HRichEdit
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateRichEdit( ::oParent:handle, ::id, ;
                                   ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::title )
       ::Init()
@@ -199,7 +199,7 @@ METHOD SetColor(tColor, bColor, lRedraw) CLASS HRichEdit
 METHOD ReadOnly( lreadOnly )
 
    IF lreadOnly != Nil
-      IF !EMPTY( SENDMESSAGE(::handle, EM_SETREADONLY, IIF( lReadOnly, 1, 0 ), 0) )
+      IF !Empty(SENDMESSAGE(::handle, EM_SETREADONLY, IIF( lReadOnly, 1, 0 ), 0))
           ::lReadOnly := lReadOnly
       ENDIF
    ENDIF
@@ -260,8 +260,8 @@ METHOD Valid() CLASS HRichEdit
 
 METHOD SaveFile(cFile) CLASS HRichEdit
 
-   IF !EMPTY( cFile )
-      IF !EMPTY( SAVERICHEDIT( ::Handle, cFile ) )
+   IF !Empty(cFile)
+      IF !Empty(SAVERICHEDIT( ::Handle, cFile ))
           RETURN .T.
       ENDIF
    ENDIF
@@ -269,8 +269,8 @@ METHOD SaveFile(cFile) CLASS HRichEdit
 
 METHOD OpenFile(cFile) CLASS HRichEdit
 
-   IF !EMPTY( cFile )
-      IF !EMPTY( LOADRICHEDIT( ::Handle, cFile ) )
+   IF !Empty(cFile)
+      IF !Empty(LOADRICHEDIT( ::Handle, cFile ))
           RETURN .T.
       ENDIF
    ENDIF

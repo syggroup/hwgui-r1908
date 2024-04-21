@@ -150,7 +150,7 @@ METHOD Activate(lNoModal, bOnActivate, nShow) CLASS HDialog
    CreateGetList( Self )
    hParent := IIf( hb_IsObject(::oParent) .AND. ;
                    __ObjHasMsg( ::oParent, "HANDLE" ) .AND. ::oParent:handle != Nil ;
-                   .AND. !Empty( ::oParent:handle ) , ::oParent:handle, ;
+                   .AND. !Empty(::oParent:handle) , ::oParent:handle, ;
                    IIf( ( oWnd := HWindow():GetMain() ) != Nil,    ;
                         oWnd:handle, GetActiveWindow() ) )
 
@@ -360,7 +360,7 @@ STATIC FUNCTION InitModalDlg( oDlg, wParam, lParam )
    oDlg:lSuspendMsgsHandling := .F.
 
    oDlg:nInitFocus := IIF( hb_IsObject(oDlg:nInitFocus), oDlg:nInitFocus:Handle, oDlg:nInitFocus )
-   IF !EMPTY( oDlg:nInitFocus )
+   IF !Empty(oDlg:nInitFocus)
       IF PtrtouLong( oDlg:FindControl( , oDlg:nInitFocus ):oParent:Handle ) == PtrtouLong( oDlg:Handle )
          SETFOCUS( oDlg:nInitFocus )
       ENDIF    
@@ -524,7 +524,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
       ELSEIF iParLow == IDCANCEL
          IF ( oCtrl := oDlg:FindControl( IDCANCEL ) ) != Nil .AND. !oCtrl:IsEnabled() .AND. oDlg:lExitOnEsc
             oDlg:nLastKey := 27
-            IF EMPTY( EndDialog( oDlg:handle ) )
+            IF Empty(EndDialog( oDlg:handle ))
                RETURN 1
             ENDIF
             oDlg:bDestroy := Nil
@@ -555,7 +555,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
 
    //IF oDlg:nInitFocus > 0 //.AND. !isWindowVisible(oDlg:handle)
    // comentado, vc não pode testar um ponteiro como se fosse numerico
-   IF !empty( oDlg:nInitFocus )  //.AND. !isWindowVisible(oDlg:handle)
+   IF !Empty(oDlg:nInitFocus)  //.AND. !isWindowVisible(oDlg:handle)
       PostMessage(oDlg:Handle, WM_NEXTDLGCTL, oDlg:nInitFocus, 1)
    ENDIF
    IF oDlg:aEvents != Nil .AND. ;
@@ -594,7 +594,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
       .AND. aMenu[1, i, 1] != Nil
       Eval( aMenu[1, i, 1], i, wParam )
    ENDIF
-   IF !Empty( oDlg:nInitFocus )
+   IF !Empty(oDlg:nInitFocus)
       oDlg:nInitFocus := 0
    ENDIF
 
@@ -648,7 +648,7 @@ STATIC FUNCTION onSize(oDlg, wParam, lParam)
       Eval( oDlg:bSize, oDlg, LOWORD(lParam), HIWORD(lParam) )
    ENDIF
    aControls := oDlg:aControls
-   IF aControls != Nil .AND. !Empty( oDlg:Rect )
+   IF aControls != Nil .AND. !Empty(oDlg:Rect)
       oDlg:Anchor( oDlg, nW1, nH1, oDlg:nWidth, oDlg:nHeight )
       FOR iCont := 1 TO Len( aControls )
          IF aControls[ iCont ]:bSize != Nil
@@ -701,29 +701,29 @@ FUNCTION onHelp(oDlg, wParam, lParam)
 
    HB_SYMBOL_UNUSED(wParam)
 
-   IF !Empty( SetHelpFileName() )
+   IF !Empty(SetHelpFileName())
       IF "chm" $ Lower( CutPath( SetHelpFileName() ) )
-         cDir := IIF( EMPTY( FilePath( SetHelpFileName() ) ), Curdir(), FilePath( SetHelpFileName() ) )
+         cDir := IIF( Empty(FilePath( SetHelpFileName() )), Curdir(), FilePath( SetHelpFileName() ) )
       ENDIF
-      IF !Empty( lParam )
+      IF !Empty(lParam)
          oCtrl := oDlg:FindControl( Nil, GetHelpData(lParam) )
       ENDIF
       IF hb_IsObject(oCtrl)
          nHelpId := oCtrl:HelpId
-         IF Empty( nHelpId )
+         IF Empty(nHelpId)
             oParent := oCtrl:oParent
-            nHelpId := IIF( Empty( oParent:HelpId ), oDlg:HelpId, oParent:HelpId )
+            nHelpId := IIF( Empty(oParent:HelpId), oDlg:HelpId, oParent:HelpId )
          ENDIF
          IF "chm" $ Lower( CutPath( SetHelpFileName() ) )
             nHelpId := IIF( hb_IsNumeric(nHelpId), LTrim( Str( nHelpId ) ), nHelpId )
             ShellExecute("hh.exe", "open", CutPath( SetHelpFileName() ) + "::" + nHelpId + ".html", cDir)
          ELSE
-            WinHelp(oDlg:handle, SetHelpFileName(), IIf( Empty( nHelpId ), 3, 1 ), nHelpId)
+            WinHelp(oDlg:handle, SetHelpFileName(), IIf( Empty(nHelpId), 3, 1 ), nHelpId)
          ENDIF
       ELSEIF cDir != Nil
          ShellExecute("hh.exe", "open", CutPath( SetHelpFileName() ), cDir)
       ELSE
-         WinHelp(oDlg:handle, SetHelpFileName(), iif( Empty( oDlg:HelpId ), 3, 1), oDlg:HelpId)
+         WinHelp(oDlg:handle, SetHelpFileName(), iif( Empty(oDlg:HelpId), 3, 1), oDlg:HelpId)
       ENDIF
    ENDIF
    RETURN 1
@@ -821,7 +821,7 @@ FUNCTION EndDialog( handle )
       ENDIF
    ENDIF
    // force control triggered killfocus
-   IF !EMPTY( hFocus ) .AND. ( oCtrl := oDlg:FindControl(, hFocus ) ) != Nil .AND.;
+   IF !Empty(hFocus) .AND. ( oCtrl := oDlg:FindControl(, hFocus ) ) != Nil .AND.;
       oCtrl:bLostFocus != Nil .AND. oDlg:lModal
       SendMessage(hFocus, WM_KILLFOCUS, 0, 0)
    ENDIF

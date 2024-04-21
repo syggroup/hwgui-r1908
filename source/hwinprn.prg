@@ -197,7 +197,7 @@ Local i, i0, j, slen, c
       ::y += ::nLineHeight + ::nLined
    ENDIF
 
-   IF cLine != Nil .AND. !Empty( cLine )
+   IF cLine != Nil .AND. !Empty(cLine)
       slen := Len( cLine )
       i := 1
       i0 := 0

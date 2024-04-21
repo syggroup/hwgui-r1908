@@ -52,7 +52,7 @@ METHOD New( nRow, nCol, nWidth, nHeight, cFileName, oWnd, lNoBorder, nid ) CLASS
    ::oMci      := TMci():New( "avivideo", cFileName )
    ::Initiate()
 
-   IF !Empty( ::oparent:handle )
+   IF !Empty(::oparent:handle)
       ::oMci:lOpen()
       ::oMci:SetWindow( Self )
    ELSE

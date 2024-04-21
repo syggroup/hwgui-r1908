@@ -85,7 +85,7 @@ METHOD New( oWndParent, nId, aValue, bSetGet, nStyle, nLeft, nTop, nWidth, nHeig
    RETURN Self
 
 METHOD Activate() CLASS HIPedit
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := InitIPAddress ( ::oParent:handle, ::id, ::style , ;
                                   ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()

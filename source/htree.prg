@@ -200,7 +200,7 @@ METHOD AddNode(cTitle, oPrev, oNext, bAction, aImages) CLASS HTreeNode
 METHOD Delete(lInternal) CLASS HTreeNode
    LOCAL h := ::handle, j, alen, aItems
 
-   IF !Empty( ::aItems )
+   IF !Empty(::aItems)
       alen := Len( ::aItems )
       FOR j := 1 TO alen
          ::aItems[ j ]:Delete(.T.)
@@ -224,7 +224,7 @@ METHOD FindChild(h) CLASS HTreeNode
    FOR i := 1 TO alen
       IF aItems[i]:handle == h
          RETURN aItems[i]
-      ELSEIF !Empty( aItems[i]:aItems )
+      ELSEIF !Empty(aItems[i]:aItems)
          IF ( oNode := aItems[i]:FindChild(h) ) != Nil
             RETURN oNode
          ENDIF
@@ -247,7 +247,7 @@ METHOD Checked(lChecked) CLASS HTreeNode
 METHOD GetLevel( h ) CLASS HTreeNode
    LOCAL iLevel := 1
    
-   LOCAL oNode := IIF( EMPTY( h ), Self, h )
+   LOCAL oNode := IIF( Empty(h), Self, h )
    DO WHILE ( oNode:oParent ) != Nil 
        oNode := oNode:oParent
        iLevel ++
@@ -291,8 +291,8 @@ CLASS VAR winclass   INIT "SysTreeView32"
    METHOD ItemHeight( nHeight ) SETGET
    METHOD SearchString( cText, iNivel, oNode, inodo )
    METHOD Selecteds( oItem, aSels )
-   METHOD Top() INLINE IIF( !Empty( ::aItems ), ( ::Select( ::aItems[1] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_TOP ), Nil) ), )
-   METHOD Bottom() INLINE IIF( !Empty( ::aItems ), ( ::Select( ::aItems[ LEN( ::aItems ) ] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_BOTTOM ), Nil) ),)
+   METHOD Top() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[1] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_TOP ), Nil) ), )
+   METHOD Bottom() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[ LEN( ::aItems ) ] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_BOTTOM ), Nil) ),)
 
 ENDCLASS
 
@@ -329,7 +329,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit,
    ::bDrop   := bDrop
    ::bOther  := bOther
 
-   IF aImages != Nil .AND. !Empty( aImages )
+   IF aImages != Nil .AND. !Empty(aImages)
       ::aImages := {}
       FOR i := 1 TO Len( aImages )
          AAdd(::aImages, Upper(aImages[i]))
@@ -364,7 +364,7 @@ METHOD Init() CLASS HTree
 
 METHOD Activate() CLASS HTree
 
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateTree(::oParent:handle, ::id, ;
                               ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::tcolor, ::bcolor)
       ::Init()
@@ -469,7 +469,7 @@ METHOD FindChild(h) CLASS HTree
    FOR i := 1 TO alen
       IF aItems[i]:handle == h
          RETURN aItems[i]
-      ELSEIF !Empty( aItems[i]:aItems )
+      ELSEIF !Empty(aItems[i]:aItems)
          IF ( oNode := aItems[i]:FindChild(h) ) != Nil
             RETURN oNode
          ENDIF
@@ -484,7 +484,7 @@ METHOD FindChildPos( oNode, h ) CLASS HTree
    FOR i := 1 TO alen
       IF aItems[i]:handle == h
          RETURN i
-      ELSEIF .F. //!Empty( aItems[i]:aItems )
+      ELSEIF .F. //!Empty(aItems[i]:aItems)
          RETURN ::FindChildPos( aItems[i], h )
       ENDIF
    NEXT
@@ -497,7 +497,7 @@ METHOD SearchString( cText, iNivel, oNode, inodo ) CLASS HTree
    
    iNodo := IIF( inodo = Nil, 0, iNodo )
    FOR i := 1 TO aLen
-      IF !Empty( aItems[i]:aItems ) .AND. ;
+      IF !Empty(aItems[i]:aItems) .AND. ;
          ( oNodeRet := ::SearchString( cText, iNivel, aItems[i], iNodo ) ) != Nil 
          RETURN oNodeRet
       ENDIF
@@ -564,7 +564,7 @@ METHOD Notify( lParam ) CLASS HTree
       // Return 1
 
    ELSEIF nCode == TVN_ENDLABELEDIT  .or. nCode == TVN_ENDLABELEDITW
-      IF !Empty( cText := Tree_GetNotify( lParam, TREE_GETNOTIFY_EDIT ) )
+      IF !Empty(cText := Tree_GetNotify( lParam, TREE_GETNOTIFY_EDIT ))
          oItem := Tree_GetNotify( lParam, TREE_GETNOTIFY_EDITPARAM )
          IF hb_IsObject(oItem)
             IF !(cText == oItem:GetText())  .AND. ;
@@ -606,12 +606,12 @@ METHOD Notify( lParam ) CLASS HTree
          IF hb_IsBlock(::bCheck)
             lEval := Eval( ::bCheck, !::oItem:checked, ::oItem, Self )
          ENDIF
-         IF lEval == Nil .OR. !EMPTY( lEval )
+         IF lEval == Nil .OR. !Empty(lEval)
             MarkCheckTree(::oItem, IIF( ::oItem:checked, 1, 2 ))
             RETURN 0   
          ENDIF
          RETURN 1   
-      ELSEIF !::lEditLabels .AND. EMPTY( nHitem )
+      ELSEIF !::lEditLabels .AND. Empty(nHitem)
          IF !::oItem:oTree:lEmpty
             IF ::oItem:bClick != Nil
                Eval( ::oItem:bClick, ::oItem, Self )
@@ -636,7 +636,7 @@ METHOD Notify( lParam ) CLASS HTree
       IF hb_IsBlock(::bCheck)
          lEval := Eval( ::bCheck, !::oItem:checked, ::oItem, Self )
       ENDIF
-      IF lEval == Nil .OR. !EMPTY( lEval )
+      IF lEval == Nil .OR. !Empty(lEval)
          MarkCheckTree(::oItem, IIF( ::oItem:checked, 1, 2 ))
       ELSE
          RETURN 1
@@ -669,7 +669,7 @@ METHOD Expand(oNode, lAllNode) CLASS HTree
    
    SendMessage(::handle, TVM_EXPAND, TVE_EXPAND, oNode:handle)
    FOR i := 1 TO iLen
-      IF !EMPTY( lAllNode ) .AND. Len( oNode:aitems ) > 0
+      IF !Empty(lAllNode) .AND. Len( oNode:aitems ) > 0
          ::Expand(oNode:aItems[i], lAllNode)
       ENDIF
    NEXT

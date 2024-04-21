@@ -48,7 +48,7 @@ RETURN stro
 FUNCTION getNextVar( stroka, varValue )
 
 LOCAL varName, iPosEnd, iPos3
-   IF Empty( stroka )
+   IF Empty(stroka)
       RETURN ""
    ELSE
       IF ( iPosEnd := Find_Z( stroka ) ) == 0

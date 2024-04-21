@@ -81,7 +81,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFo
    LOCAL oPrevFont
    
    nStyle := Hwg_BitOR( nStyle, SS_NOTIFY + SS_RIGHT  )
-   ::lAllUnderline := IIF( EMPTY( cLink ), .F., ::lAllUnderline )
+   ::lAllUnderline := IIF( Empty(cLink), .F., ::lAllUnderline )
    ::title := IIF(cCaption != Nil,cCaption ,"HWGUI HomePage")
    ::hbitmap := hbitmap
 
@@ -233,7 +233,7 @@ METHOD GoToLinkUrl( csLink ) CLASS HStaticLink
 
 METHOD GetLinkText() CLASS HStaticLink
 
-   IF ( Empty( ::Title ) )
+   IF ( Empty(::Title) )
       RETURN ""
    ENDIF
 
@@ -266,7 +266,7 @@ METHOD OnClicked() CLASS HStaticLink
    IF hb_IsBlock(::bClick)
       ::state := LBL_NORMAL
 
-   ELSEIF !EMPTY( ::m_csUrl)
+   ELSEIF !Empty(::m_csUrl)
       IF ( ::m_bFireChild )
          nCtrlID := ::id
          ::SendMessage(::oparent:Handle, _HYPERLINK_EVENT, nCtrlID, 0)
@@ -353,7 +353,7 @@ METHOD PAint( lpDis ) CLASS HStaticLink
 //   LOCAL POLDFONT
 //   LOCAL DWSTYLE
    LOCAL bHasTitle
-   LOCAL aBmpSize    := IIF( !EMPTY( ::hbitmap ), GetBitmapSize(::hbitmap),{0,0} )
+   LOCAL aBmpSize    := IIF( !Empty(::hbitmap), GetBitmapSize(::hbitmap),{0,0} )
    LOCAL itemRect    := copyrect( { drawInfo[4], drawInfo[5], drawInfo[6], drawInfo[7] } )
    LOCAL captionRect := { drawInfo[4]  , drawInfo[5], drawInfo[6] , drawInfo[7]  }
    LOCAL bmpRect
@@ -364,7 +364,7 @@ METHOD PAint( lpDis ) CLASS HStaticLink
    rcClient   := CopyRect( { drawInfo[4] , drawInfo[5], drawInfo[6], drawInfo[7] } )
    
    IF hb_IsNumeric(::hbitmap)
-      bHasTitle := hb_IsChar(strtext) .and. !Empty( strtext )
+      bHasTitle := hb_IsChar(strtext) .and. !Empty(strtext)
       itemRect[4] := aBmpSize[2] + 1
       bmpRect := PrepareImageRect( ::handle, dc, bHasTitle, @itemRect, @captionRect, , , ::hbitmap, ::iStyle )
       itemRect[4] := drawInfo[7]
@@ -423,7 +423,7 @@ METHOD Resize(x, y) CLASS HStaticLink
    ENDIF
 
    x := iif( x == Nil, 0, x - ::nWidth + 1 )
-   aBmpSize := IIF( !EMPTY( ::hbitmap ), GetBitmapSize(::hbitmap), { 0,0 } )
+   aBmpSize := IIF( !Empty(::hbitmap), GetBitmapSize(::hbitmap), { 0,0 } )
    aBmpSize[1] += IIF( aBmpSize[1] > 0, 6, 0 )
    ::Move(, , ::nWidth + x, , 0)
    aTxtSize := TxtRect( ::Title, Self )

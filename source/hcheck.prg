@@ -73,7 +73,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    RETURN Self
 
 METHOD Activate() CLASS HCheckButton
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateButton( ::oParent:handle, ::id, ;
                                 ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::title )
       ::Init()
@@ -144,7 +144,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCheckButton
    ELSEIF msg == WM_KEYUP
       ProcKeyList( Self, wParam ) // working in MDICHILD AND DIALOG
 
-    ELSEIF msg = WM_GETDLGCODE .AND. !EMPTY( lParam )
+    ELSEIF msg = WM_GETDLGCODE .AND. !Empty(lParam)
       IF wParam = VK_RETURN .OR. wParam = VK_TAB
            RETURN -1
       ELSEIF wParam = VK_ESCAPE  .AND. ;
@@ -161,7 +161,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCheckButton
 
 METHOD SetValue(lValue) CLASS HCheckButton
 
-   SendMessage(::handle, BM_SETCHECK, IIF( EMPTY( lValue), 0, 1 ), 0)
+   SendMessage(::handle, BM_SETCHECK, IIF( Empty(lValue), 0, 1 ), 0)
    ::lValue := IIF( lValue = Nil .OR. !hb_IsLogical(lValue), .F., lValue )
    IF hb_IsBlock(::bSetGet)
        Eval( ::bSetGet, lValue, Self )
@@ -286,7 +286,7 @@ METHOD Valid() CLASS HCheckButton
        Eval( ::bClick, Self, ::lValue )
        ::oparent:lSuspendMsgsHandling := .F.
    ENDIF
-   IF EMPTY( GetFocus() )
+   IF Empty(GetFocus())
       GetSkip(::oParent, ::handle,, ::nGetSkip)
    ENDIF
 

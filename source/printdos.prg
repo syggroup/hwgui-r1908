@@ -105,7 +105,7 @@ METHOD New( oPorta ) CLASS PrintDos
    ::oLeftMar := 0
    ::oText    := ""
 
-   IF Empty( oPorta ) //
+   IF Empty(oPorta) //
       ::oPorta       := "LPT1"
    ELSE
       IF oPorta == "DEFAULT"
@@ -268,7 +268,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
    // tracelog(oProw, oPcol, oTexto, oPicture)
    IF hb_IsNumeric(oTexto)
 
-      IF !Empty( oPicture ) .or. oPicture != Nil
+      IF !Empty(oPicture) .or. oPicture != Nil
          oTexto := Transform( oTexto, oPicture )
       ELSE
          oTexto := Str( oTexto )
@@ -277,7 +277,7 @@ METHOD Say( oProw, oPcol, oTexto, oPicture ) CLASS PrintDos
    ELSEIF hb_IsDate(oTexto)
       oTexto := DToC(oTexto)
    ELSE
-      IF !Empty( oPicture ) .or. oPicture != Nil
+      IF !Empty(oPicture) .or. oPicture != Nil
          oTexto := Transform( oTexto, oPicture )
       ENDIF
    ENDIF
@@ -433,7 +433,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
    LOCAL oText := { "" }
    LOCAL oDlg, oColor1, oColor2
    LOCAL oEdit
-   LOCAL oPrt := IIf( Empty( ::oPorta ) .or. ::oPorta == "PREVIEW", "LPT1", ::oPorta )
+   LOCAL oPrt := IIf( Empty(::oPorta) .or. ::oPorta == "PREVIEW", "LPT1", ::oPorta )
 
    IF han != - 1
       DO WHILE .T.
@@ -459,7 +459,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
 
    oEdit := SUBS( oText[ nPage ], 2 )  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
 
-   IF !Empty( ::colorpreview )
+   IF !Empty(::colorpreview)
       oColor1 := ::colorpreview[1]
       oColor2 := ::colorpreview[2]
    ELSE

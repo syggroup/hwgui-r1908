@@ -27,7 +27,7 @@ CLASS VAR aTimers   INIT {}
 
    DATA   xName          HIDDEN
    ACCESS Name INLINE ::xName
-   ASSIGN Name(cName) INLINE IIF( !EMPTY( cName ) .AND. hb_IsChar(cName) .AND. !(":" $ cName) .AND. !("[" $ cName),;
+   ASSIGN Name(cName) INLINE IIF( !Empty(cName) .AND. hb_IsChar(cName) .AND. !(":" $ cName) .AND. !("[" $ cName),;
          ( ::xName := cName, __objAddData(::oParent, cName), ::oParent: & ( cName ) := Self), Nil)
    ACCESS Interval INLINE ::value
    ASSIGN Interval( x ) INLINE ::value := x, ;

@@ -80,7 +80,7 @@ METHOD NewBox( cTitle, nLeft, nTop, nWidth, nHeight, maxPos, nRange, bExit, lPer
         At nLeft, nTop SIZE nWidth, nHeight   ;
         STYLE WS_POPUP + WS_VISIBLE + WS_CAPTION + WS_SYSMENU + WS_SIZEBOX + IIf( nTop == 0, DS_CENTER, 0 ) + DS_SYSMODAL + MB_USERICON
 
-   @ ::nLeft, nTop + 5 SAY ::LabelBox CAPTION IIF( EMPTY( lPercent ), "", "%" )  SIZE ::nWidth, 19 ;
+   @ ::nLeft, nTop + 5 SAY ::LabelBox CAPTION IIF( Empty(lPercent), "", "%" )  SIZE ::nWidth, 19 ;
        STYLE SS_CENTER
 
    IF bExit != Nil
@@ -98,7 +98,7 @@ METHOD NewBox( cTitle, nLeft, nTop, nWidth, nHeight, maxPos, nRange, bExit, lPer
 
 METHOD Activate() CLASS HProgressBar
 
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateProgressBar( ::oParent:handle, ::maxPos, ::style, ;
                                      ::nLeft, ::nTop, ::nWidth, IIF( ::nHeight = 0, Nil, ::nHeight ) )
       ::Init()
@@ -123,7 +123,7 @@ METHOD STEP(cTitle)
       ::nCount := 0
       UpdateProgressBar(::handle)
       ::SET( cTitle )
-      IF !EMPTY( ::lPercent )
+      IF !Empty(::lPercent)
          ::nPercent += ::maxPos  //::nLimit
          ::setLabel( LTRIM( STR( ::nPercent, 3 ) ) + " %" )
       ENDIF

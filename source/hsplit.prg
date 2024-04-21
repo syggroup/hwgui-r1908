@@ -60,7 +60,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, ;
    RETURN Self
 
 METHOD Activate() CLASS HSplitter
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateStatic(::oParent:handle, ::id, ;
                                 ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle)
       ::Init()
@@ -124,7 +124,7 @@ METHOD Paint() CLASS HSplitter
    pps := DefinePaintStru()
    hDC := BeginPaint( ::handle, pps )
    aCoors := GetClientRect(::handle)
-   
+
    x1 := aCoors[1] //+ IIf( ::lVertical, 1, 2 )
    y1 := aCoors[2] //+ IIf( ::lVertical, 2, 1 )
    x2 := aCoors[3] //- IIf( ::lVertical, 0, 3 )

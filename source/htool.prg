@@ -239,7 +239,7 @@ METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, ;
 
 METHOD Activate() CLASS hToolBar
 
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::lCreate := .T.
       ::handle := CREATETOOLBAR( ::oParent:handle, ::id, ;
                                  ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle )
@@ -274,7 +274,7 @@ METHOD CREATETOOL() CLASS hToolBar
             IF !::lCreate
                DESTROYWINDOW(::Handle)
                ::Activate()
-               //IF !EMPTY( ::oFont )
+               //IF !Empty(::oFont)
                ::SetFont( ::oFont )
                //ENDIF
           ENDIF
@@ -396,7 +396,7 @@ METHOD CREATETOOL() CLASS hToolBar
           //SendMessage(::handle, TB_SETDRAWTEXTFLAGS, DT_CENTER+DT_VCENTER, DT_CENTER+DT_VCENTER)
    ENDIF
    SENDMESSAGE(::Handle, TB_SETINDENT, ::nIndent, 0)
-   IF !Empty( ::BtnWidth )
+   IF !Empty(::BtnWidth)
       SENDMESSAGE(::Handle, TB_SETBUTTONWIDTH, 0, MAKELPARAM( ::BtnWidth -1, ::BtnWidth + 1  ))
          //SENDMESSAGE(::Handle, TB_SETBUTTONWIDTH, MAKELPARAM( ::BtnWidth, ::BtnWidth ))
    ENDIF
@@ -477,7 +477,7 @@ METHOD AddButton( nBitIp, nId, bState, bStyle, cText, bClick, c, aMenu, cName, n
    DEFAULT bstyle to 0x0000
    DEFAULT c to ""
    DEFAULT ctext to ""
-   IF nId = Nil .OR. EMPTY( nId )
+   IF nId = Nil .OR. Empty(nId)
       //IDTOOLBAR
       nId := VAL( RIGHT( STR( ::id, 6 ), 1 ) ) * IDMAXBUTTONTOOLBAR
       nId := nId + ::id + IDTOOLBAR + LEN( ::aButtons ) + LEN( ::aSeparators ) + 1

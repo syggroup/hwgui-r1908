@@ -135,7 +135,7 @@ METHOD NewId() CLASS HControl
 
 METHOD AddName(cName) CLASS HControl
 
-   IF !EMPTY( cName ) .AND. hb_IsChar(cName) .AND. !(":" $ cName) .AND. !("[" $ cName) .AND. !("->" $ cName)
+   IF !Empty(cName) .AND. hb_IsChar(cName) .AND. !(":" $ cName) .AND. !("[" $ cName) .AND. !("->" $ cName)
       ::xName := cName
          __objAddData(::oParent, cName)
        ::oParent: & ( cName ) := Self
@@ -215,7 +215,7 @@ METHOD SetFocus( lValid ) CLASS HControl
        SendMessage(GetActiveWindow(), WM_NEXTDLGCTL, 0, 0)
        ::oParent:lSuspendMsgsHandling  := lSuspend
    ELSE
-      ::oParent:lSuspendMsgsHandling  := !Empty( lValid )
+      ::oParent:lSuspendMsgsHandling  := !Empty(lValid)
       IF ::GetParentForm():Type < WND_DLG_RESOURCE
          SetFocus(::handle)
       ELSE
@@ -280,7 +280,7 @@ METHOD FontBold(lTrue) CLASS HControl
       IF oFont = Nil .AND. lTrue = Nil
           RETURN .T.
       ENDIF
-      ::oFont := IIF( oFont != Nil, HFont():Add(oFont:name, oFont:Width, , , , ,), HFont():Add("", 0, , IIF( !Empty( lTrue ), FW_BOLD, FW_REGULAR ), , ,) )
+      ::oFont := IIF( oFont != Nil, HFont():Add(oFont:name, oFont:Width, , , , ,), HFont():Add("", 0, , IIF( !Empty(lTrue), FW_BOLD, FW_REGULAR ), , ,) )
    ENDIF
    IF lTrue != NIL
       ::oFont := ::oFont:SetFontStyle(lTrue)
@@ -353,7 +353,7 @@ METHOD Enabled(lEnabled) CLASS HControl
 METHOD ControlSource(cControlSource) CLASS HControl
   Local temp
 
-  IF cControlSource != Nil .AND. !EMPTY( cControlSource ) .AND. __objHasData(Self, "BSETGETFIELD")
+  IF cControlSource != Nil .AND. !Empty(cControlSource) .AND. __objHasData(Self, "BSETGETFIELD")
      ::xControlSource := cControlSource
      temp := SUBSTR( cControlSource, AT( "->", cControlSource ) + 2 )
      ::bSetGetField := IIF( "->" $ cControlSource, FieldWBlock( temp, SELECT( SUBSTR( cControlSource, 1, AT( "->", cControlSource ) - 1 ))),FieldBlock( cControlSource ) )
@@ -496,7 +496,7 @@ METHOD onAnchor( x, y, w, h ) CLASS HControl
 
          IF ( ( x1 != x9 .OR. y1 != y9 ) .AND. ( hb_IsBlock(::bPaint) .OR. ;
                       x9 + w9 > ::oParent:nWidth ) ) .OR. ( ::backstyle = TRANSPARENT .AND. ;
-                    ( ::Title != Nil .AND. !Empty( ::Title ) ) ) .OR. __ObjHasMsg( Self,"oImage" )
+                    ( ::Title != Nil .AND. !Empty(::Title) ) ) .OR. __ObjHasMsg( Self,"oImage" )
              IF __ObjHasMsg( Self, "oImage" ) .OR.  ::backstyle = TRANSPARENT //.OR. w9 != w1
                 InvalidateRect( ::oParent:handle, 1, MAX( x1 - 1, 0 ), MAX( y1 - 1, 0 ), x1 + w1 + 1, y1 + h1 + 1 )
              ELSE
@@ -576,7 +576,7 @@ METHOD New( oWndParent, nId, nStyle, oFont, aParts, bInit, bSize, bPaint, bRClic
 
 METHOD Activate() CLASS HStatus
 
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateStatusWindow( ::oParent:handle, ::id )
       ::StatusHeight( ::nStatusHeight )
       ::Init()
@@ -591,7 +591,7 @@ METHOD Activate() CLASS HStatus
 
 METHOD Init() CLASS HStatus
    IF !::lInit
-      IF !Empty( ::aParts )
+      IF !Empty(::aParts)
          hwg_InitStatus( ::oParent:handle, ::handle, Len( ::aParts ), ::aParts )
       ENDIF
       ::Super:Init()
@@ -687,7 +687,7 @@ METHOD SetIconPanel( nPart, cIcon, nWidth, nHeight ) CLASS HStatus
    ELSE
       oIcon := HIcon():addFile(cIcon, nWidth, nHeight)
     ENDIF
-    IF !EMPTY( oIcon )
+    IF !Empty(oIcon)
       SendMessage(::handle, SB_SETICON, nPart - 1, oIcon:handle)
    ENDIF
 
@@ -696,7 +696,7 @@ METHOD SetIconPanel( nPart, cIcon, nWidth, nHeight ) CLASS HStatus
 METHOD Resize(xIncrSize) CLASS HStatus   
    LOCAL i
    
-   IF !Empty( ::aParts ) 
+   IF !Empty(::aParts)
       FOR i := 1 TO LEN( ::aParts )
          ::aParts[i] := ROUND(::aParts[i] * xIncrSize, 0)
       NEXT   
@@ -814,7 +814,7 @@ METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, ;
    RETURN Self
 
 METHOD Activate() CLASS HStatic
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateStatic(::oParent:handle, ::id, ::style, ;
                                 ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
                                 ::extStyle)
@@ -908,7 +908,7 @@ METHOD Paint( lpDis ) CLASS HStatic
    // Set transparent background
    SetBkMode(dc, ::backstyle)
    IF ::BackStyle = OPAQUE
-      brBackground := IIF( !EMPTY( ::brush ), ::brush, ::hBrushDefault )
+      brBackground := IIF( !Empty(::brush), ::brush, ::hBrushDefault )
       FillRect( dc, client_rect[1], client_rect[2], client_rect[3], client_rect[4], brBackground:handle )
    ENDIF
 
@@ -1031,7 +1031,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
    RETURN Self
 
 METHOD Activate() CLASS HButton
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateButton( ::oParent:handle, ::id, ::style, ;
                                 ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
                                 ::title )
@@ -1108,7 +1108,7 @@ METHOD onevent( msg, wParam, lParam ) CLASS HButton
          SendMessage(::handle, WM_LBUTTONUP, 0, MAKELPARAM( 1, 1 ))
          RETURN 0
       ENDIF
-   ELSEIF msg = WM_GETDLGCODE .AND. !EMPTY( lParam )
+   ELSEIF msg = WM_GETDLGCODE .AND. !Empty(lParam)
       IF wParam = VK_RETURN .OR. wParam = VK_TAB
       ELSEIF GETDLGMESSAGE(lParam) = WM_KEYDOWN .AND.wParam != VK_ESCAPE
       ELSEIF GETDLGMESSAGE(lParam) = WM_CHAR .OR.wParam = VK_ESCAPE
@@ -1176,7 +1176,7 @@ METHOD onGetFocus() CLASS HButton
       ::oParent:lSuspendMsgsHandling := .T.
       res := Eval( ::bGetFocus, ::title, Self )
       ::oParent:lSuspendMsgsHandling := .F.
-      IF res != Nil .AND.  EMPTY( res )
+      IF res != Nil .AND.  Empty(res)
          WhenSetFocus( Self, nSkip )
          IF ::lflat 
             InvalidateRect( ::oParent:Handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight  )   
@@ -1281,8 +1281,8 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
    cCaption := IIF( cCaption = Nil, "", cCaption )
    ::Caption := cCaption
    ::iStyle                             := iStyle
-   ::hBitmap                            := IIF( EMPTY( hBitmap ), Nil, hBitmap )
-   ::hicon                              := IIF( EMPTY( hicon ), Nil, hIcon )
+   ::hBitmap                            := IIF( Empty(hBitmap), Nil, hBitmap )
+   ::hicon                              := IIF( Empty(hicon), Nil, hIcon )
    ::m_bDrawTransparent                 := Transp
    ::PictureMargin                      := nPictureMargin
    ::lnoThemes                          := lnoThemes
@@ -1478,7 +1478,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
      IF CheckBit( lParam, 23 ) .AND. ( wParam > 95 .AND. wParam < 106 ) 
         wParam -= 48
      ENDIF
-     IF !EMPTY( ::title) .AND. ( pos := At( "&", ::title ) ) > 0 .AND. wParam == Asc(Upper(SubStr(::title, ++pos, 1)))
+     IF !Empty(::title) .AND. ( pos := At( "&", ::title ) ) > 0 .AND. wParam == Asc(Upper(SubStr(::title, ++pos, 1)))
         IF hb_IsBlock(::bClick) .OR. ::id < 3
            SendMessage(::oParent:handle, WM_COMMAND, makewparam( ::id, BN_CLICKED ), ::handle)
         ENDIF
@@ -1599,10 +1599,10 @@ METHOD CancelHover() CLASS HBUTTONEx
 METHOD SetDefaultColor(tColor, bColor, lPaint) CLASS HBUTTONEx
    DEFAULT lPaint TO .F.
 
-   IF !EMPTY( tColor )
+   IF !Empty(tColor)
       ::tColor := tColor
    ENDIF
-   IF !EMPTY( bColor )
+   IF !Empty(bColor)
       ::bColor := bColor
    ENDIF
    ::m_crColors[ BTNST_COLOR_BK_IN ]    := IIF( ::bColor = Nil, GetSysColor(COLOR_BTNFACE), ::bColor )
@@ -1670,8 +1670,8 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
    //LOCAL captionRectWidth
    //LOCAL centerRectWidth
    LOCAL uAlign, uStyleTmp
-   LOCAL aTxtSize := IIf( !Empty( ::caption ), TxtRect( ::caption, Self ), { 0, 0 } )
-   LOCAL aBmpSize := IIf( !Empty( ::hbitmap ), GetBitmapSize(::hbitmap), { 0, 0 } )
+   LOCAL aTxtSize := IIf( !Empty(::caption), TxtRect( ::caption, Self ), { 0, 0 } )
+   LOCAL aBmpSize := IIf( !Empty(::hbitmap), GetBitmapSize(::hbitmap), { 0, 0 } )
    LOCAL itemRectOld, saveCaptionRect, bmpRect, itemRect1, captionRect1, fillRect
    LOCAL lMultiLine, nHeight := 0
 
@@ -1691,7 +1691,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
 
       ENDIF
    ENDIF
-   IF !Empty( ::hTheme ) .AND. !::lnoThemes
+   IF !Empty(::hTheme) .AND. !::lnoThemes
        ::Themed := .T.
    ENDIF
 
@@ -1791,7 +1791,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
  //  uAlign += DT_VCENTER
    uStyleTmp := HWG_GETWINDOWSTYLE(::handle)
    itemRectOld := aclone(itemRect)
-   IF hb_BitAnd(uStyleTmp, BS_MULTILINE) != 0 .AND. !EMPTY(::caption) .AND. ;
+   IF hb_BitAnd(uStyleTmp, BS_MULTILINE) != 0 .AND. !Empty(::caption) .AND. ;
       INT( aTxtSize[2] ) !=  INT( DrawText( dc, ::caption, itemRect[1], itemRect[2],;
           itemRect[3] - IIF( ::iStyle = ST_ALIGN_VERT, 0, aBmpSize[1] + 8 ),;
           itemRect[4], DT_CALCRECT + uAlign + DT_WORDBREAK, itemRectOld ) )
@@ -1822,7 +1822,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
 
    itemRectOld := AClone(itemRect)
 
-   IF !EMPTY( ::caption ) .AND. !EMPTY( ::hbitmap )  //.AND.!EMPTY( ::hicon )
+   IF !Empty(::caption) .AND. !Empty(::hbitmap)  //.AND.!Empty(::hicon)
       nHeight :=  aTxtSize[2] //nHeight := IIF( lMultiLine, DrawText( dc, ::caption, itemRect, DT_CALCRECT + uAlign + DT_WORDBREAK  ), aTxtSize[2] )
       IF ::iStyle = ST_ALIGN_HORIZ
           itemRect[1] := IIF( ::PictureMargin = 0, ( ( ( ::nWidth - aTxtSize[1] - aBmpSize[1] / 2 ) / 2 ) ) / 2, ::PictureMargin )
@@ -1834,11 +1834,11 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
          itemRect[1] := ( ::nWidth - aBmpSize[1] ) /  2
          itemRect[2] := IIF( ::PictureMargin = 0, ( ( ( ::nHeight - ( nHeight + aBmpSize[2] + 1 ) ) / 2 ) ), ::PictureMargin )
       ENDIF
-   ELSEIF !EMPTY( ::caption )
+   ELSEIF !Empty(::caption)
       nHeight := aTxtSize[2] //nHeight := IIF( lMultiLine, DrawText( dc, ::caption, itemRect, DT_CALCRECT + DT_WORDBREAK ), aTxtSize[2] )
    ENDIF
 
-   bHasTitle := hb_IsChar(::caption) .and. !Empty( ::Caption )
+   bHasTitle := hb_IsChar(::caption) .and. !Empty(::Caption)
 
    //   DrawTheIcon( ::handle, dc, bHasTitle, @itemRect, @captionRect, bIsPressed, bIsDisabled, ::hIcon, ::hbitmap, ::iStyle )
    IF hb_IsNumeric(::hbitmap) .AND. ::m_bDrawTransparent .AND. ( !bIsDisabled .OR. ::istyle = ST_ALIGN_HORIZ_RIGHT )
@@ -1877,7 +1877,7 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
       IF hb_IsNumeric(::hicon) .OR. hb_IsNumeric(::hbitmap)
           IF !lmultiline  .AND. ::iStyle != ST_ALIGN_OVERLAP
              // DrawText( dc, ::caption, captionRect[1], captionRect[2], captionRect[3], captionRect[4], uAlign + DT_CALCRECT, @captionRect )
-          ELSEIF !EMPTY(::caption)
+          ELSEIF !Empty(::caption)
              // figura no topo texto em baixo
              IF ::iStyle = ST_ALIGN_OVERLAP //ST_ALIGN_VERT
                 captionRect[2] :=  itemRect1[2] + aBmpSize[2] //+ 1
@@ -2097,7 +2097,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, ;
    RETURN Self
 
 METHOD Activate() CLASS HGroup
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateButton( ::oParent:handle, ::id, ::style, ;
                                 ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
                                 ::title )
@@ -2154,12 +2154,12 @@ METHOD PAINT( lpdis ) CLASS HGroup
 
     // determine text length
     szText :=  ::Title
-   aSize :=  TxtRect( IIF( Empty( szText ), "A", szText ), Self )
+   aSize :=  TxtRect( IIF( Empty(szText), "A", szText ), Self )
    // distance from window top to group rect
     iUpDist := ( aSize[2] / 2 )
    dwStyle := ::Style //HWG_GETWINDOWSTYLE(::handle) //GetStyle();
    rcText := { 0, rc[2] + iUpDist, 0, rc[2] + iUpDist  }
-   IF Empty( szText )
+   IF Empty(szText)
     ELSEIF hb_BitAnd(dwStyle, BS_CENTER) == BS_RIGHT // right aligned
       rcText[3] := rc[3] + 2 - OFS_X  
       rcText[1] := rcText[3] - aSize[1]
@@ -2217,7 +2217,7 @@ METHOD PAINT( lpdis ) CLASS HGroup
    ENDIF
 
    // draw text (if any)
-   IF !Empty( szText ) && !(dwExStyle & (BS_ICON|BS_BITMAP)))
+   IF !Empty(szText) && !(dwExStyle & (BS_ICON|BS_BITMAP)))
      SetBkMode(dc, TRANSPARENT)       
      IF ::oBrush != Nil
         FillRect( DC, rc[1] + 2, rc[2] + iUpDist + 2, rc[3] - 2, rc[4] - 2, ::brush:handle )
@@ -2260,10 +2260,10 @@ METHOD New( oWndParent, nId, lVert, nLeft, nTop, nLength, bSize, bInit, tcolor, 
 
    ::title := ""
    ::lVert := IIf( lVert == NIL, .F., lVert )
-   ::LineSlant := IIF( EMPTY( cSlant ) .OR. !cSlant $ "/\", "", cSlant )
-   ::nBorder := IIF( EMPTY( nBorder ), 1, nBorder )
+   ::LineSlant := IIF( Empty(cSlant) .OR. !cSlant $ "/\", "", cSlant )
+   ::nBorder := IIF( Empty(nBorder), 1, nBorder )
 
-   IF EMPTY( ::LineSlant )
+   IF Empty(::LineSlant)
       IF ::lVert
          ::nWidth  := ::nBorder + 1 //10
          ::nHeight := IIf( nLength == NIL, 20, nLength )
@@ -2284,7 +2284,7 @@ METHOD New( oWndParent, nId, lVert, nLeft, nTop, nLength, bSize, bInit, tcolor, 
    RETURN Self
 
 METHOD Activate() CLASS HLine
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateStatic(::oParent:handle, ::id, ::style, ;
                                 ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ::Init()
@@ -2299,7 +2299,7 @@ METHOD Paint( lpdis ) CLASS HLine
 
    SelectObject(hDC, ::oPenLight:handle)
 
-   IF EMPTY( ::LineSlant )
+   IF Empty(::LineSlant)
       IF ::lVert
          // DrawEdge(hDC,x1,y1,x1+2,y2,EDGE_SUNKEN,BF_RIGHT)
          DrawLine(hDC, x1 + 1, y1, x1 + 1, y2)

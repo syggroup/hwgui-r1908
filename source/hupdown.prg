@@ -125,7 +125,7 @@ METHOD New( oWndParent,nId,vari,bSetGet,nStyle,nLeft,nTop,nWidth,nHeight, ;
 
 METHOD Activate() CLASS HUpDown
 
-   IF !empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::lCreate := .T.
       ::oEditUpDown := HEditUpDown():New( ::oParent, ::id , val(::title) , ::bSetGet, ::Style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
            ::oFont, ::bInit, ::bSize, ::bPaint, ::bGetfocus, ::bLostfocus, ::tooltip, ::tcolor, ::bcolor, ::cPicture,;
@@ -161,7 +161,7 @@ METHOD CREATEUPDOWN() CLASS Hupdown
        ::oEditUpDown:DisableBrush := ::DisableBrush  
        SETWINDOWPOS( ::oEditUpDown:handle, ::Handle, 0, 0, 0, 0, SWP_NOSIZE +  SWP_NOMOVE )
        DESTROYWINDOW(::Handle)
-   ELSEIF ::getParentForm():Type < WND_DLG_RESOURCE .AND. ::oParent:ClassName = "HTAB" //!EMPTY( ::oParent:oParent )
+   ELSEIF ::getParentForm():Type < WND_DLG_RESOURCE .AND. ::oParent:ClassName = "HTAB" //!Empty(::oParent:oParent)
       // MDICHILD WITH TAB
       ::nHolder := 1
       SetWindowObject(::oEditUpDown:handle, ::oEditUpDown)
@@ -305,7 +305,7 @@ METHOD Notify( lParam ) CLASS HeditUpDown
        RETURN 0
    ENDIF
    vari :=  vari + ( ::oUpDown:Increment * idelta )
-   ::Title := Transform( vari , ::cPicFunc + IIf( Empty( ::cPicFunc ), "", " " ) + ::cPicMask )
+   ::Title := Transform( vari , ::cPicFunc + IIf( Empty(::cPicFunc), "", " " ) + ::cPicMask )
    SetDlgItemText( ::oParent:handle, ::id, ::title )
    ::oUpDown:Title := ::Title
    ::oUpDown:SetValue(vari)
@@ -332,7 +332,7 @@ METHOD Notify( lParam ) CLASS HeditUpDown
 
    vari := ::Value
    IF ::bSetGet != Nil  .AND. ::title != Nil
-      ::Title := Transform( vari , ::cPicFunc + IIf( Empty( ::cPicFunc ), "", " " ) + ::cPicMask )
+      ::Title := Transform( vari , ::cPicFunc + IIf( Empty(::cPicFunc), "", " " ) + ::cPicMask )
    ENDIF
    SetDlgItemText( ::oParent:handle, ::id, ::title )
 
@@ -410,7 +410,7 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
    RETURN Self
 
 METHOD Activate CLASS HUpDown
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateEdit( ::oParent:handle, ::id, ;
                               ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::title )
       ::Init()
@@ -525,7 +525,7 @@ STATIC FUNCTION __Valid(oCtrl)
       ENDIF
    ENDIF
    oCtrl:oparent:lSuspendMsgsHandling := .F.
-   IF empty(GetFocus() ) //= 0
+   IF Empty(GetFocus() ) //= 0
       GetSkip(octrl:oParent, octrl:handle, , octrl:nGetSkip)
    ENDIF
 

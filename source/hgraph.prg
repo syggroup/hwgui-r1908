@@ -65,7 +65,7 @@ METHOD Redefine(oWndParent, nId, aValues, oFont, ;
    RETURN Self
 
 METHOD Activate() CLASS HGraph
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateStatic(::oParent:handle, ::id, ;
                                 ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ::Init()

@@ -133,7 +133,7 @@ METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight,   ;
    RETURN Self
 
 METHOD Activate() CLASS HOwnButton
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateOwnBtn( ::oParent:handle, ::id, ;
                                 ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
@@ -287,9 +287,9 @@ METHOD Paint() CLASS HOwnButton
          IF ::WindowsManifest
             ::hTheme := hb_OpenThemeData(::handle, "BUTTON")
          ENDIF
-         ::hTheme := IIF( EMPTY( ::hTheme  ), Nil, ::hTheme )
+         ::hTheme := IIF( Empty(::hTheme), Nil, ::hTheme )
       ENDIF
-      IF Empty( ::hTheme )
+      IF Empty(::hTheme)
          ::Themed := .F.
       ENDIF
    ENDIF
@@ -357,7 +357,7 @@ METHOD DrawItems( hDC ) CLASS HOwnButton
    LOCAL x1, y1, x2, y2, aCoors
 
    aCoors := GetClientRect(::handle)
-   IF !EMPTY( ::brush )
+   IF !Empty(::brush)
       FillRect( hDC, aCoors[1] + 2, aCoors[2] + 2, aCoors[3] - 2, aCoors[4] - 2, ::Brush:handle )
    ENDIF
 
@@ -499,7 +499,7 @@ METHOD onGetFocus() CLASS HOwnButton
    IF hb_IsBlock(::bGetFocus)
       ::oparent:lSuspendMsgsHandling := .T.
       res := Eval( ::bGetFocus, ::title, Self )
-      IF res != Nil .AND. EMPTY( res )
+      IF res != Nil .AND. Empty(res)
          WhenSetFocus( Self,nSkip )
       ENDIF
    ENDIF

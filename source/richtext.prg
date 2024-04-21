@@ -363,7 +363,7 @@ METHOD PageSetup(nLeft, nRight, nTop, nBottom, nWidth, nHeight, nTabWidth, lLand
 // Vertical alignment and page number position are "section-specific"
 // codes.  But we'll put them here anyway for now...
 
-   IF !Empty( cVertAlign )
+   IF !Empty(cVertAlign)
       ::TextCode("vertal" + Lower( Left( cVertAlign, 1 ) ))
    ENDIF
 
@@ -473,7 +473,7 @@ METHOD Paragraph( cText, nFontNumber, nFontSize, cAppear, ;
 
    IF nShdPct > 0
       ::NumCode(IIf( !lChar, "shading", "chshdng" ), nShdPct, .F.)
-      IF !Empty( cShadPat )
+      IF !Empty(cShadPat)
          ::TextCode("bg" + ::ShadeCode(cShadPat))
       ENDIF
    ENDIF
@@ -613,7 +613,7 @@ METHOD Write(xData, lCodesOK) CLASS RichText
          // translation table is specified, look up the appropriate
          // hex value to write.
 
-         IF Empty( ::aTranslate )
+         IF Empty(::aTranslate)
             // Ignore soft line breaks
             IF nChar == 141
                LOOP
@@ -1028,7 +1028,7 @@ METHOD NewSection( lLandscape, nColumns, nLeft, nRight, nTop, nBottom, ;
    ::NumCode("pgwsxn", nWidth)
    ::NumCode("pghsxn", nHeight)
 
-   IF !Empty( cVertAlign )
+   IF !Empty(cVertAlign)
       ::TextCode("vertal" + Lower( Left( cVertAlign, 1 ) ))
    ENDIF
 
@@ -1059,7 +1059,7 @@ METHOD NewFont( nFontNumber ) CLASS RichText
 *
 *********************************************************************
 
-   IF !Empty( nFontNumber ) .AND. nFontNumber <= ::nFontNum
+   IF !Empty(nFontNumber) .AND. nFontNumber <= ::nFontNum
       ::NumCode("f", nFontNumber - 1, .F.)
       ::nFontAct := nFontNumber
    ENDIF
@@ -1089,7 +1089,7 @@ METHOD Appearance(cAppear) CLASS RichText
 *********************************************************************
    LOCAL cWrite := ""
 // Special case (see .CH file) -- first remove leading slash ...ugh.
-   IF !Empty( cAppear )
+   IF !Empty(cAppear)
       cWrite := ::TextCode(SubStr( cAppear, 2 ))
       ::cLastApar := cAppear
    ENDIF
@@ -1114,7 +1114,7 @@ METHOD HAlignment( cAlign ) CLASS RichText
 * 01/19/97   TRM         Creation
 *
 *********************************************************************
-   IF !Empty( cAlign )
+   IF !Empty(cAlign)
       ::TextCode("q" + Lower( Left( cAlign, 1 ) ))
    ENDIF
 
@@ -1144,7 +1144,7 @@ METHOD LineSpacing( nSpace, lSpExact ) CLASS RichText
    DEFAULT lSpExact TO .F.
 
    ::NumCode("sl", nSpace, lSpExact)
-   IF !Empty( nSpace )
+   IF !Empty(nSpace)
       ::NumCode("slmult", IIf( lSpExact, 0, 1 ), .F.)
    ENDIF
 
@@ -1534,7 +1534,7 @@ METHOD FootNote(cTexto, cChar, nFontNumber, ;
    IF lUpper
       ::TextCode("super " + cChar)
    ELSE
-      IF !Empty( cChar )
+      IF !Empty(cChar)
          ::Write(cChar)
       ENDIF
    ENDIF
@@ -1556,7 +1556,7 @@ METHOD FootNote(cTexto, cChar, nFontNumber, ;
    IF lUpper
       ::TextCode("super " + cChar)
    ELSE
-      IF !Empty( cChar )
+      IF !Empty(cChar)
          ::Write(cChar)
       ENDIF
    ENDIF
@@ -1605,7 +1605,7 @@ METHOD BegTextBox( cTexto, aOffset, ASize, cTipo, aColores, nWidth, nPatron, ;
    ENDIF
    ::OpenGroup()
    ::TextCode("dptxbxtext \s0\ql")
-   IF !Empty( cTexto )
+   IF !Empty(cTexto)
       ::Paragraph( cTexto, nFontNumber, nFontSize, cAppear, ;
                    ,, nIndent,,,,,,,,,,,, .F., .T. , nFontColor )
    ENDIF
@@ -1652,7 +1652,7 @@ METHOD SetFrame(ASize, cHorzAlign, cVertAlign, lNoWrap, ;
                  cXAlign, xpos, cYAlign, ypos) CLASS RichText
    LOCAL ancho
 
-   IF Empty( ASize )
+   IF Empty(ASize)
       RETURN NIL
    ENDIF
 
@@ -1731,7 +1731,7 @@ METHOD Image(cName, ASize, nPercent, lCell, lInclude, lFrame, aFSize, cHorzAlign
    lInclude TO .F., ;
    nPercent TO 1
 
-   IF Empty( cName )
+   IF Empty(cName)
       RETURN NIL
    ENDIF
 
@@ -1835,7 +1835,7 @@ METHOD IncStyle(cName, styletype, nFontNumber, nFontSize, ;
       ::NumCode("ds", ::nStlSec, .F.)
    ENDCASE
 
-   IF !Empty( cKeys )
+   IF !Empty(cKeys)
       ::OpenGroup()
       ::TextCode("keycode " + cKeys)
       ::CloseGroup()
@@ -1869,7 +1869,7 @@ METHOD IncStyle(cName, styletype, nFontNumber, nFontSize, ;
    IF lParrafo
       IF nShdPct > 0
          cEstilo += ::NumCode("shading", nShdPct, .F.)
-         IF !Empty( cShadPat )
+         IF !Empty(cShadPat)
             cEstilo += ::TextCode("bg" + ::ShadeCode(cShadPat))
          ENDIF
       ENDIF
@@ -2097,7 +2097,7 @@ METHOD TableDef( lHeader, nRowHead, cCellBorder, aColPct ) CLASS RichText
    // Set the default shading, border & width info for each body cell
    FOR i := 1 TO Len( ::aTableCWid )
       IF lHeader
-         IF !Empty( ::TblCJoin )
+         IF !Empty(::TblCJoin)
             FOR j = 1 TO Len( ::TblCJoin[ nRowHead ] )
                pos := AScan( ::TblCJoin[ nRowHead ][ j ], i )
                IF pos == 1
@@ -2348,7 +2348,7 @@ IF LoadPicture(cName,@nWidth,@nHeight,@ScreenResX,@ScreenResY) //NViewLib32( All
 
 // Dimensiones de la imagen en twips
 
-   IF EMPTY(aSize)
+   IF Empty(aSize)
                 PictWidth:=ROUND(aInches[1]+0.5,0)*nPercent
                 PictHeight:=ROUND(aInches[2]+0.5,0)*nPercent
         ELSE
@@ -2402,7 +2402,7 @@ cBRead:=GETBMETAFILE(cName,aInfo)
 
 IF cBRead > 0
 
-        IF EMPTY(aSize)
+        IF Empty(aSize)
       alto=(aInfo[3]-aInfo[1])*nPercent  // Unidades
       ancho=(aInfo[4]-aInfo[2])*nPercent
         ELSE
@@ -2517,7 +2517,7 @@ lHecho:=.F.
       aInches[1]:=nWidth/ResX
                 aInches[2]:=nHeight/ResY
 
-                IF EMPTY(aSize)
+                IF Empty(aSize)
                         aInches[1]*=nPercent
                         aInches[2]*=nPercent
                         scalex:=INT(nPercent*100)

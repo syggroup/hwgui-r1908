@@ -105,15 +105,15 @@ ENDCLASS
 METHOD New(oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight, aItems, oFont, bInit, bSize, bPaint, ;
    bChange, ctooltip, lEdit, lText, bGFocus, tcolor, bcolor, bLFocus, bIChange, nDisplay, nhItem, ncWidth, nMaxLength) CLASS HComboBox
 
-   IF !Empty( nDisplay ) .AND. nDisplay > 0
+   IF !Empty(nDisplay) .AND. nDisplay > 0
       nStyle := Hwg_BitOr( nStyle, CBS_NOINTEGRALHEIGHT  + WS_VSCROLL )
       // CBS_NOINTEGRALHEIGHT. CRIATE VERTICAL SCROOL BAR
    ELSE
       nDisplay := 6
    ENDIF
-   nHeight := IIF( EMPTY( nHeight ), 24, nHeight )
+   nHeight := IIF( Empty(nHeight), 24, nHeight )
    ::nHeightBox := Int( nHeight * 0.75 )                    //   Meets A 22'S EDITBOX
-   nHeight := nHeight + ( Iif( Empty( nhItem ), 16.250, ( nhItem += 0.10 ) ) * nDisplay )
+   nHeight := nHeight + ( Iif( Empty(nhItem), 16.250, ( nhItem += 0.10 ) ) * nDisplay )
 
    IF lEdit == Nil
       lEdit := .F.
@@ -195,7 +195,7 @@ RETURN Self
 
 METHOD Activate() CLASS HComboBox
 
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateCombo(::oParent:handle, ::id, ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ::Init()
       ::nHeight := INT( ::nHeightBox / 0.75 )
@@ -221,7 +221,7 @@ METHOD Redefine(oWndParent, nId, vari, bSetGet, aItems, oFont, bInit, bSize, bPa
    ::lText := lText
 
    //::nHeightBox := INT( 22 * 0.75 ) //   Meets A 22'S EDITBOX
-   IF !Empty( nDisplay ) .AND. nDisplay > 0
+   IF !Empty(nDisplay) .AND. nDisplay > 0
       ::Style := Hwg_BitOr( ::Style, CBS_NOINTEGRALHEIGHT )                     //+ WS_VSCROLL )
       // CBS_NOINTEGRALHEIGHT. CRIATE VERTICAL SCROOL BAR
    ELSE
@@ -296,7 +296,7 @@ METHOD INIT() CLASS HComboBox
       ::nHolder := 1
       SetWindowObject(::handle, Self)
       HWG_INITCOMBOPROC(::handle)
-      IF ::aItems != Nil .AND. !Empty( ::aItems )
+      IF ::aItems != Nil .AND. !Empty(::aItems)
          /*
          IF ::value == Nil
             IF ::lText
@@ -341,14 +341,14 @@ METHOD INIT() CLASS HComboBox
       ::Super:Init()
       IF !::lResource
          // HEIGHT Items
-         IF !Empty( ::nhItem )
+         IF !Empty(::nhItem)
             sendmessage(::handle, CB_SETITEMHEIGHT, 0, ::nhItem + 0.10)
          ELSE
             ::nhItem := sendmessage(::handle, CB_GETITEMHEIGHT, 0, 0) + 0.10
          ENDIF
          nHeightBox := sendmessage(::handle, CB_GETITEMHEIGHT, -1, 0) //+ 0.750
          //  WIDTH  Items
-         IF !Empty( ::ncWidth )
+         IF !Empty(::ncWidth)
             sendmessage(::handle, CB_SETDROPPEDWIDTH, ::ncWidth, 0)
          ENDIF
          ::nHeight := Int( nHeightBox / 0.75 + ( ::nhItem * ::nDisplay ) ) + 3
@@ -593,7 +593,7 @@ METHOD Requery() CLASS HComboBox
    NEXT
    */
    //::Refresh()
-   IF Empty( ::Value ) .AND. LEN( ::aItems ) > 0 .AND. ::bSetGet = Nil .AND. !::lEdit
+   IF Empty(::Value) .AND. LEN( ::aItems ) > 0 .AND. ::bSetGet = Nil .AND. !::lEdit
       ::SetItem( 1 )
    ENDIF
 
@@ -860,7 +860,7 @@ METHOD SetCueBanner( cText, lShowFoco ) CLASS HComboBox
    LOCAL lRet := .F.
 
    IF ::lEdit
-      lRet := SendMessage(::Handle, CB_SETCUEBANNER, IIF(EMPTY(lShowFoco), 0, 1), ANSITOUNICODE(cText))
+      lRet := SendMessage(::Handle, CB_SETCUEBANNER, IIF(Empty(lShowFoco), 0, 1), ANSITOUNICODE(cText))
    ENDIF
 
 RETURN lRet
@@ -897,7 +897,7 @@ RETURN .T.
 
 METHOD onChange(lForce) CLASS HComboBox
 
-   IF !SelfFocus(::handle) .AND. Empty( lForce )
+   IF !SelfFocus(::handle) .AND. Empty(lForce)
       RETURN Nil
    ENDIF
    IF !isWindowVisible(::handle)
@@ -1001,7 +1001,7 @@ METHOD Valid() CLASS HComboBox
        //  ENDIF
       ENDIF
       ::oparent:lSuspendMsgsHandling := .F.
-      IF Empty( GETFOCUS() ) // getfocus return pointer = 0                 //::nValidSetfocus = ::handle
+      IF Empty(GETFOCUS()) // getfocus return pointer = 0                 //::nValidSetfocus = ::handle
          GetSkip(::oParent, ::handle, , ::nGetSkip)
       ENDIF
    ENDIF
@@ -1038,7 +1038,7 @@ METHOD Populate() CLASS HComboBox
    LOCAL LongComboWidth := 0
    LOCAL xRowSource
 
-   IF EMPTY( ::aItems )
+   IF Empty(::aItems)
       RETURN Nil
    ENDIF
    xRowSource := iif( hb_IsArray( ::xRowSource[1] ), ::xRowSource[1, 1], ::xRowSource[1] )
@@ -1072,7 +1072,7 @@ METHOD Populate() CLASS HComboBox
        i := 1
        DO WHILE !( cAlias ) ->( EOF() )
          AADD(::Aitems,( cAlias ) -> ( &( value ) ))
-         IF !EMPTY( cvaluebound )
+         IF !Empty(cvaluebound)
             AADD(::AitemsBound,( cAlias ) -> ( &( cValueBound ) ))
          ENDIF
          ComboAddString( ::handle, ::aItems[i] )
@@ -1465,7 +1465,7 @@ METHOD RecalcText() CLASS hCheckComboBox
 
             COMBOBOXGETLBTEXT( ::handle, i, @stritem )
 
-            IF !Empty( strtext )
+            IF !Empty(strtext)
                strtext += strSeparator
             ENDIF
 
@@ -1542,7 +1542,7 @@ METHOD Paint( lpDis ) CLASS hCheckComboBox
    ENDIF
 
    // Erase and draw
-   IF Empty( strtext )
+   IF Empty(strtext)
       strtext := ""
    ENDIF
 
@@ -1569,7 +1569,7 @@ METHOD MeasureItem( l ) CLASS hCheckComboBox
    pFont := dc:SelectObject(IIf(hb_IsObject(::oFont), ::oFont:handle, ;
       IIf(hb_IsObject(::oParent:oFont), ::oParent:oFont:handle,)))
 
-   IF !Empty( pFont )
+   IF !Empty(pFont)
 
       metrics := dc:GetTextMetric()
 
@@ -1601,7 +1601,7 @@ METHOD OnGetText( wParam, lParam ) CLASS hCheckComboBox
    // Copy the 'fake' window text
    copydata(lParam, ::m_strText, wParam)
 
-RETURN Iif( Empty( ::m_strText ), 0, Len( ::m_strText ) )
+RETURN Iif( Empty(::m_strText), 0, Len( ::m_strText ) )
 
 //-------------------------------------------------------------------------------------------------------------------//
 
@@ -1612,7 +1612,7 @@ METHOD OnGetTextLength( WPARAM, LPARAM ) CLASS hCheckComboBox
 
    ::RecalcText()
 
-RETURN Iif( Empty( ::m_strText ), 0, Len( ::m_strText ) )
+RETURN Iif( Empty(::m_strText), 0, Len( ::m_strText ) )
 
 //-------------------------------------------------------------------------------------------------------------------//
 

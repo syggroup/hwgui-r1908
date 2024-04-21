@@ -49,7 +49,7 @@ METHOD Show( oWnd, xPos, yPos, lWnd ) CLASS HMenu
 FUNCTION Hwg_CreateMenu
    LOCAL hMenu
 
-   IF Empty( hMenu := hwg__CreateMenu() )
+   IF Empty(hMenu := hwg__CreateMenu())
       RETURN Nil
    ENDIF
 
@@ -57,7 +57,7 @@ FUNCTION Hwg_CreateMenu
 
 FUNCTION Hwg_SetMenu( oWnd, aMenu )
 
-   IF !Empty( oWnd:handle )
+   IF !Empty(oWnd:handle)
       IF hwg__SetMenu( oWnd:handle, aMenu[5] )
          oWnd:menu := aMenu
       ELSE
@@ -219,7 +219,7 @@ FUNCTION Hwg_EndMenu()
    ELSE
       BuildMenu( AClone(_aMenuDef), IIf( _oWnd != Nil, _oWnd:handle, Nil ), ;
                  _oWnd,, IIf( _oWnd != Nil, .F., .T. ) )
-      IF _oWnd != Nil .AND. _aAccel != Nil .AND. !Empty( _aAccel )
+      IF _oWnd != Nil .AND. _aAccel != Nil .AND. !Empty(_aAccel)
          _oWnd:hAccel := CreateAcceleratorTable(_aAccel)
       ENDIF
       _aMenuDef := Nil
@@ -241,12 +241,12 @@ FUNCTION Hwg_DefineMenuItem( cItem, nId, bItem, lDisabled, accFlag, accKey, lBit
    FOR i := 1 TO _nLevel
       aMenu := ATail( aMenu )[1]
    NEXT
-   IF !Empty( cItem )
+   IF !Empty(cItem)
       cItem := StrTran( cItem, "\t", Chr(9) )
    ENDIF
    nId := IIf( nId == Nil .AND. cItem != Nil, ++ _Id, nId )
    AAdd(aMenu, { bItem, cItem, nId, nFlag })
-   IF lBitmap != Nil .or. !Empty( lBitmap )
+   IF lBitmap != Nil .or. !Empty(lBitmap)
       IF lResource == Nil ;lResource := .F. ; ENDIF
       IF lResource .OR. AT("." ,lBitmap ) = 0
          oBmp := HBitmap():AddResource(lBitmap, LR_LOADMAP3DCOLORS + LR_SHARED + LR_LOADTRANSPARENT , ,s_nWidthBmp, s_nHeightBmp)

@@ -124,7 +124,7 @@ METHOD New( oWnd, nId, nStyle, x, y, width, height, oFont, bInit, bSize, bPaint,
    RETURN Self
 
 METHOD Activate() CLASS HGridEx
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::Style :=  ::Style - WS_BORDER
       ::handle := ListView_Create ( ::oParent:handle, ::id, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::style, ::lNoHeader, ::lNoScroll )
       ::Init()
@@ -273,7 +273,7 @@ METHOD Notify( lParam ) CLASS HGRIDEX
    ENDIF
 
    IF nCode == LVN_COLUMNCLICK //.and. GETNOTIFYCODEFROM(lParam) == ::Handle
-      IF Empty( ::hsort )
+      IF Empty(::hsort)
          ::hSort := LISTVIEWSORTINFONEW( lParam, NIL )
       ENDIF
       LISTVIEWSORT( ::handle, lParam, ::hSort )

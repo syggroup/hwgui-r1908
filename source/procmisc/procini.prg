@@ -87,7 +87,7 @@ LOCAL iniDbf := ( Upper(FilExten(fname)) == "DBF" )
             strfull += Left( stroka,Len(stroka)-1 )
             LOOP
          ELSE
-            IF !Empty( strfull )
+            IF !Empty(strfull)
                stroka := strfull + stroka
             ENDIF
             strfull := ""
@@ -138,7 +138,7 @@ LOCAL iniDbf := ( Upper(FilExten(fname)) == "DBF" )
                   DO CASE
                   CASE stroka = "on" .OR. stroka = "ON" .OR. stroka = "On"
                      &vname := .T.
-                  CASE stroka = "off" .OR. stroka = "OFF" .OR. stroka = "Off" .OR. EMPTY( stroka )
+                  CASE stroka = "off" .OR. stroka = "OFF" .OR. stroka = "Off" .OR. Empty(stroka)
                      &vname := .F.
                   CASE ASC(stroka) = 123 .AND. SUBSTR( stroka, 2, 1 ) != "|"  // {
                      RDARR( vname, stroka )
@@ -184,7 +184,7 @@ LOCAL len1, strv, newname
       stroka := SUBSTR( stroka, 2, poz1 - 1 )
       //lenm   := LEN( &vname ) (value not used)
       DO WHILE poz1 != 0
-         IF EMPTY( stroka )
+         IF Empty(stroka)
             EXIT
          ELSE
             //i ++ (value not used)
@@ -210,6 +210,6 @@ FIELD INICOND, INITEXT
    IF Eof()
       Return ""
    ENDIF
-   stroka := IIF( Empty( INICOND ) .OR. &( INICOND ), Trim(INITEXT), "" )
+   stroka := IIF( Empty(INICOND) .OR. &( INICOND ), Trim(INITEXT), "" )
    SKIP
 RETURN stroka

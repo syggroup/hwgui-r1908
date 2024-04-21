@@ -59,7 +59,7 @@ METHOD Redefine(oWndParent, nId, bInit, bSize, ctooltip) CLASS HSayImage
 
 METHOD Activate() CLASS HSayImage
 
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateStatic(::oParent:handle, ::id, ;
                                 ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle)
       ::Init()
@@ -117,7 +117,7 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
       ::extStyle +=  WS_EX_TRANSPARENT
    ENDIF
 
-   IF Image != Nil .AND. !Empty( Image )
+   IF Image != Nil .AND. !Empty(Image)
       IF lRes == Nil ; lRes := .F. ; ENDIF
       ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),     ;
                        HBitmap():AddResource(Image), ;
@@ -153,7 +153,7 @@ METHOD Init() CLASS HSayBmp
 
    IF !::lInit
       ::Super:Init()
-      IF ::oImage != Nil .AND. !empty( ::oImage:Handle )
+      IF ::oImage != Nil .AND. !Empty(::oImage:Handle)
          SendMessage(::handle,STM_SETIMAGE, IMAGE_BITMAP, ::oImage:handle)
       ENDIF
    ENDIF
@@ -162,7 +162,7 @@ Return Nil
 METHOD Paint( lpdis ) CLASS HSayBmp
    LOCAL drawInfo := GetDrawItemInfo( lpdis )
 
-   IF ::oImage != Nil .AND. !empty( ::oImage:Handle )
+   IF ::oImage != Nil .AND. !Empty(::oImage:Handle)
       IF ::nZoom == Nil
          IF ::BackStyle = TRANSPARENT
             IF ::nStretch = 1  // isometric

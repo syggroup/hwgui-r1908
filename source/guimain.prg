@@ -23,9 +23,9 @@ FUNCTION InitObjects( oWnd )
    LOCAL i, pArray := oWnd:aObjects 
    LOCAL LoadArray := HObject():aObjects
    
-   IF !EMPTY( LoadArray )
+   IF !Empty(LoadArray)
       FOR i := 1 TO Len( LoadArray )
-         IF !EMPTY( oWnd:Handle )
+         IF !Empty(oWnd:Handle)
             IF __ObjHasMsg( LoadArray[i],"INIT")
                LoadArray[i]:Init( oWnd )
                LoadArray[i]:lInit := .T.
@@ -51,8 +51,8 @@ FUNCTION InitControls( oWnd, lNoActivate )
    IF pArray != Nil
       FOR i := 1 TO Len( pArray )
          // writelog( "InitControl1"+str(pArray[i]:handle)+"/"+pArray[i]:classname+" "+str(pArray[i]:nWidth)+"/"+str(pArray[i]:nHeight) )
-         IF Empty( pArray[i]:handle ) .AND. !lNoActivate
-//         IF empty(pArray[i]:handle ) .AND. !lNoActivate
+         IF Empty(pArray[i]:handle) .AND. !lNoActivate
+//         IF Empty(pArray[i]:handle ) .AND. !lNoActivate
             lInit := pArray[i]:lInit
             pArray[i]:lInit := .T.
             pArray[i]:Activate()
@@ -60,13 +60,13 @@ FUNCTION InitControls( oWnd, lNoActivate )
          ELSEIF !lNoActivate
             pArray[i]:lInit := .T.
          ENDIF
-//           IF empty(pArray[i]:handle)// <= 0
+//           IF Empty(pArray[i]:handle)// <= 0
          IF IF( hb_IsPointer(pArray[i]:handle), ptrtoulong( pArray[i]:handle ), pArray[i]:handle ) <= 0 // TODO: verificar
             pArray[i]:handle := GetDlgItem( oWnd:handle, pArray[i]:id )
 
             // writelog( "InitControl2"+str(pArray[i]:handle)+"/"+pArray[i]:classname )
          ENDIF
-         IF !Empty( pArray[i]:aControls )
+         IF !Empty(pArray[i]:aControls)
             InitControls( pArray[i] )
          ENDIF
          pArray[i]:Init()
@@ -153,7 +153,7 @@ FUNCTION MsgGet( cTitle, cText, nStyle, x, y, nDlgStyle, cResIni )
    LOCAL oModDlg, oFont := HFont():Add("MS Sans Serif", 0, -13)
    LOCAL cRes := IIf( cResIni != Nil, Trim( cResIni ), "" )
    /*
-   IF !Empty( cRes )
+   IF !Empty(cRes)
       Keyb_Event( VK_END )
    ENDIF
    */
@@ -173,7 +173,7 @@ FUNCTION MsgGet( cTitle, cText, nStyle, x, y, nDlgStyle, cResIni )
    @ 180, 95 BUTTON "Cancel" ID IDCANCEL SIZE 100, 32
    oModDlg:aControls[4]:Anchor := 9
    
-   ACTIVATE DIALOG oModDlg ON ACTIVATE { || IIF( !EMPTY( cRes ), KEYB_EVENT( VK_END ), .T. ) }
+   ACTIVATE DIALOG oModDlg ON ACTIVATE { || IIF( !Empty(cRes), KEYB_EVENT( VK_END ), .T. ) }
 
    oFont:Release()
    IF oModDlg:lResult

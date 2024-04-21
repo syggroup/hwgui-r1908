@@ -153,7 +153,7 @@ ELSE
    MsgStop("Can't open " + fname)
    RETURN .F.
 ENDIF
-IF Empty( aPaintRep[ FORM_ITEMS ] )
+IF Empty(aPaintRep[ FORM_ITEMS ])
    MsgStop(repName + " not found or empty!")
    res := .F.
 ELSE
@@ -219,7 +219,7 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
          IF Len( stroka ) = 0
             EXIT
          ENDIF
-         DO WHILE !Empty( varName := getNextVar( @stroka, @varValue ) )
+         DO WHILE !Empty(varName := getNextVar( @stroka, @varValue ))
             PRIVATE &varName
             IF varValue != Nil
                &varName := &varValue
@@ -473,7 +473,7 @@ FUNCTION PrintItem( oPrinter, aPaintRep, aItem, prnXCoef, prnYCoef, nYadd, lCalc
          ELSE
             stroka := aItem[ ITEM_CAPTION ]
          ENDIF
-         IF !Empty( aItem[ ITEM_CAPTION ] )
+         IF !Empty(aItem[ ITEM_CAPTION ])
             oPrinter:Say( stroka, x1, y1, x2, y2, ;
                           IIf( aItem[ ITEM_ALIGN ] == 0, DT_LEFT, IIf( aItem[ ITEM_ALIGN ] == 1, DT_RIGHT, DT_CENTER ) ), ;
                           aItem[ ITEM_STATE ] )
@@ -496,7 +496,7 @@ FUNCTION PrintItem( oPrinter, aPaintRep, aItem, prnXCoef, prnYCoef, nYadd, lCalc
 
 STATIC FUNCTION ScriptExecute(aItem)
    LOCAL nError, nLineEr
-   IF aItem[ ITEM_SCRIPT ] != Nil .AND. !Empty( aItem[ ITEM_SCRIPT ] )
+   IF aItem[ ITEM_SCRIPT ] != Nil .AND. !Empty(aItem[ ITEM_SCRIPT ])
       IF hb_IsChar(aItem[ITEM_SCRIPT])
          IF ( aItem[ ITEM_SCRIPT ] := RdScript( , aItem[ ITEM_SCRIPT ] ) ) == Nil
             nError := CompileErr( @nLineEr )

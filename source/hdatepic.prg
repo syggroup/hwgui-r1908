@@ -112,7 +112,7 @@ METHOD Redefine(oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, ;
    RETURN Self
 
 METHOD Activate() CLASS HDatePicker
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := CreateDatePicker( ::oParent:handle, ::id, ;
                                     ::nLeft, ::nTop, ::nWidth, ::nHeight, ::style )
       ::Init()
@@ -169,7 +169,7 @@ METHOD GetValue() CLASS HDatePicker
 
 METHOD SetValue(xValue) CLASS HDatePicker
 
-   IF Empty( xValue )
+   IF Empty(xValue)
       SetDatePickerNull(::handle)
    ELSEIF ::lShowTime
       SetDatePicker( ::handle, Date(), STRTRAN( xValue, ":", "" ) )
@@ -193,7 +193,7 @@ METHOD Refresh() CLASS HDatePicker
          ::tValue := Eval( ::bSetGet,, Self )
       ENDIF
    ENDIF
-   IF Empty( ::dValue ) .AND. !::lShowTime
+   IF Empty(::dValue) .AND. !::lShowTime
       //SetDatePickerNull(::handle)
       SetDatePicker( ::handle, date(), STRTRAN( Time(), ":", "" ) )
    ELSE

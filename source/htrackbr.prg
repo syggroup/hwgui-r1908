@@ -72,7 +72,7 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
    RETURN Self
 
 METHOD Activate() CLASS HTrackBar
-   IF !Empty( ::oParent:handle )
+   IF !Empty(::oParent:handle)
       ::handle := InitTrackBar ( ::oParent:handle, ::id, ::style, ;
                                  ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
                                  ::nLow, ::nHigh )

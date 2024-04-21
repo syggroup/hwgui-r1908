@@ -42,14 +42,14 @@ STATIC FUNCTION onSize(oWnd, wParam, lParam)
       HWindow():aWindows[2]:nWidth  := aCoors[3] - aCoors[1]
       HWindow():aWindows[2]:nHeight := aCoors[4] - aCoors[2]
       // ADDED                                                   =
-      IF !Empty( oWnd:Screen )
+      IF !Empty(oWnd:Screen)
           oWnd:Screen:nWidth  := aCoors[3] - aCoors[1]
           oWnd:Screen:nHeight := aCoors[4] - aCoors[2]
           //InvalidateRect( oWnd:Screen:handle, 1 )   // flick in screen in resize window
           SetWindowPos( oWnd:screen:handle, Nil, 0, 0, oWnd:Screen:nWidth, oWnd:Screen:nHeight, SWP_NOACTIVATE + SWP_NOSENDCHANGING + SWP_NOZORDER )
           InvalidateRect( oWnd:Screen:handle, 1 )
       ENDIF
-      IF !Empty( oWnd := oWnd:GetMdiActive() ) .AND.oWnd:type = WND_MDICHILD .AND. oWnd:lMaximized .AND.;
+      IF !Empty(oWnd := oWnd:GetMdiActive()) .AND.oWnd:type = WND_MDICHILD .AND. oWnd:lMaximized .AND.;
            ( oWnd:lModal .OR. oWnd:lChild )
          oWnd:lMaximized := .F.
          //-SENDMESSAGE(oWnd:handle, WM_SYSCOMMAND, SC_MAXIMIZE, 0)
@@ -149,9 +149,9 @@ METHOD New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
    ::bOther     := bOther
    ::bCloseQuery := bCloseQuery
    ::bRefresh   := bRefresh
-   ::lChild    := IIF( EMPTY( lChild ), ::lChild, lChild  )
-   ::lClipper  := IIF( EMPTY( lClipper ), ::lClipper , lClipper )
-   ::lClosable := Iif( EMPTY( lnoClosable ), .T., !lnoClosable )
+   ::lChild    := IIF( Empty(lChild), ::lChild, lChild  )
+   ::lClipper  := IIF( Empty(lClipper), ::lClipper , lClipper )
+   ::lClosable := Iif( Empty(lnoClosable), .T., !lnoClosable )
 
    /*
    IF clr != NIL
@@ -310,7 +310,7 @@ METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate) CLASS HMain
 
    DEFAULT lMaximized := .F.
    DEFAULT lMinimized := .F.
-   lCentered  := ( !lMaximized .AND. !EMPTY( lCentered ) .AND. lCentered ) .OR. Hwg_BitAND(::Style, DS_CENTER) != 0
+   lCentered  := ( !lMaximized .AND. !Empty(lCentered) .AND. lCentered ) .OR. Hwg_BitAND(::Style, DS_CENTER) != 0
    DEFAULT lShow := .T.
    CreateGetList( Self )
    AEVAL( ::aControls, { | o | o:lInit := .F. } )
@@ -412,7 +412,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HMainWindow
    ENDIF
    // added control MDICHILD MODAL
    IF msg = WM_PARENTNOTIFY
-      IF wParam = WM_LBUTTONDOWN .AND. !EMPTY( ::GetMdiActive() )
+      IF wParam = WM_LBUTTONDOWN .AND. !Empty(::GetMdiActive())
          oMdi := ::GetMdiActive()
          IF oMdi:lModal
             xPos := LoWord(lParam)
@@ -501,11 +501,11 @@ METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate, lModal) CLA
    HB_SYMBOL_UNUSED(lCentered)
 
    DEFAULT lShow := .T.
-   lMinimized := !EMPTY( lMinimized ) .AND. lMinimized .AND. Hwg_BitAnd(::style, WS_MINIMIZE) != 0
-   lMaximized := !EMPTY( lMaximized ) .AND. lMaximized .AND. ;
+   lMinimized := !Empty(lMinimized) .AND. lMinimized .AND. Hwg_BitAnd(::style, WS_MINIMIZE) != 0
+   lMaximized := !Empty(lMaximized) .AND. lMaximized .AND. ;
                  ( Hwg_BitAnd(::style, WS_MAXIMIZE) != 0 .OR.  Hwg_BitAnd(::style, WS_SIZEBOX) != 0 )
-   lCentered  := ( !lMaximized .AND. !EMPTY( lCentered ) .AND. lCentered ) .OR. Hwg_BitAND(::Style, DS_CENTER) != 0
-   ::lModal   := !EMPTY( lModal ) .AND. lModal
+   lCentered  := ( !lMaximized .AND. !Empty(lCentered) .AND. lCentered ) .OR. Hwg_BitAND(::Style, DS_CENTER) != 0
+   ::lModal   := !Empty(lModal) .AND. lModal
    ::lChild   := ::lModal .OR. ::lChild .OR. ::minWidth  > -1 .OR. ::maxWidth  > -1 .OR. ::minHeight > -1 .OR. ::maxHeight > -1
    ::lSizeBox := Hwg_BitAnd(::style, WS_SIZEBOX) != 0
    ::WindowState := IIF( lMinimized, SW_SHOWMINIMIZED, IIF( lMaximized, SW_SHOWMAXIMIZED, IIF( lShow, SW_SHOWNORMAL, 0 ) ) )
@@ -627,7 +627,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HMDIChildWindow
       SETFOCUS( nFocus )
       //-::nFocus := 0
    ELSEIF msg = WM_DESTROY .AND. ::lModal .AND. !SelfFocus( ::Screen:Handle, ::handle )
-      IF !EMPTY( ::hActive ) .AND. !SelfFocus( ::hActive, ::Screen:Handle )
+      IF !Empty(::hActive) .AND. !SelfFocus( ::hActive, ::Screen:Handle )
          PostMessage(nFocus, WM_SETFOCUS, 0, 0)
          PostMessage(::hActive , WM_SETFOCUS, 0, 0)
       ENDIF 
@@ -696,8 +696,8 @@ METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate, lModal) CLA
    HB_SYMBOL_UNUSED(lModal)
 
    DEFAULT lShow := .T.
-   lMinimized := !EMPTY( lMinimized ) .AND. lMinimized .AND. Hwg_BitAnd(::style, WS_MINIMIZE) != 0
-   lMaximized := !EMPTY( lMaximized ) .AND. lMaximized .AND. Hwg_BitAnd(::style, WS_MAXIMIZE) != 0 
+   lMinimized := !Empty(lMinimized) .AND. lMinimized .AND. Hwg_BitAnd(::style, WS_MINIMIZE) != 0
+   lMaximized := !Empty(lMaximized) .AND. lMaximized .AND. Hwg_BitAnd(::style, WS_MAXIMIZE) != 0 
 
    ::Type := WND_CHILD
 
@@ -717,8 +717,8 @@ METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate, lModal) CLA
 
    Hwg_ActivateChildWindow( lShow, ::handle, lMaximized, lMinimized )
 
-   IF !EMPTY( lCentered ) .AND. lCentered
-      IF !EMPTY( ::oParent )
+   IF !Empty(lCentered) .AND. lCentered
+      IF !Empty(::oParent)
         ::nLeft := (::oParent:nWidth - ::nWidth ) / 2
         ::nTop  := (::oParent:nHeight - ::nHeight) / 2
       ENDIF
@@ -791,7 +791,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
 
    HB_SYMBOL_UNUSED(lParam)
 
-   IF wParam >= FIRST_MDICHILD_ID .AND. wparam < FIRST_MDICHILD_ID + MAX_MDICHILD_WINDOWS .AND. !Empty( oWnd:Screen ) 
+   IF wParam >= FIRST_MDICHILD_ID .AND. wparam < FIRST_MDICHILD_ID + MAX_MDICHILD_WINDOWS .AND. !Empty(oWnd:Screen) 
       IF wParam >= FIRST_MDICHILD_ID
          SetWindowPos( ownd:Screen:HANDLE, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOREDRAW + SWP_NOACTIVATE + SWP_NOMOVE + SWP_NOSIZE )
       ENDIF
@@ -856,7 +856,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
            wParam != SC_RESTORE .AND. oWnd:Type = WND_MDI //.AND. oWnd:bMdiMenu != Nil
       /*     
       // ADDED
-      IF !Empty( oWnd:Screen )
+      IF !Empty(oWnd:Screen)
          IF wParam = FIRST_MDICHILD_ID  // first menu
             IF IsWindowEnabled(oWnd:Screen:Handle)
                SetWindowPos( oWnd:Screen:HANDLE, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOACTIVATE + SWP_NOMOVE + SWP_NOSIZE + SWP_NOZORDER + ;
@@ -870,7 +870,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
          Eval( oWnd:bMdiMenu, oWnd:GetMdiActive(), wParam  )
       ENDIF
       */
-      RETURN IIF( !Empty( oWnd:Screen ) , -1 , 0 )
+      RETURN IIF( !Empty(oWnd:Screen) , -1 , 0 )
       // end added
    ENDIF
 
@@ -890,7 +890,7 @@ FUNCTION onMove(oWnd)
         oWnd:aRectSave[2] := oWnd:nTop
       ENDIF
    ENDIF
-   IF oWnd:isMinimized() .AND. !Empty( oWnd:Screen )
+   IF oWnd:isMinimized() .AND. !Empty(oWnd:Screen)
       SetWindowPos( oWnd:Screen:HANDLE, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOREDRAW + SWP_NOACTIVATE + SWP_NOOWNERZORDER + SWP_NOSIZE + SWP_NOMOVE )
    ENDIF
    RETURN - 1
@@ -911,7 +911,7 @@ LOCAL aCoors, oWndArea
       IF oWnd:brush != Nil
          IF !hb_IsNumeric(oWnd:brush)
             FillRect( wParam, aCoors[1], aCoors[2], aCoors[3] + 1, aCoors[4] + 1, oWnd:brush:handle )
-            IF !Empty( oWnd:Screen ) .AND. SELFFOCUS( oWnd:handle, oWnd:Screen:Handle )
+            IF !Empty(oWnd:Screen) .AND. SELFFOCUS( oWnd:handle, oWnd:Screen:Handle )
                SetWindowPos( oWnd:Handle, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOREDRAW + SWP_NOACTIVATE + SWP_NOMOVE + SWP_NOSIZE + SWP_NOZORDER +;
                                                          SWP_NOOWNERZORDER )
             ENDIF
@@ -991,12 +991,12 @@ STATIC FUNCTION onSysCommand(oWnd, wParam, lParam)
 
    ELSEIF wParam = SC_NEXTWINDOW .OR. wParam = SC_PREVWINDOW
       // ctrl+tab   IN Mdi child
-      IF !Empty( oWnd:lDisableCtrlTab ) .AND. oWnd:lDisableCtrlTab
+      IF !Empty(oWnd:lDisableCtrlTab) .AND. oWnd:lDisableCtrlTab
           RETURN 0
       ENDIF
    ELSEIF wParam = SC_KEYMENU
       // accelerator MDICHILD
-      IF Len( HWindow():aWindows) > 2 .AND. ( ( oChild:=oWnd ):Type = WND_MDICHILD .OR. !EMPTY( oChild := oWnd:GetMdiActive() ) )
+      IF Len( HWindow():aWindows) > 2 .AND. ( ( oChild:=oWnd ):Type = WND_MDICHILD .OR. !Empty(oChild := oWnd:GetMdiActive()) )
          IF ( oCtrl := FindAccelerator( oChild, lParam ) ) != Nil
             oCtrl:SetFocus()
             sendMessage(oCtrl:handle, WM_SYSKEYUP, lParam, 0)
@@ -1006,7 +1006,7 @@ STATIC FUNCTION onSysCommand(oWnd, wParam, lParam)
       ENDIF
    ELSEIF wParam = SC_HOTKEY
    //ELSEIF wParam = SC_MOUSEMENU  //0xF090
-   ELSEIF wParam = SC_MENU .AND. ( oWnd:type == WND_MDICHILD .OR. !Empty( oWnd := oWnd:GetMdiActive())) .AND. oWnd:lModal
+   ELSEIF wParam = SC_MENU .AND. ( oWnd:type == WND_MDICHILD .OR. !Empty(oWnd := oWnd:GetMdiActive())) .AND. oWnd:lModal
       MSGBEEP()
       RETURN 0
    ENDIF
@@ -1121,7 +1121,7 @@ STATIC FUNCTION onMdiCommand(oWnd, wParam)
 
 STATIC FUNCTION onMdiNcActivate(oWnd, wParam)
 
-   IF !Empty( oWnd:Screen )
+   IF !Empty(oWnd:Screen)
       IF wParam = 1 .AND. SelfFocus( oWnd:Screen:handle, oWnd:handle )
          SetWindowPos( oWnd:Screen:HANDLE, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOACTIVATE + SWP_NOOWNERZORDER + SWP_NOSIZE + SWP_NOMOVE )
          RETURN 1
@@ -1132,7 +1132,7 @@ STATIC FUNCTION onMdiNcActivate(oWnd, wParam)
             EVAL( oWnd:bSetForm, oWnd )
          ENDIF   
          IF !oWnd:lSuspendMsgsHandling .AND.;
-            oWnd:bGetFocus != Nil .AND. !Empty( GetFocus() ) .AND. oWnd:IsMaximized()
+            oWnd:bGetFocus != Nil .AND. !Empty(GetFocus()) .AND. oWnd:IsMaximized()
             oWnd:lSuspendMsgsHandling := .T.
             Eval( oWnd:bGetFocus, oWnd )
             oWnd:lSuspendMsgsHandling := .F.
@@ -1152,7 +1152,7 @@ Static Function onMdiActivate(oWnd,wParam, lParam)
    EndIf
    // added
    
-   IF !Empty( wParam )
+   IF !Empty(wParam)
       oWndDeact := oWnd:FindWindow( wParam )
       IF oWnd:lChild .AND. oWnd:lmaximized .AND. oWnd:IsMaximized()
          oWnd:Restore()
@@ -1166,7 +1166,7 @@ Static Function onMdiActivate(oWnd,wParam, lParam)
       ENDIF
    ENDIF
    
-   IF lScreen .AND. ( Empty( lParam ) .OR. ;
+   IF lScreen .AND. ( Empty(lParam) .OR. ;
        SelfFocus( lParam, oWnd:Screen:Handle ) ) .AND. !lConf //wParam != oWnd:Handle
       //-SetWindowPos( oWnd:Screen:Handle, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOACTIVATE + SWP_NOOWNERZORDER + SWP_NOSIZE + SWP_NOMOVE )
       RETURN 0
@@ -1196,7 +1196,7 @@ Static Function onMdiActivate(oWnd,wParam, lParam)
      ENDIF
       IF oWnd:bGetFocus != Nil .AND. !oWnd:lSuspendMsgsHandling .AND. !oWnd:IsMaximized()
          oWnd:lSuspendMsgsHandling := .T.
-         IF EMPTY( oWnd:nFocus )
+         IF Empty(oWnd:nFocus)
              UpdateWindow( oWnd:Handle)
          ENDIF
          Eval( oWnd:bGetFocus, oWnd )

@@ -154,7 +154,7 @@ Local cLine, lDebug := ( Len( rezArray ) >= 3 )
          strfull += Left( cLine,Len(cLine)-1 )
          LOOP
       ELSE
-         IF !Empty( strfull )
+         IF !Empty(strfull)
             cLine := strfull + cLine
          ENDIF
          strfull := ""
@@ -163,7 +163,7 @@ Local cLine, lDebug := ( Len( rezArray ) >= 3 )
       IF RIGHT( stroka, 1 ) == CHR(26)
          stroka := LEFT( stroka, LEN( stroka ) - 1 )
       ENDIF
-      IF !EMPTY( stroka ) .AND. LEFT( stroka, 2 ) != "//"
+      IF !Empty(stroka) .AND. LEFT( stroka, 2 ) != "//"
 
          IF Left( stroka,1 ) == "#"
             IF UPPER(Left(stroka, 7)) == "#ENDSCR"
@@ -305,7 +305,7 @@ Local n, cTitle
       cTitle := "Script variables error"
    ELSEIF nm == 3
       n := 2
-      DO WHILE !Empty( ProcName(n) )
+      DO WHILE !Empty(ProcName(n))
         stroka += Chr(13)+Chr(10) + "Called from " + ProcName(n) + "(" + AllTrim( Str( ProcLine(n++) ) ) + ")"
       ENDDO
       stroka := ErrorMessage(e)+ Chr(10)+Chr(13) + stroka
@@ -324,7 +324,7 @@ Local n, cTitle
    ELSEIF nm == 3
       stroka += ";" + ErrorMessage(e)
       n := 2
-      DO WHILE !Empty( ProcName(n) )
+      DO WHILE !Empty(ProcName(n))
         stroka += ";Called from " + ProcName(n) + "(" + AllTrim( Str( ProcLine(n++) ) ) + ")"
       ENDDO
       Alert( "Script execution error:;"+stroka )
@@ -373,14 +373,14 @@ LOCAL bOldError
 
    j := LEN( rezArray )
    FOR i := j TO 1 STEP - 1
-      IF !EMPTY( tmpArray[i] ) .AND. LEFT( tmpArray[i], 4 ) == "EXIT"
+      IF !Empty(tmpArray[i]) .AND. LEFT( tmpArray[i], 4 ) == "EXIT"
          rezArray[i] = &( "{||iscr:=" + LTRIM( STR( j + 1, 5 ) ) + "}" )
          tmpArray[i] = ""
       ENDIF
-      IF !EMPTY( tmpArray[i] ) .AND. LEFT( tmpArray[i], 4 ) == "LOOP"
+      IF !Empty(tmpArray[i]) .AND. LEFT( tmpArray[i], 4 ) == "LOOP"
          iloop := i
       ENDIF
-      IF !EMPTY(tmpArray[i]) .AND. (UPPER(LEFT(tmpArray[i], 8)) = "DO WHILE" .OR. ;
+      IF !Empty(tmpArray[i]) .AND. (UPPER(LEFT(tmpArray[i], 8)) = "DO WHILE" .OR. ;
          UPPER(LEFT(tmpArray[i], 5)) = "WHILE")
          bOldError := ERRORBLOCK( { | e | MacroError(1,e,tmpArray[i] ) } )
          BEGIN SEQUENCE
@@ -430,7 +430,7 @@ PRIVATE iscr := 1, bOldError
             bOldError := ERRORBLOCK( { | e | MacroError(2,e) } )
             BEGIN SEQUENCE
             j := 1
-            DO WHILE !EMPTY( varName := getNextVar( @stroka, @varValue ) )
+            DO WHILE !Empty(varName := getNextVar( @stroka, @varValue ))
                PRIVATE &varName
                IF varvalue != Nil
                   &varName := &varValue

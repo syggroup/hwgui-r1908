@@ -95,7 +95,7 @@ RETURN Self
 METHOD Activate() CLASS HPanel
    LOCAL handle := ::oParent:handle
 
-   IF !Empty( handle )
+   IF !Empty(handle)
       ::handle := CreatePanel( handle, ::id, ;
                                ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::ResizeOffSet( 0 )
@@ -196,7 +196,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
       GetSkip(::oParent, ::GetParentForm():nInitFocus , , IIF( SelfFocus( ::GetParentForm():nInitFocus, ::Handle ), 1, 0 ))
       ::GetParentForm():nInitFocus := 0
 
-   ELSEIF msg = WM_SETFOCUS .AND. EMPTY(::GetParentForm():nInitFocus) .AND. !::lSuspendMsgsHandling  //.AND. Hwg_BitaND(::sTyle, WS_TABSTOP) > 0 .
+   ELSEIF msg = WM_SETFOCUS .AND. Empty(::GetParentForm():nInitFocus) .AND. !::lSuspendMsgsHandling  //.AND. Hwg_BitaND(::sTyle, WS_TABSTOP) > 0 .
       Getskip(::oParent, ::handle, , ::nGetSkip)
 /*
    ELSEIF msg = WM_KEYUP
