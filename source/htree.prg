@@ -159,7 +159,7 @@ METHOD New( oTree, oParent, oPrev, oNext, cTitle, bAction, aImages, lchecked, bC
          ENDIF
       NEXT
       IF i > 1
-         oPrev := op:aItems[ i - 1 ]
+         oPrev := op:aItems[i - 1]
          nPos := 0
       ELSE
          nPos := 1
@@ -180,10 +180,10 @@ METHOD New( oTree, oParent, oPrev, oNext, cTitle, bAction, aImages, lchecked, bC
       AAdd(aItems, Nil)
       h := oPrev:handle
       IF ( i := AScan( aItems, { | o | o:handle == h } ) ) == 0
-         aItems[ Len( aItems ) ] := Self
+         aItems[Len( aItems )] := Self
       ELSE
          AIns( aItems, i + 1 )
-         aItems[ i + 1 ] := Self
+         aItems[i + 1] := Self
       ENDIF
    ENDIF
    ::image1 := im1
@@ -203,8 +203,8 @@ METHOD Delete(lInternal) CLASS HTreeNode
    IF !Empty(::aItems)
       alen := Len( ::aItems )
       FOR j := 1 TO alen
-         ::aItems[ j ]:Delete(.T.)
-         ::aItems[ j ] := Nil
+         ::aItems[j]:Delete(.T.)
+         ::aItems[j] := Nil
       NEXT
    ENDIF
    tree_ReleaseNode(::oTree:handle, ::handle)
@@ -292,7 +292,7 @@ CLASS VAR winclass   INIT "SysTreeView32"
    METHOD SearchString( cText, iNivel, oNode, inodo )
    METHOD Selecteds( oItem, aSels )
    METHOD Top() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[1] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_TOP ), Nil) ), )
-   METHOD Bottom() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[ LEN( ::aItems ) ] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_BOTTOM ), Nil) ),)
+   METHOD Bottom() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[LEN( ::aItems )] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_BOTTOM ), Nil) ),)
 
 ENDCLASS
 

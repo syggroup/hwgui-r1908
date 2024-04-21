@@ -53,7 +53,7 @@ Return xItem
 METHOD GetAttribute(cName) CLASS HXMLNode
 Local i := Ascan( ::aAttr,{|a|a[1]==cName} )
 
-Return Iif( i==0, Nil, ::aAttr[ i,2 ] )
+Return Iif( i==0, Nil, ::aAttr[i,2] )
 
 METHOD SetAttribute(cName, cValue) CLASS HXMLNode
 Local i := Ascan( ::aAttr,{|a|a[1]==cName} )
@@ -61,7 +61,7 @@ Local i := Ascan( ::aAttr,{|a|a[1]==cName} )
    IF i == 0
       Aadd(::aAttr, { cName,cValue })
    ELSE
-      ::aAttr[ i,2 ] := cValue
+      ::aAttr[i,2] := cValue
    ENDIF
 
 Return .T.

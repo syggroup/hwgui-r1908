@@ -623,7 +623,7 @@ METHOD Write(xData, lCodesOK) CLASS RichText
                          "\cf" + AllTrim( Str( ::nFontColor ) ) + AllTrim( ::cLastApar ) + "\'" + Lower( NewBase(nChar, 16) )
             ENDIF
          ELSE
-            cWrite += ::aTranslate[ Asc(cChar) - 127 ]
+            cWrite += ::aTranslate[Asc(cChar) - 127]
          ENDIF
 
       ENDIF
@@ -793,7 +793,7 @@ METHOD DefineTable(cTblHAlign, nTblFntNum, nTblFntSize, ;
 
    // Turn independent column widths into "right boundary" info...
    FOR i := 2 TO Len( aTableCWid )
-      aTableCWid[i] += aTableCWid[ i - 1 ]
+      aTableCWid[i] += aTableCWid[i - 1]
    NEXT
 
    IF aColPct == NIL
@@ -1912,9 +1912,9 @@ METHOD ParaStyle(nStyle) CLASS RichText
       RETURN NIL
    ENDIF
    IF ::nStlAct != nStyle
-      IF nStyle <= Len( ::ParStyles[ nStyle ] )
+      IF nStyle <= Len( ::ParStyles[nStyle] )
          ::Numcode("par\pard\s", nStyle, .F.)
-         FWrite(::hFile, ::ParStyles[ nStyle ])
+         FWrite(::hFile, ::ParStyles[nStyle])
          ::nStlAct := nStyle
       ENDIF
    ENDIF
@@ -1936,9 +1936,9 @@ METHOD CharStyle(nStyle) CLASS RichText
    ENDIF
 
    IF ::nCharAct != nStyle
-      IF nStyle <= Len( ::CharStyles[ nStyle ] )
+      IF nStyle <= Len( ::CharStyles[nStyle] )
          ::Numcode("\cs", nStyle, .F.)
-         FWrite(::hFile, ::CharStyles[ nStyle ])
+         FWrite(::hFile, ::CharStyles[nStyle])
          ::nCharAct := nStyle
       ENDIF
    ENDIF
@@ -2007,7 +2007,7 @@ METHOD DefNewTable(cTblHAlign, nTblFntNum, nTblFntSize, ;
 
    // Turn independent column widths into "right boundary" info...
    FOR i := 2 TO Len( aTableCWid )
-      aTableCWid[i] += aTableCWid[ i - 1 ]
+      aTableCWid[i] += aTableCWid[i - 1]
    NEXT
 
    IF aColPct == NIL
@@ -2053,7 +2053,7 @@ METHOD DefNewTable(cTblHAlign, nTblFntNum, nTblFntSize, ;
    FOR j = 1 TO ::nTblHdRows
       ::TableDef( .T., j )
       FOR i = 1 TO Len( ::aTableCWid )
-         ::TableCell( aHeadTit[ j ][i],,,,,,,, .T., .T. )
+         ::TableCell( aHeadTit[j][i],,,,,,,, .T., .T. )
       NEXT i
    NEXT j
 
@@ -2098,8 +2098,8 @@ METHOD TableDef( lHeader, nRowHead, cCellBorder, aColPct ) CLASS RichText
    FOR i := 1 TO Len( ::aTableCWid )
       IF lHeader
          IF !Empty(::TblCJoin)
-            FOR j = 1 TO Len( ::TblCJoin[ nRowHead ] )
-               pos := AScan( ::TblCJoin[ nRowHead ][ j ], i )
+            FOR j = 1 TO Len( ::TblCJoin[nRowHead] )
+               pos := AScan( ::TblCJoin[nRowHead][j], i )
                IF pos == 1
                   ::TextCode("clvertalt")
                   ::TextCode("clmgf")

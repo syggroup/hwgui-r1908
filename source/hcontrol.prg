@@ -1313,12 +1313,12 @@ METHOD Redefine(oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ;
    ::iStyle                             := iStyle
    ::hBitmap                            := hBitmap
    ::hIcon                              := hIcon
-   ::m_crColors[ BTNST_COLOR_BK_IN ]    := GetSysColor(COLOR_BTNFACE)
-   ::m_crColors[ BTNST_COLOR_FG_IN ]    := GetSysColor(COLOR_BTNTEXT)
-   ::m_crColors[ BTNST_COLOR_BK_OUT ]   := GetSysColor(COLOR_BTNFACE)
-   ::m_crColors[ BTNST_COLOR_FG_OUT ]   := GetSysColor(COLOR_BTNTEXT)
-   ::m_crColors[ BTNST_COLOR_BK_FOCUS ] := GetSysColor(COLOR_BTNFACE)
-   ::m_crColors[ BTNST_COLOR_FG_FOCUS ] := GetSysColor(COLOR_BTNTEXT)
+   ::m_crColors[BTNST_COLOR_BK_IN]    := GetSysColor(COLOR_BTNFACE)
+   ::m_crColors[BTNST_COLOR_FG_IN]    := GetSysColor(COLOR_BTNTEXT)
+   ::m_crColors[BTNST_COLOR_BK_OUT]   := GetSysColor(COLOR_BTNFACE)
+   ::m_crColors[BTNST_COLOR_FG_OUT]   := GetSysColor(COLOR_BTNTEXT)
+   ::m_crColors[BTNST_COLOR_BK_FOCUS] := GetSysColor(COLOR_BTNFACE)
+   ::m_crColors[BTNST_COLOR_FG_FOCUS] := GetSysColor(COLOR_BTNTEXT)
    ::PictureMargin                      := nPictureMargin
 
    ::Super:Redefine(oWndParent, nId, oFont, bInit, bSize, bPaint, bClick, ;
@@ -1484,9 +1484,9 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HBUTTONEx
         ENDIF
      ELSEIF ( nID := Ascan( ::oparent:acontrols, { | o | IIF( hb_IsChar(o:title), ( pos := At( "&", o:title )) > 0 .AND. ;
               wParam == Asc(Upper(SubStr(o:title, ++pos, 1))), ) } )) > 0
-        IF __ObjHasMsg( ::oParent:aControls[ nID ],"BCLICK") .AND.;
-           hb_IsBlock(::oParent:aControls[nID]:bClick) .OR. ::oParent:aControls[ nID]:id < 3
-           SendMessage(::oParent:handle, WM_COMMAND, makewparam( ::oParent:aControls[ nID ]:id, BN_CLICKED ), ::oParent:aControls[ nID ]:handle)
+        IF __ObjHasMsg( ::oParent:aControls[nID],"BCLICK") .AND.;
+           hb_IsBlock(::oParent:aControls[nID]:bClick) .OR. ::oParent:aControls[nID]:id < 3
+           SendMessage(::oParent:handle, WM_COMMAND, makewparam( ::oParent:aControls[nID]:id, BN_CLICKED ), ::oParent:aControls[nID]:handle)
         ENDIF
      ENDIF
      IF msg != WM_SYSKEYUP
@@ -1605,23 +1605,23 @@ METHOD SetDefaultColor(tColor, bColor, lPaint) CLASS HBUTTONEx
    IF !Empty(bColor)
       ::bColor := bColor
    ENDIF
-   ::m_crColors[ BTNST_COLOR_BK_IN ]    := IIF( ::bColor = Nil, GetSysColor(COLOR_BTNFACE), ::bColor )
-   ::m_crColors[ BTNST_COLOR_FG_IN ]    := IIF( ::tColor = Nil, GetSysColor(COLOR_BTNTEXT), ::tColor )
-   ::m_crColors[ BTNST_COLOR_BK_OUT ]   := IIF( ::bColor = Nil, GetSysColor(COLOR_BTNFACE), ::bColor )
-   ::m_crColors[ BTNST_COLOR_FG_OUT ]   := IIF( ::tColor = Nil, GetSysColor(COLOR_BTNTEXT), ::tColor )
-   ::m_crColors[ BTNST_COLOR_BK_FOCUS ] := IIF( ::bColor = Nil, GetSysColor(COLOR_BTNFACE), ::bColor )
-   ::m_crColors[ BTNST_COLOR_FG_FOCUS ] := IIF( ::tColor = Nil, GetSysColor(COLOR_BTNTEXT), ::tColor )
+   ::m_crColors[BTNST_COLOR_BK_IN]    := IIF( ::bColor = Nil, GetSysColor(COLOR_BTNFACE), ::bColor )
+   ::m_crColors[BTNST_COLOR_FG_IN]    := IIF( ::tColor = Nil, GetSysColor(COLOR_BTNTEXT), ::tColor )
+   ::m_crColors[BTNST_COLOR_BK_OUT]   := IIF( ::bColor = Nil, GetSysColor(COLOR_BTNFACE), ::bColor )
+   ::m_crColors[BTNST_COLOR_FG_OUT]   := IIF( ::tColor = Nil, GetSysColor(COLOR_BTNTEXT), ::tColor )
+   ::m_crColors[BTNST_COLOR_BK_FOCUS] := IIF( ::bColor = Nil, GetSysColor(COLOR_BTNFACE), ::bColor )
+   ::m_crColors[BTNST_COLOR_FG_FOCUS] := IIF( ::tColor = Nil, GetSysColor(COLOR_BTNTEXT), ::tColor )
    //
-   ::m_crBrush[ BTNST_COLOR_BK_IN ] := HBrush():Add(::m_crColors[ BTNST_COLOR_BK_IN ])
-   ::m_crBrush[ BTNST_COLOR_BK_OUT ] := HBrush():Add(::m_crColors[ BTNST_COLOR_BK_OUT ])
-   ::m_crBrush[ BTNST_COLOR_BK_FOCUS ] := HBrush():Add(::m_crColors[ BTNST_COLOR_BK_FOCUS ])
+   ::m_crBrush[BTNST_COLOR_BK_IN] := HBrush():Add(::m_crColors[BTNST_COLOR_BK_IN])
+   ::m_crBrush[BTNST_COLOR_BK_OUT] := HBrush():Add(::m_crColors[BTNST_COLOR_BK_OUT])
+   ::m_crBrush[BTNST_COLOR_BK_FOCUS] := HBrush():Add(::m_crColors[BTNST_COLOR_BK_FOCUS])
    /*
-   ::m_crColors[ BTNST_COLOR_BK_IN ]    := GetSysColor(COLOR_BTNFACE)
-   ::m_crColors[ BTNST_COLOR_FG_IN ]    := GetSysColor(COLOR_BTNTEXT)
-   ::m_crColors[ BTNST_COLOR_BK_OUT ]   := GetSysColor(COLOR_BTNFACE)
-   ::m_crColors[ BTNST_COLOR_FG_OUT ]   := GetSysColor(COLOR_BTNTEXT)
-   ::m_crColors[ BTNST_COLOR_BK_FOCUS ] := GetSysColor(COLOR_BTNFACE)
-   ::m_crColors[ BTNST_COLOR_FG_FOCUS ] := GetSysColor(COLOR_BTNTEXT)
+   ::m_crColors[BTNST_COLOR_BK_IN]    := GetSysColor(COLOR_BTNFACE)
+   ::m_crColors[BTNST_COLOR_FG_IN]    := GetSysColor(COLOR_BTNTEXT)
+   ::m_crColors[BTNST_COLOR_BK_OUT]   := GetSysColor(COLOR_BTNFACE)
+   ::m_crColors[BTNST_COLOR_FG_OUT]   := GetSysColor(COLOR_BTNTEXT)
+   ::m_crColors[BTNST_COLOR_BK_FOCUS] := GetSysColor(COLOR_BTNFACE)
+   ::m_crColors[BTNST_COLOR_FG_FOCUS] := GetSysColor(COLOR_BTNTEXT)
    */
    IF lPaint
       Invalidaterect( ::handle, .F. )
@@ -1634,7 +1634,7 @@ METHOD SetColorEx( nIndex, nColor, lPaint ) CLASS HBUTTONEx
    IF nIndex > BTNST_MAX_COLORS
       RETURN - 1
    ENDIF
-   ::m_crColors[ nIndex ]    := nColor
+   ::m_crColors[nIndex]    := nColor
    IF lPaint
       Invalidaterect( ::handle, .F. )
    ENDIF
@@ -1916,20 +1916,20 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
 
          IF ( ::bMouseOverButton .or. bIsPressed )
 
-            SetTextColor(DC, ::m_crColors[ BTNST_COLOR_FG_IN ])
-            SetBkColor(DC, ::m_crColors[ BTNST_COLOR_BK_IN ])
+            SetTextColor(DC, ::m_crColors[BTNST_COLOR_FG_IN])
+            SetBkColor(DC, ::m_crColors[BTNST_COLOR_BK_IN])
 
          ELSE
 
             IF ( bIsFocused )
 
-               SetTextColor(DC, ::m_crColors[ BTNST_COLOR_FG_FOCUS ])
-               SetBkColor(DC, ::m_crColors[ BTNST_COLOR_BK_FOCUS ])
+               SetTextColor(DC, ::m_crColors[BTNST_COLOR_FG_FOCUS])
+               SetBkColor(DC, ::m_crColors[BTNST_COLOR_BK_FOCUS])
 
             ELSE
 
-               SetTextColor(DC, ::m_crColors[ BTNST_COLOR_FG_OUT ])
-               SetBkColor(DC, ::m_crColors[ BTNST_COLOR_BK_OUT ])
+               SetTextColor(DC, ::m_crColors[BTNST_COLOR_FG_OUT])
+               SetBkColor(DC, ::m_crColors[BTNST_COLOR_BK_OUT])
             ENDIF
          ENDIF
       ENDIF
@@ -1970,35 +1970,35 @@ METHOD Paint( lpDis ) CLASS HBUTTONEx
 //            DrawText( dc, ::caption, @captionRect[1], @captionRect[2], @captionRect[3], @captionRect[4], uAlign )
             IF ( ::bMouseOverButton .or. bIsPressed )
 
-               SetTextColor(dc, ::m_crColors[ BTNST_COLOR_FG_IN ])
-               SetBkColor(dc, ::m_crColors[ BTNST_COLOR_BK_IN ])
+               SetTextColor(dc, ::m_crColors[BTNST_COLOR_FG_IN])
+               SetBkColor(dc, ::m_crColors[BTNST_COLOR_BK_IN])
 
                fillRect := COPYRECT( itemRect )
                IF bIsPressed
                    DrawButton( dc, fillRect[1], fillRect[2], fillRect[3], fillRect[4], 6 )
                ENDIF
                InflateRect( @fillRect, - 2, - 2 )
-               FillRect( dc, fillRect[1], fillRect[2], fillRect[3], fillRect[4], ::m_crBrush[ BTNST_COLOR_BK_IN ]:handle )
+               FillRect( dc, fillRect[1], fillRect[2], fillRect[3], fillRect[4], ::m_crBrush[BTNST_COLOR_BK_IN]:handle )
 
             ELSE
 
                IF ( bIsFocused )
 
-                  SetTextColor(dc, ::m_crColors[ BTNST_COLOR_FG_FOCUS ])
-                  SetBkColor(dc, ::m_crColors[ BTNST_COLOR_BK_FOCUS ])
+                  SetTextColor(dc, ::m_crColors[BTNST_COLOR_FG_FOCUS])
+                  SetBkColor(dc, ::m_crColors[BTNST_COLOR_BK_FOCUS])
 
                   fillRect := COPYRECT( itemRect )
                   InflateRect( @fillRect, - 2, - 2 )
-                  FillRect( dc, fillRect[1], fillRect[2], fillRect[3], fillRect[4], ::m_crBrush[ BTNST_COLOR_BK_FOCUS ]:handle )
+                  FillRect( dc, fillRect[1], fillRect[2], fillRect[3], fillRect[4], ::m_crBrush[BTNST_COLOR_BK_FOCUS]:handle )
 
                ELSE
 
-                  SetTextColor(dc, ::m_crColors[ BTNST_COLOR_FG_OUT ])
-                  SetBkColor(dc, ::m_crColors[ BTNST_COLOR_BK_OUT ])
+                  SetTextColor(dc, ::m_crColors[BTNST_COLOR_FG_OUT])
+                  SetBkColor(dc, ::m_crColors[BTNST_COLOR_BK_OUT])
 
                   fillRect := COPYRECT( itemRect )
                   InflateRect( @fillRect, - 2, - 2 )
-                  FillRect( dc, fillRect[1], fillRect[2], fillRect[3], fillRect[4], ::m_crBrush[ BTNST_COLOR_BK_OUT ]:handle )
+                  FillRect( dc, fillRect[1], fillRect[2], fillRect[3], fillRect[4], ::m_crBrush[BTNST_COLOR_BK_OUT]:handle )
 
                ENDIF
             ENDIF

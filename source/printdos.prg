@@ -92,11 +92,11 @@ METHOD New( oPorta ) CLASS PrintDos
    LOCAL oUnBold  := { oMATRIXUNBOLD, oINKJETUNBOLD, oLASERUNBOLD }       //Added by  por Fernando Athayde
    LOCAL oPtrSetup, oPtrName
 
-   ::cCompr   := oCompress[ ::oPrintStyle ]
-   ::cNormal  := oNormal[ ::oPrintStyle ]
-   ::cDouble  := oDouble[ ::oPrintStyle ]
-   ::cBold    := oBold[ ::oPrintStyle ]       //Added by  por Fernando Athayde
-   ::cUnBold  := oUnBold[ ::oPrintStyle ]       //Added by  por Fernando Athayde
+   ::cCompr   := oCompress[::oPrintStyle]
+   ::cNormal  := oNormal[::oPrintStyle]
+   ::cDouble  := oDouble[::oPrintStyle]
+   ::cBold    := oBold[::oPrintStyle]       //Added by  por Fernando Athayde
+   ::cUnBold  := oUnBold[::oPrintStyle]       //Added by  por Fernando Athayde
    ::cEject   := oFORMFEED
    ::nProw    := 0
    ::nPcol    := 0
@@ -147,7 +147,7 @@ METHOD New( oPorta ) CLASS PrintDos
    IF oPorta == "GRAPHIC" .or. oPorta == "PREVIEW"
       ::gText := ""
    ELSE
-      // tracelog([          ::gText:=fCreate(::oPorta)])
+      // tracelog([::gText:=fCreate(::oPorta)])
       ::gText := FCreate(::oPorta)
       //tracelog([depois           ::gText:=fCreate(::oPorta)],::gtext)
       IF ::gText < 0
@@ -442,9 +442,9 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
             EXIT
          ENDIF
          IF ::oAns2Oem
-            oText[ oPage ] += HB_ANSITOOEM( stroka ) + Chr(13) + Chr(10)
+            oText[oPage] += HB_ANSITOOEM( stroka ) + Chr(13) + Chr(10)
          ELSE
-            oText[ oPage ] += stroka + Chr(13) + Chr(10)
+            oText[oPage] += stroka + Chr(13) + Chr(10)
          ENDIF
          IF Left( stroka, 1 ) == Chr(12)
             AAdd(oText, "")
@@ -457,7 +457,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
       RETURN .F.
    ENDIF
 
-   oEdit := SUBS( oText[ nPage ], 2 )  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
+   oEdit := SUBS( oText[nPage], 2 )  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
 
    IF !Empty(::colorpreview)
       oColor1 := ::colorpreview[1]
@@ -512,9 +512,9 @@ STATIC FUNCTION PrintDosAnt( nPage, oText )
    nPage := -- nPage
    IF nPage < 1 ; nPage := 1 ; ENDIF
    IF nPage = 1  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
-      SetDlgItemText( oDlg, 1001, SUBS( oText[ nPage ], 2 ) )  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
+      SetDlgItemText( oDlg, 1001, SUBS( oText[nPage], 2 ) )  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
    ELSE
-      SetDlgItemText( oDlg, 1001, oText[ nPage ] )
+      SetDlgItemText( oDlg, 1001, oText[nPage] )
    ENDIF
    RETURN nPage
 
@@ -522,7 +522,7 @@ STATIC FUNCTION PrintDosNext( oPage, nPage, oText )
    LOCAL oDlg := GetModalhandle()
    nPage := ++ nPage
    IF nPage > oPage ; nPage := oPage ; ENDIF
-   SetDlgItemText( oDlg, 1001, oText[ nPage ] )
+   SetDlgItemText( oDlg, 1001, oText[nPage] )
    RETURN nPage
 
 FUNCTION regenfile(o, new)

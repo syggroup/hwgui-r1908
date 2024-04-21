@@ -400,13 +400,13 @@ METHOD InitCode39(lCheck) CLASS BarCode
       cCar := SubStr(cCode, n, 1)
       m    := At(cCar, cCars)
       IF n > 0
-         cBarra := cBarra + aBarras[ m ]
+         cBarra := cBarra + aBarras[m]
          nCheck += (m - 1)
       END
    NEXT
 
    IF lCheck = .T.
-      cBarra += aBarras[ nCheck % 43 + 1 ]
+      cBarra += aBarras[nCheck % 43 + 1]
    END
 
    RETURN cBarra
@@ -527,12 +527,12 @@ METHOD InitCode128(cMode) CLASS BarCode
       ENDIF
 
       nSum += (nCar - 1) * nCount
-      cTemp := cTemp + aCode[ nCar ]
+      cTemp := cTemp + aCode[nCar]
 
    NEXT
 
    nSum  := nSum % 103 + 1
-   cTemp := cTemp + aCode[ nSum ] + aCode[107]
+   cTemp := cTemp + aCode[nSum] + aCode[107]
    cBarra := ""
 
    FOR n := 1 TO Len(cTemp) STEP 2
@@ -709,7 +709,7 @@ METHOD InitCodabar() CLASS BarCode
 
    FOR n := 1 TO Len(cCode)
       IF (nCar := At(SubStr(cCode, n, 1), cChar)) > 0
-         cBarra += abar[ nCar ]
+         cBarra += abar[nCar]
       ENDIF
    NEXT
 

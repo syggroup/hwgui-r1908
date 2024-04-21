@@ -103,21 +103,21 @@ METHOD EndGroup(nSelected) CLASS HRadioGroup
       nSelected := IIf( nSelected != Nil.AND.nSelected <= nLen.AND.nSelected > 0, ;
                         nSelected, ::oGroupCurrent:nValue )
       IF nSelected != 0 .AND. nSelected <= nLen
-         IF ::oGroupCurrent:aButtons[ nLen ]:handle > 0
-            CheckRadioButton( ::oGroupCurrent:aButtons[ nLen ]:oParent:handle, ;
+         IF ::oGroupCurrent:aButtons[nLen]:handle > 0
+            CheckRadioButton( ::oGroupCurrent:aButtons[nLen]:oParent:handle, ;
                               ::oGroupCurrent:aButtons[1]:id,    ;
-                              ::oGroupCurrent:aButtons[ nLen ]:id, ;
-                              ::oGroupCurrent:aButtons[ nSelected ]:id )
+                              ::oGroupCurrent:aButtons[nLen]:id, ;
+                              ::oGroupCurrent:aButtons[nSelected]:id )
          ELSE
-            ::oGroupCurrent:aButtons[ nLen ]:bInit :=                     ;
+            ::oGroupCurrent:aButtons[nLen]:bInit :=                     ;
                                                       &( "{|o|CheckRadioButton(o:oParent:handle," +           ;
                                                                                 LTrim( Str( ::oGroupCurrent:aButtons[1]:id ) ) + "," +    ;
-                                                                                LTrim( Str( ::oGroupCurrent:aButtons[ nLen ]:id ) ) + "," + ;
-                                                                                LTrim( Str( ::oGroupCurrent:aButtons[ nSelected ]:id ) ) + ")}" )
+                                                                                LTrim( Str( ::oGroupCurrent:aButtons[nLen]:id ) ) + "," + ;
+                                                                                LTrim( Str( ::oGroupCurrent:aButtons[nSelected]:id ) ) + ")}" )
          ENDIF
       ENDIF
       IF Empty(::oParent)
-         ::oParent := ::oGroupCurrent:aButtons[ nLen ]:oParent //GetParentForm()
+         ::oParent := ::oGroupCurrent:aButtons[nLen]:oParent //GetParentForm()
       ENDIF
       //::Init()
    ENDIF
@@ -141,18 +141,18 @@ METHOD SetValue(nValue) CLASS HRadioGroup
    LOCAL nLen
 
    IF ( nLen := Len( ::aButtons ) ) > 0 .AND. nValue > 0 .AND. nValue <= nLen
-      CheckRadioButton( ::aButtons[ nLen ]:oParent:handle, ;
+      CheckRadioButton( ::aButtons[nLen]:oParent:handle, ;
                         ::aButtons[1]:id,    ;
-                        ::aButtons[ nLen ]:id, ;
-                        ::aButtons[ nValue ]:id )
+                        ::aButtons[nLen]:id, ;
+                        ::aButtons[nValue]:id )
       ::nValue := nValue
       IF hb_IsBlock(::bSetGet)
          Eval( ::bSetGet, ::nValue )
       ENDIF
    ELSEIF nLen > 0
-      CheckRadioButton( ::aButtons[ nlen ]:oParent:handle, ;
+      CheckRadioButton( ::aButtons[nlen]:oParent:handle, ;
             ::aButtons[1]:id,    ;
-            ::aButtons[ nLen ]:id, ;
+            ::aButtons[nLen]:id, ;
             0 )
    ENDIF
    RETURN Nil

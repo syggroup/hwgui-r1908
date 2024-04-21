@@ -396,8 +396,8 @@ LOCAL bOldError
          AADD(rezArray, &( "{||iscr:=" + LTRIM( STR( i - 1, 5 ) ) + "}" ))
          AADD(tmpArray, "")
          IF iloop > 0
-            rezArray[ iloop ] = &( "{||iscr:=" + LTRIM( STR( i - 1, 5 ) ) + "}" )
-            tmpArray[ iloop ] = ""
+            rezArray[iloop] = &( "{||iscr:=" + LTRIM( STR( i - 1, 5 ) ) + "}" )
+            tmpArray[iloop] = ""
          ENDIF
          RETURN .T.
       ENDIF
@@ -436,7 +436,7 @@ PRIVATE iscr := 1, bOldError
                   &varName := &varValue
                ENDIF
                IF lParam .AND. aParams != Nil .AND. Len(aParams) >= j
-                  &varname = aParams[ j ]
+                  &varname = aParams[j]
                ENDIF
                j ++
             ENDDO

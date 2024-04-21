@@ -591,7 +591,7 @@ METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate, lModal) CLA
       ::nFocus := ASCAN( ::aControls,{|o| Hwg_BitaND(HWG_GETWINDOWSTYLE(o:handle), WS_TABSTOP) != 0 .AND. ;
                  Hwg_BitaND(HWG_GETWINDOWSTYLE(o:handle), WS_DISABLED) = 0 } )
       IF ::nFocus > 0
-         SETFOCUS( ::acontrols[ ::nFocus ]:handle )
+         SETFOCUS( ::acontrols[::nFocus]:handle )
          ::nFocus := GetFocus() //get::acontrols[1]:handle
       ENDIF
    ENDIF
@@ -738,7 +738,7 @@ METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate, lModal) CLA
       ::nFocus := ASCAN( ::aControls,{|o| Hwg_BitaND(HWG_GETWINDOWSTYLE(o:handle), WS_TABSTOP) != 0 .AND. ;
            Hwg_BitaND(HWG_GETWINDOWSTYLE(o:handle), WS_DISABLED) = 0 } )
       IF ::nFocus > 0
-         SETFOCUS( ::acontrols[ ::nFocus ]:handle )
+         SETFOCUS( ::acontrols[::nFocus]:handle )
          ::nFocus := GetFocus() //get::acontrols[1]:handle
       ENDIF
    ENDIF
@@ -826,16 +826,16 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
       ENDIF
    ELSEIF wParam > FIRST_MDICHILD_ID .AND. wParam < FIRST_MDICHILD_ID + MAX_MDICHILD_WINDOWS
       IF oWnd:bMdiMenu != Nil 
-         Eval( oWnd:bMdiMenu, HWindow():aWindows[ wParam - FIRST_MDICHILD_ID + 2 ], wParam  )
+         Eval( oWnd:bMdiMenu, HWindow():aWindows[wParam - FIRST_MDICHILD_ID + 2], wParam  )
       ENDIF
-      nHandle := HWindow():aWindows[ wParam - FIRST_MDICHILD_ID + 2 ]:handle
+      nHandle := HWindow():aWindows[wParam - FIRST_MDICHILD_ID + 2]:handle
       SendMessage(HWindow():aWindows[2]:handle, WM_MDIACTIVATE, nHandle, 0)
    ENDIF
    iParHigh := HIWORD(wParam)
    iParLow := LOWORD(wParam)
    IF oWnd:aEvents != Nil .AND. !oWnd:lSuspendMsgsHandling  .AND. ;
       ( iItem := AScan( oWnd:aEvents, { | a | a[1] == iParHigh.and.a[2] == iParLow } ) ) > 0
-      Eval( oWnd:aEvents[ iItem, 3 ], oWnd, iParLow )
+      Eval( oWnd:aEvents[iItem, 3], oWnd, iParLow )
    ELSEIF hb_IsArray(oWnd:menu) .AND. ;
       ( aMenu := Hwg_FindMenuItem( oWnd:menu, iParLow, @iCont ) ) != Nil
       IF Hwg_BitAnd(aMenu[1, iCont, 4], FLAG_CHECK) > 0
@@ -1105,7 +1105,7 @@ STATIC FUNCTION onMdiCommand(oWnd, wParam)
       IF PtrtouLong( GetParent( GetFocus() ) ) = PtrtouLong( oWnd:Handle )
          oWnd:nFocus := GetFocus()
       ENDIF   
-      Eval( oWnd:aEvents[ iItem, 3 ], oWnd, iParLow )
+      Eval( oWnd:aEvents[iItem, 3], oWnd, iParLow )
    ELSEIF __ObjHasMsg( oWnd ,"OPOPUP") .AND. oWnd:oPopup != Nil .AND. ;
          ( aMenu := Hwg_FindMenuItem( oWnd:oPopup:aMenu, wParam, @iItem ) ) != Nil ;
          .AND. aMenu[1, iItem, 1] != Nil

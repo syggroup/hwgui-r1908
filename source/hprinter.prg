@@ -326,7 +326,7 @@ METHOD EndPage() CLASS HPrinter
 
    IF ::lPreview
       nLen := Len( ::aMeta )
-      ::aMeta[ nLen ] := CloseEnhMetaFile(::aMeta[ nLen ])
+      ::aMeta[nLen] := CloseEnhMetaFile(::aMeta[nLen])
       ::hDC := 0
    ELSE
       Hwg_EndPage(::hDC)
@@ -745,7 +745,7 @@ METHOD PlayMeta(oWnd) CLASS HPrinter
             FillRect( ::memDC:m_hDC, ::x1 - 1, ::y1 - 1, ::x2 + 1, ::y2 + 1, BrushLine )
             FillRect( ::memDC:m_hDC, ::x1, ::y1, ::x2, ::y2, BrushWhite )
             // Draw the actual printer data
-            PlayEnhMetafile(::memDC:m_hDC, ::aMeta[ ::nCurrPage ], ::x1, ::y1, ::x2, ::y2)
+            PlayEnhMetafile(::memDC:m_hDC, ::aMeta[::nCurrPage], ::x1, ::y1, ::x2, ::y2)
             // Draw
             // Rectangle(::memDC:m_hDC, ::x1, ::y1, ::x2, ::y2)
 
@@ -789,10 +789,10 @@ METHOD PrintMeta(nPage) CLASS HPrinter
       ::StartDoc()
       IF nPage == Nil
          FOR nPage := 1 TO Len( ::aMeta )
-            PrintEnhMetafile(::hDCPrn, ::aMeta[ nPage ])
+            PrintEnhMetafile(::hDCPrn, ::aMeta[nPage])
          NEXT
       ELSE
-         PrintEnhMetafile(::hDCPrn, ::aMeta[ nPage ])
+         PrintEnhMetafile(::hDCPrn, ::aMeta[nPage])
       ENDIF
       ::EndDoc()
       ::lPreview := .T.

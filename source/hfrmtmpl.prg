@@ -201,7 +201,7 @@ METHOD Read(fname, cId) CLASS HFormTmpl
    FOR i := 1 TO Len( aItems )
       IF aItems[i]:title == "style"
          FOR j := 1 TO Len( aItems[i]:aItems )
-            o := aItems[i]:aItems[ j ]
+            o := aItems[i]:aItems[j]
             IF o:title == "property"
                IF !Empty(o:aItems)
                   AAdd(aProp, { Lower( o:GetAttribute("name") ), o:aItems[1] })
@@ -214,8 +214,8 @@ METHOD Read(fname, cId) CLASS HFormTmpl
          NEXT
       ELSEIF aItems[i]:title == "method"
          Aadd(aMethods, { cName := Lower(aItems[i]:GetAttribute("name")),CompileMethod(pp,aItems[i]:aItems[1]:aItems[1],Self,,cName) })
-         IF aMethods[ ( j := Len( aMethods ) ), 1 ] == "common"
-            ::aFuncs := ::aMethods[ j, 2, 2 ]
+         IF aMethods[( j := Len( aMethods ) ), 1] == "common"
+            ::aFuncs := ::aMethods[j, 2, 2]
             FOR j := 1 TO Len( ::aFuncs[2] )
                cPre := "#xtranslate " + ::aFuncs[2, j, 1] + ;
                        "( <params,...> ) => callfunc('"  + ;
@@ -254,84 +254,84 @@ METHOD Show( nMode, p1, p2, p3 ) CLASS HFormTmpl
    nstyle := DS_ABSALIGN + WS_VISIBLE + WS_SYSMENU + WS_SIZEBOX
 
    FOR i := 1 TO Len( ::aProp )
-      xProperty := hfrm_GetProperty( ::aProp[ i, 2 ] )
+      xProperty := hfrm_GetProperty( ::aProp[i, 2] )
 
-      IF ::aProp[ i, 1 ] == "geometry"
+      IF ::aProp[i, 1] == "geometry"
          nLeft   := Val( xProperty[1] )
          nTop    := Val( xProperty[2] )
          nWidth  := Val( xProperty[3] )
          nHeight := Val( xProperty[4] )
-      ELSEIF ::aProp[ i, 1 ] == "caption"
+      ELSEIF ::aProp[i, 1] == "caption"
          cTitle := xProperty
-      ELSEIF ::aProp[ i, 1 ] == "font"
+      ELSEIF ::aProp[i, 1] == "font"
          oFont := hfrm_FontFromxml( xProperty )
-      ELSEIF ::aProp[ i, 1 ] == "lclipper"
+      ELSEIF ::aProp[i, 1] == "lclipper"
          lClipper := xProperty
-      ELSEIF ::aProp[ i, 1 ] == "lexitonenter"
+      ELSEIF ::aProp[i, 1] == "lexitonenter"
          lExitOnEnter := xProperty
-      ELSEIF ::aProp[ i, 1 ] == "exstyle"
+      ELSEIF ::aProp[i, 1] == "exstyle"
          nstyle := xProperty
-      ELSEIF ::aProp[ i, 1 ] == "modal"
+      ELSEIF ::aProp[i, 1] == "modal"
          lModal := xProperty
-      ELSEIF ::aProp[ i, 1 ] == "formtype"
+      ELSEIF ::aProp[i, 1] == "formtype"
          IF nMode == Nil
             lMdi := At( "mdimain", Lower( xProperty ) ) > 0
             lMdiChild := At( "mdichild", Lower( xProperty ) ) > 0
             nMode := IF( Left( xProperty, 3 ) == "dlg", 2, 1 )
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "variables"
+      ELSEIF ::aProp[i, 1] == "variables"
          FOR j := 1 TO Len( xProperty )
-            __mvPrivate(xProperty[ j ])
+            __mvPrivate(xProperty[j])
          NEXT
          // Styles below
-      ELSEIF ::aProp[ i, 1 ] == "systemmenu"
+      ELSEIF ::aProp[i, 1] == "systemmenu"
          IF !xProperty
             nstyle := hwg_bitandinverse(nstyle, WS_SYSMENU)
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "minimizebox"
+      ELSEIF ::aProp[i, 1] == "minimizebox"
          IF xProperty
             nstyle += WS_MINIMIZEBOX
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "maximizebox"
+      ELSEIF ::aProp[i, 1] == "maximizebox"
          IF xProperty
             nstyle += WS_MAXIMIZEBOX
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "absalignent"
+      ELSEIF ::aProp[i, 1] == "absalignent"
          IF !xProperty
             nstyle := hwg_bitandinverse(nstyle, DS_ABSALIGN)
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "sizeBox"
+      ELSEIF ::aProp[i, 1] == "sizeBox"
          IF !xProperty
             nstyle := hwg_bitandinverse(nstyle, WS_SIZEBOX)
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "visible"
+      ELSEIF ::aProp[i, 1] == "visible"
          IF !xProperty
             nstyle := hwg_bitandinverse(nstyle, WS_VISIBLE)
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "3dLook"
+      ELSEIF ::aProp[i, 1] == "3dLook"
          IF xProperty
-            IF ::aControls[ j ]:cClass == "button" .OR. ::aControls[ j ]:cClass == "ownerbutton"
+            IF ::aControls[j]:cClass == "button" .OR. ::aControls[j]:cClass == "ownerbutton"
                nstyle += DS_3DLOOK
             ELSE
-               nstyle += IIf( ::aControls[ j ]:cClass = "checkbox", BS_PUSHLIKE, 0 )
+               nstyle += IIf( ::aControls[j]:cClass = "checkbox", BS_PUSHLIKE, 0 )
             ENDIF
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "clipsiblings"
+      ELSEIF ::aProp[i, 1] == "clipsiblings"
          IF xProperty
             nstyle += WS_CLIPSIBLINGS
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "clipchildren"
+      ELSEIF ::aProp[i, 1] == "clipchildren"
          IF xProperty
             nstyle += WS_CLIPCHILDREN
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "fromstyle"
+      ELSEIF ::aProp[i, 1] == "fromstyle"
          IF Lower( xProperty ) == "popup"
             nstyle += WS_POPUP + WS_CAPTION
          ELSEIF Lower( xProperty ) == "child"
             nstyle += WS_CHILD
          ENDIF
 
-      ELSEIF ::aProp[ i, 1 ] == "bitmap"
+      ELSEIF ::aProp[i, 1] == "bitmap"
          cBitmap := xProperty
       ENDIF
    NEXT
@@ -383,32 +383,32 @@ METHOD Show( nMode, p1, p2, p3 ) CLASS HFormTmpl
    oDlg := ::oDlg
 
    FOR i := 1 TO Len( ::aMethods )
-      IF ( cType := ValType(::aMethods[ i, 2 ]) ) == "B"
-         block := ::aMethods[ i, 2 ]
+      IF ( cType := ValType(::aMethods[i, 2]) ) == "B"
+         block := ::aMethods[i, 2]
       ELSEIF cType == "A"
-         block := ::aMethods[ i, 2, 1 ]
+         block := ::aMethods[i, 2, 1]
       ENDIF
-      IF ::aMethods[ i, 1 ] == "ondlginit"
+      IF ::aMethods[i, 1] == "ondlginit"
          ::oDlg:bInit := block
-      ELSEIF ::aMethods[ i, 1 ] == "onforminit"
+      ELSEIF ::aMethods[i, 1] == "onforminit"
          Eval( block, Self, p1, p2, p3 )
-      ELSEIF ::aMethods[ i, 1 ] == "onpaint"
+      ELSEIF ::aMethods[i, 1] == "onpaint"
          ::oDlg:bPaint := block
-      ELSEIF ::aMethods[ i, 1 ] == "ondlgexit"
+      ELSEIF ::aMethods[i, 1] == "ondlgexit"
          ::oDlg:bDestroy := block
-      ELSEIF ::aMethods[ i, 1 ] == "onformexit"
+      ELSEIF ::aMethods[i, 1] == "onformexit"
          bFormExit := block
       ENDIF
    NEXT
 
    j := Len( ::aControls )
-   IF j > 0 .AND. ::aControls[ j ]:cClass == "status"
-      CreateCtrl( ::oDlg, ::aControls[ j ], Self )
+   IF j > 0 .AND. ::aControls[j]:cClass == "status"
+      CreateCtrl( ::oDlg, ::aControls[j], Self )
       j --
    ENDIF
    // nando
-   IF j > 0 .AND. ::aControls[ j ]:cClass == "timer"
-      CreateCtrl( ::oDlg, ::aControls[ j ], Self )
+   IF j > 0 .AND. ::aControls[j]:cClass == "timer"
+      CreateCtrl( ::oDlg, ::aControls[j], Self )
       j --
    ENDIF
    // nando
@@ -463,7 +463,7 @@ STATIC FUNCTION ReadTree(pp, oForm, aParent, oDesc)
                         Val( oNode:GetAttribute("id") ), .T. })
          IF !Empty(oNode:aItems)
             IF ( subarr := ReadTree(pp, oForm, ATail( aTree ), oNode) ) != Nil
-               aTree[ Len( aTree ), 1 ] := subarr
+               aTree[Len( aTree ), 1] := subarr
             ENDIF
          ENDIF
       ENDIF
@@ -595,7 +595,7 @@ STATIC FUNCTION ReadCtrl( pp, oCtrlDesc, oContainer, oForm )
    FOR i := 1 TO Len( aItems )
       IF aItems[i]:title == "style"
          FOR j := 1 TO Len( aItems[i]:aItems )
-            o := aItems[i]:aItems[ j ]
+            o := aItems[i]:aItems[j]
             IF o:title == "property"
                IF ( cName := Lower( o:GetAttribute("name") ) ) == "varname"
                   AAdd(oForm:aVars, hfrm_GetProperty( o:aItems[1] ))
@@ -657,7 +657,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
    IF nCtrl == 0
       IF Lower( oCtrlTmpl:cClass ) == "pagesheet"
          tmp_nSheet ++
-         oParent:StartPage(Tabs[ tmp_nSheet ])
+         oParent:StartPage(Tabs[tmp_nSheet])
          FOR i := 1 TO Len( oCtrlTmpl:aControls )
             CreateCtrl( oParent, oCtrlTmpl:aControls[i], oForm )
          NEXT
@@ -667,7 +667,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
    ENDIF
 
    /* Declaring of variables, which are in the appropriate 'New()' function */
-   stroka := aCtrls[ nCtrl ]
+   stroka := aCtrls[nCtrl]
    IF ( i := At( "New(", stroka ) ) != 0
       i += 4
       DO WHILE .T.
@@ -733,8 +733,8 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
    shcolor := 0
 
    FOR i := 1 TO Len( oCtrlTmpl:aProp )
-      xProperty := hfrm_GetProperty( oCtrlTmpl:aProp[ i, 2 ] )
-      cPName := oCtrlTmpl:aProp[ i, 1 ]
+      xProperty := hfrm_GetProperty( oCtrlTmpl:aProp[i, 2] )
+      cPName := oCtrlTmpl:aProp[i, 1]
       //msginfo(cpname)
       IF cPName == "geometry"
          nLeft   := Val( xProperty[1] )
@@ -939,10 +939,10 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
          ENDIF
       NEXT
       FOR i := 1 TO Len( oCtrlTmpl:aMethods )
-         IF ( cType := ValType(oCtrlTmpl:aMethods[ i, 2 ]) ) == "B"
-            __mvPut( oCtrlTmpl:aMethods[ i, 1 ], oCtrlTmpl:aMethods[ i, 2 ] )
+         IF ( cType := ValType(oCtrlTmpl:aMethods[i, 2]) ) == "B"
+            __mvPut( oCtrlTmpl:aMethods[i, 1], oCtrlTmpl:aMethods[i, 2] )
          ELSEIF cType == "A"
-            __mvPut( oCtrlTmpl:aMethods[ i, 1 ], oCtrlTmpl:aMethods[ i, 2, 1 ] )
+            __mvPut( oCtrlTmpl:aMethods[i, 1], oCtrlTmpl:aMethods[i, 2, 1] )
          ENDIF
       NEXT
 
@@ -1054,9 +1054,9 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
                   //"AddColumn(HColumn():New(cHeader,Fblock,cValType,nLength,nDec,lEdit,nJusHead, nJusLine, cPicture,bValid, bWhen, Items, bClrBlck, bHeadClick ))",;  //oBrw:AddColumn
                   m->cHeader := FieldName(i)
                   m->fBlock := FieldBlock( FieldName(i) )
-                  m->cValType := j[ i, 2 ]  //TYPE("FieldName(i)")
-                  m->nLength := j[ i, 3 ] //len(&(FieldName(i)))
-                  m->nDec := j[ i, 4 ]
+                  m->cValType := j[i, 2]  //TYPE("FieldName(i)")
+                  m->nLength := j[i, 3] //len(&(FieldName(i)))
+                  m->nDec := j[i, 4]
                   m->cPicture := Nil
                   lEdit := .T.
                   oCtrl:AddColumn( HColumn():New( cHeader, fBlock, cValType, nLength, nDec, lEdit ) )
@@ -1064,7 +1064,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
             ENDIF
          ELSE
             oCtrl:aArray := caArray  //IIF(TYPE("caArray")="C",&(caArray),caArray)
-            oCtrl:AddColumn( HColumn():New( , { | v, o | IIf( v != Nil, o:aArray[ o:nCurrent ] := v, o:aArray[ o:nCurrent ] ) }, 'C', 100, 0 ) )
+            oCtrl:AddColumn( HColumn():New( , { | v, o | IIf( v != Nil, o:aArray[o:nCurrent] := v, o:aArray[o:nCurrent] ) }, 'C', 100, 0 ) )
          ENDIF
       ENDIF
       IF cVarName != Nil
@@ -1275,7 +1275,7 @@ METHOD Read(fname, cId) CLASS HRepTmpl
    FOR i := 1 TO Len( aItems )
       IF aItems[i]:title == "style"
          FOR j := 1 TO Len( aItems[i]:aItems )
-            o := aItems[i]:aItems[ j ]
+            o := aItems[i]:aItems[j]
             IF o:title == "property"
                IF !Empty(o:aItems)
                   AAdd(aProp, { Lower( o:GetAttribute("name") ), hfrm_GetProperty( o:aItems[1] ) })
@@ -1288,8 +1288,8 @@ METHOD Read(fname, cId) CLASS HRepTmpl
          NEXT
       ELSEIF aItems[i]:title == "method"
          Aadd(aMethods, { cName := Lower(aItems[i]:GetAttribute("name")),RdScript(,aItems[i]:aItems[1]:aItems[1],,.T.,cName) })
-         IF aMethods[ ( j := Len( aMethods ) ), 1 ] == "common"
-            ::aFuncs := ::aMethods[ j, 2 ]
+         IF aMethods[( j := Len( aMethods ) ), 1] == "common"
+            ::aFuncs := ::aMethods[j, 2]
             FOR j := 1 TO Len( ::aFuncs[2] )
                cPre := "#xtranslate " + ::aFuncs[2, j, 1] + ;
                        "( <params,...> ) => callfunc('"  + ;
@@ -1323,26 +1323,26 @@ METHOD Print( printer, lPreview, p1, p2, p3 ) CLASS HRepTmpl
    SetDebugger( ::lDebug )
 
    FOR i := 1 TO Len( ::aProp )
-      IF ::aProp[ i, 1 ] == "paper size"
-         IF Lower( ::aProp[ i, 2 ] ) == "a4"
+      IF ::aProp[i, 1] == "paper size"
+         IF Lower( ::aProp[i, 2] ) == "a4"
             nPWidth  := 210
             nPHeight := 297
-         ELSEIF Lower( ::aProp[ i, 2 ] ) == "a3"
+         ELSEIF Lower( ::aProp[i, 2] ) == "a3"
             nPWidth  := 297
             nPHeight := 420
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "orientation"
-         IF Lower( ::aProp[ i, 2 ] ) != "portrait"
+      ELSEIF ::aProp[i, 1] == "orientation"
+         IF Lower( ::aProp[i, 2] ) != "portrait"
             xTemp    := nPWidth
             nPWidth  := nPHeight
             nPHeight := xTemp
             nOrientation := 2
          ENDIF
-      ELSEIF ::aProp[ i, 1 ] == "font"
-         xProperty := ::aProp[ i, 2 ]
-      ELSEIF ::aProp[ i, 1 ] == "variables"
-         FOR j := 1 TO Len( ::aProp[ i, 2 ] )
-            __mvPrivate(::aProp[ i, 2 ][ j ])
+      ELSEIF ::aProp[i, 1] == "font"
+         xProperty := ::aProp[i, 2]
+      ELSEIF ::aProp[i, 1] == "variables"
+         FOR j := 1 TO Len( ::aProp[i, 2] )
+            __mvPrivate(::aProp[i, 2][j])
          NEXT
       ENDIF
    NEXT
@@ -1628,7 +1628,7 @@ STATIC FUNCTION ReadRepItem( oCtrlDesc, oContainer )
    FOR i := 1 TO Len( aItems )
       IF aItems[i]:title == "style"
          FOR j := 1 TO Len( aItems[i]:aItems )
-            o := aItems[i]:aItems[ j ]
+            o := aItems[i]:aItems[j]
             IF o:title == "property"
                AAdd(aProp, { Lower( o:GetAttribute("name") ), IIf( Empty(o:aItems), "", hfrm_GetProperty( o:aItems[1] ) ) })
             ENDIF
@@ -1649,7 +1649,7 @@ STATIC FUNCTION ReadRepItem( oCtrlDesc, oContainer )
 STATIC FUNCTION aGetSecond(arr, xFirst)
    LOCAL i := AScan( arr, { | a | a[1] == xFirst } )
 
-   RETURN IIf( i == 0, Nil, arr[ i, 2 ] )
+   RETURN IIf( i == 0, Nil, arr[i, 2] )
 
 STATIC FUNCTION hrep_FontFromXML( oPrinter, oXmlNode, height )
    LOCAL weight := oXmlNode:GetAttribute("weight")

@@ -182,7 +182,7 @@ METHOD DelControl( oCtrl ) CLASS HCustomWindow
 
    h := 0
    FOR i := Len( ::aEvents ) TO 1 STEP - 1
-      IF ::aEvents[ i, 2 ] == id
+      IF ::aEvents[i, 2] == id
          ADel( ::aEvents, i )
          h ++
       ENDIF
@@ -194,7 +194,7 @@ METHOD DelControl( oCtrl ) CLASS HCustomWindow
 
    h := 0
    FOR i := Len( ::aNotify ) TO 1 STEP - 1
-      IF ::aNotify[ i, 2 ] == id
+      IF ::aNotify[i, 2] == id
          ADel( ::aNotify, i )
          h ++
       ENDIF
@@ -260,8 +260,8 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCustomWindow
       ENDIF
    ENDIF
 
-   IF ( i := AScan( aCustomEvents[ EVENTS_MESSAGES ], msg ) ) != 0
-      RETURN Eval( aCustomEvents[ EVENTS_ACTIONS, i ], Self, wParam, lParam )
+   IF ( i := AScan( aCustomEvents[EVENTS_MESSAGES], msg ) ) != 0
+      RETURN Eval( aCustomEvents[EVENTS_ACTIONS, i], Self, wParam, lParam )
 
    ELSEIF hb_IsBlock(::bOther)
 
@@ -311,7 +311,7 @@ METHOD RefreshCtrl( oCtrl, nSeek ) CLASS HCustomWindow
    nPos := AScan( ::aControls, { | x | x[n] == oCtrl } )
 
    IF nPos > 0
-      ::aControls[ nPos, 2 ]:Refresh()
+      ::aControls[nPos, 2]:Refresh()
    ENDIF
 
    RETURN NIL
@@ -323,7 +323,7 @@ METHOD SetFocusCtrl( oCtrl ) CLASS HCustomWindow
    nPos := AScan( ::aControls, { | x | x[1] == oCtrl } )
 
    IF nPos > 0
-      ::aControls[ nPos, 2 ]:SetFocus()
+      ::aControls[nPos, 2]:SetFocus()
    ENDIF
 
    RETURN NIL
@@ -745,7 +745,7 @@ STATIC FUNCTION onNotify( oWnd, wParam, lParam )
          ELSEIF oWnd:aNotify != NIL .AND. !oWnd:lSuspendMsgsHandling .AND. ;
             ( iItem := AScan( oWnd:aNotify, { | a | a[1] == nCode .AND. ;
                                               a[2] == wParam } ) ) > 0
-            IF ( res := Eval( oWnd:aNotify[ iItem, 3 ], oWnd, wParam ) ) != NIL
+            IF ( res := Eval( oWnd:aNotify[iItem, 3], oWnd, wParam ) ) != NIL
                RETURN res
             ENDIF
          ENDIF
@@ -834,7 +834,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
             oForm:nFocus := GetFocus() //lParam
          ENDIF
       ENDIF
-      Eval( oWnd:aEvents[ iItem, 3 ], oWnd, iParLow )
+      Eval( oWnd:aEvents[iItem, 3], oWnd, iParLow )
    ENDIF
 
    RETURN 1
@@ -922,7 +922,7 @@ LOCAL oParent, nCtrl,nPos
       IF oParent != Nil .AND. !Empty(oParent:KeyList)
          nctrl := IIf( IsCtrlShift(.T., .F.), FCONTROL, iif(IsCtrlShift(.F., .T.), FSHIFT, 0 ) )
          IF ( nPos := AScan( oParent:KeyList, { | a | a[1] == nctrl.AND.a[2] == wParam } ) ) > 0
-            Eval( oParent:KeyList[ nPos, 3 ], oCtrl )
+            Eval( oParent:KeyList[nPos, 3], oCtrl )
             RETURN .T.
          ENDIF
       ENDIF
@@ -1027,7 +1027,7 @@ FUNCTION FindAccelerator( oCtrl, lParam )
   FOR i = 1 to nLen
       IF oCtrl:aControls[i]:classname = "HTAB"
          IF ( pos := FindTabAccelerator( oCtrl:aControls[i], lParam ) ) > 0 .AND. ;
-             oCtrl:aControls[i]:Pages[ pos ]:Enabled
+             oCtrl:aControls[i]:Pages[pos]:Enabled
              oCtrl:aControls[i]:SetTab(pos)
              RETURN oCtrl:aControls[i]
          ENDIF
@@ -1054,9 +1054,9 @@ FUNCTION GetBackColorParent( oCtrl, lSelf, lTransparent )
    ENDIF
    IF oCtrl != Nil .AND. oCtrl:Classname = "HTAB"
        //-brush := HBrush():Add(bColor)
-       IF Len( oCtrl:aPages ) > 0 .AND. oCtrl:Pages[ oCtrl:GETACTIVEPAGE() ]:bColor != Nil
-          //-brush := oCtrl:Pages[ oCtrl:GetActivePage() ]:brush
-          bColor := oCtrl:Pages[ oCtrl:GetActivePage() ]:bColor
+       IF Len( oCtrl:aPages ) > 0 .AND. oCtrl:Pages[oCtrl:GETACTIVEPAGE()]:bColor != Nil
+          //-brush := oCtrl:Pages[oCtrl:GetActivePage()]:brush
+          bColor := oCtrl:Pages[oCtrl:GetActivePage()]:bColor
        ELSEIF ISTHEMEACTIVE() .AND. oCtrl:WindowsManifest
           hTheme := hb_OpenThemeData(oCtrl:handle, "TAB") //oCtrl:oParent:WinClass )
           IF !Empty(hTheme)

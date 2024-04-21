@@ -167,12 +167,12 @@ METHOD Init() CLASS HGridEx
 
          FOR nPos := 1 TO Len( aButton )
 
-            aBmpSize := GetBitmapSize(aButton[ nPos ])
+            aBmpSize := GetBitmapSize(aButton[nPos])
 
             IF aBmpSize[3] == 24
-               Imagelist_Add(::hIm, aButton[ nPos ])
+               Imagelist_Add(::hIm, aButton[nPos])
             ELSE
-               Imagelist_Add(::hIm, aButton[ nPos ])
+               Imagelist_Add(::hIm, aButton[nPos])
             ENDIF
 
          NEXT
@@ -184,7 +184,7 @@ METHOD Init() CLASS HGridEx
       Listview_Init( ::handle, ::ItemCount, ::lNoLines )
 
       FOR i := 1 TO Len( ::aColumns )
-         Listview_addcolumnEX( ::handle, i, ::aColumns[ i, 1 ], ::aColumns[ i , 2 ], ::aColumns[ i, 3 ], IF( ::aColumns[ i, 4 ] != NIL, ::aColumns[ i, 4 ]  , - 1 ) )
+         Listview_addcolumnEX( ::handle, i, ::aColumns[i, 1], ::aColumns[i , 2], ::aColumns[i, 3], IF( ::aColumns[i, 4] != NIL, ::aColumns[i, 4]  , - 1 ) )
 
       NEXT
       IF Len( ::aRow ) > 0
@@ -192,7 +192,7 @@ METHOD Init() CLASS HGridEx
             aTemp := ::aRow[n]
             aTemp1 := ::aRowBitMap[n]
             FOR n1 := 1 TO Len( aTemp )
-               LISTVIEW_INSERTITEMEX( ::handle, n, n1, aTemp[ n1 ], aTemp1[ n1 ] )
+               LISTVIEW_INSERTITEMEX( ::handle, n, n1, aTemp[n1], aTemp1[n1] )
             NEXT
          NEXT
 
@@ -231,12 +231,12 @@ METHOD AddRow( a , bupdate ) CLASS HGRIDEX
    DEFAULT bupdate TO .F.
    FOR n := 1 TO nLen STEP 4
       AAdd(aTmp1, a[n])
-      AAdd(aTmp, IF( hb_IsNumeric(a[n + 1]), a[ n + 1 ], - 1 ))
+      AAdd(aTmp, IF( hb_IsNumeric(a[n + 1]), a[n + 1], - 1 ))
 
-      AAdd(aTmp2, IF( hb_IsNumeric(a[n + 2]), a[ n + 2 ], RGB(12, 15, 46) ))
+      AAdd(aTmp2, IF( hb_IsNumeric(a[n + 2]), a[n + 2], RGB(12, 15, 46) ))
 
 
-      AAdd(aTmp2, IF( hb_IsNumeric(a[n + 3]), a[ n + 3 ], RGB(192, 192, 192) ))
+      AAdd(aTmp2, IF( hb_IsNumeric(a[n + 3]), a[n + 3], RGB(192, 192, 192) ))
 
       AAdd(::aColors, aTmp2)
       aTmp2 := {}
@@ -319,7 +319,7 @@ METHOD UpdateData() CLASS hGridex
 
    FOR n1 := 1 TO Len( aTemp )
 
-      LISTVIEW_INSERTITEMEX( ::handle, n, n1, aTemp[ n1 ], atemp1[ n1 ] )
+      LISTVIEW_INSERTITEMEX( ::handle, n, n1, aTemp[n1], atemp1[n1] )
    NEXT
 
    RETURN .T.

@@ -243,16 +243,16 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HDialog
       IF ::lRouteCommand .and. ( msg == WM_COMMAND .or. msg == WM_NOTIFY )
          nPos := AScan( ::aControls, { | x | x:className() == "HTAB" } )
          IF nPos > 0
-            oTab := ::aControls[ nPos ]
+            oTab := ::aControls[nPos]
             IF Len( oTab:aPages ) > 0
-               Eval( aMessModalDlg[ i, 2 ], oTab:aPages[ oTab:GetActivePage(), 1 ], wParam, lParam )
+               Eval( aMessModalDlg[i, 2], oTab:aPages[oTab:GetActivePage(), 1], wParam, lParam )
             ENDIF
          ENDIF
       ENDIF
       //AgE SOMENTE NO DIALOG
       IF !::lSuspendMsgsHandling .OR. msg = WM_ERASEBKGND .OR. msg = WM_SIZE
          //writelog( str(msg) + str(wParam) + str(lParam)+CHR(13) )
-         RETURN Eval( aMessModalDlg[ i, 2 ], Self, wParam, lParam )
+         RETURN Eval( aMessModalDlg[i, 2], Self, wParam, lParam )
       ENDIF
    ELSEIF msg = WM_CLOSE
       ::close()
@@ -561,7 +561,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
    IF oDlg:aEvents != Nil .AND. ;
       ( i := AScan( oDlg:aEvents, { | a | a[1] == iParHigh.and.a[2] == iParLow } ) ) > 0
       IF !oDlg:lSuspendMsgsHandling
-         Eval( oDlg:aEvents[ i, 3 ], oDlg, iParLow )
+         Eval( oDlg:aEvents[i, 3], oDlg, iParLow )
       ENDIF
    ELSEIF iParHigh == 0 .AND. ( ; //.AND. !oDlg:lSuspendMsgsHandling .AND. ( ;
         ( iParLow == IDOK .AND. oDlg:FindControl( IDOK ) != NIL ) .OR. ;
@@ -651,9 +651,9 @@ STATIC FUNCTION onSize(oDlg, wParam, lParam)
    IF aControls != Nil .AND. !Empty(oDlg:Rect)
       oDlg:Anchor( oDlg, nW1, nH1, oDlg:nWidth, oDlg:nHeight )
       FOR iCont := 1 TO Len( aControls )
-         IF aControls[ iCont ]:bSize != Nil
-            Eval( aControls[ iCont ]:bSize, ;
-                  aControls[ iCont ], LOWORD(lParam), HIWORD(lParam), nW1, nH1 )
+         IF aControls[iCont]:bSize != Nil
+            Eval( aControls[iCont]:bSize, ;
+                  aControls[iCont], LOWORD(lParam), HIWORD(lParam), nW1, nH1 )
          ENDIF
       NEXT
    ENDIF
@@ -847,7 +847,7 @@ FUNCTION SetDlgKey( oDlg, nctrl, nkey, block )
    ENDIF
    aKeys := oDlg:KeyList
    IF ( i := AScan( aKeys, { | a | a[1] == nctrl.AND.a[2] == nkey } ) ) > 0
-      bOldSet := aKeys[ i, 3 ]
+      bOldSet := aKeys[i, 3]
    ENDIF
    IF block == Nil
       IF i > 0
@@ -858,7 +858,7 @@ FUNCTION SetDlgKey( oDlg, nctrl, nkey, block )
       IF i == 0
          AAdd(aKeys, { nctrl, nkey, block })
       ELSE
-         aKeys[ i, 3 ] := block
+         aKeys[i, 3] := block
       ENDIF
    ENDIF
 

@@ -506,7 +506,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HEdit
          IF oParent != Nil .AND. !Empty(oParent:KeyList)
             nctrl := IIf( IsCtrlShift( .T., .F. ), FCONTROL, IIf( IsCtrlShift( .F., .T. ), FSHIFT, 0 ) )
             IF ( nPos := AScan( oParent:KeyList, { | a | a[1] == nctrl.AND.a[2] == wParam } ) ) > 0
-               Eval( oParent:KeyList[ nPos, 3 ], Self )
+               Eval( oParent:KeyList[nPos, 3], Self )
             ENDIF
          ENDIF
       ENDIF
@@ -1435,8 +1435,8 @@ FUNCTION CreateGetList( oDlg )
       ELSEIF !Empty(oDlg:aControls[i]:aControls)
          aLen2 := Len( oDlg:aControls[i]:aControls )
          FOR j := 1 TO aLen2
-            IF __ObjHasMsg( oDlg:aControls[i]:aControls[ j ], "BSETGET" ) .AND. oDlg:aControls[i]:aControls[ j ]:bSetGet != Nil
-               AAdd(oDlg:GetList, oDlg:aControls[i]:aControls[ j ])
+            IF __ObjHasMsg( oDlg:aControls[i]:aControls[j], "BSETGET" ) .AND. oDlg:aControls[i]:aControls[j]:bSetGet != Nil
+               AAdd(oDlg:GetList, oDlg:aControls[i]:aControls[j])
             ENDIF
          NEXT
       ENDIF
@@ -1532,13 +1532,13 @@ STATIC FUNCTION NextFocusTab(oParent, hCtrl, nSkip)
                nextHandle := GetNextDlgGroupItem( oParent:handle , hCtrl, ( nSkip < 0 ) )
             ENDIF
             k := AScan( oParent:acontrols, { | o | o:Handle == nextHandle } )
-            IF LEN( oParent:aControls[ k ]:aControls ) > 0 .AND. hCtrl != nextHandle .AND. oParent:aControls[ k ]:classname != "HTAB"
-               nextHandle := NextFocusContainer( oParent:aControls[ k ], oParent:aControls[ k ]:Handle, nSkip )
-               RETURN IIF( !Empty(nextHandle), nextHandle, NextFocusTab(oParent, oParent:aControls[ k ]:Handle, nSkip) )
+            IF LEN( oParent:aControls[k]:aControls ) > 0 .AND. hCtrl != nextHandle .AND. oParent:aControls[k]:classname != "HTAB"
+               nextHandle := NextFocusContainer( oParent:aControls[k], oParent:aControls[k]:Handle, nSkip )
+               RETURN IIF( !Empty(nextHandle), nextHandle, NextFocusTab(oParent, oParent:aControls[k]:Handle, nSkip) )
             ENDIF
          ENDIF
       ELSE
-         SETFOCUS( oParent:aPages[ nPage, 1 ]:aControls[1]:Handle )
+         SETFOCUS( oParent:aPages[nPage, 1]:aControls[1]:Handle )
          RETURN 0
       ENDIF
       IF ( nSkip < 0 .AND. ( k > i .OR. k == 0 ) ) .OR. ( nSkip > 0 .AND. i > k )
@@ -1557,8 +1557,8 @@ STATIC FUNCTION NextFocusTab(oParent, hCtrl, nSkip)
              i := AScan( oParent:oparent:acontrols, { | o | o:handle == oParent:handle } ) + nSkip
              IF i > 0 .AND. i <= LEN( oParent:oParent:acontrols )
                  i := ASCAN( oParent:oParent:acontrols, {|o| Hwg_BitaND(HWG_GETWINDOWSTYLE(o:handle), WS_TABSTOP) != 0 }, i)
-                 nexthandle := oParent:oParent:acontrols[ IIF( i = 0, ASCAN( oParent:oParent:acontrols,;
-                          {|o| Hwg_BitaND(HWG_GETWINDOWSTYLE(o:handle), WS_TABSTOP) != 0 }, i), i ) ]:handle
+                 nexthandle := oParent:oParent:acontrols[IIF( i = 0, ASCAN( oParent:oParent:acontrols,;
+                          {|o| Hwg_BitaND(HWG_GETWINDOWSTYLE(o:handle), WS_TABSTOP) != 0 }, i), i )]:handle
                   ENDIF
                   */
          ELSE
@@ -1649,7 +1649,7 @@ STATIC FUNCTION NextFocusContainer(oParent,hCtrl,nSkip)
       ENDIF
       i := i2
       IF i = 0
-         nextHandle := oParent:aControls[ Len( oParent:aControls ) ]:Handle
+         nextHandle := oParent:aControls[Len( oParent:aControls )]:Handle
       ELSEIF lnoTabStop .OR. ( i > 0 .AND. i <= LEN( oParent:acontrols ).AND. oParent:aControls[i]:classname = "HGROUP") .OR. i = 0
          nextHandle := GetNextDlgTabItem ( nWindow , nextHandle, ( nSkip < 0 ) )
       ENDIF

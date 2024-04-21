@@ -89,20 +89,20 @@ METHOD CalcMinMax() CLASS HGraph
       nLen := Len( ::aValues[i] )
       IF ::nType == 1
          FOR j := 1 TO nLen
-            ::xmax := Max( ::xmax, ::aValues[ i, j, 1 ] )
-            ::xmin := Min( ::xmin, ::aValues[ i, j, 1 ] )
-            ::ymax := Max( ::ymax, ::aValues[ i, j, 2 ] )
-            ::ymin := Min( ::ymin, ::aValues[ i, j, 2 ] )
+            ::xmax := Max( ::xmax, ::aValues[i, j, 1] )
+            ::xmin := Min( ::xmin, ::aValues[i, j, 1] )
+            ::ymax := Max( ::ymax, ::aValues[i, j, 2] )
+            ::ymin := Min( ::ymin, ::aValues[i, j, 2] )
          NEXT
       ELSEIF ::nType == 2
          FOR j := 1 TO nLen
-            ::ymax := Max( ::ymax, ::aValues[ i, j, 2 ]   )
-            ::ymin := Min( ::ymin, ::aValues[ i, j, 2 ]   )
+            ::ymax := Max( ::ymax, ::aValues[i, j, 2]   )
+            ::ymin := Min( ::ymin, ::aValues[i, j, 2]   )
          NEXT
          ::xmax := nLen
       ELSEIF ::nType == 3
          FOR j := 1 TO nLen
-            ::ymax += ::aValues[ i, j, 2 ]
+            ::ymax += ::aValues[i, j, 2]
          NEXT
       ENDIF
    NEXT
@@ -150,10 +150,10 @@ METHOD Paint( lpdis ) CLASS HGraph
       nLen := Len( ::aValues[i] )
       IF ::nType == 1
          FOR j := 2 TO nLen
-            px1 := Round(x1 + ( ::aValues[ i, j - 1, 1 ] - ::xmin ) / ::scaleX, 0)
-            py1 := Round(y2 - ( ::aValues[ i, j - 1, 2 ] - ::ymin ) / ::scaleY, 0)
-            px2 := Round(x1 + ( ::aValues[ i, j, 1 ] - ::xmin ) / ::scaleX, 0)
-            py2 := Round(y2 - ( ::aValues[ i, j, 2 ] - ::ymin ) / ::scaleY, 0)
+            px1 := Round(x1 + ( ::aValues[i, j - 1, 1] - ::xmin ) / ::scaleX, 0)
+            py1 := Round(y2 - ( ::aValues[i, j - 1, 2] - ::ymin ) / ::scaleY, 0)
+            px2 := Round(x1 + ( ::aValues[i, j, 1] - ::xmin ) / ::scaleX, 0)
+            py2 := Round(y2 - ( ::aValues[i, j, 2] - ::ymin ) / ::scaleY, 0)
             IF px2 != px1 .OR. py2 != py1
                Drawline(hDC, px1, py1, px2, py2)
             ENDIF
@@ -165,7 +165,7 @@ METHOD Paint( lpdis ) CLASS HGraph
          nWidth := Round(( x2 - x1 ) / ( nLen * 2 + 1 ), 0)
          FOR j := 1 TO nLen
             px1 := Round(x1 + nWidth * ( j * 2 - 1 ), 0)
-            py1 := Round(y2 - ( ::aValues[ i, j, 2 ] - ::ymin ) / ::scaleY, 0)
+            py1 := Round(y2 - ( ::aValues[i, j, 2] - ::ymin ) / ::scaleY, 0)
             FillRect( hDC, px1, y2 - 2, px1 + nWidth, py1, ::tbrush:handle )
          NEXT
       ELSEIF ::nType == 3

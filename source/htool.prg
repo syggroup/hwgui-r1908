@@ -280,7 +280,7 @@ METHOD CREATETOOL() CLASS hToolBar
           ENDIF
    ELSE
       FOR n = 1 TO Len( ::aitem )
-         ::AddButton(::aitem[ n, 1 ],::aitem[ n, 2 ],::aitem[ n, 3 ],::aitem[ n, 4 ],::aitem[ n, 6 ], ::aitem[ n, 7 ], ::aitem[ n, 8 ], ::aitem[ n, 9 ], , n )
+         ::AddButton(::aitem[n, 1],::aitem[n, 2],::aitem[n, 3],::aitem[n, 4],::aitem[n, 6], ::aitem[n, 7], ::aitem[n, 8], ::aitem[n, 9], , n )
          //::aItem[n, 11] := oButton
       NEXT
    ENDIF
@@ -303,56 +303,56 @@ METHOD CREATETOOL() CLASS hToolBar
 
    FOR n := 1 TO Len( ::aItem )
       IF hb_IsBlock(::aItem[n, 7])
-          //::oParent:AddEvent( BN_CLICKED, ::aItem[ n, 2 ], ::aItem[ n , 7 ] )
+          //::oParent:AddEvent( BN_CLICKED, ::aItem[n, 2], ::aItem[n , 7] )
       ENDIF
       IF hb_IsArray(::aItem[n, 9])
-         ::aItem[ n, 10 ] := hwg__CreatePopupMenu()
-         ::aItem[ n, 11 ]:hMenu := ::aItem[ n, 10 ]
-         aTemp := ::aItem[ n, 9 ]
+         ::aItem[n, 10] := hwg__CreatePopupMenu()
+         ::aItem[n, 11]:hMenu := ::aItem[n, 10]
+         aTemp := ::aItem[n, 9]
 
          FOR n1 := 1 TO Len( aTemp )
-            aTemp[ n1, 1 ] := IIF( aTemp[ n1, 1 ] = "-", NIL, aTemp[ n1, 1 ] )
-            hwg__AddMenuItem( ::aItem[ n, 10 ], aTemp[ n1, 1 ], - 1, .F., aTemp[ n1, 2 ], , .F. )
-            ::oParent:AddEvent( BN_CLICKED, aTemp[ n1, 2 ], aTemp[ n1, 3 ] )
+            aTemp[n1, 1] := IIF( aTemp[n1, 1] = "-", NIL, aTemp[n1, 1] )
+            hwg__AddMenuItem( ::aItem[n, 10], aTemp[n1, 1], - 1, .F., aTemp[n1, 2], , .F. )
+            ::oParent:AddEvent( BN_CLICKED, aTemp[n1, 2], aTemp[n1, 3] )
          NEXT
       ENDIF
-            IF ::aItem[ n, 4 ] = BTNS_SEP
+            IF ::aItem[n, 4] = BTNS_SEP
                  LOOP
               ENDIF
-              nDrop := Max( nDrop, IIF( Hwg_Bitand(::aItem[ n, 4 ], BTNS_WHOLEDROPDOWN ) != 0, 0, ;
-               IIF( Hwg_Bitand(::aItem[ n, 4 ], BTNS_DROPDOWN ) != 0, 8,0 ) ) )
+              nDrop := Max( nDrop, IIF( Hwg_Bitand(::aItem[n, 4], BTNS_WHOLEDROPDOWN ) != 0, 0, ;
+               IIF( Hwg_Bitand(::aItem[n, 4], BTNS_DROPDOWN ) != 0, 8,0 ) ) )
              /*
              IF ::nSize != Nil
                 SendMessage(::HANDLE, TB_SETBITMAPSIZE, 0, MAKELONG(::nSize, ::nSize))
              ENDIF
          */
-      IF hb_IsChar(::aItem[n, 1]) .OR. ::aItem[ n, 1 ] > 1
-         IF hb_IsChar(::aItem[n, 1]) .AND. At(".", ::aitem[ n, 1 ] ) != 0
-            IF !File(::aitem[ n, 1 ])
+      IF hb_IsChar(::aItem[n, 1]) .OR. ::aItem[n, 1] > 1
+         IF hb_IsChar(::aItem[n, 1]) .AND. At(".", ::aitem[n, 1] ) != 0
+            IF !File(::aitem[n, 1])
                Loop
             ENDIF
-               //AAdd(aButton, LoadImage(, ::aitem[ n, 1 ], IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION+ LR_LOADFROMFILE))
-            hImage := HBITMAP():AddFile(::aitem[ n, 1 ], , .T., ::nwSize, ::nhSize):handle
+               //AAdd(aButton, LoadImage(, ::aitem[n, 1], IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION+ LR_LOADFROMFILE))
+            hImage := HBITMAP():AddFile(::aitem[n, 1], , .T., ::nwSize, ::nhSize):handle
          ELSE
-              // AAdd(aButton, HBitmap():AddResource(::aitem[ n, 1 ] ):handle)
-            hImage := HBitmap():AddResource(::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS, ,::nwSize,::nhSize):handle
+              // AAdd(aButton, HBitmap():AddResource(::aitem[n, 1] ):handle)
+            hImage := HBitmap():AddResource(::aitem[n, 1], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS, ,::nwSize,::nhSize):handle
          ENDIF
          IF ( img := Ascan( aButton, hImage )) = 0
             AAdd(aButton, hImage)
             img := Len( aButton )
          ENDIF
-         ::aItem[ n ,1 ] := img + nlistimg //n
+         ::aItem[n ,1] := img + nlistimg //n
          IF !::lResource
-            TOOLBAR_LOADIMAGE(::Handle, aButton[ img ])
+            TOOLBAR_LOADIMAGE(::Handle, aButton[img])
          ENDIF
       ELSE
            /*
-           IF ::aItem[ n, 1 ] > 1
-               hImage := HBitmap():AddResource(::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS,,::nSize,::nSize):handle
+           IF ::aItem[n, 1] > 1
+               hImage := HBitmap():AddResource(::aitem[n, 1], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS,,::nSize,::nSize):handle
            ENDIF
            */
-               // AAdd(aButton, LoadImage(, ::aitem[ n, 1 ] , IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION))
-           //  hImage := HBitmap():AddResource(::aitem[ n, 1 ], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS + LR_SHARED,,::nSize,::nSize):handle
+               // AAdd(aButton, LoadImage(, ::aitem[n, 1] , IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE + LR_CREATEDIBSECTION))
+           //  hImage := HBitmap():AddResource(::aitem[n, 1], LR_LOADTRANSPARENT + LR_LOADMAP3DCOLORS + LR_SHARED,,::nSize,::nSize):handle
       ENDIF
    NEXT
    IF Len( aButton ) > 0 //.AND. ::lResource
@@ -379,16 +379,16 @@ METHOD CREATETOOL() CLASS hToolBar
       hIm := CreateImageList( {} ,aBmpSize[1], aBmpSize[2], 1, ILC_COLORDDB + ILC_MASK )
       FOR nPos := 1 TO Len( aButton )
 
-//            aBmpSize := GetBitmapSize(aButton[ nPos ])
+//            aBmpSize := GetBitmapSize(aButton[nPos])
             /*
             IF aBmpSize[3] == 24
 //             Imagelist_AddMasked(hIm, aButton[nPos], RGB(236, 223, 216))
-               Imagelist_Add(hIm, aButton[ nPos ])
+               Imagelist_Add(hIm, aButton[nPos])
             ELSE
-               Imagelist_Add(hIm, aButton[ nPos ])
+               Imagelist_Add(hIm, aButton[nPos])
             ENDIF
             */
-         Imagelist_Add(hIm, aButton[ nPos ])
+         Imagelist_Add(hIm, aButton[nPos])
       NEXT
       SendMessage(::Handle, TB_SETIMAGELIST, 0, hIm)
    ELSEIF Len(aButton ) = 0
@@ -442,20 +442,20 @@ METHOD Notify( lParam ) CLASS hToolBar
 
       nButton := TOOLBAR_GETDISPINFOID(lParam)
       nPos := AScan( ::aItem, { | x | x[2] == nButton } )
-      TOOLBAR_SETDISPINFO( lParam, ::aItem[ nPos, 8 ] )
+      TOOLBAR_SETDISPINFO( lParam, ::aItem[nPos, 8] )
 
    ELSEIF nCode == TBN_GETINFOTIP
 
       nId := TOOLBAR_GETINFOTIPID(lParam)
       nPos := AScan( ::aItem, { | x | x[2] == nId } )
-      TOOLBAR_GETINFOTIP(lParam, ::aItem[ nPos, 8 ])
+      TOOLBAR_GETINFOTIP(lParam, ::aItem[nPos, 8])
 
    ELSEIF nCode == TBN_DROPDOWN
       nId := TOOLBAR_SUBMENUEXGETID(lParam)
       IF nId > 0 //hb_IsArray(::aItem[1, 9])
 //       nid := TOOLBAR_SUBMENUEXGETID(lParam)
          nPos := AScan( ::aItem, { | x | x[2] == nId } )
-         TOOLBAR_SUBMENUEx( lParam, ::aItem[ nPos, 10 ], ::oParent:handle )
+         TOOLBAR_SUBMENUEx( lParam, ::aItem[nPos, 10], ::oParent:handle )
       ELSE
          TOOLBAR_SUBMENU( lParam, 1, ::oParent:handle )
       ENDIF
@@ -498,7 +498,7 @@ METHOD AddButton( nBitIp, nId, bState, bStyle, cText, bClick, c, aMenu, cName, n
    IF !::lResource
       AAdd(::aItem ,{ nBitIp, nId, bState, bStyle, 0, cText, bClick, c, aMenu, hMenu, oButton })
    ELSE
-      ::aItem[ nIndex ] := { nBitIp, nId, bState, bStyle, 0, cText, bClick, c, aMenu, hMenu, oButton }
+      ::aItem[nIndex] := { nBitIp, nId, bState, bStyle, 0, cText, bClick, c, aMenu, hMenu, oButton }
    Endif
    RETURN oButton
 

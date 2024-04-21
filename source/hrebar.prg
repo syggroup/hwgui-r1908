@@ -110,14 +110,14 @@ METHOD CreateBands( pBar, pszText, clrFore, clrBack, pbmp, dwStyle ) CLASS hreba
    ENDIF
    dwStyle := RBBS_GRIPPERALWAYS + RBBS_USECHEVRON
    FOR i = 1 TO LEN( ::aBands )
-      ::aBands[ i, 4 ] := IIF( ::aBands[ i, 4 ] = Nil, GetSysColor(COLOR_3DFACE), ::aBands[ i, 4 ] )
-      ::aBands[ i, 6 ] := IIF( ::aBands[ i, 6 ] = Nil, dwStyle, ::aBands[ i, 6 ] )
-      IF !Empty(::aBands[ i, 1 ])
-         ::aBands[ i, 1 ] := IIF( hb_IsChar(::aBands[i, 1]), &( ::aBands[ i, 1 ] ), ::aBands[ i, 1 ] )
-         IF ( ::aBands[ i, 5 ] != Nil )
-            ADDBARBITMAP(::handle, ::aBands[ i, 1 ]:handle, ::aBands[ i, 2 ], ::aBands[ i, 5 ], ::aBands[ i, 6 ])
+      ::aBands[i, 4] := IIF( ::aBands[i, 4] = Nil, GetSysColor(COLOR_3DFACE), ::aBands[i, 4] )
+      ::aBands[i, 6] := IIF( ::aBands[i, 6] = Nil, dwStyle, ::aBands[i, 6] )
+      IF !Empty(::aBands[i, 1])
+         ::aBands[i, 1] := IIF( hb_IsChar(::aBands[i, 1]), &( ::aBands[i, 1] ), ::aBands[i, 1] )
+         IF ( ::aBands[i, 5] != Nil )
+            ADDBARBITMAP(::handle, ::aBands[i, 1]:handle, ::aBands[i, 2], ::aBands[i, 5], ::aBands[i, 6])
          ELSE
-           ADDBARCOLORS( ::handle, ::aBands[ i, 1 ]:handle, ::aBands[ i, 3 ], ::aBands[ i, 4 ], ::aBands[ i, 2 ], ::aBands[ i, 6 ]  )
+           ADDBARCOLORS( ::handle, ::aBands[i, 1]:handle, ::aBands[i, 3], ::aBands[i, 4], ::aBands[i, 2], ::aBands[i, 6]  )
          ENDIF
       ENDIF
    NEXT
