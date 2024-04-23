@@ -78,7 +78,7 @@ HB_FUNC(MCIGETERRORSTRING) // ()
   TCHAR cBuffer[256] = {0};
 
   hwg_ret_BOOL(mciGetErrorString(hb_parnl(1), // Error Code
-                            cBuffer, HB_SIZEOFARRAY(cBuffer)));
+                                 cBuffer, HB_SIZEOFARRAY(cBuffer)));
   HB_STORSTR(cBuffer, 2);
 }
 

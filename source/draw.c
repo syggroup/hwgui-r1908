@@ -165,7 +165,8 @@ PIE(HDC, nLeft, nTop, nRight, nBottom, nXR1, nYR1, nXR2, nYR2) --> numeric
 */
 HB_FUNC(PIE)
 {
-  int res = Pie(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), hwg_par_int(7), hwg_par_int(8), hwg_par_int(9));
+  int res = Pie(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6),
+                hwg_par_int(7), hwg_par_int(8), hwg_par_int(9));
   hb_retnl(res ? 0 : (LONG)GetLastError()); // TODO: o retorno da função é BOOL
 }
 
@@ -199,7 +200,8 @@ ROUNDRECT(HDC, nLeft, nTop, nRight, nBottom, nWidth, nHeight) --> .T.|.F.
 */
 HB_FUNC(ROUNDRECT)
 {
-  hwg_ret_BOOL(RoundRect(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), hwg_par_int(7)));
+  hwg_ret_BOOL(RoundRect(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6),
+                         hwg_par_int(7)));
 }
 
 #if 0
@@ -322,11 +324,9 @@ LOADIMAGE(HINSTANCE, nImage|cImage, nType, nWidth, nHeight, nLoadFlags) --> HAND
 HB_FUNC(LOADIMAGE)
 {
   void *hString = NULL;
-  hwg_ret_HANDLE(LoadImage(
-      HB_ISNIL(1) ? GetModuleHandle(NULL)
-                  : hwg_par_HINSTANCE(1),
-      HB_ISNUM(2) ? MAKEINTRESOURCE(hb_parni(2)) : HB_PARSTR(2, &hString, NULL),
-      hwg_par_UINT(3), hwg_par_int(4), hwg_par_int(5), hwg_par_UINT(6)));
+  hwg_ret_HANDLE(LoadImage(HB_ISNIL(1) ? GetModuleHandle(NULL) : hwg_par_HINSTANCE(1),
+                           HB_ISNUM(2) ? MAKEINTRESOURCE(hb_parni(2)) : HB_PARSTR(2, &hString, NULL), hwg_par_UINT(3),
+                           hwg_par_int(4), hwg_par_int(5), hwg_par_UINT(6)));
   hb_strfree(hString);
 }
 
@@ -992,7 +992,8 @@ PATBLT(HDC, nX, nY, nWidth, nHeight, nRop) --> .T.|.F.
 */
 HB_FUNC(PATBLT)
 {
-  hwg_ret_BOOL(PatBlt(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_DWORD(6)));
+  hwg_ret_BOOL(
+      PatBlt(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_DWORD(6)));
 }
 
 /*
@@ -1085,7 +1086,8 @@ BITBLT(HDC, nX, nY, nWidth, nHeight, HDCSRC, nX, nY, nRop) --> .T.|.F.
 */
 HB_FUNC(BITBLT)
 {
-  hwg_ret_BOOL(BitBlt(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_HDC(6), hwg_par_int(7), hwg_par_int(8), hwg_par_DWORD(9)));
+  hwg_ret_BOOL(BitBlt(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_HDC(6),
+                      hwg_par_int(7), hwg_par_int(8), hwg_par_DWORD(9)));
 }
 
 /*

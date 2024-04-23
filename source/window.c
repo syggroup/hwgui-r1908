@@ -239,9 +239,9 @@ HB_FUNC(HWG_PEEKMESSAGE)
   MSG msg;
 
   hwg_ret_BOOL(PeekMessage(&msg, hwg_par_HWND(1), // handle of window whose message queue will be searched
-                      hwg_par_UINT(2),       // wMsgFilterMin,
-                      hwg_par_UINT(3),       // wMsgFilterMax,
-                      PM_NOREMOVE));
+                           hwg_par_UINT(2),       // wMsgFilterMin,
+                           hwg_par_UINT(3),       // wMsgFilterMax,
+                           PM_NOREMOVE));
 }
 
 HB_FUNC(HWG_INITCHILDWINDOW)
@@ -491,7 +491,7 @@ HB_FUNC(HWG_CREATEMDICHILDWINDOW)
         y,                     // vertical position of window
         width,                 // width of window
         height,                // height of window
-        aWindows[1],     // handle to parent window (MDI client)
+        aWindows[1],           // handle to parent window (MDI client)
         GetModuleHandle(NULL), // handle to application instance
         (LPARAM)&pObj          // application-defined value
     );

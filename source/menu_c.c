@@ -272,7 +272,7 @@ HB_FUNC(ENABLEMENUITEM)
     HB_RETHANDLE(EnableMenuItem(hMenu,          // handle to menu
                                 hb_parni(2),    // menu item to check or uncheck
                                 uFlag | uEnable // menu item flags
-                                )); // TODO: revisar retorno (o retorno é BOOL e não um handle)
+                                ));             // TODO: revisar retorno (o retorno é BOOL e não um handle)
   }
 }
 
@@ -329,12 +329,12 @@ HB_FUNC(HWG_TRACKMENU)
   HWND hWnd = hwg_par_HWND(4);
   SetForegroundWindow(hWnd);
   hwg_ret_BOOL(TrackPopupMenu(hwg_par_HMENU(1),                           // handle of shortcut menu
-                         HB_ISNIL(5) ? TPM_RIGHTALIGN : hb_parni(5), // screen-position and mouse-button flags
-                         hb_parni(2),                                // horizontal position, in screen coordinates
-                         hb_parni(3),                                // vertical position, in screen coordinates
-                         0,                                          // reserved, must be zero
-                         hWnd,                                       // handle of owner window
-                         NULL));
+                              HB_ISNIL(5) ? TPM_RIGHTALIGN : hb_parni(5), // screen-position and mouse-button flags
+                              hb_parni(2),                                // horizontal position, in screen coordinates
+                              hb_parni(3),                                // vertical position, in screen coordinates
+                              0,                                          // reserved, must be zero
+                              hWnd,                                       // handle of owner window
+                              NULL));
   PostMessage(hWnd, 0, 0, 0);
 }
 
@@ -515,8 +515,8 @@ HB_FUNC(GETMENUCHECKMARKHEIGHT)
 
 HB_FUNC(STRETCHBLT)
 {
-  hwg_ret_BOOL(StretchBlt(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hwg_par_HDC(6), hb_parni(7),
-                     hb_parni(8), hb_parni(9), hb_parni(10), (DWORD)hb_parnl(11)));
+  hwg_ret_BOOL(StretchBlt(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hwg_par_HDC(6),
+                          hb_parni(7), hb_parni(8), hb_parni(9), hb_parni(10), (DWORD)hb_parnl(11)));
 }
 
 HB_FUNC(HWG__INSERTBITMAPMENU)
@@ -540,7 +540,8 @@ HB_FUNC(CHANGEMENU)
 HB_FUNC(MODIFYMENU)
 {
   void *hStr;
-  hwg_ret_BOOL(ModifyMenu(hwg_par_HMENU(1), hwg_par_UINT(2), hwg_par_UINT(3), (UINT)hb_parni(4), HB_PARSTR(5, &hStr, NULL)));
+  hwg_ret_BOOL(
+      ModifyMenu(hwg_par_HMENU(1), hwg_par_UINT(2), hwg_par_UINT(3), (UINT)hb_parni(4), HB_PARSTR(5, &hStr, NULL)));
   hb_strfree(hStr);
 }
 
@@ -560,7 +561,7 @@ HB_FUNC(ENABLEMENUSYSTEMITEM)
     HB_RETHANDLE(EnableMenuItem(hMenu,          // handle to menu
                                 hb_parni(2),    // menu item to check or uncheck
                                 uFlag | uEnable // menu item flags
-                                )); // TODO: revisar retorno (o retorno é BOOL e não um handle)
+                                ));             // TODO: revisar retorno (o retorno é BOOL e não um handle)
   }
 }
 

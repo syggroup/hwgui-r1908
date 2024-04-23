@@ -160,7 +160,8 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 
 HB_FUNC(CREATEROUNDRECTRGN)
 {
-  hwg_ret_HRGN(CreateRoundRectRgn(hwg_par_int(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6)));
+  hwg_ret_HRGN(CreateRoundRectRgn(hwg_par_int(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5),
+                                  hwg_par_int(6)));
 }
 
 HB_FUNC(SETWINDOWRGN)

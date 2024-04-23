@@ -118,7 +118,8 @@ SETDLGITEMINT(HWND, nId, nValue, lSigned) --> NIL
 */
 HB_FUNC(SETDLGITEMINT)
 {
-  SetDlgItemInt(hwg_par_HWND(1), hb_parni(2), hwg_par_UINT(3), (hb_pcount() < 4 || HB_ISNIL(4) || !hb_parl(4)) ? FALSE : TRUE);
+  SetDlgItemInt(hwg_par_HWND(1), hb_parni(2), hwg_par_UINT(3),
+                (hb_pcount() < 4 || HB_ISNIL(4) || !hb_parl(4)) ? FALSE : TRUE);
 }
 
 /*
