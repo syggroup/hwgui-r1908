@@ -910,23 +910,33 @@ METHOD InitMatrix25(lCheck) CLASS BarCode
 
 #include "hwingui.h"
 
+/*
+RICH_RECTANGLE(HDC, nLeft, nTop, nRight, nBottom) --> .T.|.F.
+*/
 HB_FUNC(RICH_RECTANGLE)
 {
-  hwg_ret_BOOL(Rectangle(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+  hwg_ret_BOOL(Rectangle(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5)));
 }
 
-// (1) = pen style (2) = pen width (3) = pen color
+/*
+RICH_CREATEPEN(nStyle, nWidth, nColor) --> HPEN
+*/
 HB_FUNC(RICH_CREATEPEN)
 {
-  hwg_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), hwg_par_COLORREF(3)));
+  hwg_ret_HPEN(CreatePen(hwg_par_int(1), hwg_par_int(2), hwg_par_COLORREF(3)));
 }
 
+/*
+RICH_SELECTOBJECT(HDC, HGDIOBJ) --> HGDIOBJ
+*/
 HB_FUNC(RICH_SELECTOBJECT)
 {
   hwg_ret_HGDIOBJ(SelectObject(hwg_par_HDC(1), hwg_par_HGDIOBJ(2)));
 }
 
-// (1) = brush color
+/*
+RICH_CREATESOLIDBRUSH(nColor) --> HBRUSH
+*/
 HB_FUNC(RICH_CREATESOLIDBRUSH)
 {
   hwg_ret_HBRUSH(CreateSolidBrush(hwg_par_COLORREF(1)));
