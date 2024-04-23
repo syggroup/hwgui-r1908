@@ -20,6 +20,10 @@
 
 #include "missing.h"
 
+#if defined(__BORLANDC__) && defined(__clang__) && defined(HB_OS_WIN_64)
+#define PtrToUlong(p) ((ULONG)(ULONG_PTR)(p))
+#endif
+
 void writelog(char *s)
 {
   HB_FHANDLE handle;
