@@ -160,13 +160,12 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 
 HB_FUNC(CREATEROUNDRECTRGN)
 {
-  HRGN Res = CreateRoundRectRgn(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6));
-  hwg_ret_HRGN(Res);
+  hwg_ret_HRGN(CreateRoundRectRgn(hwg_par_int(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6)));
 }
 
 HB_FUNC(SETWINDOWRGN)
 {
-  hb_retni(SetWindowRgn(hwg_par_HWND(1), hwg_par_HRGN(2), hb_parl(3)));
+  hwg_ret_int(SetWindowRgn(hwg_par_HWND(1), hwg_par_HRGN(2), hwg_par_BOOL(3)));
 }
 
 HB_FUNC(HWG_REGNICE)
@@ -258,10 +257,10 @@ HB_FUNC(MAKELONG)
 
 HB_FUNC(GETWINDOWLONG)
 {
-  hb_retnl(GetWindowLong(hwg_par_HWND(1), hb_parni(2)));
+  hwg_ret_LONG(GetWindowLong(hwg_par_HWND(1), hwg_par_int(2)));
 }
 
 HB_FUNC(SETBKMODE)
 {
-  hb_retni(SetBkMode(hwg_par_HDC(1), hb_parni(2)));
+  hwg_ret_int(SetBkMode(hwg_par_HDC(1), hwg_par_int(2)));
 }
