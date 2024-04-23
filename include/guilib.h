@@ -68,7 +68,11 @@
    typedef unsigned char   HB_BYTE;
    typedef int             HB_BOOL;
    typedef unsigned short  HB_USHORT;
+   #if defined(HB_OS_WIN_64)
+   typedef ULONGLONG       HB_SIZE;
+   #else
    typedef ULONG           HB_SIZE;
+   #endif
 #endif
 
 #if !defined( HB_FALSE )
