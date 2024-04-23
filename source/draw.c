@@ -105,15 +105,16 @@ HB_FUNC(INVALIDATERECT)
     rc.bottom = hb_parni(6);
   }
 
+  // TODO: parâmetro 3 é do tipo BOOL
   InvalidateRect(hwg_par_HWND(1), (hb_pcount() > 2) ? &rc : NULL, hb_parni(2));
 }
 
 /*
 MOVETO(HDC, nX, nY) -->
 */
-HB_FUNC(MOVETO)
+HB_FUNC(MOVETO) // TODO: sincronizar nome da função com função da WINAPI
 {
-  MoveToEx(hwg_par_HDC(1), hb_parni(2), hb_parni(3), NULL);
+  MoveToEx(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), NULL);
 }
 
 /*
@@ -121,13 +122,13 @@ LINETO(HDC, nX, nY) -->
 */
 HB_FUNC(LINETO)
 {
-  LineTo(hwg_par_HDC(1), hb_parni(2), hb_parni(3));
+  LineTo(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3));
 }
 
 /*
 RECTANGLE(HDC, nX1, nY1, nX2, nY2) -->
 */
-HB_FUNC(RECTANGLE)
+HB_FUNC(RECTANGLE) // TODO: usar outro nome para esta função
 {
   HDC hDC = hwg_par_HDC(1);
   int x1 = hb_parni(2);
@@ -144,9 +145,9 @@ HB_FUNC(RECTANGLE)
 /*
 BOX(HDC, nLeft, nTop, nRight, nBottom) -->
 */
-HB_FUNC(BOX)
+HB_FUNC(BOX) // TODO: sincronizar nome da função com função da WINAPI
 {
-  Rectangle(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5));
+  Rectangle(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5));
 }
 
 /*
@@ -164,22 +165,22 @@ PIE(HDC, nLeft, nTop, nRight, nBottom, nXR1, nYR1, nXR2, nYR2) --> numeric
 */
 HB_FUNC(PIE)
 {
-  int res = Pie(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9));
-  hb_retnl(res ? 0 : (LONG)GetLastError());
+  int res = Pie(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), hwg_par_int(7), hwg_par_int(8), hwg_par_int(9));
+  hb_retnl(res ? 0 : (LONG)GetLastError()); // TODO: o retorno da função é BOOL
 }
 
+/*
+ELLIPSE(HDC, nLeft, nTop, nRight, nBottom) --> numeric
+*/
 HB_FUNC(ELLIPSE)
 {
-  int res = Ellipse(hwg_par_HDC(1), // handle to device context
-                    hb_parni(2),    // x-coord. of bounding rectangle's upper-left corner
-                    hb_parni(3),    // y-coord. of bounding rectangle's upper-left corner
-                    hb_parni(4),    // x-coord. of bounding rectangle's lower-right corner
-                    hb_parni(5)     // y-coord. bounding rectangle's f lower-right corner
-  );
-
-  hb_retnl(res ? 0 : (LONG)GetLastError());
+  int res = Ellipse(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5));
+  hb_retnl(res ? 0 : (LONG)GetLastError()); // TODO: o retorno da função é BOOL
 }
 
+/*
+FILLRECT(HDC, nLeft, nTop, nRight, nBottom, HBRUSH) -->
+*/
 HB_FUNC(FILLRECT)
 {
   RECT rc;
@@ -189,22 +190,16 @@ HB_FUNC(FILLRECT)
   rc.right = hb_parni(4);
   rc.bottom = hb_parni(5);
 
-  FillRect(HB_ISPOINTER(1) ? hwg_par_HDC(1) : (HDC)(LONG_PTR)hb_parnl(1), // handle to device context
-           &rc,                                                           // pointer to structure with rectangle
-           hwg_par_HBRUSH(6)                                              // handle to brush
-  );
+  // TODO: usar apenas hwg_par_HDC(1)
+  FillRect(HB_ISPOINTER(1) ? hwg_par_HDC(1) : (HDC)(LONG_PTR)hb_parnl(1), &rc, hwg_par_HBRUSH(6));
 }
 
+/*
+ROUNDRECT(HDC, nLeft, nTop, nRight, nBottom, nWidth, nHeight) --> .T.|.F.
+*/
 HB_FUNC(ROUNDRECT)
 {
-  hb_parl(RoundRect(hwg_par_HDC(1), // handle of device context
-                    hb_parni(2),    // x-coord. of bounding rectangle's upper-left corner
-                    hb_parni(3),    // y-coord. of bounding rectangle's upper-left corner
-                    hb_parni(4),    // x-coord. of bounding rectangle's lower-right corner
-                    hb_parni(5),    // y-coord. of bounding rectangle's lower-right corner
-                    hb_parni(6),    // width of ellipse used to draw rounded corners
-                    hb_parni(7)     // height of ellipse used to draw rounded corners
-                    ));
+  hwg_ret_BOOL(RoundRect(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), hwg_par_int(7)));
 }
 
 #if 0
@@ -331,7 +326,7 @@ HB_FUNC(LOADIMAGE)
       HB_ISNIL(1) ? GetModuleHandle(NULL)
                   : hwg_par_HINSTANCE(1),
       HB_ISNUM(2) ? MAKEINTRESOURCE(hb_parni(2)) : HB_PARSTR(2, &hString, NULL),
-      hwg_par_UINT(3), hb_parni(4), hb_parni(5), hwg_par_UINT(6)));
+      hwg_par_UINT(3), hwg_par_int(4), hwg_par_int(5), hwg_par_UINT(6)));
   hb_strfree(hString);
 }
 
@@ -721,11 +716,11 @@ HB_FUNC(OPENBITMAP)
 }
 
 /*
-DRAWICON(HDC, nX, nY, HICON) -->
+DRAWICON(HDC, HICON, nX, nY) -->
 */
-HB_FUNC(DRAWICON)
+HB_FUNC(DRAWICON) // TODO: ordem dos parâmetros não segue a função da WINAPI
 {
-  DrawIcon(hwg_par_HDC(1), hb_parni(3), hb_parni(4), hwg_par_HICON(2)); // TODO: o retorno é BOOL
+  DrawIcon(hwg_par_HDC(1), hwg_par_int(3), hwg_par_int(4), hwg_par_HICON(2)); // TODO: o retorno é BOOL
 }
 
 /*
@@ -733,7 +728,7 @@ GETSYSCOLOR(nIndex) --> color
 */
 HB_FUNC(GETSYSCOLOR)
 {
-  hb_retnl((LONG)GetSysColor(hb_parni(1))); // TODO: o retorno é DWORD
+  hwg_ret_DWORD(GetSysColor(hwg_par_int(1)));
 }
 
 /*
@@ -741,7 +736,7 @@ GETSYSCOLORBRUSH(nIndex) --> HBRUSH
 */
 HB_FUNC(GETSYSCOLORBRUSH)
 {
-  hwg_ret_HBRUSH(GetSysColorBrush(hb_parni(1)));
+  hwg_ret_HBRUSH(GetSysColorBrush(hwg_par_int(1)));
 }
 
 /*
@@ -749,7 +744,7 @@ CREATEPEN(nStyle, nWidth, nColor) --> HPEN
 */
 HB_FUNC(CREATEPEN)
 {
-  hwg_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), hwg_par_COLORREF(3)));
+  hwg_ret_HPEN(CreatePen(hwg_par_int(1), hwg_par_int(2), hwg_par_COLORREF(3)));
 }
 
 /*
@@ -765,7 +760,7 @@ CREATEHATCHBRUSH(nHatch, nColor) --> HBRUSH
 */
 HB_FUNC(CREATEHATCHBRUSH)
 {
-  hwg_ret_HBRUSH(CreateHatchBrush(hb_parni(1), hwg_par_COLORREF(2)));
+  hwg_ret_HBRUSH(CreateHatchBrush(hwg_par_int(1), hwg_par_COLORREF(2)));
 }
 
 /*
@@ -997,8 +992,7 @@ PATBLT(HDC, nX, nY, nWidth, nHeight, nRop) --> .T.|.F.
 */
 HB_FUNC(PATBLT)
 {
-  // TODO: parâmetro 6 é DWORD
-  hwg_ret_BOOL(PatBlt(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parnl(6)));
+  hwg_ret_BOOL(PatBlt(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_DWORD(6)));
 }
 
 /*
@@ -1015,7 +1009,7 @@ RESTOREDC(HDC, nSavedDC) --> .T.|.F.
 */
 HB_FUNC(RESTOREDC)
 {
-  hwg_ret_BOOL(RestoreDC(hwg_par_HDC(1), hb_parni(2)));
+  hwg_ret_BOOL(RestoreDC(hwg_par_HDC(1), hwg_par_int(2)));
 }
 
 /*
@@ -1031,42 +1025,42 @@ SETMAPMODE(HDC, nMode) --> numeric
 */
 HB_FUNC(SETMAPMODE)
 {
-  hb_retni(SetMapMode(hwg_par_HDC(1), hb_parni(2)));
+  hwg_ret_int(SetMapMode(hwg_par_HDC(1), hwg_par_int(2)));
 }
 
 /*
 SETWINDOWORGEX(HDC, nX, nY) -->
 */
-HB_FUNC(SETWINDOWORGEX)
+HB_FUNC(SETWINDOWORGEX) // TODO: o retorno é BOOL
 {
-  SetWindowOrgEx(hwg_par_HDC(1), hb_parni(2), hb_parni(3), NULL);
+  SetWindowOrgEx(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), NULL);
   hb_stornl(0, 4);
 }
 
 /*
 SETWINDOWEXTEX(HDC, nX, nY) -->
 */
-HB_FUNC(SETWINDOWEXTEX)
+HB_FUNC(SETWINDOWEXTEX) // TODO: o retorno é BOOL
 {
-  SetWindowExtEx(hwg_par_HDC(1), hb_parni(2), hb_parni(3), NULL);
+  SetWindowExtEx(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), NULL);
   hb_stornl(0, 4);
 }
 
 /*
 SETVIEWPORTORGEX(HDC, nX, nY) -->
 */
-HB_FUNC(SETVIEWPORTORGEX)
+HB_FUNC(SETVIEWPORTORGEX) // TODO: o retorno é BOOL
 {
-  SetViewportOrgEx(hwg_par_HDC(1), hb_parni(2), hb_parni(3), NULL);
+  SetViewportOrgEx(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), NULL);
   hb_stornl(0, 4);
 }
 
 /*
 SETVIEWPORTEXTEX(HDC, nX, nY) -->
 */
-HB_FUNC(SETVIEWPORTEXTEX)
+HB_FUNC(SETVIEWPORTEXTEX) // TODO: o retorno é BOOL
 {
-  SetViewportExtEx(hwg_par_HDC(1), hb_parni(2), hb_parni(3), NULL);
+  SetViewportExtEx(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), NULL);
   hb_stornl(0, 4);
 }
 
@@ -1075,7 +1069,7 @@ SETARCDIRECTION(HDC, nDir) --> numeric
 */
 HB_FUNC(SETARCDIRECTION)
 {
-  hb_retni(SetArcDirection(hwg_par_HDC(1), hb_parni(2)));
+  hwg_ret_int(SetArcDirection(hwg_par_HDC(1), hwg_par_int(2)));
 }
 
 /*
@@ -1083,7 +1077,7 @@ SETROP2(HDC, nRop2) --> numeric
 */
 HB_FUNC(SETROP2)
 {
-  hb_retni(SetROP2(hwg_par_HDC(1), hb_parni(2)));
+  hwg_ret_int(SetROP2(hwg_par_HDC(1), hwg_par_int(2)));
 }
 
 /*
@@ -1091,8 +1085,7 @@ BITBLT(HDC, nX, nY, nWidth, nHeight, HDCSRC, nX, nY, nRop) --> .T.|.F.
 */
 HB_FUNC(BITBLT)
 {
-  // TODO: parametro 9 é DWORD
-  hwg_ret_BOOL(BitBlt(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hwg_par_HDC(6), hb_parni(7), hb_parni(8), hb_parnl(9)));
+  hwg_ret_BOOL(BitBlt(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_HDC(6), hwg_par_int(7), hwg_par_int(8), hwg_par_DWORD(9)));
 }
 
 /*
@@ -1100,7 +1093,7 @@ CREATECOMPATIBLEBITMAP(HDC, nWidth, nHeight) --> HBITMAP
 */
 HB_FUNC(CREATECOMPATIBLEBITMAP)
 {
-  hwg_ret_HBITMAP(CreateCompatibleBitmap(hwg_par_HDC(1), hb_parni(2), hb_parni(3)));
+  hwg_ret_HBITMAP(CreateCompatibleBitmap(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3)));
 }
 
 /*
@@ -1115,7 +1108,7 @@ HB_FUNC(INFLATERECT)
     Array2Rect(hb_param(1, HB_IT_ARRAY), &pRect);
   }
 
-  hwg_ret_BOOL(InflateRect(&pRect, hb_parni(2), hb_parni(3)));
+  hwg_ret_BOOL(InflateRect(&pRect, hwg_par_int(2), hwg_par_int(3)));
 
   hb_storvni(pRect.left, 1, 1);
   hb_storvni(pRect.top, 1, 2);
@@ -1165,7 +1158,7 @@ HB_FUNC(OFFSETRECT)
     Array2Rect(hb_param(1, HB_IT_ARRAY), &pRect);
   }
 
-  hwg_ret_BOOL(OffsetRect(&pRect, hb_parni(2), hb_parni(3)));
+  hwg_ret_BOOL(OffsetRect(&pRect, hwg_par_int(2), hwg_par_int(3)));
   hb_storvni(pRect.left, 1, 1);
   hb_storvni(pRect.top, 1, 2);
   hb_storvni(pRect.right, 1, 3);
