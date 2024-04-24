@@ -18,58 +18,68 @@
 HB_FUNC_EXTERN(HB_OEMTOANSI);
 HB_FUNC_EXTERN(HB_ANSITOOEM);
 
+/*
+DEFINEPAINTSTRU(PAINTSTRUCT) -->
+*/
 HB_FUNC(DEFINEPAINTSTRU)
 {
-  PAINTSTRUCT *pps = (PAINTSTRUCT *)hb_xgrab(sizeof(PAINTSTRUCT));
-  hwg_ret_PAINTSTRUCT(pps);
+  hwg_ret_PAINTSTRUCT((PAINTSTRUCT *)hb_xgrab(sizeof(PAINTSTRUCT)));
 }
 
+/*
+BEGINPAINT(HWND, PAINTSTRUCT) -->
+*/
 HB_FUNC(BEGINPAINT)
 {
-  HDC hDC = BeginPaint(hwg_par_HWND(1), hwg_par_PAINTSTRUCT(2));
-  hwg_ret_HDC(hDC);
+  hwg_ret_HDC(BeginPaint(hwg_par_HWND(1), hwg_par_PAINTSTRUCT(2)));
 }
 
+/*
+ENDPAINT(HWND, PAINTSTRUCT) -->
+*/
 HB_FUNC(ENDPAINT)
 {
   PAINTSTRUCT *pps = hwg_par_PAINTSTRUCT(2);
-  EndPaint(hwg_par_HWND(1), pps);
+  EndPaint(hwg_par_HWND(1), pps); // TODO: o retorno é BOOL
   hb_xfree(pps);
 }
 
+/*
+DELETEDC(HDC) -->
+*/
 HB_FUNC(DELETEDC)
 {
-  DeleteDC(hwg_par_HDC(1));
+  DeleteDC(hwg_par_HDC(1)); // TODO: o retorno é BOOL
 }
 
+/*
+TEXTOUT(HDC, nX, nY, cString) -->
+*/
 HB_FUNC(TEXTOUT)
 {
   void *hText;
   HB_SIZE nLen;
   LPCTSTR lpText = HB_PARSTR(4, &hText, &nLen);
-
-  TextOut(hwg_par_HDC(1), // handle of device context
-          hb_parni(2),    // x-coordinate of starting position
-          hb_parni(3),    // y-coordinate of starting position
-          lpText,         // address of string
-          nLen            // number of characters in string
-  );
+  TextOut(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), lpText, nLen); // TODO: o retorno é BOOL
   hb_strfree(hText);
 }
 
+/*
+DRAWTEXT(HDC, cText, nLeft, nTop, nRight, nBottom, nFormat, p8) --> numeric
+DRAWTEXT(HDC, cText, aRect, nFormat, p8) --> numeric
+*/
 HB_FUNC(DRAWTEXT)
 {
   void *hText;
   HB_SIZE nLen;
   LPCTSTR lpText = HB_PARSTR(2, &hText, &nLen);
   RECT rc;
-  UINT uFormat = (hb_pcount() == 4 ? hb_parni(4) : hb_parni(7));
+  UINT uFormat = hb_pcount() == 4 ? hwg_par_UINT(4) : hwg_par_UINT(7);
   // int uiPos = (hb_pcount() == 4 ? 3 : hb_parni(8));
   int heigh;
 
   if (hb_pcount() > 4)
   {
-
     rc.left = hb_parni(3);
     rc.top = hb_parni(4);
     rc.right = hb_parni(5);
@@ -80,10 +90,7 @@ HB_FUNC(DRAWTEXT)
     Array2Rect(hb_param(3, HB_IT_ARRAY), &rc);
   }
 
-  heigh = DrawText(hwg_par_HDC(1), // handle of device context
-                   lpText,         // address of string
-                   nLen,           // number of characters in string
-                   &rc, uFormat);
+  heigh = DrawText(hwg_par_HDC(1), lpText, nLen, &rc, uFormat);
   hb_strfree(hText);
 
   // if (HB_ISBYREF(uiPos))
@@ -94,18 +101,19 @@ HB_FUNC(DRAWTEXT)
     hb_storvni(rc.right, 8, 3);
     hb_storvni(rc.bottom, 8, 4);
   }
-  hb_retni(heigh);
+  hwg_ret_int(heigh); // TODO: remover variável heigh
 }
 
+/*
+GETTEXTMETRIC(HDC) --> array[8]
+*/
 HB_FUNC(GETTEXTMETRIC)
 {
   TEXTMETRIC tm;
   PHB_ITEM aMetr = hb_itemArrayNew(8);
   PHB_ITEM temp;
 
-  GetTextMetrics(hwg_par_HDC(1), // handle of device context
-                 &tm             // address of text metrics structure
-  );
+  GetTextMetrics(hwg_par_HDC(1), &tm);
 
   temp = hb_itemPutNL(NULL, tm.tmHeight);
   hb_itemArrayPut(aMetr, 1, temp);
@@ -143,9 +151,11 @@ HB_FUNC(GETTEXTMETRIC)
   hb_itemRelease(aMetr);
 }
 
+/*
+GETTEXTSIZE(HDC, cText) -->
+*/
 HB_FUNC(GETTEXTSIZE)
 {
-
   void *hText;
   HB_SIZE nLen;
   LPCTSTR lpText = HB_PARSTR(2, &hText, &nLen);
@@ -153,7 +163,7 @@ HB_FUNC(GETTEXTSIZE)
   PHB_ITEM aMetr = hb_itemArrayNew(2);
   PHB_ITEM temp;
 
-  GetTextExtentPoint32(hwg_par_HDC(1), lpText, nLen, &sz);
+  GetTextExtentPoint32(hwg_par_HDC(1), lpText, nLen, &sz); // TODO: o retorno é BOOL
   hb_strfree(hText);
 
   temp = hb_itemPutNL(NULL, sz.cx);
@@ -168,13 +178,16 @@ HB_FUNC(GETTEXTSIZE)
   hb_itemRelease(aMetr);
 }
 
+/*
+GETCLIENTRECT(HWND) --> aRect[4]
+*/
 HB_FUNC(GETCLIENTRECT)
 {
   RECT rc;
   PHB_ITEM aMetr = hb_itemArrayNew(4);
   PHB_ITEM temp;
 
-  GetClientRect(hwg_par_HWND(1), &rc);
+  GetClientRect(hwg_par_HWND(1), &rc); // TODO: o retorno é BOOL
 
   temp = hb_itemPutNL(NULL, rc.left);
   hb_itemArrayPut(aMetr, 1, temp);
@@ -196,13 +209,16 @@ HB_FUNC(GETCLIENTRECT)
   hb_itemRelease(aMetr);
 }
 
+/*
+GETWINDOWRECT(HWND) --> aRect[4]
+*/
 HB_FUNC(GETWINDOWRECT)
 {
   RECT rc;
   PHB_ITEM aMetr = hb_itemArrayNew(4);
   PHB_ITEM temp;
 
-  GetWindowRect(hwg_par_HWND(1), &rc);
+  GetWindowRect(hwg_par_HWND(1), &rc); // TODO: o retorno é BOOL
 
   temp = hb_itemPutNL(NULL, rc.left);
   hb_itemArrayPut(aMetr, 1, temp);
@@ -224,6 +240,9 @@ HB_FUNC(GETWINDOWRECT)
   hb_itemRelease(aMetr);
 }
 
+/*
+GETCLIENTAREA(PAINTSTRUCT) --> aRect[4]
+*/
 HB_FUNC(GETCLIENTAREA)
 {
   PAINTSTRUCT *pps = hwg_par_PAINTSTRUCT(1);
@@ -250,43 +269,50 @@ HB_FUNC(GETCLIENTAREA)
   hb_itemRelease(aMetr);
 }
 
+/*
+SETTEXTCOLOR(HDC, COLORREF) --> COLORREF
+*/
 HB_FUNC(SETTEXTCOLOR)
 {
-  COLORREF crColor = SetTextColor(hwg_par_HDC(1),     // handle of device context
-                                  hwg_par_COLORREF(2) // text color
-  );
-  hb_retnl((LONG)crColor);
+  hwg_ret_COLORREF(SetTextColor(hwg_par_HDC(1), hwg_par_COLORREF(2)));
 }
 
+/*
+SETBKCOLOR(HDC, COLORREF) --> COLORREF
+*/
 HB_FUNC(SETBKCOLOR)
 {
-  COLORREF crColor = SetBkColor(hwg_par_HDC(1),     // handle of device context
-                                hwg_par_COLORREF(2) // text color
-  );
-  hb_retnl((LONG)crColor);
+  hwg_ret_COLORREF(SetBkColor(hwg_par_HDC(1), hwg_par_COLORREF(2)));
 }
 
+/*
+SETTRANSPARENTMODE(HDC, lTransparent) --> .T.|.F.
+*/
 HB_FUNC(SETTRANSPARENTMODE)
 {
-  int iMode = SetBkMode(hwg_par_HDC(1), // handle of device context
-                        (hb_parl(2)) ? TRANSPARENT : OPAQUE);
+  int iMode = SetBkMode(hwg_par_HDC(1), hb_parl(2) ? TRANSPARENT : OPAQUE);
   hb_retl(iMode == TRANSPARENT);
 }
 
+/*
+GETTEXTCOLOR(HDC) --> COLORREF
+*/
 HB_FUNC(GETTEXTCOLOR)
 {
-  hb_retnl((LONG)GetTextColor(hwg_par_HDC(1)));
+  hwg_ret_COLORREF(GetTextColor(hwg_par_HDC(1)));
 }
 
+/*
+GETBKCOLOR(HDC) --> COLORREF
+*/
 HB_FUNC(GETBKCOLOR)
 {
-  hb_retnl((LONG)GetBkColor(hwg_par_HDC(1)));
+  hwg_ret_COLORREF(GetBkColor(hwg_par_HDC(1)));
 }
 
 /*
 HB_FUNC(GETTEXTSIZE)
 {
-
    HDC hdc = GetDC(hwg_par_HWND(1));
    SIZE size;
    PHB_ITEM aMetr = hb_itemArrayNew(2);
@@ -310,42 +336,39 @@ HB_FUNC(GETTEXTSIZE)
 
    hb_itemReturn(aMetr);
    hb_itemRelease(aMetr);
-
 }
 */
 
+/*
+EXTTEXTOUT(HDC, nX, nY, nLeft, nTop, nRight, nBottom, cText) -->
+*/
 HB_FUNC(EXTTEXTOUT)
 {
-
   RECT rc;
   void *hText;
   HB_SIZE nLen;
   LPCTSTR lpText = HB_PARSTR(8, &hText, &nLen);
-
   rc.left = hb_parni(4);
   rc.top = hb_parni(5);
   rc.right = hb_parni(6);
   rc.bottom = hb_parni(7);
-
-  ExtTextOut(hwg_par_HDC(1), // handle to device context
-             hb_parni(2),    // x-coordinate of reference point
-             hb_parni(3),    // y-coordinate of reference point
-             ETO_OPAQUE,     // text-output options
-             &rc,            // optional clipping and/or opaquing rectangle
-             lpText,         // points to string
-             nLen,           // number of characters in string
-             NULL            // pointer to array of intercharacter spacing values
-  );
+  ExtTextOut(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), ETO_OPAQUE, &rc, lpText, nLen, NULL);
   hb_strfree(hText);
 }
 
+/*
+WRITESTATUSWINDOW(HWND, nIndex) -->
+*/
 HB_FUNC(WRITESTATUSWINDOW)
 {
   void *hString;
-  SendMessage(hwg_par_HWND(1), SB_SETTEXT, hb_parni(2), (LPARAM)HB_PARSTR(3, &hString, NULL));
+  SendMessage(hwg_par_HWND(1), SB_SETTEXT, hwg_par_WPARAM(2), (LPARAM)HB_PARSTR(3, &hString, NULL));
   hb_strfree(hString);
 }
 
+/*
+WINDOWFROMDC(HDC) --> HWND
+*/
 HB_FUNC(WINDOWFROMDC)
 {
   hwg_ret_HWND(WindowFromDC(hwg_par_HDC(1)));
@@ -353,31 +376,20 @@ HB_FUNC(WINDOWFROMDC)
 
 /* CreateFont(fontName, nWidth, hHeight [,fnWeight] [,fdwCharSet], [,fdwItalic] [,fdwUnderline] [,fdwStrikeOut])
  */
+
+/*
+CREATEFONT(cFontName, nWidth, nHeight, nWeight, nCharSet, nItalic, nUnderline, nStrikeOut) --> HFONT
+*/
 HB_FUNC(CREATEFONT)
 {
   HFONT hFont;
-  int fnWeight = (HB_ISNIL(4)) ? 0 : hb_parni(4);
-  DWORD fdwCharSet = (HB_ISNIL(5)) ? 0 : hb_parni(5);
-  DWORD fdwItalic = (HB_ISNIL(6)) ? 0 : hb_parni(6);
-  DWORD fdwUnderline = (HB_ISNIL(7)) ? 0 : hb_parni(7);
-  DWORD fdwStrikeOut = (HB_ISNIL(8)) ? 0 : hb_parni(8);
+  int fnWeight = (HB_ISNIL(4)) ? 0 : hwg_par_int(4);
+  DWORD fdwCharSet = (HB_ISNIL(5)) ? 0 : hwg_par_DWORD(5);
+  DWORD fdwItalic = (HB_ISNIL(6)) ? 0 : hwg_par_DWORD(6);
+  DWORD fdwUnderline = (HB_ISNIL(7)) ? 0 : hwg_par_DWORD(7);
+  DWORD fdwStrikeOut = (HB_ISNIL(8)) ? 0 : hwg_par_DWORD(8);
   void *hString;
-
-  hFont = CreateFont(hb_parni(3),                 // logical height of font
-                     hb_parni(2),                 // logical average character width
-                     0,                           // angle of escapement
-                     0,                           // base-line orientation angle
-                     fnWeight,                    // font weight
-                     fdwItalic,                   // italic attribute flag
-                     fdwUnderline,                // underline attribute flag
-                     fdwStrikeOut,                // strikeout attribute flag
-                     fdwCharSet,                  // character set identifier
-                     0,                           // output precision
-                     0,                           // clipping precision
-                     0,                           // output quality
-                     0,                           // pitch and family
-                     HB_PARSTR(1, &hString, NULL) // pointer to typeface name string
-  );
+  hFont = CreateFont(hwg_par_int(3), hwg_par_int(2), 0, 0, fnWeight, fdwItalic, fdwUnderline, fdwStrikeOut, fdwCharSet, 0, 0, 0, 0, HB_PARSTR(1, &hString, NULL));
   hb_strfree(hString);
   hwg_ret_HFONT(hFont);
 }
@@ -385,65 +397,79 @@ HB_FUNC(CREATEFONT)
 /*
  * SetCtrlFont(hWnd, ctrlId, hFont)
  */
+
+/*
+SETCTRLFONT(HWND, nID, HFONT) -->
+*/
 HB_FUNC(SETCTRLFONT)
 {
-  SendDlgItemMessage(hwg_par_HWND(1), hb_parni(2), WM_SETFONT, (WPARAM)HB_PARHANDLE(3), 0L);
+  SendDlgItemMessage(hwg_par_HWND(1), hwg_par_int(2), WM_SETFONT, (WPARAM)hwg_par_HFONT(3), 0);
 }
 
+/*
+*/
 HB_FUNC(OEMTOANSI)
 {
   HB_FUNC_EXEC(HB_OEMTOANSI);
 }
 
+/*
+*/
 HB_FUNC(ANSITOOEM)
 {
   HB_FUNC_EXEC(HB_ANSITOOEM);
 }
 
+/*
+CREATERECTRGN(nX1, nY1, nX2, nY2) --> HRGN
+*/
 HB_FUNC(CREATERECTRGN)
 {
-  HRGN reg;
-
-  reg = CreateRectRgn(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4));
-
-  hwg_ret_HRGN(reg);
+  hwg_ret_HRGN(CreateRectRgn(hwg_par_int(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4)));
 }
 
+/*
+CREATERECTRGNINDIRECT(NIL, nLeft, nTop, nRight, nBottom) --> HRGN
+*/
 HB_FUNC(CREATERECTRGNINDIRECT)
 {
-  HRGN reg;
   RECT rc;
-
   rc.left = hb_parni(2);
   rc.top = hb_parni(3);
   rc.right = hb_parni(4);
   rc.bottom = hb_parni(5);
-
-  reg = CreateRectRgnIndirect(&rc);
-  hwg_ret_HRGN(reg);
+  hwg_ret_HRGN(CreateRectRgnIndirect(&rc));
 }
 
+/*
+EXTSELECTCLIPRGN(HDC, HRGN, nMode) --> numeric
+*/
 HB_FUNC(EXTSELECTCLIPRGN)
 {
-  hb_retni(ExtSelectClipRgn(hwg_par_HDC(1), hwg_par_HRGN(2), hb_parni(3)));
+  hwg_ret_int(ExtSelectClipRgn(hwg_par_HDC(1), hwg_par_HRGN(2), hwg_par_int(3)));
 }
 
+/*
+SELECTCLIPRGN(HDC, HRGN) --> numeric
+*/
 HB_FUNC(SELECTCLIPRGN)
 {
-  hb_retni(SelectClipRgn(hwg_par_HDC(1), hwg_par_HRGN(2)));
+  hwg_ret_int(SelectClipRgn(hwg_par_HDC(1), hwg_par_HRGN(2)));
 }
 
+/*
+CREATEFONTINDIRECT(cFontName, nWeight, nHeight, nQuality) --> HFONT
+*/
 HB_FUNC(CREATEFONTINDIRECT)
 {
   LOGFONT lf;
   HFONT f;
   memset(&lf, 0, sizeof(LOGFONT));
-  lf.lfQuality = hb_parni(4);
-  lf.lfHeight = hb_parni(3);
-  lf.lfWeight = hb_parni(2);
+  lf.lfQuality = hwg_par_BYTE(4);
+  lf.lfHeight = hwg_par_LONG(3);
+  lf.lfWeight = hwg_par_LONG(2);
   HB_ITEMCOPYSTR(hb_param(1, HB_IT_ANY), lf.lfFaceName, HB_SIZEOFARRAY(lf.lfFaceName));
   lf.lfFaceName[HB_SIZEOFARRAY(lf.lfFaceName) - 1] = '\0';
-
   f = CreateFontIndirect(&lf);
   hwg_ret_HFONT(f);
 }
