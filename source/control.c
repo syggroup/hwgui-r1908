@@ -2087,7 +2087,7 @@ HB_FUNC(COMBOGETITEMRECT)
   int nIndex = hb_parnl(2);
   RECT rcItem;
   SendMessage(hWnd, LB_GETITEMRECT, nIndex, (LONG_PTR)(VOID *)&rcItem);
-  hb_itemRelease(hb_itemReturn(Rect2Array(&rcItem)));
+  hb_itemReturnRelease(Rect2Array(&rcItem));
 }
 
 HB_FUNC(COMBOBOXGETITEMDATA)
@@ -2188,7 +2188,7 @@ HB_FUNC(TABITEMPOS)
 {
   RECT pRect;
   TabCtrl_GetItemRect(hwg_par_HWND(1), hb_parni(2), &pRect);
-  hb_itemRelease(hb_itemReturn(Rect2Array(&pRect)));
+  hb_itemReturnRelease(Rect2Array(&pRect));
 }
 
 HB_FUNC(GETTABNAME)

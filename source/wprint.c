@@ -175,8 +175,7 @@ HB_FUNC(HWG_GETPRINTERS)
       hb_itemArrayPut(aMetr, i + 1, temp);
       hb_itemRelease(temp);
     }
-    hb_itemReturn(aMetr);
-    hb_itemRelease(aMetr);
+    hb_itemReturnRelease(aMetr);
   }
   else
   {
@@ -330,8 +329,7 @@ HB_FUNC(GETDEVICEAREA)
   hb_itemArrayPut(aMetr, 11, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 HB_FUNC(CREATEENHMETAFILE)

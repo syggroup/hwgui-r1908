@@ -237,5 +237,5 @@ HB_FUNC(STRING2ARRAY)
     ReadArray(szResult, pItem);
   }
 
-  hb_itemRelease(hb_itemReturn(pItem));
+  hb_itemReturnRelease(pItem);
 }

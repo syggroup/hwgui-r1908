@@ -204,8 +204,7 @@ HB_FUNC(CLIENTTOSCREEN)
   hb_itemArrayPut(aPoint, 2, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aPoint);
-  hb_itemRelease(aPoint);
+  hb_itemReturnRelease(aPoint);
 }
 
 HB_FUNC(SCREENTOCLIENT)
@@ -227,7 +226,7 @@ HB_FUNC(SCREENTOCLIENT)
     Array2Rect(hb_param(2, HB_IT_ARRAY), &R);
     ScreenToClient(hwg_par_HWND(1), (LPPOINT)(void *)&R);
     ScreenToClient(hwg_par_HWND(1), ((LPPOINT)(void *)&R) + 1);
-    hb_itemRelease(hb_itemReturn(Rect2Array(&R)));
+    hb_itemReturnRelease(Rect2Array(&R));
     return;
   }
 
@@ -239,8 +238,7 @@ HB_FUNC(SCREENTOCLIENT)
   hb_itemArrayPut(aPoint, 2, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aPoint);
-  hb_itemRelease(aPoint);
+  hb_itemReturnRelease(aPoint);
 }
 
 HB_FUNC(HWG_GETCURSORPOS)
@@ -258,8 +256,7 @@ HB_FUNC(HWG_GETCURSORPOS)
   hb_itemArrayPut(aPoint, 2, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aPoint);
-  hb_itemRelease(aPoint);
+  hb_itemReturnRelease(aPoint);
 }
 
 HB_FUNC(HWG_SETCURSORPOS)
@@ -700,7 +697,7 @@ HB_FUNC(BUTTON1GETSCREENCLIENT)
   GetWindowRect(hChild, rect);
   ScreenToClient(hParent, (LPPOINT)rect);
   ScreenToClient(hParent, ((LPPOINT)rect) + 1);
-  hb_itemRelease(hb_itemReturn(Rect2Array(rect)));
+  hb_itemReturnRelease(Rect2Array(rect));
 }
 
 HB_FUNC(HEDITEX_CTLCOLOR)

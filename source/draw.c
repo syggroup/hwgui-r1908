@@ -86,8 +86,7 @@ HB_FUNC(GETPPSRECT)
 {
   PAINTSTRUCT *pps = hwg_par_PAINTSTRUCT(1);
   PHB_ITEM aMetr = Rect2Array(&pps->rcPaint);
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -580,8 +579,7 @@ HB_FUNC(GETBITMAPSIZE)
   hb_itemArrayPut(aMetr, 4, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -608,8 +606,7 @@ HB_FUNC(GETICONSIZE)
   hb_itemArrayPut(aMetr, 3, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -841,8 +838,7 @@ HB_FUNC(GETDRAWITEMINFO)
   hb_itemArrayPut(aMetr, 9, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -1235,8 +1231,7 @@ HB_FUNC(GETMEASUREITEMINFO)
   temp = hb_itemPutNL(NULL, lpdis->itemHeight);
   hb_itemArrayPut(aMetr, 5, temp);
   hb_itemRelease(temp);
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -1246,7 +1241,7 @@ HB_FUNC(COPYRECT)
 {
   RECT p;
   Array2Rect(hb_param(1, HB_IT_ARRAY), &p);
-  hb_itemRelease(hb_itemReturn(Rect2Array(&p)));
+  hb_itemReturnRelease(Rect2Array(&p));
 }
 
 /*
@@ -1274,6 +1269,6 @@ HB_FUNC(MODIFYSTYLE)
 HB_FUNC(PTRRECT2ARRAY)
 {
   RECT *rect = (RECT *)HB_PARHANDLE(1);
-  hb_itemRelease(hb_itemReturn(Rect2Array(&rect)));
+  hb_itemReturnRelease(Rect2Array(&rect));
 }
 #endif

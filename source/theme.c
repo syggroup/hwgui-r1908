@@ -1724,7 +1724,7 @@ HB_FUNC(PREPAREIMAGERECT)
   hb_storvni(rpTitle.right, 5, 3);
   hb_storvni(rpTitle.bottom, 5, 4);
 
-  hb_itemRelease(hb_itemReturn(Rect2Array(&rImage)));
+  hb_itemReturnRelease(Rect2Array(&rImage));
 }
 
 HB_FUNC(HB_DRAWTHEMETEXT)

@@ -147,8 +147,7 @@ HB_FUNC(GETTEXTMETRIC)
   hb_itemArrayPut(aMetr, 8, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -174,8 +173,7 @@ HB_FUNC(GETTEXTSIZE)
   hb_itemArrayPut(aMetr, 2, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -205,8 +203,7 @@ HB_FUNC(GETCLIENTRECT)
   hb_itemArrayPut(aMetr, 4, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -236,8 +233,7 @@ HB_FUNC(GETWINDOWRECT)
   hb_itemArrayPut(aMetr, 4, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -265,8 +261,7 @@ HB_FUNC(GETCLIENTAREA)
   hb_itemArrayPut(aMetr, 4, temp);
   hb_itemRelease(temp);
 
-  hb_itemReturn(aMetr);
-  hb_itemRelease(aMetr);
+  hb_itemReturnRelease(aMetr);
 }
 
 /*
@@ -334,8 +329,7 @@ HB_FUNC(GETTEXTSIZE)
    hb_itemArrayPut(aMetr, 2, temp);
    hb_itemRelease(temp);
 
-   hb_itemReturn(aMetr);
-   hb_itemRelease(aMetr);
+   hb_itemReturnRelease(aMetr);
 }
 */
 

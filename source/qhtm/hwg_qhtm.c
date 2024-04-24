@@ -234,8 +234,7 @@ HB_FUNC(QHTM_GETSIZE)
       hb_itemArrayPut(aMetr, 2, temp);
       hb_itemRelease(temp);
 
-      hb_itemReturn(aMetr);
-      hb_itemRelease(aMetr);
+      hb_itemReturnRelease(aMetr);
     }
     else
     {

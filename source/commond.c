@@ -107,7 +107,7 @@ HB_FUNC(SELECTFONT)
 
   hb_itemRelease(temp);
 
-  hb_itemRelease(hb_itemReturn(aMetr));
+  hb_itemReturnRelease(aMetr);
 }
 
 HB_FUNC(SELECTFILE)

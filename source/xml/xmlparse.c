@@ -108,7 +108,7 @@ HB_FUNC(HBXML_TRANSFORM)
   {
     pItem = hb_itemPutCL(NULL, (char *)pBuffer, ulLen);
   }
-  hb_itemRelease(hb_itemReturn(pItem));
+  hb_itemReturnRelease(pItem);
 }
 
 /*

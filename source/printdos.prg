@@ -640,7 +640,7 @@ HB_FUNC(AFILLTEXT)
       hb_arrayAddForward(pArray, hb_itemPutC(pTemp, string));
    }
 
-   hb_itemRelease(hb_itemReturn( pArray ));
+   hb_itemReturnRelease( pArray );
    hb_itemRelease(pTemp);
    hb_xfree(string);
    fclose(inFile);
