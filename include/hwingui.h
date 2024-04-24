@@ -152,6 +152,8 @@ HB_EXTERN_END
 #define hwg_par_int(n) hb_parni(n)
 #define hwg_par_BOOL(n) hb_parl(n)
 #define hwg_par_DWORD(n) hb_parnl(n)
+#define hwg_par_LONG(n) hb_parnl(n)
+#define hwg_par_BYTE(n) hb_parni(n)
 
 #define hwg_ret_BOOL(x) hb_retl(x)
 #define hwg_ret_HWND(n) HB_RETHANDLE(n)
@@ -172,6 +174,7 @@ HB_EXTERN_END
 #define hwg_ret_int(x) hb_retni(x)
 #define hwg_ret_LONG(x) hb_retnl(x)
 #define hwg_ret_DWORD(x) hb_retnl(x)
+#define hwg_ret_COLORREF(x) hb_retnl(x)
 
 #define hwg_vmPushUINT(x) hb_vmPushInteger(x)
 #define hwg_vmPushWPARAM(x) hb_vmPushLong(x)
