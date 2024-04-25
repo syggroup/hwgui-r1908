@@ -104,7 +104,7 @@ HB_FUNC(MOVEWINDOW)
 */
 HB_FUNC(CREATEPROGRESSBAR)
 {
-  HWND hParentWindow = hwg_par_HWND(1);
+  HWND hPBar, hParentWindow = hwg_par_HWND(1);
   RECT rcClient;
   DWORD ulStyle;
   int cyVScroll = GetSystemMetrics(SM_CYVSCROLL);
@@ -128,7 +128,7 @@ HB_FUNC(CREATEPROGRESSBAR)
     nheight = cyVScroll;
   }
 
-  HWND hPBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | ulStyle, x1, y1, nwidth, nheight,
+  hPBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | ulStyle, x1, y1, nwidth, nheight,
                               hParentWindow, NULL, GetModuleHandle(NULL), NULL);
 
   SendMessage(hPBar, PBM_SETRANGE, 0, MAKELPARAM(0, hb_parni(2)));
@@ -211,6 +211,7 @@ HB_FUNC(CREATEBUTTON)
 */
 HB_FUNC(CREATEEDIT)
 {
+  HWND hWndEdit;
   DWORD ulStyle = hwg_par_DWORD(3);
   ULONG ulStyleEx = (ulStyle & WS_BORDER) ? WS_EX_CLIENTEDGE : 0;
 
@@ -218,7 +219,7 @@ HB_FUNC(CREATEEDIT)
   {
     ulStyle &= ~WS_BORDER;
   }
-  HWND hWndEdit =
+  hWndEdit =
       CreateWindowEx(ulStyleEx, TEXT("EDIT"), NULL, WS_CHILD | WS_VISIBLE | ulStyle, hwg_par_int(4), hwg_par_int(5),
                      hwg_par_int(6), hwg_par_int(7), hwg_par_HWND(1), hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL);
 

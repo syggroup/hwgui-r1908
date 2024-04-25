@@ -401,6 +401,7 @@ HB_FUNC(HWG_INITMDIWINDOW)
 
 HB_FUNC(HWG_INITCLIENTWINDOW)
 {
+  HWND hWnd;
   CLIENTCREATESTRUCT ccs;
   int nPos = (hb_pcount() > 1 && !HB_ISNIL(2)) ? hb_parni(2) : 0;
 
@@ -408,7 +409,7 @@ HB_FUNC(HWG_INITCLIENTWINDOW)
   ccs.hWindowMenu = GetSubMenu(GetMenu(aWindows[0]), nPos);
   ccs.idFirstChild = FIRST_MDICHILD_ID;
 
-  HWND hWnd = CreateWindowEx(0, TEXT("MDICLIENT"), NULL, WS_CHILD | WS_CLIPCHILDREN | MDIS_ALLCHILDSTYLES,
+  hWnd = CreateWindowEx(0, TEXT("MDICLIENT"), NULL, WS_CHILD | WS_CLIPCHILDREN | MDIS_ALLCHILDSTYLES,
                              hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), aWindows[0], NULL,
                              GetModuleHandle(NULL), (LPVOID)&ccs);
 
