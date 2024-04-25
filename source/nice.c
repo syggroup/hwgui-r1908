@@ -131,7 +131,7 @@ void Gradient(HDC hdc, int x, int y, int w, int h, int color1, int color2, int n
 
 LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  long int res;
+  LRESULT res;
   PHB_DYNS pSymTest;
   if ((pSymTest = hb_dynsymFind("NICEBUTTPROC")) != NULL)
   {
@@ -142,7 +142,7 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
     hb_vmPushLong((LONG)wParam);
     hb_vmPushLong((LONG)lParam);
     hb_vmDo(4); /* where iArgCount is the number of pushed parameters */
-    res = hb_parl(-1);
+    res = hb_parl(-1); // TODO: revisar
     if (res)
     {
       return 0;

@@ -687,7 +687,7 @@ HB_FUNC(RESETWINDOWPOS)
 */
 static LRESULT CALLBACK s_MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  long int res;
+  LRESULT res;
   PHB_ITEM pObject = (PHB_ITEM)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
   if (!pSym_onEvent)
@@ -704,7 +704,7 @@ static LRESULT CALLBACK s_MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LP
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
-    res = hb_parnl(-1);
+    res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
       return DefWindowProc(hWnd, message, wParam, lParam);
@@ -722,7 +722,7 @@ static LRESULT CALLBACK s_MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LP
 
 static LRESULT CALLBACK s_FrameWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  long int res;
+  LRESULT res;
   PHB_ITEM pObject = (PHB_ITEM)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
   if (!pSym_onEvent)
@@ -738,7 +738,7 @@ static LRESULT CALLBACK s_FrameWndProc(HWND hWnd, UINT message, WPARAM wParam, L
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
-    res = hb_parnl(-1);
+    res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
       return DefFrameProc(hWnd, aWindows[1], message, wParam, lParam);
@@ -756,7 +756,7 @@ static LRESULT CALLBACK s_FrameWndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 static LRESULT CALLBACK s_MDIChildWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  long int res;
+  LRESULT res;
   PHB_ITEM pObject;
 
   if (message == WM_NCCREATE)
@@ -791,7 +791,7 @@ static LRESULT CALLBACK s_MDIChildWndProc(HWND hWnd, UINT message, WPARAM wParam
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
-    res = hb_parnl(-1);
+    res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
       return DefMDIChildProc(hWnd, message, wParam, lParam);

@@ -425,7 +425,7 @@ HB_FUNC(HWG_INITRICHPROC)
 
 LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  long int res;
+  LRESULT res;
   PHB_ITEM pObject = (PHB_ITEM)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
   if (!pSym_onEvent)
@@ -441,7 +441,7 @@ LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
-    res = hb_parnl(-1);
+    res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
       return (CallWindowProc(wpOrigRichProc, hWnd, message, wParam, lParam));

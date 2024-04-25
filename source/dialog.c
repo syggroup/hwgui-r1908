@@ -560,7 +560,7 @@ HB_FUNC(DIALOGBASEUNITS)
 static LRESULT CALLBACK s_ModalDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   // PHB_DYNS pSymTest;
-  long int res;
+  LRESULT res;
   PHB_ITEM pObject;
 
   if (uMsg == WM_INITDIALOG)
@@ -597,11 +597,11 @@ static LRESULT CALLBACK s_ModalDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPAR
         uMsg == WM_CTLCOLORDLG)
     {
       res = hb_parptr(-1);
-      return (INT_PTR)res;
+      return (INT_PTR)res; // TODO: revisar
     }
     else
 #endif
-      res = hb_parnl(-1);
+      res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
       return FALSE;
@@ -619,7 +619,7 @@ static LRESULT CALLBACK s_ModalDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPAR
 
 static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-  long int res;
+  LRESULT res;
   PHB_ITEM pObject;
 
   if (uMsg == WM_INITDIALOG)
@@ -683,12 +683,12 @@ static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
         uMsg == WM_CTLCOLORDLG)
     {
       res = hb_parptr(-1);
-      return (INT_PTR)res;
+      return (INT_PTR)res; // TODO: revisar
     }
     else
 #endif
 
-      res = hb_parnl(-1);
+      res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
       return FALSE;
@@ -706,7 +706,7 @@ static LRESULT CALLBACK s_DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 
 static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-  long int res;
+  LRESULT res;
   PHB_ITEM pObject;
 
   if (uMsg == WM_INITDIALOG)
@@ -772,7 +772,7 @@ static LRESULT CALLBACK s_PSPProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
-    res = hb_parnl(-1);
+    res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
       return FALSE;
