@@ -154,6 +154,7 @@ HB_EXTERN_END
 #define hwg_par_DWORD(n) hb_parnl(n)
 #define hwg_par_LONG(n) hb_parnl(n)
 #define hwg_par_BYTE(n) hb_parni(n)
+#define hwg_par_LRESULT(n) (LRESULT)hb_parnl(n)
 
 #define hwg_ret_BOOL(x) hb_retl(x)
 #define hwg_ret_HWND(n) HB_RETHANDLE(n)
