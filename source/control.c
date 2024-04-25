@@ -369,7 +369,7 @@ HB_FUNC(ADDTOOLTIP) // changed by MAG
   ti.hinst = GetModuleHandle(NULL);
   ti.lpszText = (LPTSTR)HB_PARSTR(3, &hStr, NULL);
 
-  hb_retl(SendMessage(hWndTT, TTM_ADDTOOL, 0, (LPARAM)(LPTOOLINFO)&ti));
+  hb_retl((BOOL)SendMessage(hWndTT, TTM_ADDTOOL, 0, (LPARAM)(LPTOOLINFO)&ti));
   hb_strfree(hStr);
 }
 
@@ -406,7 +406,7 @@ HB_FUNC(SETTOOLTIPTITLE)
     ti.hinst = GetModuleHandle(NULL);
     ti.lpszText = (LPTSTR)HB_PARSTR(3, &hStr, NULL);
 
-    hb_retl(SendMessage(hWndTT, TTM_SETTOOLINFO, 0, (LPARAM)(LPTOOLINFO)&ti));
+    hb_retl((BOOL)SendMessage(hWndTT, TTM_SETTOOLINFO, 0, (LPARAM)(LPTOOLINFO)&ti));
     hb_strfree(hStr);
   }
 }
@@ -498,7 +498,7 @@ HB_FUNC(SETDATEPICKER)
       const char *szTime = hb_parc(3);
       if (szTime)
       {
-        ulLen = strlen(szTime);
+        ulLen = (ULONG)strlen(szTime);
         if (ulLen >= 4)
         {
           lSeconds = (LONG)hb_strVal(szTime, 2) * 3600 * 1000 + (LONG)hb_strVal(szTime + 2, 2) * 60 * 1000 +
@@ -512,14 +512,14 @@ HB_FUNC(SETDATEPICKER)
 #endif
     }
 
-    sysTime.wYear = (unsigned short)lYear;
-    sysTime.wMonth = (unsigned short)lMonth;
-    sysTime.wDay = (unsigned short)lDay;
+    sysTime.wYear = (WORD)lYear;
+    sysTime.wMonth = (WORD)lMonth;
+    sysTime.wDay = (WORD)lDay;
     sysTime.wDayOfWeek = 0;
-    sysTime.wHour = (unsigned short)lHour;
-    sysTime.wMinute = (unsigned short)lMinute;
-    sysTime.wSecond = lSecond;
-    sysTime.wMilliseconds = (unsigned short)lMilliseconds;
+    sysTime.wHour = (WORD)lHour;
+    sysTime.wMinute = (WORD)lMinute;
+    sysTime.wSecond = (WORD)lSecond;
+    sysTime.wMilliseconds = (WORD)lMilliseconds;
 
     SendMessage(hwg_par_HWND(1), DTM_SETSYSTEMTIME, GDT_VALID, (LPARAM)&sysTime);
   }
@@ -566,7 +566,7 @@ HB_FUNC(INITTABCONTROL)
   PHB_ITEM pArr = hb_param(2, HB_IT_ARRAY);
   int iItems = hb_parnl(3);
   TC_ITEM tie;
-  ULONG ul, ulTabs = hb_arrayLen(pArr);
+  ULONG ul, ulTabs = (ULONG)hb_arrayLen(pArr);
 
   tie.mask = TCIF_TEXT | TCIF_IMAGE;
   tie.iImage = iItems == 0 ? -1 : 0;
@@ -865,7 +865,7 @@ HB_FUNC(TREE_GETNOTIFY)
 
   if (iType == TREE_GETNOTIFY_HANDLE)
   {
-    hb_retnl((LONG_PTR)(((NM_TREEVIEW *)HB_PARHANDLE(1))->itemNew.hItem));
+    hb_retnint((LONG_PTR)(((NM_TREEVIEW *)HB_PARHANDLE(1))->itemNew.hItem)); // TODO: retorno é HTREEITEM
   }
 
   if (iType == TREE_GETNOTIFY_ACTION)
@@ -968,7 +968,7 @@ HB_FUNC(CREATEIMAGELIST)
   PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY);
   UINT flags = (HB_ISNIL(5)) ? ILC_COLOR : hb_parni(5);
   HIMAGELIST himl;
-  ULONG ul, ulLen = hb_arrayLen(pArray);
+  ULONG ul, ulLen = (ULONG)hb_arrayLen(pArray);
   HBITMAP hbmp;
 
   himl = ImageList_Create(hb_parni(2), hb_parni(3), flags, ulLen, hb_parni(4));
@@ -1302,7 +1302,7 @@ LRESULT APIENTRY StaticSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 HB_FUNC(HWG_INITEDITPROC)
 {
   wpOrigEditProc = (WNDPROC)(LONG_PTR)SetWindowLong(hwg_par_HWND(1), GWLP_WNDPROC,
-                                                    (LONG_PTR)EditSubclassProc); // TODO: SetWindowLongPtr
+                                                    (LONG)(LONG_PTR)EditSubclassProc); // TODO: SetWindowLongPtr
 }
 
 LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1684,8 +1684,8 @@ HB_FUNC(TOOLBARADDBUTTONS)
       tb[ulCount].iBitmap = ulID - 1; // ulID > 0 ? (int)ulCount : -1;
     }
     tb[ulCount].idCommand = hb_arrayGetNI(pTemp, 2);
-    tb[ulCount].fsState = hb_arrayGetNI(pTemp, 3);
-    tb[ulCount].fsStyle = hb_arrayGetNI(pTemp, 4);
+    tb[ulCount].fsState = (BYTE)hb_arrayGetNI(pTemp, 3);
+    tb[ulCount].fsStyle = (BYTE)hb_arrayGetNI(pTemp, 4);
     tb[ulCount].dwData = hb_arrayGetNI(pTemp, 5);
     tb[ulCount].iString = hb_arrayGetCLen(pTemp, 6) > 0 ? (INT_PTR)hb_arrayGetCPtr(pTemp, 6) : 0;
   }
@@ -1765,7 +1765,7 @@ HB_FUNC(TOOLBAR_GETDISPINFOID)
 {
   // LPTOOLTIPTEXT pDispInfo = (LPTOOLTIPTEXT)hb_parnl(1);
   LPNMTTDISPINFO pDispInfo = (LPNMTTDISPINFO)HB_PARHANDLE(1);
-  DWORD idButton = pDispInfo->hdr.idFrom;
+  DWORD idButton = (DWORD)pDispInfo->hdr.idFrom;
   hb_retnl(idButton);
 }
 
@@ -1789,7 +1789,7 @@ HB_FUNC(TOOLBAR_GETINFOTIPID)
 HB_FUNC(TOOLBAR_IDCLICK)
 {
   LPNMMOUSE pDispInfo = (LPNMMOUSE)HB_PARHANDLE(1);
-  DWORD idButton = pDispInfo->dwItemSpec;
+  DWORD idButton = (DWORD)pDispInfo->dwItemSpec;
   hb_retnl(idButton);
 }
 
@@ -1902,7 +1902,7 @@ static BOOL _AddBar(HWND pParent, HWND pBar, REBARBANDINFO *pRBBI)
 
   pRBBI->cxMinChild = size.cx;
   pRBBI->cyMinChild = size.cy;
-  bResult = SendMessage(pParent, RB_INSERTBAND, (WPARAM)-1, (LPARAM)pRBBI);
+  bResult = (BOOL)SendMessage(pParent, RB_INSERTBAND, (WPARAM)-1, (LPARAM)pRBBI);
 
   return bResult;
 }
@@ -1974,7 +1974,7 @@ HB_FUNC(ADDBARCOLORS)
 
 HB_FUNC(GETCOMBOWNDPROC)
 {
-  hb_retnl((LONG_PTR)wpOrigComboProc);
+  hb_retnint((LONG_PTR)wpOrigComboProc);
 }
 
 HB_FUNC(COMBOGETITEMRECT)
@@ -1993,7 +1993,7 @@ HB_FUNC(COMBOBOXGETITEMDATA)
   int nIndex = hb_parnl(2);
   DWORD_PTR p;
   p = (DWORD_PTR)SendMessage(hWnd, CB_GETITEMDATA, nIndex, 0);
-  hb_retnl(p);
+  hb_retnl((long)p);
 }
 
 HB_FUNC(COMBOBOXSETITEMDATA)
@@ -2001,7 +2001,7 @@ HB_FUNC(COMBOBOXSETITEMDATA)
   HWND hWnd = hwg_par_HWND(1);
   int nIndex = hb_parnl(2);
   DWORD_PTR dwItemData = (DWORD_PTR)hb_parnl(3);
-  hb_retnl(SendMessage(hWnd, CB_SETITEMDATA, nIndex, (LPARAM)dwItemData));
+  hb_retnl((long)SendMessage(hWnd, CB_SETITEMDATA, nIndex, (LPARAM)dwItemData));
 }
 
 HB_FUNC(GETLOCALEINFO)
@@ -2016,7 +2016,7 @@ HB_FUNC(COMBOBOXGETLBTEXT)
   HWND hWnd = hwg_par_HWND(1);
   int nIndex = hb_parnl(2);
   TCHAR lpszText[255] = {0};
-  hb_retni(SendMessage(hWnd, CB_GETLBTEXT, nIndex, (LPARAM)lpszText));
+  hb_retni((int)SendMessage(hWnd, CB_GETLBTEXT, nIndex, (LPARAM)lpszText));
   HB_STORSTR(lpszText, 3);
 }
 
