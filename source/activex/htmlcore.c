@@ -1352,7 +1352,7 @@ static void webDetach(_IDispatchEx *lpDispatchEx)
   {
     lpDispatchEx->object->lpVtbl->Release(lpDispatchEx->object);
   }
-  
+
   // We don't need the IHTMLWindow2 any more (that we got in CreateEventHandler)
   lpDispatchEx->htmlWindow2->lpVtbl->Release(lpDispatchEx->htmlWindow2);
 }
@@ -1439,7 +1439,7 @@ HRESULT STDMETHODCALLTYPE Dispatch_Invoke(IDispatch *This, DISPID dispIdMember, 
         else
         {
           webParams.eventStr = (LPCTSTR)strType;
-        }  
+        }
       }
       // Send a WM_NOTIFY message to the window with the _IDispatchEx as
       // WPARAM, and the WEBPARAMS as LPARAM.
@@ -1463,7 +1463,7 @@ HRESULT STDMETHODCALLTYPE Dispatch_Invoke(IDispatch *This, DISPID dispIdMember, 
       if (!webParams.nmhdr.code)
       {
         webDetach((_IDispatchEx *)This);
-      }  
+      }
     }
 
     // Release the IHTMLEventObj.
@@ -1682,7 +1682,7 @@ HRESULT WINAPI SetWebReturnValue(IHTMLEventObj *htmlEvent, BOOL returnVal)
   {
     varResult.DEF_BOOLVAL = (VARIANT_BOOL)0;
   }
-  
+
   return (htmlEvent->lpVtbl->put_returnValue(htmlEvent, varResult));
 }
 
@@ -1773,7 +1773,7 @@ HRESULT WINAPI GetWebPtrs(HWND hwnd, IWebBrowser2 **webBrowser2Result, IHTMLDocu
     else
     {
       webBrowser2->lpVtbl->Release(webBrowser2);
-    }  
+    }
   }
 
   return (S_OK);

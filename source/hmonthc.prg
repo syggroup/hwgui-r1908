@@ -153,70 +153,57 @@ METHOD onSelect() CLASS HMonthCalendar
 #include "missing.h"
 #endif
 
-HB_FUNC ( INITMONTHCALENDAR )
+HB_FUNC(INITMONTHCALENDAR)
 {
-   HWND hMC;
-   RECT rc;
+  RECT rc;
 
-   hMC = CreateWindowEx( 0,
-                         MONTHCAL_CLASS,
-                         TEXT( "" ),
-                         (LONG) hb_parnl(3), /* 0,0,0,0, */
-                         hb_parni(4), hb_parni(5),      /* x, y       */
-                         hb_parni(6), hb_parni(7),      /* nWidth, nHeight */
-                         hwg_par_HWND(1),
-                         hwg_par_HMENU_ID(2),
-                         GetModuleHandle(NULL),
-                         NULL );
+  HWND hMC = CreateWindowEx(0, MONTHCAL_CLASS, TEXT(""), hwg_par_DWORD(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6),
+                       hwg_par_int(7), hwg_par_HWND(1), hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL);
 
-   MonthCal_GetMinReqRect( hMC, &rc );
+  MonthCal_GetMinReqRect(hMC, &rc);
 
-   //SetWindowPos( hMC, NULL, hb_parni(4), hb_parni(5), rc.right, rc.bottom, SWP_NOZORDER );
-   SetWindowPos( hMC, NULL, hb_parni(4), hb_parni(5), hb_parni(6),hb_parni(7), SWP_NOZORDER );
+  //SetWindowPos(hMC, NULL, hb_parni(4), hb_parni(5), rc.right, rc.bottom, SWP_NOZORDER);
+  SetWindowPos(hMC, NULL, hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), hwg_par_int(7), SWP_NOZORDER);
 
-   hwg_ret_HWND(hMC);
+  hwg_ret_HWND(hMC);
 }
 
-HB_FUNC ( SETMONTHCALENDARDATE ) // adaptation of function SetDatePicker of file Control.c
+HB_FUNC(SETMONTHCALENDARDATE) // adaptation of function SetDatePicker of file Control.c
 {
-   PHB_ITEM pDate = hb_param( 2, HB_IT_DATE );
+  PHB_ITEM pDate = hb_param(2, HB_IT_DATE);
 
-   if (pDate)
-   {
-      SYSTEMTIME sysTime;
-      #ifndef HARBOUR_OLD_VERSION
-      int lYear, lMonth, lDay;
-      #else
-      long lYear, lMonth, lDay;
-      #endif
+  if (pDate)
+  {
+    SYSTEMTIME sysTime;
+    #ifndef HARBOUR_OLD_VERSION
+    int lYear, lMonth, lDay;
+    #else
+    long lYear, lMonth, lDay;
+    #endif
 
-      hb_dateDecode(hb_itemGetDL( pDate ), &lYear, &lMonth, &lDay);
+    hb_dateDecode(hb_itemGetDL(pDate), &lYear, &lMonth, &lDay);
 
-      sysTime.wYear = (unsigned short) lYear;
-      sysTime.wMonth = (unsigned short) lMonth;
-      sysTime.wDay = (unsigned short) lDay;
-      sysTime.wDayOfWeek = 0;
-      sysTime.wHour = 0;
-      sysTime.wMinute = 0;
-      sysTime.wSecond = 0;
-      sysTime.wMilliseconds = 0;
+    sysTime.wYear = (unsigned short)lYear;
+    sysTime.wMonth = (unsigned short)lMonth;
+    sysTime.wDay = (unsigned short)lDay;
+    sysTime.wDayOfWeek = 0;
+    sysTime.wHour = 0;
+    sysTime.wMinute = 0;
+    sysTime.wSecond = 0;
+    sysTime.wMilliseconds = 0;
 
-      MonthCal_SetCurSel( hwg_par_HWND(1), &sysTime);
-
-   }
+    MonthCal_SetCurSel(hwg_par_HWND(1), &sysTime);
+  }
 }
 
-HB_FUNC ( GETMONTHCALENDARDATE ) // adaptation of function GetDatePicker of file Control.c
+HB_FUNC(GETMONTHCALENDARDATE) // adaptation of function GetDatePicker of file Control.c
 {
-   SYSTEMTIME st;
-   char szDate[9];
-
-   SendMessage(hwg_par_HWND(1), MCM_GETCURSEL, 0, (LPARAM)&st);
-
-   hb_dateStrPut( szDate, st.wYear, st.wMonth, st.wDay );
-   szDate[8] = 0;
-   hb_retds( szDate );
+  SYSTEMTIME st;
+  char szDate[9];
+  SendMessage(hwg_par_HWND(1), MCM_GETCURSEL, 0, (LPARAM)&st);
+  hb_dateStrPut(szDate, st.wYear, st.wMonth, st.wDay);
+  szDate[8] = 0;
+  hb_retds(szDate);
 }
 
 #pragma ENDDUMP
-

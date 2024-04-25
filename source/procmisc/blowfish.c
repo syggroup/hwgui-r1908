@@ -266,7 +266,7 @@ void Blowfish_Init(BLOWFISH_CTX *ctx, unsigned char *key, int keyLen)
       if (j >= keyLen)
       {
         j = 0;
-      }  
+      }
     }
     ctx->P[i] = ORIG_P[i] ^ data;
   }
@@ -340,7 +340,7 @@ HB_FUNC(BF_ENCRYPT)
   {
     ulLen = (unsigned long)hb_parnl(3);
   }
-  
+
   ulPairs = (ulLen + 2) / 8 + (((ulLen + 2) % 8) ? 1 : 0);
   ptro = (unsigned char *)hb_xgrab(ulPairs * 8 + 1);
   iDiff = (int)(ulPairs * 8 - ulLen);
@@ -398,7 +398,7 @@ HB_FUNC(BF_DECRYPT)
   {
     ulLen = (unsigned long)hb_parnl(3);
   }
-  
+
   ulPairs = ulLen / 8;
   ptro = (unsigned char *)hb_xgrab(ulLen + 1);
   memcpy(ptro, ptri, ulLen);

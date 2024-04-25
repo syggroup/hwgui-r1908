@@ -54,7 +54,7 @@ static BOOL s_qhtmInit(LPCTSTR lpLibname)
       if (pFunc)
       {
         return (pFunc(GetModuleHandle(NULL))) ? 1 : 0;
-      }  
+      }
     }
     else
     {
@@ -88,21 +88,16 @@ HB_FUNC(CREATEQHTM)
 {
   if (s_qhtmInit(NULL))
   {
-    HWND handle = CreateWindowEx(0, TEXT("QHTM_Window_Class_001"),       /* predefined class  */
-                               NULL,                                /* no window title   */
-                               WS_CHILD | WS_VISIBLE | hb_parnl(3), /* style  */
-                               hb_parni(4), hb_parni(5),            /* x, y       */
-                               hb_parni(6), hb_parni(7),            /* nWidth, nHeight */
-                               hwg_par_HWND(1),                   /* parent window    */
-                               hwg_par_HMENU_ID(2),                  /* control ID  */
-                               GetModuleHandle(NULL), NULL);
+    HWND handle = CreateWindowEx(0, TEXT("QHTM_Window_Class_001"), NULL, WS_CHILD | WS_VISIBLE | hwg_par_DWORD(3),
+                                 hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), hwg_par_int(7), hwg_par_HWND(1),
+                                 hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL);
 
-    hb_retnl((ULONG_PTR)handle);
+    hb_retnl((ULONG_PTR)handle); // TODO: usar número ou ponteiro
   }
   else
   {
     hb_retnl(0);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_GETNOTIFY)
@@ -239,7 +234,7 @@ HB_FUNC(QHTM_GETSIZE)
     else
     {
       hb_ret();
-    }  
+    }
   }
 }
 
@@ -247,13 +242,13 @@ HB_FUNC(QHTM_FORMCALLBACK)
 {
   if (s_qhtmInit(NULL))
   {
-    hb_retl(SendMessage(hwg_par_HWND(1), QHTM_SET_OPTION, (WPARAM)QHTM_OPT_SET_FORM_SUBMIT_CALLBACK,
-                        (LPARAM)FormCallback));
+    hb_retl(
+        SendMessage(hwg_par_HWND(1), QHTM_SET_OPTION, (WPARAM)QHTM_OPT_SET_FORM_SUBMIT_CALLBACK, (LPARAM)FormCallback));
   }
   else
   {
     hb_retl(FALSE);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_ENABLECOOLTIPS)
@@ -268,12 +263,12 @@ HB_FUNC(QHTM_ENABLECOOLTIPS)
     else
     {
       hb_retl(FALSE);
-    }  
+    }
   }
   else
   {
     hb_retl(FALSE);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_SETHTMLBUTTON)
@@ -288,12 +283,12 @@ HB_FUNC(QHTM_SETHTMLBUTTON)
     else
     {
       hb_retl(FALSE);
-    }  
+    }
   }
   else
   {
     hb_retl(FALSE);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_PRINTCREATECONTEXT)
@@ -306,7 +301,7 @@ HB_FUNC(QHTM_PRINTCREATECONTEXT)
   else
   {
     hb_retnl(0);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_PRINTSETTEXT)
@@ -322,7 +317,7 @@ HB_FUNC(QHTM_PRINTSETTEXT)
   else
   {
     hb_retl(FALSE);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_PRINTSETTEXTFILE)
@@ -338,7 +333,7 @@ HB_FUNC(QHTM_PRINTSETTEXTFILE)
   else
   {
     hb_retl(FALSE);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_PRINTSETTEXTRESOURCE)
@@ -355,7 +350,7 @@ HB_FUNC(QHTM_PRINTSETTEXTRESOURCE)
   else
   {
     hb_retl(FALSE);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_PRINTLAYOUT)
@@ -378,7 +373,7 @@ HB_FUNC(QHTM_PRINTLAYOUT)
   else
   {
     hb_retnl(0);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_PRINTPAGE)
@@ -399,7 +394,7 @@ HB_FUNC(QHTM_PRINTPAGE)
   else
   {
     hb_retl(FALSE);
-  }  
+  }
 }
 
 HB_FUNC(QHTM_PRINTDESTROYCONTEXT)

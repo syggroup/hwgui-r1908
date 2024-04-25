@@ -155,21 +155,8 @@ METHOD GetValue() CLASS HTrackBar
 
 HB_FUNC(INITTRACKBAR)
 {
-  HWND hTrackBar;
-
-  hTrackBar = CreateWindowEx(0, TRACKBAR_CLASS,
-                           0,
-                           (LONG)hb_parnl(3),
-                           hb_parni(4),
-                           hb_parni(5),
-                           hb_parni(6),
-                           hb_parni(7),
-                           hwg_par_HWND(1),
-                           hwg_par_HMENU_ID(2),
-                           GetModuleHandle(NULL),
-                           NULL) ;
-
-  hwg_ret_HWND(hTrackBar);
+  hwg_ret_HWND(CreateWindowEx(0, TRACKBAR_CLASS, 0, hwg_par_DWORD(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6),
+                             hwg_par_int(7), hwg_par_HWND(1), hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL));
 }
 
 HB_FUNC(TRACKBARSETRANGE)

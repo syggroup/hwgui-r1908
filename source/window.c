@@ -90,11 +90,9 @@ HB_FUNC(HWG_INITMAINWINDOW)
   LPCTSTR lpAppName = HB_PARSTR(2, &hAppName, NULL);
   LPCTSTR lpTitle = HB_PARSTR(3, &hTitle, NULL);
   LPCTSTR lpMenu = HB_PARSTR(4, &hMenu, NULL);
-  LONG nStyle = hb_parnl(7);
-  int x = hb_parnl(8);
-  int y = hb_parnl(9);
-  int width = hb_parnl(10);
-  int height = hb_parnl(11);
+  DWORD nStyle = hwg_par_DWORD(7);
+  int width = hwg_par_int(10);
+  int height = hwg_par_int(11);
 
   if (!aWindows[0])
   {
@@ -112,7 +110,7 @@ HB_FUNC(HWG_INITMAINWINDOW)
 
     if (RegisterClass(&wndclass))
     {
-      hWnd = CreateWindowEx(ExStyle, lpAppName, lpTitle, WS_OVERLAPPEDWINDOW | nStyle, x, y,
+      hWnd = CreateWindowEx(ExStyle, lpAppName, lpTitle, WS_OVERLAPPEDWINDOW | nStyle, hwg_par_int(8), hwg_par_int(9),
                             (!width) ? (LONG)CW_USEDEFAULT : width, (!height) ? (LONG)CW_USEDEFAULT : height, NULL,
                             NULL, (HINSTANCE)hInstance, NULL);
 
@@ -254,11 +252,9 @@ HB_FUNC(HWG_INITCHILDWINDOW)
   LPCTSTR lpAppName = HB_PARSTR(2, &hAppName, NULL);
   LPCTSTR lpTitle = HB_PARSTR(3, &hTitle, NULL);
   LPCTSTR lpMenu = HB_PARSTR(4, &hMenu, NULL);
-  LONG nStyle = hb_parnl(7);
-  int x = hb_parnl(8);
-  int y = hb_parnl(9);
-  int width = hb_parnl(10);
-  int height = hb_parnl(11);
+  DWORD nStyle = hwg_par_DWORD(7);
+  int width = hwg_par_int(10);
+  int height = hwg_par_int(11);
   HWND hParent = hwg_par_HWND(12);
   BOOL fRegistered = TRUE;
 
@@ -294,9 +290,9 @@ HB_FUNC(HWG_INITCHILDWINDOW)
 
   if (fRegistered)
   {
-    hWnd = CreateWindowEx(WS_EX_MDICHILD, lpAppName, lpTitle, WS_OVERLAPPEDWINDOW | nStyle, x, y,
-                          (!width) ? (LONG)CW_USEDEFAULT : width, (!height) ? (LONG)CW_USEDEFAULT : height, hParent,
-                          NULL, (HINSTANCE)hInstance, NULL);
+    hWnd = CreateWindowEx(WS_EX_MDICHILD, lpAppName, lpTitle, WS_OVERLAPPEDWINDOW | nStyle, hwg_par_int(8),
+                          hwg_par_int(9), (!width) ? (LONG)CW_USEDEFAULT : width,
+                          (!height) ? (LONG)CW_USEDEFAULT : height, hParent, NULL, (HINSTANCE)hInstance, NULL);
 
     temp = hb_itemPutNL(NULL, 1);
     SetObjectVar(pObject, "_NHOLDER", temp);
@@ -332,10 +328,8 @@ HB_FUNC(HWG_INITMDIWINDOW)
   LPCTSTR lpAppName = HB_PARSTR(2, &hAppName, NULL);
   LPCTSTR lpTitle = HB_PARSTR(3, &hTitle, NULL);
   LPCTSTR lpMenu = HB_PARSTR(4, &hMenu, NULL);
-  int x = hb_parnl(8);
-  int y = hb_parnl(9);
-  int width = hb_parnl(10);
-  int height = hb_parnl(11);
+  int width = hwg_par_int(10);
+  int height = hwg_par_int(11);
 
   if (aWindows[0])
   {
@@ -380,8 +374,9 @@ HB_FUNC(HWG_INITMDIWINDOW)
       else
       {
         // Create frame window
-        hWnd = CreateWindowEx(0, lpAppName, lpTitle, WS_OVERLAPPEDWINDOW, x, y, (!width) ? (LONG)CW_USEDEFAULT : width,
-                              (!height) ? (LONG)CW_USEDEFAULT : height, NULL, NULL, (HINSTANCE)hInstance, NULL);
+        hWnd = CreateWindowEx(0, lpAppName, lpTitle, WS_OVERLAPPEDWINDOW, hwg_par_int(8), hwg_par_int(9),
+                              (!width) ? (LONG)CW_USEDEFAULT : width, (!height) ? (LONG)CW_USEDEFAULT : height, NULL,
+                              NULL, (HINSTANCE)hInstance, NULL);
         if (!hWnd)
         {
           hb_retni(-4);
@@ -407,19 +402,15 @@ HB_FUNC(HWG_INITMDIWINDOW)
 HB_FUNC(HWG_INITCLIENTWINDOW)
 {
   CLIENTCREATESTRUCT ccs;
-  HWND hWnd;
   int nPos = (hb_pcount() > 1 && !HB_ISNIL(2)) ? hb_parni(2) : 0;
-  int x = hb_parnl(3);
-  int y = hb_parnl(4);
-  int width = hb_parnl(5);
-  int height = hb_parnl(6);
 
   // Create client window
   ccs.hWindowMenu = GetSubMenu(GetMenu(aWindows[0]), nPos);
   ccs.idFirstChild = FIRST_MDICHILD_ID;
 
-  hWnd = CreateWindowEx(0, TEXT("MDICLIENT"), NULL, WS_CHILD | WS_CLIPCHILDREN | MDIS_ALLCHILDSTYLES, x, y, width,
-                        height, aWindows[0], NULL, GetModuleHandle(NULL), (LPVOID)&ccs);
+  HWND hWnd = CreateWindowEx(0, TEXT("MDICLIENT"), NULL, WS_CHILD | WS_CLIPCHILDREN | MDIS_ALLCHILDSTYLES,
+                             hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), aWindows[0], NULL,
+                             GetModuleHandle(NULL), (LPVOID)&ccs);
 
   aWindows[1] = hWnd;
   hwg_ret_HWND(hWnd);

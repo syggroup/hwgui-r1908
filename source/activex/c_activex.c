@@ -70,23 +70,19 @@ static void _Ax_Init(void)
 
 HB_FUNC(CREATEACTIVEX)
 {
-  HWND hWndCtrl;
-
   _Ax_Init();
-  hWndCtrl = CreateWindowEx((DWORD)ISNIL(1) ? 0 : hb_parni(1),                   // nExStyle
-                            (LPCTSTR)ISNIL(2) ? "A3434_CLASS" : hb_parc(2),      // cClsName
-                            (LPCTSTR)ISNIL(3) ? "" : hb_parc(3),                 // cProgId
-                            (DWORD)ISNIL(4) ? WS_OVERLAPPEDWINDOW : hb_parni(4), // style
-                            ISNIL(5) ? CW_USEDEFAULT : hb_parni(5),              // nLeft
-                            ISNIL(6) ? CW_USEDEFAULT : hb_parni(6),              // nTop
-                            ISNIL(7) ? 544 : hb_parni(7),                        // nWidth
-                            ISNIL(8) ? 375 : hb_parni(8),                        // nHeight
-                            ISNIL(9) ? HWND_DESKTOP : hwg_par_HWND(9),           // oParent:handle
-                            // ISNIL(10) ? NULL                : (HMENU) hb_parnl(10),  // Id
-                            // GetModuleHandle(0),
-                            0, 0, NULL);
-
-  hwg_ret_HWND(hWndCtrl);
+  hwg_ret_HWND(CreateWindowEx(ISNIL(1) ? 0 : hwg_par_DWORD(1),                   // nExStyle
+                              (LPCTSTR)ISNIL(2) ? "A3434_CLASS" : hb_parc(2),    // cClsName
+                              (LPCTSTR)ISNIL(3) ? "" : hb_parc(3),               // cProgId
+                              ISNIL(4) ? WS_OVERLAPPEDWINDOW : hwg_par_DWORD(4), // style
+                              ISNIL(5) ? CW_USEDEFAULT : hwg_par_int(5),         // nLeft
+                              ISNIL(6) ? CW_USEDEFAULT : hwg_par_int(6),         // nTop
+                              ISNIL(7) ? 544 : hwg_par_int(7),                   // nWidth
+                              ISNIL(8) ? 375 : hwg_par_int(8),                   // nHeight
+                              ISNIL(9) ? HWND_DESKTOP : hwg_par_HWND(9),         // oParent:handle
+                              // ISNIL(10) ? NULL                : (HMENU) hb_parnl(10),  // Id
+                              // GetModuleHandle(0),
+                              0, 0, NULL));
 }
 
 HB_FUNC(ATLAXGETDISP) // hWnd -> pDisp
@@ -331,7 +327,7 @@ static ULONG STDMETHODCALLTYPE Invoke(IEventHandler *this, DISPID dispid, REFIID
   {
     return (DISP_E_UNKNOWNINTERFACE);
   }
-  
+
   HB_SYMBOL_UNUSED(lcid);
   HB_SYMBOL_UNUSED(wFlags);
   HB_SYMBOL_UNUSED(result);
@@ -593,7 +589,7 @@ HB_FUNC(SETUPCONNECTIONPOINT)
         {
           OutputDebugString("error getting iid");
         }
-        
+
         // OutputDebugString("calling advise");
         hr = m_pIConnectionPoint->lpVtbl->Advise(m_pIConnectionPoint, pIUnknown, &dwCookie);
         ((MyRealIEventHandler *)thisobj)->pIConnectionPoint = m_pIConnectionPoint;

@@ -158,7 +158,7 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
         if (i == HBXML_PREDEFS_KOL)
         {
           hbxml_error(HBXML_ERROR_WRONG_ENTITY, ptr);
-        }  
+        }
       }
     }
     ptr++;
@@ -210,7 +210,7 @@ PHB_ITEM hbxml_getattr(unsigned char **pBuffer, HB_BOOL *lSingle)
     {
       HB_SKIPTABSPACES(*pBuffer);
     }
-    
+
     while (**pBuffer && **pBuffer != '>')
     {
       if (!(**pBuffer))
@@ -281,7 +281,7 @@ PHB_ITEM hbxml_getattr(unsigned char **pBuffer, HB_BOOL *lSingle)
     if (**pBuffer == '>')
     {
       (*pBuffer)++;
-    }  
+    }
   }
   return pArray;
 }
@@ -340,7 +340,7 @@ HB_BOOL hbxml_readComment(PHB_ITEM pParent, unsigned char **pBuffer)
   {
     hbxml_error(HBXML_ERROR_TERMINATION, *pBuffer);
   }
-  
+
   hb_itemRelease(pNode);
   return (nParseError) ? HB_FALSE : HB_TRUE;
 }
@@ -373,7 +373,7 @@ HB_BOOL hbxml_readCDATA(PHB_ITEM pParent, unsigned char **pBuffer)
   {
     hbxml_error(HBXML_ERROR_TERMINATION, *pBuffer);
   }
-  
+
   hb_itemRelease(pNode);
   return (nParseError) ? HB_FALSE : HB_TRUE;
 }
@@ -529,7 +529,7 @@ HB_FUNC(HBXML_GETDOC)
   {
     return;
   }
-  
+
   nParseError = 0;
   ptr = cBuffer;
   HB_SKIPTABSPACES(ptr);
@@ -590,7 +590,7 @@ HB_FUNC(HBXML_GETDOC)
       if (!*ptr)
       {
         break;
-      }  
+      }
     }
   }
 

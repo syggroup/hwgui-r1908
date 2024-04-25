@@ -200,21 +200,12 @@ HB_FUNC(HWG_REGNICE)
 
 HB_FUNC(CREATENICEBTN)
 {
-  HWND hWndPanel;
-  ULONG ulStyle = HB_ISNUM(3) ? hb_parnl(3) : WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+  DWORD ulStyle = HB_ISNUM(3) ? hwg_par_DWORD(3) : WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
   void *hTitle;
-
-  hWndPanel = CreateWindowEx(hb_parni(8), TEXT("NICEBUTT"),   /* predefined class  */
-                             HB_PARSTR(9, &hTitle, NULL),     /* no window title   */
-                             WS_CHILD | WS_VISIBLE | ulStyle, /* style  */
-                             hb_parni(4), hb_parni(5),        /* x, y       */
-                             hb_parni(6), hb_parni(7),        /* nWidth, nHeight */
-                             hwg_par_HWND(1),                 /* parent window    */
-                             hwg_par_HMENU_ID(2),             /* control ID  */
-                             GetModuleHandle(NULL), NULL);
+  hwg_ret_HWND(CreateWindowEx(hb_parni(8), TEXT("NICEBUTT"), HB_PARSTR(9, &hTitle, NULL),
+                              WS_CHILD | WS_VISIBLE | ulStyle, hwg_par_int(4), hwg_par_int(5), hwg_par_int(6),
+                              hwg_par_int(7), hwg_par_HWND(1), hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL));
   hb_strfree(hTitle);
-
-  hwg_ret_HWND(hWndPanel);
 }
 
 HB_FUNC(ISMOUSEOVER)

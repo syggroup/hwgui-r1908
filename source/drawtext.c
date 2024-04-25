@@ -383,7 +383,8 @@ HB_FUNC(CREATEFONT)
   DWORD fdwUnderline = (HB_ISNIL(7)) ? 0 : hwg_par_DWORD(7);
   DWORD fdwStrikeOut = (HB_ISNIL(8)) ? 0 : hwg_par_DWORD(8);
   void *hString;
-  hFont = CreateFont(hwg_par_int(3), hwg_par_int(2), 0, 0, fnWeight, fdwItalic, fdwUnderline, fdwStrikeOut, fdwCharSet, 0, 0, 0, 0, HB_PARSTR(1, &hString, NULL));
+  hFont = CreateFont(hwg_par_int(3), hwg_par_int(2), 0, 0, fnWeight, fdwItalic, fdwUnderline, fdwStrikeOut, fdwCharSet,
+                     0, 0, 0, 0, HB_PARSTR(1, &hString, NULL));
   hb_strfree(hString);
   hwg_ret_HFONT(hFont);
 }
@@ -401,14 +402,14 @@ HB_FUNC(SETCTRLFONT)
 }
 
 /*
-*/
+ */
 HB_FUNC(OEMTOANSI)
 {
   HB_FUNC_EXEC(HB_OEMTOANSI);
 }
 
 /*
-*/
+ */
 HB_FUNC(ANSITOOEM)
 {
   HB_FUNC_EXEC(HB_ANSITOOEM);

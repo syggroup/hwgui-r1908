@@ -28,7 +28,7 @@ HB_FUNC(HWGAX_OLEINITIALIZE)
     if (OleInitialize(NULL) == S_OK)
     {
       bOleInitialized = 1;
-    }  
+    }
   }
   hb_retl(bOleInitialized);
 }
