@@ -1208,7 +1208,7 @@ LRESULT APIENTRY TreeViewSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LP
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigTreeViewProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigTreeViewProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1217,7 +1217,7 @@ LRESULT APIENTRY TreeViewSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LP
   }
   else
   {
-    return (CallWindowProc(wpOrigTreeViewProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigTreeViewProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1247,7 +1247,7 @@ LRESULT CALLBACK WinCtrlProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (DefWindowProc(hWnd, message, wParam, lParam));
+      return DefWindowProc(hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1256,7 +1256,7 @@ LRESULT CALLBACK WinCtrlProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
   }
   else
   {
-    return (DefWindowProc(hWnd, message, wParam, lParam));
+    return DefWindowProc(hWnd, message, wParam, lParam);
   }
 }
 
@@ -1286,7 +1286,7 @@ LRESULT APIENTRY StaticSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigStaticProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigStaticProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1295,7 +1295,7 @@ LRESULT APIENTRY StaticSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   }
   else
   {
-    return (CallWindowProc(wpOrigStaticProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigStaticProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1326,7 +1326,7 @@ LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1335,7 +1335,7 @@ LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   }
   else
   {
-    return (CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1366,7 +1366,7 @@ LRESULT APIENTRY ButtonSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc((WNDPROC)wpOrigButtonProc, hWnd, message, wParam, lParam));
+      return CallWindowProc((WNDPROC)wpOrigButtonProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1375,7 +1375,7 @@ LRESULT APIENTRY ButtonSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   }
   else
   {
-    return (CallWindowProc((WNDPROC)wpOrigButtonProc, hWnd, message, wParam, lParam));
+    return CallWindowProc((WNDPROC)wpOrigButtonProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1400,7 +1400,7 @@ LRESULT APIENTRY ComboSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigComboProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigComboProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1409,7 +1409,7 @@ LRESULT APIENTRY ComboSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
   }
   else
   {
-    return (CallWindowProc(wpOrigComboProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigComboProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1439,7 +1439,7 @@ LRESULT APIENTRY ListSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigListProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigListProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1448,7 +1448,7 @@ LRESULT APIENTRY ListSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   }
   else
   {
-    return (CallWindowProc(wpOrigListProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigListProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1483,7 +1483,7 @@ LRESULT APIENTRY UpDownSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigUpDownProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigUpDownProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1492,7 +1492,7 @@ LRESULT APIENTRY UpDownSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   }
   else
   {
-    return (CallWindowProc(wpOrigUpDownProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigUpDownProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1522,7 +1522,7 @@ LRESULT APIENTRY DatePickerSubclassProc(HWND hWnd, UINT message, WPARAM wParam, 
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigDatePickerProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigDatePickerProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1531,7 +1531,7 @@ LRESULT APIENTRY DatePickerSubclassProc(HWND hWnd, UINT message, WPARAM wParam, 
   }
   else
   {
-    return (CallWindowProc(wpOrigDatePickerProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigDatePickerProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1561,7 +1561,7 @@ LRESULT APIENTRY TrackSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigTrackProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigTrackProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1570,7 +1570,7 @@ LRESULT APIENTRY TrackSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
   }
   else
   {
-    return (CallWindowProc(wpOrigTrackProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigTrackProc, hWnd, message, wParam, lParam);
   }
 }
 
@@ -1600,7 +1600,7 @@ LRESULT APIENTRY TabSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
     res = hwg_par_LRESULT(-1);
     if (res == -1)
     {
-      return (CallWindowProc(wpOrigTabProc, hWnd, message, wParam, lParam));
+      return CallWindowProc(wpOrigTabProc, hWnd, message, wParam, lParam);
     }
     else
     {
@@ -1609,7 +1609,7 @@ LRESULT APIENTRY TabSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
   }
   else
   {
-    return (CallWindowProc(wpOrigTabProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigTabProc, hWnd, message, wParam, lParam);
   }
 }
 
