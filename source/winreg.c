@@ -1,21 +1,3 @@
-// Registry interface
-
-#include "hwingui.h"
-#include <shlobj.h>
-// #include <commctrl.h>
-
-#include "hbvm.h"
-#include "hbstack.h"
-#include "hbapiitm.h"
-#include "winreg.h"
-
-#if defined(__DMC__)
-__inline long PtrToLong(const void *p)
-{
-  return ((long)p);
-}
-#endif
-
 /*
  * Harbour Project source code:
  * Registry functions for Harbour
@@ -64,11 +46,32 @@ __inline long PtrToLong(const void *p)
  *
  */
 
+// Registry interface
+
+#include "hwingui.h"
+#include <shlobj.h>
+// #include <commctrl.h>
+
+#include "hbvm.h"
+#include "hbstack.h"
+#include "hbapiitm.h"
+#include "winreg.h"
+
+#if defined(__DMC__)
+__inline long PtrToLong(const void *p)
+{
+  return ((long)p);
+}
+#endif
+
+#define hwg_par_HKEY(n) (HKEY)(ULONG_PTR)hb_parnint(n)
+
+/*
+REGCLOSEKEY(HKEY) --> numeric
+*/
 HB_FUNC(REGCLOSEKEY)
 {
-  HKEY hwHandle = (HKEY)(ULONG_PTR)hb_parnl(1);
-
-  if (RegCloseKey(hwHandle) == ERROR_SUCCESS)
+  if (RegCloseKey(hwg_par_HKEY(1)) == ERROR_SUCCESS)
   {
     hb_retnl(ERROR_SUCCESS);
   }
@@ -78,15 +81,16 @@ HB_FUNC(REGCLOSEKEY)
   }
 }
 
+/*
+REGOPENKEYEX(HKEY, cSubKey) --> numeric
+*/
 HB_FUNC(REGOPENKEYEX)
 {
-  HKEY hwKey = ((HKEY)(ULONG_PTR)hb_parnl(1));
   void *hValue;
-  LPCTSTR lpValue = HB_PARSTRDEF(2, &hValue, NULL);
   LONG lError;
   HKEY phwHandle;
 
-  lError = RegOpenKeyEx((HKEY)hwKey, lpValue, 0, KEY_ALL_ACCESS, &phwHandle);
+  lError = RegOpenKeyEx(hwg_par_HKEY(1), HB_PARSTRDEF(2, &hValue, NULL), 0, KEY_ALL_ACCESS, &phwHandle);
   if (lError > 0)
   {
     hb_retni(-1);
@@ -99,11 +103,14 @@ HB_FUNC(REGOPENKEYEX)
   hb_strfree(hValue);
 }
 
+/*
+REGQUERYVALUEEX(HKEY, cValueName, NIL, nType, cData) --> numeric
+*/
 HB_FUNC(REGQUERYVALUEEX)
 {
-  HKEY hwKey = ((HKEY)(ULONG_PTR)hb_parnl(1));
+  HKEY hwKey = hwg_par_HKEY(1);
   LONG lError;
-  DWORD lpType = hb_parnl(4);
+  DWORD lpType = hwg_par_DWORD(4);
   DWORD lpcbData = 0;
   void *hValue;
   LPCTSTR lpValue = HB_PARSTRDEF(2, &hValue, NULL);
@@ -128,6 +135,9 @@ HB_FUNC(REGQUERYVALUEEX)
   hb_strfree(hValue);
 }
 
+/*
+REGENUMKEYEX(HKEY, nIndex, cBuffer, nBufferSize, NIL, cClass, nClassBufferSize) --> numeric
+*/
 HB_FUNC(REGENUMKEYEX)
 {
   FILETIME ft;
@@ -137,7 +147,7 @@ HB_FUNC(REGENUMKEYEX)
   TCHAR Class[255];
   DWORD dwClass = 255;
 
-  nErr = RegEnumKeyEx((HKEY)(ULONG_PTR)hb_parnl(1), hb_parnl(2), Buffer, &dwBuffSize, NULL, Class, &dwClass, &ft);
+  nErr = RegEnumKeyEx(hwg_par_HKEY(1), hwg_par_DWORD(2), Buffer, &dwBuffSize, NULL, Class, &dwClass, &ft);
 
   if (nErr == ERROR_SUCCESS)
   {
@@ -149,22 +159,26 @@ HB_FUNC(REGENUMKEYEX)
   hb_retnl(nErr);
 }
 
+/*
+REGSETVALUEEX(HKEY, cValueName, NIL, nType, cData) --> numeric
+*/
 HB_FUNC(REGSETVALUEEX)
 {
   void *hValue;
-
-  hb_retnl(RegSetValueEx((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), 0, hb_parnl(4),
-                         (const BYTE *)hb_parcx(5), hb_parclen(5) + 1));
+  hb_retnl(RegSetValueEx(hwg_par_HKEY(1), HB_PARSTRDEF(2, &hValue, NULL), 0, hwg_par_DWORD(4),
+                         (const BYTE *)hb_parcx(5), (DWORD)hb_parclen(5) + 1));
   hb_strfree(hValue);
 }
 
+/*
+REGCREATEKEY(HKEY, cSubKey, nHKResult) --> numeric
+*/
 HB_FUNC(REGCREATEKEY)
 {
   HKEY hKey;
   LONG nErr;
   void *hValue;
-
-  nErr = RegCreateKey((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), &hKey);
+  nErr = RegCreateKey(hwg_par_HKEY(1), HB_PARSTRDEF(2, &hValue, NULL), &hKey);
   if (nErr == ERROR_SUCCESS)
   {
     hb_stornl(PtrToLong(hKey), 3);
@@ -173,23 +187,9 @@ HB_FUNC(REGCREATEKEY)
   hb_strfree(hValue);
 }
 
-//-------------------------------------------------------
 /*
-LONG RegCreateKeyEx(
-  HKEY hKey,                // handle to an open key
-  LPCTSTR lpSubKey,         // address of subkey name
-  DWORD Reserved,           // reserved
-  LPTSTR lpClass,           // address of class string
-  DWORD dwOptions,          // special options flag
-  REGSAM samDesired,        // desired security access
-  LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-                            // address of key security structure
-  PHKEY phkResult,          // address of buffer for opened handle
-  LPDWORD lpdwDisposition   // address of disposition value buffer
-);
-
+REGCREATEKEYEX(HKEY, cSubKey, NIL, cClass, nOptions, nSamDesired, cSecurityAttributes, nHKResult, nDisposition) --> numeric
 */
-
 HB_FUNC(REGCREATEKEYEX)
 {
   HKEY hkResult;
@@ -203,13 +203,13 @@ HB_FUNC(REGCREATEKEYEX)
     sa = (SECURITY_ATTRIBUTES *)hb_parc(7);
   }
 
-  nErr = RegCreateKeyEx((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL), (DWORD)0,
-                        (LPTSTR)HB_PARSTRDEF(4, &hClass, NULL), (DWORD)hb_parnl(5), (DWORD)hb_parnl(6), sa, &hkResult,
+  nErr = RegCreateKeyEx(hwg_par_HKEY(1), HB_PARSTRDEF(2, &hValue, NULL), 0,
+                        (LPTSTR)HB_PARSTRDEF(4, &hClass, NULL), hwg_par_DWORD(5), (REGSAM)hb_parnl(6), sa, &hkResult,
                         &dwDisposition);
 
   if (nErr == ERROR_SUCCESS)
   {
-    hb_stornl((LONG_PTR)hkResult, 8);
+    hb_stornint((LONG_PTR)hkResult, 8);
     hb_stornl((LONG)dwDisposition, 9);
   }
   hb_retnl(nErr);
@@ -217,21 +217,25 @@ HB_FUNC(REGCREATEKEYEX)
   hb_strfree(hClass);
 }
 
+/*
+REGDELETEKEY(HKEY, cKey) --> numeric
+*/
 HB_FUNC(REGDELETEKEY)
 {
   void *hValue;
-
-  hb_retni(RegDeleteKey((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL)) == ERROR_SUCCESS ? 0 : -1);
+  hb_retni(RegDeleteKey(hwg_par_HKEY(1), HB_PARSTRDEF(2, &hValue, NULL)) == ERROR_SUCCESS ? 0 : -1);
   hb_strfree(hValue);
 }
 
 //  For strange reasons this function is not working properly
 //  May be I am missing something. Pritpal Bedi.
 
+/*
+REGDELETEVALUE(HKEY, cValueName) --> numeric
+*/
 HB_FUNC(REGDELETEVALUE)
 {
   void *hValue;
-
-  hb_retni(RegDeleteValue((HKEY)(ULONG_PTR)hb_parnl(1), HB_PARSTRDEF(2, &hValue, NULL)) == ERROR_SUCCESS ? 0 : -1);
+  hb_retni(RegDeleteValue(hwg_par_HKEY(1), HB_PARSTRDEF(2, &hValue, NULL)) == ERROR_SUCCESS ? 0 : -1);
   hb_strfree(hValue);
 }
