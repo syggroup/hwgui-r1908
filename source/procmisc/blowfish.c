@@ -295,9 +295,9 @@ void Blowfish_Init(BLOWFISH_CTX *ctx, unsigned char *key, int keyLen)
 #undef MAXKEYBYTES
 #undef N
 
-#include "hbapi.h"
-#include "hbvm.h"
-#include "hbapiitm.h"
+#include <hbapi.h>
+#include <hbvm.h>
+#include <hbapiitm.h>
 #include "guilib.h"
 
 HB_FUNC(BF_ENCRYPT)

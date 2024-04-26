@@ -9,9 +9,10 @@
  */
 
 #define OEMRESOURCE
+
 #include "hwingui.h"
-#include "hbapiitm.h"
-#include "hbvm.h"
+#include <hbapiitm.h>
+#include <hbvm.h>
 
 HB_FUNC(SELECTFONT)
 {

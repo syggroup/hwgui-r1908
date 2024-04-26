@@ -11,6 +11,7 @@
 #define HB_OS_WIN_32_USED
 
 #define OEMRESOURCE
+
 #include "hwingui.h"
 #include <commctrl.h>
 #include <winuser.h>
@@ -18,12 +19,12 @@
 #include "missing.h"
 #endif
 
-#include "hbapiitm.h"
-#include "hbvm.h"
-#include "hbdate.h"
-#include "hbtrace.h"
+#include <hbapiitm.h>
+#include <hbvm.h>
+#include <hbdate.h>
+#include <hbtrace.h>
 #ifdef __XHARBOUR__
-#include "hbfast.h"
+#include <hbfast.h>
 #endif
 
 #if defined(__BORLANDC__) || (defined(_MSC_VER) && !defined(__XCC__) || defined(__WATCOMC__) || defined(__DMC__))

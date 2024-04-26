@@ -13,9 +13,9 @@
 #define __DRAW_C__
 #endif
 #include "hwingui.h"
-#include "hbapiitm.h"
-#include "hbvm.h"
-#include "hbstack.h"
+#include <hbapiitm.h>
+#include <hbvm.h>
+#include <hbstack.h>
 #include "missing.h"
 
 #if defined(__BORLANDC__) && __BORLANDC__ == 0x0550

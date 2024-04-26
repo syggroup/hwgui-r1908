@@ -8,9 +8,9 @@
  * www - http://kresin.belgorod.su
  */
 
-#include "hbapi.h"
-#include "hbapiitm.h"
-#include "hbvm.h"
+#include <hbapi.h>
+#include <hbapiitm.h>
+#include <hbvm.h>
 #include "guilib.h"
 
 static const char *ReadArray(const char *ptr, PHB_ITEM pItem)

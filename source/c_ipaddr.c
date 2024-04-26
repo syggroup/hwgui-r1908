@@ -49,10 +49,10 @@
 #endif
 #include <shlobj.h>
 
-#include "winreg.h"
-#include "hbvm.h"
-#include "hbstack.h"
-#include "hbapiitm.h"
+#include <winreg.h>
+#include <hbvm.h>
+#include <hbstack.h>
+#include <hbapiitm.h>
 
 #if defined(__DMC__)
 #include "missing.h"

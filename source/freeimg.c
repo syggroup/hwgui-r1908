@@ -12,8 +12,8 @@
 #endif
 
 #include "hwingui.h"
-#include "hbapiitm.h"
-#include "hbvm.h"
+#include <hbapiitm.h>
+#include <hbvm.h>
 #include "freeimage.h"
 
 #define hwg_par_FIBITMAP(n) (FIBITMAP *)HB_PARHANDLE(n)

@@ -11,9 +11,9 @@
 #include "hwingui.h"
 #include <commctrl.h>
 
-#include "hbapiitm.h"
-#include "hbvm.h"
-#include "hbstack.h"
+#include <hbapiitm.h>
+#include <hbvm.h>
+#include <hbstack.h>
 
 #ifndef GRADIENT_FILL_RECT_H
 

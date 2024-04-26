@@ -14,10 +14,10 @@
 #include <prsht.h>
 #endif
 
-#include "hbapiitm.h"
-#include "hbvm.h"
-#include "hbstack.h"
-#include "hbinit.h"
+#include <hbapiitm.h>
+#include <hbvm.h>
+#include <hbstack.h>
+#include <hbinit.h>
 
 HMODULE hModule;
 

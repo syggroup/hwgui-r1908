@@ -9,14 +9,14 @@
  */
 
 #include <stdio.h>
-#include "hbapi.h"
-#include "hbapiitm.h"
-#include "hbvm.h"
-#include "hbapifs.h"
+#include <hbapi.h>
+#include <hbapiitm.h>
+#include <hbvm.h>
+#include <hbapifs.h>
 #if defined(__XHARBOUR__)
-#include "hbfast.h"
+#include <hbfast.h>
 #else
-#include "hbapicls.h"
+#include <hbapicls.h>
 #endif
 #include "guilib.h"
 

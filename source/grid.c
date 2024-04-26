@@ -20,7 +20,7 @@
 #if defined(__DMC__)
 #include "missing.h"
 #endif
-#include "hbapiitm.h"
+#include <hbapiitm.h>
 
 #if (defined(__MINGW32__) || defined(__MINGW64__)) && !defined(CDRF_NOTIFYSUBITEMDRAW)
 #define CDRF_NOTIFYSUBITEMDRAW 0x00000020

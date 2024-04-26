@@ -15,13 +15,13 @@
 #include "missing.h"
 #endif
 
-#include "hbapifs.h"
-#include "hbapiitm.h"
-#include "hbapicdp.h"
-#include "hbvm.h"
-#include "hbstack.h"
+#include <hbapifs.h>
+#include <hbapiitm.h>
+#include <hbapicdp.h>
+#include <hbvm.h>
+#include <hbstack.h>
 #if !defined(__XHARBOUR__)
-#include "hbapicls.h"
+#include <hbapicls.h>
 #endif
 
 #include <math.h>

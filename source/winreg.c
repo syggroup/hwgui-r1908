@@ -52,10 +52,10 @@
 #include <shlobj.h>
 // #include <commctrl.h>
 
-#include "hbvm.h"
-#include "hbstack.h"
-#include "hbapiitm.h"
-#include "winreg.h"
+#include <hbvm.h>
+#include <hbstack.h>
+#include <hbapiitm.h>
+#include <winreg.h>
 
 #if defined(__DMC__)
 __inline long PtrToLong(const void *p)

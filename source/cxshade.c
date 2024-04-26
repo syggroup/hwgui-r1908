@@ -12,7 +12,7 @@
  */
 
 #include "hwingui.h"
-#include "hbapiitm.h"
+#include <hbapiitm.h>
 
 #define STATE_DEFAULT 1
 #define STATE_SELECTED 2
