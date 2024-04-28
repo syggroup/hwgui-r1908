@@ -24,7 +24,11 @@ C_SOURCES=\
 	c_ipaddr.c
 	
 PRG_SOURCES=\
-	drawwidg.prg \
+	hfont.prg \
+	hpen.prg \
+	hbrush.prg \
+	hbitmap.prg \
+	hicon.prg \
 	errorsys.prg \
 	guimain.prg \
 	hbrowse.prg \

@@ -71,7 +71,11 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\theme.obj \
    $(OBJ_DIR)\window.obj \
    $(OBJ_DIR)\wprint.obj \
-   $(OBJ_DIR)\drawwidg.obj \
+   $(OBJ_DIR)\hfont.obj \
+   $(OBJ_DIR)\hpen.obj \
+   $(OBJ_DIR)\hbrush.obj \
+   $(OBJ_DIR)\hbitmap.obj \
+   $(OBJ_DIR)\hicon.obj \
    $(OBJ_DIR)\errorsys.obj \
    $(OBJ_DIR)\guimain.obj \
    $(OBJ_DIR)\barcode.obj \
@@ -135,14 +139,33 @@ $(XML_LIB) : $(XML_LIB_OBJS)
    $(LIB_EXE) /nologo /out:$@ $**
 
 # здддддддддддддддддддддддд©
-# Ё HWGUI.LIB Dependencies Ёш
-# юддддддддддддддддддддддддыш
+# ?HWGUI.LIB Dependencies Ёш
+# юдддддддддддддддддддддддды?
 #  ъъъъъъъъъъъъъъъъъъъъъъъъъъ
 
-$(OBJ_DIR)\drawwidg.c : $(SRC_DIR)\drawwidg.prg
+$(OBJ_DIR)\hfont.c : $(SRC_DIR)\hfont.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hfont.obj : $(OBJ_DIR)\hfont.c
+   $(CC_EXE) $(CFLAGS) -fo$@ $**
 
-$(OBJ_DIR)\drawwidg.obj : $(OBJ_DIR)\drawwidg.c
+$(OBJ_DIR)\hpen.c : $(SRC_DIR)\hpen.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hpen.obj : $(OBJ_DIR)\hpen.c
+   $(CC_EXE) $(CFLAGS) -fo$@ $**
+
+$(OBJ_DIR)\hbrush.c : $(SRC_DIR)\hbrush.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hbrush.obj : $(OBJ_DIR)\hbrush.c
+   $(CC_EXE) $(CFLAGS) -fo$@ $**
+
+$(OBJ_DIR)\hbitmap.c : $(SRC_DIR)\hbitmap.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hbitmap.obj : $(OBJ_DIR)\hbitmap.c
+   $(CC_EXE) $(CFLAGS) -fo$@ $**
+
+$(OBJ_DIR)\hicon.c : $(SRC_DIR)\hicon.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hicon.obj : $(OBJ_DIR)\hicon.c
    $(CC_EXE) $(CFLAGS) -fo$@ $**
 
 $(OBJ_DIR)\errorsys.c : $(SRC_DIR)\errorsys.prg
@@ -501,8 +524,8 @@ $(OBJ_DIR)\hhyper.obj : $(OBJ_DIR)\hhyper.c
 
 
 # здддддддддддддддддддддддд©
-# Ё QHTM.LIB Dependencies  Ёш
-# юддддддддддддддддддддддддыш
+# ?QHTM.LIB Dependencies  Ёш
+# юдддддддддддддддддддддддды?
 #  ъъъъъъъъъъъъъъъъъъъъъъъъъъ
 
 $(OBJ_DIR)\hqhtm.c : $(SRC_DIR)\qhtm\hqhtm.prg
@@ -514,10 +537,10 @@ $(OBJ_DIR)\hqhtm.obj : $(OBJ_DIR)\hqhtm.c
 $(OBJ_DIR)\hwg_qhtm.obj : $(SRC_DIR)\qhtm\hwg_qhtm.c
    $(CC_EXE) $(CFLAGS) -fo$@ $**
 
-# зддддддддддддддддддддддддддд©
-# Ё PROCMISC.LIB Dependencies Ёш
+# зддддддддддддддддддддддддддд?
+# ?PROCMISC.LIB Dependencies Ёш
 # юдддддддддддддддддддддддддддыш
-#  ъъъъъъъъъъъъъъъъъъъъъъъъъъъъъ
+#  ъъъъъъъъъъъъъъъъъъъъъъъъъъъъ?
 
 $(OBJ_DIR)\arr2str.obj : $(SRC_DIR)\procmisc\arr2str.c
    $(CC_EXE) $(CFLAGS) -fo$@ $**
@@ -550,8 +573,8 @@ $(OBJ_DIR)\scrdebug.obj : $(OBJ_DIR)\scrdebug.c
    $(CC_EXE) $(CFLAGS) -fo$@ $**
 
 # здддддддддддддддддддддддддд©
-# Ё HBXML.LIB Dependencies   Ёш
-# юддддддддддддддддддддддддддыш
+# ?HBXML.LIB Dependencies   Ёш
+# юдддддддддддддддддддддддддды?
 #  ъъъъъъъъъъъъъъъъъъъъъъъъъъъъ
 
 $(OBJ_DIR)\hxmldoc.c : $(SRC_DIR)\xml\hxmldoc.prg

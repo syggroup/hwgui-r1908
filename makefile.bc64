@@ -125,7 +125,11 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\theme.o \
    $(HWGUI_OBJ_DIR)\window.o \
    $(HWGUI_OBJ_DIR)\wprint.o \
-   $(HWGUI_OBJ_DIR)\drawwidg.o \
+   $(HWGUI_OBJ_DIR)\hfont.o \
+   $(HWGUI_OBJ_DIR)\hpen.o \
+   $(HWGUI_OBJ_DIR)\hbrush.o \
+   $(HWGUI_OBJ_DIR)\hbitmap.o \
+   $(HWGUI_OBJ_DIR)\hicon.o \
    $(HWGUI_OBJ_DIR)\guimain.o \
    $(HWGUI_OBJ_DIR)\barcode.o \
    $(HWGUI_OBJ_DIR)\hbrowse.o \

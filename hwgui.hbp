@@ -50,7 +50,11 @@ source/pager.c
 source/errorsys.prg
 
 source/hipedit.prg
-source/drawwidg.prg
+source/hfont.prg
+source/hpen.prg
+source/hbrush.prg
+source/hbitmap.prg
+source/hicon.prg
 source/guimain.prg
 source/barcode.prg
 source/hbrowse.prg
@@ -97,5 +101,3 @@ source/printdos.prg
 source/hdc.prg
 source/hhyper.prg
 source/richtext.prg
-
- 

@@ -126,7 +126,11 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\theme.obj \
    $(HWGUI_OBJ_DIR)\window.obj \
    $(HWGUI_OBJ_DIR)\wprint.obj \
-   $(HWGUI_OBJ_DIR)\drawwidg.obj \
+   $(HWGUI_OBJ_DIR)\hfont.obj \
+   $(HWGUI_OBJ_DIR)\hpen.obj \
+   $(HWGUI_OBJ_DIR)\hbrush.obj \
+   $(HWGUI_OBJ_DIR)\hbitmap.obj \
+   $(HWGUI_OBJ_DIR)\hicon.obj \
    $(HWGUI_OBJ_DIR)\guimain.obj \
    $(HWGUI_OBJ_DIR)\barcode.obj \
    $(HWGUI_OBJ_DIR)\hbrowse.obj \
@@ -294,8 +298,8 @@ $(ACTIVEX_LIB) : $(ACTIVEX_LIB_OBJS)
 !
 
 # здддддддддддддддддддддддд©
-# Ё HWGUI.LIB Dependencies Ёш
-# юддддддддддддддддддддддддыш
+# ?HWGUI.LIB Dependencies Ёш
+# юдддддддддддддддддддддддды?
 #  ъъъъъъъъъъъъъъъъъъъъъъъъъъ
 
 {$(HWGUI_DIR)}.prg{$(OBJ_DIR)}.c:
