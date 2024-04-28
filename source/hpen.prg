@@ -12,12 +12,17 @@
 #include "windows.ch"
 #include "guilib.ch"
 
+//-------------------------------------------------------------------------------------------------------------------//
+
 CLASS HPen INHERIT HObject
 
-CLASS VAR aPens   INIT {}
+   CLASS VAR aPens INIT {}
+
    DATA handle
-   DATA style, width, color
-   DATA nCounter   INIT 1
+   DATA style
+   DATA width
+   DATA color
+   DATA nCounter INIT 1
 
    METHOD Add(nStyle, nWidth, nColor)
    METHOD Get(nStyle, nWidth, nColor)
@@ -25,99 +30,79 @@ CLASS VAR aPens   INIT {}
 
 ENDCLASS
 
+//-------------------------------------------------------------------------------------------------------------------//
+
 METHOD Add(nStyle, nWidth, nColor) CLASS HPen
-   LOCAL i
 
-   nStyle := IIf(nStyle == Nil, BS_SOLID, nStyle)
-   nWidth := IIf(nWidth == Nil, 1, nWidth)
-   nColor := IIf(nColor == Nil, 0, nColor)
+   LOCAL item
 
-   #ifdef __XHARBOUR__
-      FOR EACH i IN ::aPens
-         IF i:style == nStyle .AND. ;
-            i:width == nWidth .AND. ;
-            i:color == nColor
+   nStyle := IIf(nStyle == NIL, BS_SOLID, nStyle)
+   nWidth := IIf(nWidth == NIL, 1, nWidth)
+   nColor := IIf(nColor == NIL, 0, nColor)
 
-            i:nCounter ++
-            RETURN i
-         ENDIF
-      NEXT
-   #else
-      FOR i := 1 TO Len(::aPens)
-         IF ::aPens[i]:style == nStyle .AND. ;
-            ::aPens[i]:width == nWidth .AND. ;
-            ::aPens[i]:color == nColor
-
-            ::aPens[i]:nCounter++
-            RETURN ::aPens[i]
-         ENDIF
-      NEXT
-   #endif
+   FOR EACH item IN ::aPens
+      IF item:style == nStyle .AND. ;
+         item:width == nWidth .AND. ;
+         item:color == nColor
+         item:nCounter++
+         RETURN item
+      ENDIF
+   NEXT
 
    ::handle := CreatePen(nStyle, nWidth, nColor)
-   ::style  := nStyle
-   ::width  := nWidth
-   ::color  := nColor
+   ::style := nStyle
+   ::width := nWidth
+   ::color := nColor
    AAdd(::aPens, Self)
 
-   RETURN Self
+RETURN Self
+
+//-------------------------------------------------------------------------------------------------------------------//
 
 METHOD Get(nStyle, nWidth, nColor) CLASS HPen
-   LOCAL i
 
-   nStyle := IIf(nStyle == Nil, PS_SOLID, nStyle)
-   nWidth := IIf(nWidth == Nil, 1, nWidth)
-   nColor := IIf(nColor == Nil, 0, nColor)
+   LOCAL item
 
-   #ifdef __XHARBOUR__
-      FOR EACH i IN ::aPens
-         IF i:style == nStyle .AND. ;
-            i:width == nWidth .AND. ;
-            i:color == nColor
+   nStyle := IIf(nStyle == NIL, PS_SOLID, nStyle)
+   nWidth := IIf(nWidth == NIL, 1, nWidth)
+   nColor := IIf(nColor == NIL, 0, nColor)
 
-            RETURN i
-         ENDIF
-      NEXT
-   #else
-      FOR i := 1 TO Len(::aPens)
-         IF ::aPens[i]:style == nStyle .AND. ;
-            ::aPens[i]:width == nWidth .AND. ;
-            ::aPens[i]:color == nColor
+   FOR EACH item IN ::aPens
+      IF item:style == nStyle .AND. ;
+         item:width == nWidth .AND. ;
+         item:color == nColor
+         RETURN item
+      ENDIF
+   NEXT
 
-            RETURN ::aPens[i]
-         ENDIF
-      NEXT
-   #endif
+RETURN NIL
 
-   RETURN Nil
+//-------------------------------------------------------------------------------------------------------------------//
 
 METHOD Release() CLASS HPen
-   LOCAL i, nlen := Len(::aPens)
 
-   ::nCounter --
+   LOCAL item
+   LOCAL nlen := Len(::aPens)
+
+   ::nCounter--
    IF ::nCounter == 0
-      #ifdef __XHARBOUR__
-         FOR EACH i  IN ::aPens
-            IF i:handle == ::handle
-               DeleteObject(::handle)
-               ADel(::aPens, hb_EnumIndex())
-               ASize(::aPens, nlen - 1)
-               EXIT
-            ENDIF
-         NEXT
-      #else
-         FOR i := 1 TO nlen
-            IF ::aPens[i]:handle == ::handle
-               DeleteObject(::handle)
-               ADel(::aPens, i)
-               ASize(::aPens, nlen - 1)
-               EXIT
-            ENDIF
-         NEXT
-      #endif
+      FOR EACH item IN ::aPens
+         IF item:handle == ::handle
+            DeleteObject(::handle)
+            #ifdef __XHARBOUR__
+            ADel(::aPens, hb_EnumIndex())
+            #else
+            ADel(::aPens, item:__EnumIndex())
+            #endif
+            ASize(::aPens, nlen - 1)
+            EXIT
+         ENDIF
+      NEXT
    ENDIF
-   RETURN Nil
 
+RETURN NIL
+
+//-------------------------------------------------------------------------------------------------------------------//
 
 EXIT PROCEDURE CleanDrawWidgHPen
 
@@ -128,3 +113,5 @@ EXIT PROCEDURE CleanDrawWidgHPen
    NEXT
 
 RETURN
+
+//-------------------------------------------------------------------------------------------------------------------//
