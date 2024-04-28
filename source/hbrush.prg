@@ -12,12 +12,15 @@
 #include "windows.ch"
 #include "guilib.ch"
 
+//-------------------------------------------------------------------------------------------------------------------//
+
 CLASS HBrush INHERIT HObject
 
-CLASS VAR aBrushes   INIT {}
+   CLASS VAR aBrushes INIT {}
+
    DATA handle
    DATA color
-   DATA nHatch   INIT 99
+   DATA nHatch INIT 99
    DATA nCounter INIT 1
 
    METHOD Add(nColor, nHatch)
@@ -25,67 +28,60 @@ CLASS VAR aBrushes   INIT {}
 
 ENDCLASS
 
-METHOD Add(nColor, nHatch) CLASS HBrush
-   LOCAL i
+//-------------------------------------------------------------------------------------------------------------------//
 
-   IF nHatch == Nil
+METHOD Add(nColor, nHatch) CLASS HBrush
+
+   LOCAL item
+
+   IF nHatch == NIL
       nHatch := 99
    ENDIF
    IF hb_IsPointer(nColor)
       nColor := PTRTOULONG(nColor)
    ENDIF
-   #ifdef __XHARBOUR__
-      FOR EACH i IN ::aBrushes
-
-         IF i:color == nColor .AND. i:nHatch == nHatch
-            i:nCounter ++
-            RETURN i
-         ENDIF
-      NEXT
-   #else
-      FOR i := 1 TO Len(::aBrushes)
-         IF ::aBrushes[i]:color == nColor .AND. ::aBrushes[i]:nHatch == nHatch
-            ::aBrushes[i]:nCounter++
-            RETURN ::aBrushes[i]
-         ENDIF
-      NEXT
-   #endif
+   FOR EACH item IN ::aBrushes
+      IF item:color == nColor .AND. item:nHatch == nHatch
+         item:nCounter++
+         RETURN item
+      ENDIF
+   NEXT
    IF nHatch != 99
       ::handle := CreateHatchBrush(nHatch, nColor)
    ELSE
       ::handle := CreateSolidBrush(nColor)
    ENDIF
-   ::color  := nColor
-   AAdd(::aBrushes, Self)
+   ::color := nColor
+   AAdd(::aBrushes, SELF)
 
-   RETURN Self
+RETURN SELF
+
+//-------------------------------------------------------------------------------------------------------------------//
 
 METHOD Release() CLASS HBrush
-   LOCAL i, nlen := Len(::aBrushes)
 
-   ::nCounter --
+   LOCAL item
+   LOCAL nlen := Len(::aBrushes)
+
+   ::nCounter--
    IF ::nCounter == 0
-      #ifdef __XHARBOUR__
-         FOR EACH i IN ::aBrushes
-            IF i:handle == ::handle
-               DeleteObject(::handle)
-               ADel(::aBrushes, hb_enumindex())
-               ASize(::aBrushes, nlen - 1)
-               EXIT
-            ENDIF
-         NEXT
-      #else
-         FOR i := 1 TO nlen
-            IF ::aBrushes[i]:handle == ::handle
-               DeleteObject(::handle)
-               ADel(::aBrushes, i)
-               ASize(::aBrushes, nlen - 1)
-               EXIT
-            ENDIF
-         NEXT
-      #endif
+      FOR EACH item IN ::aBrushes
+         IF item:handle == ::handle
+            DeleteObject(::handle)
+            #ifdef __XHARBOUR__
+            ADel(::aBrushes, hb_enumindex())
+            #else
+            ADel(::aBrushes, item:__enumindex())
+            #endif
+            ASize(::aBrushes, nlen - 1)
+            EXIT
+         ENDIF
+      NEXT
    ENDIF
-   RETURN Nil
+
+RETURN NIL
+
+//-------------------------------------------------------------------------------------------------------------------//
 
 EXIT PROCEDURE CleanDrawWidgHBrush
 
@@ -96,3 +92,5 @@ EXIT PROCEDURE CleanDrawWidgHBrush
    NEXT
 
 RETURN
+
+//-------------------------------------------------------------------------------------------------------------------//
