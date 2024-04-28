@@ -190,10 +190,10 @@ METHOD Release() CLASS HBitmap
 
 EXIT PROCEDURE CleanDrawWidgHBitmap
 
-   LOCAL i
-   
-   FOR i := 1 TO Len(HBitmap():aBitmaps)
-      DeleteObject(HBitmap():aBitmaps[i]:handle)
+   LOCAL item
+
+   FOR EACH item IN HBitmap():aBitmaps
+      DeleteObject(item:handle)
    NEXT
 
 RETURN

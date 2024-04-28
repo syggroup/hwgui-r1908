@@ -151,10 +151,10 @@ METHOD Release() CLASS HIcon
 
 EXIT PROCEDURE CleanDrawWidgHIcon
 
-   LOCAL i
-   
-   FOR i := 1 TO Len(HIcon():aIcons)
-      DeleteObject(HIcon():aIcons[i]:handle)
+   LOCAL item
+
+   FOR EACH item IN HIcon():aIcons
+      DeleteObject(item:handle)
    NEXT
 
 RETURN

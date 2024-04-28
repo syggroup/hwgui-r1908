@@ -89,10 +89,10 @@ METHOD Release() CLASS HBrush
 
 EXIT PROCEDURE CleanDrawWidgHBrush
 
-   LOCAL i
+   LOCAL item
 
-   FOR i := 1 TO Len(HBrush():aBrushes)
-      DeleteObject(HBrush():aBrushes[i]:handle)
+   FOR EACH item IN HBrush():aBrushes
+      DeleteObject(item:handle)
    NEXT
 
 RETURN

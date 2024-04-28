@@ -121,10 +121,10 @@ METHOD Release() CLASS HPen
 
 EXIT PROCEDURE CleanDrawWidgHPen
 
-   LOCAL i
+   LOCAL item
 
-   FOR i := 1 TO Len(HPen():aPens)
-      DeleteObject(HPen():aPens[i]:handle)
+   FOR EACH item IN HPen():aPens
+      DeleteObject(item:handle)
    NEXT
 
 RETURN

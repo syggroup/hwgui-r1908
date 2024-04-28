@@ -130,10 +130,10 @@ METHOD Release() CLASS HFont
 
 EXIT PROCEDURE CleanDrawWidgHFont
 
-   LOCAL i
-   
-   FOR i := 1 TO Len(HFont():aFonts)
-      DeleteObject(HFont():aFonts[i]:handle)
+   LOCAL item
+
+   FOR EACH item IN HFont():aFonts
+      DeleteObject(item:handle)
    NEXT
 
 RETURN
