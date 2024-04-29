@@ -18,6 +18,7 @@
 #define EVENTS_ACTIONS  2
 #define RT_MANIFEST  24
 
+#if 0 // old code for reference (to be deleted)
 STATIC aCustomEvents := { ;
        { WM_NOTIFY, WM_PAINT, WM_CTLCOLORSTATIC, WM_CTLCOLOREDIT, WM_CTLCOLORBTN, WM_CTLCOLORLISTBOX, ;
          WM_COMMAND, WM_DRAWITEM, WM_SIZE, WM_DESTROY }, ;
@@ -34,6 +35,7 @@ STATIC aCustomEvents := { ;
          { | o |     onDestroy( o ) }                                          ;
        } ;
      }
+#endif
 
 CLASS HObject
 
@@ -243,6 +245,7 @@ METHOD Move(x1, y1, width, height, nRePaint) CLASS HCustomWindow
 
    RETURN NIL
 
+#if 0 // old code for reference (to be deleted)
 METHOD onEvent( msg, wParam, lParam ) CLASS HCustomWindow
    LOCAL i
 
@@ -270,6 +273,66 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCustomWindow
    ENDIF
 
    RETURN - 1
+#else
+METHOD onEvent(msg, wParam, lParam) CLASS HCustomWindow
+
+   // Writelog("== " + ::Classname() + Str(msg) + IIF(wParam != NIL, Str(wParam), "NIL") + ;
+   //    IIF(lParam != NIL, Str(lParam), "NIL"))
+
+   SWITCH msg
+
+   CASE WM_GETMINMAXINFO
+      IF ::minWidth > -1 .OR. ::maxWidth > -1 .OR. ::minHeight > -1 .OR. ::maxHeight > -1
+         MINMAXWINDOW(::handle, lParam, ;
+                      IIf(::minWidth  > -1, ::minWidth, NIL), ;
+                      IIf(::minHeight > -1, ::minHeight, NIL), ;
+                      IIf(::maxWidth  > -1, ::maxWidth, NIL), ;
+                      IIf(::maxHeight > -1, ::maxHeight, NIL))
+         RETURN 0
+      ENDIF
+      EXIT
+
+   CASE WM_NOTIFY
+      RETURN onNotify(SELF, wParam, lParam)
+
+   CASE WM_PAINT
+      IF hb_IsBlock(::bPaint)
+         RETURN Eval(::bPaint, SELF, wParam)
+      ENDIF
+      EXIT
+
+   CASE WM_CTLCOLORSTATIC
+   CASE WM_CTLCOLOREDIT
+   CASE WM_CTLCOLORBTN
+   CASE WM_CTLCOLORLISTBOX
+      RETURN onCtlColor(SELF, wParam, lParam)
+
+   CASE WM_COMMAND
+      RETURN onCommand(SELF, wParam, lParam)
+
+   CASE WM_DRAWITEM
+      RETURN onDrawItem(SELF, wParam, lParam)
+
+   CASE WM_SIZE
+      RETURN onSize(SELF, wParam, lParam)
+
+   CASE WM_DESTROY
+      RETURN onDestroy(SELF)
+
+   #ifdef __XHARBOUR__
+   DEFAULT
+   #else
+   OTHERWISE
+   #endif
+
+      IF hb_IsBlock(::bOther)
+         RETURN Eval(::bOther, SELF, msg, wParam, lParam)
+      ENDIF
+
+   ENDSWITCH
+
+RETURN -1
+#endif
 
 METHOD END() CLASS HCustomWindow
 LOCAL aControls, i, nLen
@@ -526,7 +589,7 @@ METHOD ScrollHV( oForm, msg,wParam,lParam ) CLASS HCustomWindow
       nDelta := - HORZ_PTS * nInc
       ScrollWindow( oForm:handle, nDelta, 0 ) //, Nil, NIL )
       SetScrollPos( oForm:Handle, SB_HORZ, oForm:nHscrollPos, .T. )
-   ENDIF    
+   ENDIF
    RETURN Nil
 
 METHOD RedefineScrollbars() CLASS HCustomWindow
@@ -823,7 +886,7 @@ STATIC FUNCTION onDrawItem( oWnd, wParam, lParam )
 STATIC FUNCTION onCommand(oWnd, wParam, lParam)
    LOCAL iItem, iParHigh := HIWORD(wParam), iParLow := LOWORD(wParam)
    LOCAL oForm := oWnd:GetParentForm()
-   
+
    HB_SYMBOL_UNUSED(lParam)
    IF oWnd:aEvents != NIL .AND. !oForm:lSuspendMsgsHandling .AND. !oWnd:lSuspendMsgsHandling .AND. ;
       ( iItem := AScan( oWnd:aEvents, { | a | a[1] == iParHigh .AND. ;
