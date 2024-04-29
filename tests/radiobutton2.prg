@@ -1,0 +1,31 @@
+#include "hwgui.ch"
+
+PROCEDURE Main()
+
+   LOCAL oDialog
+   LOCAL rg1 := 1
+   LOCAL rg2 := 2
+
+   INIT DIALOG oDialog TITLE "Test" SIZE 640, 480
+
+   @ 20, 20 GROUPBOX "GroupBox1" SIZE 640 - 40, 120
+
+   GET RADIOGROUP rg1
+   @ 40, 40 RADIOBUTTON "RadioButton11" SIZE 120, 30
+   @ 40, 80 RADIOBUTTON "RadioButton12" SIZE 120, 30
+   END RADIOGROUP
+
+   @ 20, 160 GROUPBOX "GroupBox2" SIZE 640 - 40, 120
+
+   GET RADIOGROUP rg2
+   @ 40, 180 RADIOBUTTON "RadioButton21" SIZE 120, 30
+   @ 40, 220 RADIOBUTTON "RadioButton22" SIZE 120, 30
+   END RADIOGROUP
+
+   @ (320 - 100) / 2, 320 BUTTON "&Ok" ID IDOK SIZE 100, 32
+
+   @ (320 - 100) / 2 + 320, 320 BUTTON "&Cancel" ID IDCANCEL SIZE 100, 32
+
+   ACTIVATE DIALOG oDialog
+
+RETURN
