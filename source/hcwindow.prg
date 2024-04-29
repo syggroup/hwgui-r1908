@@ -37,28 +37,6 @@ STATIC aCustomEvents := { ;
      }
 #endif
 
-CLASS HObject
-
-   DATA aObjects     INIT {}
-   METHOD AddObject(oCtrl) INLINE AAdd(::aObjects, oCtrl)
-   METHOD DelObject(oCtrl)
-   METHOD Release() INLINE ::DelObject(Self)
-
-ENDCLASS
-
-METHOD DelObject(oCtrl) CLASS HObject
-
-   LOCAL h := oCtrl:handle
-   LOCAL i := Ascan( ::aObjects, {|o| o:handle == h } )
-
-   SendMessage(h, WM_CLOSE, 0, 0)
-   IF i != 0
-      Adel( ::aObjects, i )
-      Asize(::aObjects, Len( ::aObjects ) - 1)
-   ENDIF
-   RETURN NIL
-
-
 CLASS HCustomWindow INHERIT HObject
 
 CLASS VAR oDefaultParent SHARED
@@ -905,7 +883,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
 STATIC FUNCTION onSize(oWnd, wParam, lParam)
    LOCAL aControls := oWnd:aControls
    LOCAL oItem, nw1, nh1, aCoors, nWindowState
-   
+
    nw1 := oWnd:nWidth
    nh1 := oWnd:nHeight
    aCoors := GetWindowRect( oWnd:handle )
@@ -919,7 +897,7 @@ STATIC FUNCTION onSize(oWnd, wParam, lParam)
          oWnd:nHeight := aCoors[4] - aCoors[2]
          IF oWnd:Type = WND_MDICHILD .AND. oWnd:GETMDIMAIN() != Nil .AND. wParam != 1 .AND. oWnd:GETMDIMAIN():WindowState = 2
              nWindowState := SW_SHOWMINIMIZED
-         ENDIF 
+         ENDIF
       ENDIF
    ENDIF
    IF oWnd:nScrollBars > - 1 .AND. oWnd:lAutoScroll .AND. !Empty(oWnd:Type)
@@ -971,9 +949,6 @@ FUNCTION onTrackScroll( oWnd, msg, wParam, lParam )
 
    RETURN - 1
 
-PROCEDURE HB_GT_DEFAULT_NUL()
-   RETURN
-
 FUNCTION ProcKeyList( oCtrl, wParam, oMain )
 LOCAL oParent, nCtrl,nPos
 
@@ -1020,7 +995,7 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
          RETURN .T.
       ENDIF
    ELSEIF iParHigh == IDCANCEL
-      IF ( oCtrl := oWin:FindControl( IDCANCEL ) ) != Nil .AND. oCtrl:IsEnabled() 
+      IF ( oCtrl := oWin:FindControl( IDCANCEL ) ) != Nil .AND. oCtrl:IsEnabled()
          oCtrl:SetFocus()
          oWin:lResult := .F.
          SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam( oCtrl:id, BN_CLICKED ), oCtrl:handle)
@@ -1033,7 +1008,7 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
             IF AScan( oWin:GetList, { | o | o:handle == oCtrl:Handle } ) > 1
                RETURN .T.
             ENDIF
-         ENDIF                                               
+         ENDIF
       ELSEIF oWin:lExitOnEsc
           oWin:close()
       ELSEIF !oWin:lExitOnEsc
@@ -1044,44 +1019,6 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
       RETURN .T.
    ENDIF
    RETURN .F.
-
-FUNCTION ADDMETHOD(oObjectName, cMethodName, pFunction)
-
-   IF hb_IsObject(oObjectName) .AND. !Empty(cMethodName)
-      IF !__ObjHasMsg( oObjectName, cMethodName )
-          __objAddMethod(oObjectName, cMethodName, pFunction)
-      ENDIF   
-      RETURN .T.
-   ENDIF       
-   RETURN .F.
-
-FUNCTION ADDPROPERTY( oObjectName, cPropertyName, eNewValue )
-
-   IF hb_IsObject(oObjectName) .AND. !Empty(cPropertyName)
-      IF !__objHasData(oObjectName, cPropertyName)
-         IF Empty(__objAddData(oObjectName, cPropertyName))
-              RETURN .F.
-         ENDIF
-      ENDIF
-      IF !Empty(eNewValue)
-         IF hb_IsBlock(eNewValue)
-            oObjectName: & ( cPropertyName ) := EVAL( eNewValue )
-         ELSE
-            oObjectName: & ( cPropertyName ) := eNewValue
-         ENDIF
-      ENDIF
-      RETURN .T.
-   ENDIF
-   RETURN .F.
-
-FUNCTION REMOVEPROPERTY( oObjectName, cPropertyName )
-
-   IF hb_IsObject(oObjectName) .AND. !Empty(cPropertyName) .AND.;
-       __objHasData(oObjectName, cPropertyName)
-       RETURN Empty(__objDelData(oObjectName, cPropertyName))
-   ENDIF
-   RETURN .F.
-
 
 FUNCTION FindAccelerator( oCtrl, lParam )
   Local nlen , i ,pos
@@ -1136,9 +1073,3 @@ FUNCTION GetBackColorParent( oCtrl, lSelf, lTransparent )
    ENDIF
    brush := HBrush():Add(bColor)
    Return brush
-
-INIT PROCEDURE HWGINIT
-
-   hwg_ErrorSys()
-
-RETURN

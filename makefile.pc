@@ -88,6 +88,7 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\hcombo.obj \
    $(OBJ_DIR)\hcontrol.obj \
    $(OBJ_DIR)\hcwindow.obj \
+   $(OBJ_DIR)\hobject.obj \
    $(OBJ_DIR)\hdatepic.obj \
    $(OBJ_DIR)\hdialog.obj \
    $(OBJ_DIR)\hedit.obj \
@@ -213,8 +214,12 @@ $(OBJ_DIR)\hcontrol.obj : $(OBJ_DIR)\hcontrol.c
 
 $(OBJ_DIR)\hcwindow.c  : $(SRC_DIR)\hcwindow.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
-
 $(OBJ_DIR)\hcwindow.obj : $(OBJ_DIR)\hcwindow.c
+   $(CC_EXE) $(CFLAGS) /Fo$@ $**
+
+$(OBJ_DIR)\hobject.c  : $(SRC_DIR)\hobject.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hobject.obj : $(OBJ_DIR)\hobject.c
    $(CC_EXE) $(CFLAGS) /Fo$@ $**
 
 $(OBJ_DIR)\hdatepic.c : $(SRC_DIR)\hdatepic.prg

@@ -62,6 +62,7 @@ source/hcheck.prg
 source/hcombo.prg
 source/hcontrol.prg
 source/hcwindow.prg
+source/hobject.prg
 source/hdatepic.prg
 source/hdialog.prg
 source/hedit.prg
