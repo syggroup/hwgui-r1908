@@ -8,6 +8,10 @@
  * www - http://kresin.belgorod.su
  */
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough="
+#endif
+
 #include <hbapi.h>
 #include <hbapiitm.h>
 #include <hbvm.h>
@@ -119,6 +123,7 @@ static HB_ULONG ArrayMemoSize(PHB_ITEM pArray)
         ulMemoSize += 5;
         break;
       }
+      // intentional fallthrough
 
     case HB_IT_DOUBLE:
       ulMemoSize += 11;
@@ -198,6 +203,7 @@ static char *WriteArray(char *ptr, PHB_ITEM pArray)
         ptr += 4;
         break;
       }
+      // intentional fallthrough
 
     case HB_IT_DOUBLE:
       *ptr++ = '\3';
