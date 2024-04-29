@@ -382,7 +382,7 @@ METHOD Refresh( lAll, oCtrl ) CLASS HCustomWindow
          oCtrlTmp :=  oCtrl:aControls[i]
          lRefresh :=  !Empty(__ObjHasMethod(oCtrlTmp, "REFRESH"))
          IF ( ( oCtrlTmp:Handle != hCtrl .OR. LEN( oCtrlTmp:aControls) = 0) .OR.  lAll ) .AND. ;
-            ( !oCtrlTmp:lHide .OR.  __ObjHasMsg( oCtrlTmp, "BSETGET" ) ) 
+            ( !oCtrlTmp:lHide .OR.  __ObjHasMsg( oCtrlTmp, "BSETGET" ) )
              IF LEN( oCtrlTmp:aControls) > 0
                  ::Refresh( lAll, oCtrlTmp )
               ELSEIF !Empty(lRefresh) .AND. ( lAll .OR. ASCAN( ::GetList, {| o | o:Handle == oCtrlTmp:handle } ) > 0 ) 
@@ -460,6 +460,7 @@ METHOD Anchor( oCtrl, x, y, w, h ) CLASS HCustomWindow
    NEXT
    RETURN .T.
 
+#if 0 // old code for reference (to be deleted)
 METHOD ScrollHV( oForm, msg,wParam,lParam ) CLASS HCustomWindow
    Local nDelta, nSBCode , nPos, nInc
 
@@ -569,6 +570,106 @@ METHOD ScrollHV( oForm, msg,wParam,lParam ) CLASS HCustomWindow
       SetScrollPos( oForm:Handle, SB_HORZ, oForm:nHscrollPos, .T. )
    ENDIF
    RETURN Nil
+#else
+METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
+
+   LOCAL nDelta
+   LOCAL nSBCode
+   LOCAL nPos
+   LOCAL nInc
+
+   HB_SYMBOL_UNUSED(lParam)
+
+   nSBCode := loword(wParam)
+
+   IF msg == WM_MOUSEWHEEL
+      nSBCode := IIF(HIWORD(wParam) > 32768, HIWORD(wParam) - 65535, HIWORD(wParam))
+      nSBCode := IIF(nSBCode < 0, SB_LINEDOWN, SB_LINEUP)
+   ENDIF
+
+   SWITCH msg
+
+   CASE WM_VSCROLL
+   CASE WM_MOUSEWHEEL
+      // Handle vertical scrollbar messages
+      SWITCH nSBCode
+      CASE SB_TOP
+         nInc := -oForm:nVscrollPos
+         EXIT
+      CASE SB_BOTTOM
+         nInc := oForm:nVscrollMax - oForm:nVscrollPos
+         EXIT
+      CASE SB_LINEUP
+         nInc := -Int(oForm:nVertInc * 0.05 + 0.49)
+         EXIT
+      CASE SB_LINEDOWN
+         nInc := Int(oForm:nVertInc * 0.05 + 0.49)
+         EXIT
+      CASE SB_PAGEUP
+         nInc := min(-1, -oForm:nVertInc)
+         EXIT
+      CASE SB_PAGEDOWN
+         nInc := max(1, oForm:nVertInc)
+         EXIT
+      CASE SB_THUMBTRACK
+         nPos := hiword(wParam)
+         nInc := nPos - oForm:nVscrollPos
+         EXIT
+      #ifdef __XHARBOUR__
+      DEFAULT
+      #else
+      OTHERWISE
+      #endif
+         nInc := 0
+      ENDSWITCH
+      nInc := Max(-oForm:nVscrollPos, Min(nInc, oForm:nVscrollMax - oForm:nVscrollPos))
+      oForm:nVscrollPos += nInc
+      nDelta := -VERT_PTS * nInc
+      ScrollWindow(oForm:handle, 0, nDelta) //, NIL, NIL)
+      SetScrollPos(oForm:Handle, SB_VERT, oForm:nVscrollPos, .T.)
+
+   CASE WM_HSCROLL
+      // Handle horizontal scrollbar messages
+      SWITCH nSBCode
+      CASE SB_TOP
+         nInc := -oForm:nHscrollPos
+         EXIT
+      CASE SB_BOTTOM
+         nInc := oForm:nHscrollMax - oForm:nHscrollPos
+         EXIT
+      CASE SB_LINEUP
+         nInc := -1
+         EXIT
+      CASE SB_LINEDOWN
+         nInc := 1
+         EXIT
+      CASE SB_PAGEUP
+         nInc := -HORZ_PTS
+         EXIT
+      CASE SB_PAGEDOWN
+         nInc := HORZ_PTS
+         EXIT
+      CASE SB_THUMBTRACK
+         nPos := hiword(wParam)
+         nInc := nPos - oForm:nHscrollPos
+         EXIT
+      #ifdef __XHARBOUR__
+      DEFAULT
+      #else
+      OTHERWISE
+      #endif
+         nInc := 0
+      ENDSWITCH
+      nInc := max(-oForm:nHscrollPos, min(nInc, oForm:nHscrollMax - oForm:nHscrollPos))
+      oForm:nHscrollPos += nInc
+      nDelta := -HORZ_PTS * nInc
+      ScrollWindow(oForm:handle, nDelta, 0) //, NIL, NIL)
+      SetScrollPos(oForm:Handle, SB_HORZ, oForm:nHscrollPos, .T.)
+
+   ENDSWITCH
+
+RETURN NIL
+#endif
 
 METHOD RedefineScrollbars() CLASS HCustomWindow
 
