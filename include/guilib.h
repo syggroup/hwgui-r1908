@@ -4,6 +4,9 @@
 
 #include "hbapi.h"
 
+// activate this line to use pointers (unstable yet, use only for tests)
+//#define HWG_USE_POINTER_ITEM
+
 #define WND_DLG_RESOURCE      10
 #define WND_DLG_NORESOURCE    11
 #define ST_ALIGN_HORIZ        0     // Icon/bitmap on the left, text on the right
