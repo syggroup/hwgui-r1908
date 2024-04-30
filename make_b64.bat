@@ -8,6 +8,8 @@ if not exist obj\b64 md obj\b64
 if not exist obj\b64\mt md obj\b64\mt
 :BUILD
 
+set C_USR=-Wno-visibility -Wno-missing-declarations -Wno-deprecated-declarations
+
 rem   make -fmakefile.bc  > make_b32.log
 rem   if errorlevel 1 goto BUILD_ERR
 rem   set ACTIVEX_SUPPORT=ON
