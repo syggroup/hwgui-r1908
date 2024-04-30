@@ -336,7 +336,7 @@ HB_FUNC(FI_2BITMAP)
 
   hb_retnl((LONG_PTR)CreateDIBitmap(hDC, pGetinfoHead(dib), CBM_INIT, pGetbits(dib), pGetinfo(dib), DIB_RGB_COLORS));
 
-  ReleaseDC(0, hDC);
+  ReleaseDC(NULL, hDC);
 }
 
 /* 24/02/2005 - <maurilio.longo@libero.it>
