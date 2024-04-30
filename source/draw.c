@@ -699,7 +699,7 @@ HB_FUNC(OPENBITMAP)
 
   if (hb_pcount() < 2 || HB_ISNIL(2))
   {
-    ReleaseDC(0, hDC);
+    ReleaseDC(NULL, hDC);
   }
 
   /* Unlock the global memory objects and close the .BMP file. */
@@ -786,11 +786,11 @@ HB_FUNC(GETDC)
 }
 
 /*
-RELEASEDC(HWND, HDC) -->
+RELEASEDC(HWND, HDC) --> numeric
 */
 HB_FUNC(RELEASEDC)
 {
-  HB_RETHANDLE(ReleaseDC(hwg_par_HWND(1), hwg_par_HDC(2))); // TODO: revisar retorno (retorna um int e não um handle)
+  hwg_ret_int(ReleaseDC(hwg_par_HWND(1), hwg_par_HDC(2)));
 }
 
 /*
