@@ -127,9 +127,9 @@ GETDLGITEMTEXT(HWND, nId, nLen) --> cText
 */
 HB_FUNC(GETDLGITEMTEXT)
 {
-  USHORT uiLen = hb_parni(3);
-  LPTSTR lpText = (LPTSTR)hb_xgrab((uiLen + 1) * sizeof(TCHAR));
-  GetDlgItemText(hwg_par_HWND(1), hb_parni(2), lpText, uiLen);
+  int iLen = hb_parni(3);
+  LPTSTR lpText = (LPTSTR)hb_xgrab((iLen + 1) * sizeof(TCHAR));
+  GetDlgItemText(hwg_par_HWND(1), hwg_par_int(2), lpText, iLen);
   HB_RETSTR(lpText);
   hb_xfree(lpText);
 }
@@ -289,11 +289,11 @@ static LPDLGTEMPLATE s_CreateDlgTemplate(PHB_ITEM pObj, int x1, int y1, int dwid
   *p++ = 0;      // HIWORD (lExtendedStyle)
   *p++ = LOWORD(ulStyle);
   *p++ = HIWORD(ulStyle);
-  *p++ = (UINT)ulControls; // NumberOfItems
-  *p++ = x1;               // x
-  *p++ = y1;               // y
-  *p++ = dwidth;           // cx
-  *p++ = dheight;          // cy
+  *p++ = (WORD)(UINT)ulControls; // NumberOfItems // TODO: cast para UINT ?
+  *p++ = (WORD)x1;               // x
+  *p++ = (WORD)y1;               // y
+  *p++ = (WORD)dwidth;           // cx
+  *p++ = (WORD)dheight;          // cy
   *p++ = 0;                // Menu
   *p++ = 0;                // Class
 
@@ -323,11 +323,11 @@ static LPDLGTEMPLATE s_CreateDlgTemplate(PHB_ITEM pObj, int x1, int y1, int dwid
     *p++ = HIWORD(lExtStyle); // HIWORD (lExtendedStyle)
     *p++ = LOWORD(ulStyle);
     *p++ = HIWORD(ulStyle);
-    *p++ = x1;                                         // x
-    *p++ = y1;                                         // y
-    *p++ = dwidth;                                     // cx
-    *p++ = dheight;                                    // cy
-    *p++ = hb_itemGetNI(GetObjectVar(pControl, "ID")); // LOWORD (Control ID)
+    *p++ = (WORD)x1;                                         // x
+    *p++ = (WORD)y1;                                         // y
+    *p++ = (WORD)dwidth;                                     // cx
+    *p++ = (WORD)dheight;                                    // cy
+    *p++ = (WORD)hb_itemGetNI(GetObjectVar(pControl, "ID")); // LOWORD (Control ID)
     *p++ = 0;                                          // HOWORD (Control ID)
 
     // class name
