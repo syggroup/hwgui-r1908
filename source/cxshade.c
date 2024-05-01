@@ -566,7 +566,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
       {
         d = posDst[j] + ((a * i) / sYSize + (a * (sXSize - j)) / sXSize);
         posDst[j] = (BYTE)d;
-        posDst[j] += rand() / grainx2;
+        posDst[j] += (BYTE)(rand() / grainx2);
       }
       posDst += bytes;
     }
@@ -582,7 +582,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
       for (j = 0; j < sXSize; j++)
       {
         posDst[j] = (BYTE)k;
-        posDst[j] += rand() / grainx2 - granularity;
+        posDst[j] += (BYTE)(rand() / grainx2 - granularity);
       }
       posDst += bytes;
     }
@@ -605,7 +605,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
         {
           posDst[j] = (BYTE)idxmax - (BYTE)((j * 128) / d);
         }
-        posDst[j] += rand() / grainx2 - granularity;
+        posDst[j] += (BYTE)(rand() / grainx2 - granularity);
       }
       posDst += bytes;
     }
@@ -629,7 +629,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
           k = idxmax;
         }
         posDst[j] = (BYTE)k;
-        posDst[j] += rand() / grainx2 - granularity;
+        posDst[j] += (BYTE)(rand() / grainx2 - granularity);
       }
       posDst += bytes;
     }
@@ -644,7 +644,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
       for (i = 0; i < sYSize; i++)
       {
         posDst[j + i * bytes] = (BYTE)k;
-        posDst[j + i * bytes] += rand() / grainx2 - granularity;
+        posDst[j + i * bytes] += (BYTE)(rand() / grainx2 - granularity);
       }
     }
     break;
@@ -658,7 +658,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
       for (j = 0; j < sXSize; j++)
       {
         posDst[j] = (BYTE)k;
-        posDst[j] += rand() / grainx2 - granularity;
+        posDst[j] += (BYTE)(rand() / grainx2 - granularity);
       }
       posDst += bytes;
     }
@@ -674,7 +674,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
         aa = idxmin + a * (i / sYSize);
         //                posDst[j] = (BYTE) (idxmin + a *(i / sYSize) + a * (sXSize - j) / sXSize);
         posDst[j] = (BYTE)(aa + bb);
-        posDst[j] += rand() / grainx2 - granularity;
+        posDst[j] += (BYTE)(rand() / grainx2 - granularity);
       }
       posDst += bytes;
     }
@@ -688,7 +688,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
       for (j = 0; j < sXSize; j++)
       {
         posDst[j] = (BYTE)k;
-        posDst[j] += rand() / grainx2 - granularity;
+        posDst[j] += (BYTE)(rand() / grainx2 - granularity);
       }
       posDst += bytes;
     }
@@ -702,7 +702,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
       for (i = 0; i < sYSize; i++)
       {
         posDst[j + i * bytes] = (BYTE)k;
-        posDst[j + i * bytes] += rand() / grainx2 - granularity;
+        posDst[j + i * bytes] += (BYTE)(rand() / grainx2 - granularity);
       }
     }
     break;
@@ -712,7 +712,7 @@ void cxshade_SetShade(PCXSHADE pshade, UINT shadeID, BYTE palette, BYTE granular
     {
       for (j = 0; j < sXSize; j++)
       {
-        posDst[j] = 128 + rand() / grainx2 - granularity;
+        posDst[j] = (BYTE)(128 + rand() / grainx2 - granularity);
       }
       posDst += bytes;
     }
