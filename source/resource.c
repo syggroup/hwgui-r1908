@@ -23,7 +23,7 @@ HMODULE hModule;
 
 HB_FUNC(GETRESOURCES)
 {
-  hb_retnl((LONG_PTR)hModule);
+  hb_retnint((LONG_PTR)hModule);
 }
 
 HB_FUNC(LOADSTRING)
