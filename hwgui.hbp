@@ -20,6 +20,8 @@
 
 {allmsvc}-cflag=-D_CRT_SECURE_NO_WARNINGS
 {mingw64}-cflag=-Wno-cast-function-type
+{msvc}-cflag=-wd4201
+{msvc}-cflag=-wd4996
 
 -iinclude
 
