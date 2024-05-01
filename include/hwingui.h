@@ -180,6 +180,7 @@ HB_EXTERN_END
 #define hwg_ret_COLORREF(x) hb_retnl(x)
 #define hwg_ret_HACCEL(x) HB_RETHANDLE(x)
 
+#define hwg_vmPushHWND(x) HB_PUSHITEM(x)
 #define hwg_vmPushUINT(x) hb_vmPushInteger(x)
 #define hwg_vmPushWPARAM(x) hb_vmPushLong((long)x)
 #define hwg_vmPushLPARAM(x) HB_PUSHITEM(x)
