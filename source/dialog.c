@@ -231,7 +231,7 @@ static HB_SIZE s_nCopyAnsiToWideChar(LPWORD lpWCStr, PHB_ITEM pItem, HB_SIZE siz
 static int s_nWideStringLen(PHB_ITEM pItem)
 {
 #if defined(HB_HAS_STR_FUNC)
-  return hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_NATIVE, NULL, 0) + 1;
+  return (int)hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_NATIVE, NULL, 0) + 1;
 #else
   return MultiByteToWideChar(GetACP(), 0, hb_itemGetCPtr(pItem), -1, NULL, 0);
 #endif
@@ -257,7 +257,7 @@ static LPDLGTEMPLATE s_CreateDlgTemplate(PHB_ITEM pObj, int x1, int y1, int dwid
   ulStyle &= ~(DS_SETFONT | DS_SHELLFONT);
 
   pControls = hb_itemNew(GetObjectVar(pObj, "ACONTROLS"));
-  ulControls = hb_arrayLen(pControls);
+  ulControls = (ULONG)hb_arrayLen(pControls);
 
   lTemplateSize += s_nWideStringLen(GetObjectVar(pObj, "TITLE"));
   lTemplateSize += lTemplateSize & 1;
@@ -359,7 +359,7 @@ CREATEDLGTEMPLATE() -->
 */
 HB_FUNC(CREATEDLGTEMPLATE)
 {
-  hb_retnl((LONG_PTR)s_CreateDlgTemplate(hb_param(1, HB_IT_OBJECT), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5),
+  hb_retnint((LONG_PTR)s_CreateDlgTemplate(hb_param(1, HB_IT_OBJECT), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5),
                                          (ULONG)hb_parnd(6)));
 }
 
