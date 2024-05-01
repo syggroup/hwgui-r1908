@@ -245,7 +245,7 @@ HB_FUNC(SAVEFILE)
   ofn.hwndOwner = GetActiveWindow();
   ofn.lpstrFilter = lpFilter;
   ofn.lpstrFile = lpFileBuff;
-  ofn.nMaxFile = nSize;
+  ofn.nMaxFile = (DWORD)nSize;
   ofn.lpstrInitialDir = HB_PARSTR(4, &hInitDir, NULL);
   ofn.lpstrTitle = HB_PARSTR(5, &hTitle, NULL);
   ofn.Flags = OFN_FILEMUSTEXIST | OFN_EXPLORER;
@@ -534,7 +534,7 @@ HB_FUNC(_GETOPENFILENAME)
   ofn.lpstrDefExt = HB_PARSTR(7, &hDefExt, NULL);
   ofn.nFilterIndex = hb_parni(8);
   ofn.lpstrFile = lpFileBuff;
-  ofn.nMaxFile = nSize;
+  ofn.nMaxFile = (DWORD)nSize;
 
   if (GetOpenFileName(&ofn))
   {
