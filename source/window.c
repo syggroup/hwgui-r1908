@@ -626,27 +626,27 @@ HB_FUNC(GETACTIVEWINDOW)
 
 HB_FUNC(GETINSTANCE)
 {
-  hb_retnl((LONG_PTR)GetModuleHandle(NULL));
+  hb_retnint((LONG_PTR)GetModuleHandle(NULL));
 }
 
 HB_FUNC(HWG_SETWINDOWSTYLE)
 {
-  hb_retnl(SetWindowLongPtr(hwg_par_HWND(1), GWL_STYLE, hb_parnl(2)));
+  hb_retnint(SetWindowLongPtr(hwg_par_HWND(1), GWL_STYLE, hb_parnl(2)));
 }
 
 HB_FUNC(HWG_GETWINDOWSTYLE)
 {
-  hb_retnl(GetWindowLongPtr(hwg_par_HWND(1), GWL_STYLE));
+  hb_retnint(GetWindowLongPtr(hwg_par_HWND(1), GWL_STYLE));
 }
 
 HB_FUNC(HWG_SETWINDOWEXSTYLE)
 {
-  hb_retnl(SetWindowLongPtr(hwg_par_HWND(1), GWL_EXSTYLE, hb_parnl(2)));
+  hb_retnint(SetWindowLongPtr(hwg_par_HWND(1), GWL_EXSTYLE, hb_parnl(2)));
 }
 
 HB_FUNC(HWG_GETWINDOWEXSTYLE)
 {
-  hb_retnl(GetWindowLongPtr(hwg_par_HWND(1), GWL_EXSTYLE));
+  hb_retnint(GetWindowLongPtr(hwg_par_HWND(1), GWL_EXSTYLE));
 }
 
 HB_FUNC(HWG_FINDWINDOW)
@@ -947,7 +947,7 @@ const wchar_t *hwg_wstrget(PHB_ITEM pItem, void **phStr, HB_SIZE *pnLen)
 
     if (nLen)
     {
-      nDest = MultiByteToWideChar(s_iVM_CP, 0, pszText, nLen, NULL, 0);
+      nDest = MultiByteToWideChar(s_iVM_CP, 0, pszText, (int)nLen, NULL, 0);
     }
 
     if (nDest == 0)
@@ -960,7 +960,7 @@ const wchar_t *hwg_wstrget(PHB_ITEM pItem, void **phStr, HB_SIZE *pnLen)
       wchar_t *pResult = (wchar_t *)hb_xgrab((nDest + 1) * sizeof(wchar_t));
 
       pResult[nDest] = 0;
-      nDest = MultiByteToWideChar(s_iVM_CP, 0, pszText, nLen, pResult, nDest);
+      nDest = MultiByteToWideChar(s_iVM_CP, 0, pszText, (int)nLen, pResult, (int)nDest);
       *phStr = (void *)pResult;
       pStr = pResult;
     }
@@ -989,14 +989,14 @@ void hwg_wstrlenset(PHB_ITEM pItem, const wchar_t *pStr, HB_SIZE nLen)
 
     if (pStr != NULL && nLen > 0)
     {
-      nDest = WideCharToMultiByte(s_iVM_CP, 0, pStr, nLen, NULL, 0, NULL, NULL);
+      nDest = WideCharToMultiByte(s_iVM_CP, 0, pStr, (int)nLen, NULL, 0, NULL, NULL);
     }
 
     if (nDest)
     {
       char *pResult = (char *)hb_xgrab(nDest + 1);
 
-      nDest = WideCharToMultiByte(s_iVM_CP, 0, pStr, nLen, pResult, nDest, NULL, NULL);
+      nDest = WideCharToMultiByte(s_iVM_CP, 0, pStr, (int)nLen, pResult, (int)nDest, NULL, NULL);
       hb_itemPutCLPtr(pItem, pResult, nDest);
     }
     else
@@ -1037,7 +1037,7 @@ HB_SIZE hwg_wstrcopy(PHB_ITEM pItem, wchar_t *pStr, HB_SIZE nLen)
 
     if (pStr)
     {
-      size = MultiByteToWideChar(s_iVM_CP, 0, text, size, pStr, nLen);
+      size = MultiByteToWideChar(s_iVM_CP, 0, text, (int)size, pStr, (int)nLen);
       if (size < nLen)
       {
         pStr[size] = '\0';
@@ -1045,7 +1045,7 @@ HB_SIZE hwg_wstrcopy(PHB_ITEM pItem, wchar_t *pStr, HB_SIZE nLen)
     }
     else
     {
-      size = MultiByteToWideChar(s_iVM_CP, 0, text, size, NULL, 0);
+      size = MultiByteToWideChar(s_iVM_CP, 0, text, (int)size, NULL, 0);
       if (nLen && size > nLen)
       {
         size = nLen;
@@ -1307,8 +1307,8 @@ LRESULT CALLBACK KbdHook(int code, WPARAM wp, LPARAM lp)
   switch (code)
   {
   case HC_ACTION:
-    nBtnNo = SendMessage(s_hMytoolMenu, TB_BUTTONCOUNT, 0, 0);
-    nId = SendMessage(s_hMytoolMenu, TB_GETHOTITEM, 0, 0);
+    nBtnNo = (int)SendMessage(s_hMytoolMenu, TB_BUTTONCOUNT, 0, 0);
+    nId = (int)SendMessage(s_hMytoolMenu, TB_GETHOTITEM, 0, 0);
 
     bPressed = (HIWORD(lp) & KF_UP) ? FALSE : TRUE;
 
