@@ -2076,7 +2076,8 @@ HB_FUNC(HANDLETOPTR)
 {
   DWORD h = hb_parnl(1);
 #ifdef HWG_USE_POINTER_ITEM
-  hb_retptr(ULongToPtr(h));
+  //hb_retptr(ULongToPtr(h)); // TODO: Error: Unresolved external 'ULongToPtr'
+  hb_retptr((void *)(ULONG_PTR)(h));
   return;
 #endif
   hb_retnl((LONG)h);
