@@ -974,7 +974,7 @@ HB_FUNC(FI_GETPIXELINDEX)
 
 HB_FUNC(FI_SETPIXELINDEX)
 {
-  BYTE value = hb_parni(4);
+  BYTE value = (BYTE)hb_parni(4);
   pSetPixelIndex = (FREEIMAGE_SETPIXELINDEX)s_getFunction((FARPROC)pSetPixelIndex, "_FreeImage_SetPixelIndex@16");
 
   hb_retl(pSetPixelIndex(hwg_par_FIBITMAP(1), hb_parni(2), hb_parni(3), &value));
