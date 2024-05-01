@@ -92,7 +92,7 @@ HB_FUNC(CREATEQHTM)
                                  hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), hwg_par_int(7), hwg_par_HWND(1),
                                  hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL);
 
-    hb_retnl((ULONG_PTR)handle); // TODO: usar número ou ponteiro
+    hb_retnint((ULONG_PTR)handle); // TODO: usar número ou ponteiro
   }
   else
   {
@@ -137,7 +137,7 @@ void CALLBACK FormCallback(HWND hWndQHTM, LPQHTMFORMSubmit pFormSubmit, LPARAM l
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSymTest));
     hb_vmPushNil();
-    hb_vmPushLong((ULONG_PTR)hWndQHTM);
+    hb_vmPushNumInt((ULONG_PTR)hWndQHTM);
     temp = HB_ITEMPUTSTR(NULL, pFormSubmit->pcszMethod);
     hb_vmPush(temp);
     hb_vmPush(HB_ITEMPUTSTR(temp, pFormSubmit->pcszAction));
@@ -180,7 +180,7 @@ HB_FUNC(QHTM_LOADFILE)
 {
   if (s_qhtmInit(NULL))
   {
-    hb_retl(SendMessage(hwg_par_HWND(1), QHTM_LOAD_FROM_FILE, 0, (LPARAM)hb_parc(2)));
+    hb_retl((int)SendMessage(hwg_par_HWND(1), QHTM_LOAD_FROM_FILE, 0, (LPARAM)hb_parc(2)));
   }
 }
 
@@ -188,7 +188,7 @@ HB_FUNC(QHTM_LOADRES)
 {
   if (s_qhtmInit(NULL))
   {
-    hb_retl(SendMessage(hwg_par_HWND(1), QHTM_LOAD_FROM_RESOURCE, (WPARAM)GetModuleHandle(NULL), (LPARAM)hb_parc(2)));
+    hb_retl((int)SendMessage(hwg_par_HWND(1), QHTM_LOAD_FROM_RESOURCE, (WPARAM)GetModuleHandle(NULL), (LPARAM)hb_parc(2)));
   }
 }
 
@@ -243,7 +243,7 @@ HB_FUNC(QHTM_FORMCALLBACK)
   if (s_qhtmInit(NULL))
   {
     hb_retl(
-        SendMessage(hwg_par_HWND(1), QHTM_SET_OPTION, (WPARAM)QHTM_OPT_SET_FORM_SUBMIT_CALLBACK, (LPARAM)FormCallback));
+        (int)SendMessage(hwg_par_HWND(1), QHTM_SET_OPTION, (WPARAM)QHTM_OPT_SET_FORM_SUBMIT_CALLBACK, (LPARAM)FormCallback));
   }
   else
   {
