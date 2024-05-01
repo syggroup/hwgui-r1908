@@ -27,7 +27,7 @@
       #define HB_RETHANDLE( h )        hb_retnint( ( LONG_PTR ) ( h ) )
       #define HB_PARHANDLE( n )        ( ( LONG_PTR ) hb_parnint( n ) )
       #define HB_STOREHANDLE( h, n )   hb_stornint( ( LONG_PTR ) ( h ), n )
-      #define HB_PUTHANDLE( i, h )     hb_itemPutNL( i, ( LONG_PTR ) ( h ) )
+      #define HB_PUTHANDLE( i, h )     hb_itemPutNInt( i, ( LONG_PTR ) ( h ) )
       #define HB_GETHANDLE( i )        ( ( LONG_PTR ) hb_itemGetNL( i ) )
       #define HB_GETPTRHANDLE( i ,n )  ( ( LONG_PTR ) hb_arrayGetNL( i , n ) )
       #define HB_PUSHITEM( i )         hb_vmPushNumInt( ( LONG_PTR )i )
