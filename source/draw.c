@@ -830,7 +830,7 @@ HB_FUNC(GETDRAWITEMINFO)
   hb_itemArrayPut(aMetr, 7, temp);
   hb_itemRelease(temp);
 
-  temp = hb_itemPutNL(NULL, (LONG_PTR)lpdis->hwndItem);
+  temp = hb_itemPutNInt(NULL, (LONG_PTR)lpdis->hwndItem);
   hb_itemArrayPut(aMetr, 8, temp);
   hb_itemRelease(temp);
 
@@ -911,7 +911,7 @@ HB_FUNC(OPENIMAGE)
 
   if (lString)
   {
-    iFileSize = hb_parclen(1);
+    iFileSize = (int)hb_parclen(1);
     hG = GlobalAlloc(GPTR, iFileSize);
     if (!hG)
     {
@@ -1258,11 +1258,11 @@ MODIFYSTYLE(HWND, np2, np3) -->
 HB_FUNC(MODIFYSTYLE)
 {
   HWND hWnd = hwg_par_HWND(1);
-  DWORD dwStyle = GetWindowLongPtr(hWnd, GWL_STYLE);
+  DWORD dwStyle = (DWORD)GetWindowLongPtr(hWnd, GWL_STYLE);
   DWORD a = hb_parnl(2);
   DWORD b = hb_parnl(3);
   DWORD dwNewStyle = (dwStyle & ~a) | b;
-  SetWindowLong(hWnd, GWL_STYLE, dwNewStyle);
+  SetWindowLongPtr(hWnd, GWL_STYLE, dwNewStyle);
 }
 
 #if 0
