@@ -129,7 +129,7 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
       {
         int iChar;
         sscanf((char *)ptr + 2, "%d", &iChar);
-        *ptr = iChar;
+        *ptr = (unsigned char)iChar;
         i = 1;
         while (*(ptr + i + 1) >= '0' && *(ptr + i + 1) <= '9')
           i++;
