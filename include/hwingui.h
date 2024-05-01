@@ -153,7 +153,7 @@ HB_EXTERN_END
 #define hwg_par_BOOL(n) hb_parl(n)
 #define hwg_par_DWORD(n) hb_parnl(n)
 #define hwg_par_LONG(n) hb_parnl(n)
-#define hwg_par_BYTE(n) hb_parni(n)
+#define hwg_par_BYTE(n) (BYTE)hb_parni(n)
 #define hwg_par_LRESULT(n) (LRESULT)hb_parnl(n)
 #define hwg_par_HACCEL(n) (HACCEL)HB_PARHANDLE(n)
 #define hwg_par_UINT_PTR(n) (UINT_PTR)hb_parni(n)
