@@ -1793,7 +1793,7 @@ HB_FUNC(BUTTONEXONSETSTYLE)
   // Can't change control type after owner-draw is set.
   // Let the system process changes to other style bits
   // and redrawing, while keeping owner-draw style
-  hb_retnl(DefWindowProc(h, BM_SETSTYLE, (wParam & ~BS_TYPEMASK) | BS_OWNERDRAW, lParam));
+  hb_retnint(DefWindowProc(h, BM_SETSTYLE, (wParam & ~BS_TYPEMASK) | BS_OWNERDRAW, lParam));
 } // End of OnSetStyle
 
 HB_FUNC(GETTHESTYLE)
