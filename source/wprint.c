@@ -214,7 +214,7 @@ HB_FUNC(SETPRINTERMODE)
     /* Changing of values */
     if (!HB_ISNIL(3))
     {
-      pdm->dmOrientation = hb_parni(3);
+      pdm->dmOrientation = (short)hb_parni(3);
       pdm->dmFields = pdm->dmFields | DM_ORIENTATION;
     }
 
