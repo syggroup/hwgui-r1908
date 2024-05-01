@@ -80,11 +80,11 @@ HB_FUNC(RE_SETCHARFORMAT)
     ULONG ul, ulLen, ulLen1;
     PHB_ITEM pArr1;
     pArr = hb_param(2, HB_IT_ARRAY);
-    ulLen = hb_arrayLen(pArr);
+    ulLen = (ULONG)hb_arrayLen(pArr);
     for (ul = 1; ul <= ulLen; ul++)
     {
       pArr1 = hb_arrayGetItemPtr(pArr, ul);
-      ulLen1 = hb_arrayLen(pArr1);
+      ulLen1 = (ULONG)hb_arrayLen(pArr1);
       chrNew.cpMin = hb_arrayGetNL(pArr1, 1) - 1;
       chrNew.cpMax = hb_arrayGetNL(pArr1, 2) - 1;
       SendMessage(hCtrl, EM_EXSETSEL, 0, (LPARAM)&chrNew);
@@ -281,7 +281,7 @@ HB_FUNC(RE_CHARFROMPOS)
 
   pp.x = x;
   pp.y = y;
-  ul = SendMessage(hCtrl, EM_CHARFROMPOS, 0, (LPARAM)&pp);
+  ul = (ULONG)SendMessage(hCtrl, EM_CHARFROMPOS, 0, (LPARAM)&pp);
   hb_retnl(ul);
 }
 
@@ -298,7 +298,7 @@ HB_FUNC(RE_GETTEXTRANGE)
   tr.chrg.cpMax = hb_parnl(3) - 1;
 
   tr.lpstrText = (LPTSTR)hb_xgrab((tr.chrg.cpMax - tr.chrg.cpMin + 2) * sizeof(TCHAR));
-  ul = SendMessage(hCtrl, EM_GETTEXTRANGE, 0, (LPARAM)&tr);
+  ul = (ULONG)SendMessage(hCtrl, EM_GETTEXTRANGE, 0, (LPARAM)&tr);
   HB_RETSTRLEN(tr.lpstrText, ul);
   hb_xfree(tr.lpstrText);
 }
@@ -310,12 +310,12 @@ HB_FUNC(RE_GETLINE)
 {
   HWND hCtrl = hwg_par_HWND(1);
   int nLine = hb_parni(2);
-  ULONG uLineIndex = SendMessage(hCtrl, EM_LINEINDEX, (WPARAM)nLine, 0);
-  ULONG ul = SendMessage(hCtrl, EM_LINELENGTH, (WPARAM)uLineIndex, 0);
+  ULONG uLineIndex = (ULONG)SendMessage(hCtrl, EM_LINEINDEX, (WPARAM)nLine, 0);
+  ULONG ul = (ULONG)SendMessage(hCtrl, EM_LINELENGTH, (WPARAM)uLineIndex, 0);
   LPTSTR lpBuf = (LPTSTR)hb_xgrab((ul + 4) * sizeof(TCHAR));
 
   *((ULONG *)lpBuf) = ul;
-  ul = SendMessage(hCtrl, EM_GETLINE, nLine, (LPARAM)lpBuf);
+  ul = (ULONG)SendMessage(hCtrl, EM_GETLINE, nLine, (LPARAM)lpBuf);
   HB_RETSTRLEN(lpBuf, ul);
   hb_xfree(lpBuf);
 }
@@ -403,7 +403,7 @@ HB_FUNC(PRINTRTF)
     {
       break;
     }
-    cpMin = SendMessage(hwnd, EM_FORMATRANGE, TRUE, (LPARAM)&fr);
+    cpMin = (ULONG)SendMessage(hwnd, EM_FORMATRANGE, TRUE, (LPARAM)&fr);
     if (cpMin <= fr.chrg.cpMin)
     {
       fSuccess = FALSE;
@@ -420,6 +420,7 @@ HB_FUNC(PRINTRTF)
 
 HB_FUNC(HWG_INITRICHPROC)
 {
+  // TODO: warning C4244: 'função': conversão de 'LONG_PTR' para 'LONG', possível perda de dados
   wpOrigRichProc = (WNDPROC)(LONG_PTR)SetWindowLong(hwg_par_HWND(1), GWLP_WNDPROC, (LONG_PTR)RichSubclassProc);
 }
 

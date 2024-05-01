@@ -86,7 +86,7 @@ static const char *ReadArray(const char *ptr, PHB_ITEM pItem)
 
 static HB_ULONG ArrayMemoSize(PHB_ITEM pArray)
 {
-  HB_ULONG ulArrLen = hb_arrayLen(pArray), ulMemoSize = 3, ulLen, ul;
+  HB_ULONG ulArrLen = (HB_ULONG)hb_arrayLen(pArray), ulMemoSize = 3, ulLen, ul;
   double dVal;
 
   if (ulArrLen > 0xFFFF)
@@ -99,7 +99,7 @@ static HB_ULONG ArrayMemoSize(PHB_ITEM pArray)
     switch (hb_arrayGetType(pArray, ul))
     {
     case HB_IT_STRING:
-      ulLen = hb_arrayGetCLen(pArray, ul);
+      ulLen = (HB_ULONG)hb_arrayGetCLen(pArray, ul);
       ulMemoSize += ((ulLen > 0xffff) ? 5 : 3) + ulLen;
       break;
 
@@ -140,7 +140,7 @@ static HB_ULONG ArrayMemoSize(PHB_ITEM pArray)
 
 static char *WriteArray(char *ptr, PHB_ITEM pArray)
 {
-  HB_ULONG ulArrLen = hb_arrayLen(pArray), ulVal, ul;
+  HB_ULONG ulArrLen = (HB_ULONG)hb_arrayLen(pArray), ulVal, ul;
   int iDec, iWidth;
   double dVal;
 
@@ -159,7 +159,7 @@ static char *WriteArray(char *ptr, PHB_ITEM pArray)
     switch (hb_arrayGetType(pArray, ul))
     {
     case HB_IT_STRING:
-      ulVal = hb_arrayGetCLen(pArray, ul);
+      ulVal = (HB_ULONG)hb_arrayGetCLen(pArray, ul);
       if (ulVal > 0xffff)
       {
         *ptr++ = '\7';

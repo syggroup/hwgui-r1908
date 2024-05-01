@@ -59,7 +59,7 @@ static unsigned char *predefinedEntity2 = (unsigned char *)"<>&\"\' ";
 void hbxml_error(int nError, unsigned char *ptr)
 {
   nParseError = nError;
-  ulOffset = ptr - cBuffer;
+  ulOffset = (HB_ULONG)(ptr - cBuffer);
 }
 
 HB_FUNC(HBXML_TRANSFORM)
@@ -67,7 +67,7 @@ HB_FUNC(HBXML_TRANSFORM)
   PHB_ITEM pItem;
   unsigned char *pBuffer = (unsigned char *)hb_parc(1), *pNew;
   unsigned char *ptr, *ptr1, *ptrs, c;
-  HB_ULONG ulLen = hb_parclen(1);
+  HB_ULONG ulLen = (HB_ULONG)hb_parclen(1);
   int iLenAdd = 0, iLen;
 
   ptr = pBuffer;
@@ -77,7 +77,7 @@ HB_FUNC(HBXML_TRANSFORM)
     {
       if (*ptrs == c)
       {
-        iLenAdd += strlen((char *)predefinedEntity1[ptrs - predefinedEntity2]);
+        iLenAdd += (int)strlen((char *)predefinedEntity1[ptrs - predefinedEntity2]);
         break;
       }
     }
@@ -95,7 +95,7 @@ HB_FUNC(HBXML_TRANSFORM)
       {
         if (*ptrs == c)
         {
-          iLen = strlen((char *)predefinedEntity1[ptrs - predefinedEntity2]);
+          iLen = (int)strlen((char *)predefinedEntity1[ptrs - predefinedEntity2]);
           *ptr1++ = '&';
           memcpy(ptr1, predefinedEntity1[ptrs - predefinedEntity2], iLen);
           ptr1 += iLen - 1;
@@ -153,7 +153,7 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
       {
         for (i = 0; i < HBXML_PREDEFS_KOL; i++)
         {
-          nlen = strlen((char *)predefinedEntity1[i]);
+          nlen = (int)strlen((char *)predefinedEntity1[i]);
           if (!memcmp(ptr + 1, predefinedEntity1[i], nlen))
           {
             *ptr = predefinedEntity2[i];
@@ -176,7 +176,7 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
   }
   ptr = ptrStart;
   HB_SKIPTABSPACES(ptr);
-  ulLen -= (ptr - ptrStart);
+  ulLen -= (HB_ULONG)(ptr - ptrStart);
   if (!ulLen)
   {
     return hb_itemPutC(NULL, "");
@@ -240,7 +240,7 @@ PHB_ITEM hbxml_getattr(unsigned char **pBuffer, HB_BOOL *lSingle)
       }
       ptr = *pBuffer;
       HB_SKIPCHARS(*pBuffer); // skip attribute name
-      nlen = *pBuffer - ptr;
+      nlen = (int)(*pBuffer - ptr);
       // add attribute name to result array
       pSubArray = hb_itemNew(NULL);
       hb_arrayNew(pSubArray, 2);
@@ -273,7 +273,7 @@ PHB_ITEM hbxml_getattr(unsigned char **pBuffer, HB_BOOL *lSingle)
           hbxml_error(HBXML_ERROR_NOT_QUOTE, *pBuffer);
           break;
         }
-        nlen = *pBuffer - ptr;
+        nlen = (int)(*pBuffer - ptr);
         // add attribute value to result array
         pTemp = hbxml_pp(ptr, nlen);
         hb_arraySet(pSubArray, 2, pTemp);
@@ -413,7 +413,7 @@ HB_BOOL hbxml_readElement(PHB_ITEM pParent, unsigned char **pBuffer)
   }
   ptr = *pBuffer;
   HB_SKIPCHARS(ptr);
-  nLenNodeName = ptr - *pBuffer - ((*(ptr - 1) == '/') ? 1 : 0);
+  nLenNodeName = (int)(ptr - *pBuffer - ((*(ptr - 1) == '/') ? 1 : 0));
   memcpy(cNodeName, *pBuffer, nLenNodeName);
   cNodeName[nLenNodeName] = '\0';
 
@@ -456,7 +456,7 @@ HB_BOOL hbxml_readElement(PHB_ITEM pParent, unsigned char **pBuffer)
       }
       if (!lEmpty)
       {
-        pTemp = hbxml_pp(ptr, *pBuffer - ptr);
+        pTemp = hbxml_pp(ptr, (HB_ULONG)(*pBuffer - ptr));
         hb_objSendMsg(pNode, "AITEMS", 0);
         hb_arrayAdd(hb_param(-1, HB_IT_ANY), pTemp);
         hb_itemRelease(pTemp);
@@ -541,7 +541,7 @@ HB_FUNC(HBXML_GETDOC)
 
     hb_fsSeek(hInput, 0, FS_SET);
     cBuffer = (unsigned char *)hb_xgrab(ulLen + 1);
-    ulRead = hb_fsReadLarge(hInput, (HB_BYTE *)cBuffer, ulLen);
+    ulRead = (HB_ULONG)hb_fsReadLarge(hInput, (HB_BYTE *)cBuffer, ulLen);
     cBuffer[ulRead] = '\0';
     bFile = HB_TRUE;
   }

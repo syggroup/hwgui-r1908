@@ -360,7 +360,7 @@ HB_FUNC(CREATEACCELERATORTABLE)
 {
   PHB_ITEM pArray = hb_param(1, HB_IT_ARRAY), pSubArr;
   LPACCEL lpaccl;
-  ULONG ul, ulEntries = hb_arrayLen(pArray);
+  ULONG ul, ulEntries = (ULONG)hb_arrayLen(pArray);
   HACCEL h;
 
   lpaccl = (LPACCEL)hb_xgrab(sizeof(ACCEL) * ulEntries);

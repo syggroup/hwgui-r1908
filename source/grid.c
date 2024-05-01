@@ -420,7 +420,7 @@ HB_FUNC(LISTVIEWSELECTLASTITEM)
   HWND hList = hwg_par_HWND(1);
   int items;
 
-  items = SendMessage(hList, LVM_GETITEMCOUNT, 0, 0);
+  items = (int)SendMessage(hList, LVM_GETITEMCOUNT, 0, 0);
   items--;
   ListView_SetItemState(hList, -1, 0, LVIS_SELECTED);
   SendMessage(hList, LVM_ENSUREVISIBLE, (WPARAM)items, FALSE);
