@@ -74,11 +74,13 @@ HB_FUNC(HBXML_TRANSFORM)
   while ((c = *ptr) != 0)
   {
     for (ptrs = predefinedEntity2; *ptrs; ptrs++)
+    {
       if (*ptrs == c)
       {
         iLenAdd += strlen((char *)predefinedEntity1[ptrs - predefinedEntity2]);
         break;
       }
+    }
     ptr++;
   }
   if (iLenAdd)
@@ -90,6 +92,7 @@ HB_FUNC(HBXML_TRANSFORM)
     {
       *ptr1 = *ptr;
       for (ptrs = predefinedEntity2; *ptrs; ptrs++)
+      {
         if (*ptrs == c)
         {
           iLen = strlen((char *)predefinedEntity1[ptrs - predefinedEntity2]);
@@ -98,6 +101,7 @@ HB_FUNC(HBXML_TRANSFORM)
           ptr1 += iLen - 1;
           break;
         }
+      }
       ptr++;
       ptr1++;
     }
@@ -132,14 +136,18 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
         *ptr = (unsigned char)iChar;
         i = 1;
         while (*(ptr + i + 1) >= '0' && *(ptr + i + 1) <= '9')
+        {
           i++;
+        }
         if (*(ptr + i + 1) == ';')
         {
           i++;
         }
         ulLen -= i;
         for (ul1 = ul + 1; ul1 < ulLen; ul1++)
+        {
           *(ptrStart + ul1) = *(ptrStart + ul1 + i);
+        }  
       }
       else
       {
@@ -151,7 +159,9 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
             *ptr = predefinedEntity2[i];
             ulLen -= nlen;
             for (ul1 = ul + 1; ul1 < ulLen; ul1++)
+            {
               *(ptrStart + ul1) = *(ptrStart + ul1 + nlen);
+            }
             break;
           }
         }
@@ -255,7 +265,9 @@ PHB_ITEM hbxml_getattr(unsigned char **pBuffer, HB_BOOL *lSingle)
         }
         ptr = *pBuffer;
         while (**pBuffer && **pBuffer != cQuo)
+        {
           (*pBuffer)++;
+        }
         if (**pBuffer != cQuo)
         {
           hbxml_error(HBXML_ERROR_NOT_QUOTE, *pBuffer);
@@ -290,7 +302,9 @@ void hbxml_getdoctype(PHB_ITEM pDoc, unsigned char **pBuffer)
 {
   HB_SYMBOL_UNUSED(pDoc);
   while (**pBuffer != '>')
+  {
     (*pBuffer)++;
+  }
   (*pBuffer)++;
 }
 
@@ -325,7 +339,9 @@ HB_BOOL hbxml_readComment(PHB_ITEM pParent, unsigned char **pBuffer)
   (*pBuffer) += 4;
   ptr = *pBuffer;
   while (**pBuffer && (**pBuffer != '-' || *(*pBuffer + 1) != '-' || *(*pBuffer + 2) != '>'))
+  {
     (*pBuffer)++;
+  }
 
   if (**pBuffer)
   {
@@ -358,8 +374,10 @@ HB_BOOL hbxml_readCDATA(PHB_ITEM pParent, unsigned char **pBuffer)
   (*pBuffer) += 9;
   ptr = *pBuffer;
   while (**pBuffer && (**pBuffer != ']' || *(*pBuffer + 1) != ']' || *(*pBuffer + 2) != '>'))
+  {
     (*pBuffer)++;
-
+  }
+  
   if (**pBuffer)
   {
     pTemp = hb_itemPutCL(NULL, (char *)ptr, *pBuffer - ptr);
@@ -460,7 +478,9 @@ HB_BOOL hbxml_readElement(PHB_ITEM pParent, unsigned char **pBuffer)
         else
         {
           while (**pBuffer != '>')
+          {
             (*pBuffer)++;
+          }
           (*pBuffer)++;
           break;
         }
