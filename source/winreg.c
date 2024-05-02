@@ -64,7 +64,7 @@ __inline long PtrToLong(const void *p)
 }
 #endif
 
-#define hwg_par_HKEY(n) (HKEY)(ULONG_PTR)hb_parnint(n)
+#define hwg_par_HKEY(n) (HKEY)(ULONG_PTR) hb_parnint(n)
 
 /*
 REGCLOSEKEY(HKEY) --> numeric
@@ -188,7 +188,8 @@ HB_FUNC(REGCREATEKEY)
 }
 
 /*
-REGCREATEKEYEX(HKEY, cSubKey, NIL, cClass, nOptions, nSamDesired, cSecurityAttributes, nHKResult, nDisposition) --> numeric
+REGCREATEKEYEX(HKEY, cSubKey, NIL, cClass, nOptions, nSamDesired, cSecurityAttributes, nHKResult, nDisposition) -->
+numeric
 */
 HB_FUNC(REGCREATEKEYEX)
 {
@@ -203,9 +204,8 @@ HB_FUNC(REGCREATEKEYEX)
     sa = (SECURITY_ATTRIBUTES *)hb_parc(7);
   }
 
-  nErr = RegCreateKeyEx(hwg_par_HKEY(1), HB_PARSTRDEF(2, &hValue, NULL), 0,
-                        (LPTSTR)HB_PARSTRDEF(4, &hClass, NULL), hwg_par_DWORD(5), (REGSAM)hb_parnl(6), sa, &hkResult,
-                        &dwDisposition);
+  nErr = RegCreateKeyEx(hwg_par_HKEY(1), HB_PARSTRDEF(2, &hValue, NULL), 0, (LPTSTR)HB_PARSTRDEF(4, &hClass, NULL),
+                        hwg_par_DWORD(5), (REGSAM)hb_parnl(6), sa, &hkResult, &dwDisposition);
 
   if (nErr == ERROR_SUCCESS)
   {

@@ -48,8 +48,8 @@ HB_FUNC(CREATERICHEDIT)
   }
 
   hCtrl = CreateWindowEx(0, TEXT("RichEdit20A"), NULL, WS_CHILD | WS_VISIBLE | hwg_par_DWORD(3), hwg_par_int(4),
-                              hwg_par_int(5), hwg_par_int(6), hwg_par_int(7), hwg_par_HWND(1), hwg_par_HMENU_ID(2),
-                              GetModuleHandle(NULL), NULL);
+                         hwg_par_int(5), hwg_par_int(6), hwg_par_int(7), hwg_par_HWND(1), hwg_par_HMENU_ID(2),
+                         GetModuleHandle(NULL), NULL);
 
   lpText = HB_PARSTR(8, &hText, NULL);
   if (lpText)

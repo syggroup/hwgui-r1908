@@ -282,7 +282,8 @@ HB_FUNC(ENABLEMENUITEM)
   }
   else
   {
-    HB_RETHANDLE(EnableMenuItem(hMenu, hwg_par_UINT(2), uFlag | uEnable)); // TODO: revisar retorno (o retorno é BOOL e não um handle)
+    HB_RETHANDLE(EnableMenuItem(hMenu, hwg_par_UINT(2),
+                                uFlag | uEnable)); // TODO: revisar retorno (o retorno é BOOL e não um handle)
   }
 }
 
@@ -341,7 +342,8 @@ HB_FUNC(HWG_TRACKMENU)
 {
   HWND hWnd = hwg_par_HWND(4);
   SetForegroundWindow(hWnd);
-  hwg_ret_BOOL(TrackPopupMenu(hwg_par_HMENU(1), HB_ISNIL(5) ? TPM_RIGHTALIGN : hwg_par_UINT(5), hwg_par_int(2), hwg_par_int(3), 0, hWnd, NULL));
+  hwg_ret_BOOL(TrackPopupMenu(hwg_par_HMENU(1), HB_ISNIL(5) ? TPM_RIGHTALIGN : hwg_par_UINT(5), hwg_par_int(2),
+                              hwg_par_int(3), 0, hWnd, NULL));
   PostMessage(hWnd, 0, 0, 0);
 }
 
@@ -512,7 +514,8 @@ SETMENUITEMBITMAPS(HMENU, nPosition, HBITMAP, HBITMAP) --> .T.|.F.
 */
 HB_FUNC(SETMENUITEMBITMAPS)
 {
-  hwg_ret_BOOL(SetMenuItemBitmaps(hwg_par_HMENU(1), hwg_par_UINT(2), MF_BYCOMMAND, hwg_par_HBITMAP(3), hwg_par_HBITMAP(4)));
+  hwg_ret_BOOL(
+      SetMenuItemBitmaps(hwg_par_HMENU(1), hwg_par_UINT(2), MF_BYCOMMAND, hwg_par_HBITMAP(3), hwg_par_HBITMAP(4)));
 }
 
 /*
@@ -560,8 +563,9 @@ STRETCHBLT(HDCDEST, nXDest, nYDest, nWDest, nHDest, HDCSRC, nXSrc, nYSrc, nWSrc,
 */
 HB_FUNC(STRETCHBLT)
 {
-  hwg_ret_BOOL(StretchBlt(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5), hwg_par_HDC(6),
-                          hwg_par_int(7), hwg_par_int(8), hwg_par_int(9), hwg_par_int(10), hwg_par_DWORD(11)));
+  hwg_ret_BOOL(StretchBlt(hwg_par_HDC(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4), hwg_par_int(5),
+                          hwg_par_HDC(6), hwg_par_int(7), hwg_par_int(8), hwg_par_int(9), hwg_par_int(10),
+                          hwg_par_DWORD(11)));
 }
 
 /*
@@ -592,7 +596,8 @@ MODIFYMENU(HMENU, nPosition, nFlags, nIDNewItem) --> .T.|.F.
 HB_FUNC(MODIFYMENU)
 {
   void *hStr;
-  hwg_ret_BOOL(ModifyMenu(hwg_par_HMENU(1), hwg_par_UINT(2), hwg_par_UINT(3), hwg_par_UINT_PTR(4), HB_PARSTR(5, &hStr, NULL)));
+  hwg_ret_BOOL(
+      ModifyMenu(hwg_par_HMENU(1), hwg_par_UINT(2), hwg_par_UINT(3), hwg_par_UINT_PTR(4), HB_PARSTR(5, &hStr, NULL)));
   hb_strfree(hStr);
 }
 
@@ -612,7 +617,8 @@ HB_FUNC(ENABLEMENUSYSTEMITEM)
   }
   else
   {
-    HB_RETHANDLE(EnableMenuItem(hMenu, hwg_par_UINT(2), uFlag | uEnable)); // TODO: revisar retorno (o retorno é BOOL e não um handle)
+    HB_RETHANDLE(EnableMenuItem(hMenu, hwg_par_UINT(2),
+                                uFlag | uEnable)); // TODO: revisar retorno (o retorno é BOOL e não um handle)
   }
 }
 

@@ -136,12 +136,12 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
   if ((pSymTest = hb_dynsymFind("NICEBUTTPROC")) != NULL)
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSymTest));
-    hb_vmPushNil();                /* places NIL at self */
+    hb_vmPushNil();       /* places NIL at self */
     hwg_vmPushHWND(hWnd); /* pushes parameters on to the hvm stack */
     hwg_vmPushUINT(message);
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
-    hb_vmDo(4); /* where iArgCount is the number of pushed parameters */
+    hb_vmDo(4);        /* where iArgCount is the number of pushed parameters */
     res = hb_parl(-1); // TODO: revisar
     if (res)
     {

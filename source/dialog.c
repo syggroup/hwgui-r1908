@@ -294,8 +294,8 @@ static LPDLGTEMPLATE s_CreateDlgTemplate(PHB_ITEM pObj, int x1, int y1, int dwid
   *p++ = (WORD)y1;               // y
   *p++ = (WORD)dwidth;           // cx
   *p++ = (WORD)dheight;          // cy
-  *p++ = 0;                // Menu
-  *p++ = 0;                // Class
+  *p++ = 0;                      // Menu
+  *p++ = 0;                      // Class
 
   // Copy the title of the dialog box.
   p += s_nCopyAnsiToWideChar(p, GetObjectVar(pObj, "TITLE"), pend - p);
@@ -328,7 +328,7 @@ static LPDLGTEMPLATE s_CreateDlgTemplate(PHB_ITEM pObj, int x1, int y1, int dwid
     *p++ = (WORD)dwidth;                                     // cx
     *p++ = (WORD)dheight;                                    // cy
     *p++ = (WORD)hb_itemGetNI(GetObjectVar(pControl, "ID")); // LOWORD (Control ID)
-    *p++ = 0;                                          // HOWORD (Control ID)
+    *p++ = 0;                                                // HOWORD (Control ID)
 
     // class name
     p += s_nCopyAnsiToWideChar(p, GetObjectVar(pControl, "WINCLASS"), pend - p);
@@ -359,8 +359,8 @@ CREATEDLGTEMPLATE() -->
 */
 HB_FUNC(CREATEDLGTEMPLATE)
 {
-  hb_retnint((LONG_PTR)s_CreateDlgTemplate(hb_param(1, HB_IT_OBJECT), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5),
-                                         (ULONG)hb_parnd(6)));
+  hb_retnint((LONG_PTR)s_CreateDlgTemplate(hb_param(1, HB_IT_OBJECT), hb_parni(2), hb_parni(3), hb_parni(4),
+                                           hb_parni(5), (ULONG)hb_parnd(6)));
 }
 
 /*

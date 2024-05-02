@@ -41,8 +41,7 @@ HB_FUNC(HWG_INITEDITPROC)
 
 HB_FUNC(HWG_INITEDITPROC)
 {
-  wpOrigEditProc = (WNDPROC)(LONG_PTR)SetWindowLongPtr(hwg_par_HWND(1), GWLP_WNDPROC,
-                                                    (LONG_PTR)EditSubclassProc);
+  wpOrigEditProc = (WNDPROC)(LONG_PTR)SetWindowLongPtr(hwg_par_HWND(1), GWLP_WNDPROC, (LONG_PTR)EditSubclassProc);
 }
 
 LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

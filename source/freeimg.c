@@ -697,8 +697,8 @@ HB_FUNC(FI_RESCALE)
   pRescale = (FREEIMAGE_RESCALE)s_getFunction((FARPROC)pRescale, "_FreeImage_Rescale@16");
 
   hb_retnint((pRescale)
-               ? (LONG_PTR)pRescale(hwg_par_FIBITMAP(1), hb_parnl(2), hb_parnl(3), (FREE_IMAGE_FILTER)hb_parni(4))
-               : 0);
+                 ? (LONG_PTR)pRescale(hwg_par_FIBITMAP(1), hb_parnl(2), hb_parnl(3), (FREE_IMAGE_FILTER)hb_parni(4))
+                 : 0);
 }
 
 /* Channel is an enumerated type from freeimage.h passed as second parameter */
@@ -896,10 +896,10 @@ HB_FUNC(FI_COPY)
   pCopy = (FREEIMAGE_COPY)s_getFunction((FARPROC)pCopy, "_FreeImage_Copy@20");
 
   hb_retnint((ULONG_PTR)pCopy(hwg_par_FIBITMAP(1), // dib
-                            hb_parnl(2),         // left
-                            hb_parnl(3),         // top
-                            hb_parnl(4),         // right
-                            hb_parnl(5)));       // bottom
+                              hb_parnl(2),         // left
+                              hb_parnl(3),         // top
+                              hb_parnl(4),         // right
+                              hb_parnl(5)));       // bottom
 }
 
 /* just a test, should receive a RGBQUAD structure, a xharbour array */

@@ -147,7 +147,7 @@ PHB_ITEM hbxml_pp(unsigned char *ptr, HB_ULONG ulLen)
         for (ul1 = ul + 1; ul1 < ulLen; ul1++)
         {
           *(ptrStart + ul1) = *(ptrStart + ul1 + i);
-        }  
+        }
       }
       else
       {
@@ -377,7 +377,7 @@ HB_BOOL hbxml_readCDATA(PHB_ITEM pParent, unsigned char **pBuffer)
   {
     (*pBuffer)++;
   }
-  
+
   if (**pBuffer)
   {
     pTemp = hb_itemPutCL(NULL, (char *)ptr, *pBuffer - ptr);

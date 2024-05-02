@@ -67,8 +67,8 @@ static void CALLBACK s_timerProc(HWND, UINT, UINT, DWORD);
 static HWND hWndTT = 0;
 static BOOL lInitCmnCtrl = 0;
 static BOOL lToolTipBalloon = FALSE; // added by MAG
-static WNDPROC wpOrigTrackProc, wpOrigTabProc, wpOrigComboProc, wpOrigStaticProc, wpOrigListProc,
-    wpOrigUpDownProc, wpOrigDatePickerProc, wpOrigTreeViewProc; // wpOrigButtonProc
+static WNDPROC wpOrigTrackProc, wpOrigTabProc, wpOrigComboProc, wpOrigStaticProc, wpOrigListProc, wpOrigUpDownProc,
+    wpOrigDatePickerProc, wpOrigTreeViewProc; // wpOrigButtonProc
 static LONG_PTR wpOrigButtonProc;
 
 HB_FUNC(HWG_INITCOMMONCONTROLSEX)
@@ -129,7 +129,7 @@ HB_FUNC(CREATEPROGRESSBAR)
   }
 
   hPBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | ulStyle, x1, y1, nwidth, nheight,
-                              hParentWindow, NULL, GetModuleHandle(NULL), NULL);
+                         hParentWindow, NULL, GetModuleHandle(NULL), NULL);
 
   SendMessage(hPBar, PBM_SETRANGE, 0, MAKELPARAM(0, hb_parni(2)));
   SendMessage(hPBar, PBM_SETSTEP, 1, 0);
@@ -2004,7 +2004,7 @@ HB_FUNC(HANDLETOPTR)
 {
   DWORD h = hb_parnl(1);
 #ifdef HWG_USE_POINTER_ITEM
-  //hb_retptr(ULongToPtr(h)); // TODO: Error: Unresolved external 'ULongToPtr'
+  // hb_retptr(ULongToPtr(h)); // TODO: Error: Unresolved external 'ULongToPtr'
   hb_retptr((void *)(ULONG_PTR)(h));
   return;
 #endif
