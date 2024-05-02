@@ -45,6 +45,7 @@ source/hbrowse.prg
 source/hcheck.prg
 source/hcombo.prg
 source/hcontrol.prg
+source/hstatus.prg
 source/hcwindow.prg
 source/hobject.prg
 source/hdatepic.prg
