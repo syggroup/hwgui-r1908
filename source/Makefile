@@ -3,6 +3,7 @@ ROOT=../../../
 C_SOURCES=\
 	commond.c \
 	control.c \
+	edit.c \
 	cxshade.c \
 	dialog.c \
 	draw.c \

@@ -29,6 +29,7 @@ source/wprint.c
 source/c_ipaddr.c
 source/listbox.c
 source/pager.c
+source/edit.c
 
 source/errorsys.prg
 

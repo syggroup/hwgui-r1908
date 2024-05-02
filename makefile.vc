@@ -45,6 +45,7 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\animat.obj \
    $(HWGUI_OBJ_DIR)\commond.obj \
    $(HWGUI_OBJ_DIR)\control.obj \
+   $(HWGUI_OBJ_DIR)\edit.obj \
    $(HWGUI_OBJ_DIR)\cxshade.obj \
    $(HWGUI_OBJ_DIR)\dialog.obj  \
    $(HWGUI_OBJ_DIR)\draw.obj \

@@ -59,6 +59,7 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\hipedit.obj \
    $(OBJ_DIR)\commond.obj \
    $(OBJ_DIR)\control.obj \
+   $(OBJ_DIR)\edit.obj \
    $(OBJ_DIR)\dialog.obj  \
    $(OBJ_DIR)\draw.obj \
    $(OBJ_DIR)\winreg.obj \
@@ -487,6 +488,9 @@ $(OBJ_DIR)\commond.obj : $(SRC_DIR)\commond.c
    $(CC_EXE) $(CFLAGS) /Fo$@ $**
 
 $(OBJ_DIR)\control.obj : $(SRC_DIR)\control.c
+   $(CC_EXE) $(CFLAGS) /Fo$@ $**
+
+$(OBJ_DIR)\edit.obj : $(SRC_DIR)\edit.c
    $(CC_EXE) $(CFLAGS) /Fo$@ $**
 
 $(OBJ_DIR)\dialog.obj : $(SRC_DIR)\dialog.c

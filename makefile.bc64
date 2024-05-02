@@ -106,6 +106,7 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\animat.o \
    $(HWGUI_OBJ_DIR)\commond.o \
    $(HWGUI_OBJ_DIR)\control.o \
+   $(HWGUI_OBJ_DIR)\edit.o \
    $(HWGUI_OBJ_DIR)\cxshade.o \
    $(HWGUI_OBJ_DIR)\dialog.o  \
    $(HWGUI_OBJ_DIR)\draw.o \

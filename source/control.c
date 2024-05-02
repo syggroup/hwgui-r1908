@@ -54,7 +54,6 @@ HB_EXTERN_END
 LRESULT CALLBACK WinCtrlProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT APIENTRY SplitterProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT APIENTRY StaticSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-LRESULT APIENTRY EditSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT APIENTRY ButtonSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT APIENTRY ComboSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT APIENTRY ListSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -68,7 +67,7 @@ static void CALLBACK s_timerProc(HWND, UINT, UINT, DWORD);
 static HWND hWndTT = 0;
 static BOOL lInitCmnCtrl = 0;
 static BOOL lToolTipBalloon = FALSE; // added by MAG
-static WNDPROC wpOrigEditProc, wpOrigTrackProc, wpOrigTabProc, wpOrigComboProc, wpOrigStaticProc, wpOrigListProc,
+static WNDPROC wpOrigTrackProc, wpOrigTabProc, wpOrigComboProc, wpOrigStaticProc, wpOrigListProc,
     wpOrigUpDownProc, wpOrigDatePickerProc, wpOrigTreeViewProc; // wpOrigButtonProc
 static LONG_PTR wpOrigButtonProc;
 
@@ -205,37 +204,6 @@ HB_FUNC(CREATEBUTTON)
                               hwg_par_int(4), hwg_par_int(5), hwg_par_int(6), hwg_par_int(7), hwg_par_HWND(1),
                               hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL));
   hb_strfree(hStr);
-}
-
-/*
-   CreateEdit(hParentWIndow, nEditControlID, nStyle, x, y, nWidth, nHeight, cInitialString)
-*/
-HB_FUNC(CREATEEDIT)
-{
-  HWND hWndEdit;
-  DWORD ulStyle = hwg_par_DWORD(3);
-  ULONG ulStyleEx = (ulStyle & WS_BORDER) ? WS_EX_CLIENTEDGE : 0;
-
-  if ((ulStyle & WS_BORDER)) //&& (ulStyle & WS_DLGFRAME))
-  {
-    ulStyle &= ~WS_BORDER;
-  }
-  hWndEdit =
-      CreateWindowEx(ulStyleEx, TEXT("EDIT"), NULL, WS_CHILD | WS_VISIBLE | ulStyle, hwg_par_int(4), hwg_par_int(5),
-                     hwg_par_int(6), hwg_par_int(7), hwg_par_HWND(1), hwg_par_HMENU_ID(2), GetModuleHandle(NULL), NULL);
-
-  if (hb_pcount() > 7)
-  {
-    void *hStr;
-    LPCTSTR lpText = HB_PARSTR(8, &hStr, NULL);
-    if (lpText)
-    {
-      SendMessage(hWndEdit, WM_SETTEXT, 0, (LPARAM)lpText);
-    }
-    hb_strfree(hStr);
-  }
-
-  hwg_ret_HWND(hWndEdit);
 }
 
 /*
@@ -1297,46 +1265,6 @@ LRESULT APIENTRY StaticSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
   else
   {
     return CallWindowProc(wpOrigStaticProc, hWnd, message, wParam, lParam);
-  }
-}
-
-HB_FUNC(HWG_INITEDITPROC)
-{
-  wpOrigEditProc = (WNDPROC)(LONG_PTR)SetWindowLong(hwg_par_HWND(1), GWLP_WNDPROC,
-                                                    (LONG)(LONG_PTR)EditSubclassProc); // TODO: SetWindowLongPtr
-}
-
-LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-  LRESULT res;
-  PHB_ITEM pObject = (PHB_ITEM)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-
-  if (!pSym_onEvent)
-  {
-    pSym_onEvent = hb_dynsymFindName("ONEVENT");
-  }
-
-  if (pSym_onEvent && pObject)
-  {
-    hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
-    hb_vmPush(pObject);
-    hwg_vmPushUINT(message);
-    hwg_vmPushWPARAM(wParam);
-    hwg_vmPushLPARAM(lParam);
-    hb_vmSend(3);
-    res = hwg_par_LRESULT(-1);
-    if (res == -1)
-    {
-      return CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam);
-    }
-    else
-    {
-      return res;
-    }
-  }
-  else
-  {
-    return CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam);
   }
 }
 

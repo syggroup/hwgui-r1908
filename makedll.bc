@@ -35,6 +35,7 @@ $(LIB_DIR)\hwgui-b32.dll:   \
    $(OBJ_DIR)\animat.obj \
    $(OBJ_DIR)\commond.obj \
    $(OBJ_DIR)\control.obj \
+   $(OBJ_DIR)\edit.obj \
    $(OBJ_DIR)\dialog.obj  \
    $(OBJ_DIR)\draw.obj \
    $(OBJ_DIR)\drawtext.obj \
