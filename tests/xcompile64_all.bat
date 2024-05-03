@@ -16,6 +16,7 @@ call xcompile64 getdatepicker
 call xcompile64 grid
 call xcompile64 listbox
 call xcompile64 mainwindow
+call xcompile64 masks
 call xcompile64 mdichild
 call xcompile64 menu
 call xcompile64 menu2
@@ -24,6 +25,7 @@ call xcompile64 nicebutton
 call xcompile64 radiobutton
 call xcompile64 radiobutton2
 call xcompile64 static
+call xcompile64 status
 call xcompile64 tab
 call xcompile64 tab2
 call xcompile64 tab3

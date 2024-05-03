@@ -1,0 +1,31 @@
+#include "hwgui.ch"
+
+PROCEDURE Main()
+
+   LOCAL oDialog
+   LOCAL oGet1
+   LOCAL cGet1
+   LOCAL oGet2
+   LOCAL cGet2 := "abcdefg"
+   LOCAL oGet3
+   LOCAL nGet3 := 1234
+   LOCAL oGet4
+   LOCAL dGet4 := date()
+
+   INIT DIALOG oDialog TITLE "Test" SIZE 800, 600
+
+   @ 20, 40 SAY "DOCUMENT:" SIZE 120, 26
+   @ 160, 40 GET oGet1 VAR cGet1 PICTURE "@R 999.999.999-99" SIZE 300, 26
+
+   @ 20, 80 SAY "UPPER:" SIZE 120, 26
+   @ 160, 80 GET oGet2 VAR cGet2 PICTURE "@!" SIZE 300, 26
+
+   @ 20, 120 SAY "NUMBER:" SIZE 120, 26
+   @ 160, 120 GET oGet3 VAR nGet3 PICTURE "9999999" SIZE 300, 26
+
+   @ 20, 160 SAY "DATE:" SIZE 120, 26
+   @ 160, 160 GET oGet4 VAR dGet4 PICTURE "@E 99/99/99" SIZE 300, 26
+
+   ACTIVATE DIALOG oDialog
+
+RETURN
