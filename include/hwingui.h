@@ -157,6 +157,7 @@ HB_EXTERN_END
 #define hwg_par_LRESULT(n) (LRESULT)hb_parnl(n)
 #define hwg_par_HACCEL(n) (HACCEL)HB_PARHANDLE(n)
 #define hwg_par_UINT_PTR(n) (UINT_PTR)hb_parni(n)
+#define hwg_par_HTHEME(n) (HTHEME)hb_parptr(n)
 
 #define hwg_ret_BOOL(x) hb_retl(x)
 #define hwg_ret_HWND(n) HB_RETHANDLE(n)
@@ -179,6 +180,7 @@ HB_EXTERN_END
 #define hwg_ret_DWORD(x) hb_retnl(x)
 #define hwg_ret_COLORREF(x) hb_retnl(x)
 #define hwg_ret_HACCEL(x) HB_RETHANDLE(x)
+#define hwg_ret_HTHEME(n) hb_retptr(n)
 
 #define hwg_vmPushHWND(x) HB_PUSHITEM(x)
 #define hwg_vmPushUINT(x) hb_vmPushInteger(x)
