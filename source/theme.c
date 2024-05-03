@@ -1597,35 +1597,39 @@ static void DrawTheIcon(HWND hButtonWnd, HDC dc, BOOL bHasTitle, RECT *rpItem, R
 
 } // End of DrawTheIcon
 
+/*
+HB_OPENTHEMEDATA(HWND, cText) --> HTHEME
+*/
 HB_FUNC(HB_OPENTHEMEDATA)
 {
-  HWND hwnd = hwg_par_HWND(1);
   LPCSTR pText = hb_parc(2);
   HTHEME p;
   int mlen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pText, -1, NULL, 0);
   WCHAR *output = (WCHAR *)hb_xgrab(mlen * sizeof(WCHAR));
 
   MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pText, -1, output, mlen);
-  p = hb_OpenThemeData(hwnd, output);
+  p = hb_OpenThemeData(hwg_par_HWND(1), output);
   hb_xfree(output);
   if (p)
   {
     Themed = TRUE;
   }
-  hb_retptr((void *)p);
+  hwg_ret_HTHEME(p);
 }
 
+/*
+ISTHEMEDLOAD() --> .T.|.F.
+*/
 HB_FUNC(ISTHEMEDLOAD)
 {
   hb_retl(ThemeLibLoaded);
 }
 
+/*
+HB_DRAWTHEMEBACKGROUND(HTHEME, HDC, nPartId, nStateId) --> numeric
+*/
 HB_FUNC(HB_DRAWTHEMEBACKGROUND)
 {
-  HTHEME hTheme = (HTHEME)hb_parptr(1);
-  HDC hdc = hwg_par_HDC(2);
-  int iPartId = hb_parni(3);
-  int iStateId = hb_parni(4);
   RECT pRect;
   RECT pClipRect;
 
@@ -1638,21 +1642,18 @@ HB_FUNC(HB_DRAWTHEMEBACKGROUND)
     Array2Rect(hb_param(6, HB_IT_ARRAY), &pClipRect);
   }
 
-  hb_retnl(hb_DrawThemeBackground(hTheme, hdc, iPartId, iStateId, &pRect, NULL));
+  hb_retnl(hb_DrawThemeBackground(hwg_par_HTHEME(1), hwg_par_HDC(2), hwg_par_int(3), hwg_par_int(4), &pRect, NULL));
 }
 
+/*
+DRAWTHEICON(HWND, HDC, lHasTitle, aRectItem, aRectTitle, lIsPressed, lIsDisabled, HICON, HBITMAP, nStyle) -->
+*/
 HB_FUNC(DRAWTHEICON)
 {
-  HWND hButtonWnd = hwg_par_HWND(1);
-  HDC dc = hwg_par_HDC(2);
-  BOOL bHasTitle = hb_parl(3);
   RECT rpItem;
   RECT rpTitle;
-  BOOL bIsPressed = hb_parl(6);
-  BOOL bIsDisabled = hb_parl(7);
-  HICON hIco = (HB_ISNUM(8) || HB_ISPOINTER(8)) ? hwg_par_HICON(8) : NULL;
-  HBITMAP hBit = (HB_ISNUM(9) || HB_ISPOINTER(9)) ? hwg_par_HBITMAP(9) : NULL;
-  int iStyle = hb_parni(10);
+  HICON hIcon = (HB_ISNUM(8) || HB_ISPOINTER(8)) ? hwg_par_HICON(8) : NULL;
+  HBITMAP hBitmap = (HB_ISNUM(9) || HB_ISPOINTER(9)) ? hwg_par_HBITMAP(9) : NULL;
 
   if (HB_ISARRAY(4))
   {
@@ -1663,7 +1664,7 @@ HB_FUNC(DRAWTHEICON)
     Array2Rect(hb_param(5, HB_IT_ARRAY), &rpTitle);
   }
 
-  DrawTheIcon(hButtonWnd, dc, bHasTitle, &rpItem, &rpTitle, bIsPressed, bIsDisabled, hIco, hBit, iStyle);
+  DrawTheIcon(hwg_par_HWND(1), hwg_par_HDC(2), hwg_par_BOOL(3), &rpItem, &rpTitle, hwg_par_BOOL(6), hwg_par_BOOL(7), hIcon, hBitmap, hwg_par_int(10));
   hb_storvni(rpItem.left, 4, 1);
   hb_storvni(rpItem.top, 4, 2);
   hb_storvni(rpItem.right, 4, 3);
@@ -1678,9 +1679,11 @@ HB_FUNC(DRAWTHEICON)
 //PrepareImageRect( ::handle, dc, bHasTitle, @itemRect, @captionRect, bIsPressed, ::hIcon, ::hbitmap, ::iStyle )
 */
 
+/*
+PREPAREIMAGERECT(p1, p2, p3, p4, p5, p6, p7, p8, p9) -->
+*/
 HB_FUNC(PREPAREIMAGERECT)
 {
-
   HWND hButtonWnd = hwg_par_HWND(1);
   HDC dc = hwg_par_HDC(2);
   BOOL bHasTitle = hb_parl(3);
@@ -1727,15 +1730,12 @@ HB_FUNC(PREPAREIMAGERECT)
   hb_itemReturnRelease(Rect2Array(&rImage));
 }
 
+/*
+HB_DRAWTHEMETEXT(HTHEME, HDC, nPartId, nStateId, cText, nTextFlags, nTextFlags2, aRect) -->
+*/
 HB_FUNC(HB_DRAWTHEMETEXT)
 {
-  HTHEME hTheme = (HTHEME)hb_parptr(1);
-  HDC hdc = hwg_par_HDC(2);
-  int iPartId = hb_parni(3);
-  int iStateId = hb_parni(4);
   LPCSTR pText = hb_parc(5);
-  DWORD dwTextFlags = hb_parnl(6);
-  DWORD dwTextFlags2 = hb_parnl(7);
   RECT pRect;
   int mlen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pText, -1, NULL, 0);
   WCHAR *output = (WCHAR *)hb_xgrab(mlen * sizeof(WCHAR));
@@ -1745,16 +1745,21 @@ HB_FUNC(HB_DRAWTHEMETEXT)
     Array2Rect(hb_param(8, HB_IT_ARRAY), &pRect);
   }
   MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pText, -1, output, mlen);
-  hb_DrawThemeText(hTheme, hdc, iPartId, iStateId, output, mlen - 1, dwTextFlags, dwTextFlags2, &pRect);
+  hb_DrawThemeText(hwg_par_HTHEME(1), hwg_par_HDC(2), hwg_par_int(3), hwg_par_int(4), output, mlen - 1, hwg_par_DWORD(6), hwg_par_DWORD(7), &pRect);
   hb_xfree(output);
 }
 
+/*
+HB_CLOSETHEMEDATA(HTHEME) -->
+*/
 HB_FUNC(HB_CLOSETHEMEDATA)
 {
-  HTHEME hTheme = (HTHEME)hb_parptr(1);
-  hb_CloseThemeData(hTheme);
+  hb_CloseThemeData(hwg_par_HTHEME(1));
 }
 
+/*
+TRACKMOUSEVENT(HWND, nFlags, nHoverTime) -->
+*/
 HB_FUNC(TRACKMOUSEVENT)
 {
   HWND m_hWnd = hwg_par_HWND(1);
@@ -1769,11 +1774,13 @@ HB_FUNC(TRACKMOUSEVENT)
   _TrackMouseEvent(&csTME);
 }
 
+/*
+BUTTONEXONSETSTYLE(wParam, lParam, HWND, @lFlag) -->
+*/
 HB_FUNC(BUTTONEXONSETSTYLE)
 {
   WPARAM wParam = hwg_par_WPARAM(1);
   LPARAM lParam = hwg_par_LPARAM(2);
-  HWND h = hwg_par_HWND(3);
 
   UINT nNewType = (wParam & BS_TYPEMASK);
 
@@ -1786,16 +1793,18 @@ HB_FUNC(BUTTONEXONSETSTYLE)
   else if (nNewType == BS_PUSHBUTTON)
   {
     // Losing default state always allowed
-
     hb_storl(FALSE, 4);
   } // if
 
   // Can't change control type after owner-draw is set.
   // Let the system process changes to other style bits
   // and redrawing, while keeping owner-draw style
-  hb_retnint(DefWindowProc(h, BM_SETSTYLE, (wParam & ~BS_TYPEMASK) | BS_OWNERDRAW, lParam));
+  hb_retnint(DefWindowProc(hwg_par_HWND(3), BM_SETSTYLE, (wParam & ~BS_TYPEMASK) | BS_OWNERDRAW, lParam));
 } // End of OnSetStyle
 
+/*
+GETTHESTYLE(np1, np2) --> numeric
+*/
 HB_FUNC(GETTHESTYLE)
 {
   LONG nBS = hb_parnl(1);
@@ -1803,6 +1812,9 @@ HB_FUNC(GETTHESTYLE)
   hb_retnl(nBS & nBS1);
 }
 
+/*
+MODSTYLE(np1, np2, np3) --> numeric
+*/
 HB_FUNC(MODSTYLE)
 {
   LONG nbs = hb_parnl(1);
@@ -1811,10 +1823,11 @@ HB_FUNC(MODSTYLE)
   hb_retnl((nbs & ~b) | c);
 }
 
+/*
+HB_DRAWTHEMEPARENTBACKGROUND(HWND, HDC, aRect) --> numeric
+*/
 HB_FUNC(HB_DRAWTHEMEPARENTBACKGROUND)
 {
-  HWND hTheme = hwg_par_HWND(1);
-  HDC hdc = hwg_par_HDC(2);
   RECT pRect;
 
   if (HB_ISARRAY(3))
@@ -1822,24 +1835,30 @@ HB_FUNC(HB_DRAWTHEMEPARENTBACKGROUND)
     Array2Rect(hb_param(3, HB_IT_ARRAY), &pRect);
   }
 
-  hb_retnl(hb_DrawThemeParentBackground(hTheme, hdc, &pRect));
+  hb_retnl(hb_DrawThemeParentBackground(hwg_par_HWND(1), hwg_par_HDC(2), &pRect));
 }
 
+/*
+ISTHEMEACTIVE() --> .T.|.F.
+*/
 HB_FUNC(ISTHEMEACTIVE)
 {
   hb_retl(hb_IsThemeActive());
 }
 
+/*
+HWG_GETTHEMESYSCOLOR(HTHEME, nColorId) --> COLORREF
+*/
 HB_FUNC(HWG_GETTHEMESYSCOLOR)
 {
-  HWND hTheme = hwg_par_HWND(1);
-  int iColor = (int)hb_parnl(2);
-
-  HB_RETHANDLE(hb_GetThemeSysColor(hTheme, iColor));
+  HB_RETHANDLE(hb_GetThemeSysColor(hwg_par_HTHEME(1), hwg_par_int(2))); // TODO: retorno é COLORREF
 }
 
 /* NANDO  18/09/2011 */
 
+/*
+HWG_SETWINDOWTHEME(HWND, nEnable) -->
+*/
 HB_FUNC(HWG_SETWINDOWTHEME)
 {
   HWND hwnd = hwg_par_HWND(1);
@@ -1867,6 +1886,9 @@ HB_FUNC(HWG_SETWINDOWTHEME)
   }
 }
 
+/*
+HWG_GETWINDOWTHEME(HWND) --> HTHEME
+*/
 HB_FUNC(HWG_GETWINDOWTHEME)
 {
   // BOOL ret = FALSE;
@@ -1878,12 +1900,10 @@ HB_FUNC(HWG_GETWINDOWTHEME)
   if (ovi.dwMajorVersion >= 5 && ovi.dwMinorVersion == 1)
   {
     // Windows XP detected
-    HTHEME hTheme; // = (HTHEME) hb_parptr(1) ;
-    hTheme = hb_GetWindowTheme(hwg_par_HWND(1));
-    HB_RETHANDLE(hTheme);
+    hwg_ret_HTHEME(hb_GetWindowTheme(hwg_par_HWND(1)));
   }
   else
   {
-    HB_RETHANDLE(NULL);
+    hwg_ret_HTHEME(NULL);
   }
 }
