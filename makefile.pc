@@ -88,6 +88,8 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\hcheck.obj \
    $(OBJ_DIR)\hcombo.obj \
    $(OBJ_DIR)\hcontrol.obj \
+   $(OBJ_DIR)\hstatus.obj \
+   $(OBJ_DIR)\hstatic.obj \
    $(OBJ_DIR)\hcwindow.obj \
    $(OBJ_DIR)\hobject.obj \
    $(OBJ_DIR)\hdatepic.obj \
@@ -212,6 +214,11 @@ $(OBJ_DIR)\hcontrol.obj : $(OBJ_DIR)\hcontrol.c
 $(OBJ_DIR)\hstatus.c : $(SRC_DIR)\hstatus.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
 $(OBJ_DIR)\hstatus.obj : $(OBJ_DIR)\hstatus.c
+   $(CC_EXE) $(CFLAGS) /Fo$@ $**
+
+$(OBJ_DIR)\hstatic.c : $(SRC_DIR)\hstatic.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hstatic.obj : $(OBJ_DIR)\hstatic.c
    $(CC_EXE) $(CFLAGS) /Fo$@ $**
 
 $(OBJ_DIR)\hrect.c : $(SRC_DIR)\hrect.prg
