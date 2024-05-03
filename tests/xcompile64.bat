@@ -22,7 +22,7 @@ bcc64 -c -tW -I..\include -I%HB_INC_DIR% %1.c %1.c
 
 rem o -> exe
 
-ilink64 %1.o -L..\lib -L%HB_LIB_DIR% -L%BCC_PATH%\lib -L%BCC_PATH%\lib\psdk c0w64.o %HWG_LIBS% %HB_LIBS% cw64.a import64.a
+ilink64 %1.o -aa -L..\lib -L%HB_LIB_DIR% -L%BCC_PATH%\lib -L%BCC_PATH%\lib\psdk c0w64.o %HWG_LIBS% %HB_LIBS% cw64.a import64.a
 
 rem exclusão dos arquivo temporários
 
