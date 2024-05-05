@@ -49,6 +49,7 @@ $(LIB_DIR)/libhwgui.a : \
    $(OBJ_DIR)/hbutton.o \
    $(OBJ_DIR)/hbuttonex.o \
    $(OBJ_DIR)/hgroup.o \
+   $(OBJ_DIR)/hline.o \
    $(OBJ_DIR)/hcwindow.o \
    $(OBJ_DIR)/hobject.o \
    $(OBJ_DIR)/hdatepic.o \

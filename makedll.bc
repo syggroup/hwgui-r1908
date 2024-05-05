@@ -68,6 +68,7 @@ $(LIB_DIR)\hwgui-b32.dll:   \
    $(OBJ_DIR)\hbutton.obj \
    $(OBJ_DIR)\hbuttonex.obj \
    $(OBJ_DIR)\hgroup.obj \
+   $(OBJ_DIR)\hline.obj \
    $(OBJ_DIR)\hcwindow.obj \
    $(OBJ_DIR)\hobject.obj \
    $(OBJ_DIR)\hdatepic.obj \

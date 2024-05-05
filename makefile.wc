@@ -89,6 +89,7 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\hbutton.obj \
    $(OBJ_DIR)\hbuttonex.obj \
    $(OBJ_DIR)\hgroup.obj \
+   $(OBJ_DIR)\hline.obj \
    $(OBJ_DIR)\hcwindow.obj \
    $(OBJ_DIR)\hobject.obj \
    $(OBJ_DIR)\hdatepic.obj \
@@ -223,6 +224,21 @@ $(OBJ_DIR)\hstatic.obj : $(OBJ_DIR)\hstatic.c
 $(OBJ_DIR)\hbutton.c : $(SRC_DIR)\hbutton.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
 $(OBJ_DIR)\hbutton.obj : $(OBJ_DIR)\hbutton.c
+   $(CC_EXE) $(CFLAGS) -fo$@ $**
+
+$(OBJ_DIR)\hbuttonex.c : $(SRC_DIR)\hbuttonex.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hbuttonex.obj : $(OBJ_DIR)\hbuttonex.c
+   $(CC_EXE) $(CFLAGS) -fo$@ $**
+
+$(OBJ_DIR)\hgroup.c : $(SRC_DIR)\hgroup.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hgroup.obj : $(OBJ_DIR)\hgroup.c
+   $(CC_EXE) $(CFLAGS) -fo$@ $**
+
+$(OBJ_DIR)\hline.c : $(SRC_DIR)\hline.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hline.obj : $(OBJ_DIR)\hline.c
    $(CC_EXE) $(CFLAGS) -fo$@ $**
 
 $(OBJ_DIR)\hcwindow.c : $(SRC_DIR)\hcwindow.prg
