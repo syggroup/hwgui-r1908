@@ -91,6 +91,7 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\hstatus.obj \
    $(OBJ_DIR)\hstatic.obj \
    $(OBJ_DIR)\hbutton.obj \
+   $(OBJ_DIR)\hbuttonex.obj \
    $(OBJ_DIR)\hcwindow.obj \
    $(OBJ_DIR)\hobject.obj \
    $(OBJ_DIR)\hdatepic.obj \
@@ -225,6 +226,11 @@ $(OBJ_DIR)\hstatic.obj : $(OBJ_DIR)\hstatic.c
 $(OBJ_DIR)\hbutton.c : $(SRC_DIR)\hbutton.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
 $(OBJ_DIR)\hbutton.obj : $(OBJ_DIR)\hbutton.c
+   $(CC_EXE) $(CFLAGS) /Fo$@ $**
+
+$(OBJ_DIR)\hbuttonex.c : $(SRC_DIR)\hbuttonex.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hbuttonex.obj : $(OBJ_DIR)\hbuttonex.c
    $(CC_EXE) $(CFLAGS) /Fo$@ $**
 
 $(OBJ_DIR)\hrect.c : $(SRC_DIR)\hrect.prg

@@ -39,6 +39,7 @@ PRG_SOURCES=\
 	hstatus.prg \
 	hstatic.prg \
 	hbutton.prg \
+	hbuttonex.prg \
 	hcwindow.prg \
 	hobject.prg \
 	hdatepic.prg \

@@ -140,6 +140,7 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\hstatus.o \
    $(HWGUI_OBJ_DIR)\hstatic.o \
    $(HWGUI_OBJ_DIR)\hbutton.o \
+   $(HWGUI_OBJ_DIR)\hbuttonex.o \
    $(HWGUI_OBJ_DIR)\hcwindow.o \
    $(HWGUI_OBJ_DIR)\hobject.o \
    $(HWGUI_OBJ_DIR)\hdatepic.o \
