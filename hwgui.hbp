@@ -69,6 +69,7 @@ source/hstatus.prg
 source/hstatic.prg
 source/hbutton.prg
 source/hbuttonex.prg
+source/hgroup.prg
 source/hcwindow.prg
 source/hobject.prg
 source/hdatepic.prg
