@@ -2,6 +2,7 @@ call xcompile animation
 call xcompile browse
 call xcompile browse2
 call xcompile button
+call xcompile buttonex
 call xcompile checkbox
 call xcompile checkbox2
 call xcompile combobox

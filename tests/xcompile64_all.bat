@@ -2,6 +2,7 @@ call xcompile64 animation
 call xcompile64 browse
 call xcompile64 browse2
 call xcompile64 button
+call xcompile64 buttonex
 call xcompile64 checkbox
 call xcompile64 checkbox2
 call xcompile64 combobox
