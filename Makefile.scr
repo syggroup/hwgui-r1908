@@ -100,6 +100,7 @@ $(LIB_DIR)/libhwgui.a : \
    $(OBJ_DIR)/hgridex.o \
    $(OBJ_DIR)/hlistbox.o \
    $(OBJ_DIR)/htool.o \
+   $(OBJ_DIR)/htoolbarex.o \
    $(OBJ_DIR)/htoolbutton.o \
    $(OBJ_DIR)/hmonthc.o \
    $(OBJ_DIR)/htrackbr.o \
