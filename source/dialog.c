@@ -92,7 +92,7 @@ GETDLGITEM(HWND, nId) --> HWND
 */
 HB_FUNC(GETDLGITEM)
 {
-  hwg_ret_HWND(GetDlgItem(hwg_par_HWND(1), hb_parni(2)));
+  hwg_ret_HWND(GetDlgItem(hwg_par_HWND(1), hwg_par_int(2)));
 }
 
 /*
@@ -100,7 +100,7 @@ GETDLGCTRLID(HWND) --> nId
 */
 HB_FUNC(GETDLGCTRLID)
 {
-  hb_retni(GetDlgCtrlID(hwg_par_HWND(1)));
+  hwg_ret_int(GetDlgCtrlID(hwg_par_HWND(1)));
 }
 
 /*
@@ -109,7 +109,7 @@ SETDLGITEMTEXT(HWND, nId, cText) --> NIL
 HB_FUNC(SETDLGITEMTEXT)
 {
   void *hText;
-  SetDlgItemText(hwg_par_HWND(1), hb_parni(2), HB_PARSTR(3, &hText, NULL));
+  SetDlgItemText(hwg_par_HWND(1), hwg_par_int(2), HB_PARSTR(3, &hText, NULL));
   hb_strfree(hText);
 }
 
@@ -118,7 +118,7 @@ SETDLGITEMINT(HWND, nId, nValue, lSigned) --> NIL
 */
 HB_FUNC(SETDLGITEMINT)
 {
-  SetDlgItemInt(hwg_par_HWND(1), hb_parni(2), hwg_par_UINT(3),
+  SetDlgItemInt(hwg_par_HWND(1), hwg_par_int(2), hwg_par_UINT(3),
                 (hb_pcount() < 4 || HB_ISNIL(4) || !hb_parl(4)) ? FALSE : TRUE);
 }
 
@@ -140,7 +140,7 @@ GETEDITTEXT(HWND, nId) --> cText
 HB_FUNC(GETEDITTEXT)
 {
   HWND hDlg = hwg_par_HWND(1);
-  int id = hb_parni(2);
+  int id = hwg_par_int(2);
   USHORT uiLen = (USHORT)SendMessage(GetDlgItem(hDlg, id), WM_GETTEXTLENGTH, 0, 0);
   LPTSTR lpText = (LPTSTR)hb_xgrab((uiLen + 2) * sizeof(TCHAR));
   GetDlgItemText(hDlg, id, lpText, uiLen + 1);
@@ -153,7 +153,7 @@ CHECKDLGBUTTON(HWND, nId, lChecked) --> NIL
 */
 HB_FUNC(CHECKDLGBUTTON)
 {
-  CheckDlgButton(hwg_par_HWND(1), hb_parni(2), hb_parl(3) ? BST_CHECKED : BST_UNCHECKED);
+  CheckDlgButton(hwg_par_HWND(1), hwg_par_int(2), hb_parl(3) ? BST_CHECKED : BST_UNCHECKED); // TODO: retorno é BOOL
 }
 
 /*
@@ -161,7 +161,7 @@ CHECKRADIOBUTTON(HWND, nIdFirstButton, nIdLastButton, nIdCheckButton) --> NIL
 */
 HB_FUNC(CHECKRADIOBUTTON)
 {
-  CheckRadioButton(hwg_par_HWND(1), hb_parni(2), hb_parni(3), hb_parni(4));
+  CheckRadioButton(hwg_par_HWND(1), hwg_par_int(2), hwg_par_int(3), hwg_par_int(4)); // TODO: retorno é BOOL
 }
 
 /*
@@ -169,7 +169,7 @@ ISDLGBUTTONCHECKED(HWND, nId) --> .T./.F.
 */
 HB_FUNC(ISDLGBUTTONCHECKED)
 {
-  hb_retl(IsDlgButtonChecked(hwg_par_HWND(1), hb_parni(2)) == BST_CHECKED);
+  hb_retl(IsDlgButtonChecked(hwg_par_HWND(1), hwg_par_int(2)) == BST_CHECKED);
 }
 
 /*
@@ -201,11 +201,27 @@ HB_FUNC(COMBOSETSTRING)
 }
 
 /*
+GETNOTIFYCODEFROM() -->
+*/
+HB_FUNC(GETNOTIFYCODEFROM)
+{
+  hwg_ret_HWND(((NMHDR *)HB_PARHANDLE(1))->hwndFrom);
+}
+
+/*
+GETNOTIFYIDFROM() -->
+*/
+HB_FUNC(GETNOTIFYIDFROM)
+{
+  hwg_ret_UINT_PTR(((NMHDR *)HB_PARHANDLE(1))->idFrom);
+}
+
+/*
 GETNOTIFYCODE(handle) --> nCode
 */
 HB_FUNC(GETNOTIFYCODE)
 {
-  hb_retnl((LONG)(((NMHDR *)HB_PARHANDLE(1))->code));
+  hwg_ret_UINT(((NMHDR *)HB_PARHANDLE(1))->code);
 }
 
 static LPWORD s_lpwAlign(LPWORD lpIn)
@@ -360,7 +376,7 @@ CREATEDLGTEMPLATE() -->
 HB_FUNC(CREATEDLGTEMPLATE)
 {
   hb_retnint((LONG_PTR)s_CreateDlgTemplate(hb_param(1, HB_IT_OBJECT), hb_parni(2), hb_parni(3), hb_parni(4),
-                                           hb_parni(5), (ULONG)hb_parnd(6)));
+                                           hb_parni(5), (ULONG)hb_parnl(6)));
 }
 
 /*
@@ -368,7 +384,7 @@ RELEASEDLGTEMPLATE() -->
 */
 HB_FUNC(RELEASEDLGTEMPLATE)
 {
-  s_ReleaseDlgTemplate((LPDLGTEMPLATE)(LONG_PTR)hb_parnl(1));
+  s_ReleaseDlgTemplate((LPDLGTEMPLATE)(LONG_PTR)hb_parnint(1));
 }
 
 /*
@@ -384,7 +400,6 @@ HB_FUNC(_CREATEPROPERTYSHEETPAGE)
   PHB_ITEM pObj = hb_param(1, HB_IT_OBJECT), temp;
   void *hTitle = NULL;
   LPDLGTEMPLATE pdlgtemplate;
-  HPROPSHEETPAGE h;
 
   memset((void *)&psp, 0, sizeof(PROPSHEETPAGE));
 
@@ -438,8 +453,7 @@ HB_FUNC(_CREATEPROPERTYSHEETPAGE)
 #endif
   }
 
-  h = CreatePropertySheetPage(&psp);
-  HB_RETHANDLE(h);
+  hwg_ret_HPROPSHEETPAGE(CreatePropertySheetPage(&psp));
   // if (pdlgtemplate)
   //    s_ReleaseDlgTemplate(pdlgtemplate);
   hb_strfree(hTitle);
@@ -515,7 +529,7 @@ HB_FUNC(HWG_CREATEDLGINDIRECT)
   else
   {
     ULONG ulStyle = ((hb_pcount() > 6 && !HB_ISNIL(7))
-                         ? (ULONG)hb_parnd(7)
+                         ? (ULONG)hb_parnl(7)
                          : WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_SIZEBOX); // | DS_SETFONT;
 
     pdlgtemplate = s_CreateDlgTemplate(pObject, hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), ulStyle);
@@ -540,7 +554,7 @@ HB_FUNC(HWG_DLGBOXINDIRECT)
 {
   PHB_ITEM pObject = hb_param(2, HB_IT_OBJECT);
   ULONG ulStyle =
-      ((hb_pcount() > 6 && !HB_ISNIL(7)) ? (ULONG)hb_parnd(7)
+      ((hb_pcount() > 6 && !HB_ISNIL(7)) ? (ULONG)hb_parnl(7)
                                          : WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU); // | DS_SETFONT;
   int x1 = hb_parni(3), y1 = hb_parni(4), dwidth = hb_parni(5), dheight = hb_parni(6);
   LPDLGTEMPLATE pdlgtemplate = s_CreateDlgTemplate(pObject, x1, y1, dwidth, dheight, ulStyle);
@@ -554,7 +568,7 @@ DIALOGBASEUNITS() --> numeric
 */
 HB_FUNC(DIALOGBASEUNITS)
 {
-  hb_retnl(GetDialogBaseUnits());
+  hwg_ret_long(GetDialogBaseUnits());
 }
 
 static LRESULT CALLBACK s_ModalDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -801,30 +815,15 @@ HB_FUNC(HWG_EXITPROC)
 static LRESULT CALLBACK s_PSPProcRelease(HWND hwnd, UINT uMsg, LPPROPSHEETPAGE ppsp)
 {
   HB_SYMBOL_UNUSED(hwnd);
-  if (PSPCB_CREATE == uMsg)
+
+  if (uMsg == PSPCB_CREATE)
   {
     return 1;
   }
-  if (PSPCB_RELEASE == uMsg)
+  if (uMsg == PSPCB_RELEASE)
   {
     hb_itemRelease((PHB_ITEM)ppsp->lParam);
   }
 
   return 0;
-}
-
-/*
-GETNOTIFYCODEFROM() -->
-*/
-HB_FUNC(GETNOTIFYCODEFROM)
-{
-  hwg_ret_HWND((((NMHDR *)HB_PARHANDLE(1))->hwndFrom));
-}
-
-/*
-GETNOTIFYIDFROM() -->
-*/
-HB_FUNC(GETNOTIFYIDFROM)
-{
-  hb_retnl((LONG)(((NMHDR *)HB_PARHANDLE(1))->idFrom));
 }
