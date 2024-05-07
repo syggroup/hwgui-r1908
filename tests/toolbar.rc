@@ -1,0 +1,4 @@
+2 BITMAP "resources/new.bmp"
+3 BITMAP "resources/open.bmp"
+4 BITMAP "resources/save.bmp"
+5 BITMAP "resources/exit.bmp"
