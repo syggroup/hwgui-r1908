@@ -93,7 +93,7 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\hgrid.obj \
    $(HWGUI_OBJ_DIR)\hgridex.obj \
    $(HWGUI_OBJ_DIR)\hlistbox.obj \
-   $(HWGUI_OBJ_DIR)\htool.obj \
+   $(HWGUI_OBJ_DIR)\htoolbar.obj \
    $(HWGUI_OBJ_DIR)\htoolbarex.obj \
    $(HWGUI_OBJ_DIR)\htoolbutton.obj \
    $(HWGUI_OBJ_DIR)\hmonthc.obj \

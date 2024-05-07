@@ -154,7 +154,7 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\hgrid.o \
    $(HWGUI_OBJ_DIR)\hgridex.o \
    $(HWGUI_OBJ_DIR)\hlistbox.o \
-   $(HWGUI_OBJ_DIR)\htool.o \
+   $(HWGUI_OBJ_DIR)\htoolbar.o \
    $(HWGUI_OBJ_DIR)\htoolbarex.o \
    $(HWGUI_OBJ_DIR)\htoolbutton.o \
    $(HWGUI_OBJ_DIR)\hmonthc.o \

@@ -116,7 +116,7 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\hsayimg.obj \
    $(OBJ_DIR)\hsplit.obj \
    $(OBJ_DIR)\htab.obj \
-   $(OBJ_DIR)\htool.obj \
+   $(OBJ_DIR)\htoolbar.obj \
    $(OBJ_DIR)\htoolbarex.obj \
    $(OBJ_DIR)\htoolbutton.obj \
    $(OBJ_DIR)\htimer.obj \
@@ -434,9 +434,9 @@ $(OBJ_DIR)\htab.c : $(SRC_DIR)\htab.prg
 $(OBJ_DIR)\htab.obj : $(OBJ_DIR)\htab.c
    $(CC_EXE) $(CFLAGS) /Fo$@ $**
 
-$(OBJ_DIR)\htool.c : $(SRC_DIR)\htool.prg
+$(OBJ_DIR)\htoolbar.c : $(SRC_DIR)\htoolbar.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
-$(OBJ_DIR)\htool.obj : $(OBJ_DIR)\htool.c
+$(OBJ_DIR)\htoolbar.obj : $(OBJ_DIR)\htoolbar.c
    $(CC_EXE) $(CFLAGS) /Fo$@ $**
 
 $(OBJ_DIR)\htoolbarex.c : $(SRC_DIR)\htoolbarex.prg

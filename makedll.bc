@@ -80,7 +80,7 @@ $(LIB_DIR)\hwgui-b32.dll:   \
    $(OBJ_DIR)\hgrid.obj \
    $(OBJ_DIR)\hgridex.obj \
    $(OBJ_DIR)\hlistbox.obj \
-   $(OBJ_DIR)\htool.obj \
+   $(OBJ_DIR)\htoolbar.obj \
    $(OBJ_DIR)\htoolbarex.obj \
    $(OBJ_DIR)\htoolbutton.obj \
    $(OBJ_DIR)\hmonthc.obj \

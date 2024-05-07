@@ -62,7 +62,7 @@ source/hgraph.prg
 source/hgrid.prg
 source/hgridex.prg
 source/hlistbox.prg
-source/htool.prg
+source/htoolbar.prg
 source/htoolbarex.prg
 source/htoolbutton.prg
 source/hmonthc.prg

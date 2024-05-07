@@ -82,7 +82,7 @@ $(LIB_DIR)/libhwgui.a : \
    $(OBJ_DIR)/hsplit.o \
    $(OBJ_DIR)/htab.o \
    $(OBJ_DIR)/htimer.o \
-   $(OBJ_DIR)/htool.o \
+   $(OBJ_DIR)/htoolbar.o \
    $(OBJ_DIR)/htoolbarex.o \
    $(OBJ_DIR)/htoolbutton.o \
    $(OBJ_DIR)/htrackbr.o \
