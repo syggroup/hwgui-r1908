@@ -63,6 +63,7 @@ source/hgrid.prg
 source/hgridex.prg
 source/hlistbox.prg
 source/htool.prg
+source/htoolbutton.prg
 source/hmonthc.prg
 source/htrackbr.prg
 source/hanimat.prg
