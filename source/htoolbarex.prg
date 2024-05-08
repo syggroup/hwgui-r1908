@@ -2,65 +2,89 @@
  * $Id: htool.prg 1901 2012-09-19 23:12:50Z lfbasso $
  *
  * HWGUI - Harbour Win32 GUI library source code:
- *
+ * HToolBarEx class
  *
  * Copyright 2004 Luiz Rafael Culik Guimaraes <culikr@brtrubo.com>
  * www - http://sites.uol.com.br/culikr/
 */
+
 #include "windows.ch"
 #include "inkey.ch"
 #include "hbclass.ch"
 #include "guilib.ch"
 #include "common.ch"
 
-#define TRANSPARENT 1
-#DEFINE IDTOOLBAR 700
-#DEFINE IDMAXBUTTONTOOLBAR 64
+//-------------------------------------------------------------------------------------------------------------------//
 
-CLASS HToolBarEX INHERIT HToolBar
+CLASS HToolBarEx INHERIT HToolBar
 
-//method onevent()
+   //METHOD onevent()
    METHOD init()
-   METHOD ExecuteTool( nid )
+   METHOD ExecuteTool(nid)
    DESTRUCTOR MyDestructor
+
 END CLASS
 
+//-------------------------------------------------------------------------------------------------------------------//
 
-METHOD init() CLASS htoolbarex
+METHOD init() CLASS HToolBarEx
+
    ::Super:init()
    SetWindowObject(::handle, Self)
    SETTOOLHANDLE(::handle)
    Sethook()
-   RETURN Self
 
-//method onEvent(msg,w,l) class htoolbarex
-//Local nId
-//Local nPos
-//  if msg == WM_KEYDOWN
-//
-//  return -1
-//  elseif msg==WM_KEYUP
-//  unsethook()
-//  return -1
-//  endif
-//return 0
+RETURN Self
 
-METHOD ExecuteTool( nid ) CLASS htoolbarex
+//-------------------------------------------------------------------------------------------------------------------//
+
+#if 0
+METHOD onEvent(msg, w, l) CLASS HToolBarEx
+
+   LOCAL nId
+   LOCAL nPos
+
+   IF msg == WM_KEYDOWN
+      RETURN -1
+   ELSEIF msg == WM_KEYUP
+      unsethook()
+      RETURN -1
+   ENDIF
+
+RETURN 0
+#endif
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+METHOD ExecuteTool(nid) CLASS HToolBarEx
 
    IF nid > 0
-      SendMessage(::oParent:handle, WM_COMMAND, makewparam( nid, BN_CLICKED ), ::handle)
+      SendMessage(::oParent:handle, WM_COMMAND, makewparam(nid, BN_CLICKED), ::handle)
       RETURN 0
    ENDIF
-   RETURN - 200
+
+RETURN -200
+
+//-------------------------------------------------------------------------------------------------------------------//
 
 /*
-STATIC FUNCTION IsAltShift( lAlt )
+STATIC FUNCTION IsAltShift(lAlt)
+
    LOCAL cKeyb := GetKeyboardState()
 
-   IF lAlt == Nil ; lAlt := .T. ; ENDIF
-   RETURN ( lAlt .AND. ( Asc(SubStr( cKeyb, VK_MENU + 1, 1 )) >= 128 ) )
-   */
+   IF lAlt == NIL
+      lAlt := .T.
+   ENDIF
 
-PROCEDURE MyDestructor CLASS htoolbarex
+RETURN (lAlt .AND. (Asc(SubStr(cKeyb, VK_MENU + 1, 1)) >= 128))
+*/
+
+//-------------------------------------------------------------------------------------------------------------------//
+
+PROCEDURE MyDestructor() CLASS HToolBarEx
+
    unsethook()
-   RETURN
+
+RETURN
+
+//-------------------------------------------------------------------------------------------------------------------//
