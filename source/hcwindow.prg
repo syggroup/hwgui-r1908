@@ -98,8 +98,8 @@ CLASS VAR WindowsManifest INIT !Empty(FindResource(, 1, RT_MANIFEST) ) SHARED
    METHOD FindControl( nId, nHandle )
    METHOD Hide() INLINE ( ::lHide := .T., HideWindow(::handle) )
    //METHOD Show() INLINE ( ::lHide := .F., ShowWindow(::handle) )
-   METHOD Show( nShow ) INLINE ( ::lHide := .F., IIF( nShow = Nil, ShowWindow( ::handle  ),;
-                                       ShowWindow( ::handle, nShow  )  ) )
+   METHOD Show( nShow ) INLINE ( ::lHide := .F., IIF( nShow = Nil, ShowWindow(::handle),;
+                                       ShowWindow(::handle, nShow)  ) )
    METHOD Move(x1, y1, width, height, nRePaint)
    METHOD onEvent( msg, wParam, lParam )
    METHOD END()
@@ -194,17 +194,17 @@ METHOD Move(x1, y1, width, height, nRePaint) CLASS HCustomWindow
    width  := IIF( width  = NIL, ::nWidth, width )
    height := IIF( height = NIL, ::nHeight, height )
    IF Hwg_BitAnd(::style, WS_CHILD) = 0
-      rect := GetwindowRect(::Handle)
-      nHx := rect[4] - rect[2]  - GetclientRect(::Handle)[4] - ;
+      rect := GetwindowRect(::handle)
+      nHx := rect[4] - rect[2]  - GetclientRect(::handle)[4] - ;
                  IIF( Hwg_BitAnd(::style, WS_HSCROLL) > 0, GetSystemMetrics( SM_CYHSCROLL ), 0 )
-      nWx := rect[3] - rect[1]  - GetclientRect(::Handle)[3] - ;
+      nWx := rect[3] - rect[1]  - GetclientRect(::handle)[3] - ;
                  IIF( Hwg_BitAnd(::style, WS_VSCROLL) > 0, GetSystemMetrics( SM_CXVSCROLL ), 0 )
    ENDIF
 
    IF nRePaint = Nil
-      MoveWindow( ::handle, x1, y1, Width + nWx, Height + nHx  )
+      MoveWindow(::handle, x1, y1, Width + nWx, Height + nHx)
    ELSE
-      MoveWindow( ::handle, x1, y1, Width + nWx, Height + nHx, nRePaint )
+      MoveWindow(::handle, x1, y1, Width + nWx, Height + nHx, nRePaint)
    ENDIF
 
    //IF x1 != NIL
@@ -219,7 +219,7 @@ METHOD Move(x1, y1, width, height, nRePaint) CLASS HCustomWindow
    //IF height != NIL
       ::nHeight := height
    //ENDIF
-   //MoveWindow( ::handle, ::nLeft, ::nTop, ::nWidth, ::nHeight )
+   //MoveWindow(::handle, ::nLeft, ::nTop, ::nWidth, ::nHeight)
 
    RETURN NIL
 
@@ -232,11 +232,11 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HCustomWindow
    IF msg = WM_GETMINMAXINFO
       IF ::minWidth  > - 1 .OR. ::maxWidth  > - 1 .OR. ;
          ::minHeight > - 1 .OR. ::maxHeight > - 1
-         MINMAXWINDOW( ::handle, lParam, ;
-                       IIf( ::minWidth  > - 1, ::minWidth, NIL ), ;
-                       IIf( ::minHeight > - 1, ::minHeight, NIL ), ;
-                       IIf( ::maxWidth  > - 1, ::maxWidth, NIL ), ;
-                       IIf( ::maxHeight > - 1, ::maxHeight, NIL ) )
+         MINMAXWINDOW(::handle, lParam, ;
+                      IIf( ::minWidth  > - 1, ::minWidth, NIL ), ;
+                      IIf( ::minHeight > - 1, ::minHeight, NIL ), ;
+                      IIf( ::maxWidth  > - 1, ::maxWidth, NIL ), ;
+                      IIf( ::maxHeight > - 1, ::maxHeight, NIL ))
          RETURN 0
       ENDIF
    ENDIF
@@ -377,20 +377,20 @@ METHOD Refresh( lAll, oCtrl ) CLASS HCustomWindow
     lAll  := IIF( lAll  == Nil, .F., lAll )
     nLen  := LEN( oCtrl:aControls )
 
-   IF IsWindowVisible(::Handle) .OR. nLen > 0
+   IF IsWindowVisible(::handle) .OR. nLen > 0
       FOR i = 1 to nLen
          oCtrlTmp :=  oCtrl:aControls[i]
          lRefresh :=  !Empty(__ObjHasMethod(oCtrlTmp, "REFRESH"))
-         IF ( ( oCtrlTmp:Handle != hCtrl .OR. LEN( oCtrlTmp:aControls) = 0) .OR.  lAll ) .AND. ;
+         IF ( ( oCtrlTmp:handle != hCtrl .OR. LEN( oCtrlTmp:aControls) = 0) .OR.  lAll ) .AND. ;
             ( !oCtrlTmp:lHide .OR.  __ObjHasMsg( oCtrlTmp, "BSETGET" ) )
              IF LEN( oCtrlTmp:aControls) > 0
                  ::Refresh( lAll, oCtrlTmp )
-              ELSEIF !Empty(lRefresh) .AND. ( lAll .OR. ASCAN( ::GetList, {| o | o:Handle == oCtrlTmp:handle } ) > 0 ) 
+              ELSEIF !Empty(lRefresh) .AND. ( lAll .OR. ASCAN( ::GetList, {| o | o:handle == oCtrlTmp:handle } ) > 0 ) 
                oCtrlTmp:Refresh()
                IF oCtrlTmp:bRefresh != Nil  
                   EVAL( oCtrlTmp:bRefresh, oCtrlTmp )
                ENDIF   
-            ELSEIF IsWindowEnabled(oCtrlTmp:Handle) .AND. !oCtrlTmp:lHide .AND.  !lRefresh
+            ELSEIF IsWindowEnabled(oCtrlTmp:handle) .AND. !oCtrlTmp:lHide .AND.  !lRefresh
                oCtrlTmp:SHOW( SW_SHOWNOACTIVATE )
                 ENDIF  
          ENDIF
@@ -411,7 +411,7 @@ METHOD SetTextClass( x ) CLASS HCustomWindow
       ::SetText( x )
    ELSE
       ::title := x
-      SENDMESSAGE(::handle, WM_SETTEXT, 0, ::Title)
+      SendMessage(::handle, WM_SETTEXT, 0, ::Title)
    ENDIF
     //::Refresh()
    RETURN NIL
@@ -434,7 +434,7 @@ METHOD SetColor(tcolor, bColor, lRepaint) CLASS HCustomWindow
    ENDIF
 
    IF lRepaint != NIL .AND. lRepaint
-      RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
+      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
    ENDIF
    RETURN Nil
 
@@ -517,8 +517,8 @@ METHOD ScrollHV( oForm, msg,wParam,lParam ) CLASS HCustomWindow
       nInc := Max( - oForm:nVscrollPos, Min( nInc, oForm:nVscrollMax - oForm:nVscrollPos))
       oForm:nVscrollPos += nInc
       nDelta := - VERT_PTS * nInc
-      ScrollWindow( oForm:handle, 0, nDelta ) //, Nil, NIL )
-      SetScrollPos( oForm:Handle, SB_VERT, oForm:nVscrollPos, .T. )
+      ScrollWindow(oForm:handle, 0, nDelta) //, Nil, NIL)
+      SetScrollPos( oForm:handle, SB_VERT, oForm:nVscrollPos, .T. )
 
    ELSEIF ( msg = WM_HSCROLL ) //.OR. msg == WM_MOUSEWHEEL
     // Handle vertical scrollbar messages
@@ -566,8 +566,8 @@ METHOD ScrollHV( oForm, msg,wParam,lParam ) CLASS HCustomWindow
       nInc := max( - oForm:nHscrollPos, min( nInc, oForm:nHscrollMax - oForm:nHscrollPos ) )
       oForm:nHscrollPos += nInc
       nDelta := - HORZ_PTS * nInc
-      ScrollWindow( oForm:handle, nDelta, 0 ) //, Nil, NIL )
-      SetScrollPos( oForm:Handle, SB_HORZ, oForm:nHscrollPos, .T. )
+      ScrollWindow(oForm:handle, nDelta, 0) //, Nil, NIL)
+      SetScrollPos( oForm:handle, SB_HORZ, oForm:nHscrollPos, .T. )
    ENDIF
    RETURN Nil
 #else
@@ -626,7 +626,7 @@ METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
       oForm:nVscrollPos += nInc
       nDelta := -VERT_PTS * nInc
       ScrollWindow(oForm:handle, 0, nDelta) //, NIL, NIL)
-      SetScrollPos(oForm:Handle, SB_VERT, oForm:nVscrollPos, .T.)
+      SetScrollPos(oForm:handle, SB_VERT, oForm:nVscrollPos, .T.)
 
    CASE WM_HSCROLL
       // Handle horizontal scrollbar messages
@@ -664,7 +664,7 @@ METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
       oForm:nHscrollPos += nInc
       nDelta := -HORZ_PTS * nInc
       ScrollWindow(oForm:handle, nDelta, 0) //, NIL, NIL)
-      SetScrollPos(oForm:Handle, SB_HORZ, oForm:nHscrollPos, .T.)
+      SetScrollPos(oForm:handle, SB_HORZ, oForm:nHscrollPos, .T.)
 
    ENDSWITCH
 
@@ -713,37 +713,37 @@ METHOD SetupScrollbars() CLASS HCustomWindow
    IF ::nScrollBars = 0 .OR. ::nScrollBars = 2
       ::nHscrollMax := Max( 0, ::nHorzInc )
       IF ::nHscrollMax < HORZ_PTS / 2
-        //-  ScrollWindow( ::Handle, ::nHscrollPos * HORZ_PTS, 0 )
+        //-  ScrollWindow(::handle, ::nHscrollPos * HORZ_PTS, 0)
       ELSEIF ::nHScrollMax <= HORZ_PTS
           ::nHScrollMax := 0
       ENDIF
       ::nHscrollPos := Min( ::nHscrollPos, ::nHscrollMax )
       SetScrollPos( ::handle, SB_HORZ, ::nHscrollPos, .T. )
-      SetScrollInfo( ::Handle, SB_HORZ, 1, ::nHScrollPos , HORZ_PTS, ::nHscrollMax )
+      SetScrollInfo( ::handle, SB_HORZ, 1, ::nHScrollPos , HORZ_PTS, ::nHscrollMax )
       IF ::nHscrollPos > 0
          nPos := GetScrollPos( ::handle, SB_HORZ )
          IF nPos < ::nHscrollPos
-             ScrollWindow( ::Handle, 0, ( ::nHscrollPos - nPos ) * SB_HORZ )
+             ScrollWindow(::handle, 0, (::nHscrollPos - nPos) * SB_HORZ)
              ::nVscrollPos := nPos
-             SetScrollPos( ::Handle, SB_HORZ, ::nHscrollPos, .T. )
+             SetScrollPos( ::handle, SB_HORZ, ::nHscrollPos, .T. )
          ENDIF
       ENDIF
    ENDIF
    IF ::nScrollBars = 1 .OR. ::nScrollBars = 2
       ::nVscrollMax := INT( Max( 0, ::nVertInc ) )
       IF ::nVscrollMax < VERT_PTS / 2 
-        //-  ScrollWindow( ::Handle, 0, ::nVscrollPos * VERT_PTS )
+        //-  ScrollWindow(::handle, 0, ::nVscrollPos * VERT_PTS)
       ELSEIF ::nVScrollMax <= VERT_PTS
          ::nVScrollMax := 0
       ENDIF
-      SetScrollPos( ::Handle, SB_VERT, ::nVscrollPos, .T. )
-      SetScrollInfo( ::Handle, SB_VERT, 1, ::nVscrollPos , VERT_PTS, ::nVscrollMax )
+      SetScrollPos( ::handle, SB_VERT, ::nVscrollPos, .T. )
+      SetScrollInfo( ::handle, SB_VERT, 1, ::nVscrollPos , VERT_PTS, ::nVscrollMax )
       IF ::nVscrollPos > 0 //.AND. nPosVert != ::nVscrollPos
          nPos := GetScrollPos( ::handle, SB_VERT )
          IF nPos < ::nVscrollPos
-             ScrollWindow( ::Handle, 0, ( ::nVscrollPos - nPos ) * VERT_PTS )
+             ScrollWindow(::handle, 0, (::nVscrollPos - nPos) * VERT_PTS)
              ::nVscrollPos := nPos
-             SetScrollPos( ::Handle, SB_VERT, ::nVscrollPos, .T. )
+             SetScrollPos( ::handle, SB_VERT, ::nVscrollPos, .T. )
          ENDIF
       ENDIF
    ENDIF
@@ -754,19 +754,19 @@ METHOD ResetScrollbars() CLASS HCustomWindow
    Local lMaximized := GetWindowPlacement(::handle) == SW_MAXIMIZE
    
    IF lMaximized
-      ScrollWindow( ::Handle, ::nHscrollPos * HORZ_PTS, 0 )
-      ScrollWindow( ::Handle, 0, ::nVscrollPos * VERT_PTS )
+      ScrollWindow(::handle, ::nHscrollPos * HORZ_PTS, 0)
+      ScrollWindow(::handle, 0, ::nVscrollPos * VERT_PTS)
       ::nHscrollPos := 0
       ::nVscrollPos := 0
    ENDIF
    /*
    IF ::nScrollBars = 0 .OR. ::nScrollBars = 2
-      ScrollWindow( ::Handle, 0 * HORZ_PTS, 0 )
-      SetScrollPos( ::Handle, SB_HORZ, 0, .T. )
+      ScrollWindow(::handle, 0 * HORZ_PTS, 0)
+      SetScrollPos( ::handle, SB_HORZ, 0, .T. )
    ENDIF
    IF ::nScrollBars = 1 .OR. ::nScrollBars = 2
-      ScrollWindow( ::Handle, 0, 0 * VERT_PTS )
-      SetScrollPos( ::Handle, SB_VERT, 0, .T. )
+      ScrollWindow(::handle, 0, 0 * VERT_PTS)
+      SetScrollPos( ::handle, SB_VERT, 0, .T. )
    ENDIF
    */
    RETURN Nil
@@ -811,10 +811,10 @@ METHOD  ScrollHV( oForm, msg, wParam, lParam ) CLASS HCustomWindow
       oForm:nScrollPos += nDelta
       IF msg = WM_VSCROLL
          setscrollpos( oForm:handle, SB_VERT, oForm:nScrollPos )
-         ScrollWindow( oForm:handle, 0, - nDelta )
+         ScrollWindow(oForm:handle, 0, -nDelta)
       ELSE
          setscrollpos( oForm:handle, SB_HORZ, oForm:nScrollPos )
-         ScrollWindow( oForm:handle, - nDelta, 0 )
+         ScrollWindow(oForm:handle, -nDelta, 0)
       ENDIF
       RETURN - 1
 
@@ -826,9 +826,9 @@ METHOD Closable(lClosable) CLASS HCustomWindow
 
    IF lClosable != Nil
       IF !lClosable
-         hMenu := EnableMenuSystemItem( ::Handle, SC_CLOSE, .F. )
+         hMenu := EnableMenuSystemItem( ::handle, SC_CLOSE, .F. )
       ELSE
-         hMenu := EnableMenuSystemItem( ::Handle, SC_CLOSE, .T. )
+         hMenu := EnableMenuSystemItem( ::handle, SC_CLOSE, .T. )
       ENDIF
       IF !Empty(hMenu)
          ::lClosable := lClosable
@@ -972,7 +972,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
                                         a[2] == iParLow } ) ) > 0
 
       IF oForm:Type < WND_DLG_RESOURCE
-         IF SelfFocus( GetParent( GetFocus() ) , oForm:Handle )
+         IF SelfFocus( GetParent( GetFocus() ) , oForm:handle )
             oForm:nFocus := GetFocus() //lParam
          ENDIF
       ENDIF
@@ -1087,11 +1087,11 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
           oWin:lResult := .T.
           IF lForce
           ELSEIF hb_IsBlock(oCtrl:bClick) .AND. !lForce
-             SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam( oCtrl:id, BN_CLICKED ), oCtrl:handle)
+             SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam(oCtrl:id, BN_CLICKED), oCtrl:handle)
           ELSEIF oWin:lExitOnEnter
             oWin:close()
          ELSE
-            SendMessage(oWin:handle, WM_COMMAND, makewparam( IDOK, 0 ), oCtrlFocu:handle)
+            SendMessage(oWin:handle, WM_COMMAND, makewparam(IDOK, 0), oCtrlFocu:handle)
          ENDIF
          RETURN .T.
       ENDIF
@@ -1099,14 +1099,14 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
       IF ( oCtrl := oWin:FindControl( IDCANCEL ) ) != Nil .AND. oCtrl:IsEnabled()
          oCtrl:SetFocus()
          oWin:lResult := .F.
-         SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam( oCtrl:id, BN_CLICKED ), oCtrl:handle)
+         SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam(oCtrl:id, BN_CLICKED), oCtrl:handle)
       ELSEIF oWin:lGetSkiponEsc
          oCtrl := oCtrlFocu
          IF oCtrl  != Nil .AND.  __ObjHasMsg( oCtrl, "OGROUP" )  .AND. oCtrl:oGroup:oHGroup != Nil
              oCtrl := oCtrl:oGroup:oHGroup
          ENDIF
-         IF oCtrl  != Nil .and. GetSkip(oCtrl:oParent, oCtrl:Handle, , -1)
-            IF AScan( oWin:GetList, { | o | o:handle == oCtrl:Handle } ) > 1
+         IF oCtrl  != Nil .and. GetSkip(oCtrl:oParent, oCtrl:handle, , -1)
+            IF AScan( oWin:GetList, { | o | o:handle == oCtrl:handle } ) > 1
                RETURN .T.
             ENDIF
          ENDIF
@@ -1114,7 +1114,7 @@ FUNCTION ProcOkCancel( oCtrl, nKey, lForce )
           oWin:close()
       ELSEIF !oWin:lExitOnEsc
          oWin:nLastKey := 0
-         SendMessage(oWin:handle, WM_COMMAND, makewparam( IDCANCEL, 0 ), oCtrlFocu:handle)
+         SendMessage(oWin:handle, WM_COMMAND, makewparam(IDCANCEL, 0), oCtrlFocu:handle)
          RETURN .F.
       ENDIF
       RETURN .T.

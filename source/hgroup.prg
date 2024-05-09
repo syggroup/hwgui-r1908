@@ -83,7 +83,7 @@ METHOD Init() CLASS HGroup
          ::bPaint := {|o, p|o:paint(p)}
       ENDIF
       IF ::oRGroup != NIL
-         ::oRGroup:Handle := ::handle
+         ::oRGroup:handle := ::handle
          ::oRGroup:id := ::id
          ::oFont := ::oRGroup:oFont
          ::oRGroup:lInit := .F.
@@ -95,13 +95,13 @@ METHOD Init() CLASS HGroup
             FOR i = LEN(::oparent:acontrols) TO 1 STEP -1
                IF nbs != i .AND.;
                    PtInRect({::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight}, {::oparent:acontrols[i]:nLeft, ::oparent:acontrols[i]:nTop}) //.AND. NOUTOBJS = 0
-                   SetWindowPos(::oparent:acontrols[i]:handle, ::Handle, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE + SWP_FRAMECHANGED)
+                   SetWindowPos(::oparent:acontrols[i]:handle, ::handle, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE + SWP_FRAMECHANGED)
                ENDIF
             NEXT
             */
-            SetWindowPos(::Handle, NIL, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE)
+            SetWindowPos(::handle, NIL, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE)
          ELSE
-            SetWindowPos(::Handle, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE + SWP_NOSENDCHANGING)
+            SetWindowPos(::handle, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_NOACTIVATE + SWP_NOSENDCHANGING)
          ENDIF
       ENDIF
    ENDIF
@@ -148,7 +148,7 @@ METHOD PAINT(lpdis) CLASS HGroup
       //pnFrmDark := CreatePen(PS_SOLID, 1, RGB(0, 0, 0)))
       pnFrmDark := HPen():Add(PS_SOLID, 1, RGB(64, 64, 64))
       pnFrmLight := HPen():Add(PS_SOLID, 1, GetSysColor(COLOR_3DHILIGHT))
-      ppnOldPen := SelectObject(dc, pnFrmDark:Handle)
+      ppnOldPen := SelectObject(dc, pnFrmDark:handle)
       MoveTo(dc, rcText[1] - 2, rcText[2])
       LineTo(dc, rc[1], rcText[2])
       LineTo(dc, rc[1], rc[4])

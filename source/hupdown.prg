@@ -54,16 +54,16 @@ CLASS HUpDown INHERIT HControl
    METHOD SetColor(tColor, bColor, lRedraw) INLINE ::super:SetColor(tColor, bColor, lRedraw ), IIF( ::oEditUpDown != Nil, ;
                                              ::oEditUpDown:SetColor(tColor, bColor, lRedraw),)
    METHOD DisableBackColor(DisableBColor) SETGET
-   METHOD Hide() INLINE (::lHide := .T., HideWindow(::handle), HideWindow( ::hwndUpDown ) )
-   METHOD Show() INLINE (::lHide := .F., ShowWindow(::handle), ShowWindow( ::hwndUpDown ) )
-   METHOD Enable() INLINE ( ::Super:Enable(), EnableWindow( ::hwndUpDown, .T. ), InvalidateRect( ::hwndUpDown, 0 ) )
-                          //  InvalidateRect( ::oParent:Handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight ) )
-   METHOD Disable() INLINE ( ::Super:Disable(), EnableWindow( ::hwndUpDown, .F. ) )
+   METHOD Hide() INLINE (::lHide := .T., HideWindow(::handle), HideWindow(::hwndUpDown) )
+   METHOD Show() INLINE (::lHide := .F., ShowWindow(::handle), ShowWindow(::hwndUpDown) )
+   METHOD Enable() INLINE ( ::Super:Enable(), EnableWindow(::hwndUpDown, .T.), InvalidateRect(::hwndUpDown, 0) )
+                          //InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight))
+   METHOD Disable() INLINE ( ::Super:Disable(), EnableWindow(::hwndUpDown, .F.) )
    METHOD Valid()
    METHOD SetRange(nLower, nUpper)
    METHOD Move(x1, y1, width, height, nRepaint) INLINE ;                             // + GetClientRect( ::hwndUpDown )[3] - 1
                               ::Super:Move(x1, y1 , IIF( width != Nil, width, ::nWidth ), height, nRepaint) ,;
-                              SENDMESSAGE(::hwndUpDown, UDM_SETBUDDY, ::oEditUpDown:handle, 0),;
+                              SendMessage(::hwndUpDown, UDM_SETBUDDY, ::oEditUpDown:handle, 0),;
                               IIF( ::lHide, ::Hide(), ::Show() )
 
 ENDCLASS
@@ -96,10 +96,16 @@ METHOD New( oWndParent,nId,vari,bSetGet,nStyle,nLeft,nTop,nWidth,nHeight, ;
 
    ::Increment := IIF( nIncr = Nil, 1, nIncr )
    ::styleUpDown := UDS_ALIGNRIGHT  + UDS_ARROWKEYS + UDS_NOTHOUSANDS //+ UDS_SETBUDDYINT //+ UDS_HORZ
-   IF nLower != Nil ; ::nLower := nLower ; ENDIF
-   IF nUpper != Nil ; ::nUpper := nUpper ; ENDIF
+   IF nLower != Nil
+      ::nLower := nLower
+   ENDIF
+   IF nUpper != Nil
+      ::nUpper := nUpper
+   ENDIF
    // width of spinner
-   IF nUpDWidth != Nil ; ::nUpDownWidth := nUpDWidth ; ENDIF
+   IF nUpDWidth != Nil
+      ::nUpDownWidth := nUpDWidth
+   ENDIF
    ::nMaxLength :=  nMaxLength //= Nil, 4, nMaxLength )
    ::cPicture := IIF( cPicture = Nil, Replicate("9", 4), cPicture )
    ::lNoBorder := lNoBorder
@@ -159,8 +165,8 @@ METHOD CREATEUPDOWN() CLASS Hupdown
        AddToolTip(::GetParentForm():handle, ::oEditUpDown:handle, ::tooltip)
        ::oEditUpDown:SetFont( ::oFont )
        ::oEditUpDown:DisableBrush := ::DisableBrush  
-       SETWINDOWPOS( ::oEditUpDown:handle, ::Handle, 0, 0, 0, 0, SWP_NOSIZE +  SWP_NOMOVE )
-       DESTROYWINDOW(::Handle)
+       SETWINDOWPOS( ::oEditUpDown:handle, ::handle, 0, 0, 0, 0, SWP_NOSIZE +  SWP_NOMOVE )
+       DESTROYWINDOW(::handle)
    ELSEIF ::getParentForm():Type < WND_DLG_RESOURCE .AND. ::oParent:ClassName = "HTAB" //!Empty(::oParent:oParent)
       // MDICHILD WITH TAB
       ::nHolder := 1
@@ -236,7 +242,7 @@ METHOD Refresh() CLASS HUpDown
    ::oEditUpDown:Title :=  ::Title
    ::oEditUpDown:Refresh()
    IF SelfFocus(::handle)
-      InvalidateRect( ::hwndUpDown, 0 )
+      InvalidateRect(::hwndUpDown, 0)
    ENDIF
 
    RETURN Nil
@@ -256,9 +262,9 @@ METHOD Valid() CLASS HUpDown
       ::nValue := IIF( ::nValue > ::nUpper, Min( ::nValue, ::nUpper ), Max( ::nValue, ::nLower ) )
       ::SetValue(::nValue)
       ::oEditUpDown:Refresh()
-      SendMessage(::oEditUpDown:Handle, EM_SETSEL , 0, -1)
+      SendMessage(::oEditUpDown:handle, EM_SETSEL, 0, -1)
       ::SetFocus()
-        RETURN res
+      RETURN res
    ENDIF
    Return res
 
@@ -292,7 +298,7 @@ METHOD Notify( lParam ) CLASS HeditUpDown
    //iDelta := IIF( iDelta < 0, 1, - 1) // IIF( ::oParent:oParent = Nil , - 1 , 1 )
 
      IF ::oUpDown = Nil .OR. Hwg_BitAnd(GetWindowLong( ::handle, GWL_STYLE ), ES_READONLY) != 0 .OR. ;
-         GetFocus() != ::Handle .OR. ;
+         GetFocus() != ::handle .OR. ;
        ( ::oUpDown:bGetFocus != Nil .AND. !Eval( ::oUpDown:bGetFocus, ::oUpDown:nValue, ::oUpDown ) )
         Return 0
    ENDIF
@@ -359,8 +365,8 @@ CLASS VAR winclass   INIT "EDIT"
    METHOD Init()
    METHOD OnEvent(msg,wParam,lParam)
    METHOD Refresh()
-   METHOD Hide() INLINE ( ::lHide := .T., HideWindow(::handle), HideWindow( ::hwndUpDown ) )
-   METHOD Show() INLINE ( ::lHide := .F., ShowWindow(::handle), ShowWindow( ::hwndUpDown ) )
+   METHOD Hide() INLINE ( ::lHide := .T., HideWindow(::handle), HideWindow(::hwndUpDown) )
+   METHOD Show() INLINE ( ::lHide := .F., ShowWindow(::handle), ShowWindow(::hwndUpDown) )
 
 ENDCLASS
 
@@ -382,9 +388,15 @@ METHOD New( oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight
 
    ::styleUpDown := UDS_SETBUDDYINT + UDS_ALIGNRIGHT
 
-   IF nLower != Nil ; ::nLower := nLower ; ENDIF
-   IF nUpper != Nil ; ::nUpper := nUpper ; ENDIF
-   IF nUpDWidth != Nil ; ::nUpDownWidth := nUpDWidth ; ENDIF
+   IF nLower != Nil
+      ::nLower := nLower
+   ENDIF
+   IF nUpper != Nil
+      ::nUpper := nUpper
+   ENDIF
+   IF nUpDWidth != Nil
+      ::nUpDownWidth := nUpDWidth
+   ENDIF
 
    ::Activate()
 

@@ -25,7 +25,7 @@ FUNCTION InitObjects( oWnd )
    
    IF !Empty(LoadArray)
       FOR i := 1 TO Len( LoadArray )
-         IF !Empty(oWnd:Handle)
+         IF !Empty(oWnd:handle)
             IF __ObjHasMsg( LoadArray[i],"INIT")
                LoadArray[i]:Init( oWnd )
                LoadArray[i]:lInit := .T.
@@ -86,11 +86,13 @@ FUNCTION FindParent( hCtrl, nLevel )
          RETURN HDialog():aModalDialogs[i]
       ELSEIF ( oParent := HDialog():FindDialog( hParent ) ) != Nil
          RETURN oParent
-      ELSEIF ( oParent := HWindow():FindWindow( hParent ) ) != Nil
+      ELSEIF ( oParent := HWindow():FindWindow(hParent) ) != Nil
          RETURN oParent
       ENDIF
    ENDIF
-   IF nLevel == Nil ; nLevel := 0 ; ENDIF
+   IF nLevel == Nil
+      nLevel := 0
+   ENDIF
    IF nLevel < 2
       IF ( oParent := FindParent( hParent, nLevel + 1 ) ) != Nil
          RETURN oParent:FindControl(, hParent )
@@ -113,9 +115,9 @@ FUNCTION WriteStatus( oWnd, nPart, cText, lRedraw )
    LOCAL aControls, i
    aControls := oWnd:aControls
    IF ( i := AScan( aControls, { | o | o:ClassName() == "HSTATUS" } ) ) > 0
-      WriteStatusWindow( aControls[i]:handle, nPart - 1, cText )
+      WriteStatusWindow(aControls[i]:handle, nPart - 1, cText)
       IF lRedraw != Nil .AND. lRedraw
-         RedrawWindow( aControls[i]:handle, RDW_ERASE + RDW_INVALIDATE )
+         RedrawWindow(aControls[i]:handle, RDW_ERASE + RDW_INVALIDATE)
       ENDIF
    ENDIF
    RETURN Nil
@@ -210,10 +212,18 @@ FUNCTION WChoice(arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel, 
    LOCAL hDC, aMetr, width, height, aArea, aRect
    LOCAL nStyle := WS_POPUP + WS_VISIBLE + WS_CAPTION + WS_SYSMENU + WS_SIZEBOX
 
-   IF cTitle == Nil ; cTitle := "" ; ENDIF
-   IF nLeft == Nil .AND. nTop == Nil ; nStyle += DS_CENTER ; ENDIF
-   IF nLeft == Nil ; nLeft := 0 ; ENDIF
-   IF nTop == Nil ; nTop := 0 ; ENDIF
+   IF cTitle == Nil
+      cTitle := ""
+   ENDIF
+   IF nLeft == Nil .AND. nTop == Nil
+      nStyle += DS_CENTER
+   ENDIF
+   IF nLeft == Nil
+      nLeft := 0
+   ENDIF
+   IF nTop == Nil
+      nTop := 0
+   ENDIF
    IF oFont == Nil
       oFont := HFont():Add("MS Sans Serif", 0, -13)
       lNewFont := .T.
@@ -279,7 +289,7 @@ FUNCTION WChoice(arr, cTitle, nLeft, nTop, oFont, clrT, clrB, clrTSel, clrBSel, 
    ENDIF
 
    oBrw:oFont  := oFont
-   oBrw:bSize  := { | o, x, y | MoveWindow( o:handle, addX / 2, 10, x - addX, y - addY ) }
+   oBrw:bSize  := { | o, x, y | MoveWindow(o:handle, addX / 2, 10, x - addX, y - addY) }
    oBrw:bEnter := { | o | nChoice := o:nCurrent, EndDialog( o:oParent:handle ) }
    oBrw:bKeyDown := {|o,key|HB_SYMBOL_UNUSED(o),Iif(key==27,(EndDialog(oDlg:handle),.F.),.T.)}
 
@@ -350,7 +360,7 @@ FUNCTION ShowProgress( nStep, maxPos, nRange, cTitle, oWnd, x1, y1, width, heigh
          SetProgressBar( hPBar, maxPos )
       ENDIF
    ELSE
-      DestroyWindow( hPBar )
+      DestroyWindow(hPBar)
       IF oDlg != Nil
          EndDialog( oDlg:handle )
       ENDIF

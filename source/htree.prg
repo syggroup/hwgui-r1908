@@ -281,7 +281,7 @@ CLASS VAR winclass   INIT "SysTreeView32"
    METHOD FindChildPos( oNode, h )
    METHOD GetSelected() INLINE IIF( hb_IsObject(::oItem := TreeGetSelected(::handle)), ::oItem, Nil )
    METHOD EditLabel( oNode ) BLOCK { | Self, o | SendMessage(::handle, TVM_EDITLABEL, 0, o:handle) }
-   METHOD Expand(oNode, lAllNode)   //BLOCK { | Self, o | SendMessage(::handle, TVM_EXPAND, TVE_EXPAND, o:handle), REDRAWWINDOW( ::handle , RDW_NOERASE + RDW_FRAME + RDW_INVALIDATE  )}
+   METHOD Expand(oNode, lAllNode)   //BLOCK { | Self, o | SendMessage(::handle, TVM_EXPAND, TVE_EXPAND, o:handle), RedrawWindow(::handle, RDW_NOERASE + RDW_FRAME + RDW_INVALIDATE)}
    METHOD Select( oNode ) BLOCK { | Self, o | SendMessage(::handle, TVM_SELECTITEM, TVGN_CARET, o:handle), ::oItem := TreeGetSelected(::handle) }
    METHOD Clean()
    METHOD Notify( lParam )
@@ -291,8 +291,8 @@ CLASS VAR winclass   INIT "SysTreeView32"
    METHOD ItemHeight( nHeight ) SETGET
    METHOD SearchString( cText, iNivel, oNode, inodo )
    METHOD Selecteds( oItem, aSels )
-   METHOD Top() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[1] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_TOP ), Nil) ), )
-   METHOD Bottom() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[LEN( ::aItems )] ), SendMessage(::Handle, WM_VSCROLL, MAKEWPARAM( 0, SB_BOTTOM ), Nil) ),)
+   METHOD Top() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[1] ), SendMessage(::handle, WM_VSCROLL, MAKEWPARAM(0, SB_TOP), NIL) ), )
+   METHOD Bottom() INLINE IIF( !Empty(::aItems), ( ::Select( ::aItems[LEN( ::aItems )] ), SendMessage(::handle, WM_VSCROLL, MAKEWPARAM(0, SB_BOTTOM), NIL) ),)
 
 ENDCLASS
 
@@ -398,7 +398,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
 
    ELSEIF msg == WM_LBUTTONUP .AND. ::lDragging .AND. ::hitemDrop != Nil
       ::lDragging := .F.
-      SendMessage(::handle, TVM_SELECTITEM, TVGN_DROPHILITE, Nil)
+      SendMessage(::handle, TVM_SELECTITEM, TVGN_DROPHILITE, NIL)
 
       IF hb_IsBlock(::bDrag)
          nEval :=  Eval( ::bDrag, Self, ::hitemDrag, ::hitemDrop )
@@ -421,7 +421,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HTree
          IF !IsCtrlShift( .T. )
             IF ( ::hitemDrag:oParent = Nil .OR. ::hitemDrop:oParent = Nil ) .OR. ;
                ( ::hitemDrag:oParent:handle == ::hitemDrop:oParent:handle )
-               IF ::FindChildPos( ::hitemDrop:oParent, ::hitemDrag:Handle ) > ::FindChildPos( ::hitemDrop:oParent, ::hitemDrop:Handle )
+               IF ::FindChildPos( ::hitemDrop:oParent, ::hitemDrag:handle ) > ::FindChildPos( ::hitemDrop:oParent, ::hitemDrop:handle )
                   htiNext := ::hitemDrop //htiParent
                ELSE
                   htiPrev := ::hitemDrop  //htiParent
@@ -552,7 +552,7 @@ METHOD Notify( lParam ) CLASS HTree
             ELSEIF oItem:oTree:bAction != Nil
                Eval( oItem:oTree:bAction, oItem, Self )
             ENDIF
-            SENDMESSAGE(::handle, TVM_SETITEM, , oitem:HANDLE)
+            SendMessage(::handle, TVM_SETITEM, , oitem:handle)
          ENDIF
       ENDIF
    
@@ -599,7 +599,7 @@ METHOD Notify( lParam ) CLASS HTree
        //nHitem :=  GETNOTIFYcode(lParam)
        oItem  := tree_Hittest( ::handle,,, @nAct )
        IF nAct = TVHT_ONITEMSTATEICON
-          IF ::oItem == Nil .OR. oItem:Handle != ::oitem:Handle 
+          IF ::oItem == Nil .OR. oItem:handle != ::oitem:handle
             ::Select( oItem )
             ::oItem := oItem
          ENDIF
@@ -673,7 +673,7 @@ METHOD Expand(oNode, lAllNode) CLASS HTree
          ::Expand(oNode:aItems[i], lAllNode)
       ENDIF
    NEXT
-   REDRAWWINDOW( ::handle , RDW_NOERASE + RDW_FRAME + RDW_INVALIDATE  )
+   RedrawWindow(::handle, RDW_NOERASE + RDW_FRAME + RDW_INVALIDATE)
    RETURN Nil
 
 STATIC PROCEDURE ReleaseTree(aItems)

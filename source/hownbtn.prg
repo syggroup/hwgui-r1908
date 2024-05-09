@@ -62,7 +62,7 @@ CLASS VAR cPath SHARED
    METHOD onLostFocus()
    METHOD Refresh()
    METHOD SetText( cCaption ) INLINE ::title := cCaption, ;
-                RedrawWindow( ::oParent:Handle, RDW_ERASE + RDW_INVALIDATE , ::nLeft, ::nTop, ::nWidth, ::nHeight )
+                RedrawWindow(::oParent:handle, RDW_ERASE + RDW_INVALIDATE, ::nLeft, ::nTop, ::nWidth, ::nHeight)
 
 
 ENDCLASS
@@ -138,7 +138,7 @@ METHOD Activate() CLASS HOwnButton
                                 ::nLeft, ::nTop, ::nWidth, ::nHeight )
       ::Init()
       IF !::lEnabled
-         EnableWindow( ::handle, .F. )
+         EnableWindow(::handle, .F.)
          ::Disable()
       ENDIF
    ENDIF
@@ -155,7 +155,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HOwnButton
          ::Themed := .F.
       ENDIF
       ::m_bFirstTime := .T.
-      RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
+      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
       RETURN 0
 
    ELSEIF msg == WM_ERASEBKGND
@@ -423,15 +423,15 @@ METHOD MouseMove(wParam, lParam) CLASS HOwnButton
 
       IF res .AND. !::lPress
          ::state := OBTN_NORMAL
-         InvalidateRect( ::handle, 0 )
-         RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
+         InvalidateRect(::handle, 0)
+         RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
          //PostMessage(::handle, WM_PAINT, 0, 0)
       ENDIF
       IF ::state == OBTN_NORMAL .AND. !res
          ::state := OBTN_MOUSOVER
-         InvalidateRect( ::handle, 0 )
+         InvalidateRect(::handle, 0)
          //PostMessage(::handle, WM_PAINT, 0, 0)
-         RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
+         RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
          SetCapture(::handle)
       ENDIF
    ENDIF
@@ -440,14 +440,14 @@ METHOD MouseMove(wParam, lParam) CLASS HOwnButton
 METHOD MDown() CLASS HOwnButton
    IF ::state != OBTN_PRESSED
       ::state := OBTN_PRESSED
-      //InvalidateRect( ::handle, 0 )
+      //InvalidateRect(::handle, 0)
       //::SetFocus()
-      SendMessage(::Handle, WM_SETFOCUS, 0, 0)
-      InvalidateRect( ::handle, 0 )
-      RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
+      SendMessage(::handle, WM_SETFOCUS, 0, 0)
+      InvalidateRect(::handle, 0)
+      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
    ELSEIF ::lCheck
       ::state := OBTN_NORMAL
-      InvalidateRect( ::handle, 0 )
+      InvalidateRect(::handle, 0)
       PostMessage(::handle, WM_PAINT, 0, 0)
    ENDIF
    RETURN Nil
@@ -470,21 +470,21 @@ METHOD MUp() CLASS HOwnButton
          Eval( ::bClick, ::oParent, ::id )
          Release()
       ENDIF
-      RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW  )
+      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW)
 
    RETURN Nil
 
 METHOD Refresh() CLASS HOwnButton
-   InvalidateRect( ::handle, 0 )
-   RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW  )
+   InvalidateRect(::handle, 0)
+   RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW)
    RETURN Nil
 
 
 METHOD Release() CLASS HOwnButton
    ::lPress := .F.
    ::state := OBTN_NORMAL
-   InvalidateRect( ::handle, 0 )
-   RedrawWindow( ::handle, RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW + RDW_INVALIDATE )
+   InvalidateRect(::handle, 0)
+   RedrawWindow(::handle, RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW + RDW_INVALIDATE)
    //PostMessage(::handle, WM_PAINT, 0, 0)
    RETURN Nil
 
@@ -540,10 +540,10 @@ METHOD END() CLASS HOwnButton
 
 METHOD Enable() CLASS HOwnButton
 
-   EnableWindow( ::handle, .T. )
+   EnableWindow(::handle, .T.)
    ::lEnabled := .T.
-   InvalidateRect( ::handle, 0 )
-   RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
+   InvalidateRect(::handle, 0)
+   RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
    //::Init() BECAUSE ERROR GPF
 
    RETURN Nil
@@ -552,8 +552,8 @@ METHOD Disable() CLASS HOwnButton
 
    ::state   := OBTN_INIT
    ::lEnabled := .F.
-   InvalidateRect( ::handle, 0 )
-   RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE )
-   EnableWindow( ::handle, .F. )
+   InvalidateRect(::handle, 0)
+   RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+   EnableWindow(::handle, .F.)
 
    RETURN Nil

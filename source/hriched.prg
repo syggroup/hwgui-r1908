@@ -165,7 +165,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRichEdit
          RE_INSERTTEXT( ::handle, CHR(VK_TAB) )
           RETURN 0
       ENDIF
-      IF wParam == VK_ESCAPE .AND. ::GetParentForm():Handle != ::oParent:handle
+      IF wParam == VK_ESCAPE .AND. ::GetParentForm():handle != ::oParent:handle
          IF GetParent(::oParent:handle) != Nil
             //SendMessage(GetParent(::oParent:handle), WM_CLOSE, 0, 0)
          ENDIF
@@ -176,8 +176,8 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HRichEdit
       IF nDelta > 32768
          nDelta -= 65535
       ENDIF
-      SendMessage(::handle, EM_SCROLL, IIf( nDelta > 0, SB_LINEUP, SB_LINEDOWN ), 0)
-//      SendMessage(::handle, EM_SCROLL, Iif(nDelta > 0, SB_LINEUP, SB_LINEDOWN), 0)
+      SendMessage(::handle, EM_SCROLL, IIf(nDelta > 0, SB_LINEUP, SB_LINEDOWN), 0)
+      //SendMessage(::handle, EM_SCROLL, Iif(nDelta > 0, SB_LINEUP, SB_LINEDOWN), 0)
    ELSEIF msg == WM_DESTROY
       ::END()
    ENDIF
@@ -190,7 +190,7 @@ METHOD SetColor(tColor, bColor, lRedraw) CLASS HRichEdit
       re_SetDefault( ::handle, tColor ) //, ID_FONT ,, ) // cor e fonte padrao
    ENDIF
    IF bColor != NIL
-      SendMessage(::Handle, EM_SETBKGNDCOLOR, 0, bColor) // cor de fundo
+      SendMessage(::handle, EM_SETBKGNDCOLOR, 0, bColor) // cor de fundo
    ENDIF
    ::super:SetColor(tColor, bColor, lRedraw)
 
@@ -199,7 +199,7 @@ METHOD SetColor(tColor, bColor, lRedraw) CLASS HRichEdit
 METHOD ReadOnly( lreadOnly )
 
    IF lreadOnly != Nil
-      IF !Empty(SENDMESSAGE(::handle, EM_SETREADONLY, IIF( lReadOnly, 1, 0 ), 0))
+      IF !Empty(SendMessage(::handle, EM_SETREADONLY, IIF(lReadOnly, 1, 0), 0))
           ::lReadOnly := lReadOnly
       ENDIF
    ENDIF
@@ -209,12 +209,12 @@ METHOD UpdatePos() CLASS HRichEdit
    LOCAL npos := SendMessage(::handle, EM_GETSEL, 0, 0)
    LOCAL pos1 := Loword(npos) + 1, pos2 := Hiword(npos) + 1
 
-    ::Line := SendMessage(::Handle, EM_LINEFROMCHAR, pos1 - 1, 0) + 1
-    ::LinesTotal := SendMessage(::handle, EM_GETLINECOUNT, 0, 0)
-    ::SelText := RE_GETTEXTRANGE(::handle, pos1, pos2)
-    ::SelStart := pos1
-    ::SelLength := pos2 - pos1
-   ::Col := pos1 - SendMessage(::Handle, EM_LINEINDEX, -1, 0)
+   ::Line := SendMessage(::handle, EM_LINEFROMCHAR, pos1 - 1, 0) + 1
+   ::LinesTotal := SendMessage(::handle, EM_GETLINECOUNT, 0, 0)
+   ::SelText := RE_GETTEXTRANGE(::handle, pos1, pos2)
+   ::SelStart := pos1
+   ::SelLength := pos2 - pos1
+   ::Col := pos1 - SendMessage(::handle, EM_LINEINDEX, -1, 0)
 
    RETURN nPos
 
@@ -261,7 +261,7 @@ METHOD Valid() CLASS HRichEdit
 METHOD SaveFile(cFile) CLASS HRichEdit
 
    IF !Empty(cFile)
-      IF !Empty(SAVERICHEDIT( ::Handle, cFile ))
+      IF !Empty(SAVERICHEDIT( ::handle, cFile ))
           RETURN .T.
       ENDIF
    ENDIF
@@ -270,7 +270,7 @@ METHOD SaveFile(cFile) CLASS HRichEdit
 METHOD OpenFile(cFile) CLASS HRichEdit
 
    IF !Empty(cFile)
-      IF !Empty(LOADRICHEDIT( ::Handle, cFile ))
+      IF !Empty(LOADRICHEDIT( ::handle, cFile ))
           RETURN .T.
       ENDIF
    ENDIF
@@ -282,7 +282,7 @@ METHOD Print() CLASS HRichEdit
     //  ::hDCPrinter := PrintSetup()
    ENDIF
    IF HWG_STARTDOC(::hDCPrinter) != 0
-      IF PrintRTF( ::Handle, ::hDCPrinter ) != 0
+      IF PrintRTF( ::handle, ::hDCPrinter ) != 0
           HWG_ENDDOC(::hDCPrinter)
       ELSE
          HWG_ABORTDOC(::hDCPrinter)

@@ -121,16 +121,26 @@ Local nMode := 0, oFont, nWidth, nPWidth
          oFont:Release()
       ENDIF
 
-      IF ::lElite; nMode++; ENDIF
-      IF ::lCond; nMode += 2; ENDIF
+      IF ::lElite
+         nMode++
+      ENDIF
+      IF ::lCond
+         nMode += 2
+      ENDIF
 
       ::nLineHeight := ( ::nStdHeight / aKoef[nMode+1] ) * ::oPrinter:nVRes
       ::nLined := ( 25.4 * ::oPrinter:nVRes ) / ::nLineInch - ::nLineHeight
 
 #ifdef __PLATFORM__Linux__
-      IF ::lBold; cFont += "Bold"; ENDIF
-      IF ::lItalic; cFont += "Italic"; ENDIF
-      IF !::lBold .AND. !::lItalic; cFont += "Regular"; ENDIF
+      IF ::lBold
+         cFont += "Bold"
+      ENDIF
+      IF ::lItalic
+         cFont += "Italic"
+      ENDIF
+      IF !::lBold .AND. !::lItalic
+         cFont += "Regular"
+      ENDIF
       oFont := ::oPrinter:AddFont( cFont, ::nLineHeight )
 #else
       oFont := ::oPrinter:AddFont( "Lucida Console", ::nLineHeight, ::lBold, ::lItalic, ::lUnder, 204 )

@@ -269,15 +269,15 @@ METHOD OnClicked() CLASS HStaticLink
    ELSEIF !Empty(::m_csUrl)
       IF ( ::m_bFireChild )
          nCtrlID := ::id
-         ::SendMessage(::oparent:Handle, _HYPERLINK_EVENT, nCtrlID, 0)
+         ::SendMessage(::oparent:handle, _HYPERLINK_EVENT, nCtrlID, 0)
       ELSE
          ::GoToLinkUrl( ::m_csUrl )
       ENDIF
       ::m_bVisited := .T.
    ENDIF
    ::state := LBL_NORMAL
-   InvalidateRect( ::handle, 0 )
-   RedrawWindow( ::oParent:Handle, RDW_ERASE + RDW_INVALIDATE + RDW_INTERNALPAINT  , ::nLeft, ::nTop, ::nWidth, ::nHeight ) 
+   InvalidateRect(::handle, 0)
+   RedrawWindow(::oParent:handle, RDW_ERASE + RDW_INVALIDATE + RDW_INTERNALPAINT, ::nLeft, ::nTop, ::nWidth, ::nHeight)
    ::SetFocus()
 
    RETURN NIL
@@ -327,14 +327,14 @@ METHOD OnMouseMove(nFlags, lParam) CLASS HStaticLink
       ENDIF
       IF ( res .AND. !::m_bVisited ) .or. ( res .AND. ::m_bVisited )
          ::state := LBL_NORMAL
-         InvalidateRect( ::handle, 0 )
-         RedrawWindow( ::oParent:Handle, RDW_ERASE + RDW_INVALIDATE + RDW_INTERNALPAINT , ::nLeft, ::nTop, ::nWidth, ::nHeight )
+         InvalidateRect(::handle, 0)
+         RedrawWindow(::oParent:handle, RDW_ERASE + RDW_INVALIDATE + RDW_INTERNALPAINT, ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ENDIF
       IF ( ::state == LBL_NORMAL .AND. !res ) .or. ;
          ( ::state == LBL_NORMAL .AND. !res .and. ::m_bVisited )
          ::state := LBL_MOUSEOVER
-         InvalidateRect( ::handle, 0 )
-          RedrawWindow( ::oParent:Handle, RDW_ERASE + RDW_INVALIDATE + RDW_INTERNALPAINT , ::nLeft, ::nTop, ::nWidth, ::nHeight )
+         InvalidateRect(::handle, 0)
+         RedrawWindow(::oParent:handle, RDW_ERASE + RDW_INVALIDATE + RDW_INTERNALPAINT, ::nLeft, ::nTop, ::nWidth, ::nHeight)
          //SetCapture(::handle)
       ENDIF
 
@@ -439,7 +439,7 @@ METHOD Resize(x, y) CLASS HStaticLink
 
    IF nHeight != ::nHeight
       ::Move(, , , ::nHeight, 0)
-      Invalidaterect( ::Handle, 0 )
+      InvalidateRect(::handle, 0)
    ENDIF
 
    RETURN Nil

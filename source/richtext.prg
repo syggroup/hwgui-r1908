@@ -1539,13 +1539,17 @@ METHOD FootNote(cTexto, cChar, nFontNumber, ;
       ENDIF
    ENDIF
 
-   IF lAuto ; ::TextCode("chftn") ; ENDIF
+   IF lAuto
+      ::TextCode("chftn")
+   ENDIF
 
    ::CloseGroup()
 
    ::OpenGroup()
    ::TextCode("footnote")
-   IF lEnd ; ::TextCode("ftnalt") ; ENDIF
+   IF lEnd
+      ::TextCode("ftnalt")
+   ENDIF
 
    ::NewFont( nFontNumber )
    ::SetFontSize(nFontSize)
@@ -1561,7 +1565,9 @@ METHOD FootNote(cTexto, cChar, nFontNumber, ;
       ENDIF
    ENDIF
 
-   IF lAuto ; ::TextCode("chftn") ; ENDIF
+   IF lAuto
+      ::TextCode("chftn")
+   ENDIF
 
    ::CloseGroup()
 

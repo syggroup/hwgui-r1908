@@ -47,8 +47,12 @@ METHOD New( oWndParent, nId, vari, nStyle, nLeft, nTop, nWidth, nHeight, ;
             bInit, bSize, bPaint, cTooltip, bChange, bDrag, nLow, nHigh, ;
             lVertical, TickStyle, TickMarks ) CLASS HTrackBar
 
-   IF TickStyle == NIL ; TickStyle := TBS_AUTOTICKS ; ENDIF
-   IF TickMarks == NIL ; TickMarks := 0 ; ENDIF
+   IF TickStyle == NIL
+      TickStyle := TBS_AUTOTICKS
+   ENDIF
+   IF TickMarks == NIL
+      TickMarks := 0
+   ENDIF
    IF bPaint != NIL
       TickStyle := Hwg_BitOr( TickStyle, TBS_AUTOTICKS )
    ENDIF

@@ -99,8 +99,8 @@ CLASS HSayBmp INHERIT HSayImage
    METHOD Init()
    METHOD Paint( lpdis )
    METHOD ReplaceBitmap(Image, lRes)
-   //METHOD REFRESH() INLINE ::HIDE(), SENDMESSAGE(::handle, WM_PAINT, 0, 0), ::SHOW()
-   METHOD Refresh() INLINE RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE + RDW_UPDATENOW )
+   //METHOD REFRESH() INLINE ::HIDE(), SendMessage(::handle, WM_PAINT, 0, 0), ::SHOW()
+   METHOD Refresh() INLINE RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE + RDW_UPDATENOW)
 
 ENDCLASS
 
@@ -118,7 +118,9 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
    ENDIF
 
    IF Image != Nil .AND. !Empty(Image)
-      IF lRes == Nil ; lRes := .F. ; ENDIF
+      IF lRes == Nil
+         lRes := .F.
+      ENDIF
       ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),     ;
                        HBitmap():AddResource(Image), ;
                        IIf( hb_IsChar(Image),     ;
@@ -142,7 +144,9 @@ METHOD Redefine(oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip, lTransp) 
       ::BackStyle := TRANSPARENT
       ::extStyle +=  WS_EX_TRANSPARENT
    ENDIF
-   IF lRes == Nil ; lRes := .F. ; ENDIF
+   IF lRes == Nil
+      lRes := .F.
+   ENDIF
    ::oImage := IIf( lRes .OR. hb_IsNumeric(xImage),     ;
                     HBitmap():AddResource(xImage), ;
                     IIf( hb_IsChar(xImage),     ;
@@ -153,8 +157,8 @@ METHOD Init() CLASS HSayBmp
 
    IF !::lInit
       ::Super:Init()
-      IF ::oImage != Nil .AND. !Empty(::oImage:Handle)
-         SendMessage(::handle,STM_SETIMAGE, IMAGE_BITMAP, ::oImage:handle)
+      IF ::oImage != Nil .AND. !Empty(::oImage:handle)
+         SendMessage(::handle, STM_SETIMAGE, IMAGE_BITMAP, ::oImage:handle)
       ENDIF
    ENDIF
 Return Nil
@@ -162,7 +166,7 @@ Return Nil
 METHOD Paint( lpdis ) CLASS HSayBmp
    LOCAL drawInfo := GetDrawItemInfo( lpdis )
 
-   IF ::oImage != Nil .AND. !Empty(::oImage:Handle)
+   IF ::oImage != Nil .AND. !Empty(::oImage:handle)
       IF ::nZoom == Nil
          IF ::BackStyle = TRANSPARENT
             IF ::nStretch = 1  // isometric
@@ -200,7 +204,9 @@ METHOD ReplaceBitmap(Image, lRes) CLASS HSayBmp
    IF ::oImage != Nil
       ::oImage:Release()
    ENDIF
-   IF lRes == Nil ; lRes := .F. ; ENDIF
+   IF lRes == Nil
+      lRes := .F.
+   ENDIF
    ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),     ;
                     HBitmap():AddResource(Image), ;
                     IIf( hb_IsChar(Image),     ;
@@ -226,8 +232,12 @@ METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, Image, lRes, bInit, ;
 
    ::Super:New( oWndParent, nId, SS_ICON, nLeft, nTop, nWidth, nHeight, bInit, bSize, ctooltip, bClick, bDblClick )
 
-   IF lRes == Nil ; lRes := .F. ; ENDIF
-   IF lOEM == Nil ; lOEM := .F. ; ENDIF
+   IF lRes == Nil
+      lRes := .F.
+   ENDIF
+   IF lOEM == Nil
+      lOEM := .F.
+   ENDIF
    IF ::oImage == NIL
       ::oImage := IIf( lRes .OR. hb_IsNumeric(Image),  ;
                        HIcon():AddResource(Image, , , , lOEM), ;
@@ -242,7 +252,9 @@ METHOD Redefine(oWndParent, nId, xImage, lRes, bInit, bSize, ctooltip) CLASS HSa
 
    ::Super:Redefine(oWndParent, nId, bInit, bSize, ctooltip)
 
-   IF lRes == Nil ; lRes := .F. ; ENDIF
+   IF lRes == Nil
+      lRes := .F.
+   ENDIF
    IF ::oImage == NIL
       ::oImage := IIf( lRes .OR. hb_IsNumeric(xImage), ;
                        HIcon():AddResource(xImage), ;

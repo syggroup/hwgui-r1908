@@ -101,7 +101,7 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HSplitter
       Hwg_SetCursor( ::hCursor )
       SetCapture(::handle)
       ::lCaptured := .T.
-      InvalidateRect( ::handle, 1 )
+      InvalidateRect(::handle, 1)
    ELSEIF msg == WM_LBUTTONUP
       ReleaseCapture()
       ::lCaptured := .F.
@@ -166,7 +166,7 @@ METHOD Drag( lParam ) CLASS HSplitter
       xPos := 0
    ENDIF
    ::Move(::nLeft + xPos, ::nTop + yPos, ::nWidth, ::nHeight) //, !::lScrolling)
-   InvalidateRect( ::oParent:handle, 1, ::nLeft, ::nTop, ::nleft + ::nWidth , ::nTop + ::nHeight )
+   InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nleft + ::nWidth , ::nTop + ::nHeight)
    ::lMoved := .T.
 
    RETURN Nil
@@ -189,7 +189,7 @@ METHOD DragAll( lScroll ) CLASS HSplitter
       ENDIF
       oCtrl:Move(oCtrl:nLeft + xDiff, oCtrl:nTop + yDiff, oCtrl:nWidth - xDiff ,oCtrl:nHeight - yDiff, !lScroll)
       //IF oCtrl:winclass == "STATIC"
-          InvalidateRect( oCtrl:Handle, 1 )
+      InvalidateRect(oCtrl:handle, 1)
       //ENDIF
    NEXT
    FOR i := 1 TO Len( ::aLeft )
@@ -203,16 +203,16 @@ METHOD DragAll( lScroll ) CLASS HSplitter
       ENDIF
       oCtrl:Move(oCtrl:nLeft, oCtrl:nTop, oCtrl:nWidth + xDiff, oCtrl:nHeight + yDiff , !lScroll)
       //IF oCtrl:winclass == "STATIC"
-         InvalidateRect( oCtrl:Handle, 1 )
+      InvalidateRect(oCtrl:handle, 1)
       //ENDIF
    NEXT
    //::lMoved := .F.
    IF !lScroll
-      InvalidateRect( ::oParent:handle, 1, ::nLeft ,::nTop  , ::nLeft + ::nWidth , ::nTop + ::nHeight  )
+      InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
    ELSEIF ::lVertical
-      InvalidateRect( ::oParent:Handle, 0, ::nLeft - ::nWidth - xDiff - 1 , ::nTop , ::nLeft + ::nWidth + xDiff + 1, ::nTop + ::nHeight )
+      InvalidateRect(::oParent:handle, 0, ::nLeft - ::nWidth - xDiff - 1, ::nTop, ::nLeft + ::nWidth + xDiff + 1, ::nTop + ::nHeight)
    ELSE
-      InvalidateRect( ::oParent:Handle, 0, ::nLeft , ::nTop - ::nHeight - yDiff - 1 , ::nLeft + ::nWidth, ::nTop + ::nHeight + yDiff + 1 )
+      InvalidateRect(::oParent:handle, 0, ::nLeft, ::nTop - ::nHeight - yDiff - 1, ::nLeft + ::nWidth, ::nTop + ::nHeight + yDiff + 1)
    ENDIF
    IF hb_IsBlock(::bEndDrag)
       Eval( ::bEndDrag,Self )

@@ -172,7 +172,7 @@ FUNCTION BuildMenu( aMenuInit, hWnd, oWnd, nPosParent, lPopup )
    IF hWnd != Nil .AND. oWnd != Nil
       Hwg_SetMenu( oWnd, aMenu )
       IF s_nbkColor != Nil
-         Hwg_SetMenuInfo( oWnd:Handle, s_nbkColor )
+         Hwg_SetMenuInfo( oWnd:handle, s_nbkColor )
       ENDIF
    ELSEIF _oMenu != Nil
       _oMenu:handle := aMenu[5]
@@ -247,13 +247,15 @@ FUNCTION Hwg_DefineMenuItem( cItem, nId, bItem, lDisabled, accFlag, accKey, lBit
    nId := IIf( nId == Nil .AND. cItem != Nil, ++ _Id, nId )
    AAdd(aMenu, { bItem, cItem, nId, nFlag })
    IF lBitmap != Nil .or. !Empty(lBitmap)
-      IF lResource == Nil ;lResource := .F. ; ENDIF
+      IF lResource == Nil
+         lResource := .F.
+      ENDIF
       IF lResource .OR. AT("." ,lBitmap ) = 0
          oBmp := HBitmap():AddResource(lBitmap, LR_LOADMAP3DCOLORS + LR_SHARED + LR_LOADTRANSPARENT , ,s_nWidthBmp, s_nHeightBmp)
       ELSE
          oBmp := HBitmap():AddFile(lBitmap, , .T. , s_nWidthBmp, s_nHeightBmp)
       ENDIF
-      AAdd(_oBitmap, { .T., oBmp:Handle, cItem, nId })
+      AAdd(_oBitmap, { .T., oBmp:handle, cItem, nId })
    ELSE
       AAdd(_oBitmap, { .F., "", cItem, nId })
    ENDIF

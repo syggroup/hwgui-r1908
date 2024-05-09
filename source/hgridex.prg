@@ -75,9 +75,9 @@ CLASS VAR winclass INIT "SYSLISTVIEW32"
    METHOD AddRow( a, bUpdate )
    METHOD Notify( lParam )
 
-   METHOD DELETEROW() INLINE IF( ::bFlag , ( SendMessage(::HANDLE, LVM_DELETEITEM, ::iRowSelect, 0), ::bFlag := .F. ), .T. )
-   METHOD DELETEALLROW() INLINE ::aItems := NIL, ::aColors := {}, SendMessage(::Handle, LVM_DELETEALLITEMS, 0, 0)
-   METHOD SELECTALL() INLINE ListViewSelectAll(::Handle)
+   METHOD DELETEROW() INLINE IF( ::bFlag , ( SendMessage(::handle, LVM_DELETEITEM, ::iRowSelect, 0), ::bFlag := .F. ), .T. )
+   METHOD DELETEALLROW() INLINE ::aItems := NIL, ::aColors := {}, SendMessage(::handle, LVM_DELETEALLITEMS, 0, 0)
+   METHOD SELECTALL() INLINE ListViewSelectAll(::handle)
    METHOD SELECTLAST() INLINE ListViewSelectLastItem(::handle)
    METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, bSize, bPaint, ctooltip, tcolor, bcolor, lTransp, aItem)
    METHOD UpdateData()
@@ -254,9 +254,9 @@ METHOD Notify( lParam ) CLASS HGRIDEX
    LOCAL nCode := GetNotifyCode(lParam)
    LOCAL Res, iSelect, oParent := ::GetParentForm()
 
-   IF nCode == NM_CUSTOMDRAW .and. GETNOTIFYCODEFROM( lParam ) == ::Handle
+   IF nCode == NM_CUSTOMDRAW .and. GETNOTIFYCODEFROM( lParam ) == ::handle
       Res := PROCESSCUSTU( ::handle, lParam, ::aColors )
-      Hwg_SetDlgResult( oParent:Handle, Res )
+      Hwg_SetDlgResult( oParent:handle, Res )
       RETURN Res
    ENDIF
 
@@ -272,7 +272,7 @@ METHOD Notify( lParam ) CLASS HGRIDEX
       RETURN 1
    ENDIF
 
-   IF nCode == LVN_COLUMNCLICK //.and. GETNOTIFYCODEFROM(lParam) == ::Handle
+   IF nCode == LVN_COLUMNCLICK //.and. GETNOTIFYCODEFROM(lParam) == ::handle
       IF Empty(::hsort)
          ::hSort := LISTVIEWSORTINFONEW( lParam, NIL )
       ENDIF
@@ -289,7 +289,7 @@ METHOD Notify( lParam ) CLASS HGRIDEX
 
    Res := ListViewNotify( Self, lParam )
    IF hb_IsNumeric(Res)
-      Hwg_SetDlgResult( oParent:Handle, Res )
+      Hwg_SetDlgResult( oParent:handle, Res )
       //RETURN 1
    ENDIF
    RETURN Res

@@ -54,7 +54,7 @@ METHOD New( nRow, nCol, nWidth, nHeight, cFileName, oWnd, lNoBorder, nid ) CLASS
 
    IF !Empty(::oparent:handle)
       ::oMci:lOpen()
-      ::oMci:SetWindow( Self )
+      ::oMci:SetWindow(Self)
    ELSE
       ::oparent:AddControl( Self )
    ENDIF
@@ -82,7 +82,7 @@ METHOD Initiate() CLASS TVideo
 
    ::Super:Init()
    ::oMci:lOpen()
-   ::oMci:SetWindow( Self )
+   ::oMci:SetWindow(Self)
 
    RETURN NIL
 

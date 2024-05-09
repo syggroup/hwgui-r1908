@@ -340,7 +340,9 @@ METHOD PrinterFile(fname) CLASS PrintDos
 
          nRead := FRead(han, @strbuf, PF_BUFFERS)
 
-         IF nRead = 0 ; EXIT ; ENDIF
+         IF nRead = 0
+            EXIT
+         ENDIF
 
          IF FWrite(::gText, Left( strbuf, nRead )) < nRead
             ::ErrosAnt := FError()
@@ -470,7 +472,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
    IIf( cTitle == Nil, cTitle := "Print Preview", cTitle := cTitle )
 
    INIT DIALOG oDlg TITLE cTitle ;
-        At 0, 0 SIZE GETDESKTOPWIDTH(), GETDESKTOPHEIGHT() on init { || Sendmessage(oedit1:handle, WM_VSCROLL, SB_TOP, 0) }
+        At 0, 0 SIZE GETDESKTOPWIDTH(), GETDESKTOPHEIGHT() on init { || SendMessage(oedit1:handle, WM_VSCROLL, SB_TOP, 0) }
 
 
 
@@ -510,7 +512,9 @@ STATIC FUNCTION PrintDosPrint( oText, oPrt )
 STATIC FUNCTION PrintDosAnt( nPage, oText )
    LOCAL oDlg := GetModalhandle()
    nPage := -- nPage
-   IF nPage < 1 ; nPage := 1 ; ENDIF
+   IF nPage < 1
+      nPage := 1
+   ENDIF
    IF nPage = 1  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
       SetDlgItemText( oDlg, 1001, SUBS( oText[nPage], 2 ) )  //Added by  Por Fernando Exclui 1 byte do oText nao sei de onde ele aparece
    ELSE
@@ -521,7 +525,9 @@ STATIC FUNCTION PrintDosAnt( nPage, oText )
 STATIC FUNCTION PrintDosNext( oPage, nPage, oText )
    LOCAL oDlg := GetModalhandle()
    nPage := ++ nPage
-   IF nPage > oPage ; nPage := oPage ; ENDIF
+   IF nPage > oPage
+      nPage := oPage
+   ENDIF
    SetDlgItemText( oDlg, 1001, oText[nPage] )
    RETURN nPage
 

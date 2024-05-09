@@ -34,9 +34,9 @@ CLASS TMci
    METHOD cGetError()
 
 
-   METHOD SetWindow( oWnd ) INLINE ;
+   METHOD SetWindow(oWnd) INLINE ;
    ::oWnd := oWnd, ;
-   ::nError := nMciWindow( ::nId, oWnd:handle )
+   ::nError := nMciWindow(::nId, oWnd:handle)
 
    METHOD SendStr( cMciStr )
 

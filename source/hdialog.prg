@@ -201,10 +201,10 @@ METHOD Activate(lNoModal, bOnActivate, nShow) CLASS HDialog
          ::Add()
          Hwg_CreateDlgIndirect(hParent, Self, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::style)
          IF ::WindowState > SW_HIDE
-           //InvalidateRect(::handle, 1)
+            //InvalidateRect(::handle, 1)
             //BRINGTOTOP(::handle)
             //UPDATEWINDOW(::handle)
-            SetWindowPos(::Handle, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_FRAMECHANGED)
+            SetWindowPos(::handle, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE + SWP_NOMOVE + SWP_FRAMECHANGED)
             RedrawWindow(::handle, RDW_UPDATENOW + RDW_NOCHILDREN)
          ENDIF
 
@@ -251,7 +251,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HDialog
       /* triggered on activate the modal dialog is visible only when */
       ::lActivated := .T.
       IF ::lModal .AND. hb_IsBlock(::bOnActivate)
-         POSTMESSAGE(::Handle, WM_ACTIVATE, MAKEWPARAM(WA_ACTIVE, 0), ::handle)
+         POSTMESSAGE(::handle, WM_ACTIVATE, MAKEWPARAM(WA_ACTIVE, 0), ::handle)
       ENDIF
    ENDIF
    IF (i := AScan(aMessModalDlg, {|a|a[1] == msg})) != 0
@@ -325,7 +325,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HDialog
          /* triggered on activate the modal dialog is visible only when */
          ::lActivated := .T.
          IF ::lModal .AND. hb_IsBlock(::bOnActivate)
-            POSTMESSAGE(::Handle, WM_ACTIVATE, MAKEWPARAM(WA_ACTIVE, 0), ::handle)
+            POSTMESSAGE(::handle, WM_ACTIVATE, MAKEWPARAM(WA_ACTIVE, 0), ::handle)
          ENDIF
       ENDIF
       EXIT
@@ -528,7 +528,7 @@ STATIC FUNCTION InitModalDlg(oDlg, wParam, lParam)
       SendMessage(oDlg:handle, WM_SETFONT, oDlg:oFont:handle, 0)
    ENDIF
    IF oDlg:Title != NIL
-      SetWindowText(oDlg:Handle, oDlg:Title)
+      SetWindowText(oDlg:handle, oDlg:Title)
    ENDIF
    IF !oDlg:lClosable
       oDlg:Closable(.F.)
@@ -550,21 +550,21 @@ STATIC FUNCTION InitModalDlg(oDlg, wParam, lParam)
    ENDIF
    oDlg:lSuspendMsgsHandling := .F.
 
-   oDlg:nInitFocus := IIF(hb_IsObject(oDlg:nInitFocus), oDlg:nInitFocus:Handle, oDlg:nInitFocus)
+   oDlg:nInitFocus := IIF(hb_IsObject(oDlg:nInitFocus), oDlg:nInitFocus:handle, oDlg:nInitFocus)
    IF !Empty(oDlg:nInitFocus)
-      IF PtrtouLong(oDlg:FindControl(, oDlg:nInitFocus):oParent:Handle) == PtrtouLong(oDlg:Handle)
+      IF PtrtouLong(oDlg:FindControl(, oDlg:nInitFocus):oParent:handle) == PtrtouLong(oDlg:handle)
          SETFOCUS(oDlg:nInitFocus)
       ENDIF
       nReturn := 0
    ENDIF
 
-   uis := SendMESSAGE(oDlg:handle, WM_QUERYUISTATE, 0, 0)
+   uis := SendMessage(oDlg:handle, WM_QUERYUISTATE, 0, 0)
    // draw focus
    IF uis != 0
       // triggered to mouse
-      SENDMESSAGE(oDlg:handle, WM_CHANGEUISTATE, makelong(UIS_CLEAR, UISF_HIDEACCEL), 0)
+      SendMessage(oDlg:handle, WM_CHANGEUISTATE, makelong(UIS_CLEAR, UISF_HIDEACCEL), 0)
    ELSE
-      SENDMESSAGE(oDlg:handle, WM_UPDATEUISTATE, makelong(UIS_CLEAR, UISF_HIDEACCEL), 0)
+      SendMessage(oDlg:handle, WM_UPDATEUISTATE, makelong(UIS_CLEAR, UISF_HIDEACCEL), 0)
    ENDIF
 
    // CALL DIALOG NOT VISIBLE
@@ -579,7 +579,7 @@ STATIC FUNCTION InitModalDlg(oDlg, wParam, lParam)
    POSTMESSAGE(oDlg:handle, WM_CHANGEUISTATE, makelong(UIS_CLEAR, UISF_HIDEFOCUS), 0)
 
    IF !oDlg:lModal .AND. !isWindowVisible(oDlg:handle)
-      SHOWWINDOW(oDlg:Handle, SW_SHOWDEFAULT)
+      SHOWWINDOW(oDlg:handle, SW_SHOWDEFAULT)
    ENDIF
 
    IF hb_IsBlock(oDlg:bGetFocus)
@@ -637,7 +637,7 @@ STATIC FUNCTION onDlgColor(oDlg, wParam, lParam)
 
    SetBkMode(wParam, 1) // Transparent mode
    IF oDlg:bcolor != NIL .AND. !hb_IsNumeric(oDlg:brush)
-       RETURN oDlg:brush:Handle
+       RETURN oDlg:brush:handle
    ENDIF
 
 RETURN 0 //hBrTemp:handle
@@ -688,7 +688,7 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
       IF iParLow == IDOK
          hCtrl := GetFocus()
          oCtrl := oDlg:FindControl(, hCtrl)
-         IF oCtrl == NIL .OR. !SelfFocus(oCtrl:Handle, hCtrl)
+         IF oCtrl == NIL .OR. !SelfFocus(oCtrl:handle, hCtrl)
             hCtrl := GetAncestor(hCtrl, GA_PARENT)
             IF (oCtrl := oDlg:FindControl(, hCtrl)) != NIL
                GetSkip(oCtrl:oParent, hCtrl, , 1)
@@ -698,8 +698,8 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
          IF hb_IsObject(oCtrl) .AND. oCtrl:classname = "HTAB"
             RETURN 1
          ENDIF
-         IF hb_IsObject(oCtrl) .AND. (GetNextDlgTabItem(GetActiveWindow(), hCtrl, 1) == hCtrl .OR. SelfFocus(oCtrl:Handle, hCtrl))
-            SendMessage(oCtrl:Handle, WM_KILLFOCUS, 0, 0)
+         IF hb_IsObject(oCtrl) .AND. (GetNextDlgTabItem(GetActiveWindow(), hCtrl, 1) == hCtrl .OR. SelfFocus(oCtrl:handle, hCtrl))
+            SendMessage(oCtrl:handle, WM_KILLFOCUS, 0, 0)
          ENDIF
          IF hb_IsObject(oCtrl) .AND. oCtrl:id == IDOK .AND. __ObjHasMsg(oCtrl, "BCLICK") .AND. oCtrl:bClick == NIL
             oDlg:lResult := .T.
@@ -732,11 +732,11 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
                RETURN 1
             ENDIF
             oDlg:bDestroy := NIL
-            SENDMessage(oCtrl:handle, WM_CLOSE, 0, 0)
+            SendMessage(oCtrl:handle, WM_CLOSE, 0, 0)
             RETURN 0
-         ELSEIF hb_IsObject(oCtrl) .AND. oCtrl:IsEnabled() .AND. !Selffocus(oCtrl:Handle)
+         ELSEIF hb_IsObject(oCtrl) .AND. oCtrl:IsEnabled() .AND. !Selffocus(oCtrl:handle)
             //oCtrl:SetFocus()
-            PostMessage(oDlg:handle, WM_NEXTDLGCTL, oCtrl:Handle, 1)
+            PostMessage(oDlg:handle, WM_NEXTDLGCTL, oCtrl:handle, 1)
          ELSEIF oDlg:lGetSkiponEsc
             hCtrl := GetFocus()
             oCtrl := oDlg:FindControl(, hctrl)
@@ -753,14 +753,14 @@ FUNCTION DlgCommand(oDlg, wParam, lParam)
          nEsc := (getkeystate(VK_ESCAPE) < 0)
          //oDlg:nLastKey := VK_ESCAPE
       ELSEIF iParLow == IDHELP  // HELP
-         SendMessage(oDlg:Handle, WM_HELP, 0, 0)
+         SendMessage(oDlg:handle, WM_HELP, 0, 0)
       ENDIF
    ENDIF
 
    //IF oDlg:nInitFocus > 0 //.AND. !isWindowVisible(oDlg:handle)
    // comentado, vc não pode testar um ponteiro como se fosse numerico
    IF !Empty(oDlg:nInitFocus)  //.AND. !isWindowVisible(oDlg:handle)
-      PostMessage(oDlg:Handle, WM_NEXTDLGCTL, oDlg:nInitFocus, 1)
+      PostMessage(oDlg:handle, WM_NEXTDLGCTL, oDlg:nInitFocus, 1)
    ENDIF
    IF oDlg:aEvents != NIL .AND. ;
       (i := AScan(oDlg:aEvents, {|a|a[1] == iParHigh .AND. a[2] == iParLow})) > 0
@@ -877,12 +877,12 @@ STATIC FUNCTION onActivate(oDlg, wParam, lParam)
 
    //HB_SYMBOL_UNUSED(lParam)
 
-   IF (iParLow == WA_ACTIVE .OR. iParLow == WA_CLICKACTIVE) .AND. oDlg:lContainer .AND. !SelfFocus(lParam, oDlg:Handle)
-      UpdateWindow(oDlg:Handle)
-      SENDMessage(lParam, WM_NCACTIVATE, 1, NIL)
+   IF (iParLow == WA_ACTIVE .OR. iParLow == WA_CLICKACTIVE) .AND. oDlg:lContainer .AND. !SelfFocus(lParam, oDlg:handle)
+      UpdateWindow(oDlg:handle)
+      SendMessage(lParam, WM_NCACTIVATE, 1, NIL)
       RETURN 0
    ENDIF
-   IF iParLow == WA_ACTIVE .AND. SelfFocus(lParam, oDlg:Handle)
+   IF iParLow == WA_ACTIVE .AND. SelfFocus(lParam, oDlg:handle)
       IF hb_IsBlock(oDlg:bOnActivate)
         //- oDlg:lSuspendMsgsHandling := .T.
          Eval(oDlg:bOnActivate, oDlg)

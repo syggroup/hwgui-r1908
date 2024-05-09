@@ -165,22 +165,22 @@ METHOD Create() CLASS HNICEButton
    w      := Rct[3] - Rct[1]
    h      := Rct[4] - Rct[2]
    Region := CreateRoundRectRgn( 0, 0, w, h, h * 0.90, h * 0.90 )
-   SetWindowRgn( ::Handle, Region, .T. )
-   InvalidateRect( ::Handle, 0, 0 )
+   SetWindowRgn( ::handle, Region, .T. )
+   InvalidateRect(::handle, 0, 0)
 
    RETURN Self
 
 METHOD Size() CLASS HNICEButton
 
    ::State := OBTN_NORMAL
-   InvalidateRect( ::Handle, 0, 0 )
+   InvalidateRect(::handle, 0, 0)
 
    RETURN Self
 
 METHOD Moving() CLASS HNICEButton
 
    ::State := .F.
-   InvalidateRect( ::Handle, 0, 0 )
+   InvalidateRect(::handle, 0, 0)
 
    RETURN Self
 
@@ -196,7 +196,7 @@ METHOD MouseMove(wParam, lParam) CLASS HNICEButton
 
       IF otmp != Nil .AND. otmp:id != ::id .AND. !otmp:lPress
          otmp:state := OBTN_NORMAL
-         InvalidateRect( otmp:handle, 0 )
+         InvalidateRect(otmp:handle, 0)
          PostMessage(otmp:handle, WM_PAINT, 0, 0)
          SetNiceBtnSelected(Nil)
       ENDIF
@@ -205,7 +205,7 @@ METHOD MouseMove(wParam, lParam) CLASS HNICEButton
          ::state := OBTN_MOUSOVER
 
          // aBtn[CTRL_HANDLE] := hBtn
-         InvalidateRect( ::handle, 0 )
+         InvalidateRect(::handle, 0)
          PostMessage(::handle, WM_PAINT, 0, 0)
          SetNiceBtnSelected(Self)
       ENDIF
@@ -218,7 +218,7 @@ METHOD MUp() CLASS HNICEButton
    IF ::state == OBTN_PRESSED
       IF !::lPress
          ::state := IIf( ::lFlat, OBTN_MOUSOVER, OBTN_NORMAL )
-         InvalidateRect( ::handle, 0 )
+         InvalidateRect(::handle, 0)
          PostMessage(::handle, WM_PAINT, 0, 0)
       ENDIF
       IF !::lFlat
@@ -236,7 +236,7 @@ METHOD MDown() CLASS HNICEButton
    IF ::state != OBTN_PRESSED
       ::state := OBTN_PRESSED
 
-      InvalidateRect( ::Handle, 0, 0 )
+      InvalidateRect(::handle, 0, 0)
       PostMessage(::handle, WM_PAINT, 0, 0)
       SetNiceBtnSelected(Self)
    ENDIF
@@ -246,7 +246,7 @@ METHOD MDown() CLASS HNICEButton
 METHOD PAINT() CLASS HNICEButton
 
    LOCAL ps        := DefinePaintStru()
-   LOCAL hDC       := BeginPaint( ::Handle, ps )
+   LOCAL hDC       := BeginPaint( ::handle, ps )
    LOCAL Rct
    LOCAL Size
    LOCAL T
@@ -258,14 +258,14 @@ METHOD PAINT() CLASS HNICEButton
    LOCAL h
    //  *******************
 
-   Rct  := GetClientRect(::Handle)
+   Rct  := GetClientRect(::handle)
    x    := Rct[1]
    y    := Rct[2]
    w    := Rct[3] - Rct[1]
    h    := Rct[4] - Rct[2]
    XCtr := ( Rct[1] + Rct[3] ) / 2
    YCtr := ( Rct[2] + Rct[4] ) / 2
-   T    := GetWindowText(::Handle)
+   T    := GetWindowText(::handle)
    // **********************************
    //         Draw our control
    // **********************************
@@ -287,7 +287,7 @@ METHOD PAINT() CLASS HNICEButton
       TextOut( hDC, XCtr - Size[1] / 2, YCtr - Size[2] / 2, T )
    ENDIF
 
-   EndPaint( ::Handle, ps )
+   EndPaint( ::handle, ps )
 
    RETURN Self
 
@@ -299,7 +299,7 @@ METHOD RELEASE() CLASS HNiceButton
 
    ::lPress := .F.
    ::state  := OBTN_NORMAL
-   InvalidateRect( ::handle, 0 )
+   InvalidateRect(::handle, 0)
    PostMessage(::handle, WM_PAINT, 0, 0)
 
    RETURN Nil

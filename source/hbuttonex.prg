@@ -86,9 +86,9 @@ CLASS HButtonEX INHERIT HButton
    //METHOD SetText(c) INLINE ::title := c, ::caption := c, ;
    METHOD SetText(c) INLINE ;
       ::title := c, ;
-      RedrawWindow(::Handle, RDW_NOERASE + RDW_INVALIDATE), ;
-      IIF(::oParent != NIL .AND. isWindowVisible(::Handle), ;
-          InvalidateRect(::oParent:Handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight), ), ;
+      RedrawWindow(::handle, RDW_NOERASE + RDW_INVALIDATE), ;
+      IIF(::oParent != NIL .AND. isWindowVisible(::handle), ;
+          InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight), ), ;
       SetWindowText(::handle, ::title)
    //METHOD SaveParentBackground()
 
@@ -171,7 +171,7 @@ METHOD SetBitmap(hBitMap) CLASS HButtonEX
    IF hb_IsNumeric(hBitmap) // TODO: verificar
       ::hBitmap := hBitmap
       SendMessage(::handle, BM_SETIMAGE, IMAGE_BITMAP, ::hBitmap)
-      REDRAWWINDOW(::Handle, RDW_NOERASE + RDW_INVALIDATE + RDW_INTERNALPAINT)
+      RedrawWindow(::handle, RDW_NOERASE + RDW_INVALIDATE + RDW_INTERNALPAINT)
    ENDIF
 
 RETURN Self
@@ -185,7 +185,7 @@ METHOD SetIcon(hIcon) CLASS HButtonEX
    IF hb_IsNumeric(::hIcon) // TODO: verificar
       ::hIcon := hIcon
       SendMessage(::handle, BM_SETIMAGE, IMAGE_ICON, ::hIcon)
-      REDRAWWINDOW(::Handle, RDW_NOERASE + RDW_INVALIDATE + RDW_INTERNALPAINT)
+      RedrawWindow(::handle, RDW_NOERASE + RDW_INVALIDATE + RDW_INTERNALPAINT)
    ENDIF
 
 RETURN Self
@@ -289,7 +289,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HBUTTONEx
       ENDIF
       IF(!::bMouseOverButton)
          ::bMouseOverButton := .T.
-         Invalidaterect(::handle, .F.)
+         InvalidateRect(::handle, .F.)
          TRACKMOUSEVENT(::handle)
       ENDIF
       RETURN 0
@@ -317,7 +317,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HBUTTONEx
          /*
          IF ::GetParentForm(Self):Type < WND_DLG_RESOURCE
             SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
-             ELSE
+         ELSE
             SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
          ENDIF
          */
@@ -419,8 +419,8 @@ METHOD onEvent(msg, wParam, lParam) CLASS HBUTTONEx
            IF !ProcKeyList(Self, wParam) .AND. (oParent:Type < WND_DLG_RESOURCE .OR. !oParent:lModal)
               SendMessage(oParent:handle, WM_COMMAND, makewparam(IDCANCEL, 0), ::handle)
            ELSEIF oParent:FindControl(IDCANCEL) != NIL .AND. !oParent:FindControl(IDCANCEL):IsEnabled() .AND. oParent:lExitOnEsc
-            SendMessage(oParent:handle, WM_COMMAND, makewparam(IDCANCEL, 0), ::handle)
-            RETURN 0
+              SendMessage(oParent:handle, WM_COMMAND, makewparam(IDCANCEL, 0), ::handle)
+              RETURN 0
            ENDIF
         ENDIF
       RETURN IIF(wParam == VK_ESCAPE, -1, ButtonGetDlgCode(lParam))
@@ -491,7 +491,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HBUTTONEx
       ENDIF
       IF !::bMouseOverButton
          ::bMouseOverButton := .T.
-         Invalidaterect(::handle, .F.)
+         InvalidateRect(::handle, .F.)
          TRACKMOUSEVENT(::handle)
       ENDIF
       RETURN 0
@@ -514,7 +514,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HBUTTONEx
          /*
          IF ::GetParentForm(Self):Type < WND_DLG_RESOURCE
             SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
-             ELSE
+         ELSE
             SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
          ENDIF
          */
@@ -673,9 +673,9 @@ METHOD CancelHover() CLASS HBUTTONEx
    IF ::bMouseOverButton .AND. ::id != IDOK //NANDO
       ::bMouseOverButton := .F.
       IF !::lflat
-         Invalidaterect(::handle, .F.)
+         InvalidateRect(::handle, .F.)
       ELSE
-         InvalidateRect(::oParent:Handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
+         InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
       ENDIF
    ENDIF
 
@@ -712,7 +712,7 @@ METHOD SetDefaultColor(tColor, bColor, lPaint) CLASS HBUTTONEx
    ::m_crColors[BTNST_COLOR_FG_FOCUS] := GetSysColor(COLOR_BTNTEXT)
    */
    IF lPaint
-      Invalidaterect(::handle, .F.)
+      InvalidateRect(::handle, .F.)
    ENDIF
 
 RETURN Self
@@ -730,7 +730,7 @@ METHOD SetColorEx(nIndex, nColor, lPaint) CLASS HBUTTONEx
    ::m_crColors[nIndex] := nColor
 
    IF lPaint
-      Invalidaterect(::handle, .F.)
+      InvalidateRect(::handle, .F.)
    ENDIF
 
 RETURN 0

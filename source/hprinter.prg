@@ -357,7 +357,9 @@ METHOD Preview( cTitle, aBitmaps, aTooltips, aBootUser ) CLASS HPrinter
       AAdd(aPage, Str( i, 4 ) + ":" + Str( nLastPage, 4 ))
    NEXT
 
-   IF cTitle == Nil ; cTitle := "Print preview - " + ::cPrinterName ; ENDIF
+   IF cTitle == Nil
+      cTitle := "Print preview - " + ::cPrinterName
+   ENDIF
    ::nZoom := 0
    ::nCurrPage := 1
 
@@ -506,8 +508,8 @@ STATIC FUNCTION SetTimerPrinter( oDlg, oTimer )
    RETURN Nil
 
 STATIC FUNCTION TimerFunc(o)
-   // RedrawWindow( o:handle, RDW_ERASE + RDW_INVALIDATE )
-   RedrawWindow( o:handle, RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW + RDW_INVALIDATE )  // Force a complete redraw
+   //RedrawWindow(o:handle, RDW_ERASE + RDW_INVALIDATE)
+   RedrawWindow(o:handle, RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW + RDW_INVALIDATE) // Force a complete redraw
    RETURN Nil
 
 METHOD ChangePage(oSayPage, n, nPage) CLASS hPrinter
@@ -688,7 +690,7 @@ METHOD ResizePreviewDlg( oCanvas, nZoom, msg, wParam, lParam ) CLASS hPrinter
    ::y2 := ::y1 + nHeight - 1
 
    IF nZoom != Nil .OR. msg != Nil
-      RedrawWindow( oCanvas:handle, RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW + RDW_INVALIDATE )  // Force a complete redraw
+      RedrawWindow(oCanvas:handle, RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW + RDW_INVALIDATE) // Force a complete redraw
    ENDIF
 
    RETURN Nil

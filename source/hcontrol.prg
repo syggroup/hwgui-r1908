@@ -47,15 +47,15 @@ CLASS HControl INHERIT HCustomWindow
       0, ::handle), 1), .T.)
    METHOD Hide() INLINE (::oParent:lGetSkipLostFocus := .F., ::Super:Hide())
    //METHOD Disable() INLINE EnableWindow(::handle, .F.)
-   METHOD Disable() INLINE (IIF(SELFFOCUS(::Handle), SendMessage(GetActiveWindow(), WM_NEXTDLGCTL, 0, 0),), ;
+   METHOD Disable() INLINE (IIF(SELFFOCUS(::handle), SendMessage(GetActiveWindow(), WM_NEXTDLGCTL, 0, 0),), ;
       EnableWindow(::handle, .F.))
    METHOD Enable()
-   METHOD IsEnabled() INLINE IsWindowEnabled(::Handle)
+   METHOD IsEnabled() INLINE IsWindowEnabled(::handle)
    METHOD Enabled(lEnabled) SETGET
    METHOD SetFont(oFont)
    METHOD SetFocus(lValid)
    METHOD GetText() INLINE GetWindowText(::handle)
-   METHOD SetText(c) INLINE SetWindowText(::Handle, c), ::title := c, ::Refresh()
+   METHOD SetText(c) INLINE SetWindowText(::handle, c), ::title := c, ::Refresh()
    METHOD Refresh() VIRTUAL
    METHOD onAnchor(x, y, w, h)
    METHOD SetToolTip(ctooltip)
@@ -149,7 +149,7 @@ METHOD INIT() CLASS HControl
       ENDIF
       IF oForm != NIL .AND. oForm:Type != WND_DLG_RESOURCE .AND. (::nLeft + ::nTop + ::nWidth + ::nHeight != 0)
          // fix init position in FORM reduce  flickering
-         SetWindowPos(::Handle, NIL, ::nLeft, ::nTop, ::nWidth, ::nHeight, SWP_NOACTIVATE + SWP_NOSIZE + SWP_NOZORDER + SWP_NOOWNERZORDER + SWP_NOSENDCHANGING) //+ SWP_DRAWFRAME)
+         SetWindowPos(::handle, NIL, ::nLeft, ::nTop, ::nWidth, ::nHeight, SWP_NOACTIVATE + SWP_NOSIZE + SWP_NOZORDER + SWP_NOOWNERZORDER + SWP_NOSENDCHANGING) //+ SWP_DRAWFRAME)
       ENDIF
 
       IF hb_IsBlock(::bInit)
@@ -199,7 +199,7 @@ METHOD SetFocus(lValid) CLASS HControl
 
    LOCAL lSuspend := ::oParent:lSuspendMsgsHandling
 
-   IF !IsWindowEnabled(::Handle)
+   IF !IsWindowEnabled(::handle)
       ::oParent:lSuspendMsgsHandling := .T.
       //GetSkip(::oParent, ::handle, , 1)
       SendMessage(GetActiveWindow(), WM_NEXTDLGCTL, 0, 0)
@@ -214,7 +214,7 @@ METHOD SetFocus(lValid) CLASS HControl
       ::oParent:lSuspendMsgsHandling := lSuspend
    ENDIF
    IF ::GetParentForm():Type < WND_DLG_RESOURCE
-      ::GetParentForm():nFocus := ::Handle
+      ::GetParentForm():nFocus := ::handle
    ENDIF
 
 RETURN NIL
@@ -223,14 +223,14 @@ RETURN NIL
 
 METHOD Enable() CLASS HControl
 
-   LOCAL lEnable := IsWindowEnabled(::Handle)
+   LOCAL lEnable := IsWindowEnabled(::handle)
    LOCAL nPos
    LOCAL nNext
 
    EnableWindow(::handle, .T.)
-   IF ::oParent:lGetSkipLostFocus .AND. !lEnable .AND. Hwg_BitaND(HWG_GETWINDOWSTYLE(::Handle), WS_TABSTOP) > 0
-      nNext := Ascan(::oParent:aControls, {|o|PtrtouLong(o:Handle) == PtrtouLong(GetFocus())})
-      nPos := Ascan(::oParent:acontrols, {|o|PtrtouLong(o:Handle) == PtrtouLong(::handle)})
+   IF ::oParent:lGetSkipLostFocus .AND. !lEnable .AND. Hwg_BitaND(HWG_GETWINDOWSTYLE(::handle), WS_TABSTOP) > 0
+      nNext := Ascan(::oParent:aControls, {|o|PtrtouLong(o:handle) == PtrtouLong(GetFocus())})
+      nPos := Ascan(::oParent:acontrols, {|o|PtrtouLong(o:handle) == PtrtouLong(::handle)})
       IF nPos < nNext
          SendMessage(GetActiveWindow(), WM_NEXTDLGCTL, ::handle, 1)
       ENDIF
@@ -248,8 +248,8 @@ METHOD DisableBackColor(DisableBColor)
          ::Disablebrush:Release()
       ENDIF
       ::Disablebrush := HBrush():Add(::DisableBColor)
-      IF !::IsEnabled() .AND. IsWindowVisible(::Handle)
-         InvalidateRect(::Handle, 0)
+      IF !::IsEnabled() .AND. IsWindowVisible(::handle)
+         InvalidateRect(::handle, 0)
       ENDIF
    ENDIF
 
@@ -262,7 +262,7 @@ METHOD SetFont(oFont) CLASS HControl
    IF oFont != NIL
       IF hb_IsObject(oFont)
          ::oFont := oFont:SetFontStyle()
-         SetWindowFont(::Handle, ::oFont:Handle, .T.)
+         SetWindowFont(::handle, ::oFont:handle, .T.)
       ENDIF
    ELSEIF ::oParent:oFont != NIL
       SetWindowFont(::handle, ::oParent:oFont:handle, .T.)

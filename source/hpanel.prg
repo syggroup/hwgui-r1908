@@ -144,10 +144,10 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
    LOCAL nret
 
    IF msg == WM_PAINT
-      InvalidateRect( ::handle, 0 )
+      InvalidateRect(::handle, 0)
       ::Paint()
    ELSEIF msg == WM_NCPAINT
-     //- RedrawWindow( ::handle, RDW_NOERASE +  RDW_FRAME + RDW_INVALIDATE + RDW_INTERNALPAINT )
+     //- RedrawWindow(::handle, RDW_NOERASE + RDW_FRAME + RDW_INVALIDATE + RDW_INTERNALPAINT)
    ELSEIF msg == WM_ERASEBKGND
       IF ::backstyle = OPAQUE
          RETURN ::nrePaint
@@ -191,9 +191,9 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HPanel
       ENDIF
    ENDIF
    IF msg = WM_NCPAINT .AND. ::GetParentForm():nInitFocus > 0 .AND. ;
-       ( SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), ::Handle  ) .OR. ;
-         SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), GetParent(::Handle) ) )
-      GetSkip(::oParent, ::GetParentForm():nInitFocus , , IIF( SelfFocus( ::GetParentForm():nInitFocus, ::Handle ), 1, 0 ))
+       ( SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), ::handle  ) .OR. ;
+         SELFFOCUS( GetParent( ::GetParentForm():nInitFocus ), GetParent(::handle) ) )
+      GetSkip(::oParent, ::GetParentForm():nInitFocus , , IIF( SelfFocus( ::GetParentForm():nInitFocus, ::handle ), 1, 0 ))
       ::GetParentForm():nInitFocus := 0
 
    ELSEIF msg = WM_SETFOCUS .AND. Empty(::GetParentForm():nInitFocus) .AND. !::lSuspendMsgsHandling  //.AND. Hwg_BitaND(::sTyle, WS_TABSTOP) > 0 .
@@ -283,7 +283,7 @@ METHOD Release() CLASS HPanel
       ::oParent:aOffset[1] := MAX( ::oParent:aOffset[1] , 0 )
       ::oParent:aOffset[2] := MAX( ::oParent:aOffset[2] , 0 )
       ::oParent:aOffset[3] := MAX( ::oParent:aOffset[3] , 0 )
-      SENDMESSAGE(::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ))
+      SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
       ::nHeight := 0
       ::nWidth := 0
    ENDIF
@@ -318,8 +318,8 @@ METHOD Hide() CLASS HPanel
    */
     ::Super:Hide()
     IF ::oParent:type == WND_MDI .AND. lRes
-       //SENDMESSAGE(::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ))
-       InvalidateRect( ::oParent:handle, 1, ::nLeft, ::nTop + 1, ::nLeft + ::nWidth, ::nTop + ::nHeight )
+       //SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
+       InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop + 1, ::nLeft + ::nWidth, ::nTop + ::nHeight)
     ENDIF
     RETURN Nil
 
@@ -346,8 +346,8 @@ METHOD Show() CLASS HPanel
    */
    ::Super:Show()
    IF ::oParent:type == WND_MDI .AND. lRes
-       //SENDMESSAGE(::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ))
-       InvalidateRect( ::oParent:handle, 1, ::nLeft, ::nTop+1, ::nLeft + ::nWidth, ::nTop + ::nHeight )
+       //SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
+       InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop+1, ::nLeft + ::nWidth, ::nTop + ::nHeight)
    ENDIF
    RETURN Nil
 
@@ -374,14 +374,14 @@ METHOD Resize() CLASS HPanel
             ::oParent:aOffset[3] += ( nWidth - ::nWidth )
          ENDIF
       ENDIF
-      SENDMESSAGE(::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ))
+      SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
    ELSE
       RETURN Nil
    ENDIF
    */
    ::nWidth  := aCoors[3] - aCoors[1]
    ::nHeight := aCoors[4] - aCoors[2]
- //  RedrawWindow( ::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW )  // Force a complete redraw
+   //RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW) // Force a complete redraw
  
    RETURN Nil
 
@@ -414,7 +414,7 @@ METHOD ResizeOffSet( nMode ) CLASS HPanel
       ::oParent:aOffset[2] := MAX( ::oParent:aOffset[2] , 0 )
       ::oParent:aOffset[3] := MAX( ::oParent:aOffset[3] , 0 )
       IF lRes
-         SENDMESSAGE(::oParent:Handle, WM_SIZE, 0, MAKELPARAM( ::oParent:nWidth, ::oParent:nHeight ))
+         SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
       ENDIF
    ENDIF
 

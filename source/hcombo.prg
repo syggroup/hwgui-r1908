@@ -342,20 +342,20 @@ METHOD INIT() CLASS HComboBox
       IF !::lResource
          // HEIGHT Items
          IF !Empty(::nhItem)
-            sendmessage(::handle, CB_SETITEMHEIGHT, 0, ::nhItem + 0.10)
+            SendMessage(::handle, CB_SETITEMHEIGHT, 0, ::nhItem + 0.10)
          ELSE
-            ::nhItem := sendmessage(::handle, CB_GETITEMHEIGHT, 0, 0) + 0.10
+            ::nhItem := SendMessage(::handle, CB_GETITEMHEIGHT, 0, 0) + 0.10
          ENDIF
-         nHeightBox := sendmessage(::handle, CB_GETITEMHEIGHT, -1, 0) //+ 0.750
+         nHeightBox := SendMessage(::handle, CB_GETITEMHEIGHT, -1, 0) //+ 0.750
          //  WIDTH  Items
          IF !Empty(::ncWidth)
-            sendmessage(::handle, CB_SETDROPPEDWIDTH, ::ncWidth, 0)
+            SendMessage(::handle, CB_SETDROPPEDWIDTH, ::ncWidth, 0)
          ENDIF
          ::nHeight := Int( nHeightBox / 0.75 + ( ::nhItem * ::nDisplay ) ) + 3
       ENDIF
    ENDIF
    IF !::lResource
-      MoveWindow( ::handle, ::nLeft, ::nTop, ::nWidth, ::nHeight )
+      MoveWindow(::handle, ::nLeft, ::nTop, ::nWidth, ::nHeight)
       // HEIGHT COMBOBOX
       SendMessage(::handle, CB_SETITEMHEIGHT, -1, ::nHeightBox)
    ENDIF
@@ -574,7 +574,7 @@ RETURN -1
 METHOD MaxLength( nMaxLength ) CLASS HComboBox
 
    IF nMaxLength != Nil .AND. ::lEdit
-       Sendmessage(::handle, CB_LIMITTEXT, nMaxLength, 0)
+       SendMessage(::handle, CB_LIMITTEXT, nMaxLength, 0)
        ::nMaxLength := nMaxLength
    ENDIF
 
@@ -794,7 +794,7 @@ METHOD DisplayValue(cValue) CLASS HComboBox
    ENDIF
 
 RETURN IIF( !::lEdit, GetEditText( ::oParent:handle, ::id ), ::cDisplayValue )
-//RETURN IIF( IsWindow( ::oParent:handle ), GetEditText( ::oParent:handle, ::id ), ::cDisplayValue )
+//RETURN IIF( IsWindow(::oParent:handle), GetEditText( ::oParent:handle, ::id ), ::cDisplayValue )
 
 //-------------------------------------------------------------------------------------------------------------------//
 
@@ -860,7 +860,7 @@ METHOD SetCueBanner( cText, lShowFoco ) CLASS HComboBox
    LOCAL lRet := .F.
 
    IF ::lEdit
-      lRet := SendMessage(::Handle, CB_SETCUEBANNER, IIF(Empty(lShowFoco), 0, 1), ANSITOUNICODE(cText))
+      lRet := SendMessage(::handle, CB_SETCUEBANNER, IIF(Empty(lShowFoco), 0, 1), ANSITOUNICODE(cText))
    ENDIF
 
 RETURN lRet
@@ -994,7 +994,7 @@ METHOD Valid() CLASS HComboBox
       IF oDlg != Nil
          oDlg:nLastKey := 0
       ENDIF
-      IF lTab .AND. SelfFocus( hCtrl ) .AND. !SelfFocus( ::oParent:handle, oDlg:Handle )
+      IF lTab .AND. SelfFocus( hCtrl ) .AND. !SelfFocus( ::oParent:handle, oDlg:handle )
         // IF ::oParent:CLASSNAME = "HTAB"
             ::oParent:SETFOCUS()
             Getskip(::oparent, ::handle, , nSkip)
@@ -1099,7 +1099,7 @@ METHOD Populate() CLASS HComboBox
           ELSE
              ComboAddString( ::handle, ::aItems[i] )
           ENDIF
-          numofchars := SendMessage(::handle,CB_GETLBTEXTLEN, i - 1, 0 )
+          numofchars := SendMessage(::handle, CB_GETLBTEXTLEN, i - 1, 0)
           if numofchars > LongComboWidth
               LongComboWidth := numofchars
           endif
@@ -1211,9 +1211,9 @@ METHOD onEvent( msg, wParam, lParam ) CLASS hCheckComboBox
 
          nIndex := SendMessage(::handle, CB_GETCURSEL, wParam, lParam) + 1
          rcItem := COMBOGETITEMRECT( ::handle, nIndex - 1 )
-         InvalidateRect( ::handle, .F., rcItem[1], rcItem[2], rcItem[3], rcItem[4] )
+         InvalidateRect(::handle, .F., rcItem[1], rcItem[2], rcItem[3], rcItem[4])
          ::SetCheck( nIndex, !::GetCheck( nIndex ) )
-         SendMessage(::oParent:handle, WM_COMMAND, MAKELONG( ::id, CBN_SELCHANGE ), ::handle)
+         SendMessage(::oParent:handle, WM_COMMAND, MAKELONG(::id, CBN_SELCHANGE), ::handle)
       ENDIF
       IF ( ::GetParentForm( Self ) :Type < WND_DLG_RESOURCE .OR. !::GetParentForm( Self ) :lModal )
          IF wParam = VK_TAB
@@ -1248,13 +1248,13 @@ METHOD onEvent( msg, wParam, lParam ) CLASS hCheckComboBox
          //IF ( PtInRect( rcItem, pt ) )
          IF pt[1] < ::nWidthCheck
             // Invalidate this window
-            InvalidateRect( ::handle, .F., rcItem[1], rcItem[2], rcItem[3], rcItem[4] )
+            InvalidateRect(::handle, .F., rcItem[1], rcItem[2], rcItem[3], rcItem[4])
             nIndex := SendMessage(::handle, CB_GETCURSEL, wParam, lParam) + 1
             ::SetCheck( nIndex, !::GetCheck( nIndex ) )
 
             // Notify that selection has changed
 
-            SendMessage(::oParent:handle, WM_COMMAND, MAKELONG( ::id, CBN_SELCHANGE ), ::handle)
+            SendMessage(::oParent:handle, WM_COMMAND, MAKELONG(::id, CBN_SELCHANGE), ::handle)
 
          ENDIF
       ENDIF
@@ -1402,7 +1402,7 @@ METHOD SetCheck( nIndex, bFlag ) CLASS hCheckComboBox
    ::m_bTextUpdated := FALSE
 
    // Redraw the window
-   InvalidateRect( ::handle, 0 )
+   InvalidateRect(::handle, 0)
 
 RETURN nResult
 
@@ -1579,7 +1579,7 @@ METHOD MeasureItem( l ) CLASS hCheckComboBox
 
       IF ( !::m_bItemHeightSet )
          ::m_bItemHeightSet := .T.
-         SendMessage(::handle, CB_SETITEMHEIGHT, - 1, MAKELONG( lpMeasureItemStruct[5], 0 ))
+         SendMessage(::handle, CB_SETITEMHEIGHT, - 1, MAKELONG(lpMeasureItemStruct[5], 0))
       ENDIF
 
       dc:SelectObject(pFont)
