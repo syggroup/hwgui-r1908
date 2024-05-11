@@ -89,6 +89,7 @@ $(LIB_DIR)/libhwgui.a : \
    $(OBJ_DIR)/htree.o \
    $(OBJ_DIR)/hupdown.o \
    $(OBJ_DIR)/hwindow.o \
+   $(OBJ_DIR)/hmainwindow.o \
    $(OBJ_DIR)/hwinprn.o \
    $(OBJ_DIR)/listbox.o \
    $(OBJ_DIR)/media_c.o \

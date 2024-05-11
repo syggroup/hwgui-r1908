@@ -115,6 +115,7 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\htree.obj \
    $(OBJ_DIR)\hupdown.obj \
    $(OBJ_DIR)\hwindow.obj \
+   $(OBJ_DIR)\hmainwindow.obj \
    $(OBJ_DIR)\hwinprn.obj \
    $(OBJ_DIR)\menu.obj \
    $(OBJ_DIR)\c_ipaddr.obj \
@@ -453,8 +454,12 @@ $(OBJ_DIR)\hupdown.obj : $(OBJ_DIR)\hupdown.c
 
 $(OBJ_DIR)\hwindow.c : $(SRC_DIR)\hwindow.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
-
 $(OBJ_DIR)\hwindow.obj : $(OBJ_DIR)\hwindow.c
+   $(CC_EXE) $(CFLAGS) -fo$@ $**
+
+$(OBJ_DIR)\hmainwindow.c : $(SRC_DIR)\hmainwindow.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hmainwindow.obj : $(OBJ_DIR)\hmainwindow.c
    $(CC_EXE) $(CFLAGS) -fo$@ $**
 
 $(OBJ_DIR)\hwinprn.c : $(SRC_DIR)\hwinprn.prg

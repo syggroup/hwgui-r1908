@@ -102,6 +102,7 @@ $(LIB_DIR)\hwgui-b32.dll:   \
    $(OBJ_DIR)\hrect.obj \
    $(OBJ_DIR)\hupdown.obj \
    $(OBJ_DIR)\hwindow.obj \
+   $(OBJ_DIR)\hmainwindow.obj \
    $(OBJ_DIR)\hwinprn.obj \
    $(OBJ_DIR)\menu.obj \
    $(OBJ_DIR)\barcode.obj \

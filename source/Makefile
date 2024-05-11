@@ -57,6 +57,7 @@ PRG_SOURCES=\
 	htab.prg \
 	hupdown.prg \
 	hwindow.prg \
+	hmainwindow.prg \
 	hwinprn.prg \
 	menu.prg \
 	repexec.prg \

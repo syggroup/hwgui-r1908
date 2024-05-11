@@ -199,266 +199,19 @@ METHOD DelItem( oWnd ) CLASS HWindow
 
 METHOD FindWindow(hWndTitle) CLASS HWindow
    LOCAL cType := VALTYPE(hWndTitle), i
-   
+
    IF cType != "C"
       i := AScan( ::aWindows, { | o | PtrtoUlong( o:handle ) == PtrtoUlong( hWndTitle ) } )
    ELSE
       i := AScan( ::aWindows, { | o | hb_IsChar(o:Title) .AND. o:Title == hWndTitle } )
    ENDIF
    RETURN IIf( i == 0, Nil, ::aWindows[i] )
-   
+
 METHOD GetMain() CLASS HWindow
    RETURN IIf( Len( ::aWindows ) > 0, ;
                IIf( ::aWindows[1]:Type == WND_MAIN, ;
                     ::aWindows[1],                  ;
                     IIf( Len( ::aWindows ) > 1, ::aWindows[2], Nil ) ), Nil )
-
-
-
-CLASS HMainWindow INHERIT HWindow
-
-CLASS VAR aMessages INIT { ;
-                           { WM_COMMAND, WM_ERASEBKGND, WM_MOVE, WM_SIZE, WM_SYSCOMMAND, ;
-                             WM_NOTIFYICON, WM_ENTERIDLE, WM_CLOSE, WM_DESTROY, WM_ENDSESSION, WM_ACTIVATE, WM_HELP }, ;
-                           { ;
-                             { | o, w, l | onCommand(o, w, l) },        ;
-                             { | o, w | onEraseBk( o, w ) },              ;
-                             { | o | onMove(o) },                       ;
-                             { | o, w, l | onSize(o, w, l) },           ;
-                             { | o, w, l | onSysCommand(o, w, l) },     ;
-                             { | o, w, l | onNotifyIcon( o, w, l ) },     ;
-                             { | o, w, l | onEnterIdle(o, w, l) },      ;
-                             { | o | onCloseQuery( o ) },                 ;
-                             { | o | onDestroy( o ) },                    ;
-                             { | o, w | onEndSession( o, w ) },           ;
-                             { | o, w, l | onActivate(o, w, l) },       ;
-                             { | o, w, l | onHelp(o, w, l) }            ;
-                           } ;
-                         }
-
-   DATA  nMenuPos
-   DATA  bMdiMenu
-   DATA  oNotifyIcon, bNotify, oNotifyMenu
-   DATA  lTray INIT .F.
-
-   METHOD New( lType, oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, nPos,   ;
-               oFont, bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther, ;
-               cAppName, oBmp, cHelp, nHelpId, bCloseQuery, bRefresh, bMdiMenu )
-   METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate)
-   METHOD onEvent( msg, wParam, lParam )
-   METHOD InitTray( oNotifyIcon, bNotify, oNotifyMenu, cTooltip )
-   METHOD GetMdiActive() INLINE ::FindWindow(IIF( ::GetMain() != Nil, SendMessage(::GetMain():handle, WM_MDIGETACTIVE, 0, 0) , Nil ))
-
-ENDCLASS
-
-METHOD New( lType, oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, nPos,   ;
-            oFont, bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther, ;
-            cAppName, oBmp, cHelp, nHelpId, bCloseQuery, bRefresh, bMdiMenu ) CLASS HMainWindow
-
-   ::Super:New( oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, ;
-              bInit, bExit, bSize, bPaint, bGfocus, bLfocus, bOther,  ;
-              cAppName, oBmp, cHelp, nHelpId, bCloseQuery, bRefresh )
-   ::Type := lType
-
-   IF lType == WND_MDI
-
-      //::nMenuPos := nPos
-      ::nMenuPos := IIF( nPos = Nil, -1, nPos )     //don't show menu
-      ::bMdiMenu := bMdiMenu
-      ::Style := nStyle
-      ::tColor := clr
-      ::oBmp := oBmp
-       clr:= NIL  // because error
-      ::handle := Hwg_InitMdiWindow(Self, ::szAppName, cTitle, cMenu,  ;
-                                    IIf( oIcon != Nil, oIcon:handle, Nil ), , ;  //clr, ;
-                                    nStyle, ::nLeft, ::nTop, ::nWidth, ::nHeight)
-
-      IF cHelp != NIL
-         SetHelpFileName(cHelp)
-      ENDIF
-
-      /* ADDED screen to backgroup to MDI MAIN */
-      ::Screen := HMdiChildWindow():New(, ::tcolor, WS_CHILD + WS_MAXIMIZE + MB_USERICON + WS_DISABLED,;
-                      0, 0, ::nWidth * 1, ::nheight * 1 - GETSYSTEMMETRICS( SM_CYSMCAPTION ) - GETSYSTEMMETRICS( SM_CYSMCAPTION ) , ;
-                     -1 ,,,,,::bSize ,,,,,,::oBmp,,,,,, )
-      ::Screen:Type    := WND_MDICHILD
-      
-      ::oDefaultParent := Self
-
-   ELSEIF lType == WND_MAIN
-
-      clr := NIL  // because error and WINDOW IS INVISIBLE
-      ::handle := Hwg_InitMainWindow(Self, ::szAppName, cTitle, cMenu, ;
-                      IIf( oIcon != Nil, oIcon:handle, Nil ), ;
-                      IIf( oBmp != Nil, - 1, clr ), nStyle, ::nLeft, ::nTop, ::nWidth, ::nHeight)
-
-      IF cHelp != NIL
-         SetHelpFileName(cHelp)
-      ENDIF
-
-   ENDIF
-   ::rect := GetWindowRect(::handle)
-   /*
-   IF hb_IsBlock(::bInit)
-      Eval( ::bInit, Self )
-   ENDIF
-    */
-   RETURN Self
-
-METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate) CLASS HMainWindow
-   LOCAL oWndClient, handle, lres
-
-   DEFAULT lMaximized := .F.
-   DEFAULT lMinimized := .F.
-   lCentered  := ( !lMaximized .AND. !Empty(lCentered) .AND. lCentered ) .OR. Hwg_BitAND(::Style, DS_CENTER) != 0
-   DEFAULT lShow := .T.
-   CreateGetList( Self )
-   AEVAL( ::aControls, { | o | o:lInit := .F. } )
-   
-   IF ::Type == WND_MDI
-   
-      oWndClient := HWindow():New( ,,, ::style, ::title,, ::bInit, ::bDestroy, ::bSize, ;
-                                   ::bPaint, ::bGetFocus, ::bLostFocus, ::bOther, ::obmp )
-
-      handle := Hwg_InitClientWindow(oWndClient, ::nMenuPos, ::nLeft, ::nTop, ::nWidth, ::nHeight)
-      ::oClient := HWindow():aWindows[2]
-
-     // SetWindowPos( ::oClient:handle, 0, 0, 0, 0, 0, SWP_NOACTIVATE + SWP_NOMOVE + SWP_NOSIZE + SWP_NOZORDER +;
-     //                   SWP_NOOWNERZORDER + SWP_FRAMECHANGED)
-
-      /*
-      // ADDED screen to backgroup to MDI MAIN
-      ::Screen := HMdiChildWindow():New(, ::tcolor, WS_CHILD + MB_USERICON + WS_MAXIMIZE + WS_DISABLED,;
-                  0, 0, ::nWidth * 1, ::nheight * 1 - GETSYSTEMMETRICS( SM_CYSMCAPTION ) - GETSYSTEMMETRICS( SM_CYSMCAPTION ) , ;
-                 -1 ,,,,,,,,,,,::oBmp,,,,,, )
-      */
-
-      IF ::Screen != Nil
-         ::Screen:lExitOnEsc := .F.
-         //::Screen:lClipper := .F.
-         ::Screen:Activate(.T., .T.)
-      ENDIF
-      ///
-      oWndClient:handle := handle
-      /* recalculate area offset */
-      SendMessage(::handle, WM_SIZE, 0, MAKELPARAM(::nWidth, ::nHeight))
-      
-      InitControls( Self )
-      IF hb_IsBlock(::bInit)
-         lres := Eval( ::bInit, Self )
-         IF hb_IsLogical(lres) .AND. !lres
-            SendMessage(::handle, WM_DESTROY, 0, 0)
-            RETURN Nil
-         ENDIF
-      ENDIF
-      IF ::Screen != Nil
-         ::Screen:lBmpCenter := ::lBmpCenter
-         ::Screen:Maximize()
-         SetWindowPos( ::Screen:handle, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOACTIVATE + SWP_NOMOVE + SWP_NOSIZE + SWP_NOZORDER +;
-                                                                 SWP_NOOWNERZORDER + SWP_FRAMECHANGED )
-         ::Screen:Restore()
-      ENDIF
-      IF lMaximized
-         ::Maximize()
-      ELSEIF lMinimized
-         ::Minimize()
-      ELSEIF lCentered
-         ::Center()
-      ENDIF
-
-      IF ( bActivate  != NIL )
-         Eval( bActivate, Self )
-      ENDIF
-       AddToolTip(::handle, ::handle, "")
-      Hwg_ActivateMdiWindow(( lShow == Nil .OR. lShow ), ::hAccel, lMaximized, lMinimized)
-
-   ELSEIF ::Type == WND_MAIN
-   
-      IF hb_IsBlock(::bInit)
-         lres := Eval( ::bInit, Self )
-         IF hb_IsLogical(lres) .AND. !lres
-            SendMessage(::handle, WM_DESTROY, 0, 0)
-            RETURN Nil
-         ENDIF
-      ENDIF
-      IF lMaximized
-         ::maximize()
-      ELSEIF lMinimized
-         ::minimize()
-      ELSEIF lCentered
-         ::center()
-      ENDIF
-
-      IF ( bActivate  != NIL )
-         Eval( bActivate, Self )
-      ENDIF
-
-      AddToolTip(::handle, ::handle, "")
-      Hwg_ActivateMainWindow(( lShow == Nil .OR. lShow ), ::hAccel, lMaximized, lMinimized)
-
-   ENDIF
-
-   RETURN Nil
-
-METHOD onEvent( msg, wParam, lParam ) CLASS HMainWindow
-   Local i, xPos, yPos, oMdi, aCoors
-   LOCAL nFocus := If( Hb_IsNumeric(::nFocus), ::nFocus, 0 )
-
-   // writelog( str(msg) + str(wParam) + str(lParam) + chr(13) )
-
-   IF msg = WM_MENUCHAR
-      // PROCESS ACCELERATOR IN CONTROLS
-      RETURN onSysCommand(Self, SC_KEYMENU, LoWord(wParam))
-   ENDIF
-   // added control MDICHILD MODAL
-   IF msg = WM_PARENTNOTIFY
-      IF wParam = WM_LBUTTONDOWN .AND. !Empty(::GetMdiActive())
-         oMdi := ::GetMdiActive()
-         IF oMdi:lModal
-            xPos := LoWord(lParam)
-            yPos := HiWord(lParam) // + ::nTop + GetSystemMetrics( SM_CYMENU ) + GETSYSTEMMETRICS( SM_CYCAPTION )
-            aCoors := ScreenToClient( ::handle, GetWindowRect( oMdi:handle ) ) // acoors[1], acoors[2]  )
-            IF ( !PtInRect( aCoors, { xPos, yPos } ) )
-               MSGBEEP()
-               FOR i = 1 to 6
-                  FlashWindow(oMdi:handle, 1)
-                  Sleep(60)
-               NEXT
-               SetWindowPos( oMdi:handle, HWND_TOP, 0, 0, 0, 0, ;
-                             SWP_NOMOVE + SWP_NOSIZE +  SWP_NOOWNERZORDER + SWP_FRAMECHANGED)
-               ::lSuspendMsgsHandling := .T.                             
-               RETURN 0
-            ENDIF
-         ENDIF
-      ENDIF
-   ELSEIF msg = WM_SETFOCUS .AND. nFocus > 0
-      SETFOCUS( nFocus )
-   ENDIF
-   IF ( i := Ascan( ::aMessages[1],msg ) ) != 0 .AND. ;
-       ( !::lSuspendMsgsHandling .OR. msg = WM_ERASEBKGND .OR. msg = WM_SIZE )
-      Return Eval( ::aMessages[2,i], Self, wParam, lParam )
-   ELSE
-      IF msg == WM_HSCROLL .OR. msg == WM_VSCROLL .or. msg == WM_MOUSEWHEEL
-         IF ::nScrollBars != -1
-             ::ScrollHV( Self,msg,wParam,lParam )
-         ENDIF
-         onTrackScroll( Self, msg, wParam, lParam )
-      ENDIF
-      RETURN ::Super:onEvent( msg, wParam, lParam )
-   ENDIF
-
-   RETURN - 1
-
-METHOD InitTray( oNotifyIcon, bNotify, oNotifyMenu, cTooltip ) CLASS HMainWindow
-
-   ::bNotify     := bNotify
-   ::oNotifyMenu := oNotifyMenu
-   ::oNotifyIcon := oNotifyIcon
-   ShellNotifyIcon( .T., ::handle, oNotifyIcon:handle, cTooltip )
-   ::lTray := .T.
-
-   RETURN Nil
-
 
 CLASS HMDIChildWindow INHERIT HWindow
 
@@ -786,12 +539,13 @@ FUNCTION ReleaseAllWindows( hWnd )
 
    #define  FLAG_CHECK      2
 
+#if 0
 STATIC FUNCTION onCommand(oWnd, wParam, lParam)
    LOCAL iItem, iCont, aMenu, iParHigh, iParLow, nHandle, oChild, i
 
    HB_SYMBOL_UNUSED(lParam)
 
-   IF wParam >= FIRST_MDICHILD_ID .AND. wparam < FIRST_MDICHILD_ID + MAX_MDICHILD_WINDOWS .AND. !Empty(oWnd:Screen) 
+   IF wParam >= FIRST_MDICHILD_ID .AND. wparam < FIRST_MDICHILD_ID + MAX_MDICHILD_WINDOWS .AND. !Empty(oWnd:Screen)
       IF wParam >= FIRST_MDICHILD_ID
          SetWindowPos( ownd:Screen:handle, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOREDRAW + SWP_NOACTIVATE + SWP_NOMOVE + SWP_NOSIZE )
       ENDIF
@@ -825,7 +579,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
          SendMessage(HWindow():aWindows[2]:handle, WM_MDIMAXIMIZE, nHandle, 0)
       ENDIF
    ELSEIF wParam > FIRST_MDICHILD_ID .AND. wParam < FIRST_MDICHILD_ID + MAX_MDICHILD_WINDOWS
-      IF oWnd:bMdiMenu != Nil 
+      IF oWnd:bMdiMenu != Nil
          Eval( oWnd:bMdiMenu, HWindow():aWindows[wParam - FIRST_MDICHILD_ID + 2], wParam  )
       ENDIF
       nHandle := HWindow():aWindows[wParam - FIRST_MDICHILD_ID + 2]:handle
@@ -854,7 +608,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
       Eval( aMenu[1, iCont, 1], iCont, wParam )
    ELSEIF wParam != SC_CLOSE .AND. wParam != SC_MINIMIZE .AND. wParam != SC_MAXIMIZE .AND.;
            wParam != SC_RESTORE .AND. oWnd:Type = WND_MDI //.AND. oWnd:bMdiMenu != Nil
-      /*     
+      /*
       // ADDED
       IF !Empty(oWnd:Screen)
          IF wParam = FIRST_MDICHILD_ID  // first menu
@@ -875,6 +629,7 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
    ENDIF
 
    RETURN 0
+#endif
 
 FUNCTION onMove(oWnd)
    LOCAL aControls := GetWindowRect( oWnd:handle )
@@ -1013,6 +768,7 @@ STATIC FUNCTION onSysCommand(oWnd, wParam, lParam)
 
    RETURN - 1
 
+#if 0
 STATIC FUNCTION onEndSession( oWnd, wParam )
 
    LOCAL i
@@ -1028,7 +784,9 @@ STATIC FUNCTION onEndSession( oWnd, wParam )
    ENDIF
 
    RETURN - 1
+#endif
 
+#if 0
 STATIC FUNCTION onNotifyIcon( oWnd, wParam, lParam )
    LOCAL ar
 
@@ -1053,6 +811,7 @@ STATIC FUNCTION onNotifyIcon( oWnd, wParam, lParam )
       ENDIF
    ENDIF
    RETURN - 1
+#endif
 
 STATIC FUNCTION onMdiCreate(oWnd, lParam)
    LOCAL nReturn
@@ -1220,6 +979,7 @@ STATIC FUNCTION onEnterIdle(oDlg, wParam, lParam)
    ENDIF
    RETURN 0
 
+#if 0
 //add by sauli
 STATIC FUNCTION onCloseQuery( o )
    IF hb_IsBlock(o:bCloseQuery)
@@ -1232,7 +992,9 @@ STATIC FUNCTION onCloseQuery( o )
 
    RETURN - 1
 // end sauli
+#endif
 
+#if 0
 STATIC FUNCTION onActivate(oWin, wParam, lParam)
    LOCAL iParLow := LOWORD(wParam), iParHigh := HIWORD(wParam)
 
@@ -1240,7 +1002,7 @@ STATIC FUNCTION onActivate(oWin, wParam, lParam)
 
    IF ( iParLow = WA_ACTIVE .OR. iParLow = WA_CLICKACTIVE ) .AND. IsWindowVisible(oWin:handle)
       IF ( oWin:type = WND_MDICHILD .AND. PtrtoUlong( lParam ) = 0  ) .OR.;
-          ( oWin:type != WND_MDICHILD .AND. iParHigh = 0 ) 
+          ( oWin:type != WND_MDICHILD .AND. iParHigh = 0 )
          IF oWin:bGetFocus != Nil //.AND. IsWindowVisible(::handle)
             oWin:lSuspendMsgsHandling := .T.
             IF iParHigh > 0  // MINIMIZED
@@ -1249,10 +1011,10 @@ STATIC FUNCTION onActivate(oWin, wParam, lParam)
             Eval( oWin:bGetFocus, oWin, lParam )
             oWin:lSuspendMsgsHandling := .F.
          ENDIF
-      ENDIF   
-   ELSEIF iParLow = WA_INACTIVE 
+      ENDIF
+   ELSEIF iParLow = WA_INACTIVE
       IF ( oWin:type = WND_MDICHILD .AND. PtrtoUlong( lParam ) != 0 ).OR.;
-          ( oWin:type != WND_MDICHILD .AND. iParHigh = 0 .AND. PtrtoUlong( lParam ) = 0 ) 
+          ( oWin:type != WND_MDICHILD .AND. iParHigh = 0 .AND. PtrtoUlong( lParam ) = 0 )
          IF oWin:bLostFocus != Nil //.AND. IsWindowVisible(::handle)
             oWin:lSuspendMsgsHandling := .T.
             Eval( oWin:bLostFocus, oWin, lParam )
@@ -1261,3 +1023,4 @@ STATIC FUNCTION onActivate(oWin, wParam, lParam)
       ENDIF
    ENDIF
    RETURN 1
+#endif
