@@ -126,6 +126,7 @@ $(LIB_DIR)/libhwgui.a : \
    $(OBJ_DIR)/hwindow.o \
    $(OBJ_DIR)/hmainwindow.o \
    $(OBJ_DIR)/hmdichildwindow.o \
+   $(OBJ_DIR)/hchildwindow.o \
    $(OBJ_DIR)/hwinprn.o \
    $(OBJ_DIR)/menu.o \
    $(OBJ_DIR)/c_ipaddr.o \

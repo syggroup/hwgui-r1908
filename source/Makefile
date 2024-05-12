@@ -59,6 +59,7 @@ PRG_SOURCES=\
 	hwindow.prg \
 	hmainwindow.prg \
 	hmdichildwindow.prg \
+	hchildwindow.prg \
 	hwinprn.prg \
 	menu.prg \
 	repexec.prg \

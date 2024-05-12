@@ -125,6 +125,7 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\hwindow.obj \
    $(OBJ_DIR)\hmainwindow.obj \
    $(OBJ_DIR)\hmdichildwindow.obj \
+   $(OBJ_DIR)\hchildwindow.obj \
    $(OBJ_DIR)\hwinprn.obj \
    $(OBJ_DIR)\hrect.obj \
    $(OBJ_DIR)\menu.obj \
@@ -485,6 +486,11 @@ $(OBJ_DIR)\hmainwindow.obj : $(OBJ_DIR)\hmainwindow.c
 $(OBJ_DIR)\hmdichildwindow.c : $(SRC_DIR)\hmdichildwindow.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
 $(OBJ_DIR)\hmdichildwindow.obj : $(OBJ_DIR)\hmdichildwindow.c
+   $(CC_EXE) $(CFLAGS) /Fo$@ $**
+
+$(OBJ_DIR)\hchildwindow.c : $(SRC_DIR)\hchildwindow.prg
+   $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
+$(OBJ_DIR)\hchildwindow.obj : $(OBJ_DIR)\hchildwindow.c
    $(CC_EXE) $(CFLAGS) /Fo$@ $**
 
 $(OBJ_DIR)\hwinprn.c : $(SRC_DIR)\hwinprn.prg
