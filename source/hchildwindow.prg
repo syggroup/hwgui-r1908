@@ -144,7 +144,6 @@ RETURN -1
 #else
 METHOD onEvent(msg, wParam, lParam) CLASS HChildWindow
 
-   LOCAL i
    LOCAL oCtrl
 
    SWITCH msg
