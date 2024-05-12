@@ -88,6 +88,7 @@ source/hrect.prg
 source/hupdown.prg
 source/hwindow.prg
 source/hmainwindow.prg
+source/hmdichildwindow.prg
 source/hwinprn.prg
 source/menu.prg
 source/repexec.prg

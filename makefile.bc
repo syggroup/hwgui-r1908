@@ -182,6 +182,7 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\hupdown.obj \
    $(HWGUI_OBJ_DIR)\hwindow.obj \
    $(HWGUI_OBJ_DIR)\hmainwindow.obj \
+   $(HWGUI_OBJ_DIR)\hmdichildwindow.obj \
    $(HWGUI_OBJ_DIR)\hwinprn.obj \
    $(HWGUI_OBJ_DIR)\menu.obj \
    $(HWGUI_OBJ_DIR)\c_ipaddr.obj \
