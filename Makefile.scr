@@ -104,7 +104,7 @@ $(LIB_DIR)/libhwgui.a : \
    $(OBJ_DIR)/htoolbutton.o \
    $(OBJ_DIR)/hmonthc.o \
    $(OBJ_DIR)/htrackbr.o \
-   $(OBJ_DIR)/hanimat.o \
+   $(OBJ_DIR)/hanimation.o \
    $(OBJ_DIR)/hnice.o \
    $(OBJ_DIR)/hownbtn.o \
    $(OBJ_DIR)/hpanel.o \

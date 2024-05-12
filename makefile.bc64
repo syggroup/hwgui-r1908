@@ -159,7 +159,7 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\htoolbutton.o \
    $(HWGUI_OBJ_DIR)\hmonthc.o \
    $(HWGUI_OBJ_DIR)\htrackbr.o \
-   $(HWGUI_OBJ_DIR)\hanimat.o \
+   $(HWGUI_OBJ_DIR)\hanimation.o \
    $(HWGUI_OBJ_DIR)\hnice.o \
    $(HWGUI_OBJ_DIR)\hownbtn.o \
    $(HWGUI_OBJ_DIR)\hpanel.o \

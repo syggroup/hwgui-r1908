@@ -87,7 +87,7 @@ source/htoolbarex.prg
 source/htoolbutton.prg
 source/hmonthc.prg
 source/htrackbr.prg
-source/hanimat.prg
+source/hanimation.prg
 source/hnice.prg
 source/hownbtn.prg
 source/hpanel.prg

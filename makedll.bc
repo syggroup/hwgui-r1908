@@ -85,7 +85,7 @@ $(LIB_DIR)\hwgui-b32.dll:   \
    $(OBJ_DIR)\htoolbutton.obj \
    $(OBJ_DIR)\hmonthc.obj \
    $(OBJ_DIR)\htrackbr.obj \
-   $(OBJ_DIR)\hanimat.obj \
+   $(OBJ_DIR)\hanimation.obj \
    $(OBJ_DIR)\hnice.obj \
    $(OBJ_DIR)\hownbtn.obj \
    $(OBJ_DIR)\hpanel.obj \

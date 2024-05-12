@@ -132,7 +132,7 @@ HWGUI_LIB_OBJS = \
    $(OBJ_DIR)\hgrid.obj \
    $(OBJ_DIR)\hgridex.obj \
    $(OBJ_DIR)\htrackbr.obj \
-   $(OBJ_DIR)\hanimat.obj \
+   $(OBJ_DIR)\hanimation.obj \
    $(OBJ_DIR)\hnice.obj \
    $(OBJ_DIR)\grid.obj \
    $(OBJ_DIR)\hdc.obj \
@@ -334,10 +334,9 @@ $(OBJ_DIR)\htrackbr.c : $(SRC_DIR)\htrackbr.prg
 $(OBJ_DIR)\htrackbr.obj : $(OBJ_DIR)\htrackbr.c
    $(CC_EXE) $(CFLAGS) -fo$@ $**
 
-$(OBJ_DIR)\hanimat.c : $(SRC_DIR)\hanimat.prg
+$(OBJ_DIR)\hanimation.c : $(SRC_DIR)\hanimation.prg
    $(HARBOUR_EXE) $(HARBOURFLAGS) $** -o$@
-
-$(OBJ_DIR)\hanimat.obj : $(OBJ_DIR)\hanimat.c
+$(OBJ_DIR)\hanimation.obj : $(OBJ_DIR)\hanimation.c
    $(CC_EXE) $(CFLAGS) -fo$@ $**
 
 $(OBJ_DIR)\hnice.c : $(SRC_DIR)\hnice.prg
