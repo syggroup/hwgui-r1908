@@ -136,6 +136,7 @@ HWGUI_LIB_OBJS = \
    $(HWGUI_OBJ_DIR)\hbrowse.o \
    $(HWGUI_OBJ_DIR)\hcheckbutton.o \
    $(HWGUI_OBJ_DIR)\hcombo.o \
+   $(HWGUI_OBJ_DIR)\hcheckcombobox.o \
    $(HWGUI_OBJ_DIR)\hcontrol.o \
    $(HWGUI_OBJ_DIR)\hstatus.o \
    $(HWGUI_OBJ_DIR)\hstatic.o \

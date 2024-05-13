@@ -35,6 +35,7 @@ PRG_SOURCES=\
 	hbrowse.prg \
 	hcheckbutton.prg \
 	hcombo.prg \
+	hcheckcombobox.prg \
 	hcontrol.prg \
 	hstatus.prg \
 	hstatic.prg \

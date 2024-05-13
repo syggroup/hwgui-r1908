@@ -62,6 +62,7 @@ $(LIB_DIR)\hwgui-b32.dll:   \
    $(OBJ_DIR)\hbrowse.obj \
    $(OBJ_DIR)\hcheckbutton.obj \
    $(OBJ_DIR)\hcombo.obj \
+   $(OBJ_DIR)\hcheckcombobox.obj \
    $(OBJ_DIR)\hcontrol.obj \
    $(OBJ_DIR)\hstatus.obj \
    $(OBJ_DIR)\hstatic.obj \
