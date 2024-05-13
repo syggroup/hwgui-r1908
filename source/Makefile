@@ -34,7 +34,7 @@ PRG_SOURCES=\
 	guimain.prg \
 	hbrowse.prg \
 	hcheckbutton.prg \
-	hcombo.prg \
+	hcombobox.prg \
 	hcheckcombobox.prg \
 	hcontrol.prg \
 	hstatus.prg \

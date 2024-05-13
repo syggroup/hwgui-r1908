@@ -43,7 +43,7 @@ source/guimain.prg
 source/barcode.prg
 source/hbrowse.prg
 source/hcheckbutton.prg
-source/hcombo.prg
+source/hcombobox.prg
 source/hcheckcombobox.prg
 source/hcontrol.prg
 source/hstatus.prg
