@@ -60,7 +60,7 @@ $(LIB_DIR)\hwgui-b32.dll:   \
    $(OBJ_DIR)\hicon.obj \
    $(OBJ_DIR)\guimain.obj \
    $(OBJ_DIR)\hbrowse.obj \
-   $(OBJ_DIR)\hcheck.obj \
+   $(OBJ_DIR)\hcheckbutton.obj \
    $(OBJ_DIR)\hcombo.obj \
    $(OBJ_DIR)\hcontrol.obj \
    $(OBJ_DIR)\hstatus.obj \

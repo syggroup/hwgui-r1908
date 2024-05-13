@@ -33,7 +33,7 @@ PRG_SOURCES=\
 	errorsys.prg \
 	guimain.prg \
 	hbrowse.prg \
-	hcheck.prg \
+	hcheckbutton.prg \
 	hcombo.prg \
 	hcontrol.prg \
 	hstatus.prg \
