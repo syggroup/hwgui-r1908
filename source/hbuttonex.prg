@@ -102,7 +102,7 @@ METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFon
 
    DEFAULT iStyle TO ST_ALIGN_HORIZ
    DEFAULT Transp TO .T.
-   DEFAULT nPictureMargin TO 0
+   DEFAULT nPictureMargin TO 1
    DEFAULT lnoThemes  TO .F.
 
    ::m_bLButtonDown := .F.
