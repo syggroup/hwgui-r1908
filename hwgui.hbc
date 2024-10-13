@@ -18,3 +18,4 @@
 # multiple definition of `HB_FUN_ERRORSYS'
 #{allmingw}ldflags=-Wl,--allow-multiple-definition
 #{allmsvc}ldflags=/FORCE:MULTIPLE
+-DHWG_USE_POINTER_ITEM

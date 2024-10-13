@@ -2,11 +2,14 @@
 # $Id: hbxml.hbp 1615 2011-02-18 13:53:35Z mlacecilia $
 #
 
+#-DHWG_USE_POINTER_ITEM
+
 -inc
 
 -hblib
 #-olib/hbxml
--olib/${hb_plat}/${hb_comp}/hbxml
+{!xhb}-oD:/devel/hwgui_hb/lib/${hb_plat}/${hb_comp}/hbxml
+{xhb}-oD:/devel/hwgui_hb/lib/${hb_plat}/${hb_comp}/hbxml_xhb
 
 -n -q0 -w3 -es2
 

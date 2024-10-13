@@ -1,0 +1,1 @@
+hbmk2 hwguiall -xhb -jobs=%NUMBER_OF_PROCESSORS%
