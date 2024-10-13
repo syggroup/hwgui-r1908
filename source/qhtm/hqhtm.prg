@@ -116,7 +116,7 @@ Local cLink := QHTM_GetNotify( lParam )
          IF File(cLink)
             QHTM_LoadFile(::handle, cLink)
          ELSE
-            MsgStop(cLink, "File not found")
+            HWG_MsgStop(cLink, "File not found")
          ENDIF
       ENDIF
    ENDIF

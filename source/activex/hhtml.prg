@@ -40,7 +40,7 @@ ENDCLASS
 METHOD New(oParent) CLASS HHtml
 
    IF !hwgax_OleInitialize()
-      MsgStop("Can't open OLE!","HHtml():New()")
+      HWG_MsgStop("Can't open OLE!","HHtml():New()")
       Return Nil
    ENDIF
 
@@ -55,7 +55,7 @@ METHOD Activate CLASS HHtml
    IF !Empty(::oParent:handle)
      ::oParent:oEmbedded := Self
       IF !hwgax_EmbedBrowserObject(::oParent:handle)
-         MsgStop("Can't embed IE object!","HHtml():New()")
+         HWG_MsgStop("Can't embed IE object!","HHtml():New()")
       ENDIF
    ENDIF
 Return Nil

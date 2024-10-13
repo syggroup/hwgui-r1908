@@ -159,7 +159,7 @@ HB_FUNC(HWG_BITANDINVERSE)
   hb_retnl((HB_ISPOINTER(1) ? PtrToUlong(hb_parptr(1)) : (ULONG)hb_parnl(1)) & (~hb_parnl(2)));
 }
 
-HB_FUNC(SETBIT)
+HB_FUNC(HWG_SETBIT)
 {
   if (hb_pcount() < 3 || hb_parni(3))
   {
@@ -397,7 +397,7 @@ HB_FUNC(POSTQUITMESSAGE)
 Contributed by Rodrigo Moreno rodrigo_moreno@yahoo.com base upon code minigui
 */
 
-HB_FUNC(SHELLABOUT)
+HB_FUNC(HWG_SHELLABOUT)
 {
   void *hStr1, *hStr2;
 
@@ -407,17 +407,32 @@ HB_FUNC(SHELLABOUT)
   hb_strfree(hStr2);
 }
 
-HB_FUNC(GETDESKTOPWIDTH)
+HB_FUNC( HWG_GETNUMMONITORS ) // PEGA O NUMERO DE MONITORES QUE ESTÁ RODANDO
+{
+   hb_retni( GetSystemMetrics( SM_CMONITORS ) );
+}
+
+HB_FUNC(HWG_GETDESKTOPWIDTH)
 {
   hb_retni(GetSystemMetrics(SM_CXSCREEN));
 }
 
-HB_FUNC(GETDESKTOPHEIGHT)
+HB_FUNC(HWG_GETDESKTOPHEIGHT)
 {
   hb_retni(GetSystemMetrics(SM_CYSCREEN));
 }
 
-HB_FUNC(GETHELPDATA)
+HB_FUNC( HWG_GETDESKTOPWIDTH_VS )
+{
+   hb_retni( GetSystemMetrics( SM_CXVIRTUALSCREEN ) );
+}
+
+HB_FUNC( HWG_GETDESKTOPHEIGHT_VS )
+{
+   hb_retni( GetSystemMetrics( SM_CYVIRTUALSCREEN ) );
+}
+
+HB_FUNC(HWG_GETHELPDATA)
 {
   hb_retnint((LONG_PTR)(((HELPINFO FAR *)(LONG_PTR)hb_parnl(1))->hItemHandle));
 }
@@ -459,7 +474,7 @@ HB_FUNC(GETNEXTDLGTABITEM)
   hwg_ret_HWND(GetNextDlgTabItem(hwg_par_HWND(1), hwg_par_HWND(2), hb_parl(3)));
 }
 
-HB_FUNC(SLEEP)
+HB_FUNC(HWG_SLEEP)
 {
   if (hb_parinfo(1))
   {

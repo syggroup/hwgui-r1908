@@ -855,7 +855,7 @@ METHOD DeleteChar(lBack) CLASS HEdit
    ELSE
       nPosEnd += 1
    ENDIF
-  // msginfo(STR(NPOSEND)+STR(NPOSSTART)+::TITLE)
+  // HWG_MSGINFO(STR(NPOSEND)+STR(NPOSSTART)+::TITLE)
    /* NEW */
    IF nPosEnd - nPosStart - 1 > 1 .AND. ::lPicComplex .AND. ::cType != "N" //.AND. NPOSEND < nGetLen
       lBack := .T.
@@ -1262,7 +1262,7 @@ METHOD Valid() CLASS HEdit
             IF ::IsBadDate(vari)
                SetFocus(0)
                ::SetFocus(.T.)
-               MsgBeep()
+               HWG_MSGBEEP()
                SendMessage(::handle, EM_SETSEL, 0, 0)
                RETURN .F.
             ENDIF

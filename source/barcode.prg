@@ -107,7 +107,7 @@ FUNCTION main
 *         Name: Barcode
 *  Description:
 *-----------------------------------------------------------------------------
-CLASS Barcode
+CLASS HWG_Barcode
 
    DATA hDC           // handle of the window, dialog or printer object
    DATA cText         // barcode text
@@ -162,7 +162,7 @@ ENDCLASS
 *-----------------------------------------------------------------------------
 
 METHOD New(hDC, cText, nTop, nLeft, nWidth, nHeight, nBCodeType, nColText, nColPane, lHorz, lTransparent, ;
-   nPinWidth) CLASS Barcode
+   nPinWidth) CLASS HWG_Barcode
 
    DEFAULT nWidth       := 200
    DEFAULT nHeight      := 20
@@ -196,7 +196,7 @@ METHOD New(hDC, cText, nTop, nLeft, nWidth, nHeight, nBCodeType, nColText, nColP
 *         Name: ShowBarcode
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD ShowBarcode() CLASS BarCode
+METHOD ShowBarcode() CLASS HWG_Barcode
 
    LOCAL cCode, cCode2
 
@@ -254,7 +254,7 @@ METHOD ShowBarcode() CLASS BarCode
 *         Name: CreateBarcode
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD CreateBarcode(cCode) CLASS BarCode
+METHOD CreateBarcode(cCode) CLASS HWG_Barcode
 
    LOCAL i, hPen, hOldPen, hBrush, hOldBrush
 
@@ -333,7 +333,7 @@ METHOD CreateBarcode(cCode) CLASS BarCode
 *         Name: InitCode39
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitCode39(lCheck) CLASS BarCode
+METHOD InitCode39(lCheck) CLASS HWG_Barcode
 
    LOCAL cCars   := "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ-. *$/+%"
    LOCAL aBarras := { '1110100010101110', ;
@@ -416,7 +416,7 @@ METHOD InitCode39(lCheck) CLASS BarCode
 *         Name: InitCode128
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitCode128(cMode) CLASS BarCode
+METHOD InitCode128(cMode) CLASS HWG_Barcode
 
    LOCAL aCode := { "212222", "222122", "222221", "121223", "121322", "131222", ;
          "122213", "122312", "132212", "221213", "221312", "231212", ;
@@ -446,7 +446,7 @@ METHOD InitCode128(cMode) CLASS BarCode
 
    // Errors
    IF !hb_IsChar(cCode)
-      MsgInfo("Barcode Code 128 requires a character value.")
+      HWG_MsgInfo("Barcode Code 128 requires a character value.")
       RETURN NIL
    ENDIF
 
@@ -454,7 +454,7 @@ METHOD InitCode128(cMode) CLASS BarCode
       IF hb_IsChar(cMode) .AND. Upper(cMode) $ "ABC"
          cMode := Upper(cMode)
       ELSE
-         MsgInfo("Code 128 modes are A,B o C. Character values.")
+         HWG_MsgInfo("Code 128 modes are A,B o C. Character values.")
       ENDIF
    ENDIF
 
@@ -547,7 +547,7 @@ METHOD InitCode128(cMode) CLASS BarCode
 *         Name: InitEAN13
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitEAN13() CLASS BarCode
+METHOD InitEAN13() CLASS HWG_Barcode
 
    LOCAL derecha := [1110010110011011011001000010101110010011101010000100010010010001110100]
    LOCAL izda1   := [0001101001100100100110111101010001101100010101111011101101101110001011]
@@ -618,7 +618,7 @@ METHOD InitEAN13() CLASS BarCode
 *         Name: InitUPC
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitUPC(nLen) CLASS BarCode
+METHOD InitUPC(nLen) CLASS HWG_Barcode
 
    LOCAL derecha := [1110010110011011011001000010101110010011101010000100010010010001110100]
    LOCAL izda1   := [0001101001100100100110111101010001101100010101111011101101101110001011]
@@ -680,7 +680,7 @@ METHOD InitUPC(nLen) CLASS BarCode
 *         Name: InitE13BL
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitE13BL(nLen) CLASS BarCode
+METHOD InitE13BL(nLen) CLASS HWG_Barcode
 
    nLen := Int(nLen / 2)
 
@@ -691,7 +691,7 @@ METHOD InitE13BL(nLen) CLASS BarCode
 *         Name: InitCodabar
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitCodabar() CLASS BarCode
+METHOD InitCodabar() CLASS HWG_Barcode
 
    //this system not test the start/end code
 
@@ -720,7 +720,7 @@ METHOD InitCodabar() CLASS BarCode
 *         Name: InitSup5
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitSub5() CLASS BarCode
+METHOD InitSub5() CLASS HWG_Barcode
 
    LOCAL izda1   := [0001101001100100100110111101010001101100010101111011101101101110001011]
    LOCAL izda2   := [0100111011001100110110100001001110101110010000101001000100010010010111]
@@ -757,7 +757,7 @@ METHOD InitSub5() CLASS BarCode
 *         Name: InitIndustrial25
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitIndustrial25(lCheck) CLASS BarCode
+METHOD InitIndustrial25(lCheck) CLASS HWG_Barcode
 
    LOCAL n
    LOCAL aBar     := { "00110", "10001", "01001", "11000", "00101", ;
@@ -801,7 +801,7 @@ METHOD InitIndustrial25(lCheck) CLASS BarCode
 *         Name: InitInterleave25
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitInterleave25(lMode) CLASS BarCode
+METHOD InitInterleave25(lMode) CLASS HWG_Barcode
 
    LOCAL n, m
    LOCAL aBar   := { "00110", "10001", "01001", "11000", "00101", ;
@@ -863,7 +863,7 @@ METHOD InitInterleave25(lMode) CLASS BarCode
 *         Name: InitIndust25
 *  Description:
 *-----------------------------------------------------------------------------
-METHOD InitMatrix25(lCheck) CLASS BarCode
+METHOD InitMatrix25(lCheck) CLASS HWG_Barcode
 
    LOCAL n
    LOCAL aBar   := { "00110", "10001", "01001", "11000", "00101", ;

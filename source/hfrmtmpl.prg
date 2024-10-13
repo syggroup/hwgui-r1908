@@ -182,10 +182,10 @@ METHOD Read(fname, cId) CLASS HFormTmpl
    ENDIF
 
    IF Empty(oDoc:aItems)
-      MsgStop("Can't open " + fname)
+      HWG_MsgStop("Can't open " + fname)
       RETURN Nil
    ELSEIF oDoc:aItems[1]:title != "part" .OR. oDoc:aItems[1]:GetAttribute("class") != "form"
-      MsgStop("Form description isn't found")
+      HWG_MsgStop("Form description isn't found")
       RETURN Nil
    ENDIF
 
@@ -579,7 +579,7 @@ STATIC FUNCTION CompileMethod(pp, cMethod, oForm, oCtrl, cName)
 
 STATIC PROCEDURE CompileErr( e, stroka )
 
-   MsgStop(ErrorMessage(e) + Chr(10) + Chr(13) + "in" + Chr(10) + Chr(13) + AllTrim(stroka), "Script compiling error")
+   HWG_MsgStop(ErrorMessage(e) + Chr(10) + Chr(13) + "in" + Chr(10) + Chr(13) + AllTrim(stroka), "Script compiling error")
    BREAK( NIL )
 
 STATIC FUNCTION ReadCtrl( pp, oCtrlDesc, oContainer, oForm )
@@ -735,7 +735,7 @@ STATIC FUNCTION CreateCtrl( oParent, oCtrlTmpl, oForm )
    FOR i := 1 TO Len( oCtrlTmpl:aProp )
       xProperty := hfrm_GetProperty( oCtrlTmpl:aProp[i, 2] )
       cPName := oCtrlTmpl:aProp[i, 1]
-      //msginfo(cpname)
+      //HWG_MSGINFO(cpname)
       IF cPName == "geometry"
          nLeft   := Val( xProperty[1] )
          nTop    := Val( xProperty[2] )
@@ -1256,10 +1256,10 @@ METHOD Read(fname, cId) CLASS HRepTmpl
    ENDIF
 
    IF Empty(oDoc:aItems)
-      MsgStop("Can't open " + fname)
+      HWG_MsgStop("Can't open " + fname)
       RETURN Nil
    ELSEIF oDoc:aItems[1]:title != "part" .OR. oDoc:aItems[1]:GetAttribute("class") != "report"
-      MsgStop("Report description isn't found")
+      HWG_MsgStop("Report description isn't found")
       RETURN Nil
    ENDIF
 

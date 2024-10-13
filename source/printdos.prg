@@ -111,7 +111,7 @@ METHOD New( oPorta ) CLASS PrintDos
       IF oPorta == "DEFAULT"
          oPtrName := PrintPortName()
          IF oPtrName == Nil
-            MsgInfo( "Error, file to:ERROR.TXT" )
+            HWG_MSGINFO( "Error, file to:ERROR.TXT" )
             ::oPorta := "Error.txt"
          ELSE
             ::oPorta := oPtrName
@@ -124,12 +124,12 @@ METHOD New( oPorta ) CLASS PrintDos
             oPtrSetup := PrintSetupDos()
          #endif
          IF oPtrSetup == Nil
-            MsgInfo( "Error, file to:ERROR.TXT" )
+            HWG_MSGINFO( "Error, file to:ERROR.TXT" )
             ::oPorta := "Error.txt"
          ELSE
             oPtrName := PrintPortName()
             IF oPtrName == Nil
-               MsgInfo( "Error, file to:ERROR.TXT" )
+               HWG_MSGINFO( "Error, file to:ERROR.TXT" )
                ::oPorta := "Error.txt"
             ELSE
                oPtrName := AllTrim( oPtrName )
@@ -328,7 +328,7 @@ METHOD PrinterFile(fname) CLASS PrintDos
    LOCAL han, nRead
 
    IF !File(fname)
-      MsgStop("Error open file " + fname, "Error")
+      HWG_MsgStop("Error open file " + fname, "Error")
       RETURN .F.
    ENDIF
 
@@ -354,7 +354,7 @@ METHOD PrinterFile(fname) CLASS PrintDos
 
    ELSE
 
-      MsgStop("Can't Open port")
+      HWG_MsgStop("Can't Open port")
       FClose(han)
 
    ENDIF
@@ -415,7 +415,7 @@ METHOD TxttoGraphic(fName, osize, oPreview) CLASS PrintDos
       ENDDO
       FClose(han)
    ELSE
-      MsgStop("Can't open " + fName)
+      HWG_MsgStop("Can't open " + fName)
       RETURN .F.
    ENDIF
    oPrinter:EndPage()
@@ -455,7 +455,7 @@ METHOD Preview( fName, cTitle ) CLASS PrintDos
       ENDDO
       FClose(han)
    ELSE
-      MsgStop("Can't open " + fName)
+      HWG_MsgStop("Can't open " + fName)
       RETURN .F.
    ENDIF
 

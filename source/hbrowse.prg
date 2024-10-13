@@ -186,7 +186,7 @@ METHOD Value(xValue) CLASS HColumn
             ( ::oParent:Alias ) ->( Eval( ::block, varbuf, ::oParent, ::Column ) )
             ( ::oParent:Alias ) ->( DBUnlock() )
          ELSE
-             MsgStop("Can't lock the record!")
+             HWG_MsgStop("Can't lock the record!")
          ENDIF
       ELSEIF ::oParent:nRecords  > 0
          Eval( ::block, varbuf, ::oParent, ::Column )
@@ -3306,7 +3306,7 @@ ELSEIF nLine == 0
       //::aColumns[fif]:bHeadClick != NIL
       ::aColumns[fif]:lHeadClick := .T.
       InvalidateRect(::handle, 0, ::x1, ::y1 - ::nHeadHeight * ::nHeadRows, ::x2, ::y1)
-     // MSGINFO('C')
+     // HWG_MSGINFO('C')
       IF ::aColumns[fif]:bHeadClick != NIL
          ::isMouseOver := .F.
          ::oParent:lSuspendMsgsHandling := .T.
@@ -3785,7 +3785,7 @@ METHOD Edit( wParam, lParam ) CLASS HBrowse
                      ( ::Alias ) ->( Eval( oColumn:block, ::varbuf, Self, fipos ) )
                      ( ::Alias ) ->( DBUnlock() )
                   ELSE
-                     MsgStop("Can't lock the record!")
+                     HWG_MsgStop("Can't lock the record!")
                   ENDIF
                ELSE
                   Eval( oColumn:block, ::varbuf, Self, fipos )
@@ -3857,7 +3857,7 @@ METHOD EditLogical( wParam, lParam ) CLASS HBrowse
             ( ::Alias ) ->( Eval( ::aColumns[::fipos]:block, !::varbuf, Self, ::fipos ) )
             ( ::Alias ) ->( DBUnlock() )
          ELSE
-             MsgStop("Can't lock the record!")
+             HWG_MsgStop("Can't lock the record!")
          ENDIF
       ELSEIF ::nRecords  > 0
          IF wParam != VK_SPACE
@@ -4323,7 +4323,7 @@ METHOD ShowSizes() CLASS HBrowse
 
    AEval( ::aColumns, ;
           { | v, e | HB_SYMBOL_UNUSED(v), cText += ::aColumns[e]:heading + ": " + Str( Round(::aColumns[e]:width / 8, 0) - 2  ) + Chr(10) + Chr(13) } )
-   MsgInfo( cText )
+   HWG_MSGINFO( cText )
    RETURN NIL
 
 FUNCTION ColumnArBlock()

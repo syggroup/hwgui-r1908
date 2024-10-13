@@ -75,7 +75,7 @@ LOCAL aFormCode, aFormName
       FCLOSE(han)
    ELSE
 #ifdef __WINDOWS__
-      MsgStop(fname + " can't be opened ")
+      HWG_MsgStop(fname + " can't be opened ")
 #else
       ALERT( fname + " can't be opened " )
 #endif
@@ -129,7 +129,7 @@ LOCAL rezArray := Iif( lDebugInfo, { "", {}, {} }, { "", {} } )
       ENDIF
    ELSE
 #ifdef __WINDOWS__
-      MsgStop("Can't open " + scrSource)
+      HWG_MsgStop("Can't open " + scrSource)
 #else
       WndOut( "Can't open " + scrSource )
       WAIT ""

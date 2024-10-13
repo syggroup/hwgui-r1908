@@ -1145,7 +1145,7 @@ STATIC Function SetTabFocus( oCtrl, nPage, nKeyDown )
      ELSE
       nPageAcel := FindTabAccelerator( oCtrl, nKeyDown )
       IF nPageAcel == 0
-         MsgBeep()
+         HWG_MSGBEEP()
       ENDIF
    ENDIF
 

@@ -46,7 +46,7 @@ METHOD New(oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, bInit,
       ::handle := Hwg_InitChildWindow(Self, ::szAppName, cTitle, cMenu, IIf(oIcon != NIL, oIcon:handle, NIL), ;
          IIf(oBmp != NIL, -1, clr), nStyle, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::oParent:handle)
    ELSE
-      MsgStop("Create Main window first !", "HChildWindow():New()")
+      HWG_MsgStop("Create Main window first !", "HChildWindow():New()")
       RETURN NIL
    ENDIF
    //IF hb_IsBlock(::bInit)
@@ -497,7 +497,7 @@ STATIC FUNCTION onSysCommand(oWnd, wParam, lParam)
    ELSEIF wParam == SC_HOTKEY
    //ELSEIF wParam == SC_MOUSEMENU //0xF090
    ELSEIF wParam == SC_MENU .AND. (oWnd:type == WND_MDICHILD .OR. !Empty(oWnd := oWnd:GetMdiActive())) .AND. oWnd:lModal
-      MSGBEEP()
+      HWG_MSGBEEP()
       RETURN 0
    ENDIF
 

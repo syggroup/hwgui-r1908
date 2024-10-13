@@ -16,6 +16,12 @@
 #define WM_PSPNOTIFY WM_USER + 1010
 #define FLAG_CHECK 2
 
+#ifdef __COMPILER_BCC77__
+   #define SYG_AUMENTA_TELA   10
+#else
+   #define SYG_AUMENTA_TELA   0
+#endif
+
 STATIC aSheet := NIL
 #if 0 // old code for reference (to be deleted)
 STATIC aMessModalDlg := { ;
@@ -193,13 +199,13 @@ METHOD Activate(lNoModal, bOnActivate, nShow) CLASS HDialog
          ::lModal := .T.
          ::Add()
          // Hwg_DlgBoxIndirect(HWindow():GetMain():handle, Self, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::style)
-         Hwg_DlgBoxIndirect(GetActiveWindow(), Self, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::style)
+         Hwg_DlgBoxIndirect(GetActiveWindow(), Self, ::nLeft, ::nTop, ::nWidth+SYG_AUMENTA_TELA, ::nHeight+SYG_AUMENTA_TELA, ::style)
       ELSE
          ::lModal  := .F.
          ::handle  := 0
          ::lResult := .F.
          ::Add()
-         Hwg_CreateDlgIndirect(hParent, Self, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::style)
+         Hwg_CreateDlgIndirect(hParent, Self, ::nLeft, ::nTop, ::nWidth+SYG_AUMENTA_TELA, ::nHeight+SYG_AUMENTA_TELA, ::style)
          IF ::WindowState > SW_HIDE
             //InvalidateRect(::handle, 1)
             //BRINGTOTOP(::handle)
@@ -924,7 +930,7 @@ FUNCTION onHelp(oDlg, wParam, lParam)
          cDir := IIF(Empty(FilePath(SetHelpFileName())), Curdir(), FilePath(SetHelpFileName()))
       ENDIF
       IF !Empty(lParam)
-         oCtrl := oDlg:FindControl(NIL, GetHelpData(lParam))
+         oCtrl := oDlg:FindControl(NIL, HWG_GETHELPDATA(lParam))
       ENDIF
       IF hb_IsObject(oCtrl)
          nHelpId := oCtrl:HelpId

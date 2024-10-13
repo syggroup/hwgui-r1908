@@ -94,7 +94,7 @@ FUNCTION OpenReport( fname, repName )
                   aItem[ITEM_Y1] == Nil .OR. aItem[ITEM_Y1] == 0 .OR. ;
                   aItem[ITEM_WIDTH] == Nil .OR. aItem[ITEM_WIDTH] == 0 .OR. ;
                   aItem[ITEM_HEIGHT] == Nil .OR. aItem[ITEM_HEIGHT] == 0
-                  MsgStop("Error: " + stroka)
+                  HWG_MsgStop("Error: " + stroka)
                   res := .F.
                   EXIT
                ENDIF
@@ -110,7 +110,7 @@ FUNCTION OpenReport( fname, repName )
                aItem[ITEM_Y1] == Nil .OR. aItem[ITEM_Y1] == 0 .OR. ;
                aItem[ITEM_WIDTH] == Nil .OR. aItem[ITEM_WIDTH] == 0 .OR. ;
                aItem[ITEM_HEIGHT] == Nil .OR. aItem[ITEM_HEIGHT] == 0
-               MsgStop("Error: " + stroka)
+               HWG_MsgStop("Error: " + stroka)
                res := .F.
                EXIT
             ENDIF
@@ -124,7 +124,7 @@ FUNCTION OpenReport( fname, repName )
                aItem[ITEM_Y1] == Nil .OR. aItem[ITEM_Y1] == 0 .OR. ;
                aItem[ITEM_WIDTH] == Nil .OR. aItem[ITEM_WIDTH] == 0 .OR. ;
                aItem[ITEM_HEIGHT] == Nil .OR. aItem[ITEM_HEIGHT] == 0
-               MsgStop("Error: " + stroka)
+               HWG_MsgStop("Error: " + stroka)
                res := .F.
                EXIT
             ENDIF
@@ -150,11 +150,11 @@ FUNCTION OpenReport( fname, repName )
 ENDDO
 FClose(han)
 ELSE
-   MsgStop("Can't open " + fname)
+   HWG_MsgStop("Can't open " + fname)
    RETURN .F.
 ENDIF
 IF Empty(aPaintRep[FORM_ITEMS])
-   MsgStop(repName + " not found or empty!")
+   HWG_MsgStop(repName + " not found or empty!")
    res := .F.
 ELSE
    aPaintRep[FORM_ITEMS] := ASort( aPaintRep[FORM_ITEMS],,, { | z, y | z[ITEM_Y1] < y[ITEM_Y1] .OR.( z[ITEM_Y1] == y[ITEM_Y1] .AND.z[ITEM_X1] < y[ITEM_X1] ) .OR.( z[ITEM_Y1] == y[ITEM_Y1] .AND.z[ITEM_X1] == y[ITEM_X1] .AND.( z[ITEM_WIDTH] < y[ITEM_WIDTH] .OR.z[ITEM_HEIGHT] < y[ITEM_HEIGHT] ) ) } )
@@ -256,19 +256,19 @@ FUNCTION PrintReport( printerName, oPrn, lPreview )
       ENDIF
    NEXT
    IF iPH > 0 .AND. iSL == 0
-      MsgStop("'Start Line' marker is absent")
+      HWG_MsgStop("'Start Line' marker is absent")
       oPrinter:END()
       RETURN .F.
    ELSEIF iSL > 0 .AND. iEL == 0
-      MsgStop("'End Line' marker is absent")
+      HWG_MsgStop("'End Line' marker is absent")
       oPrinter:END()
       RETURN .F.
    ELSEIF iPF > 0 .AND. iEPF == 0
-      MsgStop("'End of Page Footer' marker is absent")
+      HWG_MsgStop("'End of Page Footer' marker is absent")
       oPrinter:END()
       RETURN .F.
    ELSEIF iSL > 0 .AND. iPF == 0 .AND. iDF == 0
-      MsgStop("'Page Footer' and 'Document Footer' markers are absent")
+      HWG_MsgStop("'Page Footer' and 'Document Footer' markers are absent")
       oPrinter:END()
       RETURN .F.
    ENDIF
@@ -500,7 +500,7 @@ STATIC FUNCTION ScriptExecute(aItem)
       IF hb_IsChar(aItem[ITEM_SCRIPT])
          IF ( aItem[ITEM_SCRIPT] := RdScript( , aItem[ITEM_SCRIPT] ) ) == Nil
             nError := CompileErr( @nLineEr )
-            MsgStop("Script error (" + LTrim( Str( nError ) ) + "), line " + LTrim( Str( nLineEr ) ))
+            HWG_MsgStop("Script error (" + LTrim( Str( nError ) ) + "), line " + LTrim( Str( nLineEr ) ))
             RETURN .F.
          ENDIF
       ENDIF

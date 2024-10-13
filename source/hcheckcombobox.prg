@@ -559,7 +559,7 @@ FUNCTION hwg_multibitor( ... )
 
    FOR EACH nItem IN aArgumentList
       IF !hb_IsNumeric(nItem)
-         msginfo( "hwg_multibitor parameter not numeric set to zero", "Possible error" )
+         HWG_MSGINFO( "hwg_multibitor parameter not numeric set to zero", "Possible error" )
          nItem := 0
       ENDIF
       result := hwg_bitor( result, nItem )

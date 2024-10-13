@@ -1160,6 +1160,7 @@
              [ FONT <oFont> ]           ;
              [ ON INIT <bInit> ]        ;
              [ ON SIZE <bSize> ]        ;
+             [ ON GETFOCUS <bGfocus> ]  ;  
              [ TOOLTIP <ctoolt> ]       ;
              [ ON KEYDOWN <bKeyDown>   ];
              [ ON CHANGE <bChange> ]    ;
@@ -1333,6 +1334,7 @@
              [ COLOR <color> ]          ;
              [ BACKCOLOR <bcolor> ]     ;
              [ ON INIT <bInit> ]        ;
+             [ ON GETFOCUS <bGfocus> ]  ;  
              [ WHEN <bGfocus> ]         ;
              [ VALID <bLfocus> ]        ;
              [ ON CHANGE <bChange> ]    ;
