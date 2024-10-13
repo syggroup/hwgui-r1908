@@ -20,7 +20,7 @@ Function Main
                 MENU OF oMain
                         MENUITEM "&Exit"   ACTION oMain:Close()
                         MENUITEM "&Browse" ACTION BrowseTest()
-                        MENUITEM "&Count"  ACTION MsgInfo(str(nCount))
+                        MENUITEM "&Count"  ACTION HWG_MSGINFO(str(nCount))
                 ENDMENU
 
         ACTIVATE WINDOW oMain
@@ -95,7 +95,7 @@ Static Function BrowseValid()
 Return .T.
 
 Static Function BrowseMove()
-        MsgInfo("Going to record " + ltrim(str(recno())))
+        HWG_MSGINFO("Going to record " + ltrim(str(recno())))
 return Nil
         
 Static Function BrowseUpdate( oBrow, colpos)

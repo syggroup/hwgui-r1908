@@ -20,7 +20,7 @@ Private var1 := 10320.54
       MENUITEM "&Get a value" ACTION DlgGet(.F.)
       MENUITEM "&Get using SetcolorinFocus" ACTION DlgGet(.T.)
       MENUITEM "&Text Ballon" ACTION TestBallon()
-      MENUITEM "&Hd Serial  " ACTION MsgInfo( HdSerial("C:\"),"HD Serial number" )
+      MENUITEM "&Hd Serial  " ACTION HWG_MSGINFO( HdSerial("C:\"),"HD Serial number" )
    ENDMENU
 
    ACTIVATE WINDOW oMainWindow
@@ -43,9 +43,9 @@ Private oSayT
    FONT oFont ;
    ON INIT {|| SetTimer(oModDlg,@oTimer)}
 
-   SET KEY FSHIFT,VK_F3 TO MsgInfo("Shift-F3") 
-   SET KEY FCONTROL,VK_F3 TO MsgInfo("Ctrl-F3") 
-   SET KEY 0,VK_F3 TO MsgInfo("F3") 
+   SET KEY FSHIFT,VK_F3 TO HWG_MSGINFO("Shift-F3") 
+   SET KEY FCONTROL,VK_F3 TO HWG_MSGINFO("Ctrl-F3") 
+   SET KEY 0,VK_F3 TO HWG_MSGINFO("F3") 
    
    If lColor <> Nil
       SetColorinFocus( lColor )
@@ -89,7 +89,7 @@ Private oSayT
    oTimer:End()
 
    IF oModDlg:lResult
-      MsgInfo( e1 + chr(10) + chr(13) +       ;
+      HWG_MSGINFO( e1 + chr(10) + chr(13) +       ;
                e6 + chr(10) + chr(13) +       ;
                Dtoc(e2) + chr(10) + chr(13) + ;
                Str(e3) + chr(10) + chr(13) +  ;
@@ -122,7 +122,7 @@ Function TestBallon
    INIT DIALOG oWnd CLIPPER TITLE "Dialog text Balon" ;
       AT 100,100 SIZE 140,100
 
-   @ 20,20 BUTTON "Button 1" ON CLICK {||MsgInfo("Button 1")} SIZE 100,40 ;
+   @ 20,20 BUTTON "Button 1" ON CLICK {||HWG_MSGINFO("Button 1")} SIZE 100,40 ;
        TOOLTIP "ToolTip do Button 1"
 
    ACTIVATE DIALOG oWnd

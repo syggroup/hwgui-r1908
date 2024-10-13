@@ -144,7 +144,7 @@ Local aBases, nChoic
    IF nChoic != 0
       cDatabase := aBases[ nChoic ]
       IF sqlSelectD( connHandle, cDatabase ) != 0
-         MsgStop( "Can't connect to "+cDataBase )
+         HWG_MsgStop( "Can't connect to "+cDataBase )
          cDatabase := ""
       ELSE
          WriteStatus( Hwindow():GetMain(),2,"DataBase: " + cDataBase )
@@ -165,7 +165,7 @@ Local cTable
    ENDIF
    aTables := sqlListTbl( connHandle )
    IF Empty( aTables )
-      MsgInfo( "No tables !" )
+      HWG_MSGINFO( "No tables !" )
       Return .F.
    ENDIF
 
@@ -269,7 +269,7 @@ Local arScr, nError, nLineEr
          DoScript( arScr )
       ELSE
          nError := CompileErr( @nLineEr )
-         MsgStop( "Script error ("+Ltrim(Str(nError))+"), line "+Ltrim(Str(nLineEr)) )
+         HWG_MsgStop( "Script error ("+Ltrim(Str(nError))+"), line "+Ltrim(Str(nLineEr)) )
       ENDIF
    ELSE
       execSQL( cQuery )
@@ -288,7 +288,7 @@ Local res, stroka, poz := 0, lFirst := .T., i := 1
    ENDIF
    IF ( res := sqlQuery( connHandle, cQuery) ) != 0
       cQuery := ""
-      MsgInfo( "Operation failed: " + STR( res ) + "( " + sqlGetErr( connHandle ) + " )" )
+      HWG_MSGINFO( "Operation failed: " + STR( res ) + "( " + sqlGetErr( connHandle ) + " )" )
       WriteStatus( Hwindow():GetMain(), 3, sqlGetErr( connHandle ) )
    ELSE
       IF nHistCurr < nHistoryMax
@@ -315,7 +315,7 @@ Local res, stroka, poz := 0, lFirst := .T., i := 1
             WriteStatus( Hwindow():GetMain(), 3, Str( sqlAffRows( connHandle ) ) + " rows updated." )
          ELSE
             @ 20,2 SAY "Operation failed:" + sqlGetErr( connHandle )
-            MsgInfo( "Operation failed: " + "( " + sqlGetErr( connHandle ) + " )" )
+            HWG_MSGINFO( "Operation failed: " + "( " + sqlGetErr( connHandle ) + " )" )
             WriteStatus( Hwindow():GetMain(), 3, sqlGetErr( connHandle ) )
             res := -1
          ENDIF
@@ -492,7 +492,7 @@ Function WndOut()
 Return Nil
 
 Function MsgSay( cText )
-   MsgStop( cText )
+   HWG_MsgStop( cText )
 Return Nil
 
 EXIT PROCEDURE cleanup

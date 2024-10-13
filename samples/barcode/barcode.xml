@@ -233,7 +233,7 @@ refreshAllGets(oDlg)]]>
         <property name="Caption">[Back Color]</property>
       </style>
       <method name="onClick">
-        <![CDATA[//MsgInfo(str(GetSysColor(15)))
+        <![CDATA[//HWG_MSGINFO(str(GetSysColor(15)))
 nColPane:=hwg_ChooseColor(nColPane)
 refreshAllGets(oDlg)
 ]]>

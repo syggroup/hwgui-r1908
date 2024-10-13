@@ -79,7 +79,7 @@ Private oBrw, oSay1, oSay2, oFont, DataCP, currentCP, currFname
        ENDMENU
      ENDMENU
      MENU TITLE "&Help"
-       MENUITEM "&About" ACTION MsgInfo("Dbf Files Browser" + Chr(10) + "2005" )
+       MENUITEM "&About" ACTION HWG_MSGINFO("Dbf Files Browser" + Chr(10) + "2005" )
      ENDMENU
    ENDMENU
    
@@ -263,7 +263,7 @@ Memvar oBrw
          ENDIF
          oMsg:Close()
       ELSE
-         MsgStop( "Fill necessary fields" )
+         HWG_MsgStop( "Fill necessary fields" )
       ENDIF
    ENDIF
    
@@ -446,7 +446,7 @@ Memvar oBrw, currentCP, currFname
          SKIP
       ENDDO
       IF lOverFlow
-         MsgInfo( "There was overflow in Numeric field","Warning!" )
+         HWG_MSGINFO( "There was overflow in Numeric field","Warning!" )
       ENDIF
 
       Close All
@@ -541,7 +541,7 @@ Local cKey, nRec
 Memvar oBrw, oSay2
 
    IF OrdNumber() == 0
-      MsgStop( "No active order !","Seek record" )
+      HWG_MsgStop( "No active order !","Seek record" )
    ELSE
       cKey := GetData( dbv_cSeek,"Seek record","Input key:" )
       IF !Empty( cKey )
@@ -582,7 +582,7 @@ Memvar oBrw, oSay2
       ERRORBLOCK( bOldError )
 
       IF cType != "L"
-         MsgStop( "Wrong expression" )
+         HWG_MsgStop( "Wrong expression" )
       ELSE
          EXIT
       ENDIF
@@ -646,7 +646,7 @@ Return cRes
 
 STATIC FUNCTION MacroError( e )
 
-   MsgStop( ErrorMessage(e),"Expression error" )
+   HWG_MsgStop( ErrorMessage(e),"Expression error" )
    BREAK
 RETURN .T.
 

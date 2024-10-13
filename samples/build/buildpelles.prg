@@ -215,7 +215,7 @@ if file(oFolderFile)
    If(MsgYesNo("File "+oFolderFile+" EXIT ..Replace?"))
      Erase( oFolderFile )
    Else
-     MsgInfo("No file SAVED.")
+     HWG_MSGINFO("No file SAVED.")
      Return Nil
    EndIf
 EndIf     
@@ -265,7 +265,7 @@ if Len(oBrowse4:aArray)>=1
    Next     
 endif   
 
-Msginfo("File "+oFolderFile+" saved","HwGUI Build")
+HWG_MSGINFO("File "+oFolderFile+" saved","HwGUI Build")
 Return Nil
 
 Function BuildApp()
@@ -457,7 +457,7 @@ fClose(oArq)
 __Run("Hwg_Build.bat>Error.log")
 
 if file(voExeName+".exe")
-   MsgInfo("File "+ voExeName+".exe Build correct")
+   HWG_MSGINFO("File "+ voExeName+".exe Build correct")
 Else 
    ShellExecute("NotePad error.log")   
 Endif   

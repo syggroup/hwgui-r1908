@@ -52,7 +52,7 @@ Private nVert, nHorz
          MENUITEM "Ori&ginal size" ACTION Zoom( oMainWindow,0 )
       ENDMENU
       MENU TITLE "&Help"
-         MENUITEM "&About" ACTION MsgInfo("About")
+         MENUITEM "&About" ACTION HWG_MSGINFO("About")
       ENDMENU
    ENDMENU
 

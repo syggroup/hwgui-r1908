@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------------
+# Script de construção do SAGI
+# ---------------------------------------------------------------------------------
+# Autor  : Leonardo Machado
+# Versão : 1.0
+# Data   : 21/04/2024
+# Compiladores compativel: BCC 7.70(32 BITS)
+# ---------------------------------------------------------------------------------
+# Nome do Executável
+# ---------------------------------------------------------------------------------
+{xhb}-oTESTE_xhb_${hb_comp}
+{xhb}-workdir=.\obj_xhb_${hb_comp}
+
+-strip
+-run
+-inc
+-gui
+-DHWG_USE_POINTER_ITEM
+
+{bcc64}-incpath=D:\devel\sqlrdd_xhb\include;D:\devel\hwgui_hb\include;
+{bcc64}-LD:\devel\sqlrdd_xhb\lib;
+-LD:\devel\bcc72_64\lib;
+
+checkbox2.prg
+
+#BCC 7.70 - 64 BITS
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\gdlib.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\libbgd.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\hbmzip.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\hbzip.lib
+{bcc64}D:\devel\xharbour_bcc72_64\lib\tipssl.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\tip.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\codepage.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\FreeImage.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\png.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\hbcurl.lib
+{bcc64}D:\Devel\xharbour_bcc72_64\lib\libcurl.lib
+{bcc64}D:\devel\xharbour_bcc72_64\lib\libcrypto.lib
+{bcc64}D:\devel\xharbour_bcc72_64\lib\libssl.lib
+{bcc64}D:\devel\hwgui_hb\lib\win\bcc64\hwgui_xhb.lib
+
+-lct
+-llibfi

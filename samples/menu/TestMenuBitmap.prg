@@ -26,8 +26,8 @@ Private oMenu
                   MENU TITLE "Samples"
                      MENUITEM "&Exit"    ID 1001 ACTION oMain:Close()   BITMAP "\hwgui\samples\image\exit_m.bmp" 
                      SEPARATOR                      
-                     MENUITEM "&New "    ID 1002 ACTION msginfo("New")  BITMAP "\hwgui\samples\image\new_m.bmp"  
-                     MENUITEM "&Open"    ID 1003 ACTION msginfo("Open") BITMAP "\hwgui\samples\image\open_m.bmp" 
+                     MENUITEM "&New "    ID 1002 ACTION HWG_MSGINFO("New")  BITMAP "\hwgui\samples\image\new_m.bmp"  
+                     MENUITEM "&Open"    ID 1003 ACTION HWG_MSGINFO("Open") BITMAP "\hwgui\samples\image\open_m.bmp" 
                      MENUITEM "&Demo"    ID 1004 ACTION Test()
                      separator
                      MENUITEM "&Bitmap and a Text"  ID 1005 ACTION Test()
@@ -40,7 +40,7 @@ Private oMenu
 Return Nil
 
 Function Test()
-MsgInfo("Test")
+HWG_MSGINFO("Test")
 Return Nil
 
  

@@ -65,8 +65,8 @@ Function Test()
                      BACKCOLOR VColor('BEBEBE') 
                      
                      /*
-                     ON LOSTFOCUS {|| msginfo('lost focus') } ;
-                     ON GETFOCUS {|| msginfo('get focus')  }                     
+                     ON LOSTFOCUS {|| HWG_MSGINFO('lost focus') } ;
+                     ON GETFOCUS {|| HWG_MSGINFO('get focus')  }                     
                      */
 
              ADD COLUMN TO GRID oGrid HEADER "Code" WIDTH 50
@@ -80,15 +80,15 @@ Function Test()
 Return Nil
 
 Function OnKey( o, k )
-//    msginfo(str(k))
+//    HWG_MSGINFO(str(k))
 return nil    
 
 Function OnPosChange( o, row )
-//    msginfo( str(row) )
+//    HWG_MSGINFO( str(row) )
 return nil    
 
 Function OnClick( o )
-//    msginfo( 'click' )
+//    HWG_MSGINFO( 'click' )
 return nil    
 
 Function OnDispInfo( o, x, y )
@@ -113,7 +113,7 @@ Function OnDispInfo( o, x, y )
         else
             lEof := .T.
             
-            msginfo(res)
+            HWG_MSGINFO(res)
         
         endif
         PQclear(res)              
@@ -147,7 +147,7 @@ Function CriaBase()
         conn := PQConnect('test', 'localhost', 'Rodrigo', 'moreno', 5432)
         
         if ISCHARACTER(conn)
-            msginfo(conn)
+            HWG_MSGINFO(conn)
             quit
         endif
 

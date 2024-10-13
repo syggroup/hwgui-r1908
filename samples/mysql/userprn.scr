@@ -4,10 +4,10 @@ Private aUsers
   if aResult[1] == 0
      if OpenReport( "userprn.rpt","users" )
         PrintReport()
-        MsgInfo( "Done!","Script result" )
+        HWG_MSGINFO( "Done!","Script result" )
      else
-        MsgStop( "Can't open report" )
+        HWG_MsgStop( "Can't open report" )
      endif
   else
-     MsgStop( "Error executing query" )
+     HWG_MsgStop( "Error executing query" )
   endif

@@ -7,7 +7,7 @@ Local oMainWindow, oTrayMenu, oIcon := HIcon():AddResource("ICON_1")
    INIT WINDOW oMainWindow MAIN TITLE "Example"
 
    CONTEXT MENU oTrayMenu
-      MENUITEM "Message"  ACTION MsgInfo( "Tray Message !" )
+      MENUITEM "Message"  ACTION HWG_MSGINFO( "Tray Message !" )
       SEPARATOR
       MENUITEM "Exit"  ACTION EndWindow()
    ENDMENU

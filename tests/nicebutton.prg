@@ -6,8 +6,8 @@ PROCEDURE Main()
 
    INIT WINDOW oWindow MAIN SIZE 640, 480
 
-   @ 20,  20 NICEBUTTON "button1" OF oWindow ID 100 SIZE 120, 40 RED  52 GREEN  10 BLUE  60 ON CLICK {||MsgInfo("button1 clicked")}
-   @ 20, 120 NICEBUTTON "button2" OF oWindow ID 101 SIZE 120, 40 RED 215 GREEN  76 BLUE 108 ON CLICK {||MsgInfo("button2 clicked")}
+   @ 20,  20 NICEBUTTON "button1" OF oWindow ID 100 SIZE 120, 40 RED  52 GREEN  10 BLUE  60 ON CLICK {||HWG_MSGINFO("button1 clicked")}
+   @ 20, 120 NICEBUTTON "button2" OF oWindow ID 101 SIZE 120, 40 RED 215 GREEN  76 BLUE 108 ON CLICK {||HWG_MSGINFO("button2 clicked")}
 
    ACTIVATE WINDOW oWindow
 

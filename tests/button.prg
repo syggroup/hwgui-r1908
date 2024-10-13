@@ -13,9 +13,9 @@ PROCEDURE Main()
    ACTIVATE DIALOG oDialog
 
    IF oDialog:lResult
-      MsgInfo("OK", "Info")
+      HWG_MSGINFO("OK", "Info")
    ELSE
-      MsgInfo("CANCEL", "Info")
+      HWG_MSGINFO("CANCEL", "Info")
    ENDIF
 
 RETURN

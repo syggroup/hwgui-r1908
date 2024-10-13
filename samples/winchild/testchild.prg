@@ -34,7 +34,7 @@ function CreateChild(lClip)
    Local oIcon := HIcon():AddFile("..\image\PIM.ICO")
    Local oBmp  := HBitMap():AddFile("..\image\logo.bmp")
    Local cMenu := ""
-   Local bExit := { | oSelf | MsgInfo( "Bye!" , "Destroy message from " + oSelf:title )  }
+   Local bExit := { | oSelf | HWG_MSGINFO( "Bye!" , "Destroy message from " + oSelf:title )  }
 
    DEFAULT lClip := .f.
 
@@ -51,7 +51,7 @@ function CreateChild(lClip)
    If ISOBJECT(oChild)
       aAdd(aChilds,oChild)
    Else
-       MsgStop("Erro ao tentar criar objeto HWindow!")
+       HWG_MsgStop("Erro ao tentar criar objeto HWindow!")
    Endif
 
    oChild:Activate(.t.)

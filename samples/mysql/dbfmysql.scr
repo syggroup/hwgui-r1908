@@ -53,11 +53,11 @@ Private cDbf, cTable, cQuery, i := 1, aStruct, vartmp
         enddo
         cQuery := Left(cQuery, Len(cQuery) - 1)
         if sqlQuery( connHandle, cQuery) != 0
-           MsgStop( sqlGetErr( connHandle ) )
+           HWG_MsgStop( sqlGetErr( connHandle ) )
            exit
         endif
         skip
       enddo
     endif
-    MsgInfo("Script executed")
+    HWG_MSGINFO("Script executed")
   endif

@@ -8,21 +8,21 @@ PROCEDURE Main()
 
    MENU OF oMainWindow
       MENU TITLE "Menu A"
-         MENUITEM "Option A1" ACTION MsgInfo("A1")
-         MENUITEM "Option A2" ACTION MsgInfo("A2")
-         MENUITEM "Option A3" ACTION MsgInfo("A3")
+         MENUITEM "Option A1" ACTION HWG_MSGINFO("A1")
+         MENUITEM "Option A2" ACTION HWG_MSGINFO("A2")
+         MENUITEM "Option A3" ACTION HWG_MSGINFO("A3")
          SEPARATOR
          MENUITEM "Exit" ACTION EndWindow()
       ENDMENU
       MENU TITLE "Menu B"
-         MENUITEM "Option B1" ACTION MsgInfo("B1")
-         MENUITEM "Option B2" ACTION MsgInfo("B2")
-         MENUITEM "Option B3" ACTION MsgInfo("B3")
+         MENUITEM "Option B1" ACTION HWG_MSGINFO("B1")
+         MENUITEM "Option B2" ACTION HWG_MSGINFO("B2")
+         MENUITEM "Option B3" ACTION HWG_MSGINFO("B3")
       ENDMENU
       MENU TITLE "Menu C"
-         MENUITEM "Option C1" ACTION MsgInfo("C1")
-         MENUITEM "Option C2" ACTION MsgInfo("C2")
-         MENUITEM "Option C3" ACTION MsgInfo("C3")
+         MENUITEM "Option C1" ACTION HWG_MSGINFO("C1")
+         MENUITEM "Option C2" ACTION HWG_MSGINFO("C2")
+         MENUITEM "Option C3" ACTION HWG_MSGINFO("C3")
       ENDMENU
    ENDMENU
 

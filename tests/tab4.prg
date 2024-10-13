@@ -41,12 +41,12 @@ PROCEDURE Main()
    INIT DIALOG oDialog TITLE "Test" SIZE 800, 600 ;
 
    @ 40, 40 TAB oTab ITEMS {} OF oDialog SIZE 800 - 80, 600 - 100 ;
-      ON CLICK {|o, n|MsgInfo("Tab "+alltrim(str(n))+ " clicked", "Info")} ;
-      ON RIGHTCLICK {|o, n|MsgInfo("Tab "+alltrim(str(n))+ " right clicked", "Info")}
+      ON CLICK {|o, n|HWG_MsgInfo("Tab "+alltrim(str(n))+ " clicked", "Info")} ;
+      ON RIGHTCLICK {|o, n|HWG_MsgInfo("Tab "+alltrim(str(n))+ " right clicked", "Info")}
 
    BEGIN PAGE "&First Tab" OF oTab
-      @ 20, 40 SAY "Field A&1 (ALT+1):" SIZE 120, 26
-      @ 160, 40 GET oGetA1 VAR cGetA1 SIZE 300, 26
+      @ 20, 40 SAY "CPF:" SIZE 120, 26
+      @ 160, 40 GET oGetA1 VAR cGetA1 PICTURE "@R 999.999.999-99" SIZE 300, 26
       @ 20, 80 SAY "Field A&2 (ALT+2):" SIZE 120, 26
       @ 160, 80 GET oGetA2 VAR cGetA2 SIZE 300, 26
       @ 20, 120 SAY "Field A&3 (ALT+3):" SIZE 120, 26
@@ -90,9 +90,9 @@ PROCEDURE Main()
    ACTIVATE DIALOG oDialog ON ACTIVATE {||oGetA1:SetFocus()}
 
    IF oDialog:lResult
-      MsgInfo("OK", "Info")
+      HWG_MsgInfo("OK", "Info")
    ELSE
-      MsgInfo("CANCEL", "Info")
+      HWG_MsgInfo("CANCEL", "Info")
    ENDIF
 
 RETURN

@@ -88,15 +88,15 @@ enddo
 Return Nil
 
 Function OnKey( o, k )
-//    msginfo(str(k))
+//    HWG_MSGINFO(str(k))
 return nil    
 
 Function OnPosChange( o, row )
-//    msginfo( str(row) )
+//    HWG_MSGINFO( str(row) )
 return nil    
 
 Function OnClick( o )
-//    msginfo( 'click' )
+//    HWG_MSGINFO( 'click' )
 return nil    
 
 Function OnDispInfo( o, x, y )

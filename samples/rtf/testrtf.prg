@@ -179,7 +179,7 @@ LOCAL j, aMarca, lFormato := .F.
 
    CLOSE RTF oRtf
 
-   MsgInfo( cOutFile + " is created !" )
+   HWG_MSGINFO( cOutFile + " is created !" )
 
 RETURN NIL
 

@@ -58,8 +58,8 @@ Function Test ()
       @ 300, 395 BUTTON "Add"    SIZE 75, 25 ON CLICK {|| oCombo1:AddItem(cEdit), oCombo1:refresh() }
 
       @ 380, 395 BUTTON "Test"    SIZE 75, 25 ON CLICK {|| xCombo := "Temp", oCombo3:refresh(), nCombo := 2, oCombo1:refresh(), oCombo2:SetItem(3), oCombo4:SetItem(3), oCombo5:value := "Third", oCombo5:refresh(), oCombo6:SetItem(2) }
-      @ 460, 395 BUTTON "Combo 1" SIZE 75, 25 ON CLICK {|| MsgInfo(str(nCombo)) }
-      @ 540, 395 BUTTON "Combo 2" SIZE 75, 25 ON CLICK {|| MsgInfo(cCombo, xCombo) }
+      @ 460, 395 BUTTON "Combo 1" SIZE 75, 25 ON CLICK {|| HWG_MSGINFO(str(nCombo)) }
+      @ 540, 395 BUTTON "Combo 2" SIZE 75, 25 ON CLICK {|| HWG_MSGINFO(cCombo, xCombo) }
       @ 620, 395 BUTTON "Close"   SIZE 75, 25 ON CLICK {|| oForm:Close() }
 
    ACTIVATE DIALOG oForm
@@ -89,9 +89,9 @@ Function BoundTest ()
       // @ 20,200 GET cEdit SIZE 150, 23
 //      @ 300, 395 BUTTON "Add"    SIZE 75, 25 ON CLICK {|| oCombo1:AddItem(cEdit), oCombo1:refresh() }
 //      @ 380, 395 BUTTON "Test"    SIZE 75, 25 ON CLICK {|| xCombo := "Temp", oCombo3:refresh(), nCombo := 2, oCombo1:refresh(), oCombo2:SetItem(3), oCombo4:SetItem(3), oCombo5:value := "Third", oCombo5:refresh(), oCombo6:SetItem(2) }
-      @ 380, 395 BUTTON "Combo 1" SIZE 75, 25 ON CLICK {|| MsgInfo(oCombo1:GetValueBound()+"-"+str(nCombo), "Value of combo 1") }
-      @ 460, 395 BUTTON "Combo 2" SIZE 75, 25 ON CLICK {|| MsgInfo(oCombo2:GetValueBound()+"-"+cCombo, "Value of combo 2") }
-      @ 540, 395 BUTTON "Combo 3" SIZE 75, 25 ON CLICK {|| MsgInfo(oCombo3:GetValueBound()+"-"+xCombo, "Value of combo 3") }
+      @ 380, 395 BUTTON "Combo 1" SIZE 75, 25 ON CLICK {|| HWG_MSGINFO(oCombo1:GetValueBound()+"-"+str(nCombo), "Value of combo 1") }
+      @ 460, 395 BUTTON "Combo 2" SIZE 75, 25 ON CLICK {|| HWG_MSGINFO(oCombo2:GetValueBound()+"-"+cCombo, "Value of combo 2") }
+      @ 540, 395 BUTTON "Combo 3" SIZE 75, 25 ON CLICK {|| HWG_MSGINFO(oCombo3:GetValueBound()+"-"+xCombo, "Value of combo 3") }
       @ 620, 395 BUTTON "Close"   SIZE 75, 25 ON CLICK {|| oForm:Close() }
 
    ACTIVATE DIALOG oForm

@@ -29,7 +29,7 @@ Local oList, oItems:={"Item01","Item02","Item03","Item04"}
              OF oModDlg                  ;
              INIT 1 ;
              SIZE 210, 220            ;
-             ON INIT {||MsgInfo("Teste")} ;
+             ON INIT {||HWG_MSGINFO("Teste")} ;
              TOOLTIP "Test ListBox"       
 
    @  10,280 BUTTON "Ok" ID IDOK  SIZE 50, 32

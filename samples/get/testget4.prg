@@ -64,8 +64,8 @@ wnome   := "Nome"
 
    @ 20,35 GET ocodigo VAR wcodigo PICTURE "@!" SIZE 100,22 ;
      NOBORDER STYLE ES_AUTOHSCROLL ;
-     WHEN {|| msginfo("WHEN codigo"), .T.  } ;
-     VALID {|| msginfo("VALID codigo"), .F.  }
+     WHEN {|| HWG_MSGINFO("WHEN codigo"), .T.  } ;
+     VALID {|| HWG_MSGINFO("VALID codigo"), .F.  }
 
    ACTIVATE DIALOG oModDlg
 

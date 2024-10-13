@@ -58,7 +58,7 @@ local i, a, b
 
 
     oBrw1:aColumns[1]:bColorFoot := {|| { x_BLUE, x_RED } }
-    oBrw1:aColumns[1]:bHeadClick := {|| msginfo( "HeadClick") }
+    oBrw1:aColumns[1]:bHeadClick := {|| HWG_MSGINFO( "HeadClick") }
     oBrw1:aColumns[1]:heading := "Header 1;second line"
     oBrw1:aColumns[2]:heading := "Header 2"
     oBrw1:aColumns[1]:footing := "Footer 1;F1L2"

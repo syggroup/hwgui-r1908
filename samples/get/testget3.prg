@@ -97,7 +97,7 @@ MENUBARITEM  amenu CAPTION "teste2" ON 906 ACTION {||.t.}
    oFont:Release()
 
    IF oModDlg:lResult
-      MsgInfo( e1 + chr(10) + chr(13) +                               ;
+      HWG_MSGINFO( e1 + chr(10) + chr(13) +                               ;
                "Check1 - " + Iif(c1,"On","Off") + chr(10) + chr(13) + ;
                "Check2 - " + Iif(c2,"On","Off") + chr(10) + chr(13) + ;
                "Radio: " + Str(r1,1) + chr(10) + chr(13) +            ;

@@ -10,7 +10,7 @@ PROCEDURE Main()
    @ 40, 40 DATEPICKER oDatePicker SIZE 130, 30
 
    @ (320 - 100) / 2, 280 BUTTONEX "&Ok" OF oDialog ID IDOK SIZE 100, 32 ;
-      ON CLICK {||MsgInfo("Date: " + dtoc(oDatePicker:GetValue()), "Info"), oDialog:Close()}
+      ON CLICK {||HWG_MSGINFO("Date: " + dtoc(oDatePicker:GetValue()), "Info"), oDialog:Close()}
 
    @ (320 - 100) / 2 + 320, 280 BUTTONEX "&Cancel" OF oDialog ID IDCANCEL SIZE 100, 32
 

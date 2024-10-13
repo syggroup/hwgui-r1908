@@ -59,7 +59,7 @@ Local aIP := { 10,1,2,3 }
    oFont:Release()
 
    IF oModDlg:lResult
-      MsgInfo( e1 + chr(10) + chr(13) +                               ;
+      HWG_MSGINFO( e1 + chr(10) + chr(13) +                               ;
                "Check1 - " + Iif(c1,"On","Off") + chr(10) + chr(13) + ;
                "Check2 - " + Iif(c2,"On","Off") + chr(10) + chr(13) + ;
                "Radio: " + Str(r1,1) + chr(10) + chr(13) +            ;
@@ -73,9 +73,9 @@ Return Nil
 
 
 function IpGetFocus()
-   MsgInfo("GetFocus")
+   HWG_MSGINFO("GetFocus")
 return (NIL)
 
 function IpLostFocus()
-   MsgInfo("LostFocus")
+   HWG_MSGINFO("LostFocus")
 return (NIL)

@@ -53,26 +53,26 @@ Private aGetsTab := { "","","","","","","","","","","","","","" }
          MENUITEM "YYYYY" ACTION MsgGet( "Example","Input anything")
       ENDMENU
       MENU TITLE "Help"
-         MENUITEM "About" ACTION MsgInfo("About")
+         MENUITEM "About" ACTION HWG_MSGINFO("About")
          MENUITEM "Info" ACTION MsgTemp("")
       ENDMENU
       MENU TITLE "Third"
          MENUITEM "Wchoice" ACTION Wchoice( acho,"Select",,,,,15132390,,VColor( "008000" ) )
-         MENUITEM "SelectFolder" ACTION MsgInfo( SelectFolder("!!!") )
+         MENUITEM "SelectFolder" ACTION HWG_MSGINFO( SelectFolder("!!!") )
          MENU TITLE "Submenu"
-            MENUITEM "ShellExecute" ACTION (ShellExecute("d:\temp\podst.doc"),MsgInfo(str(oMainWindow:handle)))
-            MENUITEM "S2" ACTION MsgStop("S2")
+            MENUITEM "ShellExecute" ACTION (ShellExecute("d:\temp\podst.doc"),HWG_MSGINFO(str(oMainWindow:handle)))
+            MENUITEM "S2" ACTION HWG_MsgStop("S2")
          ENDMENU
       ENDMENU
    ENDMENU
 
 /*   
    aMenu := { ;
-     { { { {||MsgInfo("Xxxx")},"XXXXX",130 }, ;
+     { { { {||HWG_MSGINFO("Xxxx")},"XXXXX",130 }, ;
          { ,,131 }, ;
-         { {||MsgInfo("Yyyy")},"YYYYY",132 } ;
+         { {||HWG_MSGINFO("Yyyy")},"YYYYY",132 } ;
        },"File",120 }, ;
-     { {||MsgInfo("Help")},"Help",121 } ;
+     { {||HWG_MSGINFO("Help")},"Help",121 } ;
    }
    BuildMenu( aMenu,hWnd,aMainWindow )
 */

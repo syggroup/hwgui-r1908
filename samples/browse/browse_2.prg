@@ -239,7 +239,7 @@ Return Nil
 Function ReplaceIndex(oPos)
 
 if  ! oBrowse:lAppMode
-  Msginfo("Key press in col "+str(oPos))
+  HWG_MSGINFO("Key press in col "+str(oPos))
   if oPos==1
     Set Order to 1
   Else

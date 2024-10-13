@@ -28,9 +28,9 @@ PROCEDURE Main()
 
    ACTIVATE DIALOG oDialog
 
-   MsgInfo(cCB1, "Info")
-   MsgInfo(cCB2, "Info")
-   MsgInfo(cCB3, "Info")
-   MsgInfo(cCB4, "Info")
+   HWG_MSGINFO(cCB1, "Info")
+   HWG_MSGINFO(cCB2, "Info")
+   HWG_MSGINFO(cCB3, "Info")
+   HWG_MSGINFO(cCB4, "Info")
 
 RETURN

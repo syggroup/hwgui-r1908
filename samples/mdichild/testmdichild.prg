@@ -81,7 +81,7 @@ FUNCTION CreateMdiChild(  )
         FONT HFont():Add( 'Times New Roman',0,-27,400,,,)
    @ 818,180 BUTTONEX oButtonex1 CAPTION "Cancela Cupom"   SIZE 183,38 ;
         STYLE BS_CENTER +WS_TABSTOP  NOTHEMES  ;
-        ON CLICK {|This, Value| msginfo('Cancelado') } ;
+        ON CLICK {|This, Value| HWG_MSGINFO('Cancelado') } ;
         ON GETFOCUS {|| Thisform:obuttonex1:SetColor( 255, rgb(225,243,252), .t.) } ;
         ON INIT {|This| This:blostfocus:={|t,this| this:bcolor := NIL, this:Setcolor( 0, NIL, .t. ) } }
         oButtonex1:Anchor := 225

@@ -1,0 +1,1 @@
+hbmk2 teste.hbp -xhb -jobs=%NUMBER_OF_PROCESSORS%

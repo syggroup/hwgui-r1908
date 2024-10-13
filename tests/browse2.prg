@@ -15,8 +15,8 @@ PROCEDURE Main()
    // Right Click: executa o codeblock definido no 'ON RIGHTCLICK'
 
    @ 20, 20 BROWSE oBrowse ARRAY SIZE 640 - 40, 480 - 100 AUTOEDIT NO VSCROLL ;
-      ON CLICK {||MsgInfo("ON CLICK", "Aviso")} ;
-      ON RIGHTCLICK {||MsgInfo("ON RIGHTCLICK", "Aviso")}
+      ON CLICK {||HWG_MSGINFO("ON CLICK", "Aviso")} ;
+      ON RIGHTCLICK {||HWG_MSGINFO("ON RIGHTCLICK", "Aviso")}
 
    aData := Array(1000)
    FOR n := 1 TO 1000
