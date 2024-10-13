@@ -21,7 +21,7 @@ CLASS HStatic INHERIT HControl
 
    CLASS VAR winclass INIT "STATIC"
 
-   DATA AutoSize INIT .F.
+   DATA AutoSize INIT .T.
    //DATA lTransparent INIT .F. HIDDEN
    DATA nStyleHS
    DATA bClick
