@@ -7,10 +7,13 @@
 -3rd=hbide_title=hwgui
 -3rd=hbide_output=hwgui
 
+{x86_64}-DHWG_USE_POINTER_ITEM
+{bcc|bcc64}-D__COMPILER_BCC77__
+
 -inc
 -hblib
-#-olib/hwgui
--olib/${hb_plat}/${hb_comp}/hwgui
+{!xhb}-oD:/devel/hwgui_hb/lib/${hb_plat}/${hb_comp}/hwgui
+{xhb}-oD:/devel/hwgui_hb/lib/${hb_plat}/${hb_comp}/hwgui_xhb
 -n
 -q0
 -w3
@@ -33,7 +36,6 @@ source/dialog.c
 source/draw.c
 source/winreg.c
 source/drawtext.c
-source/freeimg.c
 source/grid.c
 source/media_c.c
 source/menu_c.c
@@ -51,7 +53,7 @@ source/listbox.c
 source/pager.c
 source/edit.c
 
-source/errorsys.prg
+#source/errorsys.prg
 
 source/hipedit.prg
 source/hfont.prg
@@ -118,3 +120,6 @@ source/printdos.prg
 source/hdc.prg
 source/hhyper.prg
 source/richtext.prg
+
+source/procmisc/*.c
+source/procmisc/*.prg
