@@ -297,21 +297,20 @@ METHOD INIT() CLASS HComboBox
          IF ::lText
             IF ::lEdit
                SetDlgItemText( getmodalhandle(), ::id, ::value )
-               SendMessage(::handle, CB_SELECTSTRING, -1, ::value)
-               SendMessage(::handle, CB_SETEDITSEL, -1, 0)
+         //      SendMessage( ::handle, CB_SELECTSTRING, -1, ::value)
             ELSE
                #ifdef __XHARBOUR__
-               ComboSetString( ::handle, AScan( ::aItems, ::value, , , .T.  ) )
+               ComboSetString( ::handle, AScan( ::aItems, ALLTRIM(::value)) )
                #else
                ComboSetString( ::handle, hb_AScan( ::aItems, ::value, , , .T.  ) )
                #endif
             ENDIF
-            //SendMessage(::handle, CB_SELECTSTRING, 0, ::value)
+            SendMessage( ::handle, CB_SELECTSTRING, 0, ::value )
             SetWindowText( ::handle, ::value )
          ELSE
             ComboSetString( ::handle, ::value )
          ENDIF
-         avgwidth := GetFontDialogUnits( ::oParent:handle ) + 0.75   //,::oParent:oFont:handle)
+         avgwidth          := GetFontDialogUnits( ::oParent:handle )            //,::oParent:oFont:handle)
          NewLongComboWidth := ( LongComboWidth - 2 ) * avgwidth
          SendMessage(::handle, CB_SETDROPPEDWIDTH, NewLongComboWidth + 50, 0)
       ENDIF
@@ -338,7 +337,7 @@ METHOD INIT() CLASS HComboBox
    ENDIF
    ::Refresh()
    IF ::lEdit
-      SendMessage(::handle, CB_SETEDITSEL, -1, 0)
+      SendMessage(::handle, CB_SETEDITSEL , -1, 0)
       SendMessage(::handle, WM_SETREDRAW, 1, 0)
    ENDIF
 
@@ -618,7 +617,7 @@ METHOD Refresh() CLASS HComboBox
          SendMessage(::handle, CB_SETEDITSEL, 0, ::SelStart)
       ENDIF
       #ifdef __XHARBOUR__
-      ComboSetString( ::handle, AScan( ::aItems, ::value, , , .T.  ) )
+      ComboSetString( ::handle, AScan( ::aItems, ::value) )
       #else
       ComboSetString( ::handle, hb_AScan( ::aItems, ::value, , , .T.  ) )
       #endif
@@ -737,7 +736,7 @@ METHOD GetValueBound(xItem) CLASS HComboBox
       IF ::lText
           //nPos := IIF( ::Value = Nil,0, AScan( ::aItems, ::Value ) )
           #ifdef __XHARBOUR__
-          nPos := IIF( ::Value = Nil, 0, AScan( ::aItems, ::value, , , .T.  ) )
+          nPos := IIF( ::Value = Nil, 0, AScan( ::aItems, ::value ) )
           #else
           nPos := IIF( ::Value = Nil, 0, hb_AScan( ::aItems, ::value, , , .T.  ) )
           #endif
@@ -745,7 +744,7 @@ METHOD GetValueBound(xItem) CLASS HComboBox
    ELSE
       //nPos := AScan( ::aItemsBound, xItem )
       #ifdef __XHARBOUR__
-      nPos := AScan( ::aItemsBound, xItem, , , .T. )
+      nPos := AScan( ::aItemsBound, xItem )
       #else
       nPos := hb_AScan( ::aItemsBound, xItem, , , .T. )
       #endif
