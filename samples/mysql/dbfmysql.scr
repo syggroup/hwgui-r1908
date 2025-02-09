@@ -1,6 +1,6 @@
 // dbf2mysql
 Private cDbf, cTable, cQuery, i := 1, aStruct, vartmp
-  if !Empty(cDbf:=SelectFile("xBase files( *.dbf )","*.dbf",Nil,"Select table to import")) .and. (cTable:=MsgGet("","Input mySQL table name:"))!=Nil
+  if !Empty(cDbf:=hwg_SelectFile("xBase files( *.dbf )","*.dbf",Nil,"Select table to import")) .and. (cTable:=MsgGet("","Input mySQL table name:"))!=Nil
     use (cDbf)
     aStruct := dbStruct()
     // Building of CREATE TABLE query
@@ -53,11 +53,11 @@ Private cDbf, cTable, cQuery, i := 1, aStruct, vartmp
         enddo
         cQuery := Left(cQuery, Len(cQuery) - 1)
         if sqlQuery( connHandle, cQuery) != 0
-           HWG_MsgStop( sqlGetErr( connHandle ) )
+           hwg_MsgStop( sqlGetErr( connHandle ) )
            exit
         endif
         skip
       enddo
     endif
-    HWG_MSGINFO("Script executed")
+    hwg_MsgInfo("Script executed")
   endif

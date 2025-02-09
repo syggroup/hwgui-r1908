@@ -24,10 +24,10 @@
              [ <lTransparent: TRANSPARENT > ] ;
              [ ON MOUSEOVER <uMOver> ] ; 
        => ;
-          [ <oSSay> := ] TSSay():ReDefine( <nId>, <{cText}>, <oWnd>, <cPict>, ;
+          [ <oSSay> := ] TSSay():ReDefine(<nId>, <{cText}>, <oWnd>, <cPict>, ;
              [\{|Self|<uAction>\}], <.lCenter.>, <.lRight.>, <.lBottom.>, ;
              <nClrText>, <nClrBack>, <nClrOver>, <.update.>, <oFont>, <oCursor>, ;
-             <.lShaded.>, <.lBox.>, <.lRaised.>, <.lTransparent.>, [{||<uMOver>}] )
+             <.lShaded.>, <.lBox.>, <.lRaised.>, <.lTransparent.>, [{||<uMOver>}])
 
 #xcommand @ <nRow>, <nCol> SENSITIVE SAY [ <oSSay> <label: PROMPT,VAR > ] <cText> ;
              [ PICTURE <cPict> ] ;

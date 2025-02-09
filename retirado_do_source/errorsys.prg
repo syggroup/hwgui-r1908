@@ -1,24 +1,24 @@
-/*
- * $Id: errorsys.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Windows errorsys replacement
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: errorsys.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Windows errorsys replacement
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "common.ch"
 #include "error.ch"
 #include "windows.ch"
 #include "guilib.ch"
 
-STATIC LogInitialPath := ""
+STATIC s_LogInitialPath := ""
 
 PROCEDURE hwg_ErrorSys
 
    ErrorBlock({|oError|DefError(oError)})
-   LogInitialPath := "\" + CurDir() + IIf(Empty(CurDir()), "", "\")
+   s_LogInitialPath := "\" + CurDir() + IIf(Empty(CurDir()), "", "\")
 
    RETURN
 
@@ -71,10 +71,10 @@ STATIC FUNCTION DefError(oError)
    cMessage += Chr(13) + Chr(10) + "Time:" + Time()
 
 
-   MemoWrit(LogInitialPath + "Error.log", cMessage)
+   MemoWrit(s_LogInitialPath + "Error.log", cMessage)
 
    ErrorPreview(cMessage)
-   EndWindow()
+   hwg_EndWindow()
    PostQuitMessage(0)
 
    RETURN .F.
@@ -124,7 +124,7 @@ FUNCTION ErrorMessage(oError)
 FUNCTION hwg_WriteLog(cText, fname)
    LOCAL nHand
 
-   fname := LogInitialPath + IIf(fname == Nil, "a.log", fname)
+   fname := s_LogInitialPath + IIf(fname == NIL, "a.log", fname)
    IF !File(fname)
       nHand := FCreate(fname)
    ELSE
@@ -144,9 +144,9 @@ STATIC FUNCTION ErrorPreview(cMess)
 
    @ 10, 10 EDITBOX oEdit CAPTION cMess SIZE 480, 440 STYLE WS_VSCROLL + WS_HSCROLL + ES_MULTILINE + ES_READONLY ;
       COLOR 16777088 BACKCOLOR 0 ;
-      ON GETFOCUS { || SendMessage(oEdit:handle, EM_SETSEL, 0, 0) }
+      ON GETFOCUS {||hwg_SendMessage(oEdit:handle, EM_SETSEL, 0, 0)}
 
-   @ 200, 460 BUTTON "Close" ON CLICK { || EndDialog() } SIZE 100, 32
+   @ 200, 460 BUTTON "Close" ON CLICK {||EndDialog()} SIZE 100, 32
 
    oDlg:Activate()
-   RETURN Nil
+   RETURN NIL

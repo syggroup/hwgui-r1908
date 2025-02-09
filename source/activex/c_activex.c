@@ -1,6 +1,7 @@
-/*
- * $Id: c_activex.c 1615 2011-02-18 13:53:35Z mlacecilia $
- */
+//
+// $Id: c_activex.c 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+
 /*
  * ooHG source code:
  * ActiveX control
@@ -243,7 +244,7 @@ static HRESULT STDMETHODCALLTYPE QueryInterface(IEventHandler *this, REFIID vTab
   // We don't recognize the GUID passed to us. Let the caller know this,
   // by clearing his handle, and returning E_NOINTERFACE.
   *ppv = 0;
-  return (E_NOINTERFACE);
+  return E_NOINTERFACE;
 }
 
 //------------------------------------------------------------------------------
@@ -265,7 +266,7 @@ static ULONG STDMETHODCALLTYPE Release(IEventHandler *this)
   if (--((MyRealIEventHandler *)this)->count == 0)
   {
     GlobalFree(this);
-    return (0);
+    return 0;
   }
   return (((MyRealIEventHandler *)this)->count);
 }
@@ -325,7 +326,7 @@ static ULONG STDMETHODCALLTYPE Invoke(IEventHandler *this, DISPID dispid, REFIID
   // We implement only a "default" interface
   if (!IsEqualIID(riid, &IID_NULL))
   {
-    return (DISP_E_UNKNOWNINTERFACE);
+    return DISP_E_UNKNOWNINTERFACE;
   }
 
   HB_SYMBOL_UNUSED(lcid);

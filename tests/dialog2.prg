@@ -1,6 +1,6 @@
 #include "hwgui.ch"
 
-PROCEDURE Main()
+FUNCTION Main()
 
    LOCAL oDialog
    LOCAL oEdit1
@@ -11,7 +11,7 @@ PROCEDURE Main()
 
    INIT DIALOG oDialog TITLE "Test" SIZE 640, 480 ;
       FONT HFont():Add("Courier New", 0, -13) ;
-      ON EXIT {||MsgYesNo("Confirm exit ?")}
+      ON EXIT {||hwg_MsgYesNo("Confirm exit ?")}
 
    @ 20, 40 SAY "Field&1 (ALT+1):" SIZE 130, 26
    @ 160, 40 EDITBOX oEdit1 CAPTION "" SIZE 300, 26
@@ -34,4 +34,4 @@ PROCEDURE Main()
 
    ACTIVATE DIALOG oDialog
 
-RETURN
+RETURN NIL

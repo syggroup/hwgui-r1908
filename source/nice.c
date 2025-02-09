@@ -1,12 +1,11 @@
-/*
- * $Id: nice.c 1846 2012-07-02 16:52:31Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- *
- *
- * Copyright 2003 Luiz Rafael Culik Guimaraes <culikr@brtrubo.com>
- * www - http://sites.uol.com.br/culikr/
- */
+//
+// $Id: nice.c 1846 2012-07-02 16:52:31Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+//
+// Copyright 2003 Luiz Rafael Culik Guimaraes <culikr@brtrubo.com>
+// www - http://sites.uol.com.br/culikr/
+//
 
 #include "hwingui.h"
 #include <commctrl.h>
@@ -129,7 +128,7 @@ void Gradient(HDC hdc, int x, int y, int w, int h, int color1, int color2, int n
   s_pGradientfill(hdc, Vert, 2, &Rect, 1, nmode); // GRADIENT_FILL_RECT_H );
 }
 
-LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   LRESULT res;
   PHB_DYNS pSymTest;
@@ -138,7 +137,7 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
     hb_vmPushSymbol(hb_dynsymSymbol(pSymTest));
     hb_vmPushNil();       /* places NIL at self */
     hwg_vmPushHWND(hWnd); /* pushes parameters on to the hvm stack */
-    hwg_vmPushUINT(message);
+    hwg_vmPushUINT(uMsg);
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
     hb_vmDo(4);        /* where iArgCount is the number of pushed parameters */
@@ -149,12 +148,12 @@ LRESULT CALLBACK NiceButtProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
     }
     else
     {
-      return (DefWindowProc(hWnd, message, wParam, lParam));
+      return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
   }
   else
   {
-    return (DefWindowProc(hWnd, message, wParam, lParam));
+    return DefWindowProc(hWnd, uMsg, wParam, lParam);
   }
 }
 
@@ -234,7 +233,7 @@ HB_FUNC(GRADIENT)
   {
     s_pGradientfill = (GRADIENTFILL)GetProcAddress(LoadLibrary(TEXT("MSIMG32.DLL")), "GradientFill");
   }
-  // void Gradient( HDC hdc, int x, int y, int w, int h, int color1, int color2, int nmode )
+  // void Gradient(HDC hdc, int x, int y, int w, int h, int color1, int color2, int nmode)
 
   Gradient(hwg_par_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5),
            (hb_pcount() > 5 && !HB_ISNIL(6)) ? hb_parni(6) : 16777215,

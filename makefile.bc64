@@ -31,7 +31,7 @@ CC = bcc64
 LINKER = tlib64
 
 BIN_DIR  = $(HRB_DIR)\bin
-LIB_DIR  = lib
+LIB_DIR  = lib\b64
 
 HWGUI_OBJ_DIR      = $(OBJ_DIR)
 PROCMISC_OBJ_DIR   = $(OBJ_DIR)

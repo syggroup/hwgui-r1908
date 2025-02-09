@@ -1,12 +1,12 @@
-/*
- * $Id: drawtext.c 1835 2012-01-21 09:37:51Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level text functions
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
- */
+//
+// $Id: drawtext.c 1835 2012-01-21 09:37:51Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level text functions
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #define OEMRESOURCE
 #include "hwingui.h"
@@ -19,30 +19,36 @@ HB_FUNC_EXTERN(HB_OEMTOANSI);
 HB_FUNC_EXTERN(HB_ANSITOOEM);
 
 /*
-DEFINEPAINTSTRU(PAINTSTRUCT) -->
+HWG_DEFINEPAINTSTRU(PAINTSTRUCT) -->
 */
-HB_FUNC(DEFINEPAINTSTRU)
+HB_FUNC(HWG_DEFINEPAINTSTRU)
 {
   hwg_ret_PAINTSTRUCT((PAINTSTRUCT *)hb_xgrab(sizeof(PAINTSTRUCT)));
 }
 
+HB_FUNC_TRANSLATE(DEFINEPAINTSTRU, HWG_DEFINEPAINTSTRU);
+
 /*
-BEGINPAINT(HWND, PAINTSTRUCT) -->
+HWG_BEGINPAINT(HWND, PAINTSTRUCT) -->
 */
-HB_FUNC(BEGINPAINT)
+HB_FUNC(HWG_BEGINPAINT)
 {
   hwg_ret_HDC(BeginPaint(hwg_par_HWND(1), hwg_par_PAINTSTRUCT(2)));
 }
 
+HB_FUNC_TRANSLATE(BEGINPAINT, HWG_BEGINPAINT);
+
 /*
-ENDPAINT(HWND, PAINTSTRUCT) -->
+HWG_ENDPAINT(HWND, PAINTSTRUCT) -->
 */
-HB_FUNC(ENDPAINT)
+HB_FUNC(HWG_ENDPAINT)
 {
   PAINTSTRUCT *pps = hwg_par_PAINTSTRUCT(2);
   EndPaint(hwg_par_HWND(1), pps); // TODO: o retorno é BOOL
   hb_xfree(pps);
 }
+
+HB_FUNC_TRANSLATE(ENDPAINT, HWG_ENDPAINT);
 
 /*
 DELETEDC(HDC) -->
@@ -177,9 +183,9 @@ HB_FUNC(GETTEXTSIZE)
 }
 
 /*
-GETCLIENTRECT(HWND) --> aRect[4]
+HWG_GETCLIENTRECT(HWND) --> aRect[4]
 */
-HB_FUNC(GETCLIENTRECT)
+HB_FUNC(HWG_GETCLIENTRECT)
 {
   RECT rc;
   PHB_ITEM aMetr = hb_itemArrayNew(4);
@@ -206,10 +212,12 @@ HB_FUNC(GETCLIENTRECT)
   hb_itemReturnRelease(aMetr);
 }
 
+HB_FUNC_TRANSLATE(GETCLIENTRECT, HWG_GETCLIENTRECT);
+
 /*
 GETWINDOWRECT(HWND) --> aRect[4]
 */
-HB_FUNC(GETWINDOWRECT)
+HB_FUNC(HWG_GETWINDOWRECT)
 {
   RECT rc;
   PHB_ITEM aMetr = hb_itemArrayNew(4);
@@ -235,6 +243,8 @@ HB_FUNC(GETWINDOWRECT)
 
   hb_itemReturnRelease(aMetr);
 }
+
+HB_FUNC_TRANSLATE(GETWINDOWRECT, HWG_GETWINDOWRECT);
 
 /*
 GETCLIENTAREA(PAINTSTRUCT) --> aRect[4]

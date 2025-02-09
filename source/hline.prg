@@ -1,12 +1,12 @@
-/*
- * $Id: hcontrol.prg 1902 2012-09-20 11:51:37Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HLine class
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hcontrol.prg 1902 2012-09-20 11:51:37Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HLine class
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -38,8 +38,8 @@ METHOD New(oWndParent, nId, lVert, nLeft, nTop, nLength, bSize, bInit, tcolor, n
 
    ::title := ""
    ::lVert := IIf(lVert == NIL, .F., lVert)
-   ::LineSlant := IIF(Empty(cSlant) .OR. !(cSlant $ "/\"), "", cSlant)
-   ::nBorder := IIF(Empty(nBorder), 1, nBorder)
+   ::LineSlant := IIf(Empty(cSlant) .OR. !(cSlant $ "/\"), "", cSlant)
+   ::nBorder := IIf(Empty(nBorder), 1, nBorder)
 
    IF Empty(::LineSlant)
       IF ::lVert
@@ -76,21 +76,21 @@ RETURN NIL
 
 METHOD Paint(lpdis) CLASS HLine
 
-   LOCAL drawInfo := GetDrawItemInfo(lpdis)
+   LOCAL drawInfo := hwg_GetDrawItemInfo(lpdis)
    LOCAL hDC := drawInfo[3]
    LOCAL x1 := drawInfo[4]
    LOCAL y1 := drawInfo[5]
    LOCAL x2 := drawInfo[6]
    LOCAL y2 := drawInfo[7]
 
-   SelectObject(hDC, ::oPenLight:handle)
+   hwg_SelectObject(hDC, ::oPenLight:handle)
 
    IF Empty(::LineSlant)
       IF ::lVert
-         // DrawEdge(hDC,x1,y1,x1+2,y2,EDGE_SUNKEN,BF_RIGHT)
+         // DrawEdge(hDC, x1, y1, x1 + 2, y2, EDGE_SUNKEN, BF_RIGHT)
          DrawLine(hDC, x1 + 1, y1, x1 + 1, y2)
       ELSE
-         // DrawEdge(hDC,x1,y1,x2,y1+2,EDGE_SUNKEN,BF_RIGHT)
+         // DrawEdge(hDC, x1, y1, x2, y1 + 2, EDGE_SUNKEN, BF_RIGHT)
          DrawLine(hDC, x1, y1 + 1, x2, y1 + 1)
       ENDIF
       SelectObject(hDC, ::oPenGray:handle)

@@ -1,12 +1,12 @@
-/*
- * $Id: hcontrol.prg 1902 2012-09-20 11:51:37Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HStatus class
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hcontrol.prg 1902 2012-09-20 11:51:37Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HStatus class
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -48,11 +48,11 @@ ENDCLASS
 METHOD New(oWndParent, nId, nStyle, oFont, aParts, bInit, bSize, bPaint, bRClick, bDblClick, nHeight) CLASS HStatus
 
    bSize := IIf(bSize != NIL, bSize, {|o, x, y|o:Move(0, y - ::nStatusHeight, x, ::nStatusHeight)})
-   nStyle := Hwg_BitOr(IIf(nStyle == NIL, 0, nStyle), WS_CHILD + WS_VISIBLE + WS_OVERLAPPED + WS_CLIPSIBLINGS)
+   nStyle := hwg_BitOr(IIf(nStyle == NIL, 0, nStyle), WS_CHILD + WS_VISIBLE + WS_OVERLAPPED + WS_CLIPSIBLINGS)
    ::Super:New(oWndParent, nId, nStyle, 0, 0, 0, 0, oFont, bInit, bSize, bPaint)
 
    //::nHeight := nHeight
-   ::nStatusHeight := IIF(nHeight == NIL, ::nStatusHeight, nHeight)
+   ::nStatusHeight := IIf(nHeight == NIL, ::nStatusHeight, nHeight)
    ::aParts := aParts
    ::bDblClick := bDblClick
    ::bRClick := bRClick
@@ -71,7 +71,7 @@ METHOD Activate() CLASS HStatus
       ::Init()
       /*
       IF __ObjHasMsg(::oParent, "AOFFSET")
-         aCoors := GetWindowRect(::handle)
+         aCoors := hwg_GetWindowRect(::handle)
          ::oParent:aOffset[4] := aCoors[4] - aCoors[2]
       ENDIF
       */
@@ -111,7 +111,7 @@ RETURN Self
 
 METHOD Notify(lParam) CLASS HStatus
 
-   LOCAL nCode := GetNotifyCode(lParam)
+   LOCAL nCode := hwg_GetNotifyCode(lParam)
    LOCAL nParts := GetNotifySBParts(lParam) - 1
 
    SWITCH nCode
@@ -140,14 +140,14 @@ METHOD StatusHeight(nHeight) CLASS HStatus
    LOCAL aCoors
 
    IF nHeight != NIL
-      aCoors := GetWindowRect(::handle)
+      aCoors := hwg_GetWindowRect(::handle)
       IF nHeight != 0
          IF ::lInit .AND. __ObjHasMsg(::oParent, "AOFFSET")
             ::oParent:aOffset[4] -= (aCoors[4] - aCoors[2])
          ENDIF
-         SendMessage(::handle, SB_SETMINHEIGHT, nHeight, 0)
-         SendMessage(::handle, WM_SIZE, 0, 0)
-         aCoors := GetWindowRect(::handle)
+         hwg_SendMessage(::handle, SB_SETMINHEIGHT, nHeight, 0)
+         hwg_SendMessage(::handle, WM_SIZE, 0, 0)
+         aCoors := hwg_GetWindowRect(::handle)
       ENDIF
       ::nStatusHeight := (aCoors[4] - aCoors[2]) - 1
       IF __ObjHasMsg(::oParent, "AOFFSET")
@@ -164,9 +164,9 @@ METHOD GetTextPanel(nPart) CLASS HStatus
    LOCAL ntxtLen
    LOCAL cText := ""
 
-   ntxtLen := SendMessage(::handle, SB_GETTEXTLENGTH, nPart - 1, 0)
+   ntxtLen := hwg_SendMessage(::handle, SB_GETTEXTLENGTH, nPart - 1, 0)
    cText := Replicate(Chr(0), ntxtLen)
-   SendMessage(::handle, SB_GETTEXT, nPart - 1, @cText)
+   hwg_SendMessage(::handle, SB_GETTEXT, nPart - 1, @cText)
 
 RETURN cText
 
@@ -175,9 +175,9 @@ RETURN cText
 METHOD SetTextPanel(nPart, cText, lRedraw) CLASS HStatus
 
    //WriteStatusWindow(::handle, nPart - 1, cText)
-   SendMessage(::handle, SB_SETTEXT, nPart - 1, cText)
+   hwg_SendMessage(::handle, SB_SETTEXT, nPart - 1, cText)
    IF lRedraw != NIL .AND. lRedraw
-      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+      hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
    ENDIF
 
 RETURN NIL
@@ -198,7 +198,7 @@ METHOD SetIconPanel(nPart, cIcon, nWidth, nHeight) CLASS HStatus
       oIcon := HIcon():addFile(cIcon, nWidth, nHeight)
    ENDIF
    IF !Empty(oIcon)
-      SendMessage(::handle, SB_SETICON, nPart - 1, oIcon:handle)
+      hwg_SendMessage(::handle, SB_SETICON, nPart - 1, oIcon:handle)
    ENDIF
 
 RETURN NIL
@@ -210,7 +210,7 @@ METHOD Resize(xIncrSize) CLASS HStatus
    LOCAL i
 
    IF !Empty(::aParts)
-      FOR i := 1 TO LEN(::aParts)
+      FOR i := 1 TO Len(::aParts)
          ::aParts[i] := ROUND(::aParts[i] * xIncrSize, 0)
       NEXT
       hwg_InitStatus(::oParent:handle, ::handle, Len(::aParts), ::aParts)

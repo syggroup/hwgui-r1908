@@ -1,6 +1,6 @@
 #include "hwgui.ch"
 
-PROCEDURE Main()
+FUNCTION Main()
 
    LOCAL oDialog
    LOCAL oBrowse
@@ -15,8 +15,8 @@ PROCEDURE Main()
    // Right Click: executa o codeblock definido no 'ON RIGHTCLICK'
 
    @ 20, 20 BROWSE oBrowse ARRAY SIZE 640 - 40, 480 - 100 AUTOEDIT NO VSCROLL ;
-      ON CLICK {||HWG_MSGINFO("ON CLICK", "Aviso")} ;
-      ON RIGHTCLICK {||HWG_MSGINFO("ON RIGHTCLICK", "Aviso")}
+      ON CLICK {||hwg_MsgInfo("ON CLICK", "Aviso")} ;
+      ON RIGHTCLICK {||hwg_MsgInfo("ON RIGHTCLICK", "Aviso")}
 
    aData := Array(1000)
    FOR n := 1 TO 1000
@@ -27,7 +27,7 @@ PROCEDURE Main()
                    AllTrim(Str(n)) + "," + "5"}
    NEXT n
 
-   CreateArList(oBrowse, aData)
+   hwg_CreateArList(oBrowse, aData)
 
    oBrowse:aColumns[1]:heading := "Coluna 1"
    oBrowse:aColumns[2]:heading := "Coluna 2"
@@ -39,4 +39,4 @@ PROCEDURE Main()
 
    ACTIVATE DIALOG oDialog
 
-RETURN
+RETURN NIL

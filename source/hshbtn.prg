@@ -1,13 +1,13 @@
-/*
- * $Id: hshbtn.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HShadeButton class, inherited from HOwnButton
- * It implements some kind of owner drawn buttons
- *
- * Copyright 2006 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hshbtn.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HShadeButton class, inherited from HOwnButton
+// It implements some kind of owner drawn buttons
+//
+// Copyright 2006 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "hbclass.ch"
 #include "hwgui.ch"
@@ -22,62 +22,62 @@ CLASS HShadeButton INHERIT HOwnButton
 
    DATA hShade
 
-   METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
+   METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
                bInit, bSize, bPaint, bClick, lflat,              ;
                cText, color, font, xt, yt,                       ;
                bmp, lResour, xb, yb, widthb, heightb, lTr, trColor, ;
                cTooltip, lEnabled, shadeID, palette,         ;
-               granularity, highlight, coloring, shcolor )
+               granularity, highlight, coloring, shcolor)
    METHOD Paint()
    METHOD END()
 
 ENDCLASS
 
-METHOD New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
+METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, ;
             bInit, bSize, bPaint, bClick, lFlat,              ;
             cText, color, font, xt, yt,                       ;
             bmp, lResour, xb, yb, widthb, heightb, lTr, trColor, ;
             cTooltip, lEnabled, shadeID, palette,         ;
-            granularity, highlight, coloring, shcolor ) CLASS HShadeButton
+            granularity, highlight, coloring, shcolor) CLASS HShadeButton
 
-   ::Super:New( oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight,    ;
+   ::Super:New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight,    ;
               bInit, bSize, bPaint, bClick, lFlat,             ;
               cText, color, font, xt, yt,,,                    ;
               bmp, lResour, xb, yb, widthb, heightb, lTr, trColor, ;
-              cTooltip, lEnabled )
+              cTooltip, lEnabled)
 
-   ::hShade := shade_New( 0, 0, nWidth, nHeight, lFlat )
-   shade_Set( ::hShade, shadeID, palette, granularity, highlight, coloring, shcolor )
+   ::hShade := hwg_Shade_New(0, 0, nWidth, nHeight, lFlat)
+   hwg_Shade_Set(::hShade, shadeID, palette, granularity, highlight, coloring, shcolor)
    RETURN Self
 
 METHOD Paint() CLASS HShadeButton
    LOCAL pps, hDC
    LOCAL nState
 
-   pps := DefinePaintStru()
-   hDC := BeginPaint( ::handle, pps )
+   pps := hwg_DefinePaintStru()
+   hDC := hwg_BeginPaint(::handle, pps)
 
    IF ::state == OBTN_INIT
       ::state := OBTN_NORMAL
    ENDIF
 
    IF ::lEnabled
-      nState := IIf( ::state == OBTN_PRESSED, STATE_SELECTED, STATE_DEFAULT + ;
-                     IIf( ::state == OBTN_MOUSOVER, STATE_OVER, 0 ) ) + ;
-                IIf( GetFocus() == ::handle, STATE_FOCUS, 0 )
+      nState := IIf(::state == OBTN_PRESSED, STATE_SELECTED, STATE_DEFAULT + ;
+                     IIf(::state == OBTN_MOUSOVER, STATE_OVER, 0)) + ;
+                IIf(hwg_GetFocus() == ::handle, STATE_FOCUS, 0)
    ELSE
       nState := STATE_DISABLED
    ENDIF
 
-   shade_Draw( ::hShade, hDC, nState )
+   hwg_Shade_Draw(::hShade, hDC, nState)
 
-   ::DrawItems( hDC )
+   ::DrawItems(hDC)
 
-   EndPaint( ::handle, pps )
-   RETURN Nil
+   hwg_EndPaint(::handle, pps)
+   RETURN NIL
 
 METHOD END() CLASS HShadeButton
 
    ::Super:END()
-   shade_Release(::hShade)
-   RETURN Nil
+   hwg_Shade_Release(::hShade)
+   RETURN NIL

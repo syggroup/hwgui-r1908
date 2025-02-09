@@ -1,12 +1,12 @@
-/*
- * $Id: hsplit.prg 1906 2012-09-25 22:23:08Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HSplitter class
- *
- * Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hsplit.prg 1906 2012-09-25 22:23:08Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HSplitter class
+//
+// Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -28,30 +28,30 @@ CLASS VAR winclass INIT "STATIC"
    DATA bEndDrag
    DATA lScrolling
 
-   METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, ;
-               bSize, bDraw, color, bcolor, aLeft, aRight, lTransp, lScrolling )
+   METHOD New(oWndParent, nId, nLeft, nTop, nWidth, nHeight, ;
+               bSize, bDraw, color, bcolor, aLeft, aRight, lTransp, lScrolling)
    METHOD Activate()
-   METHOD onEvent( msg, wParam, lParam )
+   METHOD onEvent(msg, wParam, lParam)
    METHOD Init()
    METHOD Paint()
-   METHOD Drag( lParam )
-   METHOD DragAll( lScroll )
+   METHOD Drag(lParam)
+   METHOD DragAll(lScroll)
 
 ENDCLASS
 
-METHOD New( oWndParent, nId, nLeft, nTop, nWidth, nHeight, ;
-            bSize, bDraw, color, bcolor, aLeft, aRight, lTransp, lScrolling ) CLASS HSplitter
+METHOD New(oWndParent, nId, nLeft, nTop, nWidth, nHeight, ;
+            bSize, bDraw, color, bcolor, aLeft, aRight, lTransp, lScrolling) CLASS HSplitter
                                                          //+  WS_CLIPCHILDREN
-   ::Super:New( oWndParent, nId, WS_VISIBLE + SS_OWNERDRAW , nLeft, nTop, nWidth, nHeight,,, ;
-              bSize, bDraw,, color, bcolor )
+   ::Super:New(oWndParent, nId, WS_VISIBLE + SS_OWNERDRAW , nLeft, nTop, nWidth, nHeight,,, ;
+              bSize, bDraw,, color, bcolor)
 
    ::title   := ""
    
-   ::aLeft   := IIf( aLeft == Nil, {}, aLeft )
-   ::aRight  := IIf( aRight == Nil, {}, aRight )
-   ::lVertical := ( ::nHeight > ::nWidth )
-   ::lScrolling := Iif( lScrolling == Nil, .F., lScrolling )
-   IF ( lTransp != NIL .AND. lTransp )
+   ::aLeft   := IIf(aLeft == NIL, {}, aLeft)
+   ::aRight  := IIf(aRight == NIL, {}, aRight)
+   ::lVertical := (::nHeight > ::nWidth)
+   ::lScrolling := Iif(lScrolling == NIL, .F., lScrolling)
+   IF (lTransp != NIL .AND. lTransp)
       ::BackStyle := TRANSPARENT
       ::extStyle += WS_EX_TRANSPARENT
    ENDIF
@@ -65,32 +65,32 @@ METHOD Activate() CLASS HSplitter
                                 ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ::extStyle)
       ::Init()
    ENDIF
-   RETURN Nil
+   RETURN NIL
 
 METHOD Init() CLASS HSplitter
 
    IF !::lInit
       ::Super:Init()
       ::nHolder := 1
-      SetWindowObject(::handle, Self)
-      Hwg_InitWinCtrl(::handle)
+      hwg_SetWindowObject(::handle, Self)
+      hwg_InitWinCtrl(::handle)
    ENDIF
 
-   RETURN Nil
+   RETURN NIL
 
-METHOD onEvent( msg, wParam, lParam ) CLASS HSplitter
+METHOD onEvent(msg, wParam, lParam) CLASS HSplitter
 
    HB_SYMBOL_UNUSED(wParam)
 
    IF msg == WM_MOUSEMOVE
-      IF ::hCursor == Nil
-         ::hCursor := LoadCursor( IIf( ::lVertical, IDC_SIZEWE, IDC_SIZENS ) )
+      IF ::hCursor == NIL
+         ::hCursor := hwg_LoadCursor(IIf(::lVertical, IDC_SIZEWE, IDC_SIZENS))
       ENDIF
-      Hwg_SetCursor( ::hCursor )
+      hwg_SetCursor(::hCursor)
       IF ::lCaptured
-         ::Drag( lParam )
+         ::Drag(lParam)
          IF ::lScrolling
-            ::DragAll( .T. )
+            ::DragAll(.T.)
          ENDIF
       ENDIF
    ELSEIF msg == WM_PAINT
@@ -98,17 +98,17 @@ METHOD onEvent( msg, wParam, lParam ) CLASS HSplitter
    ELSEIF msg == WM_ERASEBKGND
 
    ELSEIF msg == WM_LBUTTONDOWN
-      Hwg_SetCursor( ::hCursor )
+      hwg_SetCursor(::hCursor)
       SetCapture(::handle)
       ::lCaptured := .T.
-      InvalidateRect(::handle, 1)
+      hwg_InvalidateRect(::handle, 1)
    ELSEIF msg == WM_LBUTTONUP
       ReleaseCapture()
       ::lCaptured := .F.
       ::lMoved := .F.
-      ::DragAll( .F. )
+      ::DragAll(.F.)
       IF hb_IsBlock(::bEndDrag)
-       //  Eval( ::bEndDrag, Self )
+       //  Eval(::bEndDrag, Self)
       ENDIF
    ELSEIF msg == WM_DESTROY
       ::END()
@@ -121,36 +121,36 @@ METHOD Paint() CLASS HSplitter
    LOCAL pps, hDC, aCoors, x1, y1, x2, y2, oBrushFill
 
 
-   pps := DefinePaintStru()
-   hDC := BeginPaint( ::handle, pps )
-   aCoors := GetClientRect(::handle)
+   pps := hwg_DefinePaintStru()
+   hDC := hwg_BeginPaint(::handle, pps)
+   aCoors := hwg_GetClientRect(::handle)
 
-   x1 := aCoors[1] //+ IIf( ::lVertical, 1, 2 )
-   y1 := aCoors[2] //+ IIf( ::lVertical, 2, 1 )
-   x2 := aCoors[3] //- IIf( ::lVertical, 0, 3 )
-   y2 := aCoors[4] //- IIf( ::lVertical, 3, 0 )
+   x1 := aCoors[1] //+ IIf(::lVertical, 1, 2)
+   y1 := aCoors[2] //+ IIf(::lVertical, 2, 1)
+   x2 := aCoors[3] //- IIf(::lVertical, 0, 3)
+   y2 := aCoors[4] //- IIf(::lVertical, 3, 0)
 
    SetBkMode(hDC, ::backStyle)
    IF hb_IsBlock(::bPaint)
-      Eval( ::bPaint, Self )
+      Eval(::bPaint, Self)
    ELSEIF !::lScrolling
       IF ::lCaptured
          oBrushFill := HBrush():Add(RGB(156, 156, 156))
-         SelectObject(hDC, oBrushFill:handle)
-         DrawEdge(hDC, x1, y1, x2, y2, EDGE_ETCHED, Iif( ::lVertical,BF_RECT,BF_TOP ) + BF_MIDDLE)
-         FillRect( hDC, x1, y1, x2, y2, oBrushFill:handle )
-      ELSEIF ::BackStyle = OPAQUE
-         DrawEdge(hDC, x1, y1, x2, y2, EDGE_ETCHED, IIf( ::lVertical, BF_LEFT, BF_TOP ))
+         hwg_SelectObject(hDC, oBrushFill:handle)
+         DrawEdge(hDC, x1, y1, x2, y2, EDGE_ETCHED, IIf(::lVertical, BF_RECT, BF_TOP) + BF_MIDDLE)
+         FillRect(hDC, x1, y1, x2, y2, oBrushFill:handle)
+      ELSEIF ::BackStyle == OPAQUE
+         DrawEdge(hDC, x1, y1, x2, y2, EDGE_ETCHED, IIf(::lVertical, BF_LEFT, BF_TOP))
       ENDIF
-   ELSEIF !::lMoved .AND. ::BackStyle = OPAQUE
-      DrawEdge(hDC, x1, y1, x2, y2, EDGE_ETCHED, Iif( ::lVertical,BF_RECT,BF_TOP )) //+ BF_MIDDLE)
+   ELSEIF !::lMoved .AND. ::BackStyle == OPAQUE
+      DrawEdge(hDC, x1, y1, x2, y2, EDGE_ETCHED, IIf(::lVertical, BF_RECT, BF_TOP)) //+ BF_MIDDLE)
    ENDIF
-   EndPaint( ::handle, pps )
+   hwg_EndPaint(::handle, pps)
 
-   RETURN Nil
+   RETURN NIL
 
-METHOD Drag( lParam ) CLASS HSplitter
-   LOCAL xPos := LOWORD(lParam), yPos := HIWORD(lParam)
+METHOD Drag(lParam) CLASS HSplitter
+   LOCAL xPos := hwg_LOWORD(lParam), yPos := hwg_HIWORD(lParam)
 
    IF ::lVertical
       IF xPos > 32000
@@ -166,17 +166,17 @@ METHOD Drag( lParam ) CLASS HSplitter
       xPos := 0
    ENDIF
    ::Move(::nLeft + xPos, ::nTop + yPos, ::nWidth, ::nHeight) //, !::lScrolling)
-   InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nleft + ::nWidth , ::nTop + ::nHeight)
+   hwg_InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nleft + ::nWidth , ::nTop + ::nHeight)
    ::lMoved := .T.
 
-   RETURN Nil
+   RETURN NIL
 
-METHOD DragAll( lScroll ) CLASS HSplitter
+METHOD DragAll(lScroll) CLASS HSplitter
    LOCAL i, oCtrl, xDiff := 0, yDiff := 0
 
-   lScroll := IIF(  Len( ::aLeft ) = 0 .OR. Len( ::aRight ) = 0, .F., lScroll )
+   lScroll := IIf(Len(::aLeft) == 0 .OR. Len(::aRight) == 0, .F., lScroll)
 
-   FOR i := 1 TO Len( ::aRight )
+   FOR i := 1 TO Len(::aRight)
       oCtrl := ::aRight[i]
       IF ::lVertical
          xDiff := ::nLeft + ::nWidth - oCtrl:nLeft
@@ -187,36 +187,36 @@ METHOD DragAll( lScroll ) CLASS HSplitter
          //oCtrl:nTop += nDiff
          //oCtrl:nHeight -= nDiff
       ENDIF
-      oCtrl:Move(oCtrl:nLeft + xDiff, oCtrl:nTop + yDiff, oCtrl:nWidth - xDiff ,oCtrl:nHeight - yDiff, !lScroll)
+      oCtrl:Move(oCtrl:nLeft + xDiff, oCtrl:nTop + yDiff, oCtrl:nWidth - xDiff, oCtrl:nHeight - yDiff, !lScroll)
       //IF oCtrl:winclass == "STATIC"
-      InvalidateRect(oCtrl:handle, 1)
+      hwg_InvalidateRect(oCtrl:handle, 1)
       //ENDIF
    NEXT
-   FOR i := 1 TO Len( ::aLeft )
+   FOR i := 1 TO Len(::aLeft)
       oCtrl := ::aLeft[i]
       IF ::lVertical
-         xDiff := ::nLeft - ( oCtrl:nLeft + oCtrl:nWidth )
+         xDiff := ::nLeft - (oCtrl:nLeft + oCtrl:nWidth)
          //oCtrl:nWidth += nDiff
       ELSE
-         yDiff := ::nTop - ( oCtrl:nTop + oCtrl:nHeight )
+         yDiff := ::nTop - (oCtrl:nTop + oCtrl:nHeight)
         // oCtrl:nHeight += nDiff
       ENDIF
       oCtrl:Move(oCtrl:nLeft, oCtrl:nTop, oCtrl:nWidth + xDiff, oCtrl:nHeight + yDiff , !lScroll)
       //IF oCtrl:winclass == "STATIC"
-      InvalidateRect(oCtrl:handle, 1)
+      hwg_InvalidateRect(oCtrl:handle, 1)
       //ENDIF
    NEXT
    //::lMoved := .F.
    IF !lScroll
-      InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
+      hwg_InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
    ELSEIF ::lVertical
-      InvalidateRect(::oParent:handle, 0, ::nLeft - ::nWidth - xDiff - 1, ::nTop, ::nLeft + ::nWidth + xDiff + 1, ::nTop + ::nHeight)
+      hwg_InvalidateRect(::oParent:handle, 0, ::nLeft - ::nWidth - xDiff - 1, ::nTop, ::nLeft + ::nWidth + xDiff + 1, ::nTop + ::nHeight)
    ELSE
-      InvalidateRect(::oParent:handle, 0, ::nLeft, ::nTop - ::nHeight - yDiff - 1, ::nLeft + ::nWidth, ::nTop + ::nHeight + yDiff + 1)
+      hwg_InvalidateRect(::oParent:handle, 0, ::nLeft, ::nTop - ::nHeight - yDiff - 1, ::nLeft + ::nWidth, ::nTop + ::nHeight + yDiff + 1)
    ENDIF
    IF hb_IsBlock(::bEndDrag)
-      Eval( ::bEndDrag,Self )
+      Eval(::bEndDrag, Self)
    ENDIF
 
-   RETURN Nil
+   RETURN NIL
 

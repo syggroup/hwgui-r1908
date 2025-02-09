@@ -1,12 +1,12 @@
-/*
- * $Id: xmlparse.c 1844 2012-06-06 11:11:24Z alkresin $
- *
- * Harbour XML Library
- * C level XML parse functions
- *
- * Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: xmlparse.c 1844 2012-06-06 11:11:24Z alkresin $
+//
+// Harbour XML Library
+// C level XML parse functions
+//
+// Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include <stdio.h>
 #include <hbapi.h>

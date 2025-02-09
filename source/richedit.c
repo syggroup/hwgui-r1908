@@ -1,12 +1,12 @@
-/*
- * $Id: richedit.c 1625 2011-08-05 13:14:50Z druzus $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level richedit control functions
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: richedit.c 1625 2011-08-05 13:14:50Z druzus $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level richedit control functions
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "hwingui.h"
 #if defined(__MINGW32__) || defined(__MINGW64__) || defined(__WATCOMC__)
@@ -62,8 +62,8 @@ HB_FUNC(CREATERICHEDIT)
 }
 
 /*
- * re_SetCharFormat( hCtrl, n1, n2, nColor, cName, nHeight, lBold, lItalic,
-           lUnderline, nCharset, lSuperScript/lSubscript(.T./.F.), lProtected )
+ * re_SetCharFormat(hCtrl, n1, n2, nColor, cName, nHeight, lBold, lItalic,
+           lUnderline, nCharset, lSuperScript/lSubscript(.T./.F.), lProtected)
  */
 HB_FUNC(RE_SETCHARFORMAT)
 {
@@ -217,7 +217,7 @@ HB_FUNC(RE_SETCHARFORMAT)
 }
 
 /*
- * re_SetDefault( hCtrl, nColor, cName, nHeight, lBold, lItalic, lUnderline, nCharset )
+ * re_SetDefault(hCtrl, nColor, cName, nHeight, lBold, lItalic, lUnderline, nCharset)
  */
 HB_FUNC(RE_SETDEFAULT)
 {
@@ -269,7 +269,7 @@ HB_FUNC(RE_SETDEFAULT)
 }
 
 /*
- * re_CharFromPos( hEdit, xPos, yPos ) --> nPos
+ * re_CharFromPos(hEdit, xPos, yPos) --> nPos
  */
 HB_FUNC(RE_CHARFROMPOS)
 {
@@ -328,7 +328,7 @@ HB_FUNC(RE_INSERTTEXT)
 }
 
 /*
- * re_FindText( hEdit, cFind, nStart, bCase, bWholeWord, bSearchUp )
+ * re_FindText(hEdit, cFind, nStart, bCase, bWholeWord, bSearchUp)
  */
 HB_FUNC(RE_FINDTEXT)
 {
@@ -424,7 +424,7 @@ HB_FUNC(HWG_INITRICHPROC)
   wpOrigRichProc = (WNDPROC)(LONG_PTR)SetWindowLong(hwg_par_HWND(1), GWLP_WNDPROC, (LONG_PTR)RichSubclassProc);
 }
 
-LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   LRESULT res;
   PHB_ITEM pObject = (PHB_ITEM)GetWindowLongPtr(hWnd, GWLP_USERDATA);
@@ -438,23 +438,16 @@ LRESULT APIENTRY RichSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
     hb_vmPush(pObject);
-    hwg_vmPushUINT(message);
+    hwg_vmPushUINT(uMsg);
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
     res = hwg_par_LRESULT(-1);
-    if (res == -1)
-    {
-      return (CallWindowProc(wpOrigRichProc, hWnd, message, wParam, lParam));
-    }
-    else
-    {
-      return res;
-    }
+    return (res == -1) ? CallWindowProc(wpOrigRichProc, hWnd, uMsg, wParam, lParam) : res;
   }
   else
   {
-    return (CallWindowProc(wpOrigRichProc, hWnd, message, wParam, lParam));
+    return CallWindowProc(wpOrigRichProc, hWnd, uMsg, wParam, lParam);
   }
 }
 

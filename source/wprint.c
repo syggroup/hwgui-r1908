@@ -1,12 +1,12 @@
-/*
- * $Id: wprint.c 1625 2011-08-05 13:14:50Z druzus $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level print functions
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: wprint.c 1625 2011-08-05 13:14:50Z druzus $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level print functions
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #define OEMRESOURCE
 
@@ -361,8 +361,8 @@ HB_FUNC(CREATEENHMETAFILE)
 
   GetClientRect(hWnd, &rc);
   // sprintf( cres,"%d %d %d %d %d %d %d %d",iWidthMM, iHeightMM, iWidthPels,
-  // iHeightPels,rc.left,rc.top,rc.right,rc.bottom ); MessageBox( GetActiveWindow(), cres, "", MB_OK |
-  // MB_ICONINFORMATION );
+  // iHeightPels,rc.left,rc.top,rc.right,rc.bottom ); MessageBox(GetActiveWindow(), cres, "", MB_OK |
+  // MB_ICONINFORMATION);
 
   /*
    * Convert client coordinates to .01-mm units.

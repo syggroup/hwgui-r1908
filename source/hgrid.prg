@@ -1,12 +1,11 @@
- /*
- * $Id: hgrid.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HGrid class
- *
- * Copyright 2004 Rodrigo Moreno <rodrigo_moreno@yahoo.com>
- *
-*/
+//
+// $Id: hgrid.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HGrid class
+//
+// Copyright 2004 Rodrigo Moreno <rodrigo_moreno@yahoo.com>
+//
 
 /*
 TODO: 1) In line edit
@@ -81,7 +80,7 @@ METHOD New(oWnd, nId, nStyle, x, y, width, height, oFont, bInit, bSize, bPaint, 
 
    DEFAULT aBit TO {}
 
-   nStyle := Hwg_BitOr(IIf(nStyle == NIL, 0, nStyle), LVS_SHOWSELALWAYS + WS_TABSTOP + IIf(lNoBord, 0, WS_BORDER) + ;
+   nStyle := hwg_BitOr(IIf(nStyle == NIL, 0, nStyle), LVS_SHOWSELALWAYS + WS_TABSTOP + IIf(lNoBord, 0, WS_BORDER) + ;
                        LVS_REPORT + LVS_OWNERDATA + LVS_SINGLESEL)
 
    ::Super:New(oWnd, nId, nStyle, x, y, width, height, oFont, bInit, bSize, bPaint)
@@ -207,7 +206,7 @@ FUNCTION ListViewNotify(oCtrl, lParam)
 
    LOCAL aCord
 
-   SWITCH GetNotifyCode(lParam)
+   SWITCH hwg_GetNotifyCode(lParam)
 
    CASE LVN_KEYDOWN
       IF hb_IsBlock(oCtrl:bKeydown)

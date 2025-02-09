@@ -1,13 +1,13 @@
-/*
- * $Id: blowfish.c 1625 2011-08-05 13:14:50Z druzus $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Encryption/Decryption functions, using BlowFish algorithm,
- * originally designed by Bruce Schneier.
- *
- * Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
- */
+//
+// $Id: blowfish.c 1625 2011-08-05 13:14:50Z druzus $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Encryption/Decryption functions, using BlowFish algorithm,
+// originally designed by Bruce Schneier.
+//
+// Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #define MAXKEYBYTES 56 /* 448 bits */
 #define N 16
@@ -252,7 +252,9 @@ void Blowfish_Init(BLOWFISH_CTX *ctx, unsigned char *key, int keyLen)
   for (i = 0; i < 4; i++)
   {
     for (j = 0; j < 256; j++)
+    {
       ctx->S[i][j] = ORIG_S[i][j];
+    }  
   }
 
   j = 0;
@@ -348,10 +350,14 @@ HB_FUNC(BF_ENCRYPT)
   *(ptro + 1) = '\0';
   memcpy(ptro + 2, ptri, ulLen);
   for (ul = ulLen + 2; ul < ulPairs * 8 + 1; ul++)
+  {
     *(ptro + ul) = '\0';
+  }
 
   for (ul = 0; ul < ulPairs; ul++)
+  {
     Blowfish_Encrypt(&ctx, (unsigned long *)(ptro + ul * 8), (unsigned long *)(ptro + ul * 8 + 4));
+  }
 
   hb_retclen((char *)ptro, ulPairs * 8);
   hb_xfree(key);
@@ -404,7 +410,9 @@ HB_FUNC(BF_DECRYPT)
   memcpy(ptro, ptri, ulLen);
 
   for (ul = 0; ul < ulPairs; ul++)
+  {
     Blowfish_Decrypt(&ctx, (unsigned long *)(ptro + ul * 8), (unsigned long *)(ptro + ul * 8 + 4));
+  }
 
   iDiff = (int)(*ptro);
   if (iDiff > 10 || *(ptro + 1))

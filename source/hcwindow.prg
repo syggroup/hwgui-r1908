@@ -1,12 +1,12 @@
-/*
- *$Id: hcwindow.prg 1868 2012-08-27 17:33:11Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HCustomWindow class
- *
- * Copyright 2004 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hcwindow.prg 1868 2012-08-27 17:33:11Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HCustomWindow class
+//
+// Copyright 2004 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -22,19 +22,29 @@
 
 #if 0 // old code for reference (to be deleted)
 STATIC aCustomEvents := { ;
-       { WM_NOTIFY, WM_PAINT, WM_CTLCOLORSTATIC, WM_CTLCOLOREDIT, WM_CTLCOLORBTN, WM_CTLCOLORLISTBOX, ;
-         WM_COMMAND, WM_DRAWITEM, WM_SIZE, WM_DESTROY }, ;
        { ;
-         { |o, w, l| onNotify(o, w, l) }                                 , ;
-         { |o, w|   IIf(o:bPaint != NIL, Eval(o:bPaint, o, w), -1) }  , ;
-         { |o, w, l| onCtlColor(o, w, l) }                               , ;
-         { |o, w, l| onCtlColor(o, w, l) }                               , ;
-         { |o, w, l| onCtlColor(o, w, l) }                               , ;
-         { |o, w, l| onCtlColor(o, w, l) }                               , ;
-         { |o, w, l| onCommand(o, w, l) }                                , ;
-         { |o, w, l| onDrawItem(o, w, l) }                               , ;
-         { |o, w, l| onSize(o, w, l) }                                   , ;
-         { |o|     onDestroy(o) }                                          ;
+        WM_NOTIFY, ;
+        WM_PAINT, ;
+        WM_CTLCOLORSTATIC, ;
+        WM_CTLCOLOREDIT, ;
+        WM_CTLCOLORBTN, ;
+        WM_CTLCOLORLISTBOX, ;
+        WM_COMMAND, ;
+        WM_DRAWITEM, ;
+        WM_SIZE, ;
+        WM_DESTROY ;
+       }, ;
+       { ;
+        {|o, w, l|onNotify(o, w, l)}                           , ;
+        {|o, w|IIf(o:bPaint != NIL, Eval(o:bPaint, o, w), -1)} , ;
+        {|o, w, l|onCtlColor(o, w, l)}                         , ;
+        {|o, w, l|onCtlColor(o, w, l)}                         , ;
+        {|o, w, l|onCtlColor(o, w, l)}                         , ;
+        {|o, w, l|onCtlColor(o, w, l)}                         , ;
+        {|o, w, l|onCommand(o, w, l)}                          , ;
+        {|o, w, l|onDrawItem(o, w, l)}                         , ;
+        {|o, w, l|onSize(o, w, l)}                             , ;
+        {|o|onDestroy(o)}                                      ;
        } ;
      }
 #endif
@@ -44,7 +54,7 @@ STATIC aCustomEvents := { ;
 CLASS HCustomWindow INHERIT HObject
 
    CLASS VAR oDefaultParent SHARED
-   CLASS VAR WindowsManifest INIT !Empty(FindResource(, 1, RT_MANIFEST)) SHARED
+   CLASS VAR WindowsManifest INIT !Empty(hwg_FindResource(, 1, RT_MANIFEST)) SHARED
 
    DATA handle INIT 0
    DATA oParent
@@ -102,9 +112,9 @@ CLASS HCustomWindow INHERIT HObject
    METHOD DelControl(oCtrl)
    METHOD AddEvent(nEvent, oCtrl, bAction, lNotify, cMethName)
    METHOD FindControl(nId, nHandle)
-   METHOD Hide() INLINE (::lHide := .T., HideWindow(::handle))
-   //METHOD Show() INLINE (::lHide := .F., ShowWindow(::handle))
-   METHOD Show(nShow) INLINE (::lHide := .F., IIF(nShow == NIL, ShowWindow(::handle), ShowWindow(::handle, nShow)))
+   METHOD Hide() INLINE (::lHide := .T., hwg_HideWindow(::handle))
+   //METHOD Show() INLINE (::lHide := .F., hwg_ShowWindow(::handle))
+   METHOD Show(nShow) INLINE (::lHide := .F., IIf(nShow == NIL, hwg_ShowWindow(::handle), hwg_ShowWindow(::handle, nShow)))
    METHOD Move(x1, y1, width, height, nRePaint)
    METHOD onEvent(msg, wParam, lParam)
    METHOD END()
@@ -119,7 +129,7 @@ CLASS HCustomWindow INHERIT HObject
    METHOD RedefineScrollbars()
    METHOD SetTextClass(x) HIDDEN
    METHOD GetParentForm(oCtrl)
-   METHOD ActiveControl() INLINE ::FindControl(, GetFocus())
+   METHOD ActiveControl() INLINE ::FindControl(, hwg_GetFocus())
    METHOD Closable(lClosable) SETGET
    METHOD Release() INLINE ::DelControl(Self)
    METHOD SetAll(cProperty, Value, aControls, cClass)
@@ -149,14 +159,14 @@ METHOD FindControl(nId, nHandle) CLASS HCustomWindow
    LOCAL oCtrl
 
    DO WHILE i > 0
-      IF Len(::aControls[i]:aControls) > 0 .and. ;
+      IF Len(::aControls[i]:aControls) > 0 .AND. ;
          (oCtrl := ::aControls[i]:FindControl(nId, nHandle)) != NIL
          RETURN oCtrl
       ENDIF
       IF Eval(bSearch, ::aControls[i])
          RETURN ::aControls[i]
       ENDIF
-      i --
+      i--
    ENDDO
 
 RETURN NIL
@@ -169,7 +179,7 @@ METHOD DelControl(oCtrl) CLASS HCustomWindow
    LOCAL id := oCtrl:id
    LOCAL i := AScan(::aControls, {|o|o:handle == h})
 
-   SendMessage(h, WM_CLOSE, 0, 0)
+   hwg_SendMessage(h, WM_CLOSE, 0, 0)
    IF i != 0
       ADel(::aControls, i)
       ASize(::aControls, Len(::aControls) -1)
@@ -191,7 +201,7 @@ METHOD DelControl(oCtrl) CLASS HCustomWindow
    FOR i := Len(::aNotify) TO 1 STEP -1
       IF ::aNotify[i, 2] == id
          ADel(::aNotify, i)
-         h ++
+         h++
       ENDIF
    NEXT
 
@@ -209,22 +219,22 @@ METHOD Move(x1, y1, width, height, nRePaint) CLASS HCustomWindow
    LOCAL nHx := 0
    LOCAL nWx := 0
 
-   x1 := IIF(x1 == NIL, ::nLeft, x1)
-   y1 := IIF(y1 == NIL, ::nTop, y1)
-   width := IIF(width == NIL, ::nWidth, width)
-   height := IIF(height == NIL, ::nHeight, height)
-   IF Hwg_BitAnd(::style, WS_CHILD) == 0
-      rect := GetwindowRect(::handle)
-      nHx := rect[4] - rect[2]  - GetclientRect(::handle)[4] - ;
-         IIF(Hwg_BitAnd(::style, WS_HSCROLL) > 0, GetSystemMetrics(SM_CYHSCROLL), 0)
-      nWx := rect[3] - rect[1]  - GetclientRect(::handle)[3] - ;
-         IIF(Hwg_BitAnd(::style, WS_VSCROLL) > 0, GetSystemMetrics(SM_CXVSCROLL), 0)
+   x1 := IIf(x1 == NIL, ::nLeft, x1)
+   y1 := IIf(y1 == NIL, ::nTop, y1)
+   width := IIf(width == NIL, ::nWidth, width)
+   height := IIf(height == NIL, ::nHeight, height)
+   IF hwg_BitAnd(::style, WS_CHILD) == 0
+      rect := hwg_GetwindowRect(::handle)
+      nHx := rect[4] - rect[2]  - hwg_GetclientRect(::handle)[4] - ;
+         IIf(hwg_BitAnd(::style, WS_HSCROLL) > 0, hwg_GetSystemMetrics(SM_CYHSCROLL), 0)
+      nWx := rect[3] - rect[1]  - hwg_GetclientRect(::handle)[3] - ;
+         IIf(hwg_BitAnd(::style, WS_VSCROLL) > 0, hwg_GetSystemMetrics(SM_CXVSCROLL), 0)
    ENDIF
 
    IF nRePaint == NIL
-      MoveWindow(::handle, x1, y1, Width + nWx, Height + nHx)
+      hwg_MoveWindow(::handle, x1, y1, Width + nWx, Height + nHx)
    ELSE
-      MoveWindow(::handle, x1, y1, Width + nWx, Height + nHx, nRePaint)
+      hwg_MoveWindow(::handle, x1, y1, Width + nWx, Height + nHx, nRePaint)
    ENDIF
 
    //IF x1 != NIL
@@ -239,7 +249,7 @@ METHOD Move(x1, y1, width, height, nRePaint) CLASS HCustomWindow
    //IF height != NIL
    ::nHeight := height
    //ENDIF
-   //MoveWindow(::handle, ::nLeft, ::nTop, ::nWidth, ::nHeight)
+   //hwg_MoveWindow(::handle, ::nLeft, ::nTop, ::nWidth, ::nHeight)
 
 RETURN NIL
 
@@ -250,8 +260,8 @@ METHOD onEvent(msg, wParam, lParam) CLASS HCustomWindow
 
    LOCAL i
 
-   //Writelog("== " + ::Classname() + Str(msg) + IIF(wParam != NIL, Str(wParam), "NIL") + ;
-   //   IIF(lParam != NIL, Str(lParam), "NIL"))
+   // hwg_WriteLog("== " + ::Classname() + Str(msg) + IIf(wParam != NIL, Str(wParam), "NIL") + ;
+   //    IIf(lParam != NIL, Str(lParam), "NIL"))
 
    IF msg == WM_GETMINMAXINFO
       IF ::minWidth  > -1 .OR. ::maxWidth  > -1 .OR. ;
@@ -278,8 +288,8 @@ RETURN -1
 #else
 METHOD onEvent(msg, wParam, lParam) CLASS HCustomWindow
 
-   // Writelog("== " + ::Classname() + Str(msg) + IIF(wParam != NIL, Str(wParam), "NIL") + ;
-   //    IIF(lParam != NIL, Str(lParam), "NIL"))
+   // hwg_WriteLog("== " + ::Classname() + Str(msg) + IIf(wParam != NIL, Str(wParam), "NIL") + ;
+   //    IIf(lParam != NIL, Str(lParam), "NIL"))
 
    SWITCH msg
 
@@ -361,13 +371,13 @@ RETURN NIL
 
 METHOD GetParentForm(oCtrl) CLASS HCustomWindow
 
-   LOCAL oForm := IIF(Empty(oCtrl), Self, oCtrl)
+   LOCAL oForm := IIf(Empty(oCtrl), Self, oCtrl)
 
    DO WHILE (oForm:oParent) != NIL .AND. !__ObjHasMsg(oForm, "GETLIST")
       oForm := oForm:oParent
    ENDDO
 
-RETURN IIF(hb_IsObject(oForm), oForm, ::oParent)
+RETURN IIf(hb_IsObject(oForm), oForm, ::oParent)
 
 //-------------------------------------------------------------------------------------------------------------------//
 
@@ -412,28 +422,28 @@ METHOD Refresh(lAll, oCtrl) CLASS HCustomWindow
 
    LOCAL nlen
    LOCAL i
-   LOCAL hCtrl := GetFocus()
+   LOCAL hCtrl := hwg_GetFocus()
    LOCAL oCtrlTmp
    LOCAL lRefresh
 
-   oCtrl := IIF(oCtrl == NIL, Self, oCtrl)
-   lAll := IIF(lAll == NIL, .F., lAll)
-   nLen := LEN(oCtrl:aControls)
+   oCtrl := IIf(oCtrl == NIL, Self, oCtrl)
+   lAll := IIf(lAll == NIL, .F., lAll)
+   nLen := Len(oCtrl:aControls)
 
-   IF IsWindowVisible(::handle) .OR. nLen > 0
+   IF hwg_IsWindowVisible(::handle) .OR. nLen > 0
       FOR i := 1 TO nLen
          oCtrlTmp := oCtrl:aControls[i]
          lRefresh := !Empty(__ObjHasMethod(oCtrlTmp, "REFRESH"))
-         IF ((oCtrlTmp:handle != hCtrl .OR. LEN(oCtrlTmp:aControls) == 0) .OR. lAll) .AND. ;
+         IF ((oCtrlTmp:handle != hCtrl .OR. Len(oCtrlTmp:aControls) == 0) .OR. lAll) .AND. ;
             (!oCtrlTmp:lHide .OR. __ObjHasMsg(oCtrlTmp, "BSETGET"))
-            IF LEN(oCtrlTmp:aControls) > 0
+            IF Len(oCtrlTmp:aControls) > 0
                ::Refresh(lAll, oCtrlTmp)
             ELSEIF !Empty(lRefresh) .AND. (lAll .OR. ASCAN(::GetList, {|o|o:handle == oCtrlTmp:handle}) > 0)
                oCtrlTmp:Refresh()
                IF oCtrlTmp:bRefresh != NIL
-                  EVAL(oCtrlTmp:bRefresh, oCtrlTmp)
+                  Eval(oCtrlTmp:bRefresh, oCtrlTmp)
                ENDIF
-            ELSEIF IsWindowEnabled(oCtrlTmp:handle) .AND. !oCtrlTmp:lHide .AND. !lRefresh
+            ELSEIF hwg_IsWindowEnabled(oCtrlTmp:handle) .AND. !oCtrlTmp:lHide .AND. !lRefresh
                oCtrlTmp:SHOW(SW_SHOWNOACTIVATE)
             ENDIF
          ENDIF
@@ -456,7 +466,7 @@ METHOD SetTextClass(x) CLASS HCustomWindow
       ::SetText(x)
    ELSE
       ::title := x
-      SendMessage(::handle, WM_SETTEXT, 0, ::Title)
+      hwg_SendMessage(::handle, WM_SETTEXT, 0, ::Title)
    ENDIF
    //::Refresh()
 
@@ -482,7 +492,7 @@ METHOD SetColor(tcolor, bColor, lRepaint) CLASS HCustomWindow
    ENDIF
 
    IF lRepaint != NIL .AND. lRepaint
-      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+      hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
    ENDIF
 
 RETURN NIL
@@ -518,7 +528,7 @@ RETURN .T.
 //-------------------------------------------------------------------------------------------------------------------//
 
 #if 0 // old code for reference (to be deleted)
-METHOD ScrollHV(oForm, msg,wParam,lParam) CLASS HCustomWindow
+METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
 
    LOCAL nDelta
    LOCAL nSBCode
@@ -527,10 +537,10 @@ METHOD ScrollHV(oForm, msg,wParam,lParam) CLASS HCustomWindow
 
    HB_SYMBOL_UNUSED(lParam)
 
-   nSBCode := loword(wParam)
+   nSBCode := hwg_LOWORD(wParam)
    IF msg == WM_MOUSEWHEEL
-      nSBCode := IIF(HIWORD(wParam) > 32768, HIWORD(wParam) - 65535, HIWORD(wParam))
-      nSBCode := IIF(nSBCode < 0, SB_LINEDOWN, SB_LINEUP)
+      nSBCode := IIf(hwg_HIWORD(wParam) > 32768, hwg_HIWORD(wParam) - 65535, hwg_HIWORD(wParam))
+      nSBCode := IIf(nSBCode < 0, SB_LINEDOWN, SB_LINEUP)
    ENDIF
    IF (msg == WM_VSCROLL) .OR. msg == WM_MOUSEWHEEL
      // Handle vertical scrollbar messages
@@ -549,7 +559,7 @@ METHOD ScrollHV(oForm, msg,wParam,lParam) CLASS HCustomWindow
          Case nSBCode == SB_PAGEDOWN
             nInc := max(1, oForm:nVertInc)
          Case nSBCode == SB_THUMBTRACK
-            nPos := hiword(wParam)
+            nPos := hwg_HIWORD(wParam)
             nInc := nPos - oForm:nVscrollPos
          OTHERWISE
             nInc := 0
@@ -575,7 +585,7 @@ METHOD ScrollHV(oForm, msg,wParam,lParam) CLASS HCustomWindow
             nInc := max(1, oForm:nVertInc / 2)
             EXIT
          Case SB_THUMBTRACK
-            nPos := hiword(wParam)
+            nPos := hwg_HIWORD(wParam)
             nInc := nPos - oForm:nVscrollPos
             EXIT
          Default
@@ -605,7 +615,7 @@ METHOD ScrollHV(oForm, msg,wParam,lParam) CLASS HCustomWindow
          Case nSBCode == SB_PAGEDOWN
             nInc := HORZ_PTS
          Case nSBCode == SB_THUMBTRACK
-            nPos := hiword(wParam)
+            nPos := hwg_HIWORD(wParam)
             nInc := nPos - oForm:nHscrollPos
          OTHERWISE
             nInc := 0
@@ -631,7 +641,7 @@ METHOD ScrollHV(oForm, msg,wParam,lParam) CLASS HCustomWindow
             nInc := HORZ_PTS
             EXIT
          Case SB_THUMBTRACK
-            nPos := hiword(wParam)
+            nPos := hwg_HIWORD(wParam)
             nInc := nPos - oForm:nHscrollPos
             EXIT
          Default
@@ -655,11 +665,11 @@ METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
 
    HB_SYMBOL_UNUSED(lParam)
 
-   nSBCode := loword(wParam)
+   nSBCode := hwg_LOWORD(wParam)
 
    IF msg == WM_MOUSEWHEEL
-      nSBCode := IIF(HIWORD(wParam) > 32768, HIWORD(wParam) - 65535, HIWORD(wParam))
-      nSBCode := IIF(nSBCode < 0, SB_LINEDOWN, SB_LINEUP)
+      nSBCode := IIf(hwg_HIWORD(wParam) > 32768, hwg_HIWORD(wParam) - 65535, hwg_HIWORD(wParam))
+      nSBCode := IIf(nSBCode < 0, SB_LINEDOWN, SB_LINEUP)
    ENDIF
 
    SWITCH msg
@@ -687,7 +697,7 @@ METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
          nInc := max(1, oForm:nVertInc)
          EXIT
       CASE SB_THUMBTRACK
-         nPos := hiword(wParam)
+         nPos := hwg_HIWORD(wParam)
          nInc := nPos - oForm:nVscrollPos
          EXIT
       #ifdef __XHARBOUR__
@@ -725,7 +735,7 @@ METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
          nInc := HORZ_PTS
          EXIT
       CASE SB_THUMBTRACK
-         nPos := hiword(wParam)
+         nPos := hwg_HIWORD(wParam)
          nInc := nPos - oForm:nHscrollPos
          EXIT
       #ifdef __XHARBOUR__
@@ -750,7 +760,7 @@ RETURN NIL
 
 METHOD RedefineScrollbars() CLASS HCustomWindow
 
-   ::rect := GetClientRect(::handle)
+   ::rect := hwg_GetClientRect(::handle)
    IF ::nScrollBars > -1 .AND. ::bScroll == NIL
       IF ::nVscrollPos == 0
          ::ncurHeight := 0                                                              //* 4
@@ -776,8 +786,8 @@ METHOD SetupScrollbars() CLASS HCustomWindow
    LOCAL aMenu
    LOCAL nPos
 
-   tempRect := GetClientRect(::handle)
-   aMenu := IIF(__objHasData(Self, "MENU"), ::menu, NIL)
+   tempRect := hwg_GetClientRect(::handle)
+   aMenu := IIf(__objHasData(Self, "MENU"), ::menu, NIL)
    // Calculate how many scrolling increments for the client area
    IF ::Type == WND_MDICHILD //.AND. ::aRectSave != NIL
       nwMax := Max(::ncurWidth, tempRect[3]) //::maxWidth
@@ -789,7 +799,7 @@ METHOD SetupScrollbars() CLASS HCustomWindow
       nhMax := Max(::ncurHeight, ::Rect[4])
       ::nHorzInc := INT((nwMax - tempRect[3]) / HORZ_PTS + HORZ_PTS)
       ::nVertInc := INT((nhMax - tempRect[4]) / VERT_PTS + VERT_PTS - ;
-         IIF(amenu != NIL, GetSystemMetrics(SM_CYMENU), 0)) // MENU
+         IIf(amenu != NIL, hwg_GetSystemMetrics(SM_CYMENU), 0)) // MENU
    ENDIF
     // Set the vertical and horizontal scrolling info
    IF ::nScrollBars == 0 .OR. ::nScrollBars == 2
@@ -871,7 +881,7 @@ METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
    HB_SYMBOL_UNUSED(lParam)
 
    nDelta := 0
-   wmsg := LOWORD(wParam)
+   wmsg := hwg_LOWORD(wParam)
 
    IF msg == WM_VSCROLL .OR. msg == WM_HSCROLL
       nMaxPos := IIf(msg == WM_VSCROLL, oForm:rect[4] - oForm:nCurHeight, oForm:rect[3] - oForm:nCurWidth)
@@ -891,7 +901,7 @@ METHOD ScrollHV(oForm, msg, wParam, lParam) CLASS HCustomWindow
          ENDIF
          nDelta := Min(nMaxPos / 10, nMaxPos - oForm:nScrollPos)
       ELSEIF wmsg == SB_THUMBPOSITION
-         nPos := HIWORD(wParam)
+         nPos := hwg_HIWORD(wParam)
          nDelta := nPos - oForm:nScrollPos
       ELSEIF wmsg == SB_PAGEUP
          IF (oForm:nScrollPos <= 0)
@@ -946,12 +956,12 @@ METHOD SetAll(cProperty, Value, aControls, cClass) CLASS HCustomWindow
    LOCAL i
    //LOCAL oCtrl
 
-   aControls := IIF(Empty(aControls), ::aControls, aControls)
-   nLen := IIF(hb_IsChar(aControls), Len(::&aControls), LEN(aControls))
+   aControls := IIf(Empty(aControls), ::aControls, aControls)
+   nLen := IIf(hb_IsChar(aControls), Len(::&aControls), Len(aControls))
    FOR i := 1 TO nLen
       IF hb_IsChar(aControls)
          ::&aControls[i]:&cProperty := Value
-      ELSEIF cClass == NIL .OR. UPPER(cClass) == aControls[i]:ClassName
+      ELSEIF cClass == NIL .OR. Upper(cClass) == aControls[i]:ClassName
          IF Value == NIL
             __mvPrivate("oCtrl")
             &("oCtrl") := aControls[i]
@@ -987,7 +997,7 @@ STATIC FUNCTION onNotify(oWnd, wParam, lParam)
       IF __ObjHasMsg(oCtrl, "NOTIFY")
          RETURN oCtrl:Notify(lParam)
       ELSE
-         nCode := GetNotifyCode(lParam)
+         nCode := hwg_GetNotifyCode(lParam)
          IF nCode == EN_PROTECTED
             RETURN 1
          ELSEIF oWnd:aNotify != NIL .AND. !oWnd:lSuspendMsgsHandling .AND. ;
@@ -1083,8 +1093,8 @@ RETURN -1
 STATIC FUNCTION onCommand(oWnd, wParam, lParam)
 
    LOCAL iItem
-   LOCAL iParHigh := HIWORD(wParam)
-   LOCAL iParLow := LOWORD(wParam)
+   LOCAL iParHigh := hwg_HIWORD(wParam)
+   LOCAL iParLow := hwg_LOWORD(wParam)
    LOCAL oForm := oWnd:GetParentForm()
 
    HB_SYMBOL_UNUSED(lParam)
@@ -1092,8 +1102,8 @@ STATIC FUNCTION onCommand(oWnd, wParam, lParam)
    IF oWnd:aEvents != NIL .AND. !oForm:lSuspendMsgsHandling .AND. !oWnd:lSuspendMsgsHandling .AND. ;
       (iItem := AScan(oWnd:aEvents, {|a|a[1] == iParHigh .AND. a[2] == iParLow})) > 0
       IF oForm:Type < WND_DLG_RESOURCE
-         IF SelfFocus(GetParent(GetFocus()) , oForm:handle)
-            oForm:nFocus := GetFocus() //lParam
+         IF hwg_SelfFocus(hwg_GetParent(hwg_GetFocus()) , oForm:handle)
+            oForm:nFocus := hwg_GetFocus() //lParam
          ENDIF
       ENDIF
       Eval(oWnd:aEvents[iItem, 3], oWnd, iParLow)
@@ -1114,7 +1124,7 @@ STATIC FUNCTION onSize(oWnd, wParam, lParam)
 
    nw1 := oWnd:nWidth
    nh1 := oWnd:nHeight
-   aCoors := GetWindowRect(oWnd:handle)
+   aCoors := hwg_GetWindowRect(oWnd:handle)
    IF Empty(oWnd:Type)
       oWnd:nWidth := aCoors[3] - aCoors[1]
       oWnd:nHeight := aCoors[4] - aCoors[2]
@@ -1145,7 +1155,7 @@ STATIC FUNCTION onSize(oWnd, wParam, lParam)
 
    FOR EACH oItem IN aControls
       IF oItem:bSize != NIL
-         Eval(oItem:bSize, oItem, LOWORD(lParam), HIWORD(lParam))
+         Eval(oItem:bSize, oItem, hwg_LOWORD(lParam), hwg_HIWORD(lParam))
       ENDIF
    NEXT
 
@@ -1159,7 +1169,7 @@ FUNCTION onTrackScroll(oWnd, msg, wParam, lParam)
    LOCAL oCtrl := oWnd:FindControl(, lParam)
 
    IF oCtrl != NIL
-      msg := LOWORD(wParam)
+      msg := hwg_LOWORD(wParam)
       IF msg == TB_ENDTRACK
          IF hb_IsBlock(oCtrl:bChange)
             Eval(oCtrl:bChange, oCtrl)
@@ -1185,7 +1195,7 @@ FUNCTION onTrackScroll(oWnd, msg, wParam, lParam)
    LOCAL oCtrl := oWnd:FindControl(, lParam)
 
    IF oCtrl != NIL
-      msg := LOWORD(wParam)
+      msg := hwg_LOWORD(wParam)
       SWITCH msg
       CASE TB_ENDTRACK
          IF hb_IsBlock(oCtrl:bChange)
@@ -1223,9 +1233,9 @@ FUNCTION ProcKeyList(oCtrl, wParam, oMain)
       RETURN .F.
    ENDIF
    IF wParam != VK_SHIFT .AND. wParam != VK_CONTROL .AND. wParam != VK_MENU
-      oParent := IIF(oMain != NIL, oMain, ParentGetDialog(oCtrl))
+      oParent := IIf(oMain != NIL, oMain, ParentGetDialog(oCtrl))
       IF oParent != NIL .AND. !Empty(oParent:KeyList)
-         nctrl := IIf(IsCtrlShift(.T., .F.), FCONTROL, iif(IsCtrlShift(.F., .T.), FSHIFT, 0))
+         nctrl := IIf(IsCtrlShift(.T., .F.), FCONTROL, IIf(IsCtrlShift(.F., .T.), FSHIFT, 0))
          IF (nPos := AScan(oParent:KeyList, {|a|a[1] == nctrl .AND. a[2] == wParam})) > 0
             Eval(oParent:KeyList[nPos, 3], oCtrl)
             RETURN .T.
@@ -1244,12 +1254,12 @@ FUNCTION ProcOkCancel(oCtrl, nKey, lForce)
 
    LOCAL oWin := oCtrl:GetParentForm()
    LOCAL lEscape
-   LOCAL iParHigh := IIF(nKey == VK_RETURN, IDOK, IDCANCEL)
+   LOCAL iParHigh := IIf(nKey == VK_RETURN, IDOK, IDCANCEL)
    LOCAL oCtrlFocu := oCtrl
 
    lForce := !Empty(lForce)
    lEscape := nKey == VK_ESCAPE .AND. (oCtrl := oWin:FindControl(IDCANCEL)) != NIL .AND. !oCtrl:IsEnabled()
-   IF ((oWin:Type >= WND_DLG_RESOURCE .AND. oWin:lModal) .AND. !lForce .and. !lEscape) .OR. ;
+   IF ((oWin:Type >= WND_DLG_RESOURCE .AND. oWin:lModal) .AND. !lForce .AND. !lEscape) .OR. ;
       (nKey != VK_RETURN .AND. nKey != VK_ESCAPE)
       RETURN .F.
    ENDIF
@@ -1259,11 +1269,11 @@ FUNCTION ProcOkCancel(oCtrl, nKey, lForce)
          oWin:lResult := .T.
          IF lForce
          ELSEIF hb_IsBlock(oCtrl:bClick) .AND. !lForce
-            SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam(oCtrl:id, BN_CLICKED), oCtrl:handle)
+            hwg_SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam(oCtrl:id, BN_CLICKED), oCtrl:handle)
          ELSEIF oWin:lExitOnEnter
             oWin:close()
          ELSE
-            SendMessage(oWin:handle, WM_COMMAND, makewparam(IDOK, 0), oCtrlFocu:handle)
+            hwg_SendMessage(oWin:handle, WM_COMMAND, makewparam(IDOK, 0), oCtrlFocu:handle)
          ENDIF
          RETURN .T.
       ENDIF
@@ -1271,13 +1281,13 @@ FUNCTION ProcOkCancel(oCtrl, nKey, lForce)
       IF (oCtrl := oWin:FindControl(IDCANCEL)) != NIL .AND. oCtrl:IsEnabled()
          oCtrl:SetFocus()
          oWin:lResult := .F.
-         SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam(oCtrl:id, BN_CLICKED), oCtrl:handle)
+         hwg_SendMessage(oCtrl:oParent:handle, WM_COMMAND, makewparam(oCtrl:id, BN_CLICKED), oCtrl:handle)
       ELSEIF oWin:lGetSkiponEsc
          oCtrl := oCtrlFocu
          IF oCtrl != NIL .AND. __ObjHasMsg(oCtrl, "OGROUP") .AND. oCtrl:oGroup:oHGroup != NIL
             oCtrl := oCtrl:oGroup:oHGroup
          ENDIF
-         IF oCtrl != NIL .and. GetSkip(oCtrl:oParent, oCtrl:handle, , -1)
+         IF oCtrl != NIL .AND. GetSkip(oCtrl:oParent, oCtrl:handle, , -1)
             IF AScan(oWin:GetList, {|o|o:handle == oCtrl:handle}) > 1
                RETURN .T.
             ENDIF
@@ -1286,7 +1296,7 @@ FUNCTION ProcOkCancel(oCtrl, nKey, lForce)
          oWin:close()
       ELSEIF !oWin:lExitOnEsc
          oWin:nLastKey := 0
-         SendMessage(oWin:handle, WM_COMMAND, makewparam(IDCANCEL, 0), oCtrlFocu:handle)
+         hwg_SendMessage(oWin:handle, WM_COMMAND, makewparam(IDCANCEL, 0), oCtrlFocu:handle)
          RETURN .F.
       ENDIF
       RETURN .T.
@@ -1302,7 +1312,7 @@ FUNCTION FindAccelerator(oCtrl, lParam)
    LOCAL i
    LOCAL pos
 
-   nlen := LEN(oCtrl:aControls)
+   nlen := Len(oCtrl:aControls)
    FOR i := 1 TO nLen
       IF oCtrl:aControls[i]:classname = "HTAB"
          IF (pos := FindTabAccelerator(oCtrl:aControls[i], lParam)) > 0 .AND. ;
@@ -1311,11 +1321,11 @@ FUNCTION FindAccelerator(oCtrl, lParam)
             RETURN oCtrl:aControls[i]
          ENDIF
       ENDIF
-      IF LEN(oCtrl:aControls[i]:aControls) > 0
+      IF Len(oCtrl:aControls[i]:aControls) > 0
          RETURN FindAccelerator(oCtrl:aControls[i], lParam)
       ENDIF
-      IF __ObjHasMsg(oCtrl:aControls[i],"TITLE") .AND. hb_IsChar(oCtrl:aControls[i]:title) .AND. ;
-         !oCtrl:aControls[i]:lHide .AND. IsWindowEnabled(oCtrl:aControls[i]:handle)
+      IF __ObjHasMsg(oCtrl:aControls[i], "TITLE") .AND. hb_IsChar(oCtrl:aControls[i]:title) .AND. ;
+         !oCtrl:aControls[i]:lHide .AND. hwg_IsWindowEnabled(oCtrl:aControls[i]:handle)
          IF (pos := At("&", oCtrl:aControls[i]:title)) > 0 .AND. ;
             Upper(Chr(lParam)) == Upper(SubStr(oCtrl:aControls[i]:title, ++pos, 1))
             RETURN oCtrl:aControls[i]

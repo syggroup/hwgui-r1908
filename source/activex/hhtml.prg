@@ -1,12 +1,12 @@
-/*
- * $Id: hhtml.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HHtml class
- *
- * Copyright 2006 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hhtml.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HHtml class
+//
+// Copyright 2006 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "hwgui.ch"
 #include "hbclass.ch"
@@ -40,37 +40,37 @@ ENDCLASS
 METHOD New(oParent) CLASS HHtml
 
    IF !hwgax_OleInitialize()
-      HWG_MsgStop("Can't open OLE!","HHtml():New()")
-      Return Nil
+      hwg_MsgStop("Can't open OLE!", "HHtml():New()")
+      RETURN NIL
    ENDIF
 
    ::oParent := oParent
 
    ::Activate()
 
-Return Self
+RETURN Self
 
 METHOD Activate CLASS HHtml
 
    IF !Empty(::oParent:handle)
      ::oParent:oEmbedded := Self
       IF !hwgax_EmbedBrowserObject(::oParent:handle)
-         HWG_MsgStop("Can't embed IE object!","HHtml():New()")
+         hwg_MsgStop("Can't embed IE object!", "HHtml():New()")
       ENDIF
    ENDIF
-Return Nil
+RETURN NIL
 
 METHOD Resize(width, height) CLASS HHtml
 
-   // writelog(str(width) + " " + str(height) + " / " + str(::oParent:nwidth) + " " + str(::oParent:nheight))
-   hwgax_ResizeBrowser(::oParent:handle, width, height )
-Return Nil
+   // hwg_WriteLog(Str(width) + " " + Str(height) + " / " + Str(::oParent:nwidth) + " " + Str(::oParent:nheight))
+   hwgax_ResizeBrowser(::oParent:handle, width, height)
+RETURN NIL
 
 METHOD End() CLASS HHtml
 
    hwgax_UnEmbedBrowserObject(::oParent:handle)
-Return Nil
+RETURN NIL
 
 EXIT PROCEDURE EXITOLE
    hwgax_OleUninitialize()
-Return
+RETURN

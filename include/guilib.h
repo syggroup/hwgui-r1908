@@ -65,8 +65,8 @@
 #if defined( __XHARBOUR__ ) || ( __HARBOUR__ - 0 < 0x020000 )
    #define hb_storvni      hb_storni
 
-   #define HB_LONG         LONG
-   #define HB_ULONG        ULONG
+   //#define HB_LONG         LONG
+   //#define HB_ULONG        ULONG
 
    typedef unsigned char   HB_BYTE;
    typedef int             HB_BOOL;

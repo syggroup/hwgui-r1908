@@ -1,12 +1,12 @@
-/*
- * $Id: drawwidg.prg 1740 2011-09-23 12:06:53Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Brushes handling
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
-*/
+//
+// $Id: drawwidg.prg 1740 2011-09-23 12:06:53Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Brushes handling
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #include "hbclass.ch"
 #include "windows.ch"
@@ -67,7 +67,7 @@ METHOD Release() CLASS HBrush
    IF ::nCounter == 0
       FOR EACH item IN ::aBrushes
          IF item:handle == ::handle
-            DeleteObject(::handle)
+            hwg_DeleteObject(::handle)
             #ifdef __XHARBOUR__
             ADel(::aBrushes, hb_enumindex())
             #else
@@ -88,7 +88,7 @@ EXIT PROCEDURE CleanDrawWidgHBrush
    LOCAL item
 
    FOR EACH item IN HBrush():aBrushes
-      DeleteObject(item:handle)
+      hwg_DeleteObject(item:handle)
    NEXT
 
 RETURN

@@ -1,12 +1,12 @@
-/*
- * $Id: menu_c.c 1819 2011-12-26 11:17:03Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level menu functions
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: menu_c.c 1819 2011-12-26 11:17:03Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level menu functions
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #define OEMRESOURCE
 
@@ -42,7 +42,7 @@ HB_FUNC(HWG__CREATEPOPUPMENU)
 }
 
 /*
- *  AddMenuItem( hMenu,cCaption,nPos,fByPosition,nId,fState,lSubMenu ) --> lResult
+ *  AddMenuItem(hMenu,cCaption,nPos,fByPosition,nId,fState,lSubMenu) --> lResult
  */
 
 /*
@@ -119,7 +119,7 @@ HB_FUNC(HWG__ADDMENUITEM)
 
   mii.cbSize = sizeof( MENUITEMINFO );
   mii.fMask = MIIM_TYPE | MIIM_STATE | MIIM_ID;
-  mii.fState = ( HB_ISNIL(6) || hb_parl( 6 ) )? 0:MFS_DISABLED;
+  mii.fState = ( HB_ISNIL(6) || hb_parl(6) )? 0:MFS_DISABLED;
   mii.wID = hb_parni( 5 );
   if (HB_ISCHAR(2))
   {
@@ -138,7 +138,7 @@ HB_FUNC(HWG__ADDMENUITEM)
 */
 
 /*
- *  CreateSubMenu( hMenu, nMenuId ) --> hSubMenu
+ *  CreateSubMenu(hMenu, nMenuId) --> hSubMenu
  */
 
 /*
@@ -164,7 +164,7 @@ HB_FUNC(HWG__CREATESUBMENU)
 }
 
 /*
- *  SetMenu( hWnd, hMenu ) --> lResult
+ *  SetMenu(hWnd, hMenu) --> lResult
  */
 
 /*
@@ -401,7 +401,7 @@ HB_FUNC(DRAWMENUBAR)
 }
 
 /*
- *  GetMenuCaption( hWnd | oWnd, nMenuId )
+ *  GetMenuCaption(hWnd | oWnd, nMenuId)
  */
 
 /*
@@ -458,7 +458,7 @@ HB_FUNC(GETMENUCAPTION)
 }
 
 /*
- *  SetMenuCaption( hWnd | oWnd, nMenuId, cCaption )
+ *  SetMenuCaption(hWnd | oWnd, nMenuId, cCaption)
  */
 
 /*

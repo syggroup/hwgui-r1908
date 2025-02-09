@@ -1,12 +1,12 @@
-/*
- * $Id: hcontrol.prg 1902 2012-09-20 11:51:37Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HButton class
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hcontrol.prg 1902 2012-09-20 11:51:37Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HButton class
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -42,12 +42,12 @@ ENDCLASS
 METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFont, bInit, bSize, bPaint, bClick, ;
    cTooltip, tcolor, bColor, bGFocus) CLASS HButton
 
-   nStyle := Hwg_BitOr(IIf(nStyle == NIL, 0, nStyle), BS_PUSHBUTTON + BS_NOTIFY)
+   nStyle := hwg_BitOr(IIf(nStyle == NIL, 0, nStyle), BS_PUSHBUTTON + BS_NOTIFY)
 
    ::title := cCaption
    ::bClick := bClick
    ::bGetFocus := bGFocus
-   ::lFlat := Hwg_BitAND(nStyle, BS_FLAT) != 0
+   ::lFlat := hwg_BitAND(nStyle, BS_FLAT) != 0
 
    ::Super:New(oWndParent, nId, nStyle, nLeft, nTop, IIf(nWidth == NIL, 90, nWidth), ;
       IIf(nHeight == NIL, 30, nHeight), oFont, bInit, bSize, bPaint, cTooltip, tcolor, bColor)
@@ -114,13 +114,13 @@ METHOD Init() CLASS HButton
       IF !(::GetParentForm():classname == ::oParent:classname .AND. ::GetParentForm():Type >= WND_DLG_RESOURCE) .OR. ;
          !::GetParentForm():lModal .OR. ::nHolder == 1
          ::nHolder := 1
-         SetWindowObject(::handle, Self)
+         hwg_SetWindowObject(::handle, Self)
          HWG_INITBUTTONPROC(::handle)
       ENDIF
       ::Super:init()
       /*
       IF ::Title != NIL
-         SETWINDOWTEXT(::handle, ::title)
+         hwg_SetWindowText(::handle, ::title)
       ENDIF
       */
    ENDIF
@@ -133,16 +133,16 @@ RETURN NIL
 METHOD onevent(msg, wParam, lParam) CLASS HButton
 
    IF msg == WM_SETFOCUS .AND. ::oParent:oParent == NIL
-      //- SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
+      //- hwg_SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
    ELSEIF msg == WM_KILLFOCUS
       IF ::GetParentForm():handle != ::oParent:handle
       //- IF ::oParent:oParent != NIL
-         InvalidateRect(::handle, 0)
-         SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
+         hwg_InvalidateRect(::handle, 0)
+         hwg_SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
       ENDIF
    ELSEIF msg == WM_KEYDOWN
       IF (wParam == VK_RETURN .OR. wParam == VK_SPACE)
-         SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
+         hwg_SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
          RETURN 0
       ENDIF
       IF !ProcKeyList(Self, wParam)
@@ -159,7 +159,7 @@ METHOD onevent(msg, wParam, lParam) CLASS HButton
       ENDIF
    ELSEIF msg == WM_KEYUP
       IF (wParam == VK_RETURN .OR. wParam == VK_SPACE)
-         SendMessage(::handle, WM_LBUTTONUP, 0, MAKELPARAM(1, 1))
+         hwg_SendMessage(::handle, WM_LBUTTONUP, 0, MAKELPARAM(1, 1))
          RETURN 0
       ENDIF
    ELSEIF msg == WM_GETDLGCODE .AND. !Empty(lParam)
@@ -179,20 +179,20 @@ METHOD onevent(msg, wParam, lParam) CLASS HButton
 
    //CASE WM_SETFOCUS
    //   IF ::oParent:oParent == NIL
-   //      //- SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
+   //      //- hwg_SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
    //   ENDIF
 
    CASE WM_KILLFOCUS
       IF ::GetParentForm():handle != ::oParent:handle
       //- IF ::oParent:oParent != NIL
-          InvalidateRect(::handle, 0)
-          SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
+          hwg_InvalidateRect(::handle, 0)
+          hwg_SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
       ENDIF
       EXIT
 
    CASE WM_KEYDOWN
       IF (wParam == VK_RETURN .OR. wParam == VK_SPACE)
-         SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
+         hwg_SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
          RETURN 0
       ENDIF
       IF !ProcKeyList(Self, wParam)
@@ -214,7 +214,7 @@ METHOD onevent(msg, wParam, lParam) CLASS HButton
 
    CASE WM_KEYUP
       IF (wParam == VK_RETURN .OR. wParam == VK_SPACE)
-         SendMessage(::handle, WM_LBUTTONUP, 0, MAKELPARAM(1, 1))
+         hwg_SendMessage(::handle, WM_LBUTTONUP, 0, MAKELPARAM(1, 1))
          RETURN 0
       ENDIF
       EXIT
@@ -256,12 +256,12 @@ METHOD Notify(lParam) CLASS HButton
    //
    IF PtrtoUlong(lParam) == WM_KEYDOWN
       IF ::oParent:Classname == "HTAB"
-         IF getfocus() != ::handle
-            InvalidateRect(::handle, 0)
-            SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
+         IF hwg_GetFocus() != ::handle
+            hwg_InvalidateRect(::handle, 0)
+            hwg_SendMessage(::handle, BM_SETSTYLE, BS_PUSHBUTTON, 1)
          ENDIF
          IF getkeystate(VK_LEFT) + getkeystate(VK_UP) < 0 .OR. ;
-            (GetKeyState(VK_TAB) < 0 .and. GetKeyState(VK_SHIFT) < 0)
+            (GetKeyState(VK_TAB) < 0 .AND. GetKeyState(VK_SHIFT) < 0)
             nSkip := -1
          ELSEIF ndown < 0
             nSkip := 1
@@ -284,8 +284,8 @@ METHOD NoteCaption(cNote) CLASS HButton         //*
 //#DEFINE BCM_SETNOTE  0x00001609
 
    IF cNote != NIL
-      IF Hwg_BitOr(::Style, BS_COMMANDLINK) > 0
-         SendMessage(::handle, BCM_SETNOTE, 0, ANSITOUNICODE(cNote))
+      IF hwg_BitOr(::Style, BS_COMMANDLINK) > 0
+         hwg_SendMessage(::handle, BCM_SETNOTE, 0, ANSITOUNICODE(cNote))
       ENDIF
       ::cNote := cNote
    ENDIF
@@ -303,14 +303,14 @@ METHOD onGetFocus() CLASS HButton
       RETURN .T.
    ENDIF
    IF hb_IsBlock(::bGetFocus)
-      nSkip := IIf(GetKeyState(VK_UP) < 0 .or. (GetKeyState(VK_TAB) < 0 .and. GetKeyState(VK_SHIFT) < 0), -1, 1)
+      nSkip := IIf(GetKeyState(VK_UP) < 0 .OR. (GetKeyState(VK_TAB) < 0 .AND. GetKeyState(VK_SHIFT) < 0), -1, 1)
       ::oParent:lSuspendMsgsHandling := .T.
       res := Eval(::bGetFocus, ::title, Self)
       ::oParent:lSuspendMsgsHandling := .F.
       IF res != NIL .AND. Empty(res)
          WhenSetFocus(Self, nSkip)
          IF ::lflat
-            InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
+            hwg_InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
          ENDIF
       ENDIF
    ENDIF
@@ -322,10 +322,10 @@ RETURN res
 METHOD onLostFocus() CLASS HButton
 
    IF ::lflat
-      InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
+      hwg_InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
    ENDIF
    ::lnoWhen := .F.
-   IF hb_IsBlock(::bLostFocus).AND. SelfFocus(GetParent(GetFocus()), ::getparentform():handle)
+   IF hb_IsBlock(::bLostFocus).AND. hwg_SelfFocus(hwg_GetParent(hwg_GetFocus()), ::getparentform():handle)
       ::oparent:lSuspendMsgsHandling := .T.
       Eval(::bLostFocus, ::title, Self)
       ::oparent:lSuspendMsgsHandling := .F.

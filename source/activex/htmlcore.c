@@ -1,13 +1,13 @@
-/*
- * $Id: htmlcore.c 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * ActiveX container
- *
- * Original author - Jeff Glatt
- * Modifyed for using with HwGUI by Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: htmlcore.c 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// ActiveX container
+//
+// Original author - Jeff Glatt
+// Modifyed for using with HwGUI by Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 /*
  * Dll.c -- A dynamic link library to display a web page in your own window.
@@ -456,13 +456,13 @@ HRESULT STDMETHODCALLTYPE UI_QueryInterface(IDocHostUIHandler *This, REFIID riid
 ULONG STDMETHODCALLTYPE UI_AddRef(IDocHostUIHandler *This)
 {
   (void)This;
-  return (1);
+  return 1;
 }
 
 ULONG STDMETHODCALLTYPE UI_Release(IDocHostUIHandler *This)
 {
   (void)This;
-  return (1);
+  return 1;
 }
 
 // Called when the browser object is about to display its context menu.
@@ -484,7 +484,7 @@ HRESULT STDMETHODCALLTYPE UI_ShowContextMenu(IDocHostUIHandler *This, DWORD dwID
   // not to bring up its own context menu, by returning S_OK.
   // PostMessage(((_IOleInPlaceSiteEx *)((char *)This - sizeof(_IOleInPlaceSiteEx)))->frame.window, WM_CONTEXTMENU,
   // (WPARAM)pt.x, pt.y);
-  return (S_FALSE);
+  return S_FALSE;
 }
 
 // Called at initialization of the browser object UI. We can set various features of the browser object here.
@@ -504,7 +504,7 @@ HRESULT STDMETHODCALLTYPE UI_GetHostInfo(IDocHostUIHandler *This, DOCHOSTUIINFO 
   // Set what happens when the user double-clicks on the object. Here we use the default.
   pInfo->dwDoubleClick = DOCHOSTUIDBLCLK_DEFAULT;
 
-  return (S_OK);
+  return S_OK;
 }
 
 // Called when the browser object shows its UI. This allows us to replace its
@@ -522,14 +522,14 @@ HRESULT STDMETHODCALLTYPE UI_ShowUI(IDocHostUIHandler *This, DWORD dwID, IOleInP
   // We've already got our own UI in place so just return S_OK to tell the
   // browser not to display its menus/toolbars. Otherwise we'd return
   // S_FALSE to let it do that.
-  return (S_OK);
+  return S_OK;
 }
 
 // Called when browser object hides its UI. This allows us to hide any menus/toolbars we created in ShowUI.
 HRESULT STDMETHODCALLTYPE UI_HideUI(IDocHostUIHandler *This)
 {
   (void)This;
-  return (S_OK);
+  return S_OK;
 }
 
 // Called when the browser object wants to notify us that the command state
@@ -539,7 +539,7 @@ HRESULT STDMETHODCALLTYPE UI_UpdateUI(IDocHostUIHandler *This)
 {
   (void)This;
   // We update our UI in our window message loop so we don't do anything here.
-  return (S_OK);
+  return S_OK;
 }
 
 // Called from the browser object's IOleInPlaceActiveObject object's
@@ -548,7 +548,7 @@ HRESULT STDMETHODCALLTYPE UI_EnableModeless(IDocHostUIHandler *This, BOOL fEnabl
 {
   (void)This;
   (void)fEnable;
-  return (S_OK);
+  return S_OK;
 }
 
 // Called from the browser object's IOleInPlaceActiveObject object's OnDocWindowActivate() function.
@@ -557,7 +557,7 @@ HRESULT STDMETHODCALLTYPE UI_OnDocWindowActivate(IDocHostUIHandler *This, BOOL f
 {
   (void)This;
   (void)fActivate;
-  return (S_OK);
+  return S_OK;
 }
 
 // Called from the browser object's IOleInPlaceActiveObject object's OnFrameWindowActivate() function.
@@ -565,7 +565,7 @@ HRESULT STDMETHODCALLTYPE UI_OnFrameWindowActivate(IDocHostUIHandler *This, BOOL
 {
   (void)This;
   (void)fActivate;
-  return (S_OK);
+  return S_OK;
 }
 
 // Called from the browser object's IOleInPlaceActiveObject object's ResizeBorder() function.
@@ -576,7 +576,7 @@ HRESULT STDMETHODCALLTYPE UI_ResizeBorder(IDocHostUIHandler *This, LPCRECT prcBo
   (void)prcBorder;
   (void)pUIWindow;
   (void)fRameWindow;
-  return (S_OK);
+  return S_OK;
 }
 
 // Called from the browser object's TranslateAccelerator routines to translate key strokes to commands.
@@ -604,7 +604,7 @@ HRESULT STDMETHODCALLTYPE UI_TranslateAccelerator(IDocHostUIHandler *This, LPMSG
 
   // For our example, we want to make sure that the user can't invoke some
   // key to popup the context menu, so we'll tell it to ignore all msgs.
-  return (S_FALSE);
+  return S_FALSE;
 }
 
 // Called by the browser object to find where the host wishes the browser to
@@ -617,7 +617,7 @@ HRESULT STDMETHODCALLTYPE UI_GetOptionKeyPath(IDocHostUIHandler *This, LPOLESTR 
   (void)This;
   (void)pchKey;
   (void)dw;
-  return (S_FALSE);
+  return S_FALSE;
 }
 
 // Called by the browser object when it is used as a drop target. We can supply
@@ -645,7 +645,7 @@ HRESULT STDMETHODCALLTYPE UI_GetDropTarget(IDocHostUIHandler *This, IDropTarget 
 
   // But for our purposes, we don't need an IDropTarget object, so we'll tell whomever is calling
   // us that we don't have one.
-  return (S_FALSE);
+  return S_FALSE;
 }
 
 // Called by the browser when it wants a pointer to our IDispatch object. This
@@ -677,7 +677,7 @@ HRESULT STDMETHODCALLTYPE UI_GetExternal(IDocHostUIHandler *This, IDispatch **pp
   // whomever is calling us that we don't have one.
   // Note: We must set ppDispatch to 0 if we don't return our own IDispatch object.
   *ppDispatch = 0;
-  return (S_FALSE);
+  return S_FALSE;
 }
 
 /* ************************* asciiToNumW() **************************
@@ -710,7 +710,7 @@ DWORD asciiToNumW(OLECHAR *val)
     len += (len + (len << 3) + chr);
   }
 
-  return (len);
+  return len;
 }
 
 // Called by the browser object to give us an opportunity to modify the URL to be loaded.
@@ -766,14 +766,14 @@ HRESULT STDMETHODCALLTYPE UI_TranslateUrl(IDocHostUIHandler *This, DWORD dwTrans
       PostMessage(hwnd, WM_APP, (WPARAM)len, 0);
 
       // Tell browser that we returned a URL
-      return (S_OK);
+      return S_OK;
     }
   }
 
   // We don't need to modify the URL. Note: We need to set ppchURLOut to 0 if we don't
   // return an OLECHAR (buffer) containing a modified version of pchURLIn.
   *ppchURLOut = 0;
-  return (S_FALSE);
+  return S_FALSE;
 }
 
 // Called by the browser when it does cut/paste to the clipboard. This allows us to block certain clipboard
@@ -799,7 +799,7 @@ HRESULT STDMETHODCALLTYPE UI_FilterDataObject(IDocHostUIHandler *This, IDataObje
   // us that we don't have one. Note: We must set ppDORet to 0 if we don't return our own
   // IDataObject object.
   *ppDORet = 0;
-  return (S_FALSE);
+  return S_FALSE;
 }
 
 ////////////////////// My IOleClientSite functions  //////////////////
@@ -904,22 +904,22 @@ HRESULT STDMETHODCALLTYPE Site_QueryInterface(IOleClientSite *This, REFIID riid,
   else
   {
     *ppvObject = 0;
-    return (E_NOINTERFACE);
+    return E_NOINTERFACE;
   }
 
-  return (S_OK);
+  return S_OK;
 }
 
 ULONG STDMETHODCALLTYPE Site_AddRef(IOleClientSite *This)
 {
   (void)This;
-  return (1);
+  return 1;
 }
 
 ULONG STDMETHODCALLTYPE Site_Release(IOleClientSite *This)
 {
   (void)This;
-  return (1);
+  return 1;
 }
 
 HRESULT STDMETHODCALLTYPE Site_SaveObject(IOleClientSite *This)
@@ -943,13 +943,13 @@ HRESULT STDMETHODCALLTYPE Site_GetContainer(IOleClientSite *This, LPOLECONTAINER
   // Tell the browser that we are a simple object and don't support a container
   *ppContainer = 0;
 
-  return (E_NOINTERFACE);
+  return E_NOINTERFACE;
 }
 
 HRESULT STDMETHODCALLTYPE Site_ShowObject(IOleClientSite *This)
 {
   (void)This;
-  return (NOERROR);
+  return NOERROR;
 }
 
 HRESULT STDMETHODCALLTYPE Site_OnShowWindow(IOleClientSite *This, BOOL fShow)
@@ -990,13 +990,13 @@ HRESULT STDMETHODCALLTYPE InPlace_QueryInterface(IOleInPlaceSite *This, REFIID r
 ULONG STDMETHODCALLTYPE InPlace_AddRef(IOleInPlaceSite *This)
 {
   (void)This;
-  return (1);
+  return 1;
 }
 
 ULONG STDMETHODCALLTYPE InPlace_Release(IOleInPlaceSite *This)
 {
   (void)This;
-  return (1);
+  return 1;
 }
 
 HRESULT STDMETHODCALLTYPE InPlace_GetWindow(IOleInPlaceSite *This, HWND *lphwnd)
@@ -1013,7 +1013,7 @@ HRESULT STDMETHODCALLTYPE InPlace_GetWindow(IOleInPlaceSite *This, HWND *lphwnd)
   // it and use it as so here.
   *lphwnd = ((_IOleInPlaceSiteEx *)This)->frame.window;
 
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE InPlace_ContextSensitiveHelp(IOleInPlaceSite *This, BOOL fEnterMode)
@@ -1027,20 +1027,20 @@ HRESULT STDMETHODCALLTYPE InPlace_CanInPlaceActivate(IOleInPlaceSite *This)
 {
   (void)This;
   // Tell the browser we can in place activate
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE InPlace_OnInPlaceActivate(IOleInPlaceSite *This)
 {
   (void)This;
   // Tell the browser we did it ok
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE InPlace_OnUIActivate(IOleInPlaceSite *This)
 {
   (void)This;
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE InPlace_GetWindowContext(IOleInPlaceSite *This, LPOLEINPLACEFRAME *lplpFrame,
@@ -1083,7 +1083,7 @@ HRESULT STDMETHODCALLTYPE InPlace_GetWindowContext(IOleInPlaceSite *This, LPOLEI
   //      GetClientRect(lpFrameInfo->hwndFrame, lprcPosRect);
   //      GetClientRect(lpFrameInfo->hwndFrame, lprcClipRect);
 
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE InPlace_Scroll(IOleInPlaceSite *This, SIZE scrollExtent)
@@ -1097,13 +1097,13 @@ HRESULT STDMETHODCALLTYPE InPlace_OnUIDeactivate(IOleInPlaceSite *This, BOOL fUn
 {
   (void)This;
   (void)fUndoable;
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE InPlace_OnInPlaceDeactivate(IOleInPlaceSite *This)
 {
   (void)This;
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE InPlace_DiscardUndoState(IOleInPlaceSite *This)
@@ -1134,7 +1134,7 @@ HRESULT STDMETHODCALLTYPE InPlace_OnPosRectChange(IOleInPlaceSite *This, LPCRECT
     inplace->lpVtbl->SetObjectRects(inplace, lprcPosRect, lprcPosRect);
   }
 
-  return (S_OK);
+  return S_OK;
 }
 
 //////////////////// My IOleInPlaceFrame functions  //////////////////
@@ -1150,13 +1150,13 @@ HRESULT STDMETHODCALLTYPE Frame_QueryInterface(IOleInPlaceFrame *This, REFIID ri
 ULONG STDMETHODCALLTYPE Frame_AddRef(IOleInPlaceFrame *This)
 {
   (void)This;
-  return (1);
+  return 1;
 }
 
 ULONG STDMETHODCALLTYPE Frame_Release(IOleInPlaceFrame *This)
 {
   (void)This;
-  return (1);
+  return 1;
 }
 
 HRESULT STDMETHODCALLTYPE Frame_GetWindow(IOleInPlaceFrame *This, HWND *lphwnd)
@@ -1170,7 +1170,7 @@ HRESULT STDMETHODCALLTYPE Frame_GetWindow(IOleInPlaceFrame *This, HWND *lphwnd)
   // browser is passing us. It doesn't know that. But we do. So we can recast it and
   // use it as so here.
   *lphwnd = ((_IOleInPlaceFrameEx *)This)->window;
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE Frame_ContextSensitiveHelp(IOleInPlaceFrame *This, BOOL fEnterMode)
@@ -1207,7 +1207,7 @@ HRESULT STDMETHODCALLTYPE Frame_SetActiveObject(IOleInPlaceFrame *This, IOleInPl
   (void)This;
   (void)pActiveObject;
   (void)pszObjName;
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE Frame_InsertMenus(IOleInPlaceFrame *This, HMENU hmenuShared,
@@ -1226,7 +1226,7 @@ HRESULT STDMETHODCALLTYPE Frame_SetMenu(IOleInPlaceFrame *This, HMENU hmenuShare
   (void)hmenuShared;
   (void)holemenu;
   (void)hwndActiveObject;
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE Frame_RemoveMenus(IOleInPlaceFrame *This, HMENU hmenuShared)
@@ -1240,14 +1240,14 @@ HRESULT STDMETHODCALLTYPE Frame_SetStatusText(IOleInPlaceFrame *This, LPCOLESTR 
 {
   (void)This;
   (void)pszStatusText;
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE Frame_EnableModeless(IOleInPlaceFrame *This, BOOL fEnable)
 {
   (void)This;
   (void)fEnable;
-  return (S_OK);
+  return S_OK;
 }
 
 HRESULT STDMETHODCALLTYPE Frame_TranslateAccelerator(IOleInPlaceFrame *This, LPMSG lpmsg, WORD wID)
@@ -1275,11 +1275,11 @@ HRESULT STDMETHODCALLTYPE Dispatch_QueryInterface(IDispatch *This, REFIID riid, 
     // our IDispatch.
     Dispatch_AddRef(This);
 
-    return (S_OK);
+    return S_OK;
   }
 
   *ppvObject = 0;
-  return (E_NOINTERFACE);
+  return E_NOINTERFACE;
 }
 
 ULONG STDMETHODCALLTYPE Dispatch_AddRef(IDispatch *This)
@@ -1299,7 +1299,7 @@ ULONG STDMETHODCALLTYPE Dispatch_Release(IDispatch *This)
     // OutputDebugString("One event handler destroyed");
 
     GlobalFree(((char *)This - ((_IDispatchEx *)This)->extraSize));
-    return (0);
+    return 0;
   }
 
   return (((_IDispatchEx *)This)->refCount);
@@ -1309,7 +1309,7 @@ HRESULT STDMETHODCALLTYPE Dispatch_GetTypeInfoCount(IDispatch *This, unsigned in
 {
   (void)This;
   (void)pctinfo;
-  return (E_NOTIMPL);
+  return E_NOTIMPL;
 }
 
 HRESULT STDMETHODCALLTYPE Dispatch_GetTypeInfo(IDispatch *This, unsigned int iTInfo, LCID lcid, ITypeInfo **ppTInfo)
@@ -1318,7 +1318,7 @@ HRESULT STDMETHODCALLTYPE Dispatch_GetTypeInfo(IDispatch *This, unsigned int iTI
   (void)iTInfo;
   (void)lcid;
   (void)ppTInfo;
-  return (E_NOTIMPL);
+  return E_NOTIMPL;
 }
 
 HRESULT STDMETHODCALLTYPE Dispatch_GetIDsOfNames(IDispatch *This, REFIID riid, OLECHAR **rgszNames, unsigned int cNames,
@@ -1330,7 +1330,7 @@ HRESULT STDMETHODCALLTYPE Dispatch_GetIDsOfNames(IDispatch *This, REFIID riid, O
   (void)cNames;
   (void)lcid;
   (void)rgDispId;
-  return (S_OK);
+  return S_OK;
 }
 
 static void webDetach(_IDispatchEx *lpDispatchEx)
@@ -1470,7 +1470,7 @@ HRESULT STDMETHODCALLTYPE Dispatch_Invoke(IDispatch *This, DISPID dispIdMember, 
     webParams.htmlEvent->lpVtbl->Release(webParams.htmlEvent);
   }
 
-  return (S_OK);
+  return S_OK;
 }
 
 /************************ CreateWebEvtHandler() *********************
@@ -1622,7 +1622,7 @@ IDispatch *WINAPI CreateWebEvtHandler(HWND hwnd, IHTMLDocument2 *htmlDoc2, DWORD
   }
 
   // FAILURE.
-  return (0);
+  return 0;
 }
 
 /********************** FreeWebEvtHandler() *********************
@@ -1659,7 +1659,7 @@ IHTMLElement *WINAPI GetWebSrcElement(IHTMLEventObj *htmlEvent)
   IHTMLElement *htmlElement = 0;
 
   htmlEvent->lpVtbl->get_srcElement(htmlEvent, &htmlElement);
-  return (htmlElement);
+  return htmlElement;
 }
 
 /************************** SetWebReturnValue() **********************
@@ -1757,7 +1757,7 @@ HRESULT WINAPI GetWebPtrs(HWND hwnd, IWebBrowser2 **webBrowser2Result, IHTMLDocu
       {
         webBrowser2->lpVtbl->Release(webBrowser2);
       fail:
-        return (E_FAIL);
+        return E_FAIL;
       }
     }
 
@@ -1776,7 +1776,7 @@ HRESULT WINAPI GetWebPtrs(HWND hwnd, IWebBrowser2 **webBrowser2Result, IHTMLDocu
     }
   }
 
-  return (S_OK);
+  return S_OK;
 }
 
 /************************** TStr2BStr() *************************
@@ -1805,7 +1805,7 @@ BSTR WINAPI TStr2BStr(HWND hwnd, const char *string)
     size = MultiByteToWideChar(CP_ACP, 0, (char *)string, -1, 0, 0);
     if ((buffer = (WCHAR *)GlobalAlloc(GMEM_FIXED, sizeof(WCHAR) * size)) == NULL)
     {
-      return (0);
+      return 0;
     }
     MultiByteToWideChar(CP_ACP, 0, (char *)string, -1, buffer, size);
     bstr = SysAllocString(buffer);
@@ -1816,7 +1816,7 @@ BSTR WINAPI TStr2BStr(HWND hwnd, const char *string)
     bstr = SysAllocString((WCHAR *)string);
   }
 
-  return (bstr);
+  return bstr;
 }
 
 /************************** BStr2TStr() *************************
@@ -1851,7 +1851,7 @@ void *WINAPI BStr2TStr(HWND hwnd, BSTR strIn)
     }
   }
 
-  return (strOut);
+  return strOut;
 }
 
 /*************************** GetWebElement() **************************
@@ -1938,7 +1938,7 @@ IHTMLElement *WINAPI GetWebElement(HWND hwnd, IHTMLDocument2 *htmlDoc2, const ch
   }
 
   // Return the IHTMLElement ptr.
-  return (htmlElem);
+  return htmlElem;
 }
 
 /************************** doEvents() ***********************
@@ -2216,11 +2216,11 @@ long WINAPI DisplayHTMLStr(HWND hwnd, const char *string)
   // No error?
   if (myURL.DEF_VT != VT_BSTR)
   {
-    return (0);
+    return 0;
   }
 
   // An error
-  return (-1);
+  return -1;
 }
 
 /***************************** DisplayHTMLPage() **************************
@@ -2276,7 +2276,7 @@ long WINAPI DisplayHTMLPage(HWND hwnd, const char *webPageName)
     if ((myURL.DEF_BSTRVAL = TStr2BStr(hwnd, webPageName)) == NULL)
     {
       webBrowser2->lpVtbl->Release(webBrowser2);
-      return (-6);
+      return -6;
     }
 
     // Call the Navigate2() function to actually display the page.
@@ -2291,10 +2291,10 @@ long WINAPI DisplayHTMLPage(HWND hwnd, const char *webPageName)
     webBrowser2->lpVtbl->Release(webBrowser2);
 
     // Success
-    return (0);
+    return 0;
   }
 
-  return (-5);
+  return -5;
 }
 
 /******************************* DoPageAction() **************************
@@ -2470,7 +2470,7 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
   // to the browser object.
   if ((ptr = (char *)GlobalAlloc(GMEM_FIXED, sizeof(_IOleClientSiteEx) + sizeof(IOleObject *))) == NULL)
   {
-    return (-1);
+    return -1;
   }
 
   // Initialize our IOleClientSite object with a pointer to our
@@ -2569,7 +2569,7 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
           webBrowser2->lpVtbl->Release(webBrowser2);
 
           // Success
-          return (0);
+          return 0;
         }
       }
 
@@ -2577,7 +2577,7 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
 
       // Something went wrong setting up the browser!
       UnEmbedBrowserObject(hwnd);
-      return (-4);
+      return -4;
     }
 
     webBrowser2->lpVtbl->Release(webBrowser2);
@@ -2585,13 +2585,13 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
     GlobalFree(ptr);
 
     // Can't create an instance of the browser!
-    return (-3);
+    return -3;
   }
 
   GlobalFree(ptr);
 
   // Can't get the web browser's IWebBrowser2!
-  return (-2);
+  return -2;
 }
 
 /* DllMain()

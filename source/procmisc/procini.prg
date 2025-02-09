@@ -1,12 +1,12 @@
-/*
- * $Id: procini.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * Common procedures
- * Ini files reading
- *
- * Author: Alexander S.Kresin <alex@belacy.belgorod.su>
- *         www - http://www.geocities.com/alkresin/
-*/
+//
+// $Id: procini.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// Common procedures
+// Ini files reading
+//
+// Author: Alexander S.Kresin <alex@belacy.belgorod.su>
+//         www - http://www.geocities.com/alkresin/
+//
 
 /*
  Function Rdini scans file line by line, creates variables ( if they doesn't
@@ -53,38 +53,38 @@
 #include "fileio.ch"
 #define STR_BUFLEN  1024
 
-FUNCTION RDINI( fname, prm1, prm2, prm3, prm4 )
+FUNCTION RDINI(fname, prm1, prm2, prm3, prm4)
 
 LOCAL han, stroka, strfull, kolstr
 //LOCAL rez (variable not used)
 LOCAL poz1, vname
 //LOCAL i (variable not used)
 LOCAL prblo, lTruncAr
-LOCAL lWinIni  := ( hb_IsArray(prm1) )
+LOCAL lWinIni  := (hb_IsArray(prm1))
 LOCAL strbuf := Space(STR_BUFLEN), poz := STR_BUFLEN+1
-LOCAL iniDbf := ( Upper(FilExten(fname)) == "DBF" )
+LOCAL iniDbf := (Upper(FilExten(fname)) == "DBF")
 
    kolstr := 0
    prblo  := .T.
    IF iniDbf
       USE (fname) NEW
-      han := Iif( NetErr(), -1, 0 )
+      han := IIf(NetErr(), -1, 0)
    ELSE
-      han    := FOPEN( fname, FO_READ + FO_SHARED )
+      han    := FOpen(fname, FO_READ + FO_SHARED)
    ENDIF
    IF han != - 1
       strfull := ""
       DO WHILE .T.
-         kolstr ++
-         stroka := Iif( iniDbf, RDSTRDBF(), RDSTR( han,@strbuf,@poz,STR_BUFLEN ) )
-         IF LEN( stroka ) = 0
+         kolstr++
+         stroka := IIf(iniDbf, RDSTRDBF(), RDSTR(han, @strbuf, @poz, STR_BUFLEN))
+         IF Len(stroka) == 0
             EXIT
          ENDIF
-         IF Right( stroka,2 ) == '&&'
-            strfull += Left( stroka,Len(stroka)-2 )
+         IF Right(stroka, 2) == "&&"
+            strfull += Left(stroka, Len(stroka) - 2)
             LOOP
-         ELSEIF Right( stroka,1 ) == '&'
-            strfull += Left( stroka,Len(stroka)-1 )
+         ELSEIF Right(stroka, 1) == "&"
+            strfull += Left(stroka, Len(stroka) - 1)
             LOOP
          ELSE
             IF !Empty(strfull)
@@ -93,46 +93,46 @@ LOCAL iniDbf := ( Upper(FilExten(fname)) == "DBF" )
             strfull := ""
          ENDIF
          //
-         IF Left( stroka,1 ) = "["
-            stroka := UPPER(SUBSTR(stroka, 2, AT("]", stroka) - 2))
+         IF Left(stroka, 1) = "["
+            stroka := Upper(SubStr(stroka, 2, At("]", stroka) - 2))
             IF lWinIni
-               AADD(prm1, { UPPER(stroka), {} })
+               AAdd(prm1, {Upper(stroka), {}})
             ELSE
                prblo := .F.
                SET EXACT ON
-               IF stroka = prm1 .OR. stroka = prm2 .OR. stroka = prm3 .OR. stroka = prm4
+               IF stroka == prm1 .OR. stroka == prm2 .OR. stroka == prm3 .OR. stroka == prm4
                   prblo := .T.
                ENDIF
                SET EXACT OFF
             ENDIF
-         ELSEIF ( prblo .OR. lWinIni ) .AND. Left( stroka,1 ) != ";"
-            poz1 := AT( "=", stroka )
+         ELSEIF (prblo .OR. lWinIni) .AND. Left(stroka, 1) != ";"
+            poz1 := At("=", stroka)
             IF poz1 != 0
-               lTruncAr := IIF( SUBSTR( stroka, poz1 - 1, 1 ) == '+', .F., .T. )
-               vname    := RTRIM( SUBSTR( stroka, 1, IIF( lTruncAr, poz1 - 1, poz1 - 2 ) ) )
-               stroka   := ALLTRIM( SUBSTR( stroka, poz1 + 1 ) )
+               lTruncAr := IIf(SubStr(stroka, poz1 - 1, 1) == "+", .F., .T.)
+               vname    := RTrim(SubStr(stroka, 1, IIf(lTruncAr, poz1 - 1, poz1 - 2)))
+               stroka   := AllTrim(SubStr(stroka, poz1 + 1))
                IF lWinIni
-                  AADD(prm1[LEN( prm1 ), 2], { UPPER(vname), stroka })
+                  AAdd(prm1[Len(prm1), 2], {Upper(vname), stroka})
                ELSE
-                  IF TYPE(vname) = "U"
-                     IF ASC(stroka) = 123                 // {
-                        IF ASC(vname) = 35                // #
-                           vname := SUBSTR( vname, 2 )
+                  IF Type(vname) = "U"
+                     IF Asc(stroka) == 123                 // {
+                        IF Asc(vname) == 35                // #
+                           vname := SubStr(vname, 2)
                            PRIVATE &vname := {}
                         ELSE
                            PUBLIC &vname := {}
                         ENDIF
                      ELSE
-                        IF ASC(vname) = 35                // #
-                           vname := SUBSTR( vname, 2 )
+                        IF Asc(vname) == 35                // #
+                           vname := SubStr(vname, 2)
                            PRIVATE &vname
                         ELSE
                            PUBLIC &vname
                         ENDIF
                      ENDIF
                   ELSE
-                     IF lTruncAr .AND. ASC(stroka) = 123 .AND. LEN( &vname ) > 0
-                        ASIZE(&vname, 0)
+                     IF lTruncAr .AND. Asc(stroka) == 123 .AND. Len(&vname) > 0
+                        ASize(&vname, 0)
                      ENDIF
                   ENDIF
                   DO CASE
@@ -140,17 +140,17 @@ LOCAL iniDbf := ( Upper(FilExten(fname)) == "DBF" )
                      &vname := .T.
                   CASE stroka = "off" .OR. stroka = "OFF" .OR. stroka = "Off" .OR. Empty(stroka)
                      &vname := .F.
-                  CASE ASC(stroka) = 123 .AND. SUBSTR( stroka, 2, 1 ) != "|"  // {
-                     RDARR( vname, stroka )
+                  CASE Asc(stroka) == 123 .AND. SubStr(stroka, 2, 1) != "|"  // {
+                     RDARR(vname, stroka)
                   OTHERWISE
-                     &vname := RDZNACH( stroka )
+                     &vname := RDZNACH(stroka)
                   ENDCASE
                ENDIF
             ENDIF
             //
          ENDIF
       ENDDO
-      FCLOSE(han)
+      FClose(han)
    ELSE
       RETURN 0
    ENDIF
@@ -159,57 +159,57 @@ LOCAL iniDbf := ( Upper(FilExten(fname)) == "DBF" )
    ENDIF
 RETURN kolstr
 
-STATIC FUNCTION RDZNACH( ps )
+STATIC FUNCTION RDZNACH(ps)
 
 LOCAL poz, znc
-   ps := ALLTRIM( ps )
-   IF ASC(ps) = 34
-      poz := AT( CHR(34), SUBSTR( ps, 2 ) )
+   ps := AllTrim(ps)
+   IF Asc(ps) == 34
+      poz := At(Chr(34), SubStr(ps, 2))
       IF poz != 0
-         znc := SUBSTR( ps, 2, poz - 1 )
+         znc := SubStr(ps, 2, poz - 1)
       ENDIF
    ELSE
       znc := &ps
    ENDIF
 RETURN znc
 
-STATIC FUNCTION RDARR( vname, stroka )
+STATIC FUNCTION RDARR(vname, stroka)
 
 LOCAL poz1
 //LOCAL i := 0 (variable/value not used)
 //LOCAL lenm (variable not used)
 LOCAL len1, strv, newname
-   poz1 := FIND_Z( SUBSTR( stroka, 2 ), "}" )
+   poz1 := FIND_Z(SubStr(stroka, 2), "}")
    IF poz1 != 0
-      stroka := SUBSTR( stroka, 2, poz1 - 1 )
-      //lenm   := LEN( &vname ) (value not used)
+      stroka := SubStr(stroka, 2, poz1 - 1)
+      //lenm   := Len(&vname) (value not used)
       DO WHILE poz1 != 0
          IF Empty(stroka)
             EXIT
          ELSE
-            //i ++ (value not used)
-            poz1 := FIND_Z( stroka )
-            strv := LTRIM( SUBSTR( stroka, 1, IIF( poz1 = 0, 9999, poz1 - 1 ) ) )
-            IF ASC(strv) = 123 .AND. SUBSTR( strv, 2, 1 ) != "|"              // {
-               AADD(&vname, {})
-               len1    := LEN( &vname )
-               newname := vname + "[" + LTRIM( STR( len1, 3 ) ) + "]"
-               RDARR( newname, strv )
+            //i++ (value not used)
+            poz1 := FIND_Z(stroka)
+            strv := LTrim(SubStr(stroka, 1, IIf(poz1 == 0, 9999, poz1 - 1)))
+            IF Asc(strv) == 123 .AND. SubStr(strv, 2, 1) != "|"              // {
+               AAdd(&vname, {})
+               len1    := Len(&vname)
+               newname := vname + "[" + LTrim(Str(len1, 3)) + "]"
+               RDARR(newname, strv)
             ELSE
-               AADD(&vname, RDZNACH( strv ))
+               AAdd(&vname, RDZNACH(strv))
             ENDIF
-            stroka := SUBSTR( stroka, poz1 + 1 )
+            stroka := SubStr(stroka, poz1 + 1)
          ENDIF
       ENDDO
    ENDIF
-RETURN Nil
+RETURN NIL
 
 STATIC FUNCTION RDSTRDBF
 LOCAL stroka
 FIELD INICOND, INITEXT
    IF Eof()
-      Return ""
+      RETURN ""
    ENDIF
-   stroka := IIF( Empty(INICOND) .OR. &( INICOND ), Trim(INITEXT), "" )
+   stroka := IIf(Empty(INICOND) .OR. &(INICOND), Trim(INITEXT), "")
    SKIP
 RETURN stroka

@@ -13,86 +13,84 @@
 // biblioteca HWGUI (Classe HMonthCalendar).
 //================================================================//
 
-#include "windows.ch"
-#include "guilib.ch"
+#include "hwgui.ch"
 
 //================================================================//
 
-Function Main
+FUNCTION Main()
 
-   Local oWnd
+   LOCAL oWnd
 
    SET DATE BRITISH
    SET CENTURY ON
 
-   SetTooltipBalloon(.t.)
+   hwg_SetTooltipBalloon(.T.)
 
    INIT WINDOW oWnd MAIN TITLE "Controle MonthCalendar" ;
-      AT 100,100 SIZE 640,480
+      AT 100, 100 SIZE 640, 480
 
    MENU OF oWnd
       MENUITEM "&Calendário 1" ACTION Dlg1()
       MENUITEM "&Calendário 2" ACTION Dlg2()
-      MENUITEM "&Sair"         ACTION EndWindow()
+      MENUITEM "&Sair"         ACTION hwg_EndWindow()
    ENDMENU
 
    ACTIVATE WINDOW oWnd
 
-   Return Nil
+RETURN NIL
 
 //================================================================//
 
-Function Dlg1
+FUNCTION Dlg1()
 
-   Local oDlg
-   Local oMC
-   Local oFont
+   LOCAL oDlg
+   LOCAL oMC
+   LOCAL oFont
 
    INIT DIALOG oDlg TITLE "Calendário - Exemplo 1" ;
-      AT 20,20 SIZE 500,300
+      AT 20, 20 SIZE 500, 300
 
    PREPARE FONT oFont NAME "Arial" WIDTH 0 HEIGHT -12
 
-   @ 20,20 MONTHCALENDAR oMC ;
-      SIZE 250,250 ;
+   @ 20, 20 MONTHCALENDAR oMC ;
+      SIZE 250, 250 ;
       INIT ctod("01/01/2004") ;
-      ON INIT {||HWG_MSGINFO("Evento On Init","MonthCalendar")} ;
-      ON CHANGE {||HWG_MSGINFO("Evento On Change","MonthCalendar")} ;
+      ON INIT {||hwg_MsgInfo("Evento On Init", "MonthCalendar")} ;
+      ON CHANGE {||hwg_MsgInfo("Evento On Change", "MonthCalendar")} ;
       NOTODAY NOTODAYCIRCLE WEEKNUMBERS ;
       FONT oFont ;
       TOOLTIP "MonthCalendar - NoToday - NoTodayCircle - WeekNumbers"
 
-   @ 300,20 BUTTON "Get Date" ON CLICK {||HWG_MSGINFO(dtoc(oMC:GetValue()))} SIZE 100,40
-   @ 300,60 BUTTON "Set Date" ON CLICK {||oMC:SetValue(Date())} SIZE 100,40
+   @ 300, 20 BUTTON "Get Date" ON CLICK {||hwg_MsgInfo(dtoc(oMC:GetValue()))} SIZE 100, 40
+   @ 300, 60 BUTTON "Set Date" ON CLICK {||oMC:SetValue(Date())} SIZE 100, 40
 
    ACTIVATE DIALOG oDlg
 
-   Return Nil
+RETURN NIL
 
 //================================================================//
 
-Function Dlg2
+FUNCTION Dlg2()
 
-   Local oDlg
-   Local oMC
-   Local oFont
+   LOCAL oDlg
+   LOCAL oMC
+   lOCAL oFont
 
    INIT DIALOG oDlg TITLE "Calendário - Exemplo 2" ;
-      AT 20,20 SIZE 500,300
+      AT 20, 20 SIZE 500, 300
 
    PREPARE FONT oFont NAME "Courier New" WIDTH 0 HEIGHT -12
 
-   @ 20,20 MONTHCALENDAR oMC ;
-      SIZE 250,250 ;
+   @ 20, 20 MONTHCALENDAR oMC ;
+      SIZE 250, 250 ;
       INIT Date() ;
       FONT oFont
 
-   @ 300,20 BUTTON "Get Date" ON CLICK {||HWG_MSGINFO(dtoc(oMC:GetValue()))} SIZE 100,40
-   @ 300,60 BUTTON "Set Date" ON CLICK {||oMC:SetValue(Date())} SIZE 100,40
+   @ 300, 20 BUTTON "Get Date" ON CLICK {||hwg_MsgInfo(dtoc(oMC:GetValue()))} SIZE 100, 40
+   @ 300, 60 BUTTON "Set Date" ON CLICK {||oMC:SetValue(Date())} SIZE 100, 40
 
    ACTIVATE DIALOG oDlg
 
-   Return Nil
+RETURN NIL
 
 //================================================================//
-

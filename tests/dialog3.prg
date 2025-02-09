@@ -2,7 +2,7 @@
 
 STATIC oMainWindow
 
-PROCEDURE Main()
+FUNCTION Main()
 
    INIT WINDOW oMainWindow TITLE "Test" SIZE 800, 600
 
@@ -11,13 +11,13 @@ PROCEDURE Main()
          MENUITEM "Dialog&1 (MODAL)" ACTION ShowDialog1()
          MENUITEM "Dialog&2 (NOMODAL)" ACTION ShowDialog2()
          SEPARATOR
-         MENUITEM "E&xit" ACTION EndWindow()
+         MENUITEM "E&xit" ACTION hwg_EndWindow()
       ENDMENU
    ENDMENU
 
    ACTIVATE WINDOW oMainWindow MAXIMIZED
 
-RETURN
+RETURN NIL
 
 STATIC FUNCTION ShowDialog1()
 
@@ -32,10 +32,10 @@ STATIC FUNCTION ShowDialog1()
 
    ++n
 
-   INIT DIALOG oDialog TITLE "Dialog (MODAL) " + alltrim(str(n)) ;
+   INIT DIALOG oDialog TITLE "Dialog (MODAL) " + AllTrim(Str(n)) ;
       SIZE 640, 480 FONT HFont():Add("Courier New", 0, -13) ;
       STYLE DS_CENTER ;
-      ON EXIT {||MsgYesNo("Confirm exit ?")}
+      ON EXIT {||hwg_MsgYesNo("Confirm exit ?")}
 
    @ 20, 40 SAY "Field&1 (ALT+1):" SIZE 130, 26
    @ 160, 40 EDITBOX oEdit1 CAPTION "" SIZE 300, 26
@@ -58,7 +58,7 @@ STATIC FUNCTION ShowDialog1()
 
    ACTIVATE DIALOG oDialog
 
-RETURN
+RETURN NIL
 
 STATIC FUNCTION ShowDialog2()
 
@@ -73,10 +73,10 @@ STATIC FUNCTION ShowDialog2()
 
    ++n
 
-   INIT DIALOG oDialog TITLE "Dialog (NOMODAL) " + alltrim(str(n)) ;
+   INIT DIALOG oDialog TITLE "Dialog (NOMODAL) " + AllTrim(Str(n)) ;
       SIZE 640, 480 FONT HFont():Add("Verdana", 0, -13) ;
       STYLE DS_CENTER ;
-      ON EXIT {||IIF(MsgYesNo("Confirm exit ?"),(SetFocus(oMainWindow:handle), .T.), .F.)}
+      ON EXIT {||IIf(hwg_MsgYesNo("Confirm exit ?"), (hwg_SetFocus(oMainWindow:handle), .T.), .F.)}
 
    @ 20, 40 SAY "Field&1 (ALT+1):" SIZE 130, 26
    @ 160, 40 EDITBOX oEdit1 CAPTION "" SIZE 300, 26
@@ -99,4 +99,4 @@ STATIC FUNCTION ShowDialog2()
 
    ACTIVATE DIALOG oDialog NOMODAL
 
-RETURN
+RETURN NIL

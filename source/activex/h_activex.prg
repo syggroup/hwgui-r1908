@@ -1,6 +1,7 @@
-/*
- * $Id: h_activex.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- */
+//
+// $Id: h_activex.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+
 /*
  * ooHG source code:
  * ActiveX control
@@ -50,35 +51,35 @@ ENDCLASS
 
 METHOD New(oWnd, cProgId, nTop, nLeft, nWidth, nHeight, bSize) CLASS HActiveX
    LOCAL nStyle, nExStyle, cClsName, hSink
-   LOCAL i,a,h,n
+   LOCAL i, a, h, n
    LOCAL oError, bErrorBlock
 
-   nStyle   := WS_CHILD + WS_VISIBLE + WS_CLIPCHILDREN
+   nStyle := WS_CHILD + WS_VISIBLE + WS_CLIPCHILDREN
    nExStyle := 0
    cClsName := "AtlAxWin"
 
-   ::Super:New(oWnd, , nStyle, nLeft, nTop, nWidth, nHeight)   // ,,,,bSize)
-   ::title = cProgId
+   ::Super:New(oWnd, , nStyle, nLeft, nTop, nWidth, nHeight)   // ,,,, bSize)
+   ::title := cProgId
 
-   ::handle = CreateActivex(nExStyle, cClsName, cProgId, ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
+   ::handle := CreateActivex(nExStyle, cClsName, cProgId, ::style, ::nLeft, ::nTop, ::nWidth, ::nHeight, ;
       ::oParent:handle, ::Id)
 
    ::Init()
 
-   ::hObj   := AtlAxGetDisp(::handle)
+   ::hObj := AtlAxGetDisp(::handle)
 
    bErrorBlock := ErrorBlock({|x|break(x)})
    #ifdef __XHARBOUR__
       TRY
          ::oOle := ToleAuto():New(::hObj)
       CATCH oError
-         HWG_MSGINFO(oError:Description)
+         hwg_MsgInfo(oError:Description)
       END
    #else
       BEGIN SEQUENCE
          ::oOle := ToleAuto():New(::hObj)
       RECOVER USING oError
-         HWG_MSGINFO(oError:Description)
+         hwg_MsgInfo(oError:Description)
       END
    #endif
    ErrorBlock(bErrorBlock)
@@ -93,7 +94,7 @@ METHOD Release() CLASS HActiveX
 *-----------------------------------------------------------------------------*
    SHUTDOWNCONNECTIONPOINT(::hSink)
    ReleaseDispatch(::hObj)
-Return ::Super:Release()
+RETURN ::Super:Release()
 
 *-----------------------------------------------------------------------------* 
 METHOD __Error(...) CLASS HActiveX 
@@ -113,9 +114,9 @@ METHOD EventMap(nMsg, xExec, oSelf) CLASS HActiveX
    nAt := AScan(::aAxEv, nMsg)
    IF nAt == 0
       AAdd(::aAxEv, nMsg)
-      AAdd(::aAxExec, { NIL, NIL })
+      AAdd(::aAxExec, {NIL, NIL})
       nAt := Len(::aAxEv)
    ENDIF
-   ::aAxExec[nAt] := { xExec, oSelf }
+   ::aAxExec[nAt] := {xExec, oSelf}
 RETURN NIL
 

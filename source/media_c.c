@@ -1,12 +1,12 @@
-/*
- * $Id: media_c.c 1625 2011-08-05 13:14:50Z druzus $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level media functions
- *
- * Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
- */
+//
+// $Id: media_c.c 1625 2011-08-05 13:14:50Z druzus $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level media functions
+//
+// Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #include "hwingui.h"
 #include <commctrl.h>
@@ -16,9 +16,9 @@
 #include <hbstack.h>
 
 /*
- *  PlaySound(cName, lSync, lLoop)
+ *  hwg_PlaySound(cName, lSync, lLoop)
  */
-HB_FUNC(PLAYSOUND)
+HB_FUNC(HWG_PLAYSOUND)
 {
   void *hSound;
   LPCTSTR lpSound = HB_PARSTR(1, &hSound, NULL);
@@ -47,7 +47,9 @@ HB_FUNC(PLAYSOUND)
   hb_strfree(hSound);
 }
 
-HB_FUNC(MCISENDSTRING)
+HB_FUNC_TRANSLATE(PLAYSOUND, HWG_PLAYSOUND);
+
+HB_FUNC(HWG_MCISENDSTRING)
 {
   TCHAR cBuffer[256] = {0};
   void *hCommand;
@@ -61,9 +63,11 @@ HB_FUNC(MCISENDSTRING)
   hb_strfree(hCommand);
 }
 
+HB_FUNC_TRANSLATE(MCISENDSTRING, HWG_MCISENDSTRING);
+
 /* Functions bellow for play video's and wav's*/
 
-HB_FUNC(MCISENDCOMMAND) // ()
+HB_FUNC(HWG_MCISENDCOMMAND) // ()
 {
   hb_retnl(mciSendCommand(hb_parni(1),             // Device ID
                           hb_parni(2),             // Command Message
@@ -71,9 +75,11 @@ HB_FUNC(MCISENDCOMMAND) // ()
                           (DWORD_PTR)hb_parc(4))); // Parameter Block
 }
 
+HB_FUNC_TRANSLATE(MCISENDCOMMAND, HWG_MCISENDCOMMAND);
+
 //----------------------------------------------------------------------------//
 
-HB_FUNC(MCIGETERRORSTRING) // ()
+HB_FUNC(HWG_MCIGETERRORSTRING) // ()
 {
   TCHAR cBuffer[256] = {0};
 
@@ -82,9 +88,11 @@ HB_FUNC(MCIGETERRORSTRING) // ()
   HB_STORSTR(cBuffer, 2);
 }
 
+HB_FUNC_TRANSLATE(MCIGETERRORSTRING, HWG_MCIGETERRORSTRING);
+
 //----------------------------------------------------------------------------//
 
-HB_FUNC(NMCIOPEN)
+HB_FUNC(HWG_NMCIOPEN)
 {
   MCI_OPEN_PARMS mciOpenParms;
   DWORD dwFlags = MCI_OPEN_ELEMENT;
@@ -106,9 +114,11 @@ HB_FUNC(NMCIOPEN)
   hb_strfree(hName);
 }
 
+HB_FUNC_TRANSLATE(NMCIOPEN, HWG_NMCIOPEN);
+
 //----------------------------------------------------------------------------//
 
-HB_FUNC(NMCIPLAY)
+HB_FUNC(HWG_NMCIPLAY)
 {
   MCI_PLAY_PARMS mciPlayParms;
   DWORD dwFlags = 0;
@@ -125,16 +135,18 @@ HB_FUNC(NMCIPLAY)
     dwFlags |= MCI_TO;
   }
 
-  //   if( ( mciPlayParms.dwCallback = ( DWORD_PTR ) hb_parnint( 4 ) ) != 0 )
+  //   if( ( mciPlayParms.dwCallback = ( DWORD_PTR ) hb_parnint(4) ) != 0 )
   //      dwFlags |= MCI_NOTIFY;
 
   hb_retnl(mciSendCommand(hb_parni(1), // Device ID
                           MCI_PLAY, dwFlags, (DWORD_PTR)(LPMCI_PLAY_PARMS)&mciPlayParms));
 }
 
+HB_FUNC_TRANSLATE(NMCIPLAY, HWG_NMCIPLAY);
+
 //----------------------------------------------------------------------------//
 
-HB_FUNC(NMCIWINDOW)
+HB_FUNC(HWG_NMCIWINDOW)
 {
   MCI_ANIM_WINDOW_PARMS mciWindowParms;
   HWND hWnd = hwg_par_HWND(2);
@@ -144,3 +156,5 @@ HB_FUNC(NMCIWINDOW)
   hb_retnl(mciSendCommand(hb_parni(1), MCI_WINDOW, MCI_ANIM_WINDOW_HWND | MCI_ANIM_WINDOW_DISABLE_STRETCH,
                           (LONG_PTR)(LPMCI_ANIM_WINDOW_PARMS)&mciWindowParms));
 }
+
+HB_FUNC_TRANSLATE(NMCIWINDOW, HWG_NMCIWINDOW);

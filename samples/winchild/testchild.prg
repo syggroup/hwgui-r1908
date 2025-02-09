@@ -1,60 +1,54 @@
-/*
- * HWGUI using sample
- * 
- *
- * Jose Augusto M de Andrade Jr - jamaj@terra.com.br
- * 
-*/
+//
+// HWGUI using sample
+//
+// Jose Augusto M de Andrade Jr - jamaj@terra.com.br
+//
 
-#include "windows.ch"
-#include "guilib.ch"
+#include "hwgui.ch"
 
-static aChilds := {}
+STATIC aChilds := {}
 
-function Main()
-   Local oMainWindow
+FUNCTION Main()
+
+   LOCAL oMainWindow
 
    INIT WINDOW oMainWindow MAIN MDI TITLE "HwGui - Child Windows Example" STYLE WS_CLIPCHILDREN ;
 
    MENU OF oMainWindow
-      MENUITEM "&Exit" ACTION EndWindow()
+      MENUITEM "&Exit" ACTION hwg_EndWindow()
       MENUITEM "&Create a child" ACTION CreateChild()
    ENDMENU
 
-
    ACTIVATE WINDOW oMainWindow
 
-return (NIL)
+RETURN NIL
 
+FUNCTION CreateChild(lClip)
 
+   LOCAL oChild
+   LOCAL cTitle := "Child Window #" + Str(Len(aChilds) + 1, 2, 0)
+   LOCAL oIcon := HIcon():AddFile("..\image\PIM.ICO")
+   LOCAL oBmp := HBitMap():AddFile("..\image\logo.bmp")
+   LOCAL cMenu := ""
+   LOCAL bExit := {|oSelf|hwg_MsgInfo("Bye!" , "Destroy message from " + oSelf:title)}
 
-function CreateChild(lClip)
-   Local oChild
-   Local cTitle := "Child Window #" + Str(len(aChilds)+1,2,0)
-   Local oIcon := HIcon():AddFile("..\image\PIM.ICO")
-   Local oBmp  := HBitMap():AddFile("..\image\logo.bmp")
-   Local cMenu := ""
-   Local bExit := { | oSelf | HWG_MSGINFO( "Bye!" , "Destroy message from " + oSelf:title )  }
-
-   DEFAULT lClip := .f.
-
+   DEFAULT lClip := .F.
 
    /*
-   oChild := HWindow():New( WND_CHILD , oIcon,Vcolor("0000FF"),NIL,10,10,200,100,cTitle,cMenu,NIL,NIL, ;
-                          NIL,bExit,NIL,NIL,NIL,NIL,NIL, "Child_" + Alltrim(Str(len(aChilds))) , oBmp )
+   oChild := HWindow():New(WND_CHILD, oIcon, VColor("0000FF"), NIL, 10, 10, 200, 100, cTitle, cMenu, NIL, NIL, ;
+                           NIL, bExit, NIL, NIL, NIL, NIL, NIL, "Child_" + AllTrim(Str(Len(aChilds))), oBmp)
    */
-   
-   oChild := HChildWindow():New( oIcon,Vcolor("0000FF"),NIL,10,10,200,100,cTitle,cMenu,NIL,NIL, ;
-                          bExit,NIL,NIL,NIL,NIL,NIL, "Child_" + Alltrim(Str(len(aChilds))) , NIL )
-   
-   // Test if we could create the window object 
+
+   oChild := HChildWindow():New(oIcon, VColor("0000FF"), NIL, 10, 10, 200, 100, cTitle, cMenu, NIL, NIL, ;
+                          bExit, NIL, NIL, NIL, NIL, NIL, "Child_" + AllTrim(Str(Len(aChilds))), NIL)
+
+   // Test if we could create the window object
    If ISOBJECT(oChild)
-      aAdd(aChilds,oChild)
+      AAdd(aChilds, oChild)
    Else
-       HWG_MsgStop("Erro ao tentar criar objeto HWindow!")
+       hwg_MsgStop("Erro ao tentar criar objeto HWindow!")
    Endif
 
-   oChild:Activate(.t.)
+   oChild:Activate(.T.)
 
-return (NIL)
-
+RETURN NIL

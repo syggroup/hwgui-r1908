@@ -1,6 +1,6 @@
 #include "hwgui.ch"
 
-PROCEDURE Main()
+FUNCTION Main()
 
    LOCAL oMainWindow
 
@@ -8,12 +8,12 @@ PROCEDURE Main()
 
    MENU OF oMainWindow
       MENUITEM "&New child" ACTION NewChild()
-      MENUITEM "&Exit" ACTION EndWindow()
+      MENUITEM "&Exit" ACTION hwg_EndWindow()
    ENDMENU
 
    ACTIVATE WINDOW oMainWindow MAXIMIZED
 
-RETURN
+RETURN NIL
 
 STATIC FUNCTION NewChild()
 

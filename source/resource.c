@@ -1,13 +1,12 @@
-/*
- * $Id: resource.c 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level resource functions
- *
- * Copyright 2003 Luiz Rafael Culik Guimaraes <culikr@brtrubo.com>
- * www - http://sites.uol.com.br/culikr/
-
-*/
+//
+// $Id: resource.c 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level resource functions
+//
+// Copyright 2003 Luiz Rafael Culik Guimaraes <culikr@brtrubo.com>
+// www - http://sites.uol.com.br/culikr/
+//
 
 #include "hwingui.h"
 #if defined(__MINGW32__) || defined(__MINGW64__) || defined(__WATCOMC__)
@@ -21,24 +20,30 @@
 
 HMODULE hModule;
 
-HB_FUNC(GETRESOURCES)
+HB_FUNC(HWG_GETRESOURCES)
 {
   hb_retnint((LONG_PTR)hModule);
 }
 
-HB_FUNC(LOADSTRING)
+HB_FUNC_TRANSLATE(GETRESOURCES, HWG_GETRESOURCES);
+
+HB_FUNC(HWG_LOADSTRING)
 {
   TCHAR buffer[2048];
   int iBuffRet = LoadString((HINSTANCE)hModule, hwg_par_UINT(2), buffer, 2048);
   HB_RETSTRLEN(buffer, iBuffRet);
 }
 
-HB_FUNC(LOADRESOURCE)
+HB_FUNC_TRANSLATE(LOADSTRING, HWG_LOADSTRING);
+
+HB_FUNC(HWG_LOADRESOURCE)
 {
   void *hString;
   hModule = GetModuleHandle(HB_PARSTR(1, &hString, NULL));
   hb_strfree(hString);
 }
+
+HB_FUNC_TRANSLATE(LOADRESOURCE, HWG_LOADRESOURCE);
 
 void hb_resourcemodules(void *cargo)
 {
@@ -65,7 +70,7 @@ static HB_$INITSYM hb_vm_auto_hwgui_module_init_ = _hwgui_module_init_;
 #pragma data_seg()
 #endif
 
-HB_FUNC(FINDRESOURCE)
+HB_FUNC(HWG_FINDRESOURCE)
 {
   HRSRC hHRSRC;
   int iName = hb_parni(2); // "WindowsXP.Manifest";
@@ -85,3 +90,5 @@ HB_FUNC(FINDRESOURCE)
     HB_RETHANDLE(NULL);
   }
 }
+
+HB_FUNC_TRANSLATE(FINDRESOURCE, HWG_FINDRESOURCE);

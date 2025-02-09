@@ -1,12 +1,16 @@
-#include "guilib.ch"
-#include "windows.ch"
-func main
-local o
-init window o main
+#include "hwgui.ch"
 
-@   1,2 nicebutton [ola]    of o id 100 size 40,40 red 52  green 10  blue 60
-@ 50,20 nicebutton [Rafael] of o id 101 size 60,40 red 215 green 76  blue 108
-@ 80,40 nicebutton [Culik]  of o id 102 size 40,40 red 136 green 157 blue 234 on click {||endwindow()}
-@ 80,80 nicebutton [guimaraes]  of o id 102 size 60,60 red 198 green 045 blue 215 on click {||endwindow()}
-activate window o
-return nil
+FUNCTION Main()
+
+   LOCAL o
+
+   INIT WINDOW o MAIN
+
+   @   1, 2 NICEBUTTON "ola"    OF o ID 100 SIZE 40, 40 RED 52  GREEN 10  BLUE 60
+   @ 50, 20 NICEBUTTON "Rafael" OF o ID 101 SIZE 60, 40 RED 215 GREEN 76  BLUE 108
+   @ 80, 40 NICEBUTTON "Culik"  OF o ID 102 SIZE 40, 40 RED 136 GREEN 157 BLUE 234 ON CLICK {||hwg_EndWindow()}
+   @ 80, 80 NICEBUTTON "guimaraes" OF o ID 102 SIZE 60, 60 RED 198 GREEN 045 BLUE 215 ON CLICK {||hwg_EndWindow()}
+
+   ACTIVATE WINDOW o
+
+RETURN NIL

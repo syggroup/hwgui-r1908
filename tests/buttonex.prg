@@ -1,6 +1,6 @@
 #include "hwgui.ch"
 
-PROCEDURE Main()
+FUNCTION Main()
 
    LOCAL oDialog
 
@@ -15,9 +15,9 @@ PROCEDURE Main()
    ACTIVATE DIALOG oDialog
 
    IF oDialog:lResult
-      MsgInfo("OK", "Info")
+      hwg_MsgInfo("OK", "Info")
    ELSE
-      MsgInfo("CANCEL", "Info")
+      hwg_MsgInfo("CANCEL", "Info")
    ENDIF
 
-RETURN
+RETURN NIL

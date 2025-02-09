@@ -1,12 +1,12 @@
-/*
- * $Id: hcontrol.prg 1902 2012-09-20 11:51:37Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HStatic class
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hcontrol.prg 1902 2012-09-20 11:51:37Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HStatic class
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -33,7 +33,7 @@ CLASS HStatic INHERIT HControl
    METHOD Redefine(oWndParent, nId, cCaption, oFont, bInit, bSize, bPaint, cTooltip, tcolor, bColor, lTransp, bClick, ;
       bDblClick, bOther)
    METHOD Activate()
-   //METHOD SetValue(value) INLINE SetDlgItemText(::oParent:handle, ::id, ;
+   //METHOD SetValue(value) INLINE hwg_SetDlgItemText(::oParent:handle, ::id, ;
    //
    METHOD SetText(value) INLINE ::SetValue(value)
    METHOD SetValue(cValue)
@@ -58,10 +58,10 @@ METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFon
    //   IF nStyle == NIL
    //      nStyle := SS_NOTIFY
    //   ELSE
-   nStyles := IIF(Hwg_BitAND(nStyle, WS_BORDER) != 0, WS_BORDER, 0)
-   nStyles += IIF(Hwg_BitAND(nStyle, WS_DLGFRAME) != 0, WS_DLGFRAME, 0)
-   nStyles += IIF(Hwg_BitAND(nStyle, WS_DISABLED) != 0, WS_DISABLED, 0)
-   nStyle  := Hwg_BitOr(nStyle, SS_NOTIFY) - nStyles
+   nStyles := IIf(hwg_BitAND(nStyle, WS_BORDER) != 0, WS_BORDER, 0)
+   nStyles += IIf(hwg_BitAND(nStyle, WS_DLGFRAME) != 0, WS_DLGFRAME, 0)
+   nStyles += IIf(hwg_BitAND(nStyle, WS_DISABLED) != 0, WS_DISABLED, 0)
+   nStyle  := hwg_BitOr(nStyle, SS_NOTIFY) - nStyles
    //    ENDIF
    // ENDIF
    //
@@ -71,10 +71,10 @@ METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, cCaption, oFon
       ::BackStyle := TRANSPARENT
       ::extStyle += WS_EX_TRANSPARENT
       bPaint := {|o, p|o:paint(p)}
-      nStyle := SS_OWNERDRAW + Hwg_Bitand(nStyle, SS_NOTIFY)
+      nStyle := SS_OWNERDRAW + hwg_Bitand(nStyle, SS_NOTIFY)
    ELSEIF nStyle - SS_NOTIFY > 32 .OR. ::nStyleHS - SS_NOTIFY == 2
       bPaint := {|o, p|o:paint(p)}
-      nStyle := SS_OWNERDRAW + Hwg_Bitand(nStyle, SS_NOTIFY)
+      nStyle := SS_OWNERDRAW + hwg_Bitand(nStyle, SS_NOTIFY)
    ENDIF
    ::hBrushDefault := HBrush():Add(GetSysColor(COLOR_BTNFACE))
 
@@ -151,14 +151,14 @@ METHOD Init() CLASS HStatic
       ::Super:init()
       IF ::nHolder != 1
          ::nHolder := 1
-         SetWindowObject(::handle, Self)
-         Hwg_InitStaticProc(::handle)
+         hwg_SetWindowObject(::handle, Self)
+         hwg_InitStaticProc(::handle)
       ENDIF
       IF ::classname == "HSTATIC"
          ::Auto_Size(::Title)
       ENDIF
       IF ::title != NIL
-         SetWindowText(::handle, ::title)
+         hwg_SetWindowText(::handle, ::title)
       ENDIF
    ENDIF
 
@@ -190,7 +190,7 @@ METHOD OnEvent(msg, wParam, lParam) CLASS  HStatic
       ENDIF
       RETURN 0
    ELSEIF msg == WM_SYSKEYUP
-      IF (pos := At("&", ::title)) > 0 .and. wParam == Asc(Upper(SubStr(::title, ++pos, 1)))
+      IF (pos := At("&", ::title)) > 0 .AND. wParam == Asc(Upper(SubStr(::title, ++pos, 1)))
          getskip(::oparent, ::handle, , 1)
          RETURN  0
       ENDIF
@@ -248,14 +248,14 @@ METHOD SetValue(cValue) CLASS HStatic
 
    ::Auto_Size(cValue)
    IF ::Title != cValue
-      IF ::backstyle == TRANSPARENT .AND. ::Title != cValue .AND. isWindowVisible(::handle)
-         RedrawWindow(::oParent:handle, RDW_NOERASE + RDW_INVALIDATE + RDW_ERASENOW, ;
+      IF ::backstyle == TRANSPARENT .AND. ::Title != cValue .AND. hwg_IsWindowVisible(::handle)
+         hwg_RedrawWindow(::oParent:handle, RDW_NOERASE + RDW_INVALIDATE + RDW_ERASENOW, ;
             ::nLeft, ::nTop, ::nWidth, ::nHeight)
-         InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
+         hwg_InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop, ::nLeft + ::nWidth, ::nTop + ::nHeight)
       ENDIF
-      SetDlgItemText(::oParent:handle, ::id, cValue)
+      hwg_SetDlgItemText(::oParent:handle, ::id, cValue)
    ELSEIF ::backstyle != TRANSPARENT
-      SetDlgItemText(::oParent:handle, ::id, cValue)
+      hwg_SetDlgItemText(::oParent:handle, ::id, cValue)
    ENDIF
    ::Title := cValue
 
@@ -265,7 +265,7 @@ RETURN NIL
 
 METHOD Paint(lpDis) CLASS HStatic
 
-   LOCAL drawInfo := GetDrawItemInfo(lpDis)
+   LOCAL drawInfo := hwg_GetDrawItemInfo(lpDis)
    LOCAL client_rect
    LOCAL szText
    LOCAL dwtext
@@ -274,8 +274,8 @@ METHOD Paint(lpDis) CLASS HStatic
    LOCAL dc := drawInfo[3]
 
    client_rect := CopyRect({drawInfo[4], drawInfo[5], drawInfo[6], drawInfo[7]})
-   //client_rect := GetClientRect(::handle)
-   szText := GetWindowText(::handle)
+   //client_rect := hwg_GetClientRect(::handle)
+   szText := hwg_GetWindowText(::handle)
 
    // Map "Static Styles" to "Text Styles"
    nstyle := ::nStyleHS // ::style
@@ -288,7 +288,7 @@ METHOD Paint(lpDis) CLASS HStatic
    // Set transparent background
    SetBkMode(dc, ::backstyle)
    IF ::BackStyle == OPAQUE
-      brBackground := IIF(!Empty(::brush), ::brush, ::hBrushDefault)
+      brBackground := IIf(!Empty(::brush), ::brush, ::hBrushDefault)
       FillRect(dc, client_rect[1], client_rect[2], client_rect[3], client_rect[4], brBackground:handle)
    ENDIF
 

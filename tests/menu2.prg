@@ -1,6 +1,6 @@
 #include "hwgui.ch"
 
-PROCEDURE Main()
+FUNCTION Main()
 
    LOCAL oDialog
 
@@ -8,24 +8,24 @@ PROCEDURE Main()
 
    MENU OF oDialog
       MENU TITLE "Menu A"
-         MENUITEM "Option A1" ACTION HWG_MSGINFO("A1")
-         MENUITEM "Option A2" ACTION HWG_MSGINFO("A2")
-         MENUITEM "Option A3" ACTION HWG_MSGINFO("A3")
+         MENUITEM "Option A1" ACTION hwg_MsgInfo("A1")
+         MENUITEM "Option A2" ACTION hwg_MsgInfo("A2")
+         MENUITEM "Option A3" ACTION hwg_MsgInfo("A3")
          SEPARATOR
          MENUITEM "Exit" ACTION oDialog:Close()
       ENDMENU
       MENU TITLE "Menu B"
-         MENUITEM "Option B1" ACTION HWG_MSGINFO("B1")
-         MENUITEM "Option B2" ACTION HWG_MSGINFO("B2")
-         MENUITEM "Option B3" ACTION HWG_MSGINFO("B3")
+         MENUITEM "Option B1" ACTION hwg_MsgInfo("B1")
+         MENUITEM "Option B2" ACTION hwg_MsgInfo("B2")
+         MENUITEM "Option B3" ACTION hwg_MsgInfo("B3")
       ENDMENU
       MENU TITLE "Menu C"
-         MENUITEM "Option C1" ACTION HWG_MSGINFO("C1")
-         MENUITEM "Option C2" ACTION HWG_MSGINFO("C2")
-         MENUITEM "Option C3" ACTION HWG_MSGINFO("C3")
+         MENUITEM "Option C1" ACTION hwg_MsgInfo("C1")
+         MENUITEM "Option C2" ACTION hwg_MsgInfo("C2")
+         MENUITEM "Option C3" ACTION hwg_MsgInfo("C3")
       ENDMENU
    ENDMENU
 
    ACTIVATE DIALOG oDialog
 
-RETURN
+RETURN NIL

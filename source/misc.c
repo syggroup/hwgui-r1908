@@ -1,12 +1,12 @@
-/*
- * $Id: misc.c 1846 2012-07-02 16:52:31Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Miscellaneous functions
- *
- * Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
- */
+//
+// $Id: misc.c 1846 2012-07-02 16:52:31Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Miscellaneous functions
+//
+// Copyright 2003 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #define OEMRESOURCE
 #include "hwingui.h"
@@ -134,15 +134,19 @@ HB_FUNC(GETSTOCKOBJECT)
   hwg_ret_HGDIOBJ(GetStockObject(hb_parni(1)));
 }
 
-HB_FUNC(LOWORD)
+HB_FUNC(HWG_LOWORD)
 {
   hb_retni((int)((HB_ISPOINTER(1) ? PtrToUlong(hb_parptr(1)) : (ULONG)hb_parnl(1)) & 0xFFFF));
 }
 
-HB_FUNC(HIWORD)
+HB_FUNC_TRANSLATE(LOWORD, HWG_LOWORD);
+
+HB_FUNC(HWG_HIWORD)
 {
   hb_retni((int)(((HB_ISPOINTER(1) ? PtrToUlong(hb_parptr(1)) : (ULONG)hb_parnl(1)) >> 16) & 0xFFFF));
 }
+
+HB_FUNC_TRANSLATE(HIWORD, HWG_HIWORD);
 
 HB_FUNC(HWG_BITOR)
 {
@@ -159,7 +163,7 @@ HB_FUNC(HWG_BITANDINVERSE)
   hb_retnl((HB_ISPOINTER(1) ? PtrToUlong(hb_parptr(1)) : (ULONG)hb_parnl(1)) & (~hb_parnl(2)));
 }
 
-HB_FUNC(HWG_SETBIT)
+HB_FUNC(SETBIT)
 {
   if (hb_pcount() < 3 || hb_parni(3))
   {
@@ -186,7 +190,7 @@ HB_FUNC(HWG_COS)
   hb_retnd(cos(hb_parnd(1)));
 }
 
-HB_FUNC(CLIENTTOSCREEN)
+HB_FUNC(HWG_CLIENTTOSCREEN)
 {
   POINT pt;
   PHB_ITEM aPoint = hb_itemArrayNew(2);
@@ -207,7 +211,9 @@ HB_FUNC(CLIENTTOSCREEN)
   hb_itemReturnRelease(aPoint);
 }
 
-HB_FUNC(SCREENTOCLIENT)
+HB_FUNC_TRANSLATE(CLIENTTOSCREEN, HWG_CLIENTTOSCREEN);
+
+HB_FUNC(HWG_SCREENTOCLIENT)
 {
   POINT pt;
   RECT R;
@@ -240,6 +246,8 @@ HB_FUNC(SCREENTOCLIENT)
 
   hb_itemReturnRelease(aPoint);
 }
+
+HB_FUNC_TRANSLATE(SCREENTOCLIENT, HWG_SCREENTOCLIENT);
 
 HB_FUNC(HWG_GETCURSORPOS)
 {
@@ -335,7 +343,7 @@ HB_FUNC(ACTIVATEKEYBOARDLAYOUT)
 }
 
 /*
- * Pts2Pix( nPoints [,hDC] ) --> nPixels
+ * Pts2Pix(nPoints [,hDC]) --> nPixels
  * Conversion from points to pixels, provided by Vic McClung.
  */
 
@@ -362,7 +370,7 @@ HB_FUNC(PTS2PIX)
   }
 }
 
-/* Functions Contributed  By Luiz Rafael Culik Guimaraes( culikr@uol.com.br) */
+/* Functions Contributed  By Luiz Rafael Culik Guimaraes (culikr@uol.com.br) */
 
 HB_FUNC(GETWINDOWSDIR)
 {
@@ -397,7 +405,7 @@ HB_FUNC(POSTQUITMESSAGE)
 Contributed by Rodrigo Moreno rodrigo_moreno@yahoo.com base upon code minigui
 */
 
-HB_FUNC(HWG_SHELLABOUT)
+HB_FUNC(SHELLABOUT)
 {
   void *hStr1, *hStr2;
 
@@ -412,16 +420,6 @@ HB_FUNC( HWG_GETNUMMONITORS ) // PEGA O NUMERO DE MONITORES QUE ESTÁ RODANDO
    hb_retni( GetSystemMetrics( SM_CMONITORS ) );
 }
 
-HB_FUNC(HWG_GETDESKTOPWIDTH)
-{
-  hb_retni(GetSystemMetrics(SM_CXSCREEN));
-}
-
-HB_FUNC(HWG_GETDESKTOPHEIGHT)
-{
-  hb_retni(GetSystemMetrics(SM_CYSCREEN));
-}
-
 HB_FUNC( HWG_GETDESKTOPWIDTH_VS )
 {
    hb_retni( GetSystemMetrics( SM_CXVIRTUALSCREEN ) );
@@ -432,7 +430,21 @@ HB_FUNC( HWG_GETDESKTOPHEIGHT_VS )
    hb_retni( GetSystemMetrics( SM_CYVIRTUALSCREEN ) );
 }
 
-HB_FUNC(HWG_GETHELPDATA)
+HB_FUNC(HWG_GETDESKTOPWIDTH)
+{
+  hb_retni(GetSystemMetrics(SM_CXSCREEN));
+}
+
+HB_FUNC_TRANSLATE(GETDESKTOPWIDTH, HWG_GETDESKTOPWIDTH);
+
+HB_FUNC(HWG_GETDESKTOPHEIGHT)
+{
+  hb_retni(GetSystemMetrics(SM_CYSCREEN));
+}
+
+HB_FUNC_TRANSLATE(GETDESKTOPHEIGHT, HWG_GETDESKTOPHEIGHT);
+
+HB_FUNC(GETHELPDATA)
 {
   hb_retnint((LONG_PTR)(((HELPINFO FAR *)(LONG_PTR)hb_parnl(1))->hItemHandle));
 }
@@ -474,7 +486,7 @@ HB_FUNC(GETNEXTDLGTABITEM)
   hwg_ret_HWND(GetNextDlgTabItem(hwg_par_HWND(1), hwg_par_HWND(2), hb_parl(3)));
 }
 
-HB_FUNC(HWG_SLEEP)
+HB_FUNC(SLEEP)
 {
   if (hb_parinfo(1))
   {
@@ -519,7 +531,7 @@ HB_FUNC(KEYB_EVENT)
   }
 }
 
-/* SetScrollInfo( hWnd, nType, nRedraw, nPos, nPage, nmax )
+/* SetScrollInfo(hWnd, nType, nRedraw, nPos, nPage, nmax)
  */
 HB_FUNC(SETSCROLLINFO)
 {
@@ -784,10 +796,12 @@ HB_FUNC(OUTPUTDEBUGSTRING)
   hb_strfree(hStr);
 }
 
-HB_FUNC(GETSYSTEMMETRICS)
+HB_FUNC(HWG_GETSYSTEMMETRICS)
 {
   hb_retni(GetSystemMetrics(hb_parni(1)));
 }
+
+HB_FUNC_TRANSLATE(GETSYSTEMMETRICS, HWG_GETSYSTEMMETRICS);
 
 // nando
 HB_FUNC(HWG_LASTKEY)
@@ -798,11 +812,13 @@ HB_FUNC(HWG_LASTKEY)
   GetKeyboardState(kbBuffer);
 
   for (i = 0; i < 256; i++)
+  {
     if (kbBuffer[i] & 0x80)
     {
       hb_retni(i);
       return;
     }
+  }
   hb_retni(0);
 }
 

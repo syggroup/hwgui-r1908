@@ -1,9 +1,9 @@
-#include "windows.ch"
-#include "guilib.ch"
+#include "hwgui.ch"
 
-FUNCTION main
+FUNCTION Main()
 
-   LOCAL oMain, i
+   LOCAL oMain
+   LOCAL i
 
    INIT WINDOW oMain main TITLE "Scrollbar example"  ;
         COLOR COLOR_3DLIGHT + 1                       ;
@@ -15,27 +15,31 @@ FUNCTION main
    next
 
 
-   oMain:bScroll := { | o, msg, wParam, lParam | stdScroll( o, msg, wParam, lParam ) }
+   oMain:bScroll := {|o, msg, wParam, lParam|stdScroll(o, msg, wParam, lParam)}
 
    ACTIVATE window oMain
 
    RETURN nil
 
+STATIC FUNCTION stdScroll(oDlg, msg, wParam, lParam, nIncr)
 
-STATIC FUNCTION stdScroll( oDlg, msg, wParam, lParam, nIncr )
-   LOCAL nScrollCode := LOWORD( wParam )
-   LOCAL nNewPos := HIWORD( wParam )
-   LOCAL x, y, xx, yy, pg
+   LOCAL nScrollCode := hwg_LOWORD(wParam)
+   LOCAL nNewPos := hwg_HIWORD(wParam)
+   LOCAL x
+   LOCAL y
+   LOCAL xx
+   LOCAL yy
+   LOCAL pg
 
-   IF ! HB_IsNumeric( nIncr )
+   IF !HB_IsNumeric(nIncr)
       nIncr := 10
    ENDIF
    pg := Max(Round(nIncr / 5, 0), 2)
-   x := GetScrollPos( oDlg:handle, SB_HORZ )
-   y := GetScrollPos( oDlg:handle, SB_VERT )
+   x := GetScrollPos(oDlg:handle, SB_HORZ)
+   y := GetScrollPos(oDlg:handle, SB_VERT)
    IF msg == WM_VSCROLL
       yy := y
-      SetScrollRange( oDlg:handle, SB_VERT, 0, nIncr )
+      SetScrollRange(oDlg:handle, SB_VERT, 0, nIncr)
       IF nScrollCode == SB_LINEDOWN
          IF ++y > nIncr
             y := nIncr
@@ -58,11 +62,11 @@ STATIC FUNCTION stdScroll( oDlg, msg, wParam, lParam, nIncr )
          y := nNewPos
       ENDIF
       IF y != yy
-         SetScrollPos( oDlg:handle, SB_VERT, y )
-         ScrollWindow( oDlg:handle, 0, ( yy - y ) * nIncr )
+         SetScrollPos(oDlg:handle, SB_VERT, y)
+         ScrollWindow(oDlg:handle, 0, ( yy - y ) * nIncr)
       ENDIF
    ELSEIF msg == WM_HSCROLL
-      SetScrollRange( oDlg:handle, SB_HORZ, 0, nIncr )
+      SetScrollRange(oDlg:handle, SB_HORZ, 0, nIncr)
       xx := x
       IF nScrollCode == SB_LINERIGHT
          IF ++x > nIncr
@@ -86,13 +90,13 @@ STATIC FUNCTION stdScroll( oDlg, msg, wParam, lParam, nIncr )
          x := nNewPos
       ENDIF
       IF x != xx
-         SetScrollPos( oDlg:handle, SB_HORZ, x )
-         ScrollWindow( oDlg:handle, ( xx - x ) * nIncr, 0 )
+         SetScrollPos(oDlg:handle, SB_HORZ, x)
+         ScrollWindow(oDlg:handle, ( xx - x ) * nIncr, 0)
       ENDIF
    ELSEIF msg == WM_MOUSEWHEEL
       yy := y
-      SetScrollRange( oDlg:handle, SB_VERT, 0, nIncr )
-      IF HIWORD(wParam) > 32678
+      SetScrollRange(oDlg:handle, SB_VERT, 0, nIncr)
+      IF hwg_HIWORD(wParam) > 32678
          IF ++y > nIncr
             y := nIncr
          ENDIF
@@ -102,8 +106,8 @@ STATIC FUNCTION stdScroll( oDlg, msg, wParam, lParam, nIncr )
          ENDIF
       ENDIF
       IF y != yy
-         SetScrollPos( oDlg:handle, SB_VERT, y )
-         ScrollWindow( oDlg:handle, 0, ( yy - y ) * nIncr )
+         SetScrollPos(oDlg:handle, SB_VERT, y)
+         ScrollWindow(oDlg:handle, 0, ( yy - y ) * nIncr)
       ENDIF
    ENDIF
 

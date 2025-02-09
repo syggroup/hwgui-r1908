@@ -1,42 +1,44 @@
-/*
- *$Id: testini.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HwGUI Samples
- * testini.prg - Test to use files ini 
- */
+//
+// $Id: testini.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HwGUI Samples
+// testini.prg - Test to use files ini
+//
 
-#include "windows.ch"
-#include "guilib.ch"
+#include "hwgui.ch"
 
-Function Main
+FUNCTION Main()
 
-   Local oMainWindow
-   Local cIniFile:="HwGui.ini"
+   LOCAL oMainWindow
+   LOCAL cIniFile := "HwGui.ini"
 
    //Create the inifile
-   if !file( cIniFile )
+   if !file(cIniFile)
 
-      Hwg_WriteIni( 'Config', 'WallParer' , "No Paper", cIniFile )
-      Hwg_WriteIni( 'Config', 'DirHwGUima', "C:\HwGUI" , cIniFile )
-      Hwg_WriteIni( 'Print',  'Spoll'   ,   "Epson LX 80" , cIniFile )
+      hwg_WriteIni("Config", "WallParer", "No Paper", cIniFile)
+      hwg_WriteIni("Config", "DirHwGUima", "C:\HwGUI", cIniFile)
+      hwg_WriteIni("Print", "Spoll", "Epson LX 80", cIniFile)
 
-    endif 
-
+    endif
 
    INIT WINDOW oMainWindow MAIN TITLE "Example" ;
-     AT 200,0 SIZE 400,150
+     AT 200, 0 SIZE 400, 150
 
    MENU OF oMainWindow
-      MENUITEM "&Exit" ACTION EndWindow()
+      MENUITEM "&Exit" ACTION hwg_EndWindow()
       MENUITEM "&Read Ini" ACTION ReadIni()
    ENDMENU
 
    ACTIVATE WINDOW oMainWindow
-Return Nil
 
-Function ReadIni()
-Local cIniFile:="HwGui.ini"
-HWG_MSGINFO( Hwg_GetIni( 'Config', 'WallParer' ,, cIniFile ) )
-HWG_MSGINFO( Hwg_GetIni( 'Config', 'DirHwGUima',, cIniFile ) )
-HWG_MSGINFO( Hwg_GetIni( 'Print',  'Spoll'     ,, cIniFile ) )
-Return Nil
+RETURN NIL
+
+FUNCTION ReadIni()
+
+   LOCAL cIniFile := "HwGui.ini"
+
+   hwg_MsgInfo(hwg_GetIni("Config", "WallParer", , cIniFile))
+   hwg_MsgInfo(hwg_GetIni("Config", "DirHwGUima", , cIniFile))
+   hwg_MsgInfo(hwg_GetIni("Print", "Spoll", , cIniFile))
+
+RETURN NIL

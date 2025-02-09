@@ -1,12 +1,12 @@
-/*
- * $Id: drawwidg.prg 1740 2011-09-23 12:06:53Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Icons handling
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
-*/
+//
+// $Id: drawwidg.prg 1740 2011-09-23 12:06:53Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Icons handling
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #include "hbclass.ch"
 #include "windows.ch"
@@ -63,7 +63,7 @@ METHOD AddResource(name, nWidth, nHeight, nFlags, lOEM) CLASS HIcon
    NEXT
    // ::classname := "HICON"
    IF lOEM // LR_SHARED is required for OEM images
-      ::handle := LoadImage(0, Val(name), IMAGE_ICON, nWidth, nHeight, Hwg_bitor(nFlags, LR_SHARED))
+      ::handle := LoadImage(0, Val(name), IMAGE_ICON, nWidth, nHeight, hwg_bitor(nFlags, LR_SHARED))
    ELSE
       ::handle := LoadImage(NIL, IIf(lPreDefined, Val(name), name), IMAGE_ICON, nWidth, nHeight, nFlags)
    ENDIF
@@ -102,7 +102,7 @@ METHOD AddFile(name, nWidth, nHeight) CLASS HIcon
    name := IIf(!File(name) .AND. FILE(CutPath(name)), CutPath(name), name)
    IF !File(name)
       cCurDir := DiskName() + ":\" + CurDir()
-      name := SelectFile("Image Files( *.jpg;*.gif;*.bmp;*.ico )", CutPath(name), FilePath(name), "Locate " + name) //"*.jpg;*.gif;*.bmp;*.ico"
+      name := hwg_SelectFile("Image Files( *.jpg;*.gif;*.bmp;*.ico )", CutPath(name), FilePath(name), "Locate " + name) //"*.jpg;*.gif;*.bmp;*.ico"
       DirChange(cCurDir)
    ENDIF
 
@@ -128,7 +128,7 @@ METHOD Release() CLASS HIcon
    IF ::nCounter == 0
       FOR EACH item IN ::aIcons
          IF item:handle == ::handle
-            DeleteObject(::handle)
+            hwg_DeleteObject(::handle)
             #ifdef __XHARBOUR__
             ADel(::aIcons, hb_enumindex())
             #else
@@ -149,7 +149,7 @@ EXIT PROCEDURE CleanDrawWidgHIcon
    LOCAL item
 
    FOR EACH item IN HIcon():aIcons
-      DeleteObject(item:handle)
+      hwg_DeleteObject(item:handle)
    NEXT
 
 RETURN

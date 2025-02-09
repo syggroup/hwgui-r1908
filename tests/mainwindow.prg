@@ -1,6 +1,6 @@
 #include "hwgui.ch"
 
-PROCEDURE Main()
+FUNCTION Main()
 
    LOCAL oMainWindow
 
@@ -8,4 +8,4 @@ PROCEDURE Main()
 
    ACTIVATE WINDOW oMainWindow
 
-RETURN
+RETURN NIL

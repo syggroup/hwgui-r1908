@@ -1,12 +1,12 @@
-/*
- *$Id: hwindow.prg 1904 2012-09-21 11:43:56Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HWindow class
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hwindow.prg 1904 2012-09-21 11:43:56Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HWindow class
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -54,12 +54,12 @@ CLASS HWindow INHERIT HCustomWindow
    METHOD DelItem(oWnd)
    METHOD FindWindow(hWndTitle)
    METHOD GetMain()
-   METHOD GetMdiMain() INLINE IIF(::GetMain() != NIL, ::aWindows[1], NIL)
-   METHOD Center() INLINE Hwg_CenterWindow(::handle, ::Type)
-   METHOD Restore() INLINE SendMessage(::handle, WM_SYSCOMMAND, SC_RESTORE, 0)
-   METHOD Maximize() INLINE SendMessage(::handle, WM_SYSCOMMAND, SC_MAXIMIZE, 0)
-   METHOD Minimize() INLINE SendMessage(::handle, WM_SYSCOMMAND, SC_MINIMIZE, 0)
-   METHOD Close() INLINE SendMessage(::handle, WM_SYSCOMMAND, SC_CLOSE, 0)
+   METHOD GetMdiMain() INLINE IIf(::GetMain() != NIL, ::aWindows[1], NIL)
+   METHOD Center() INLINE hwg_CenterWindow(::handle, ::Type)
+   METHOD Restore() INLINE hwg_SendMessage(::handle, WM_SYSCOMMAND, SC_RESTORE, 0)
+   METHOD Maximize() INLINE hwg_SendMessage(::handle, WM_SYSCOMMAND, SC_MAXIMIZE, 0)
+   METHOD Minimize() INLINE hwg_SendMessage(::handle, WM_SYSCOMMAND, SC_MINIMIZE, 0)
+   METHOD Close() INLINE hwg_SendMessage(::handle, WM_SYSCOMMAND, SC_CLOSE, 0)
    METHOD Release() INLINE ::Close(), ::super:Release(), Self := NIL
    METHOD isMaximized() INLINE GetWindowPlacement(::handle) == SW_SHOWMAXIMIZED
    METHOD isMinimized() INLINE GetWindowPlacement(::handle) == SW_SHOWMINIMIZED
@@ -97,8 +97,8 @@ METHOD New(oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, bInit,
    ::bOther := bOther
    ::bCloseQuery := bCloseQuery
    ::bRefresh := bRefresh
-   ::lChild := IIF(Empty(lChild), ::lChild, lChild)
-   ::lClipper := IIF(Empty(lClipper), ::lClipper, lClipper)
+   ::lChild := IIf(Empty(lChild), ::lChild, lChild)
+   ::lClipper := IIf(Empty(lClipper), ::lClipper, lClipper)
    ::lClosable := Iif(Empty(lnoClosable), .T., !lnoClosable)
 
    //IF clr != NIL
@@ -121,10 +121,10 @@ METHOD New(oIcon, clr, nStyle, x, y, width, height, cTitle, cMenu, oFont, bInit,
    IF !hb_IsNumeric(cTitle)
       ::AddItem(Self)
    ENDIF
-   IF Hwg_Bitand(nStyle, WS_HSCROLL) > 0
+   IF hwg_Bitand(nStyle, WS_HSCROLL) > 0
       ::nScrollBars++
    ENDIF
-   IF Hwg_Bitand(nStyle, WS_VSCROLL) > 0
+   IF hwg_Bitand(nStyle, WS_VSCROLL) > 0
       ::nScrollBars += 2
    ENDIF
    ::bSetForm := bSetForm
@@ -157,7 +157,7 @@ RETURN NIL
 
 METHOD FindWindow(hWndTitle) CLASS HWindow
 
-   LOCAL cType := VALTYPE(hWndTitle)
+   LOCAL cType := ValType(hWndTitle)
    LOCAL i
 
    IF cType != "C"
@@ -182,7 +182,7 @@ FUNCTION ReleaseAllWindows(hWnd)
 
    FOR EACH oItem IN HWindow():aWindows
       IF oItem:oParent != NIL .AND. PtrToUlong(oItem:oParent:handle) == PtrToUlong(hWnd)
-         SendMessage(oItem:handle, WM_CLOSE, 0, 0)
+         hwg_SendMessage(oItem:handle, WM_CLOSE, 0, 0)
       ENDIF
    NEXT
    IF PtrToUlong(HWindow():aWindows[1]:handle) == PtrToUlong(hWnd)
@@ -195,13 +195,13 @@ RETURN -1
 
 FUNCTION onMove(oWnd)
 
-   LOCAL aControls := GetWindowRect(oWnd:handle)
+   LOCAL aControls := hwg_GetWindowRect(oWnd:handle)
 
    oWnd:nLeft := aControls[1]
    oWnd:nTop := aControls[2]
    IF oWnd:type == WND_MDICHILD .AND. !oWnd:lMaximized
       //oWnd:aRectSave := {oWnd:nLeft, oWnd:nTop, oWnd:nWidth, oWnd:nHeight}
-      IF oWnd:nHeight > GETSYSTEMMETRICS(SM_CYCAPTION) + 6
+      IF oWnd:nHeight > hwg_GetSystemMetrics(SM_CYCAPTION) + 6
           oWnd:aRectSave := {oWnd:nLeft, oWnd:nTop, oWnd:nWidth, oWnd:nHeight}
       ELSE
         oWnd:aRectSave[1] := oWnd:nLeft
@@ -209,7 +209,7 @@ FUNCTION onMove(oWnd)
       ENDIF
    ENDIF
    IF oWnd:isMinimized() .AND. !Empty(oWnd:Screen)
-      SetWindowPos(oWnd:Screen:handle, HWND_BOTTOM, 0, 0, 0, 0, ;
+      hwg_SetWindowPos(oWnd:Screen:handle, HWND_BOTTOM, 0, 0, 0, 0, ;
          SWP_NOREDRAW + SWP_NOACTIVATE + SWP_NOOWNERZORDER + SWP_NOSIZE + SWP_NOMOVE)
    ENDIF
 

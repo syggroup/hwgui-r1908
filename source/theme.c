@@ -1,12 +1,12 @@
-/*
- * $Id: theme.c 1753 2011-10-02 12:34:53Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Theme related functions
- *
- * Copyright 2007 Luiz Rafael Culik Guimaraes <luiz at xharbour.com.br >
- * www - http://sites.uol.com.br/culikr/
- */
+//
+// $Id: theme.c 1753 2011-10-02 12:34:53Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Theme related functions
+//
+// Copyright 2007 Luiz Rafael Culik Guimaraes <luiz at xharbour.com.br >
+// www - http://sites.uol.com.br/culikr/
+//
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wcast-function-type"
@@ -1147,7 +1147,7 @@ static int image_left(int cx, const RECT *Rect, DWORD style)
     x = Rect->left + ((Rect->right - Rect->left) - cx) / 2;
   }
 
-  return (x);
+  return x;
 }
 
 // calcultate the top position of the image so it is drawn on top, bottom or vertically centred (the default)
@@ -1174,7 +1174,7 @@ static int image_top(int cy, const RECT *Rect, DWORD style)
     y = Rect->top + ((Rect->bottom - Rect->top) - cy) / 2;
   }
 
-  return (y);
+  return y;
 }
 
 HB_FUNC(INITTHEMELIB)
@@ -1200,20 +1200,20 @@ HB_FUNC(ENDTHEMELIB)
 
 HB_FUNC(ONNOTIFYCUSTOMDRAW)
 {
-  // HWND hWnd = ( HWND ) hb_parnl( 1 ) ;
+  // HWND hWnd = ( HWND ) hb_parnl(1) ;
   LPARAM lParam = hwg_par_LPARAM(1);
-  // PHB_ITEM pColor = hb_param( 3, HB_IT_ARRAY );
+  // PHB_ITEM pColor = hb_param(3, HB_IT_ARRAY);
   hb_retnl((LONG)OnNotifyCustomDraw(lParam));
 }
 
 /*
 
-LRESULT OnButtonDraw( LPARAM  lParam)
+LRESULT OnButtonDraw(LPARAM  lParam)
 {
       LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT) lParam;
 
 //            if(lpDIS->CtlID != IDC_OWNERDRAW_BTN)
-//                return (0);
+//                return 0;
 
       HDC dc = lpDIS->hDC;
             HTHEME hTheme = hb_OpenThemeData (m_hWnd, L"BUTTON");
@@ -1331,7 +1331,7 @@ bIsDisabled, iStyle);
           if(output)
           {
             MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sTitle, nTextLen + 1, output, mlen);
-                        hb_DrawThemeText( hTheme, dc, BP_PUSHBUTTON, PBS_NORMAL,
+                        hb_DrawThemeText(hTheme, dc, BP_PUSHBUTTON, PBS_NORMAL,
                     output, wcslen(output),
                     DT_CENTER | DT_VCENTER | DT_SINGLELINE,
                     0, &captionRect);
@@ -1367,7 +1367,7 @@ bIsDisabled, iStyle);
         InflateRect(&focusRect, -3, -3);
         DrawFocusRect(dc, &focusRect);
         } // if
-      return (TRUE);
+      return TRUE;
       }
   */
 
@@ -1664,7 +1664,8 @@ HB_FUNC(DRAWTHEICON)
     Array2Rect(hb_param(5, HB_IT_ARRAY), &rpTitle);
   }
 
-  DrawTheIcon(hwg_par_HWND(1), hwg_par_HDC(2), hwg_par_BOOL(3), &rpItem, &rpTitle, hwg_par_BOOL(6), hwg_par_BOOL(7), hIcon, hBitmap, hwg_par_int(10));
+  DrawTheIcon(hwg_par_HWND(1), hwg_par_HDC(2), hwg_par_BOOL(3), &rpItem, &rpTitle, hwg_par_BOOL(6), hwg_par_BOOL(7),
+              hIcon, hBitmap, hwg_par_int(10));
   hb_storvni(rpItem.left, 4, 1);
   hb_storvni(rpItem.top, 4, 2);
   hb_storvni(rpItem.right, 4, 3);
@@ -1676,7 +1677,7 @@ HB_FUNC(DRAWTHEICON)
 }
 
 /*
-//PrepareImageRect( ::handle, dc, bHasTitle, @itemRect, @captionRect, bIsPressed, ::hIcon, ::hbitmap, ::iStyle )
+//PrepareImageRect(::handle, dc, bHasTitle, @itemRect, @captionRect, bIsPressed, ::hIcon, ::hbitmap, ::iStyle)
 */
 
 /*
@@ -1745,7 +1746,8 @@ HB_FUNC(HB_DRAWTHEMETEXT)
     Array2Rect(hb_param(8, HB_IT_ARRAY), &pRect);
   }
   MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pText, -1, output, mlen);
-  hb_DrawThemeText(hwg_par_HTHEME(1), hwg_par_HDC(2), hwg_par_int(3), hwg_par_int(4), output, mlen - 1, hwg_par_DWORD(6), hwg_par_DWORD(7), &pRect);
+  hb_DrawThemeText(hwg_par_HTHEME(1), hwg_par_HDC(2), hwg_par_int(3), hwg_par_int(4), output, mlen - 1,
+                   hwg_par_DWORD(6), hwg_par_DWORD(7), &pRect);
   hb_xfree(output);
 }
 

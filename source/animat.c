@@ -1,18 +1,18 @@
-/*
- * HWGUI - Harbour Win32 GUI library source code:
- * C functions for HAnimation class
- *
- * Copyright 2004 Marcos Antonio Gambeta <marcos_gambeta@hotmail.com>
- * www - http://geocities.yahoo.com.br/marcosgambeta/
- */
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C functions for HAnimation class
+//
+// Copyright 2004 Marcos Antonio Gambeta <marcos_gambeta@hotmail.com>
+// www - http://geocities.yahoo.com.br/marcosgambeta/
+//
 
 #include "hwingui.h"
 #include <commctrl.h>
 
 /*
-ANIMATE_CREATE(HWND, nId, nStyle, nX, nY, nWidth, nHeight) --> HWND
+HWG_ANIMATE_CREATE(HWND, nId, nStyle, nX, nY, nWidth, nHeight) --> HWND
 */
-HB_FUNC(ANIMATE_CREATE)
+HB_FUNC(HWG_ANIMATE_CREATE)
 {
   HWND hwnd;
   hwnd = Animate_Create(hwg_par_HWND(1), hwg_par_UINT(2), hwg_par_DWORD(3), GetModuleHandle(NULL));
@@ -20,60 +20,74 @@ HB_FUNC(ANIMATE_CREATE)
   hwg_ret_HWND(hwnd);
 }
 
+HB_FUNC_TRANSLATE(ANIMATE_CREATE, HWG_ANIMATE_CREATE);
+
 /*
-ANIMATE_OPEN(HWND, cFileName) -->
+HWG_ANIMATE_OPEN(HWND, cFileName) -->
 */
-HB_FUNC(ANIMATE_OPEN) // TODO: adicionar opção de usar 'resources'
+HB_FUNC(HWG_ANIMATE_OPEN) // TODO: adicionar opção de usar 'resources'
 {
   void *hStr;
   Animate_Open(hwg_par_HWND(1), HB_PARSTR(2, &hStr, NULL));
   hb_strfree(hStr);
 }
 
+HB_FUNC_TRANSLATE(ANIMATE_OPEN, HWG_ANIMATE_OPEN);
+
 /*
-ANIMATE_PLAY(HWND, nFrom, nTo, nReplay) -->
+HWG_ANIMATE_PLAY(HWND, nFrom, nTo, nReplay) -->
 */
-HB_FUNC(ANIMATE_PLAY)
+HB_FUNC(HWG_ANIMATE_PLAY)
 {
   Animate_Play(hwg_par_HWND(1), hwg_par_UINT(2), hwg_par_UINT(3), hwg_par_UINT(4));
 }
 
+HB_FUNC_TRANSLATE(ANIMATE_PLAY, HWG_ANIMATE_PLAY);
+
 /*
-ANIMATE_SEEK(HWND, nFrame) -->
+HWG_ANIMATE_SEEK(HWND, nFrame) -->
 */
-HB_FUNC(ANIMATE_SEEK)
+HB_FUNC(HWG_ANIMATE_SEEK)
 {
   Animate_Seek(hwg_par_HWND(1), hwg_par_UINT(2));
 }
 
+HB_FUNC_TRANSLATE(ANIMATE_SEEK, HWG_ANIMATE_SEEK);
+
 /*
-ANIMATE_STOP(HWND) -->
+HWG_ANIMATE_STOP(HWND) -->
 */
-HB_FUNC(ANIMATE_STOP)
+HB_FUNC(HWG_ANIMATE_STOP)
 {
   Animate_Stop(hwg_par_HWND(1));
 }
 
+HB_FUNC_TRANSLATE(ANIMATE_STOP, HWG_ANIMATE_STOP);
+
 /*
-ANIMATE_CLOSE(HWND) -->
+HWG_ANIMATE_CLOSE(HWND) -->
 */
-HB_FUNC(ANIMATE_CLOSE)
+HB_FUNC(HWG_ANIMATE_CLOSE)
 {
   Animate_Close(hwg_par_HWND(1));
 }
 
+HB_FUNC_TRANSLATE(ANIMATE_CLOSE, HWG_ANIMATE_CLOSE);
+
 /*
-ANIMATE_DESTROY(HWND) -->
+HWG_ANIMATE_DESTROY(HWND) -->
 */
-HB_FUNC(ANIMATE_DESTROY)
+HB_FUNC(HWG_ANIMATE_DESTROY)
 {
   DestroyWindow(hwg_par_HWND(1));
 }
 
+HB_FUNC_TRANSLATE(ANIMATE_DESTROY, HWG_ANIMATE_DESTROY);
+
 /*
-ANIMATE_OPENEX(HWND, HINSTANCE, cFileName|cResource|nResource) -->
+HWG_ANIMATE_OPENEX(HWND, HINSTANCE, cFileName|cResource|nResource) -->
 */
-HB_FUNC(ANIMATE_OPENEX)
+HB_FUNC(HWG_ANIMATE_OPENEX)
 {
 #if defined(__DMC__)
 #define Animate_OpenEx(hwnd, hInst, szName) (BOOL) SNDMSG(hwnd, ACM_OPEN, (WPARAM)hInst, (LPARAM)(LPTSTR)(szName))
@@ -90,3 +104,5 @@ HB_FUNC(ANIMATE_OPENEX)
 
   hb_strfree(hResource);
 }
+
+HB_FUNC_TRANSLATE(ANIMATE_OPENEX, HWG_ANIMATE_OPENEX);

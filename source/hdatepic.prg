@@ -1,12 +1,12 @@
-/*
- * $Id: hdatepic.prg 1889 2012-09-09 22:28:07Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HDatePicker class
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hdatepic.prg 1889 2012-09-09 22:28:07Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HDatePicker class
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -54,14 +54,14 @@ ENDCLASS
 METHOD New(oWndParent, nId, vari, bSetGet, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, bGfocus, bLfocus, ;
    bChange, ctooltip, tcolor, bcolor, lShowTime) CLASS HDatePicker
 
-   nStyle := Hwg_BitOr(Iif(nStyle == NIL, 0, nStyle), IIF(bSetGet != NIL, WS_TABSTOP, 0) + ;
-      IIF(lShowTime == NIL .OR. !lShowTime, 0, DTS_TIMEFORMAT))
+   nStyle := hwg_BitOr(IIf(nStyle == NIL, 0, nStyle), IIf(bSetGet != NIL, WS_TABSTOP, 0) + ;
+      IIf(lShowTime == NIL .OR. !lShowTime, 0, DTS_TIMEFORMAT))
    ::Super:New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, , , ctooltip, tcolor, bcolor)
 
-   ::lShowTime := Hwg_BitAnd(nStyle, DTS_TIMEFORMAT) > 0
-   ::dValue := IIF(vari == NIL .OR. !hb_IsDate(vari), CToD(Space(8)), vari)
-   ::tValue := IIF(vari == NIL .OR. !hb_IsChar(vari), SPACE(6), vari)
-   ::title := IIF(!::lShowTime, ::dValue, ::tValue)
+   ::lShowTime := hwg_BitAnd(nStyle, DTS_TIMEFORMAT) > 0
+   ::dValue := IIf(vari == NIL .OR. !hb_IsDate(vari), CToD(Space(8)), vari)
+   ::tValue := IIf(vari == NIL .OR. !hb_IsChar(vari), Space(6), vari)
+   ::title := IIf(!::lShowTime, ::dValue, ::tValue)
 
    ::bSetGet := bSetGet
    ::bChange := bChange
@@ -97,7 +97,7 @@ METHOD Redefine(oWndParent, nId, vari, bSetGet, oFont, bSize, bInit, bGfocus, bL
 
    HWG_InitCommonControlsEx()
    ::dValue := IIf(vari == NIL .OR. !hb_IsDate(vari), CToD(Space(8)), vari)
-   ::tValue := IIF(vari == NIL .OR. !hb_IsChar(vari), SPACE(6), vari)
+   ::tValue := IIf(vari == NIL .OR. !hb_IsChar(vari), Space(6), vari)
    ::bSetGet := bSetGet
    ::bChange := bChange
    ::lShowTime := lShowTime
@@ -134,7 +134,7 @@ METHOD Init() CLASS HDatePicker
 
    IF !::lInit
       ::nHolder := 1
-      SetWindowObject(::handle, Self)
+      hwg_SetWindowObject(::handle, Self)
       HWG_INITDATEPICKERPROC(::handle)
       ::Super:Init()
       ::Refresh()
@@ -154,7 +154,7 @@ METHOD OnEvent(msg, wParam, lParam) CLASS HDatePicker
    ENDIF
    IF msg == WM_CHAR
       IF wParam == VK_TAB
-         GetSkip(::oParent, ::handle, , iif(IsCtrlShift(.F., .T.), -1, 1))
+         GetSkip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
          RETURN 0
       ELSEIF wParam == VK_RETURN
          GetSkip(::oParent, ::handle, , 1)
@@ -166,7 +166,7 @@ METHOD OnEvent(msg, wParam, lParam) CLASS HDatePicker
        ENDIF
    ELSEIF msg == WM_GETDLGCODE
       IF wParam == VK_TAB //.AND. ::GetParentForm(Self):Type < WND_DLG_RESOURCE
-         //GetSkip(::oParent, ::handle, , iif(IsCtrlShift(.F., .T.), -1, 1))
+         //GetSkip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
          RETURN DLGC_WANTTAB
       ENDIF
    ENDIF
@@ -185,7 +185,7 @@ METHOD OnEvent(msg, wParam, lParam) CLASS HDatePicker
 
    CASE WM_CHAR
       IF wParam == VK_TAB
-         GetSkip(::oParent, ::handle, , iif(IsCtrlShift(.F., .T.), -1, 1))
+         GetSkip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
          RETURN 0
       ELSEIF wParam == VK_RETURN
          GetSkip(::oParent, ::handle, , 1)
@@ -199,7 +199,7 @@ METHOD OnEvent(msg, wParam, lParam) CLASS HDatePicker
       EXIT
    CASE WM_GETDLGCODE
       IF wParam == VK_TAB //.AND. ::GetParentForm(Self):Type < WND_DLG_RESOURCE
-         // GetSkip(::oParent, ::handle, , iif(IsCtrlShift(.F., .T.), -1, 1))
+         // GetSkip(::oParent, ::handle, , IIf(IsCtrlShift(.F., .T.), -1, 1))
          RETURN DLGC_WANTTAB
       ENDIF
    ENDSWITCH
@@ -215,12 +215,12 @@ METHOD Value(Value) CLASS HDatePicker
       ::SetValue(Value)
    ENDIF
 
-RETURN IIF(::lShowTime, ::tValue, ::dValue)
+RETURN IIf(::lShowTime, ::tValue, ::dValue)
 
 //-------------------------------------------------------------------------------------------------------------------//
 
 METHOD GetValue() CLASS HDatePicker
-RETURN IIF(!::lShowTime, GetDatePicker(::handle), GetTimePicker(::handle))
+RETURN IIf(!::lShowTime, GetDatePicker(::handle), GetTimePicker(::handle))
 
 //-------------------------------------------------------------------------------------------------------------------//
 
@@ -229,15 +229,15 @@ METHOD SetValue(xValue) CLASS HDatePicker
    IF Empty(xValue)
       SetDatePickerNull(::handle)
    ELSEIF ::lShowTime
-      SetDatePicker(::handle, Date(), STRTRAN(xValue, ":", ""))
+      SetDatePicker(::handle, Date(), StrTran(xValue, ":", ""))
    ELSE
-      SetDatePicker(::handle, xValue, STRTRAN(::tValue, ":", ""))
+      SetDatePicker(::handle, xValue, StrTran(::tValue, ":", ""))
    ENDIF
    ::dValue := GetDatePicker(::handle)
    ::tValue := GetTimePicker(::handle)
-   ::title := IIF(::lShowTime, ::tValue, ::dValue)
+   ::title := IIf(::lShowTime, ::tValue, ::dValue)
    IF hb_IsBlock(::bSetGet)
-      Eval(::bSetGet, IIF(::lShowTime, ::tValue,::dValue), Self)
+      Eval(::bSetGet, IIf(::lShowTime, ::tValue, ::dValue), Self)
    ENDIF
 
 RETURN NIL
@@ -255,9 +255,9 @@ METHOD Refresh() CLASS HDatePicker
    ENDIF
    IF Empty(::dValue) .AND. !::lShowTime
       //SetDatePickerNull(::handle)
-      SetDatePicker(::handle, date(), STRTRAN(Time(), ":", ""))
+      SetDatePicker(::handle, date(), StrTran(Time(), ":", ""))
    ELSE
-      ::SetValue(IIF(!::lShowTime, ::dValue, ::tValue))
+      ::SetValue(IIf(!::lShowTime, ::dValue, ::tValue))
    ENDIF
 
 RETURN NIL
@@ -266,19 +266,19 @@ RETURN NIL
 
 METHOD onChange(nMess) CLASS HDatePicker
 
-   IF (nMess == DTN_DATETIMECHANGE .AND. SendMessage(::handle, DTM_GETMONTHCAL, 0, 0) == 0) .OR. nMess == DTN_CLOSEUP
+   IF (nMess == DTN_DATETIMECHANGE .AND. hwg_SendMessage(::handle, DTM_GETMONTHCAL, 0, 0) == 0) .OR. nMess == DTN_CLOSEUP
       IF nMess == DTN_CLOSEUP
-         POSTMESSAGE(::handle, WM_KEYDOWN, VK_RIGHT, 0)
+         hwg_PostMessage(::handle, WM_KEYDOWN, VK_RIGHT, 0)
          ::SetFocus()
       ENDIF
       ::dValue := GetDatePicker(::handle)
       ::tValue := GetTimePicker(::handle)
       IF hb_IsBlock(::bSetGet)
-         Eval(::bSetGet, IIF(::lShowTime, ::tValue, ::dValue), Self)
+         Eval(::bSetGet, IIf(::lShowTime, ::tValue, ::dValue), Self)
       ENDIF
       IF hb_IsBlock(::bChange)
          ::oparent:lSuspendMsgsHandling := .T.
-         Eval(::bChange, IIF(::lShowTime, ::tValue, ::dValue), Self)
+         Eval(::bChange, IIf(::lShowTime, ::tValue, ::dValue), Self)
          ::oparent:lSuspendMsgsHandling := .F.
       ENDIF
    ENDIF
@@ -299,12 +299,12 @@ METHOD When() CLASS HDatePicker
       nSkip := IIf(GetKeyState(VK_UP) < 0 .OR. (GetKeyState(VK_TAB) < 0 .AND. GetKeyState(VK_SHIFT) < 0), - 1, 1)
       ::oParent:lSuspendMsgsHandling := .T.
       ::lnoValid := .T.
-      res :=  Eval(::bGetFocus, IIF(::lShowTime, ::tValue, ::dValue), Self)
+      res :=  Eval(::bGetFocus, IIf(::lShowTime, ::tValue, ::dValue), Self)
       ::lnoValid := !res
       ::oParent:lSuspendMsgsHandling := .F.
       IF hb_IsLogical(res) .AND. !res
          WhenSetFocus(Self, nSkip)
-         SendMessage(::handle, DTM_CLOSEMONTHCAL, 0, 0)
+         hwg_SendMessage(::handle, DTM_CLOSEMONTHCAL, 0, 0)
       ELSE
          ::SetFocus()
       ENDIF
@@ -318,7 +318,7 @@ METHOD Valid() CLASS HDatePicker
 
    LOCAL res := .T.
 
-   //IF !SELFFOCUS(GetParent(GetFocus()), ::GetParentForm():handle)
+   //IF !hwg_SelfFocus(GetParent(hwg_GetFocus()), ::GetParentForm():handle)
    //   RETURN .T.
    //ENDIF
    IF !CheckFocus(Self, .T.) .OR. ::lnoValid
@@ -326,15 +326,15 @@ METHOD Valid() CLASS HDatePicker
    ENDIF
    ::dValue := GetDatePicker(::handle)
    IF hb_IsBlock(::bSetGet)
-      Eval(::bSetGet, IIF(::lShowTime, ::tValue,::dValue), Self)
+      Eval(::bSetGet, IIf(::lShowTime, ::tValue, ::dValue), Self)
    ENDIF
    IF hb_IsBlock(::bLostFocus)
       ::oparent:lSuspendMsgsHandling := .T.
-      res := Eval(::bLostFocus, IIF(::lShowTime, ::tValue, ::dValue), Self)
-      res := IIF(hb_IsLogical(res), res, .T.)
+      res := Eval(::bLostFocus, IIf(::lShowTime, ::tValue, ::dValue), Self)
+      res := IIf(hb_IsLogical(res), res, .T.)
       ::oparent:lSuspendMsgsHandling := .F.
       IF !res
-         POSTMESSAGE(::handle, WM_KEYDOWN, VK_RIGHT, 0)
+         hwg_PostMessage(::handle, WM_KEYDOWN, VK_RIGHT, 0)
          ::SetFocus(.T.)
       ENDIF
    ENDIF

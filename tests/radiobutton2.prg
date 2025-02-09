@@ -1,6 +1,6 @@
 #include "hwgui.ch"
 
-PROCEDURE Main()
+FUNCTION Main()
 
    LOCAL oDialog
    LOCAL rg1 := 1
@@ -28,4 +28,4 @@ PROCEDURE Main()
 
    ACTIVATE DIALOG oDialog
 
-RETURN
+RETURN NIL

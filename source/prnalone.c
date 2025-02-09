@@ -1,10 +1,9 @@
-/*
- *
- * C level print functions
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
- */
+//
+// C level print functions
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #define OEMRESOURCE
 
@@ -18,7 +17,7 @@
 #include <hbfast.h>
 #endif
 
-HB_FUNC(PRINTSETUP)
+HB_FUNC(HWG_PRINTSETUP)
 {
   PRINTDLG pd;
 
@@ -40,6 +39,8 @@ HB_FUNC(PRINTSETUP)
     hwg_ret_HDC(NULL);
   }
 }
+
+HB_FUNC_TRANSLATE(PRINTSETUP, HWG_PRINTSETUP);
 
 HB_FUNC(OPENPRINTER)
 {

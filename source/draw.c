@@ -1,12 +1,12 @@
-/*
- * $Id: draw.c 1846 2012-07-02 16:52:31Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level painting functions
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: draw.c 1846 2012-07-02 16:52:31Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level painting functions
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #define OEMRESOURCE
 #ifdef __DMC__
@@ -90,9 +90,9 @@ HB_FUNC(GETPPSRECT)
 }
 
 /*
-INVALIDATERECT(HWND, nEraseBackgroundFlag, nLeft, nTop, nRight, nBottom) -->
+HWG_INVALIDATERECT(HWND, nEraseBackgroundFlag, nLeft, nTop, nRight, nBottom) -->
 */
-HB_FUNC(INVALIDATERECT)
+HB_FUNC(HWG_INVALIDATERECT)
 {
   RECT rc;
 
@@ -107,6 +107,8 @@ HB_FUNC(INVALIDATERECT)
   // TODO: parâmetro 3 é do tipo BOOL
   InvalidateRect(hwg_par_HWND(1), (hb_pcount() > 2) ? &rc : NULL, hb_parni(2));
 }
+
+HB_FUNC_TRANSLATE(INVALIDATERECT, HWG_INVALIDATERECT);
 
 /*
 MOVETO(HDC, nX, nY) -->
@@ -215,9 +217,9 @@ HB_FUNC(REDRAWWINDOW)
 #endif
 
 /*
-REDRAWWINDOW(HWND, nFlags, nX, nY, nWidth, nHeight) -->
+HWG_REDRAWWINDOW(HWND, nFlags, nX, nY, nWidth, nHeight) -->
 */
-HB_FUNC(REDRAWWINDOW)
+HB_FUNC(HWG_REDRAWWINDOW)
 {
   RECT rc;
 
@@ -235,6 +237,8 @@ HB_FUNC(REDRAWWINDOW)
 
   RedrawWindow(hwg_par_HWND(1), (hb_pcount() > 3) ? &rc : NULL, NULL, hwg_par_UINT(2));
 }
+
+HB_FUNC_TRANSLATE(REDRAWWINDOW, HWG_REDRAWWINDOW);
 
 /*
 DRAWBUTTON(HDC, nLeft, nTop, nRight, nBottom, nType) -->
@@ -763,40 +767,48 @@ HB_FUNC(CREATEHATCHBRUSH)
 /*
 SELECTOBJECT(HDC, HGDIOBJ) --> HGDIOBJ
 */
-HB_FUNC(SELECTOBJECT)
+HB_FUNC(HWG_SELECTOBJECT)
 {
   hwg_ret_HGDIOBJ(SelectObject(hwg_par_HDC(1), hwg_par_HGDIOBJ(2)));
 }
 
+HB_FUNC_TRANSLATE(SELECTOBJECT, HWG_SELECTOBJECT);
+
 /*
 DELETEOBJECT(HGDIOBJ) -->
 */
-HB_FUNC(DELETEOBJECT)
+HB_FUNC(HWG_DELETEOBJECT)
 {
   // TODO: retorno BOOL
   DeleteObject(hwg_par_HGDIOBJ(1));
 }
 
+HB_FUNC_TRANSLATE(DELETEOBJECT, HWG_DELETEOBJECT);
+
 /*
 GETDC(HWND) --> HDC
 */
-HB_FUNC(GETDC)
+HB_FUNC(HWG_GETDC)
 {
   hwg_ret_HDC(GetDC(hwg_par_HWND(1)));
 }
 
+HB_FUNC_TRANSLATE(GETDC, HWG_GETDC);
+
 /*
 RELEASEDC(HWND, HDC) --> numeric
 */
-HB_FUNC(RELEASEDC)
+HB_FUNC(HWG_RELEASEDC)
 {
   hwg_ret_int(ReleaseDC(hwg_par_HWND(1), hwg_par_HDC(2)));
 }
 
+HB_FUNC_TRANSLATE(RELEASEDC, HWG_RELEASEDC);
+
 /*
 GETDRAWITEMINFO(DRAWITEMSTRUCT) --> aInfo[9]
 */
-HB_FUNC(GETDRAWITEMINFO)
+HB_FUNC(HWG_GETDRAWITEMINFO)
 {
   DRAWITEMSTRUCT *lpdis = (DRAWITEMSTRUCT *)HB_PARHANDLE(1); // hb_parnl(1);
   PHB_ITEM aMetr = hb_itemArrayNew(9);
@@ -840,6 +852,8 @@ HB_FUNC(GETDRAWITEMINFO)
 
   hb_itemReturnRelease(aMetr);
 }
+
+HB_FUNC_TRANSLATE(GETDRAWITEMINFO, HWG_GETDRAWITEMINFO);
 
 /*
  * DrawGrayBitmap(hDC, hBitmap, x, y)
@@ -995,27 +1009,33 @@ HB_FUNC(PATBLT)
 /*
 SAVEDC(HDC) --> .T.|.F.
 */
-HB_FUNC(SAVEDC)
+HB_FUNC(HWG_SAVEDC)
 {
   // TODO: o valor de retorno deve ser numérico e não lógico
   hb_retl(SaveDC(hwg_par_HDC(1)));
 }
 
+HB_FUNC_TRANSLATE(SAVEDC, HWG_SAVEDC);
+
 /*
 RESTOREDC(HDC, nSavedDC) --> .T.|.F.
 */
-HB_FUNC(RESTOREDC)
+HB_FUNC(HWG_RESTOREDC)
 {
   hwg_ret_BOOL(RestoreDC(hwg_par_HDC(1), hwg_par_int(2)));
 }
 
+HB_FUNC_TRANSLATE(RESTOREDC, HWG_RESTOREDC);
+
 /*
 CREATECOMPATIBLEDC(HDC) --> HDC
 */
-HB_FUNC(CREATECOMPATIBLEDC)
+HB_FUNC(HWG_CREATECOMPATIBLEDC)
 {
   hwg_ret_HDC(CreateCompatibleDC(hwg_par_HDC(1)));
 }
+
+HB_FUNC_TRANSLATE(CREATECOMPATIBLEDC, HWG_CREATECOMPATIBLEDC);
 
 /*
 SETMAPMODE(HDC, nMode) --> numeric
@@ -1247,10 +1267,12 @@ HB_FUNC(COPYRECT)
 /*
 GETWINDOWDC(HWND) --> HDC
 */
-HB_FUNC(GETWINDOWDC)
+HB_FUNC(HWG_GETWINDOWDC)
 {
   hwg_ret_HDC(GetWindowDC(hwg_par_HWND(1)));
 }
+
+HB_FUNC_TRANSLATE(GETWINDOWDC, HWG_GETWINDOWDC);
 
 /*
 MODIFYSTYLE(HWND, np2, np3) -->

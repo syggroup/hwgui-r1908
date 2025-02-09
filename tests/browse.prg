@@ -1,6 +1,6 @@
 #include "hwgui.ch"
 
-PROCEDURE Main()
+FUNCTION Main()
 
    LOCAL oDialog
    LOCAL oBrowse
@@ -20,7 +20,7 @@ PROCEDURE Main()
                    AllTrim(Str(n)) + "," + "5"}
    NEXT n
 
-   CreateArList(oBrowse, aData)
+   hwg_CreateArList(oBrowse, aData)
 
    oBrowse:aColumns[1]:heading := "Column 1"
    oBrowse:aColumns[2]:heading := "Column 2"
@@ -32,4 +32,4 @@ PROCEDURE Main()
 
    ACTIVATE DIALOG oDialog
 
-RETURN
+RETURN NIL

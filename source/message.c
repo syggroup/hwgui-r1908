@@ -1,12 +1,12 @@
-/*
- *$Id: message.c 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level messages functions
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
- */
+//
+// $Id: message.c 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level messages functions
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #include "hwingui.h"
 #include <commctrl.h>
@@ -29,45 +29,63 @@ HB_FUNC(HWG_MSGINFO)
   s_msgbox(MB_OK | MB_ICONINFORMATION);
 }
 
+HB_FUNC_TRANSLATE(MSGINFO, HWG_MSGINFO)
+
 HB_FUNC(HWG_MSGSTOP)
 {
   s_msgbox(MB_OK | MB_ICONSTOP);
 }
+
+HB_FUNC_TRANSLATE(MSGSTOP, HWG_MSGSTOP)
 
 HB_FUNC(HWG_MSGOKCANCEL)
 {
   hb_retni(s_msgbox(MB_OKCANCEL | MB_ICONQUESTION));
 }
 
+HB_FUNC_TRANSLATE(MSGOKCANCEL, HWG_MSGOKCANCEL)
+
 HB_FUNC(HWG_MSGYESNO)
 {
   hb_retl(s_msgbox(MB_YESNO | MB_ICONQUESTION) == IDYES);
 }
+
+HB_FUNC_TRANSLATE(MSGYESNO, HWG_MSGYESNO)
 
 HB_FUNC(HWG_MSGNOYES)
 {
   hb_retl(s_msgbox(MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2) == IDYES);
 }
 
+HB_FUNC_TRANSLATE(MSGNOYES, HWG_MSGNOYES)
+
 HB_FUNC(HWG_MSGYESNOCANCEL)
 {
   hb_retni(s_msgbox(MB_YESNOCANCEL | MB_ICONQUESTION));
 }
+
+HB_FUNC_TRANSLATE(MSGYESNOCANCEL, HWG_MSGYESNOCANCEL)
 
 HB_FUNC(HWG_MSGEXCLAMATION)
 {
   s_msgbox(MB_ICONEXCLAMATION | MB_OK | MB_SYSTEMMODAL);
 }
 
+HB_FUNC_TRANSLATE(MSGEXCLAMATION, HWG_MSGEXCLAMATION)
+
 HB_FUNC(HWG_MSGRETRYCANCEL)
 {
   hb_retni(s_msgbox(MB_RETRYCANCEL | MB_ICONQUESTION | MB_ICONQUESTION));
 }
 
+HB_FUNC_TRANSLATE(MSGRETRYCANCEL, HWG_MSGRETRYCANCEL)
+
 HB_FUNC(HWG_MSGBEEP)
 {
   MessageBeep((hb_pcount() == 0) ? (LONG)0xFFFFFFFF : hb_parnl(1));
 }
+
+HB_FUNC_TRANSLATE(MSGBEEP, HWG_MSGBEEP)
 
 HB_FUNC(HWG_MSGTEMP)
 {
@@ -90,3 +108,5 @@ HB_FUNC(HWG_MSGTEMP)
     hb_retni(MessageBox(GetActiveWindow(), msg, TEXT("DialogBaseUnits"), MB_OKCANCEL | MB_ICONQUESTION));
   }
 }
+
+HB_FUNC_TRANSLATE(MSGTEMP, HWG_MSGTEMP)

@@ -1,28 +1,27 @@
-/*
- *$Id: pdfreader.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 and Linux (GTK) GUI library
- * pdfreader.prg - sample of ActiveX container for the Acrobat Reader ocx
- *
- *
- * Copyright 2006 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- *
- * Sample code derived from a sample code found on Internet.... oohg ?
- *
- */
+//
+// $Id: pdfreader.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 and Linux (GTK) GUI library
+// pdfreader.prg - sample of ActiveX container for the Acrobat Reader ocx
+//
+// Copyright 2006 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
+// Sample code derived from a sample code found on Internet.... oohg ?
+//
 
 #include "hwgui.ch"
 #include "rmchart.ch"
 #include "hbclass.ch"
 
+FUNCTION Main()
 
+   LOCAL oMainWnd
+   LOCAL oPanel
 
-Function Main
-Local oMainWnd, oPanel
-Private oPdf
+   PRIVATE oPdf
 
-   INIT WINDOW oMainWnd TITLE "Pdf example" AT 200,0 SIZE 500,400
+   INIT WINDOW oMainWnd TITLE "Pdf example" AT 200, 0 SIZE 500, 400
 
    MENU OF oMainWnd
       MENU TITLE "File"
@@ -30,13 +29,13 @@ Private oPdf
       ENDMENU
    ENDMENU
 
-   @ 0,0 PANEL oPanel SIZE 500,366 ON SIZE {|o,x, y| o:Move(,,x,y), opdf:Move(,,x,y), opdf:Refresh() }
+   @ 0, 0 PANEL oPanel SIZE 500, 366 ON SIZE {|o, x, y|o:Move(, , x, y), opdf:Move(, , x, y), opdf:Refresh()}
 
-   opdf := ViewPdf( oPanel, "SAMPLE.PDF", 0, 0, 500, 366 )
+   opdf := ViewPdf(oPanel, "SAMPLE.PDF", 0, 0, 500, 366)
 
    ACTIVATE WINDOW oMainWnd
 
-Return
+RETURN NIL
 
 CLASS PdfReader  FROM HActiveX
 CLASS VAR winclass INIT "Pdfreader"
@@ -44,16 +43,17 @@ CLASS VAR winclass INIT "Pdfreader"
 ENDCLASS
 
 
-METHOD New(p1,p2,p3,p4,p5,p6) CLASS PdfReader
-  ::Super:New(p1,p2,p3,p4,p5,p6)
-RETURN
+METHOD New(p1, p2, p3, p4, p5, p6) CLASS PdfReader
 
-function ViewPdf(oWindow, cPdfFile, col, row, nHeight, nWidth)
-    local oPdf
+  ::Super:New(p1, p2, p3, p4, p5, p6)
 
-    oPdf := PdfReader():New( oWindow, "AcroPDF.PDF.1", 0, 0, nHeight, nWidth )
+RETURN NIL
+
+FUNCTION ViewPdf(oWindow, cPdfFile, col, row, nHeight, nWidth)
+
+    LOCAL oPdf
+
+    oPdf := PdfReader():New(oWindow, "AcroPDF.PDF.1", 0, 0, nHeight, nWidth)
     oPdf:LoadFile(cPdfFile)
 
-    return oPdf
-
-
+RETURN oPdf

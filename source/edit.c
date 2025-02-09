@@ -1,12 +1,12 @@
-/*
- * $Id: control.c 1897 2012-09-17 23:12:45Z marcosgambeta $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level controls functions (Edit control)
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: control.c 1897 2012-09-17 23:12:45Z marcosgambeta $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level controls functions (Edit control)
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #define HB_OS_WIN_32_USED
 
@@ -44,7 +44,7 @@ HB_FUNC(HWG_INITEDITPROC)
   wpOrigEditProc = (WNDPROC)(LONG_PTR)SetWindowLongPtr(hwg_par_HWND(1), GWLP_WNDPROC, (LONG_PTR)EditSubclassProc);
 }
 
-LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   LRESULT res;
   PHB_ITEM pObject = (PHB_ITEM)GetWindowLongPtr(hWnd, GWLP_USERDATA);
@@ -58,23 +58,16 @@ LRESULT APIENTRY EditSubclassProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
   {
     hb_vmPushSymbol(hb_dynsymSymbol(pSym_onEvent));
     hb_vmPush(pObject);
-    hwg_vmPushUINT(message);
+    hwg_vmPushUINT(uMsg);
     hwg_vmPushWPARAM(wParam);
     hwg_vmPushLPARAM(lParam);
     hb_vmSend(3);
     res = hwg_par_LRESULT(-1);
-    if (res == -1)
-    {
-      return CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam);
-    }
-    else
-    {
-      return res;
-    }
+    return (res == -1) ? CallWindowProc(wpOrigEditProc, hWnd, uMsg, wParam, lParam) : res;
   }
   else
   {
-    return CallWindowProc(wpOrigEditProc, hWnd, message, wParam, lParam);
+    return CallWindowProc(wpOrigEditProc, hWnd, uMsg, wParam, lParam);
   }
 }
 

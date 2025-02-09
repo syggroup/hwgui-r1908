@@ -1,34 +1,37 @@
-/*
- * $Id: grid_3.prg 1615 2011-02-18 13:53:35Z mlacecilia $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HGrid class
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
- * Copyright 2004 Rodrigo Moreno <rodrigo_moreno@yahoo.com>
- *
- * This Sample use Postgres Library, you need to link libpq.lib and libhbpg.lib
- *
-*/
+//
+// $Id: grid_3.prg 1615 2011-02-18 13:53:35Z mlacecilia $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HGrid class
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+// Copyright 2004 Rodrigo Moreno <rodrigo_moreno@yahoo.com>
+//
+// This Sample use Postgres Library, you need to link libpq.lib and libhbpg.lib
+//
 
-#include "windows.ch"
-#include "guilib.ch"
+#include "hwgui.ch"
 #include "common.ch"
 
-#translate RGB( <nRed>, <nGreen>, <nBlue> ) => ( <nRed> + ( <nGreen> * 256 ) + ( <nBlue> * 65536 ) )
+#translate RGB(<nRed>, <nGreen>, <nBlue>) => ( <nRed> + ( <nGreen> * 256 ) + ( <nBlue> * 65536 ) )
 
-Static oMain, oForm, oFont, oGrid
-Static nCount := 50, conn, leof := .F.
+STATIC oMain
+STATIC oForm
+STATIC oFont
+STATIC oGrid
+STATIC nCount := 50
+STATIC conn
+STATIC leof := .F.
 
-Function Main()
+FUNCTION Main()
 
         SET (_SET_DATEFORMAT, "yyyy-mm-dd")
         CriaBase()
-        
+
         INIT WINDOW oMain MAIN TITLE "Postgres Sample Using low level functions" ;
-             AT 0,0 ;
-             SIZE GetDesktopWidth(), GetDesktopHeight() - 28
+             AT 0, 0 ;
+             SIZE hwg_GetDesktopWidth(), hwg_GetDesktopHeight() - 28
 
                 MENU OF oMain
                         MENUITEM "&Exit"   ACTION oMain:Close()
@@ -36,156 +39,167 @@ Function Main()
                 ENDMENU
 
         ACTIVATE WINDOW oMain
-        
-        res := PQexec(conn, 'CLOSE cursor_1')
-        PQclear(res)    
-        
+
+        res := PQexec(conn, "CLOSE cursor_1")
+        PQclear(res)
+
         res = PQexec(conn, "END")
         PQclear(res)
 
         PQClose(conn)
-        
-Return Nil
 
-Function Test()
+RETURN NIL
+
+FUNCTION Test()
+
         PREPARE FONT oFont NAME "Courier New" WIDTH 0 HEIGHT -11
-        
+
         INIT DIALOG oForm CLIPPER NOEXIT TITLE "Postgres Demo";
              FONT oFont ;
              AT 0, 0 SIZE 700, 425 ;
              STYLE DS_CENTER + WS_POPUP + WS_VISIBLE + WS_CAPTION + WS_SYSMENU
-                
-             @ 10,10 GRID oGrid OF oForm SIZE 680,375;
+
+             @ 10, 10 GRID oGrid OF oForm SIZE 680, 375;
                      ITEMCOUNT 10000 ;
-                     ON KEYDOWN {|oCtrl, key| OnKey(oCtrl, key) } ;
-                     ON POSCHANGE {|oCtrl, nRow| OnPoschange(oCtrl, nRow) } ;
-                     ON CLICK {|oCtrl| OnClick(oCtrl) } ;
-                     ON DISPINFO {|oCtrl, nRow, nCol| OnDispInfo( oCtrl, nRow, nCol ) } ;
-                     COLOR VColor('D3D3D3');
-                     BACKCOLOR VColor('BEBEBE') 
-                     
+                     ON KEYDOWN {|oCtrl, key|OnKey(oCtrl, key)} ;
+                     ON POSCHANGE {|oCtrl, nRow|OnPoschange(oCtrl, nRow)} ;
+                     ON CLICK {|oCtrl|OnClick(oCtrl)} ;
+                     ON DISPINFO {|oCtrl, nRow, nCol|OnDispInfo(oCtrl, nRow, nCol)} ;
+                     COLOR VColor("D3D3D3");
+                     BACKCOLOR VColor("BEBEBE")
+
                      /*
-                     ON LOSTFOCUS {|| HWG_MSGINFO('lost focus') } ;
-                     ON GETFOCUS {|| HWG_MSGINFO('get focus')  }                     
+                     ON LOSTFOCUS {||hwg_MsgInfo("lost focus")} ;
+                     ON GETFOCUS {||hwg_MsgInfo("get focus")}
                      */
 
              ADD COLUMN TO GRID oGrid HEADER "Code" WIDTH 50
              ADD COLUMN TO GRID oGrid HEADER "Date" WIDTH 80
              ADD COLUMN TO GRID oGrid HEADER "Description" WIDTH 100
-                                                              
-             @ 620, 395 BUTTON 'Close' SIZE 75,25 ON CLICK {|| oForm:Close() }                            
-             
+
+             @ 620, 395 BUTTON "Close" SIZE 75, 25 ON CLICK {||oForm:Close()}
+
         ACTIVATE DIALOG oForm
-                
-Return Nil
 
-Function OnKey( o, k )
-//    HWG_MSGINFO(str(k))
-return nil    
+RETURN NIL
 
-Function OnPosChange( o, row )
-//    HWG_MSGINFO( str(row) )
-return nil    
+FUNCTION OnKey(o, k)
 
-Function OnClick( o )
-//    HWG_MSGINFO( 'click' )
-return nil    
+//    hwg_MsgInfo(str(k))
 
-Function OnDispInfo( o, x, y )
-    Local result := '', i
-    
-    
-    if x > Lastrec() .and. ! lEof
-        res := PQexec(conn, 'FETCH FORWARD 10 FROM cursor_1')
-        
-        if ! ISCHARACTER(res)
+RETURN NIL
+
+FUNCTION OnPosChange(o, row)
+
+//    hwg_MsgInfo(str(row))
+
+RETURN NIL
+
+FUNCTION OnClick(o)
+
+//    hwg_MsgInfo("click")
+
+RETURN NIL
+
+FUNCTION OnDispInfo(o, x, y)
+
+   LOCAL result := ""
+   LOCAL i
+
+    if x > Lastrec() .AND. !lEof
+        res := PQexec(conn, "FETCH FORWARD 10 FROM cursor_1")
+
+        if !ISCHARACTER(res)
 
             if PQLastrec(res) != 10
                 lEof := .T.
             end
-            
+
             for i := 1 to PQLastrec(res)
                 Append Blank
-                Replace Code     WITH myval(PQGetvalue(res, i, 1), 'N')
-                Replace Creation WITH myval(PQGetvalue(res, i, 2), 'D')
-                Replace Descr    WITH myval(PQGetvalue(res, i, 3), 'C')
+                Replace Code     WITH myval(PQGetvalue(res, i, 1), "N")
+                Replace Creation WITH myval(PQGetvalue(res, i, 2), "D")
+                Replace Descr    WITH myval(PQGetvalue(res, i, 3), "C")
             next
         else
             lEof := .T.
-            
-            HWG_MSGINFO(res)
-        
+
+            hwg_MsgInfo(res)
+
         endif
-        PQclear(res)              
+        PQclear(res)
     endif
-    
+
     if x <= Lastrec()
         dbgoto(x)
-        
+
         if y == 1
             result := str(code)
         elseif y == 2
             result := dtoc(creation)
         elseif y == 3
             result := descr
-        end            
-    endif        
-    
-Return result
+        end
+    endif
 
-Function CriaBase()
-        IF File('trash.dbf')
-            FErase('trash.dbf')
+RETURN result
+
+FUNCTION CriaBase()
+
+        IF File("trash.dbf")
+            FErase("trash.dbf")
         END
-                    
-        DBCreate( "trash.dbf", {{'code', 'N', 10, 0},;
-                                {'creation', 'D',  8, 0},;
-                                {'descr', 'C', 40, 0}} )
-        
-        USE trash                         
-        
-        conn := PQConnect('test', 'localhost', 'Rodrigo', 'moreno', 5432)
-        
+
+        DBCreate("trash.dbf", {{"code", "N", 10, 0},;
+                               {"creation", "D",  8, 0},;
+                               {"descr", "C", 40, 0}})
+
+        USE trash
+
+        conn := PQConnect("test", "localhost", "Rodrigo", "moreno", 5432)
+
         if ISCHARACTER(conn)
-            HWG_MSGINFO(conn)
+            hwg_MsgInfo(conn)
             quit
         endif
 
         res := PQexec(conn, "drop table test")
-        PQclear(res)    
+        PQclear(res)
 
         res := PQexec(conn, "create table test (code numeric(10), creation date, descr char(40))")
-        PQclear(res)    
+        PQclear(res)
 
         For i := 1 to 100
-            res := PQexec(conn, "insert into test (code,creation,descr) values ("+ str(i) + ",'" + DtoC(date()+i) + "','test')")            
-            PQclear(res)    
-        Next  
-        
+            res := PQexec(conn, "insert into test (code, creation, descr) values (" + str(i) + ",'" + DtoC(date()+i) + "','test')")
+            PQclear(res)
+        Next
+
         res = PQexec(conn, "BEGIN")
-        PQclear(res)    
+        PQclear(res)
 
-        res := PQexec(conn, 'DECLARE cursor_1 NO SCROLL CURSOR WITH HOLD FOR SELECT * FROM test')        
-        PQclear(res)    
-return nil        
+        res := PQexec(conn, "DECLARE cursor_1 NO SCROLL CURSOR WITH HOLD FOR SELECT * FROM test")
+        PQclear(res)
 
+RETURN NIL
 
-Function MyVal( xValue, type )
-    Local result
-    
-    if valtype(xValue) == 'U'
-        if type == 'N'
-            result := 0
-        elseif type == 'D'
-            result := CtoD('')
-        elseif type == 'C'
-            result := ''
-        endif
-    elseif type == 'N'
-        result := val(xvalue)
-    elseif type == 'C'
-        result := xvalue
-    elseif type == 'D'
-        result := CtoD(xvalue)    
-    endif
-Return result
+FUNCTION MyVal(xValue, type)
+
+   LOCAL result
+
+   IF ValType(xValue) == "U"
+      IF type == "N"
+         result := 0
+      ELSEIF type == "D"
+         result := CtoD("")
+      ELSEIF type == "C"
+         result := ""
+      ENDIF
+   ELSEIF type == "N"
+      result := val(xvalue)
+   ELSEIF type == "C"
+      result := xvalue
+   ELSEIF type == "D"
+      result := CtoD(xvalue)
+   ENDIF
+
+RETURN result

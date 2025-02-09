@@ -1,12 +1,12 @@
-/*
- * $Id: htimer.prg 1866 2012-08-27 16:23:17Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HTimer class
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
-*/
+//
+// $Id: htimer.prg 1866 2012-08-27 16:23:17Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HTimer class
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -27,13 +27,13 @@ CLASS VAR aTimers   INIT {}
 
    DATA   xName          HIDDEN
    ACCESS Name INLINE ::xName
-   ASSIGN Name(cName) INLINE IIF( !Empty(cName) .AND. hb_IsChar(cName) .AND. !(":" $ cName) .AND. !("[" $ cName),;
-         ( ::xName := cName, __objAddData(::oParent, cName), ::oParent: & ( cName ) := Self), Nil)
+   ASSIGN Name(cName) INLINE IIf(!Empty(cName) .AND. hb_IsChar(cName) .AND. !(":" $ cName) .AND. !("[" $ cName),;
+         (::xName := cName, __objAddData(::oParent, cName), ::oParent: &(cName) := Self), NIL)
    ACCESS Interval INLINE ::value
-   ASSIGN Interval( x ) INLINE ::value := x, ;
-                                           SetTimer( ::oParent:handle, ::id, ::value )
+   ASSIGN Interval(x) INLINE ::value := x, ;
+                                           SetTimer(::oParent:handle, ::id, ::value)
 
-   METHOD New( oParent, nId, value, bAction )
+   METHOD New(oParent, nId, value, bAction)
    METHOD Init()
    METHOD onAction()
    METHOD END()
@@ -41,21 +41,21 @@ CLASS VAR aTimers   INIT {}
 ENDCLASS
 
 
-METHOD New( oParent, nId, value, bAction ) CLASS HTimer
+METHOD New(oParent, nId, value, bAction) CLASS HTimer
 
-   ::oParent := Iif( oParent==Nil, HWindow():GetMain():oDefaultParent, oParent )
+   ::oParent := IIf(oParent == NIL, HWindow():GetMain():oDefaultParent, oParent)
    IF nId == NIL
       nId := TIMER_FIRST_ID
-      DO WHILE AScan( ::aTimers, { | o | o:id == nId } ) !=  0
-         nId ++
+      DO WHILE AScan(::aTimers, {|o|o:id == nId}) !=  0
+         nId++
       ENDDO
    ENDIF
    ::id      := nId
-   ::value   := IIF( hb_IsNumeric(value), value, 0 )
+   ::value   := IIf(hb_IsNumeric(value), value, 0)
    ::bAction := bAction
    /*
     if ::value > 0
-      SetTimer( oParent:handle, ::id, ::value )
+      SetTimer(oParent:handle, ::id, ::value)
    endif
    */
    ::Init()
@@ -67,7 +67,7 @@ METHOD New( oParent, nId, value, bAction ) CLASS HTimer
 METHOD Init() CLASS HTimer
    IF !::lInit
       IF ::value > 0
-         SetTimer( ::oParent:handle, ::id, ::value )
+         SetTimer(::oParent:handle, ::id, ::value)
       ENDIF
    ENDIF
    RETURN  NIL
@@ -75,43 +75,43 @@ METHOD Init() CLASS HTimer
 METHOD END() CLASS HTimer
    LOCAL i
 
-   IF ::oParent != Nil
-      KillTimer( ::oParent:handle, ::id )
+   IF ::oParent != NIL
+      KillTimer(::oParent:handle, ::id)
    ENDIF
-   IF ( i := AScan( ::aTimers, { | o | o:id == ::id } ) ) > 0
-      ADel( ::aTimers, i )
-      ASize(::aTimers, Len( ::aTimers ) - 1)
+   IF (i := AScan(::aTimers, {|o|o:id == ::id})) > 0
+      ADel(::aTimers, i)
+      ASize(::aTimers, Len(::aTimers) - 1)
    ENDIF
 
-   RETURN Nil
+   RETURN NIL
 
 METHOD onAction()
 
    TimerProc(, ::id, ::interval)
 
-RETURN Nil
+RETURN NIL
 
 
 FUNCTION TimerProc(hWnd, idTimer, Time)
-   LOCAL i := AScan( HTimer():aTimers, { | o | o:id == idTimer } )
+   LOCAL i := AScan(HTimer():aTimers, {|o|o:id == idTimer})
 
    HB_SYMBOL_UNUSED(hWnd)
 
-   IF i != 0 .AND. HTimer():aTimers[i]:value > 0 .AND. HTimer():aTimers[i]:bAction != Nil .AND.;
+   IF i != 0 .AND. HTimer():aTimers[i]:value > 0 .AND. HTimer():aTimers[i]:bAction != NIL .AND.;
       hb_IsBlock(HTimer():aTimers[i]:bAction)
-      Eval( HTimer():aTimers[i]:bAction, HTimer():aTimers[i], time )
+      Eval(HTimer():aTimers[i]:bAction, HTimer():aTimers[i], time)
    ENDIF
 
-   RETURN Nil
+   RETURN NIL
 
 
 
    EXIT PROCEDURE CleanTimers
    LOCAL oTimer, i
 
-   FOR i := 1 TO Len( HTimer():aTimers )
+   FOR i := 1 TO Len(HTimer():aTimers)
       oTimer := HTimer():aTimers[i]
-      KillTimer( oTimer:oParent:handle, oTimer:id )
+      KillTimer(oTimer:oParent:handle, oTimer:id)
    NEXT
 
    RETURN

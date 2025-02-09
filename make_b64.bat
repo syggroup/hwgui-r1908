@@ -3,8 +3,10 @@ if "%1" == "clean" goto CLEAN
 if "%1" == "CLEAN" goto CLEAN
 
 if not exist lib md lib
+if not exist lib\b64 md lib\b64
 if not exist obj md obj
 if not exist obj\b64 md obj\b64
+if not exist obj\b64\bin md obj\b64\bin
 if not exist obj\b64\mt md obj\b64\mt
 :BUILD
 
@@ -29,10 +31,12 @@ if errorlevel 1 goto BUILD_ERR
    goto EXIT
 
 :CLEAN
-   del lib\*.lib
-   del lib\*.bak
+   del lib\b64\*.lib
+   del lib\b64\*.bak
    del obj\b64\*.obj
    del obj\b64\*.c
+   del obj\b64\bin\*.exe
+   del obj\b64\bin\*.dll
    del obj\b64\mt\*.obj
    del obj\b64\mt\*.c
 

@@ -1,13 +1,12 @@
-#include "windows.ch" 
-#include "guilib.ch"
+#include "hwgui.ch"
 // #include "listbox.ch"
 
+FUNCTION Main()
 
-Function Main
-Local oMainWindow
+   LOCAL oMainWindow
 
    INIT WINDOW oMainWindow MAIN TITLE "Example" ;
-     AT 0,0 SIZE GetDesktopWidth(), GetDesktopHeight() - 28
+     AT 0, 0 SIZE hwg_GetDesktopWidth(), hwg_GetDesktopHeight() - 28
 
    MENU OF oMainWindow
       MENUITEM "&Exit" ACTION oMainWindow:Close()
@@ -15,27 +14,32 @@ Local oMainWindow
    ENDMENU
 
    ACTIVATE WINDOW oMainWindow
-Return Nil
 
-Function Teste
-Local oModDlg, oFont := HFont():Add( "MS Sans Serif",0,-13 )
-Local oList, oItems:={"Item01","Item02","Item03","Item04"}
+RETURN NIL
+
+FUNCTION Teste()
+
+   LOCAL oModDlg
+   LOCAL oFont := HFont():Add("MS Sans Serif", 0, -13)
+   LOCAL oList
+   LOCAL oItems := {"Item01", "Item02", "Item03", "Item04"}
 
    INIT DIALOG oModDlg TITLE "Test"  ;
-   AT 0,0  SIZE 450,350   ;
+   AT 0, 0 SIZE 450, 350   ;
    FONT oFont
 
-   @ 10,40 LISTBOX oList ITEMS oItems ;
+   @ 10, 40 LISTBOX oList ITEMS oItems ;
              OF oModDlg                  ;
              INIT 1 ;
              SIZE 210, 220            ;
-             ON INIT {||HWG_MSGINFO("Teste")} ;
-             TOOLTIP "Test ListBox"       
+             ON INIT {||hwg_MsgInfo("Teste")} ;
+             TOOLTIP "Test ListBox"
 
-   @  10,280 BUTTON "Ok" ID IDOK  SIZE 50, 32
+   @  10, 280 BUTTON "Ok" ID IDOK SIZE 50, 32
     ACTIVATE DIALOG oModDlg
     oFont:Release()
 
    IF oModDlg:lResult
     ENDIF
-Return Nil
+
+RETURN NIL

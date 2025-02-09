@@ -1,12 +1,12 @@
-/*
- * $Id: shellapi.c 1857 2012-07-09 13:39:38Z lculik $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Shell API wrappers
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: shellapi.c 1857 2012-07-09 13:39:38Z lculik $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Shell API wrappers
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "hwingui.h"
 #include <shlobj.h>
@@ -45,10 +45,10 @@ static int(CALLBACK BrowseCallbackProc)(HWND hwnd, UINT uMsg, LPARAM lParam, LPA
 }
 
 /*
- *  SelectFolder( cTitle )
+ *  hwg_SelectFolder(cTitle)
  */
 
-HB_FUNC(SELECTFOLDER)
+HB_FUNC(HWG_SELECTFOLDER)
 {
   BROWSEINFO bi;
   TCHAR lpBuffer[MAX_PATH];
@@ -83,11 +83,13 @@ HB_FUNC(SELECTFOLDER)
   hb_strfree(hFolderName);
 }
 
+HB_FUNC_TRANSLATE(SELECTFOLDER, HWG_SELECTFOLDER);
+
 /*
- *  ShellNotifyIcon( lAdd, hWnd, hIcon, cTooltip )
+ *  hwg_ShellNotifyIcon(lAdd, hWnd, hIcon, cTooltip)
  */
 
-HB_FUNC(SHELLNOTIFYICON)
+HB_FUNC(HWG_SHELLNOTIFYICON)
 {
   NOTIFYICONDATA tnid;
 
@@ -111,11 +113,13 @@ HB_FUNC(SHELLNOTIFYICON)
   }
 }
 
+HB_FUNC_TRANSLATE(SHELLNOTIFYICON, HWG_SHELLNOTIFYICON);
+
 /*
- *  ShellModifyIcon( hWnd, hIcon, cTooltip )
+ *  hwg_ShellModifyIcon(hWnd, hIcon, cTooltip)
  */
 
-HB_FUNC(SHELLMODIFYICON)
+HB_FUNC(HWG_SHELLMODIFYICON)
 {
   NOTIFYICONDATA tnid;
 
@@ -137,10 +141,12 @@ HB_FUNC(SHELLMODIFYICON)
   Shell_NotifyIcon(NIM_MODIFY, &tnid);
 }
 
+HB_FUNC_TRANSLATE(SHELLMODIFYICON, HWG_SHELLMODIFYICON);
+
 /*
- * ShellExecute(cFile, cOperation, cParams, cDir, nFlag)
+ * hwg_ShellExecute(cFile, cOperation, cParams, cDir, nFlag)
  */
-HB_FUNC(SHELLEXECUTE)
+HB_FUNC(HWG_SHELLEXECUTE)
 {
 #if defined(HB_OS_WIN_CE)
   hb_retni(-1);
@@ -167,3 +173,5 @@ HB_FUNC(SHELLEXECUTE)
   hb_strfree(hDirectory);
 #endif
 }
+
+HB_FUNC_TRANSLATE(SHELLEXECUTE, HWG_SHELLEXECUTE);

@@ -1,12 +1,12 @@
-/*
- *$Id: hcwindow.prg 1868 2012-08-27 17:33:11Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HObject class
- *
- * Copyright 2004 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hcwindow.prg 1868 2012-08-27 17:33:11Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HObject class
+//
+// Copyright 2004 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "hbclass.ch"
@@ -30,12 +30,12 @@ ENDCLASS
 METHOD DelObject(oCtrl) CLASS HObject
 
    LOCAL h := oCtrl:handle
-   LOCAL i := Ascan(::aObjects, {|o|o:handle == h})
+   LOCAL i := AScan(::aObjects, {|o|o:handle == h})
 
-   SendMessage(h, WM_CLOSE, 0, 0)
+   hwg_SendMessage(h, WM_CLOSE, 0, 0)
    IF i != 0
-      Adel(::aObjects, i)
-      Asize(::aObjects, Len(::aObjects) - 1)
+      ADel(::aObjects, i)
+      ASize(::aObjects, Len(::aObjects) - 1)
    ENDIF
 
 RETURN NIL
@@ -70,7 +70,7 @@ FUNCTION ADDPROPERTY(oObjectName, cPropertyName, eNewValue)
       ENDIF
       IF !Empty(eNewValue)
          IF hb_IsBlock(eNewValue)
-            oObjectName: &(cPropertyName) := EVAL(eNewValue)
+            oObjectName: &(cPropertyName) := Eval(eNewValue)
          ELSE
             oObjectName: &(cPropertyName) := eNewValue
          ENDIF

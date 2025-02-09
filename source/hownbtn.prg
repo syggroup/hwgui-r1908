@@ -1,12 +1,12 @@
-/*
- * $Id: hownbtn.prg 1866 2012-08-27 16:23:17Z lfbasso $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * HOwnButton class, which implements owner drawn buttons
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
-*/
+//
+// $Id: hownbtn.prg 1866 2012-08-27 16:23:17Z lfbasso $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// HOwnButton class, which implements owner drawn buttons
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #include "windows.ch"
 #include "inkey.ch"
@@ -47,7 +47,7 @@ CLASS HOwnButton INHERIT HControl
 
    METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, bInit, bSize, bPaint, bClick, lflat, cText, ;
       color, oFont, xt, yt, widtht, heightt, bmp, lResour, xb, yb, widthb, heightb, lTr, trColor, cTooltip, lEnabled, ;
-      lCheck, bColor,bGfocus, bLfocus, themed)
+      lCheck, bColor, bGfocus, bLfocus, themed)
    METHOD Activate()
    METHOD onEvent(msg, wParam, lParam)
    METHOD Init()
@@ -68,7 +68,7 @@ CLASS HOwnButton INHERIT HControl
    METHOD onLostFocus()
    METHOD Refresh()
    METHOD SetText(cCaption) INLINE ::title := cCaption, ;
-      RedrawWindow(::oParent:handle, RDW_ERASE + RDW_INVALIDATE, ::nLeft, ::nTop, ::nWidth, ::nHeight)
+      hwg_RedrawWindow(::oParent:handle, RDW_ERASE + RDW_INVALIDATE, ::nLeft, ::nTop, ::nWidth, ::nHeight)
 
 ENDCLASS
 
@@ -76,7 +76,7 @@ ENDCLASS
 
 METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, bInit, bSize, bPaint, bClick, lflat, cText, color, ;
    oFont, xt, yt, widtht, heightt, bmp, lResour, xb, yb, widthb, heightb, lTr, trColor, cTooltip, lEnabled, lCheck, ;
-   bColor,bGfocus, bLfocus, themed) CLASS HOwnButton
+   bColor, bGfocus, bLfocus, themed) CLASS HOwnButton
 
    ::Super:New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, oFont, bInit, bSize, bPaint, cTooltip)
 
@@ -108,7 +108,7 @@ METHOD New(oWndParent, nId, nStyle, nLeft, nTop, nWidth, nHeight, bInit, bSize, 
    IF lCheck != NIL
       ::lCheck := lCheck
    ENDIF
-   ::themed := IIF(themed == NIL, .F., themed)
+   ::themed := IIf(themed == NIL, .F., themed)
    IF bmp != NIL
       IF hb_IsObject(bmp)
          ::oBitmap := bmp
@@ -139,7 +139,7 @@ METHOD Activate() CLASS HOwnButton
       ::handle := CreateOwnBtn(::oParent:handle, ::id, ::nLeft, ::nTop, ::nWidth, ::nHeight)
       ::Init()
       IF !::lEnabled
-         EnableWindow(::handle, .F.)
+         hwg_EnableWindow(::handle, .F.)
          ::Disable()
       ENDIF
    ENDIF
@@ -160,7 +160,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HOwnButton
          ::Themed := .F.
       ENDIF
       ::m_bFirstTime := .T.
-      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+      hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
       RETURN 0
 
    ELSEIF msg == WM_ERASEBKGND
@@ -223,7 +223,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HOwnButton
          ::Themed := .F.
       ENDIF
       ::m_bFirstTime := .T.
-      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+      hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
       RETURN 0
 
    CASE WM_ERASEBKGND
@@ -304,7 +304,7 @@ METHOD Init() CLASS HOwnButton
 
    IF !::lInit
       ::nHolder := 1
-      SetWindowObject(::handle, Self)
+      hwg_SetWindowObject(::handle, Self)
       ::Super:Init()
    ENDIF
 
@@ -363,11 +363,11 @@ METHOD Paint() CLASS HOwnButton
    LOCAL aCoors
    LOCAL state
 
-   pps := DefinePaintStru()
+   pps := hwg_DefinePaintStru()
 
-   hDC := BeginPaint(::handle, pps)
+   hDC := hwg_BeginPaint(::handle, pps)
 
-   aCoors := GetClientRect(::handle)
+   aCoors := hwg_GetClientRect(::handle)
 
    IF ::state == OBTN_INIT
       ::state := OBTN_NORMAL
@@ -385,7 +385,7 @@ METHOD Paint() CLASS HOwnButton
          IF ::WindowsManifest
             ::hTheme := hb_OpenThemeData(::handle, "BUTTON")
          ENDIF
-         ::hTheme := IIF(Empty(::hTheme), NIL, ::hTheme)
+         ::hTheme := IIf(Empty(::hTheme), NIL, ::hTheme)
       ENDIF
       IF Empty(::hTheme)
          ::Themed := .F.
@@ -395,7 +395,7 @@ METHOD Paint() CLASS HOwnButton
       IF !::lEnabled
          state := PBS_DISABLED
       ELSE
-         state := IIF(::state == OBTN_PRESSED, PBS_PRESSED, PBS_NORMAL)
+         state := IIf(::state == OBTN_PRESSED, PBS_PRESSED, PBS_NORMAL)
       ENDIF
       IF ::lCheck
          state := OBTN_PRESSED
@@ -405,7 +405,7 @@ METHOD Paint() CLASS HOwnButton
    IF ::lFlat
       IF ::Themed
          //SetBkMode(hdc, TRANSPARENT)
-         IF ::handle == getfocus() .AND. ::lCheck
+         IF ::handle == hwg_GetFocus() .AND. ::lCheck
             hb_DrawThemeBackground(::hTheme, hdc, BP_PUSHBUTTON, PBS_PRESSED, aCoors, NIL)
          ELSEIF ::state != OBTN_NORMAL
              hb_DrawThemeBackground(::hTheme, hdc, BP_PUSHBUTTON, state, aCoors, NIL)
@@ -415,7 +415,7 @@ METHOD Paint() CLASS HOwnButton
          ENDIF
       ELSE
          IF ::state == OBTN_NORMAL
-            IF !SelfFocus(::handle, GetFocus())
+            IF !hwg_SelfFocus(::handle, hwg_GetFocus())
                // NORM
                DrawButton(hDC, 0, 0, aCoors[3], aCoors[4], 0)
             ELSE
@@ -430,7 +430,7 @@ METHOD Paint() CLASS HOwnButton
    ELSE
       IF ::Themed
          //SetBkMode(hdc, TRANSPARENT)
-         IF SelfFocus(::handle, GetFocus()) .AND. ::lCheck
+         IF hwg_SelfFocus(::handle, hwg_GetFocus()) .AND. ::lCheck
             hb_DrawThemeBackground(::hTheme, hdc, BP_PUSHBUTTON, PBS_PRESSED, aCoors, NIL)
          ELSE //IF ::state != OBTN_NORMAL
             hb_DrawThemeBackground(::hTheme, hdc, BP_PUSHBUTTON, state, aCoors, NIL)
@@ -448,7 +448,7 @@ METHOD Paint() CLASS HOwnButton
 
    ::DrawItems(hDC)
 
-   EndPaint(::handle, pps)
+   hwg_EndPaint(::handle, pps)
 
 RETURN NIL
 
@@ -462,7 +462,7 @@ METHOD DrawItems(hDC) CLASS HOwnButton
    LOCAL y2
    LOCAL aCoors
 
-   aCoors := GetClientRect(::handle)
+   aCoors := hwg_GetClientRect(::handle)
    IF !Empty(::brush)
       FillRect(hDC, aCoors[1] + 2, aCoors[2] + 2, aCoors[3] - 2, aCoors[4] - 2, ::Brush:handle)
    ENDIF
@@ -491,7 +491,7 @@ METHOD DrawItems(hDC) CLASS HOwnButton
 
    IF ::title != NIL
       IF ::oFont != NIL
-         SelectObject(hDC, ::oFont:handle)
+         hwg_SelectObject(hDC, ::oFont:handle)
       ENDIF
       IF ::lEnabled
          SetTextColor(hDC, ::tcolor)
@@ -522,23 +522,23 @@ METHOD MouseMove(wParam, lParam) CLASS HOwnButton
    HB_SYMBOL_UNUSED(wParam)
 
    IF ::state != OBTN_INIT
-      xPos := LOWORD(lParam)
-      yPos := HIWORD(lParam)
+      xPos := hwg_LOWORD(lParam)
+      yPos := hwg_HIWORD(lParam)
       IF xPos > ::nWidth .OR. yPos > ::nHeight
          ReleaseCapture()
          res := .T.
       ENDIF
       IF res .AND. !::lPress
          ::state := OBTN_NORMAL
-         InvalidateRect(::handle, 0)
-         RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
-         //PostMessage(::handle, WM_PAINT, 0, 0)
+         hwg_InvalidateRect(::handle, 0)
+         hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+         //hwg_PostMessage(::handle, WM_PAINT, 0, 0)
       ENDIF
       IF ::state == OBTN_NORMAL .AND. !res
          ::state := OBTN_MOUSOVER
-         InvalidateRect(::handle, 0)
-         //PostMessage(::handle, WM_PAINT, 0, 0)
-         RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+         hwg_InvalidateRect(::handle, 0)
+         //hwg_PostMessage(::handle, WM_PAINT, 0, 0)
+         hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
          SetCapture(::handle)
       ENDIF
    ENDIF
@@ -551,15 +551,15 @@ METHOD MDown() CLASS HOwnButton
 
    IF ::state != OBTN_PRESSED
       ::state := OBTN_PRESSED
-      //InvalidateRect(::handle, 0)
+      //hwg_InvalidateRect(::handle, 0)
       //::SetFocus()
-      SendMessage(::handle, WM_SETFOCUS, 0, 0)
-      InvalidateRect(::handle, 0)
-      RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+      hwg_SendMessage(::handle, WM_SETFOCUS, 0, 0)
+      hwg_InvalidateRect(::handle, 0)
+      hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
    ELSEIF ::lCheck
       ::state := OBTN_NORMAL
-      InvalidateRect(::handle, 0)
-      PostMessage(::handle, WM_PAINT, 0, 0)
+      hwg_InvalidateRect(::handle, 0)
+      hwg_PostMessage(::handle, WM_PAINT, 0, 0)
    ENDIF
 
 RETURN NIL
@@ -570,8 +570,8 @@ METHOD MUp() CLASS HOwnButton
 
    //IF ::state == OBTN_PRESSED
    IF !::lPress
-      //::state := OBTN_NORMAL // IIF(::lFlat, OBTN_MOUSOVER, OBTN_NORMAL)
-      ::state := IIF(::lFlat, OBTN_MOUSOVER, OBTN_NORMAL)
+      //::state := OBTN_NORMAL // IIf(::lFlat, OBTN_MOUSOVER, OBTN_NORMAL)
+      ::state := IIf(::lFlat, OBTN_MOUSOVER, OBTN_NORMAL)
    ENDIF
    IF ::lCheck
       IF ::lPress
@@ -585,7 +585,7 @@ METHOD MUp() CLASS HOwnButton
       Eval(::bClick, ::oParent, ::id)
       Release()
    ENDIF
-   RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW)
+   hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW)
 
 RETURN NIL
 
@@ -593,8 +593,8 @@ RETURN NIL
 
 METHOD Refresh() CLASS HOwnButton
 
-   InvalidateRect(::handle, 0)
-   RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW)
+   hwg_InvalidateRect(::handle, 0)
+   hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW)
 
 RETURN NIL
 
@@ -604,9 +604,9 @@ METHOD Release() CLASS HOwnButton
 
    ::lPress := .F.
    ::state := OBTN_NORMAL
-   InvalidateRect(::handle, 0)
-   RedrawWindow(::handle, RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW + RDW_INVALIDATE)
-   //PostMessage(::handle, WM_PAINT, 0, 0)
+   hwg_InvalidateRect(::handle, 0)
+   hwg_RedrawWindow(::handle, RDW_FRAME + RDW_INTERNALPAINT + RDW_UPDATENOW + RDW_INVALIDATE)
+   //hwg_PostMessage(::handle, WM_PAINT, 0, 0)
 
 RETURN NIL
 
@@ -625,7 +625,7 @@ METHOD onGetFocus() CLASS HOwnButton
       ::oparent:lSuspendMsgsHandling := .T.
       res := Eval(::bGetFocus, ::title, Self)
       IF res != NIL .AND. Empty(res)
-         WhenSetFocus(Self,nSkip)
+         WhenSetFocus(Self, nSkip)
       ENDIF
    ENDIF
    ::oparent:lSuspendMsgsHandling := .F.
@@ -669,7 +669,7 @@ METHOD END() CLASS HOwnButton
       ::oBitmap:Release()
       ::oBitmap := NIL
    ENDIF
-   PostMessage(::handle, WM_CLOSE, 0, 0)
+   hwg_PostMessage(::handle, WM_CLOSE, 0, 0)
 
 RETURN NIL
 
@@ -677,10 +677,10 @@ RETURN NIL
 
 METHOD Enable() CLASS HOwnButton
 
-   EnableWindow(::handle, .T.)
+   hwg_EnableWindow(::handle, .T.)
    ::lEnabled := .T.
-   InvalidateRect(::handle, 0)
-   RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+   hwg_InvalidateRect(::handle, 0)
+   hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
    //::Init() BECAUSE ERROR GPF
 
 RETURN NIL
@@ -691,9 +691,9 @@ METHOD Disable() CLASS HOwnButton
 
    ::state := OBTN_INIT
    ::lEnabled := .F.
-   InvalidateRect(::handle, 0)
-   RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
-   EnableWindow(::handle, .F.)
+   hwg_InvalidateRect(::handle, 0)
+   hwg_RedrawWindow(::handle, RDW_ERASE + RDW_INVALIDATE)
+   hwg_EnableWindow(::handle, .F.)
 
 RETURN NIL
 

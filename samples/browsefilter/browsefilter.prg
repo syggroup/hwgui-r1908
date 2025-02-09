@@ -1,47 +1,48 @@
-/* 
-   Copyright (c) Luiz Henrique lh.santos at ibest.com.br
-*/
+//
+// Copyright (c) Luiz Henrique lh.santos at ibest.com.br
+//
+
 #include "hwgui.ch"
 
-STATIC nLastRecordFilter  := 0
+STATIC nLastRecordFilter := 0
 STATIC nFirstRecordFilter := 0
 
-
 FUNCTION Main()
+
   PRIVATE frmTesteBrowse
-  
+
   INIT WINDOW frmTesteBrowse MAIN TITLE "Teste HBrowse com filtro" ;
     COLOR COLOR_3DLIGHT+1 ;
-  	AT 0,0 ;
-  	SIZE GetDesktopWidth(), GetDesktopHeight() - 28 ;
+  	AT 0, 0 ;
+  	SIZE hwg_GetDesktopWidth(), hwg_GetDesktopHeight() - 28 ;
   	FONT HFont():Add("MS Sans Serif", 0, -12)
-  	
+
   USE MESAS NEW SHARED
   INDEX ON mesa TO indmesas
   SET INDEX TO indmesas
-  
+
   USE ITENS NEW SHARED
   INDEX ON mesa+nomeprod TO inditens
   SET INDEX TO inditens
-  
+
   DBSELECTAREA("MESAS")
-  
-  @ 010,061 BROWSE DATABASE brwMesas ;
-            SIZE 353,283 ;
+
+  @ 010, 061 BROWSE DATABASE brwMesas ;
+            SIZE 353, 283 ;
             STYLE WS_VSCROLL + WS_HSCROLL ;
-  	        ON POSCHANGE {|| EVAL(brwItens:bFirst), brwItens:Refresh()} ;
-  	        FOR { || EMPTY(fechado) }
-  
+  	        ON POSCHANGE {||EVAL(brwItens:bFirst), brwItens:Refresh()} ;
+  	        FOR {||Empty(fechado)}
+
   brwMesas:bColorSel := 16711680 //Cor da linha do browse
-  
-  ADD COLUMN {|| OrdKeyNo()} TO brwMesas ;
+
+  ADD COLUMN {||OrdKeyNo()} TO brwMesas ;
     HEADER "OrdKeyNo()";
     TYPE "N" LENGTH 6 DEC 0 ;
     PICTURE "@E 999999";
     JUSTIFY HEAD DT_LEFT ;
     JUSTIFY LINE DT_RIGHT
 
-  ADD COLUMN {|| RECNO()} TO brwMesas ;
+  ADD COLUMN {||RECNO()} TO brwMesas ;
     HEADER "Recno()";
     TYPE "N" LENGTH 6 DEC 0 ;
     PICTURE "@E 999999";
@@ -54,40 +55,40 @@ FUNCTION Main()
     PICTURE "@E 999999";
     JUSTIFY HEAD DT_LEFT ;
     JUSTIFY LINE DT_LEFT
-                   
+
   ADD COLUMN FIELDBLOCK("garcon") TO brwMesas ;
     HEADER "Garcom" ;
     PICTURE "@E 999" ;
     JUSTIFY HEAD DT_LEFT ;
-    JUSTIFY LINE DT_LEFT 
+    JUSTIFY LINE DT_LEFT
 
   ADD COLUMN FIELDBLOCK("total") TO brwMesas ;
     HEADER "Total" ;
     PICTURE "@E 999,999.99" ;
     JUSTIFY HEAD DT_RIGHT ;
-    JUSTIFY LINE DT_RIGHT 
+    JUSTIFY LINE DT_RIGHT
 
   brwMesas:Refresh()
-  
+
   DBSELECTAREA("ITENS")
-  
-  @ 375,061 BROWSE DATABASE brwItens ;
-    SIZE 415,283 ;
+
+  @ 375, 061 BROWSE DATABASE brwItens ;
+    SIZE 415, 283 ;
   	STYLE WS_VSCROLL + WS_HSCROLL ;
-  	FIRST {|| DBSEEK(mesas->mesa)} ;
-  	WHILE {|| mesa == mesas->mesa} ;
-  	FOR {|| EMPTY(fechado)}
-            
+  	FIRST {||DBSEEK(mesas->mesa)} ;
+  	WHILE {||mesa == mesas->mesa} ;
+  	FOR {||Empty(fechado)}
+
   brwItens:bColorSel := 16711680
-  
-  ADD COLUMN {|| OrdKeyNo()} TO brwItens ;
+
+  ADD COLUMN {||OrdKeyNo()} TO brwItens ;
     HEADER "OrdKeyNo()";
     TYPE "N" LENGTH 6 DEC 0 ;
     PICTURE "@E 999999";
     JUSTIFY HEAD DT_LEFT ;
     JUSTIFY LINE DT_RIGHT
 
-  ADD COLUMN {|| RECNO()} TO brwItens ;
+  ADD COLUMN {||RECNO()} TO brwItens ;
     HEADER "Recno()";
     TYPE "N" LENGTH 6 DEC 0 ;
     PICTURE "@E 999999";
@@ -113,14 +114,15 @@ FUNCTION Main()
     LENGTH 40 ;
     DEC 0 ;
     JUSTIFY HEAD DT_LEFT ;
-    JUSTIFY LINE DT_LEFT 
-                   
+    JUSTIFY LINE DT_LEFT
+
   ADD COLUMN FIELDBLOCK("qtd") TO brwItens ;
-    HEADER "Quantidade"; 
+    HEADER "Quantidade";
     JUSTIFY HEAD DT_RIGHT ;
-    JUSTIFY LINE DT_RIGHT 
+    JUSTIFY LINE DT_RIGHT
 
   brwItens:Refresh()
-  
+
   ACTIVATE WINDOW frmTesteBrowse
+
 RETURN NIL

@@ -1,12 +1,12 @@
-/*
- * $Id: commond.c 1830 2012-01-12 12:47:11Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * C level common dialogs functions
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://kresin.belgorod.su
- */
+//
+// $Id: commond.c 1830 2012-01-12 12:47:11Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// C level common dialogs functions
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://kresin.belgorod.su
+//
 
 #define OEMRESOURCE
 
@@ -14,9 +14,8 @@
 #include <hbapiitm.h>
 #include <hbvm.h>
 
-HB_FUNC(SELECTFONT)
+HB_FUNC(HWG_SELECTFONT)
 {
-
   CHOOSEFONT cf;
   LOGFONT lf;
   HFONT hfont;
@@ -24,7 +23,7 @@ HB_FUNC(SELECTFONT)
   PHB_ITEM temp1;
   PHB_ITEM aMetr = hb_itemArrayNew(9), temp;
 
-  /* Initialize members of the CHOOSEFONT structure. */
+  // Initialize members of the CHOOSEFONT structure.
   if (pObj)
   {
     memset(&lf, 0, sizeof(LOGFONT));
@@ -64,7 +63,7 @@ HB_FUNC(SELECTFONT)
   cf.nSizeMin = 0;
   cf.nSizeMax = 0;
 
-  /* Display the CHOOSEFONT common-dialog box. */
+  // Display the CHOOSEFONT common-dialog box.
 
   if (!ChooseFont(&cf))
   {
@@ -73,9 +72,9 @@ HB_FUNC(SELECTFONT)
     return;
   }
 
-  /* Create a logical font based on the user's   */
-  /* selection and return a handle identifying   */
-  /* that font.                                  */
+  // Create a logical font based on the user's
+  // selection and return a handle identifying
+  // that font.
 
   hfont = CreateFontIndirect(cf.lpLogFont);
 
@@ -111,7 +110,9 @@ HB_FUNC(SELECTFONT)
   hb_itemReturnRelease(aMetr);
 }
 
-HB_FUNC(SELECTFILE)
+HB_FUNC_TRANSLATE(SELECTFONT, HWG_SELECTFONT);
+
+HB_FUNC(HWG_SELECTFILE)
 {
   OPENFILENAME ofn;
   TCHAR buffer[1024];
@@ -207,7 +208,9 @@ HB_FUNC(SELECTFILE)
   hb_strfree(hTitle);
 }
 
-HB_FUNC(SAVEFILE)
+HB_FUNC_TRANSLATE(SELECTFILE, HWG_SELECTFILE);
+
+HB_FUNC(HWG_SAVEFILE)
 {
   OPENFILENAME ofn;
   TCHAR buffer[1024];
@@ -269,7 +272,9 @@ HB_FUNC(SAVEFILE)
   hb_strfree(hTitle);
 }
 
-HB_FUNC(PRINTSETUP)
+HB_FUNC_TRANSLATE(SAVEFILE, HWG_SAVEFILE);
+
+HB_FUNC(HWG_PRINTSETUP)
 {
   PRINTDLG pd;
 
@@ -315,6 +320,8 @@ HB_FUNC(PRINTSETUP)
   }
 }
 
+HB_FUNC_TRANSLATE(PRINTSETUP, HWG_PRINTSETUP);
+
 HB_FUNC(HWG_CHOOSECOLOR)
 {
   CHOOSECOLOR cc;
@@ -351,22 +358,22 @@ static unsigned long Get_SerialNumber(LPCTSTR RootPathName)
   return SerialNumber;
 }
 
-HB_FUNC(HDGETSERIAL)
+HB_FUNC(HWG_HDGETSERIAL)
 {
   void *hStr;
   hb_retnl(Get_SerialNumber(HB_PARSTR(1, &hStr, NULL)));
   hb_strfree(hStr);
 }
 
-/*
- The functions added by extract for the Minigui Lib Open Source project
- Copyright 2002 Roberto Lopez <roblez@ciudad.com.ar>
- http://www.geocities.com/harbour_minigui/
- HB_FUNC(GETPRIVATEPROFILESTRING)
- HB_FUNC(WRITEPRIVATEPROFILESTRING)
-*/
+HB_FUNC_TRANSLATE(HDGETSERIAL, HWG_HDGETSERIAL);
 
-HB_FUNC(GETPRIVATEPROFILESTRING)
+// The functions added by extract for the Minigui Lib Open Source project
+// Copyright 2002 Roberto Lopez <roblez@ciudad.com.ar>
+// http://www.geocities.com/harbour_minigui/
+// HB_FUNC(GETPRIVATEPROFILESTRING)
+// HB_FUNC(WRITEPRIVATEPROFILESTRING)
+
+HB_FUNC(HWG_GETPRIVATEPROFILESTRING)
 {
   TCHAR buffer[1024];
   DWORD dwLen;
@@ -390,7 +397,9 @@ HB_FUNC(GETPRIVATEPROFILESTRING)
   hb_strfree(hFileName);
 }
 
-HB_FUNC(WRITEPRIVATEPROFILESTRING)
+HB_FUNC_TRANSLATE(GETPRIVATEPROFILESTRING, HWG_GETPRIVATEPROFILESTRING);
+
+HB_FUNC(HWG_WRITEPRIVATEPROFILESTRING)
 {
   void *hSection, *hEntry, *hData, *hFileName;
 
@@ -404,6 +413,8 @@ HB_FUNC(WRITEPRIVATEPROFILESTRING)
   hb_strfree(hData);
   hb_strfree(hFileName);
 }
+
+HB_FUNC_TRANSLATE(WRITEPRIVATEPROFILESTRING, HWG_WRITEPRIVATEPROFILESTRING);
 
 static far PRINTDLG s_pd;
 static far BOOL s_fInit = FALSE;
@@ -423,20 +434,20 @@ static void StartPrn(void)
 
     PrintDlg(&s_pd);
 
-    /*
-       if (PrintDlg(&s_pd) == TRUE)
-       {
-         hb_retl(TRUE);
-       }
-       else
-       {
-         hb_retl(FALSE);
-       }
-     */
+#if 0
+    if (PrintDlg(&s_pd) == TRUE)
+    {
+      hb_retl(TRUE);
+    }
+    else
+    {
+      hb_retl(FALSE);
+    }
+#endif
   }
 }
 
-HB_FUNC(PRINTPORTNAME)
+HB_FUNC(HWG_PRINTPORTNAME)
 {
   if (!s_fPName && s_pd.hDevNames)
   {
@@ -449,7 +460,9 @@ HB_FUNC(PRINTPORTNAME)
   }
 }
 
-HB_FUNC(PRINTSETUPDOS)
+HB_FUNC_TRANSLATE(PRINTPORTNAME, HWG_PRINTPORTNAME);
+
+HB_FUNC(HWG_PRINTSETUPDOS)
 {
 
   StartPrn();
@@ -480,7 +493,9 @@ HB_FUNC(PRINTSETUPDOS)
   }
 }
 
-HB_FUNC(PRINTSETUPEX)
+HB_FUNC_TRANSLATE(PRINTSETUPDOS, HWG_PRINTSETUPDOS);
+
+HB_FUNC(HWG_PRINTSETUPEX)
 {
   PRINTDLG pd;
   DEVMODE *pDevMode;
@@ -502,7 +517,9 @@ HB_FUNC(PRINTSETUPEX)
   }
 }
 
-HB_FUNC(_GETOPENFILENAME)
+HB_FUNC_TRANSLATE(PRINTSETUPEX, HWG_PRINTSETUPEX);
+
+HB_FUNC(HWG__GETOPENFILENAME)
 {
   OPENFILENAME ofn;
   TCHAR buffer[1024];
@@ -553,3 +570,5 @@ HB_FUNC(_GETOPENFILENAME)
   hb_strfree(hInitDir);
   hb_strfree(hDefExt);
 }
+
+HB_FUNC_TRANSLATE(_GETOPENFILENAME, HWG__GETOPENFILENAME);

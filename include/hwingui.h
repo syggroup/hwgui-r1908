@@ -158,6 +158,7 @@ HB_EXTERN_END
 #define hwg_par_HACCEL(n) (HACCEL)HB_PARHANDLE(n)
 #define hwg_par_UINT_PTR(n) (UINT_PTR)hb_parni(n)
 #define hwg_par_HTHEME(n) (HTHEME)hb_parptr(n)
+#define hwg_par_HCURSOR(n) (HCURSOR)HB_PARHANDLE(n)
 
 #define hwg_ret_BOOL(x) hb_retl(x)
 #define hwg_ret_HWND(n) HB_RETHANDLE(n)

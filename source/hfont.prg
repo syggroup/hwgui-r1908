@@ -1,12 +1,12 @@
-/*
- * $Id: drawwidg.prg 1740 2011-09-23 12:06:53Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Fonts handling
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
-*/
+//
+// $Id: drawwidg.prg 1740 2011-09-23 12:06:53Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Fonts handling
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #include "hbclass.ch"
 #include "windows.ch"
@@ -61,7 +61,7 @@ METHOD Add(fontName, nWidth, nHeight, fnWeight, fdwCharSet, fdwItalic, fdwUnderl
          ::aFonts[i]:StrikeOut == fdwStrikeOut
          ::aFonts[i]:nCounter++
          IF nHandle != NIL
-            DeleteObject(nHandle)
+            hwg_DeleteObject(nHandle)
          ENDIF
          RETURN ::aFonts[i]
       ENDIF
@@ -90,13 +90,13 @@ RETURN Self
 
 METHOD Select(oFont, nCharSet) CLASS HFont
 
-   LOCAL af := SelectFont(oFont)
+   LOCAL af := hwg_SelectFont(oFont)
 
    IF af == NIL
       RETURN NIL
    ENDIF
 
-RETURN ::Add(af[2], af[3], af[4], af[5], IIF(Empty(nCharSet), af[6], nCharSet ), af[7], af[8], af[9], af[1])
+RETURN ::Add(af[2], af[3], af[4], af[5], IIf(Empty(nCharSet), af[6], nCharSet), af[7], af[8], af[9], af[1])
 
 //-------------------------------------------------------------------------------------------------------------------//
 
@@ -108,15 +108,15 @@ METHOD SetFontStyle(lBold, nCharSet, lItalic, lUnder, lStrike, nHeight) CLASS HF
    LOCAL StrikeOut
 
    IF lBold != NIL
-      weight = IIF(lBold, FW_BOLD, FW_REGULAR)
+      weight := IIf(lBold, FW_BOLD, FW_REGULAR)
    ELSE
       weight := ::weight
    ENDIF
-   Italic := IIF(lItalic == NIL, ::Italic, IIF(lItalic, 1, 0))
-   Underline := IIF(lUnder == NIL, ::Underline, IIF(lUnder, 1, 0))
-   StrikeOut := IIF(lStrike == NIL, ::StrikeOut, IIF(lStrike, 1, 0))
-   nheight := IIF(nheight == NIL, ::height, nheight)
-   nCharSet := IIF(nCharSet == NIL, ::CharSet, nCharSet)
+   Italic := IIf(lItalic == NIL, ::Italic, IIf(lItalic, 1, 0))
+   Underline := IIf(lUnder == NIL, ::Underline, IIf(lUnder, 1, 0))
+   StrikeOut := IIf(lStrike == NIL, ::StrikeOut, IIf(lStrike, 1, 0))
+   nheight := IIf(nheight == NIL, ::height, nheight)
+   nCharSet := IIf(nCharSet == NIL, ::CharSet, nCharSet)
 
 RETURN ::Add(::name, ::width, nheight, weight, nCharSet, Italic, Underline, StrikeOut) // ::handle)
 
@@ -131,7 +131,7 @@ METHOD Release() CLASS HFont
    IF ::nCounter == 0
       FOR EACH item IN ::aFonts
          IF item:handle == ::handle
-            DeleteObject(::handle)
+            hwg_DeleteObject(::handle)
             #ifdef __XHARBOUR__
             ADel(::aFonts, hb_enumindex())
             #else
@@ -152,7 +152,7 @@ EXIT PROCEDURE CleanDrawWidgHFont
    LOCAL item
 
    FOR EACH item IN HFont():aFonts
-      DeleteObject(item:handle)
+      hwg_DeleteObject(item:handle)
    NEXT
 
 RETURN

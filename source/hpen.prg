@@ -1,12 +1,12 @@
-/*
- * $Id: drawwidg.prg 1740 2011-09-23 12:06:53Z LFBASSO $
- *
- * HWGUI - Harbour Win32 GUI library source code:
- * Pens handling
- *
- * Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
- * www - http://www.geocities.com/alkresin/
-*/
+//
+// $Id: drawwidg.prg 1740 2011-09-23 12:06:53Z LFBASSO $
+//
+// HWGUI - Harbour Win32 GUI library source code:
+// Pens handling
+//
+// Copyright 2001 Alexander S.Kresin <alex@belacy.belgorod.su>
+// www - http://www.geocities.com/alkresin/
+//
 
 #include "hbclass.ch"
 #include "windows.ch"
@@ -88,7 +88,7 @@ METHOD Release() CLASS HPen
    IF ::nCounter == 0
       FOR EACH item IN ::aPens
          IF item:handle == ::handle
-            DeleteObject(::handle)
+            hwg_DeleteObject(::handle)
             #ifdef __XHARBOUR__
             ADel(::aPens, hb_EnumIndex())
             #else
@@ -109,7 +109,7 @@ EXIT PROCEDURE CleanDrawWidgHPen
    LOCAL item
 
    FOR EACH item IN HPen():aPens
-      DeleteObject(item:handle)
+      hwg_DeleteObject(item:handle)
    NEXT
 
 RETURN
