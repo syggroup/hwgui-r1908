@@ -165,7 +165,7 @@ METHOD Activate(lShow, lMaximized, lMinimized, lCentered, bActivate) CLASS HMain
       ///
       oWndClient:handle := handle
       // recalculate area offset
-      hwg_SendMessage(::handle, WM_SIZE, 0, MAKELPARAM(::nWidth, ::nHeight))
+      hwg_SendMessage(::handle, WM_SIZE, 0, hwg_MAKELPARAM(::nWidth, ::nHeight))
 
       InitControls(Self)
       IF hb_IsBlock(::bInit)

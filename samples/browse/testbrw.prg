@@ -35,7 +35,7 @@ FUNCTION DlgGet()
 
    @ 80, 180 OWNERBUTTON ON CLICK {||EndDialog()} ;
        SIZE 180, 35 FLAT                                  ;
-       TEXT "Close" COLOR VColor("0000FF")
+       TEXT "Close" COLOR hwg_VColor("0000FF")
 
    hwg_CreateArList(oBrw1, aSample1)
 

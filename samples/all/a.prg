@@ -167,20 +167,20 @@ FUNCTION MdiChildFromPrg(o)
    @ 20, 10 SAY cText SIZE 260, 22
    @ 20, 35 EDITBOX oEdit CAPTION ""    ;
         STYLE WS_DLGFRAME              ;
-        SIZE 260, 26 COLOR VColor("FF0000")
+        SIZE 260, 26 COLOR hwg_VColor("FF0000")
    oEdit:anchor := 11
 
    @ 20, 70 CHECKBOX "Check 1" SIZE 90, 20
    @ 20, 95 CHECKBOX "Check 2"  ;
-        SIZE 90, 20 COLOR IIf(nColor == NIL, VColor("0000FF"), nColor)
+        SIZE 90, 20 COLOR IIf(nColor == NIL, hwg_VColor("0000FF"), nColor)
 
    @ 160, 70 GROUPBOX "RadioGroup" SIZE 130, 75
 
    RADIOGROUP
    @ 180, 90 RADIOBUTTON "Radio 1"  ;
-        SIZE 90, 20 ON CLICK {||oEdit:SetColor(VColor("0000FF"),, .T.)}
+        SIZE 90, 20 ON CLICK {||oEdit:SetColor(hwg_VColor("0000FF"),, .T.)}
    @ 180, 115 RADIOBUTTON "Radio 2" ;
-        SIZE 90, 20 ON CLICK {||oEdit:SetColor(VColor("FF0000"),, .T.)}
+        SIZE 90, 20 ON CLICK {||oEdit:SetColor(hwg_VColor("FF0000"),, .T.)}
    END RADIOGROUP SELECTED 2
 
    @ 20, 120 COMBOBOX aCombo STYLE WS_TABSTOP ;
@@ -200,7 +200,7 @@ FUNCTION MdiChildFromPrg(o)
    @ 100, 220 LINE LENGTH 100
 
    @ 20, 240 BUTTONEX oCmd1 CAPTION "Ok" ID IDOK  ;
-        SIZE 100, 32 COLOR VColor("FF0000")
+        SIZE 100, 32 COLOR hwg_VColor("FF0000")
    @ 140, 240 BUTTONEX oCmd2 CAPTION "11"   ;
         SIZE 20, 32 ON CLICK {|o|CreateC(o)}
    @ 180, 240 BUTTONEX oCmd3 CAPTION "Cancel" ID IDCANCEL  ;
@@ -257,7 +257,7 @@ FUNCTION OpenAbout()
 
    @ 20, 60 SAY "Sample Dialog"        ;
        SIZE 130, 22 STYLE SS_CENTER  ;
-        COLOR VColor("0000FF")
+        COLOR hwg_VColor("0000FF")
 
    @ 20, 80 SAY "Written as a sample"  ;
         SIZE 130, 22 STYLE SS_CENTER
@@ -269,13 +269,13 @@ FUNCTION OpenAbout()
    @ 20, 140 SAY "Hwgui Page"        ;
    LINK "http://kresin.belgorod.su/hwgui.html" ;
        SIZE 130, 22 STYLE SS_CENTER  ;
-        COLOR VColor("0000FF") ;
+        COLOR hwg_VColor("0000FF") ;
         VISITCOLOR RGB(241, 249, 91)
 
    @ 20, 160 SAY "Hwgui international Forum"        ;
    LINK "http://br.groups.yahoo.com/group/hwguibr" ;
        SIZE 200, 22 STYLE SS_CENTER  ;
-        COLOR VColor("0000FF") ;
+        COLOR hwg_VColor("0000FF") ;
         VISITCOLOR RGB(241, 249, 91)
 
 
@@ -284,7 +284,7 @@ FUNCTION OpenAbout()
 
    @ 80, 180 OWNERBUTTON ON CLICK {||EndDialog()}        ;
        SIZE 180, 35 FLAT                                  ;
-       TEXT "Close" COLOR VColor("0000FF") FONT oFontBtn ;
+       TEXT "Close" COLOR hwg_VColor("0000FF") FONT oFontBtn ;
        BITMAP cImageDir + "door.bmp" COORDINATES 40, 10, 0, 0
        // 
 
@@ -457,19 +457,19 @@ FUNCTION DialogFromPrg(o)
    @ 20, 10 SAY cText SIZE 260, 22
    @ 20, 35 EDITBOX oEdit CAPTION ""    ;
         STYLE WS_DLGFRAME              ;
-        SIZE 260, 26 COLOR VColor("FF0000")
+        SIZE 260, 26 COLOR hwg_VColor("FF0000")
 
    @ 20, 70 CHECKBOX "Check 1" SIZE 90, 20
    @ 20, 95 CHECKBOX "Check 2"  ;
-        SIZE 90, 20 COLOR IIf(nColor == NIL, VColor("0000FF"), nColor)
+        SIZE 90, 20 COLOR IIf(nColor == NIL, hwg_VColor("0000FF"), nColor)
 
    @ 160, 70 GROUPBOX "RadioGroup" SIZE 130, 75
 
    RADIOGROUP
    @ 180, 90 RADIOBUTTON "Radio 1"  ;
-        SIZE 90, 20 ON CLICK {||oEdit:SetColor(VColor("0000FF"),, .T.)}
+        SIZE 90, 20 ON CLICK {||oEdit:SetColor(hwg_VColor("0000FF"),, .T.)}
    @ 180, 115 RADIOBUTTON "Radio 2" ;
-        SIZE 90, 20 ON CLICK {||oEdit:SetColor(VColor("FF0000"),, .T.)}
+        SIZE 90, 20 ON CLICK {||oEdit:SetColor(hwg_VColor("FF0000"),, .T.)}
    END RADIOGROUP SELECTED 2
 
    @ 20, 120 COMBOBOX aCombo STYLE WS_TABSTOP ;
@@ -488,7 +488,7 @@ FUNCTION DialogFromPrg(o)
    @ 100, 220 LINE LENGTH 100
 
    @ 20, 240 BUTTON "Ok" OF oModDlg ID IDOK  ;
-        SIZE 100, 32 COLOR VColor("FF0000")
+        SIZE 100, 32 COLOR hwg_VColor("FF0000")
    @ 140, 240 BUTTON "11" OF oModDlg  ;
         SIZE 20, 32 ON CLICK {|o|CreateC(o)}
    @ 180, 240 BUTTON "Cancel" OF oModDlg ID IDCANCEL  ;

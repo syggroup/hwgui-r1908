@@ -141,7 +141,7 @@ FUNCTION About()
    PREPARE FONT oFont NAME "MS Sans Serif" WIDTH 0 HEIGHT -13 ITALIC UNDERLINE
 
    REDEFINE OWNERBUTTON OF oModDlg ID IDC_OWNB1 ON CLICK {||EndDialog(getmodalhandle())} ;
-       FLAT TEXT "Close" COLOR VColor("0000FF") FONT oFont
+       FLAT TEXT "Close" COLOR hwg_VColor("0000FF") FONT oFont
 
    oModDlg:Activate()
 
@@ -424,7 +424,7 @@ FUNCTION sqlBrowse(queHandle)
       oBrw:aColumns[i]:length := af[i, 2]
       oBrw:aColumns[i]:dec := af[i, 3]
    NEXT
-   oBrw:bcolorSel := VColor("800080")
+   oBrw:bcolorSel := hwg_VColor("800080")
    oBrw:ofont := oBrwFont
    hwg_RedrawWindow(oBrw:handle, RDW_ERASE + RDW_INVALIDATE)
 
@@ -440,7 +440,7 @@ FUNCTION BrowHistory()
    oBrw:aArray := aQueries
    oBrw:AddColumn(HColumn():New("History of queries", {|value, o|o:aArray[o:nCurrent, 1]}, "C", 76, 0))
 
-   oBrw:bcolorSel := VColor("800080")
+   oBrw:bcolorSel := hwg_VColor("800080")
    oBrw:ofont := oBrwFont
    oBrw:bEnter := {|h, o|GetFromHistory(h, o)}
    hwg_RedrawWindow(oBrw:handle, RDW_ERASE + RDW_INVALIDATE)

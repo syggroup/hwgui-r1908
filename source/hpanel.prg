@@ -283,7 +283,7 @@ METHOD Release() CLASS HPanel
       ::oParent:aOffset[1] := MAX(::oParent:aOffset[1] , 0)
       ::oParent:aOffset[2] := MAX(::oParent:aOffset[2] , 0)
       ::oParent:aOffset[3] := MAX(::oParent:aOffset[3] , 0)
-      hwg_SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
+      hwg_SendMessage(::oParent:handle, WM_SIZE, 0, hwg_MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
       ::nHeight := 0
       ::nWidth := 0
    ENDIF
@@ -318,7 +318,7 @@ METHOD Hide() CLASS HPanel
    */
     ::Super:Hide()
     IF ::oParent:type == WND_MDI .AND. lRes
-       //hwg_SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
+       //hwg_SendMessage(::oParent:handle, WM_SIZE, 0, hwg_MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
        hwg_InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop + 1, ::nLeft + ::nWidth, ::nTop + ::nHeight)
     ENDIF
     RETURN NIL
@@ -346,7 +346,7 @@ METHOD Show() CLASS HPanel
    */
    ::Super:Show()
    IF ::oParent:type == WND_MDI .AND. lRes
-       //hwg_SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
+       //hwg_SendMessage(::oParent:handle, WM_SIZE, 0, hwg_MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
        hwg_InvalidateRect(::oParent:handle, 1, ::nLeft, ::nTop+1, ::nLeft + ::nWidth, ::nTop + ::nHeight)
    ENDIF
    RETURN NIL
@@ -374,7 +374,7 @@ METHOD Resize() CLASS HPanel
             ::oParent:aOffset[3] += (nWidth - ::nWidth)
          ENDIF
       ENDIF
-      hwg_SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
+      hwg_SendMessage(::oParent:handle, WM_SIZE, 0, hwg_MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
    ELSE
       RETURN NIL
    ENDIF
@@ -414,7 +414,7 @@ METHOD ResizeOffSet(nMode) CLASS HPanel
       ::oParent:aOffset[2] := MAX(::oParent:aOffset[2] , 0)
       ::oParent:aOffset[3] := MAX(::oParent:aOffset[3] , 0)
       IF lRes
-         hwg_SendMessage(::oParent:handle, WM_SIZE, 0, MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
+         hwg_SendMessage(::oParent:handle, WM_SIZE, 0, hwg_MAKELPARAM(::oParent:nWidth, ::oParent:nHeight))
       ENDIF
    ENDIF
 

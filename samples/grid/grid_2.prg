@@ -53,7 +53,7 @@ FUNCTION Test()
 
              @ 10, 10 GRID oGrid OF oForm SIZE 680, 375;
                      ITEMCOUNT oQuery:Lastrec() ;
-                     COLOR VColor("D3D3D3");
+                     COLOR hwg_VColor("D3D3D3");
                      BACKCOLOR RGB(220, 220, 220) ;
                      ON DISPINFO {|oCtrl, nRow, nCol|valtoprg(oQuery:FieldGet(nRow, nCol))}
 

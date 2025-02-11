@@ -280,7 +280,7 @@ METHOD Init() CLASS HTab
       ELSE
          ::TabHeightSize := 23
       ENDIF
-      hwg_SendMessage(::handle, TCM_SETITEMSIZE, 0, MAKELPARAM(x, ::TabHeightSize))
+      hwg_SendMessage(::handle, TCM_SETITEMSIZE, 0, hwg_MAKELPARAM(x, ::TabHeightSize))
       IF ::himl != NIL
          hwg_SendMessage(::handle, TCM_SETIMAGELIST, 0, ::himl)
       ENDIF
@@ -903,7 +903,7 @@ METHOD OnEvent(msg, wParam, lParam) CLASS HTab
           ::GetParentForm():nInitFocus := 0
       ENDIF
       IF msg == WM_KILLFOCUS .AND. ::GetParentForm() != NIL .AND. ::GetParentForm():Type < WND_DLG_RESOURCE
-          hwg_SendMessage(::oParent:handle, WM_COMMAND, makewparam(::id, 0), ::handle)
+          hwg_SendMessage(::oParent:handle, WM_COMMAND, hwg_MAKEWPARAM(::id, 0), ::handle)
           ::nPrevPage := 0
       ENDIF
       IF msg == WM_DRAWITEM
@@ -1047,7 +1047,7 @@ METHOD OnEvent(msg, wParam, lParam) CLASS HTab
          ::GetParentForm():nInitFocus := 0
       ENDIF
       IF msg == WM_KILLFOCUS .AND. ::GetParentForm() != NIL .AND. ::GetParentForm():Type < WND_DLG_RESOURCE
-         hwg_SendMessage(::oParent:handle, WM_COMMAND, makewparam(::id, 0), ::handle)
+         hwg_SendMessage(::oParent:handle, WM_COMMAND, hwg_MAKEWPARAM(::id, 0), ::handle)
          ::nPrevPage := 0
       ENDIF
       IF msg == WM_DRAWITEM

@@ -83,7 +83,9 @@ HB_FUNC(HWG_SELECTFOLDER)
   hb_strfree(hFolderName);
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(SELECTFOLDER, HWG_SELECTFOLDER);
+#endif
 
 /*
  *  hwg_ShellNotifyIcon(lAdd, hWnd, hIcon, cTooltip)
@@ -113,7 +115,9 @@ HB_FUNC(HWG_SHELLNOTIFYICON)
   }
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(SHELLNOTIFYICON, HWG_SHELLNOTIFYICON);
+#endif
 
 /*
  *  hwg_ShellModifyIcon(hWnd, hIcon, cTooltip)
@@ -141,7 +145,9 @@ HB_FUNC(HWG_SHELLMODIFYICON)
   Shell_NotifyIcon(NIM_MODIFY, &tnid);
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(SHELLMODIFYICON, HWG_SHELLMODIFYICON);
+#endif
 
 /*
  * hwg_ShellExecute(cFile, cOperation, cParams, cDir, nFlag)
@@ -174,4 +180,6 @@ HB_FUNC(HWG_SHELLEXECUTE)
 #endif
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(SHELLEXECUTE, HWG_SHELLEXECUTE);
+#endif

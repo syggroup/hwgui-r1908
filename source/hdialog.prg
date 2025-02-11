@@ -251,7 +251,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HDialog
       /* triggered on activate the modal dialog is visible only when */
       ::lActivated := .T.
       IF ::lModal .AND. hb_IsBlock(::bOnActivate)
-         hwg_PostMessage(::handle, WM_ACTIVATE, MAKEWPARAM(WA_ACTIVE, 0), ::handle)
+         hwg_PostMessage(::handle, WM_ACTIVATE, hwg_MAKEWPARAM(WA_ACTIVE, 0), ::handle)
       ENDIF
    ENDIF
    IF (i := AScan(s_aMessModalDlg, {|a|a[1] == msg})) != 0
@@ -325,7 +325,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HDialog
          /* triggered on activate the modal dialog is visible only when */
          ::lActivated := .T.
          IF ::lModal .AND. hb_IsBlock(::bOnActivate)
-            hwg_PostMessage(::handle, WM_ACTIVATE, MAKEWPARAM(WA_ACTIVE, 0), ::handle)
+            hwg_PostMessage(::handle, WM_ACTIVATE, hwg_MAKEWPARAM(WA_ACTIVE, 0), ::handle)
          ENDIF
       ENDIF
       EXIT

@@ -608,7 +608,7 @@ METHOD onEvent(msg, wParam, lParam) CLASS HBrowse
          ENDIF
 
          IF ::GetParentForm(self):Type < WND_DLG_RESOURCE
-             hwg_SendMessage(::oParent:handle, WM_COMMAND, makewparam(::id, 0), ::handle)
+             hwg_SendMessage(::oParent:handle, WM_COMMAND, hwg_MAKEWPARAM(::id, 0), ::handle)
          ENDIF
          */
          ::internal[1] := 15 //force redraw header, footer and separator
@@ -993,7 +993,7 @@ METHOD OnEvent(msg, wParam, lParam) CLASS HBrowse
          //   Eval(::bLostFocus, Self)
          //ENDIF
          //IF ::GetParentForm(self):Type < WND_DLG_RESOURCE
-         //    hwg_SendMessage(::oParent:handle, WM_COMMAND, makewparam(::id, 0), ::handle)
+         //    hwg_SendMessage(::oParent:handle, WM_COMMAND, hwg_MAKEWPARAM(::id, 0), ::handle)
          //ENDIF
          ::internal[1] := 15 //force redraw header, footer and separator
       ENDIF
@@ -1838,11 +1838,11 @@ ENDIF
       ::tcolor := 0
    ENDIF
    IF ::bcolor == NIL
-      ::bcolor := VColor("FFFFFF")
+      ::bcolor := hwg_VColor("FFFFFF")
    ENDIF
 
    //IF ::httcolor == NIL
-   //   ::httcolor := VColor("FFFFFF")
+   //   ::httcolor := hwg_VColor("FFFFFF")
    //ENDIF
    //IF ::htbcolor == NIL
    //   ::htbcolor := 2896388
@@ -1855,10 +1855,10 @@ ENDIF
    ENDIF
 
    IF ::tcolorSel == NIL
-      ::tcolorSel := VColor("FFFFFF")
+      ::tcolorSel := hwg_VColor("FFFFFF")
    ENDIF
    IF ::bcolorSel == NIL
-      ::bcolorSel := VColor("808080")
+      ::bcolorSel := hwg_VColor("808080")
    ENDIF
 
 // Open Paint procedure
@@ -4920,6 +4920,8 @@ RETURN nLen
 
 #include <hbapi.h>
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(CREATEARLIST, HWG_CREATEARLIST);
+#endif
 
 #pragma ENDDUMP

@@ -62,3 +62,6 @@ https://sourceforge.net/p/hwgui/code/1908/tree/
 Alterações (commits) com a descrição "Formatação" modificam o código-fonte, mas sem alterar o comportamento da
 HWGUI. O objetivo destas alterações é a padronização do código-fonte, de forma que não há a necessidade real de
 atualizar e recompilar após estes commits.
+
+A flag 'HWGUI_FUNC_TRANSLATE_ON' ativa o redirecionamento das funções sem o prefixo 'HWG_' para as funções com prefixo,
+podendo ser utilizada em casos onde o código-fonte do desenvolvedor ainda não foi atualizado.

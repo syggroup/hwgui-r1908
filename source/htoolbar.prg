@@ -328,8 +328,8 @@ METHOD CREATETOOL() CLASS hToolBar
    ENDIF
    hwg_SendMessage(::handle, TB_SETINDENT, ::nIndent, 0)
    IF !Empty(::BtnWidth)
-      hwg_SendMessage(::handle, TB_SETBUTTONWIDTH, 0, MAKELPARAM(::BtnWidth - 1, ::BtnWidth + 1))
-      //hwg_SendMessage(::handle, TB_SETBUTTONWIDTH, MAKELPARAM(::BtnWidth, ::BtnWidth))
+      hwg_SendMessage(::handle, TB_SETBUTTONWIDTH, 0, hwg_MAKELPARAM(::BtnWidth - 1, ::BtnWidth + 1))
+      //hwg_SendMessage(::handle, TB_SETBUTTONWIDTH, hwg_MAKELPARAM(::BtnWidth, ::BtnWidth))
    ENDIF
    IF Len(::aItem) > 0
       TOOLBARADDBUTTONS(::handle, ::aItem, Len(::aItem))
@@ -345,9 +345,9 @@ METHOD CREATETOOL() CLASS hToolBar
       ::BtnHeight := MAX(hwg_HIWORD(hwg_SendMessage(::handle, TB_GETBUTTONSIZE, 0, 0)), ;
          ::nHeight - ::nDrop - IIf(!::lnoThemes .AND. hwg_BitAnd(::Style, TBSTYLE_FLAT) > 0, 0, 2))
       IF !::lVertical
-         hwg_SendMessage(::handle, TB_SETBUTTONSIZE, 0, MAKELPARAM(::BtnWidth, ::BtnHeight))
+         hwg_SendMessage(::handle, TB_SETBUTTONSIZE, 0, hwg_MAKELPARAM(::BtnWidth, ::BtnHeight))
       ELSE
-         hwg_SendMessage(::handle, TB_SETBUTTONSIZE, 0, MAKELPARAM(::nWidth - ::nDrop - 1, ::BtnWidth))
+         hwg_SendMessage(::handle, TB_SETBUTTONSIZE, 0, hwg_MAKELPARAM(::nWidth - ::nDrop - 1, ::BtnWidth))
       ENDIF
    ENDIF
    ::BtnWidth := hwg_LOWORD(hwg_SendMessage(::handle, TB_GETBUTTONSIZE, 0, 0))
@@ -506,12 +506,12 @@ METHOD RESIZE(xIncrSize, lWidth, lHeight) CLASS hToolBar
    ELSE
       ::BtnWidth := hwg_LOWORD(nSize) * xIncrSize
    ENDIF
-   hwg_SendMessage(::handle, TB_SETBUTTONWIDTH, MAKELPARAM(::BtnWidth - 1, ::BtnWidth + 1))
+   hwg_SendMessage(::handle, TB_SETBUTTONWIDTH, hwg_MAKELPARAM(::BtnWidth - 1, ::BtnWidth + 1))
    IF ::BtnWidth != NIL
       IF !::lVertical
-         hwg_SendMessage(::handle, TB_SETBUTTONSIZE, 0, MAKELPARAM(::BtnWidth, ::BtnHeight))
+         hwg_SendMessage(::handle, TB_SETBUTTONSIZE, 0, hwg_MAKELPARAM(::BtnWidth, ::BtnHeight))
       ELSE
-         hwg_SendMessage(::handle, TB_SETBUTTONSIZE, 0, MAKELPARAM(::nWidth - ::nDrop - 1, ::BtnWidth))
+         hwg_SendMessage(::handle, TB_SETBUTTONSIZE, 0, hwg_MAKELPARAM(::nWidth - ::nDrop - 1, ::BtnWidth))
       ENDIF
       hwg_SendMessage(::handle, WM_SIZE, 0, 0)
    ENDIF

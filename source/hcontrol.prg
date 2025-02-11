@@ -291,7 +291,7 @@ METHOD FontBold(lTrue) CLASS HControl
    ENDIF
    IF lTrue != NIL
       ::oFont := ::oFont:SetFontStyle(lTrue)
-      hwg_SendMessage(::handle, WM_SETFONT, ::oFont:handle, MAKELPARAM(0, 1))
+      hwg_SendMessage(::handle, WM_SETFONT, ::oFont:handle, hwg_MAKELPARAM(0, 1))
       hwg_RedrawWindow(::handle, RDW_NOERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT)
    ENDIF
 
@@ -317,7 +317,7 @@ METHOD FontItalic(lTrue) CLASS HControl
    ENDIF
    IF lTrue != NIL
       ::oFont := ::oFont:SetFontStyle(, , lTrue)
-      hwg_SendMessage(::handle, WM_SETFONT, ::oFont:handle, MAKELPARAM(0, 1))
+      hwg_SendMessage(::handle, WM_SETFONT, ::oFont:handle, hwg_MAKELPARAM(0, 1))
       hwg_RedrawWindow(::handle, RDW_NOERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT)
    ENDIF
 
@@ -343,7 +343,7 @@ METHOD FontUnderline(lTrue) CLASS HControl
    ENDIF
    IF lTrue != NIL
       ::oFont := ::oFont:SetFontStyle(, , , lTrue)
-      hwg_SendMessage(::handle, WM_SETFONT, ::oFont:handle, MAKELPARAM(0, 1))
+      hwg_SendMessage(::handle, WM_SETFONT, ::oFont:handle, hwg_MAKELPARAM(0, 1))
       hwg_RedrawWindow(::handle, RDW_NOERASE + RDW_INVALIDATE + RDW_FRAME + RDW_INTERNALPAINT)
    ENDIF
 

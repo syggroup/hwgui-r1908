@@ -67,9 +67,9 @@ FUNCTION Test()
                      ON KEYDOWN {|oCtrl, key|OnKey(oCtrl, key)} ;
                      ON POSCHANGE {|oCtrl, nRow|OnPoschange(oCtrl, nRow)} ;
                      ON CLICK {|oCtrl|OnClick(oCtrl)} ;
-                     COLOR VColor("D3D3D3");
+                     COLOR hwg_VColor("D3D3D3");
                      ON DISPINFO {|oCtrl, nRow, nCol|OnDispInfo(oCtrl, nRow, nCol)} ;
-                     BACKCOLOR VColor("BEBEBE")  ;
+                     BACKCOLOR hwg_VColor("BEBEBE")  ;
                      BITMAP { 2, 3, 4, 5 }   ITEMS aItems
 
              ADD COLUMN TO GRID oGrid HEADER aHead[1] WIDTH 150  bitmap 1

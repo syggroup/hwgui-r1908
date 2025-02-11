@@ -108,7 +108,9 @@ HB_FUNC(HWG_INVALIDATERECT)
   InvalidateRect(hwg_par_HWND(1), (hb_pcount() > 2) ? &rc : NULL, hb_parni(2));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(INVALIDATERECT, HWG_INVALIDATERECT);
+#endif
 
 /*
 MOVETO(HDC, nX, nY) -->
@@ -238,7 +240,9 @@ HB_FUNC(HWG_REDRAWWINDOW)
   RedrawWindow(hwg_par_HWND(1), (hb_pcount() > 3) ? &rc : NULL, NULL, hwg_par_UINT(2));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(REDRAWWINDOW, HWG_REDRAWWINDOW);
+#endif
 
 /*
 DRAWBUTTON(HDC, nLeft, nTop, nRight, nBottom, nType) -->
@@ -772,7 +776,9 @@ HB_FUNC(HWG_SELECTOBJECT)
   hwg_ret_HGDIOBJ(SelectObject(hwg_par_HDC(1), hwg_par_HGDIOBJ(2)));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(SELECTOBJECT, HWG_SELECTOBJECT);
+#endif
 
 /*
 DELETEOBJECT(HGDIOBJ) -->
@@ -783,7 +789,9 @@ HB_FUNC(HWG_DELETEOBJECT)
   DeleteObject(hwg_par_HGDIOBJ(1));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(DELETEOBJECT, HWG_DELETEOBJECT);
+#endif
 
 /*
 GETDC(HWND) --> HDC
@@ -793,7 +801,9 @@ HB_FUNC(HWG_GETDC)
   hwg_ret_HDC(GetDC(hwg_par_HWND(1)));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(GETDC, HWG_GETDC);
+#endif
 
 /*
 RELEASEDC(HWND, HDC) --> numeric
@@ -803,7 +813,9 @@ HB_FUNC(HWG_RELEASEDC)
   hwg_ret_int(ReleaseDC(hwg_par_HWND(1), hwg_par_HDC(2)));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(RELEASEDC, HWG_RELEASEDC);
+#endif
 
 /*
 GETDRAWITEMINFO(DRAWITEMSTRUCT) --> aInfo[9]
@@ -853,7 +865,9 @@ HB_FUNC(HWG_GETDRAWITEMINFO)
   hb_itemReturnRelease(aMetr);
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(GETDRAWITEMINFO, HWG_GETDRAWITEMINFO);
+#endif
 
 /*
  * DrawGrayBitmap(hDC, hBitmap, x, y)
@@ -1015,7 +1029,9 @@ HB_FUNC(HWG_SAVEDC)
   hb_retl(SaveDC(hwg_par_HDC(1)));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(SAVEDC, HWG_SAVEDC);
+#endif
 
 /*
 RESTOREDC(HDC, nSavedDC) --> .T.|.F.
@@ -1025,7 +1041,9 @@ HB_FUNC(HWG_RESTOREDC)
   hwg_ret_BOOL(RestoreDC(hwg_par_HDC(1), hwg_par_int(2)));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(RESTOREDC, HWG_RESTOREDC);
+#endif
 
 /*
 CREATECOMPATIBLEDC(HDC) --> HDC
@@ -1035,7 +1053,9 @@ HB_FUNC(HWG_CREATECOMPATIBLEDC)
   hwg_ret_HDC(CreateCompatibleDC(hwg_par_HDC(1)));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(CREATECOMPATIBLEDC, HWG_CREATECOMPATIBLEDC);
+#endif
 
 /*
 SETMAPMODE(HDC, nMode) --> numeric
@@ -1272,7 +1292,9 @@ HB_FUNC(HWG_GETWINDOWDC)
   hwg_ret_HDC(GetWindowDC(hwg_par_HWND(1)));
 }
 
+#ifdef HWGUI_FUNC_TRANSLATE_ON
 HB_FUNC_TRANSLATE(GETWINDOWDC, HWG_GETWINDOWDC);
+#endif
 
 /*
 MODIFYSTYLE(HWND, np2, np3) -->

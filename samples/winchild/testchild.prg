@@ -35,11 +35,11 @@ FUNCTION CreateChild(lClip)
    DEFAULT lClip := .F.
 
    /*
-   oChild := HWindow():New(WND_CHILD, oIcon, VColor("0000FF"), NIL, 10, 10, 200, 100, cTitle, cMenu, NIL, NIL, ;
+   oChild := HWindow():New(WND_CHILD, oIcon, hwg_VColor("0000FF"), NIL, 10, 10, 200, 100, cTitle, cMenu, NIL, NIL, ;
                            NIL, bExit, NIL, NIL, NIL, NIL, NIL, "Child_" + AllTrim(Str(Len(aChilds))), oBmp)
    */
 
-   oChild := HChildWindow():New(oIcon, VColor("0000FF"), NIL, 10, 10, 200, 100, cTitle, cMenu, NIL, NIL, ;
+   oChild := HChildWindow():New(oIcon, hwg_VColor("0000FF"), NIL, 10, 10, 200, 100, cTitle, cMenu, NIL, NIL, ;
                           bExit, NIL, NIL, NIL, NIL, NIL, "Child_" + AllTrim(Str(Len(aChilds))), NIL)
 
    // Test if we could create the window object

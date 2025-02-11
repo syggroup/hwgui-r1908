@@ -142,7 +142,7 @@ METHOD onevent(msg, wParam, lParam) CLASS HButton
       ENDIF
    ELSEIF msg == WM_KEYDOWN
       IF (wParam == VK_RETURN .OR. wParam == VK_SPACE)
-         hwg_SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
+         hwg_SendMessage(::handle, WM_LBUTTONDOWN, 0, hwg_MAKELPARAM(1, 1))
          RETURN 0
       ENDIF
       IF !ProcKeyList(Self, wParam)
@@ -159,7 +159,7 @@ METHOD onevent(msg, wParam, lParam) CLASS HButton
       ENDIF
    ELSEIF msg == WM_KEYUP
       IF (wParam == VK_RETURN .OR. wParam == VK_SPACE)
-         hwg_SendMessage(::handle, WM_LBUTTONUP, 0, MAKELPARAM(1, 1))
+         hwg_SendMessage(::handle, WM_LBUTTONUP, 0, hwg_MAKELPARAM(1, 1))
          RETURN 0
       ENDIF
    ELSEIF msg == WM_GETDLGCODE .AND. !Empty(lParam)
@@ -192,7 +192,7 @@ METHOD onevent(msg, wParam, lParam) CLASS HButton
 
    CASE WM_KEYDOWN
       IF (wParam == VK_RETURN .OR. wParam == VK_SPACE)
-         hwg_SendMessage(::handle, WM_LBUTTONDOWN, 0, MAKELPARAM(1, 1))
+         hwg_SendMessage(::handle, WM_LBUTTONDOWN, 0, hwg_MAKELPARAM(1, 1))
          RETURN 0
       ENDIF
       IF !ProcKeyList(Self, wParam)
@@ -214,7 +214,7 @@ METHOD onevent(msg, wParam, lParam) CLASS HButton
 
    CASE WM_KEYUP
       IF (wParam == VK_RETURN .OR. wParam == VK_SPACE)
-         hwg_SendMessage(::handle, WM_LBUTTONUP, 0, MAKELPARAM(1, 1))
+         hwg_SendMessage(::handle, WM_LBUTTONUP, 0, hwg_MAKELPARAM(1, 1))
          RETURN 0
       ENDIF
       EXIT
