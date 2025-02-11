@@ -298,18 +298,18 @@ Local n, cTitle
 
 #ifdef __WINDOWS__
    IF nm == 1
-      stroka := ErrorMessage(e) + Chr(10)+Chr(13) + "in" + Chr(10)+Chr(13) + ;
+      stroka := SYG_ErrorMessage(e) + Chr(10)+Chr(13) + "in" + Chr(10)+Chr(13) + ;
                       AllTrim(stroka)
       cTitle := "Script compiling error"
    ELSEIF nm == 2
-      stroka := ErrorMessage(e)
+      stroka := SYG_ErrorMessage(e)
       cTitle := "Script variables error"
    ELSEIF nm == 3
       n := 2
       DO WHILE !Empty(ProcName(n))
         stroka += Chr(13)+Chr(10) + "Called from " + ProcName(n) + "(" + AllTrim(Str(ProcLine(n++))) + ")"
       ENDDO
-      stroka := ErrorMessage(e)+ Chr(10)+Chr(13) + stroka
+      stroka := SYG_ErrorMessage(e)+ Chr(10)+Chr(13) + stroka
       cTitle := "Script execution error"
    ENDIF
    stroka += Chr(13)+Chr(10) + Chr(13)+Chr(10) + "Continue ?"
@@ -323,7 +323,7 @@ Local n, cTitle
    ELSEIF nm == 2
       Alert("Script variables error")
    ELSEIF nm == 3
-      stroka += ";" + ErrorMessage(e)
+      stroka += ";" + SYG_ErrorMessage(e)
       n := 2
       DO WHILE !Empty(ProcName(n))
         stroka += ";Called from " + ProcName(n) + "(" + AllTrim(Str(ProcLine(n++))) + ")"

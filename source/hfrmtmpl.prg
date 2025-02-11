@@ -633,7 +633,7 @@ RETURN arrExe
 
 STATIC PROCEDURE CompileErr(e, stroka)
 
-   hwg_MsgStop(ErrorMessage(e) + Chr(10) + Chr(13) + "in" + Chr(10) + Chr(13) + AllTrim(stroka), "Script compiling error")
+   hwg_MsgStop(SYG_ErrorMessage(e) + Chr(10) + Chr(13) + "in" + Chr(10) + Chr(13) + AllTrim(stroka), "Script compiling error")
    BREAK(NIL)
 
 STATIC FUNCTION ReadCtrl(pp, oCtrlDesc, oContainer, oForm)
